@@ -1,7 +1,0 @@
---- 
-name: deprecated-annotatio
-layout: post
-title: Deprecated Annotation
-time: 2009-01-22 15:25:00 +00:00
----
-Why didn't Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of<br /><br /><pre name="code" class="java:nogutter:nocontrols">@Documented<br />@Retention(RetentionPolicy.RUNTIME)<br />public @interface Deprecated {<br />}<br /></pre><br /><br />which kind of implies we should do the following.<br /><br /><pre name="code" class="java:nogutter:nocontrols">@Deprecated<br />/** @deprecated use {@link Foo} instead */<br />public class GoneOff {<br />   // ...<br />}<br /></pre><br /><br />why can't we have<br /><br /><pre name="code" class="java:nogutter:nocontrols">@Documented<br />@Retention(RetentionPolicy.RUNTIME)<br />public @interface MyDeprecated{<br />   public abstract String value() default "";<br />}<br /></pre><br /><br />which means we can use<br /><br /><pre name="code" class="java:nogutter:nocontrols">@MyDeprecated("use Foo instead")<br />public class GoneOff {<br />   // ...<br />}<br /></pre><br /><br /><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png" style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer; width: 22px; height: 22px;" alt="" id="BLOGGER_PHOTO_ID_5283328307719135378" border="0" /><div class="blogger-post-footer"><img width='1' height='1' src='https://blogger.googleusercontent.com/tracker/20485368-7810597785529521387?l=pequenoperro.blogspot.com' alt='' /></div>
