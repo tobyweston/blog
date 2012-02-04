@@ -1,0 +1,55 @@
+---
+name: transaction-managment-without
+layout: post
+title: Transaction Managment without the Frameworks
+time: 2012-01-29 13:58:00 +00:00
+categories: java object-oriented
+---
+It's easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it's often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we're not tied into yet another framework, why wouldn't we? Aside from just avoiding frameworks though, how does replacing
+<code>@Transctional</code> with something bespoke really help us? <br/>
+<br/>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <i>composability</i>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.
+<br/><br/>Lets take a look at an example in detail<br/><a name='more'></a>
+<br/>It's probably helpful to be clear what we mean by a <i>unit of
+    work</i> here. Intimately related to the idea of a database transaction,  a unit of work is a series of database operations that when applied together adhere to all the transactional characteristics (
+<i>atomic</i>, <i>coherent</i>, <i>isolated</i> and
+<i>durable</i>). For example, when updating the database to increment one bank account and decrementing another, things should be atomic (both operations happen or neither does), consistent (the bank accounts actually exist), isolated (protected from concurrent updates to the same accounts) and durable (permanently applied). Describing both operations as a unit of work and applying then transactionally achieves this.
+<br/>
+<br/>So we can think of the unit of work as something that can be executed and when it is, it'll be under the conditions described above.
+<br/><br/>
+<pre class="java:nogutter:nocontrols" name="code">public interface UnitOfWork&lt;R, E extends Exception&gt; {<br/>    R execute(SessionProvider sessionProvider) throws E;<br/>}<br/></pre>
+<br/>Something that would be responsible for executing the unit of work might look like this.<br/><br/>
+<pre class="java:nogutter:nocontrols" name="code">public interface UnitOfWorkRunner {<br/>    &lt;T, E extends Exception&gt; T run(UnitOfWork&lt;T, E&gt; unitOfWork) throws Throwable;<br/>}<br/></pre>
+<br/>When it comes to using Hibernate, we might have a concrete
+<code>UnitOfWorkRunner</code> look something like the following. The key thing here is that the transaction management is handled here, its a simple try catch finally pattern and as you can see, is very simple.
+<br/><br/>
+<pre class="java:nogutter:nocontrols" name="code">public class TransactionalUnitOfWorkRunner implements UnitOfWorkRunner {<br/><br/>    private final SessionProvider sessionProvider;<br/><br/>    public TransactionalUnitOfWorkRunner(SessionProvider sessionProvider) {<br/>        this.sessionProvider = sessionProvider;<br/>    }<br/><br/>    @Override<br/>    public &lt;T, E extends Exception&gt; T run(UnitOfWork&lt;T, E&gt; unitOfWork) throws Throwable {<br/>        Session session = sessionProvider.getCurrentSession();<br/>        Transaction transaction = session.beginTransaction();<br/>        try {<br/>            T result = unitOfWork.execute(sessionProvider);<br/>            transaction.commit();<br/>            return result;<br/>        } catch (Throwable e) {<br/>            transaction.rollback();<br/>            throw e;<br/>        } finally {<br/>            if (session.isOpen())<br/>                session.close();<br/>        }<br/>    }<br/><br/>    public static &lt;T, E extends Exception&gt; T runInTransaction(SessionProvider sessionProvider, UnitOfWork&lt;T, E&gt; unitOfWork) throws Throwable {<br/>        return new TransactionalUnitOfWorkRunner(sessionProvider).run(unitOfWork);<br/>    }<br/>}<br/></pre>
+<br/>It's this class and interface that allows us to be explicit about our transactional boundary. Clients to this define the transaction boundary. In most containers and frameworks, the transactional boundary is around the request/response cycle and the developer has little influence. Using the
+<code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can use a servlet filter to achieve a similar request/response scoped transaction or you can be finer grained and produce what I prefer; a transaction scoped to a coherent
+<i>business operation</i>.<br/>
+<br/>For example, lets have a interface describing current account business functions that work on bank account entities. The
+<code>CurrentAccount</code> interface represents business functions and should define the transactional boundary. The
+<code>BankAccount</code> on the other hand represents the entities involved which themselves are stored in an <code>Accounts</code>
+<i>repostiory</i>.<br/><br/>
+<pre class="java:nogutter:nocontrols" name="code">// "business" operations<br/>public interface CurrentAccount {<br/>   void deposit(From&lt;BankAccount&gt; from, To&lt;BankAccount&gt; to);<br/>}<br/></pre>
+<br/>When we implement the
+<code>CurrentAccount</code>, we can define the transactional behavior as a separate concern from the business behavior. For example,
+<br/><br/>
+<pre class="java:nogutter:nocontrols" name="code">Accounts repository = new AccountRepository();<br/>CurrentAccount currentAccount = new AcmeBankCurrentAccount(repository);<br/>CurrentAccount transactionally = transactionally(sessionProvider, currentAccount);<br/>// ...<br/>transactionally.deposit(...);<br/></pre>
+<br/>Where <code>transactionally</code> is a statically imported creation method that wires up the <code>AcmeBankCurrentAccount</code> (the business services) with transactional behavior. It does this via decoration but essentially creates an anonymous
+<code>UnitOfWork</code> in which to execute the business operation within.<br/><br/>The full class looks like this<br/>
+<br/>
+<pre class="java:nogutter:nocontrols" name="code">public class TransactionWrapper&lt;R&gt; implements InvocationHandler {<br/><br/>    private final SessionProvider sessionProvider;<br/>    private final R delegate;<br/><br/>    public static &lt;R&gt; R transactionally(SessionProvider sessionProvider, R object) {<br/>        return (R) Proxy.newProxyInstance(object.getClass().getClassLoader(), object.getClass().getInterfaces(), new TransactionWrapper(sessionProvider, object));<br/>    }<br/><br/>    public TransactionWrapper(SessionProvider sessionProvider, R delegate) {<br/>        this.sessionProvider = sessionProvider;<br/>        this.delegate = delegate;<br/>    }<br/><br/>    @Override<br/>    public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {<br/>        try {<br/>            return new TransactionalUnitOfWorkRunner(sessionProvider).run(new UnitOfWork&lt;Object, Exception&gt;() {<br/>                @Override<br/>                public Object execute(SessionProvider sessionProvider) throws Exception {<br/>                    return method.invoke(delegate, args);<br/>                }<br/>            });<br/>        } catch (InvocationTargetException throwable) {<br/>            throw throwable.getTargetException();<br/>        }<br/>    }<br/>}<br/></pre>
+<br/>The underlying business functionality within the
+<code>AcmeBankCurrentAccount</code> isn't concerned with transactions. Instead, its decorated with transactionality and we can use this decorating proxy to wrap any business interface as a transaction.
+<br/><br/>
+<pre class="java:nogutter:nocontrols"
+     name="code">public class AcmeBankCurrentAccount implements CurrentAccount {<br/><br/>    private final AccountRepository accounts;<br/><br/>    public AcmeBankCurrentAccount(AccountRepository accounts) {<br/>        this.accounts = accounts;<br/>    }<br/><br/>    @Override<br/>    public void deposit(From&lt;BankAccountIdentifier&gt; from, To&lt;BankAccountIdentifier&gt; to, Amount amount) throws Throwable {<br/>        BankAccount benefactor =  accounts.find(from.value());<br/>        BankAccount beneficiary = accounts.find(to.value());<br/>        benefactor.withdraw(amount);<br/>        beneficiary.deposit(amount);<br/>        accounts.save(benefactor);<br/>        accounts.save(beneficiary);<br/>    }<br/>}<br/></pre>
+<br/>This can come in handy when testing as we can isolate and test the different responsibilities. We're also left with a handy framework to add ad-hoc data directly to the database and it's easy enough to wire up an in-memory only
+<code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from
+<a href="http://www.growing-object-oriented-software.com/">GOOS</a>.<br/><br/>
+<div><img alt="" border="0" id="BLOGGER_PHOTO_ID_5283328307719135378"
+          src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"
+          style="cursor: pointer; float: left; height: 22px; margin: 0pt 10px 10px 0pt; width: 22px;"/></div>
+<div class="blogger-post-footer"><img width='1' height='1'
+                                      src='https://blogger.googleusercontent.com/tracker/20485368-2698377992928578328?l=pequenoperro.blogspot.com'
+                                      alt=''/></div>
