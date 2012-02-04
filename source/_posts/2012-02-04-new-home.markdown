@@ -1,0 +1,10 @@
+---
+layout: post
+title: "New Home"
+date: 2012-02-04 13:00
+comments: true
+categories: misc
+---
+
+I'm currently checking out a move from [Blogger](http://www.blogger.com) to [Ocotopress](http://www.octopress.org).
+
