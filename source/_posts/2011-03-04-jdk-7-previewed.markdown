@@ -1,6 +1,6 @@
 ---
 name: previwed
-layout: post
+layout: article
 title: JDK7 Previewed
 time: 2011-03-04 15:44:00 +00:00
 categories: java

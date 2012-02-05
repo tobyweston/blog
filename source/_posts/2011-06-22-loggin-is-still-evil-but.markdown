@@ -3,7 +3,7 @@ name: loggin-is-still-evil-but
 layout: post
 title: Loggin is still evil but...
 time: 2011-06-22 21:14:00 +01:00
-categories: java object-oriented mocking
+categories: java object-oriented mocking testing
 ---
 
 In a [previous post](http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html), I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.
