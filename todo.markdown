@@ -1,8 +1,10 @@
-* DONE  Migrate old content to .md
-* Setup discus / migrate comments
+* DONE Migrate old content to .md
+* Setup discus
+* Migrate comments
 * Remove any links to old blog
 * Investigate 'moved permantaly' from old blog
 * Deprecate old blog
-* Style (inc bad.robot logo font)
+* Style
+* DONE Style bad.robot logo font
 * Copy over images
-* Add 404 page
+* DONE Add 404 page
