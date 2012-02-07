@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mocking | bad.robot]]></title>
+  <link href="http://www.baddotrobot.com/blog/categories/mocking/atom.xml" rel="self"/>
+  <link href="http://www.baddotrobot.com/"/>
+  <updated>2012-02-07T21:12:07+00:00</updated>
+  <id>http://www.baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Loggin is still evil but...]]></title>
+    <link href="http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
+    <updated>2011-06-22T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
+    <content type="html"><![CDATA[<p>In a <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
+
+<p>Mocking Log4J however can be a real pain. I've managed it in the past using
+Apache's logging abstraction and configuring it to use Log4J under the covers
+but in my previous post, I demonstrated a slightly easier way. A helper class
+called Log4J that we can use to represent the logging system and that we can
+make assertions against. Pretty cool so far.</p>
+
+<!-- more -->
+
+
+<p>There was one caveat, I wasn't entirely happy with the fact that the class
+would rely on your external Log4J configuration. To assert that a log message
+appeared at the level INFO for example, you'd have to make sure that the test
+environment sets up the appropriate class to log at that level. It made for a
+kind of integration / environmental test which in some cases might be a
+sensible test but for the most part, I kept seeing test failures down to
+configuration on different environments. Yuk.</p>
+
+<p>So I updated the helper class to include a log level override which will
+ignore what the actual configuration says. This means you can write less
+brittle tests to say things like "ensure my log message is output at debug
+level regardless of the runtime configuration".</p>
+
+<p>The updated class looks like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">,</span> <span class="n">ALL</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">,</span> <span class="n">Level</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">,</span> <span class="n">level</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">,</span> <span class="n">Level</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">setLevel</span><span class="o">(</span><span class="n">level</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Which means you can setup to expect a log level at say the ERROR level like
+this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">LogLevel</span><span class="o">.</span><span class="na">ERROR</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The make assertions like this (which would fail if the matcher fails or
+because its not logged at the expected level.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>I still think logging is evil and try <em>really</em> hard not to use a single log
+statement but if you have to, I hope the helper class helps keep you honest in
+your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
+post</a> for
+more details and extended examples.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Logging is evil but...]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/"/>
+    <updated>2010-10-18T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
+    <content type="html"><![CDATA[<p>Logging is a nightmare. I don't mean here that conveying information about
+exceptional circumstances is a nightmare, I mean the combination of over eager
+developers and [<em>insert your current logging framework here</em>] is a recipe
+for disaster. We've all seen too much of</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">somethingRisky</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+</span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which is just one example where the exception handling policy for the system
+(it's a system-wide concern remember) is muddled at best. Nothing is saying
+that the same exception isn't logged elsewhere or that the exception is even
+handled correctly or the right people notified. It's not ok to just log and
+rethrow and every single time we go to declare a new logger, we should think
+twice.</p>
+
+<!-- more -->
+
+
+<p>We've taken this very literally in my current project and everyone is actively
+discouraged from instantiating a logger. I'd rather be explicit that some
+exception event has occurred and fire an event that some interested party can
+listen for. This makes perfect sense when you think about the huge log files
+that someone has to trawl through, armed only with for some vague clue as to
+what went wrong, a grep manual and the futile hope that developers actually
+log something useful. All without the context of the code to actually guide
+them. Good luck.</p>
+
+<p>The disseminated log problem is exacerbated if there is no clear audit trail
+tying pieces of information together. In a system with thousands of request
+per second, how do you tie the logged request inputs to some stack trace
+embedded in the middle of another thousand requests? What should have been a
+clear set of requirements from the business (in this case, presumably the
+support team) can easily get lost in the technical translation.</p>
+
+<blockquote><p>Logging is evil, but if I really <em>have</em> to log, be honest about it...</p></blockquote>
+
+<p>Asking the business <em>"what information do you want to see in the event of x
+happening"</em> rather than assuming they want to see some stack trace in a huge
+log can make a lot of sense. We're often not logging for ourselves (we have
+debuggers for that), we're often logging for our customers. If we start to
+think about this stuff early, in terms of exception events and their audience,
+we can build systems that tell the outside world something meaningful in
+flexible ways. We start to define a system wide exception handling policy
+rather than relying of the default exception handler (<code>System.out</code> is rarely
+the right choice!).</p>
+
+<p>So back to my current project... people are regularly beaten with a chair leg
+for creating loggers but I'll admit that on occasion, I've actually logged
+stuff and didn't resort to some Opus Dei style self-flagellation. Logging is
+evil, but if I really <em>have</em> to log, my saving grace is to be explicit about
+it. I'll hunt down a customer and I'll write a test to advertise the fact the
+log contains what they asked for.</p>
+
+<p>Most of the common logging frameworks make it troublesome to inject a logger
+instance, and I'm reluctant to subvert behaviour just because some logging
+framework wants me to. Logging (or preferably, firing an event) should be
+orthogonal to the classes core behaviour, why should I compromise? My
+preferred approach is the canonical example of using Aspects, or less
+esoterically, using decorators.</p>
+
+<p>For example, I created a interface to handle HTTP POST requests, imaginatively
+called <code>Post</code>. Why should I add logging to implementations and open the door
+to ad-hoc, erratic logging? I shouldn't, but when my implementation
+<code>CustomerPost</code> requires logging of the request and response, I can decorate
+with a <code>LoggingPost</code></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">Post</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">delegate</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Response</span> <span class="nf">post</span><span class="o">(</span><span class="n">Body</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>       <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>You might be concerned that the try/catch above looks very similar to the
+original negative example. The good thing about our decorated example above is
+that by being explicit about this classes responsibility, declaring the usage
+in the correct context, we can actually define the system wide policy for
+logging the <code>Post</code> calls in one place, without affecting the contract of the
+interface. We'd do this for example, on the system boundary, for example where
+the RESTful API is implemented.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Resource</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerServlet</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">doPost</span><span class="o">(</span><span class="n">Request</span> <span class="n">chuck</span><span class="o">,</span> <span class="n">Response</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomerPost</span><span class="o">(...));</span>
+</span><span class='line'>    <span class="n">customer</span><span class="o">.</span><span class="na">post</span><span class="o">(...)</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In our <code>LoggingPost</code> above, we haven't even tried to inject a logger in to
+make the testing easier. Instead, mostly because I was being lazy, I used the
+helper class below. This is intended to represent Log4J in the context of a
+test and give access to the logger for assertion purposes.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Using it in the test for <code>LoggingPost</code> is shown below</p>
+
+<p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPostTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Post</span> <span class="n">mock</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">EXCEPTION_MESSAGE</span> <span class="o">=</span> <span class="s">&quot;bar bar black sheep...&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDelegate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'>    <span class="o">}});</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldLogWhenExceptionIsThrown</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">postWill</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="k">new</span> <span class="n">IOException</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">allOf</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;ERROR&quot;</span><span class="o">),</span> <span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@After</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">cleanupLogger</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">clean</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kt">void</span> <span class="nf">postWill</span><span class="o">(</span><span class="kd">final</span> <span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">(){{</span>
+</span><span class='line'>        <span class="n">allowing</span><span class="o">(</span><span class="n">mock</span><span class="o">);</span> <span class="n">will</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}});</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It relies on nasty statics to dynamically add a logger to Log4J's list of
+loggers and thereby appending any generated logs to something that the <code>Log4J</code>
+test helper can assert on. I can't decide if I like this or not. It gives you
+an extra test that your class under test is using a logger with the name that
+you expect (<code>"Post.class"</code> in the example above), testing your logger
+configuration as a by-product.</p>
+
+<p>What I found interesting about this though was that it was always seemed a lot
+of effort making some logging framework play nicely with mocks, or writing and
+configuring a custom in memory appender and asserting on it. With the above
+example, I very quickly added confirmation to existing Log4J infrastructure.
+It seemed almost too easy... so I'd love to hear your comments and how you
+write tests for logging.</p>
+
+<p>PS. Logging is evil.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changing Test Gears]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
+    <updated>2010-07-09T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
+    <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.</p>
+
+<p>To put it development terms, good developers know when to change gears. They
+know when to change their testing style from cautious to aggressive as the
+code evolves.</p>
+
+<p>Lets pretend there is just three types of testing; unit, integration and
+acceptance. In the interest of stereotyping, we'll define them simplistically
+as</p>
+
+<ul>
+<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
+<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
+<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h3>Starting in a low gear with unit tests</h3>
+
+<p>People are probably most comfortable with this type of testing. The term unit
+testing and the technology JUnit have become so intertwined in the Java world,
+that people often confuse tests written with JUnit as unit tests. They may be,
+but they may not be. So where's the value in defining the term unit testing
+and how does knowing what type of test you've just written in JUnit help with
+changing gears?</p>
+
+<p>Knowing what gear you're in and knowing the terrain that’s coming up is
+essential for you to select the right gear. Writing a non-unit test in JUnit
+has value, of course it does (assuming it actually tests something) so why
+should I care if it’s a unit test or a chazzwazzer? Knowing where you are and
+where you want to be is useful because you can defer some things and avoid
+duplication. So for me, unit testing is good for testing the edge cases (Right
+BICEP) and exploring the class you're writing. It can be especially useful
+when you <em>test drive</em> towards something or explore relationships and your
+understanding of the classes roles and responsibilities. In this sense,
+testing becomes a design activity or an analysis activity, a chance to phrase
+your thinking and understanding in code. The regression element can quickly
+lose value here. For example, writing a test with mocks to explore the
+interaction between two collaborators, A and B. Then writing a separate test
+to explore the same for classes B and C. Then a test for A, B and C. There was
+value in each test individually, but is there still value in all three when
+there is obvious cross-over? When might I consciously choose <em>not</em> to write
+unit tests?</p>
+
+<h3>Changing up to integration tests</h3>
+
+<p>If I know the context that a set of objects are going to work together in, I'm
+going to want to be confident that they work together as expected. I can't
+test these in isolation, so I'm going to need to test them in cooperation. At
+this level, my confidence is fairly high around the composites so I'm already
+up and running, I'm more concerned here with a broader brush approach. I'm
+certainly not interested in re-testing all the lower level object tests, just
+how they operate together. So I change up a gear and as a developer, convince
+myself that these object work together <em>in context</em>. I'm most likely still
+using JUnit but I understand what gear I'm in.</p>
+
+<h3>Cruising with acceptance tests</h3>
+
+<p>So how about the value to the business? The unit tests in particular don't
+advertise value to the business, they're a developer tool and its all too easy
+to write individual classes well with good test coverage and yet combine them
+into something that doesn't work. Demonstrating to business that their
+specifications have been meet is the ultimate gear, and to change up to that
+gear and have overall confidence in the system means going through the
+previous gears to get there. Knowing that you'll be changing up whilst in
+lower gears can help you decide what to do in those lower gears.</p>
+
+<p>For example, lets assume the business want to <em>see</em> the affect of a
+configuration file in the system. When developing the code to load and decode
+the contents of the file, you started by proving the component works at the
+unit level so why would you test that the component is wired up correctly as a
+unit test? You'd be forced to mock that component in some higher level
+component and test it calls it. But what does this give you? You can still
+wire the higher level component up incorrectly. The acceptance test is going
+to have to test this to demonstrate the affect, so there's an argument to say
+you can leave it to the acceptance test to verify. This might have the added
+bonus of avoiding "breaking up" the higher level component albeit a minor
+point.</p>
+
+<h3>The missing gear?</h3>
+
+<p>When we build software in a componentised way, we're often left with objects
+that work in isolation with their dependencies passed in. We push up and up
+the assembly of the objects and their ultimate iterations and are left with
+parts of the system that are responsible for this assembly. This might be
+done in code or by some dependency injection framework. Either way,
+it feels like these 'assemblers' have a clear role
+and responsibility and so shouldn't they be tested? What gear do we test them
+in? Personally, I'm comfortable in limiting the assembly options and so reduce
+the combinations of testing required. With a single "builder" or "spring
+context", I'm comfortable with testing these through acceptance tests.</p>
+
+<p>In this article, I suppose I'm using "gears" as an analogy for pragmatism and
+certainly not pace. I'm not saying that good developers know when to rush,
+compromising quality but they do know how to optimise their testing
+strategies. I think its important not to get bogged down in exhaustive unit-
+style testing if its not of value and so understanding what gear you're in and
+what gear you'll soon be in can help focus your attentions. What to test and
+when is the question I find myself asking again and again.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Interfaces vs Class impostorisers]]></title>
+    <link href="http://www.baddotrobot.com/blog/2008/12/24/interfaces-vs-class-imposterisers/"/>
+    <updated>2008-12-24T00:00:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2008/12/24/interfaces-vs-class-imposterisers</id>
+    <content type="html"><![CDATA[<p>I've been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I'm not sure I get the resistance when people want to use class impostorisers.</p>
+
+<p>I've been doing a lot with SWT lately and always want to unit test the GUI
+elements. One way I've managed to do this is to mock parts of the GUI
+framework using impostorisers. Unless I want a full on GUI brought up, there
+just isn't another way. The GUI API doesn't offer me any convenient interfaces
+and I can't even create sub-classed mocks myself as the framework prevents you
+sub-classing with run time checks.</p>
+
+<p>I understand that by slowly teasing out behaviour during the mocking / TDD
+process you can clearly express the collaborations a class may have but I feel
+that you can still be clear about a classes behaviour when impostorising. It's
+just code right? I'm not sure I care that collaborations are documented as
+interfaces or not, my tests express the relationships and I've gone through
+the same thought process to understand clearly how the classes under test
+interact. So why is an impostor a bad guy?</p>
+
+<p>In the case of legacy code or third part code, you're kind of stuck with
+impostorisers right? I mean you could build an application layer between your
+code and the third party stuff but I'd want better motivation for doing this
+than to avoid using impostorisers.</p>
+
+<!-- more -->
+
+
+<p>In the traditional description of an interface, we're taught to use interfaces
+when we want to share behaviour across multiple implementations. When driven
+to creating interfaces for mocking purposes we often only ever have one
+implementation in production which would seem at odds with this traditional
+definition. We do usually end up with a well designed applications which are
+nicely componentised and plugable, but we rarely plug anything different in.
+This in itself often leads us to testing the production configuration in
+larger end-to-end style tests.</p>
+
+<p>So I feel that if you're clear about what's driving you to expose a public
+method on a class, your test exercises the collaboration clearly with mocks
+and your class under test is small and discrete then impostorising isn't
+really the devils work. You've considered what you're doing and why and at the
+end of the day, you've created a unit test that does what its supposed to.</p>
+
+<p>If working naturally defining interfaces, then like me, mock away but at least
+consider not creating an interface if the only reason you're doing this is for
+mocking. If you do end up creating an interface just for mocking, don't do it
+just for mocking but take it further and be explicit in why you're formalising
+the collaboration. Think about the behaviour and let it drive your design.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+</feed>
