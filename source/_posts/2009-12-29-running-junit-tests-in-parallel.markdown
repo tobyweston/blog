@@ -4,6 +4,7 @@ layout: post
 title: Running JUnit tests in parallel
 time: 2009-12-29 19:03:00 +00:00
 categories: java concurrency tempus-fugit
+comments: true
 ---
 
 I've been playing with running tests in their own threads for a while now (in particular with reference to [GUI testing](http://pequenoperro.blogspot.com/2008/12/be-explicit-about-ui-thread-in-swt.html)) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project and today I was working on running tests in parallel with JUnit.

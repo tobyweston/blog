@@ -4,6 +4,7 @@ layout: post
 title: tempus-fugit 1.1 released
 time: 2011-04-13 10:36:00 +01:00
 categories: java tempus-fugit concurrency testing
+comments: true
 ---
 
 Yesterday, I released the 1.1 version of my micro-library [tempus-fugit](http://code.google.com/p/tempus-fugit/). From the project's website

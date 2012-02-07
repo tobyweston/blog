@@ -4,6 +4,7 @@ layout: post
 title: Performance Monitoring (Part 1)
 time: 2009-10-31 20:15:00 +00:00
 categories: java performance
+comments: true
 ---
 
 Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?

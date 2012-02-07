@@ -4,6 +4,7 @@ layout: post
 title: Generate Concordion Overviews
 time: 2010-07-07 22:01:00 +01:00
 categories: java agile testing
+comments: true
 ---
 
 Creating customer authored acceptance tests is awesome! I love it. Getting your users to tell you exactly what they want (and don't want) in a form that they can (ghost) write can make for a world that even the Care Bears are jealous of.

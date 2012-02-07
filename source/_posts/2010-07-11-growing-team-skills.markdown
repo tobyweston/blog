@@ -4,6 +4,7 @@ layout: post
 title: Growing Team Skills
 time: 2010-07-11 17:15:00 +01:00
 categories: agile coaching
+comments: true
 ---
 
 I love the idea of growing teams, the lure of the gardening analogy is just too strong... they have to be nurtured to flourish blar blar blar. What is obvious though is that team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well we, the team, are doing. It's useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.

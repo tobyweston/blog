@@ -4,6 +4,7 @@ layout: post
 title: Deadlock detection in Java
 time: 2009-12-24 15:41:00 +00:00
 categories: java concurrency tempus-fugit
+comments: true
 ---
 
 I recently added a basic deadlock detection mechanism to [tempus-fugit](http://code.google.com/p/tempus-fugit/). The

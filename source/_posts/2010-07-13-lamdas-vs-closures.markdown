@@ -4,6 +4,7 @@ layout: post
 title: Lamdas vs. Closures
 time: 2010-07-13 23:21:00 +01:00
 categories: java tempus-fugit
+comments: true
 ---
 
 When writing Java in a functional style, apart from the verbosity of it all,

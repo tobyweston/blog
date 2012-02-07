@@ -4,6 +4,7 @@ layout: post
 title: Objectives
 time: 2010-06-17 08:13:00 +01:00
 categories: coaching
+comments: true
 ---
 
 It's objective setting time for the guys at work. Aligning what's really good for you with what's good for the company shouldn't be difficult, right? Your generally heading in the same direction and have similar interests at heart. Why then do we end up with generic meaningless objectives like "attend a XXX course"? I think you can get the most out of the objective setting exercise by thinking about what you want _personally_ out of your career, don't settle for the bland, phrase your objectives so there is real value in them. So, if the company think of them in terms of

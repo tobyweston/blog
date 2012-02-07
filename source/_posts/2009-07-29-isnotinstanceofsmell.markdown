@@ -4,6 +4,7 @@ layout: post
 title: is(not(instanceOf(smell)));
 time: 2009-07-29 19:17:00 +01:00
 categories: java object-oriented
+comments: true
 ---
 
 For some reason, common perception is that using `instanceof` is a bit of smell. I think its fallen in with a bad

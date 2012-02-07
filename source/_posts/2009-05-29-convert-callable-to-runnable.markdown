@@ -4,6 +4,7 @@ layout: post
 title: Convert a Callable to a Runnable
 time: 2009-05-29 21:37:00 +01:00
 categories: java object-oriented tempus-fugit
+comments: true
 ---
 
 Every time I come across it, it bugs me.

@@ -4,6 +4,7 @@ layout: post
 title: Be more Expressive with Builders
 time: 2009-01-06 17:07:00 +00:00
 categories: java concurrency tempus-fugit
+comments: true
 ---
 
 I came up with a neat little pattern that's helped me be more expressive in some (fairly specific) situations. Here I'll give you a feel for it using the CountDownLatch class as an example.

@@ -4,6 +4,7 @@ layout: post
 title: Infering the Type in a Micro DSL
 time: 2009-02-23 19:34:00 +00:00
 categories: java testing
+comments: true
 ---
 
 In a recent [post](http://pequenoperro.blogspot.com/2009/02/more-on-micro-dsls.html), I was talking about a micro DSL to create a simple "find x in a list" service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x's.

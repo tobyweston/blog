@@ -4,6 +4,7 @@ layout: post
 title: Changing Test Gears
 time: 2010-07-09 18:55:00 +01:00
 categories: agile coaching java mocking testing
+comments: true
 ---
 
 Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the _odds change_ as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.

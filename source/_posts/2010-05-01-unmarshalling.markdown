@@ -4,6 +4,7 @@ layout: post
 title: Un/Marshalling
 time: 2010-05-01 09:35:00 +01:00
 categories: java
+comments: true
 ---
 
 This post should probably be titled "Why I don't like Unmarhsalling frameworks". They just hack me off. I mean really,

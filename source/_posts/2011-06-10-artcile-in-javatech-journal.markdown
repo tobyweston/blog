@@ -4,6 +4,7 @@ layout: post
 title: JDK7 Artcile in JavaTech Journal
 time: 2011-06-10 16:52:00 +01:00
 categories: java
+comments: true
 ---
 
 [{% img right http://jaxenter.com/assets/125/150/JTJ-2011-05.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf)

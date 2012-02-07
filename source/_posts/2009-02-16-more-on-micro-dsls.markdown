@@ -4,6 +4,7 @@ layout: post
 title: More on Micro DSLs
 time: 2009-02-16 20:06:00 +00:00
 categories: java
+comments: true
 ---
 
 I was recently talking about what I call [micro DSLs](http://pequenoperro.blogspot.com/2009/01/be-more-expressive-with-builders.html) and I thought I'd follow up with another example.

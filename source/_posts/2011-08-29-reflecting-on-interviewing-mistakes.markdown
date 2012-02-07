@@ -4,6 +4,7 @@ layout: post
 title: Reflecting on Interviewing Mistakes
 time: 2011-08-29 13:30:00 +01:00
 categories: agile coaching
+comments: true
 ---
 
 Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.

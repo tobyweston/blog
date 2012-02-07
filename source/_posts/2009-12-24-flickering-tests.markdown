@@ -4,6 +4,7 @@ layout: post
 title: Flickering Tests and a JUnit Rule
 time: 2009-12-24 15:55:00 +00:00
 categories: java concurrency tempus-fugit
+comments: true
 ---
 
 Occasionally I'll see flickering tests. Sometimes they're green, sometimes they're red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven't just been lucky and the green I'm seeing isn't really a false positive. I'll have to manually run the test several times before my confidence grows.

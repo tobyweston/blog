@@ -4,6 +4,7 @@ layout: post
 title: Abstracting ReentrantReadWriteLock
 time: 2009-08-01 10:47:00 +01:00
 categories: java concurrency tempus-fugit
+comments: true
 ---
 
 All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronised method and then call the superclass method without deadlocking.
