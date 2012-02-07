@@ -1,0 +1,18 @@
+---
+layout: page
+title: Page Not Found
+footer: false
+---
+<p>
+    Sorry, looks like these weren't the droids you were looking for after all.
+</p>
+<p>
+    On the plus side though, here's a list of recently published posts.
+</p>
+<div id="blog-archives" class="missing">
+    {% for post in site.posts limit: 6 %}
+    <article>
+        {% include archive_post.html %}
+    </article>
+    {% endfor %}
+</div>
