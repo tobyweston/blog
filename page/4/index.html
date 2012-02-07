@@ -1,0 +1,1181 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Every time I come across it, it bugs me. The Executors class has helper methods to convert from a Runnable to a
+Callable, presumably so you can &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/page/4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/blog/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1 style="font-family: Typewriter"><a href="/">bad.robot</a></h1>
+  
+    <h2 style="font-family: Typewriter">because good robots do what they're told</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.baddotrobot.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/05/29/convert-callable-to-runnable/">Convert a Callable to a Runnable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-29T00:00:00+01:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Every time I come across it, it bugs me.</p>
+
+<p>The <code>Executors</code> class has helper methods to convert from a <code>Runnable</code> to a
+<code>Callable</code>, presumably so you can submit an old school <code>Runnable</code> task to an
+executor, but I can never find the counterpart helper. Something to convert a
+<code>Callable</code> to a <code>Runnable</code>.</p>
+
+<p>I seem to keep finding myself needing one and you might think me silly for
+doing so but it&#8217;s because I&#8217;m into the habit of coding as <code>Callable</code>s now. I
+tend to think of <code>Runnable</code> as simply something that can run, not in terms of a
+<code>Thread</code> or concurrent task. I like the way I think about <code>Runnable</code>.</p>
+
+<p>Lets have a go at converting <code>Callable</code> to a <code>Runnable</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/05/29/convert-callable-to-runnable/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/03/15/swtbot-vs-window-licker/">SWTBot vs Window Licker</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s1600-h/GodzillaBot1972.png"><img class="left" src="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s200/GodzillaBot1972.png"></a></p>
+
+<p>The title is a bit misleading because these guys aren&#8217;t really squaring off like Gozilla and Gigan,
+the projects aren&#8217;t competing and this blog isn&#8217;t really a full or fair comparison. For a start Window Licker doesn&#8217;t yet support SWT and as its name suggests SWTBot, er, does.</p>
+
+<p>My comments are really based on having a go at <a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">implementing some basic SWT support</a> in Window Licker and adding some
+features to SWTBot so it shouldn&#8217;t be taken as authoritative. This entry is
+more of an experience report after trying to contribute to both projects. I&#8217;ll
+try to follow up with an API usage report when I&#8217;ve used both more with my
+applications.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/03/15/swtbot-vs-window-licker/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/26/less-is-more/">Less is More</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-26T00:00:00+00:00" pubdate data-updated="true">Feb 26<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Denton</a> was trying to
+convince me the other day that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
+
+<blockquote><p>After running a few tests I confirmed that the lower the max heap size is,
+the more threads I could create. I can easily get a OutOfMemoryError when
+allocating memory for threads way before any real heap space is used.</p></blockquote>
+
+<p>The helpful message you&#8217;ll get is.</p>
+
+<pre><code>java.lang.OutOfMemoryError: unable to create new native thread
+</code></pre>
+
+<p>I ran a simple loop that would create dozy threads (they sleep a lot) and
+watched how many threads could be created before the out of memory error
+above. I repeated this after setting the maximum heap size. Check out the
+results below, you can see that no real Java heap is used, still I get an out
+of memory error and am limited on the number of threads I can create. As a
+caveat, these results should in no way taken as representative on any other
+environment than my laptop running Java 1.6. Your mileage may vary.</p>
+
+<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/SabxCtNlpUI/AAAAAAAADCM/er62bS1oW9Y/s1600-h/64.PNG"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SabxCtNlpUI/AAAAAAAADCM/er62bS1oW9Y/s400/64.PNG"></a></p>
+
+<p><a href="http://2.bp.blogspot.com/_-uMxV_fCbC4/SabxJsaTCWI/AAAAAAAADCU/WM7e4EBwsSU/s1600-h/512.PNG"><img src="http://2.bp.blogspot.com/_-uMxV_fCbC4/SabxJsaTCWI/AAAAAAAADCU/WM7e4EBwsSU/s400/512.PNG"></a></p>
+
+<p><a href="http://1.bp.blogspot.com/_-uMxV_fCbC4/SabxQc8DBkI/AAAAAAAADCc/-O6ApHci_q4/s1600-h/1512.PNG"><img src="http://1.bp.blogspot.com/_-uMxV_fCbC4/SabxQc8DBkI/AAAAAAAADCc/-O6ApHci_q4/s400/1512.PNG"></a></p>
+
+<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sab0EHyHXyI/AAAAAAAADCk/6ur4CTR3svI/s1600-h/results.PNG"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sab0EHyHXyI/AAAAAAAADCk/6ur4CTR3svI/s400/results.PNG"></a></p>
+
+<p>I&#8217;d always considered OS native threads or light weight processes to be
+effectively unbounded with the restrictions being on the resources they are
+associated with. I don&#8217;t think this is really the case though as clearly, the
+act of creating a thread that does nothing and has no real resources
+associated with it (other than any native voodoo) requires OS memory
+allocation in my tests.</p>
+
+<p>I thought this was really interesting as it demonstrates how small decisions
+can have a big impact on the run-time characteristics of a system. Being able
+to tune your application to suit your production requirements is always
+tricky. Large memory models and data manipulation can often require large heap
+sizes but if in addition, you then want to create large numbers of threads,
+you might get into the murky world I&#8217;ve touched on here. Of course, thread
+pools are generally the way to go if you want to manage your resources
+properly, but that&#8217;s another story all together.</p>
+
+<p>I&#8217;m sure Google can tell you more, but see this <a href="http://www.egilh.com/blog/archive/2006/06/09/2811.aspx">random blog</a> for another
+description.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/23/infering-type-in-micro-dsl/">Infering the Type in a Micro DSL</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-23T00:00:00+00:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a recent <a href="http://pequenoperro.blogspot.com/2009/02/more-on-micro-dsls.html">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
+
+<p>Just to recap then, to find something in a list, the original client code
+(using a static import) looks like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The class (in this case <code>NeedleFinder</code>) implements the DSL and specifically
+decides in the <code>in</code> method how to compare a <code>Needle</code> object to whatever is in the
+haystack list. I wanted to create a more generic class so started to implement
+the <code>ListFinder</code> to use generics and a couple of interesting things came out.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/02/23/infering-type-in-micro-dsl/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/02/16/more-on-micro-dsls/">More on Micro DSLs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-16T00:00:00+00:00" pubdate data-updated="true">Feb 16<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was recently talking about what I call <a href="http://pequenoperro.blogspot.com/2009/01/be-more-expressive-with-builders.html">micro DSLs</a> and I thought I&#8217;d follow up with another example.</p>
+
+<p>So, another example of a micro DSL I found myself writing is one of finding
+some object within a collection of differently typed objects. In my example, I
+want to find a <code>Race</code> object inside a bunch of calendar events objects, the
+finder micro DSL looks like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Race</span> <span class="n">race</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">race</span> <span class="o">=</span> <span class="n">race</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">static</span> <span class="n">RaceFinder</span> <span class="nf">find</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CalendarEventEntry</span> <span class="nf">in</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">CalendarEventEntry</span><span class="o">&gt;</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">:</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">race</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getTitle</span><span class="o">().</span><span class="na">getPlainText</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">event</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The way the class is built, it forces the client to use it such.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where find is statically imported and race and events have been pre-populated.</p>
+
+<p>The original version had a method in the class to do the find, in the context
+of this class it was harder to test the find. I had a bunch of mocks and I was
+testing the find function amongst other behaviours of the class. The search
+line looked something like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Why I term this a micro DSL is that it has a very specific usage (to find a
+race within a calendar) and it has a private constructor and public static
+construction method to ensure strict usage. The real thing though is the
+method names don&#8217;t really do what they imply they&#8217;re going to do. The <code>in</code>
+method actually does the search, but the <code>find</code> method doesn&#8217;t do any such
+thing; it <em>creates</em> an object.</p>
+
+<p>How do you feel about this? When its used in a tiny domain like this and when
+it expresses the conversation more concisely than the alternatives, I feel
+pretty good about it. It makes me realise its not the words (method names)
+that are important, its the sentences they put together. So I&#8217;m compromising
+on realistic method names for more expressive sentences. The fact that the
+class prevents you from constructing invalid sentences just makes the warm
+feeling grow.</p>
+
+<blockquote><p>Micro DSLs are recognisable by their tiny-domain, the way in which
+construction is done to ensure they can only be called in an order that makes
+sense to the domain and badly named methods.</p></blockquote>
+
+<p>Micro DSLs are starting to spread in my code like jam on toast but I know I
+have to check myself and really justify their use before I go mad. I also had
+fun trying to turn the finder above into a generified class which I&#8217;ll talk
+about in my next post. I bet you can&#8217;t wait, you lucky people.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/01/24/inheritance-vs-composition/">Inheritance vs Composition</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+
+<h3>Example 1.</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Example 2</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
+Suddenly, methods to get and insert elements at specific positions are
+available to clients of the stack. We move from trying to create a well
+behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+
+<p>So I was surprised when looking at the Java source to see that
+<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/01/22/deprecated-annotation/">Deprecated Annotation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Why didn&#8217;t Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Deprecated</span> <span class="o">{</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which kind of implies we should do the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Deprecated</span>
+</span><span class='line'><span class="cm">/** @deprecated use {@link Foo} instead */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>why can&#8217;t we have</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyDeprecated</span><span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which means we can use</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/01/06/be-more-expressive-with-builders/">Be more Expressive with Builders</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-06T00:00:00+00:00" pubdate data-updated="true">Jan 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel for it using the CountDownLatch class as an example.</p>
+
+<h3>CountDownLatch.await()</h3>
+
+<p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down
+to zero, blocking the calling thread before continuing. When using a timeout,
+the method returns true if the count reached zero or false if the timeout
+expires. To make the timeout more explicit in my application code, I started
+with the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">startup</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">shutdown</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Using a Builder with Static Constructor</h3>
+
+<p>To be more concise, I wanted to wrap the logic above in some kind of helper
+class. Thanks to lovely static imports, a private constructor and a static
+factory method called <code>await()</code>, I was able to express the same thing with the
+following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">startup</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">shutdown</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>with(...)</code> method is the thing that actually wraps the call to the <code>await()</code>
+method on the latch. I created a <code>Duration</code> class in the above case to capture
+the timeout constant.</p>
+
+<p>This can be a neat little pattern which when used sparingly can lead to little
+nuggets of really readable code. However, the helper class that employs the
+static factory can feel unnatural as the method names don&#8217;t really represent
+their function but rather their context within the DSL that the class defines.
+Using a private constructor and verifying the internal state is essential to
+ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very
+few methods and you make sure they can only be called in a sensible order, I&#8217;d
+suggest its a good pattern to follow. The finished class is shown below in full.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CountDownLatchWithTimeout</span> <span class="nf">await</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">latch</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">with</span><span class="o">(</span><span class="n">Duration</span> <span class="n">timeout</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="n">timeout</span><span class="o">.</span><span class="na">inMillis</span><span class="o">(),</span> <span class="n">MILLISECONDS</span><span class="o">))</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/12/31/what-makes-good-pair/">What Makes a Good Pair?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-31T00:00:00+00:00" pubdate data-updated="true">Dec 31<span>st</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s1600-h/q71195623.png"><img class="right" src="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s200/q71195623.png"></a></p>
+
+<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code,
+conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive,
+communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work.
+When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working
+in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">Be Explicit with the UI Thread</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-30T00:00:00+00:00" pubdate data-updated="true">Dec 30<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Following up from the post <a href="http://pequenoperro.blogspot.com/2008/12/swt-support-for-window-licker.html">SWT Support in Window Licker</a>.</p>
+
+<p>The thing I found most interesting about looking at this was having to be more
+explicit about the UI thread. When developing SWT applications, we&#8217;re all
+aware that accessing almost anything graphical in SWT from any other thread
+than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more
+explicit about the &#8220;UI thread&#8221;.</p>
+
+<p>When I started to look at how I go about writing SWT applications, I noticed
+that</p>
+
+<ul>
+<li>I often run the application from a main somewhere.</li>
+<li>I often discover invalid thread access problems at run time.</li>
+<li>I often plug the problem by wrapping the offender in a <code>Display.a/sync(...)</code> call.</li>
+<li>I often have very few long running processes that need to spawn a thread and update the UI.</li>
+</ul>
+
+
+<p>It wasn&#8217;t until I started looking at being able to run the application from
+the context of a JUnit test that I started to think in more detail about
+these.</p>
+
+<h3>Running the application from a main method</h3>
+
+<p>This seems simple but being more explicit about the UI thread means that this
+is worth a closer look. I always used to start an SWT application from the
+main, in variations of the code below.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">SwtCalculator</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">SwtCalculator</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">display</span> <span class="o">=</span> <span class="n">Display</span><span class="o">.</span><span class="na">detDefault</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">shell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shell</span><span class="o">(</span><span class="n">display</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">shell</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Calculator&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// shell setup</span>
+</span><span class='line'>        <span class="n">startEventLoop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startEVentLoop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">shell</span><span class="o">.</span><span class="na">isDisposed</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(!</span><span class="n">display</span><span class="o">.</span><span class="na">readAndDispatch</span><span class="o">())</span>
+</span><span class='line'>                <span class="n">display</span><span class="o">.</span><span class="na">sleep</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">display</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The default constructor would do or delegate the work to setup the various
+shells and widgets and finally start the event loop. When using JFace&#8217;s
+<code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling
+<code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the
+event loop to the <code>ApplicationWindow class</code>. If you call
+<code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event
+loop.</p>
+
+<p>However you do it, getting into that event loop blocks the client and its the
+thread that executes this event loop that is called the UI thread. It just so
+happens that most SWT applications will hit that loop from the main thread as
+you can see from the following partial thread dump.</p>
+
+<pre><code>Name: main
+State: RUNNABLE
+Total blocked: 0 Total waited: 0
+
+Stack trace:
+    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
+    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
+    com.objogate...SwtCalculator.startEventLoop(SwtCalculator.java:104)
+    com.objogate...SwtCalculator.main(SwtCalculator.java:113)
+</code></pre>
+
+<p>At this point, the SWT event loop is doing its thing, waiting for UI events
+(mouse clicks, keyboard input etc) and dispatching them to the appropriate
+listeners. We&#8217;ve also defined what we mean by the UI thread;</p>
+
+<blockquote><p>The UI thread or event dispatching thread is the thread that executes the standard SWT event loop.</p></blockquote>
+
+<h3>Running the tests and GUI in different threads</h3>
+
+<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in
+a test, the test would block until the event loop finished, the display would
+be disposed and any subsequent tests against the GUI elements would quickly
+discover that they no longer exist.</p>
+
+<p>It should be pretty clear then that in order to test GUI elements the event
+loop has to be started in a different thread than the tests run in. The gotcha
+is that the test thread will likely want to interact with this UI thread in
+order to push buttons and make assertions and that&#8217;s when we get into invalid
+thread access territory with SWT.</p>
+
+<p>The way I implemented this was to use a class extending <code>Thread</code> to represent
+the UI thread and to start the event loop in its <code>run()</code> method. The tests can
+interact with the UI thread by either searching for the display with
+<code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the
+default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
+
+<p>A minor change to the application&#8217;s main method is required to optionally not
+call the event loop when calling main. For example;</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
+</span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The tests can then explicitly create a UI thread delegating shell setup to the
+<code>SwtCalculator</code> class before starting the event loop and allowing the test
+thread to continue.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">SwtCalculator</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">DONT_BLOCK_ON_OPEN</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'>    <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculatorDriver</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@After</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopTheApplication</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run
+inside the UI thread. This uses the strategy pattern but an alternative design
+could just as easily sub-class the <code>UIThread</code> and use the template pattern in a
+similar way.</p>
+
+<p>The interrupt allows the event loop on the UI thread to be interrupted and
+stop gracefully.</p>
+
+<p>The following partial thread dump shows it in action. As you can see, a
+explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
+are the hints).</p>
+
+<pre><code>Name: SWT-Event-Dispatcher-Thread-1
+State: RUNNABLE
+Total blocked: 0 Total waited: 0
+
+Stack trace:
+    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
+    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
+    com.objogate.wl.swt.UIThread.startEventLoop(UIThread.java:90)
+    com.objogate.wl.swt.UIThread.run(UIThread.java:68)
+    - locked java.lang.Class@1d7fbfb
+</code></pre>
+
+<p>It was a good exercise exploring the UI thread and I encourage you to take a
+look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took
+above.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <p>
+      <a href="blog/categories/agile/">agile</a>
+      <a href="blog/categories/coaching/">coaching</a>
+      <a href="blog/categories/concurrency/">concurrency</a>
+      <a href="blog/categories/java/">java</a>
+      <a href="blog/categories/mocking/">mocking</a>
+      <a href="blog/categories/object-oriented/">object-oriented</a>
+      <a href="blog/categories/performance/">performance</a>
+      <a href="blog/categories/tempus-fugit/">tempus-fugit</a>
+      <a href="blog/categories/testing/">testing</a>
+  </p>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jamanifin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
+  
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2012 - Toby Weston -
+  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

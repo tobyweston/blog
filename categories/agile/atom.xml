@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: agile | bad.robot]]></title>
+  <link href="http://www.baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
+  <link href="http://www.baddotrobot.com/"/>
+  <updated>2012-02-07T21:51:59+00:00</updated>
+  <id>http://www.baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
+    <link href="http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
+    <updated>2011-08-29T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
+    <content type="html"><![CDATA[<p>Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.</p>
+
+<p>Let's take an example from two teams.</p>
+
+<!-- more -->
+
+
+<p>Team A's process starts off by favoring buzz word heavy CVs and CVs that meet
+a minimum number of years of experience. A unattended pen and paper test,
+characterised by very closed questioning against specialist areas of the
+programming language. This might include questions around language syntax
+semantics (keywords and modifiers, object equality etc etc). Things like
+bubble sorts algorithms are requested. Scores out of 100 are tallied. Things
+are fairly black and white.</p>
+
+<p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
+Team B's process favors mention of agile experience in the CV. Follow up
+questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?".
+The unattended coding exercise is not a test, at least it should be more of an
+exercise to explore the way a candidate approaches things. The team might
+require the presence of unit tests and evidence of TDD but should actively not
+persecute style or syntax. Something that's harder in practice to do than in
+theory.
+</span></p>
+
+<p>Hopefully, its clear that Team A's selection process is heavily biased towards
+developers with good memories. It's probably unfairly prejudice against
+candidates that haven't had specific exposure to specific scenarios /
+solutions. I experienced this when I was asked to write a algorithm to
+calculate prime numbers with pen and paper. I fumbled through and handed over
+my scrawl. I explained that I'd prefer write tests, experiment with the code
+and improve the design; basically to learn as I went along. The response from
+the interviewer, looking down at my scribbling, was "that's not really what
+we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously,
+I hadn't.</p>
+
+<p>Rather than assess my approach, the interviewer was looking for a specific
+piece of knowledge but what for? If I got the job I'm pretty sure my first
+task wouldn't be to write something to work out prime numbers. Would that fix
+some production problem? Would it introduce a new feature that had no other
+solution? No.</p>
+
+<p>A huge part of what we do is learn, or at least it should be. Failure is what
+makes us better and in environments where failure is embraced and we write
+code that we can (fairly) easily rework, we get better systems (as we refine
+our understanding). We never now what the real problems are going to be when
+we start a story. The interviewer above simply brushed over this, it seemed he
+wanted me to reach the same conclusion he had without explaining the steps I
+took to get there. Without any advocacy on my part, how would he know I could
+do it again with a different problem?</p>
+
+<blockquote><p>"Right or wrong answers don't really have a place because there's never a
+right or wrong answer in what we do."</p></blockquote>
+
+<p>Having said all that, I'm sure we'd all favour a process like Team Bs but I'm
+starting to see that Team B are making at least some of the same mistakes just
+in a more subtle way...</p>
+
+<p>For the CV selection, Team A look for "spring", "hibernate" and other
+technology buzzwords. Team B look for "refactoring", "TDD", "XP" and other
+development buzz words, the reason usually cited as being because the
+technologies aren't as import. Team B are favouring the <em>why</em> over the <em>how</em>,
+they're assuming given the right approach and smart people, specifics around
+technologies can be learnt. Both teams are trying to expose characteristics of
+the candidates that mirror their own.</p>
+
+<p>Team B asks candidates to complete a short programming exercise off-line.
+Implement a library, a DVD store, a robot explorer, whatever. It should only
+take an hour or so and demonstrates the candidates style. I've certainly seen
+it as an effective tool to eliminate people that really can't code for toffee
+but I've also seen people fall into the same old trap and eliminate people who
+missed something specific hidden there. A trivial example might be "oh! they
+didn't use dependency injection. Fail!".</p>
+
+<p>Team B's pair test should be a great way to understand how a candidate
+operates in front of an IDE and if you'll actually be able to work with him. A
+bit like the unattended test, it's a good way to eliminate extreme cases. If
+the candidate behaves completely anti-socially, wont listen and codes like mad
+man, you can probably reject him with confidence. It's easy to let bad
+interview habits creep in though; to focus more on some obscure gotcha in the
+code than how the candidate is actually pairing.</p>
+
+<blockquote><p>"I think the problem with both these techniques (unattended exercise and the
+pair test) is when too much specificity comes in at the start. When you are
+looking for something specific, you'll often be disappointed."</p></blockquote>
+
+<p>I've certainly heard myself say "oh, he didn't spot that there was a precision
+issue with double there...". In all honesty, I'd miss that kind of bug as
+often as I'd spot it but I'd hire me! The upshot there, especially when we
+doing a couple of pair tests a week, is to stay focused on why you're doing
+the pair test and not on the test itself. Are we doing this to see if the
+candidate can spot all the traps and pitfalls that we spent so long putting in
+or do we want to see how they pair? In my view, if they get the "right" answer
+is almost irrelevant, it's how they explore the problem.</p>
+
+<p>I guess what I'm reflecting on here is how as a peer group, we pretty much
+realise that closed questioning limits our choices and that open ended
+questions lead to real conversations that are more relevant to the types of
+conversations we have day to day. Right or wrong answers don't really have a
+place because there's never a right or wrong answer in what we do. If I
+implement a prime number finder without the Colander of Eratosthenes, am I
+wrong? The tests still pass so I must be right? Is Eratosthenes more right?
+Despite this realisation though, we can easily fall into a more subtle way of
+behaving where we mentally start ticking off specifics for a candidate.</p>
+
+<p>I guess we have to keep reminding ourselves what's important and what we're
+looking for in a candidate. I guess I'm mellowing in the way I assess
+candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pairing Honestly]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
+    <updated>2010-08-15T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
+    <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team {" were able to admit that each of us has had difference experiences pairing "}. We were honest in saying that despite having "done pairing" we'd all done different amounts of pairing and that, at times, we weren't even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="http://pequenoperro.blogspot.com/2008/12/what-makes-good-pair.html">previous post</a>) and how do we know that we're getting something out of it?</p>
+
+<!-- more -->
+
+
+<p>Once we honest in our experiences and expectations around pairing, we were
+able to be explicit in what we <em>want</em> to achieve. We had the conversation
+along the lines of "do we even believe we <em>could</em> get something out of
+pairing? Do we want to try?" and when the team bought into that idea we could
+be explicit about starting from scratch and putting tools in place to help us.</p>
+
+<p>Some techniques I favour include</p>
+
+<ul>
+<li><p>when sitting down to start a session, stating explicitly what each individual hopes to get out of the session and what isn't helpful. In short, what they think a pairing session should be like.</p></li>
+<li><p>each pair can set up one or two "rules", written on cards and placed prominently to remind each other about something they feel is important to the session. For example, I often have a rule "ask don't tell" to remind me to be asked before I go rambling on about something in the code.</p></li>
+<li><p>the silent partner; saying up front that when not driving, the silent partner should hold their tongue and make notes / record a task stack. Interruption is interruption, so be considerate about when to make a comment. This one should be agreed up front, it may or may not be appropriate for your pair.</p></li>
+<li><p><strong>most important one of all</strong>; have a mini pair-retrospective at the end of the session. It's a great chance to ask the question "how was that for you?" and a great way to let the other person know if some aspect didn't go well.</p></li>
+</ul>
+
+
+<p>Another useful tool can be the pair stairs. It's very easy to avoid pairing
+rather than face it's challenges so <a href="http://www.natpryce.com/articles/000522.html">pair stairs</a> can be a good way to
+keep you honest. Probably the most helpful thing though is
+having people on the team that have lots of experience pairing, know what the
+team can get out of it and are able to help guide pairing sessions for the
+less experienced.</p>
+
+<p>Pairing is hard. It's probably one of the hardest things we do as developers
+but it can also be one of the most rewarding, personally and for the team as a
+whole. Collaboration has given the world some of its greatest achievements but
+you have to be honest that in this case, you might have to work for
+it.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Growing Team Skills]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
+    <updated>2010-07-11T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
+    <content type="html"><![CDATA[<p>I love the idea of growing teams, the lure of the gardening analogy is just too strong... they have to be nurtured to flourish blar blar blar. What is obvious though is that team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well we, the team, are doing. It's useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
+
+<p>Often, new or junior developers worry about the barrage of new and unfamiliar
+technologies. Technologies are such a small part of what we do in my opinion
+but it can be useful to be explicit about individual competencies to re-assure
+the bedazzled new developer. In this post, I present a tool I came up with to
+help, a kind of competency depth distribution chart (that makes a nice
+palindrome so it's a good a name as any).</p>
+
+<!-- more -->
+
+
+<p>It works like this;</p>
+
+<p>As a team, define the technologies that are important / exotic / of interest.
+Rank them by importance. Try to limit to around 5-10. Start the distribution
+chart, along the Y axis you'll list the technologies, ranked by importance and
+on the X, the <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">Dreyfus Scale of Competency</a>.
+The team must agree on the ranking of technologies and agree on their
+understanding of the Dreyfus scale.</p>
+
+<p>Next, each team member grades themselves on the scale for each technology.
+It's important to be honest. The team can then agree and plot the desired
+competency in each area on a separate sheet (the black line in the example
+below). Each individual can then see immediately their delta and use it to
+focus their personal development.</p>
+
+<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDnq1Y3LWYI/AAAAAAAAEoI/6m2PreTjioQ/s1600/depth-chart.png"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDnq1Y3LWYI/AAAAAAAAEoI/6m2PreTjioQ/s640/depth-chart.png"></a></p>
+
+<p>If the team choose to come together and share their individual charts, they'll
+be able to see how the team compares to their minimum requirements. It might
+be that some people are strong in some area and others less so. In this case,
+there's an obvious knowledge sharing opportunity and it might be that the
+urgency to close the delta changes. For example, if there is already an expert
+in some technology on the team, the others may not need to stress. Hopefully,
+you can start to look at the needs of the team and not the individual. Working
+through this as a team can also help build trust which is vital to healthy
+plants, sorry, teams.</p>
+
+<p>If the Dreyfus scale seems a little too harsh, you could always try a scale to
+reflect general confidence in the area. This tool doesn't have to be about
+technologies, it can be about any competencies that you want analyse.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Changing Test Gears]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
+    <updated>2010-07-09T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
+    <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.</p>
+
+<p>To put it development terms, good developers know when to change gears. They
+know when to change their testing style from cautious to aggressive as the
+code evolves.</p>
+
+<p>Lets pretend there is just three types of testing; unit, integration and
+acceptance. In the interest of stereotyping, we'll define them simplistically
+as</p>
+
+<ul>
+<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
+<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
+<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h3>Starting in a low gear with unit tests</h3>
+
+<p>People are probably most comfortable with this type of testing. The term unit
+testing and the technology JUnit have become so intertwined in the Java world,
+that people often confuse tests written with JUnit as unit tests. They may be,
+but they may not be. So where's the value in defining the term unit testing
+and how does knowing what type of test you've just written in JUnit help with
+changing gears?</p>
+
+<p>Knowing what gear you're in and knowing the terrain that’s coming up is
+essential for you to select the right gear. Writing a non-unit test in JUnit
+has value, of course it does (assuming it actually tests something) so why
+should I care if it’s a unit test or a chazzwazzer? Knowing where you are and
+where you want to be is useful because you can defer some things and avoid
+duplication. So for me, unit testing is good for testing the edge cases (Right
+BICEP) and exploring the class you're writing. It can be especially useful
+when you <em>test drive</em> towards something or explore relationships and your
+understanding of the classes roles and responsibilities. In this sense,
+testing becomes a design activity or an analysis activity, a chance to phrase
+your thinking and understanding in code. The regression element can quickly
+lose value here. For example, writing a test with mocks to explore the
+interaction between two collaborators, A and B. Then writing a separate test
+to explore the same for classes B and C. Then a test for A, B and C. There was
+value in each test individually, but is there still value in all three when
+there is obvious cross-over? When might I consciously choose <em>not</em> to write
+unit tests?</p>
+
+<h3>Changing up to integration tests</h3>
+
+<p>If I know the context that a set of objects are going to work together in, I'm
+going to want to be confident that they work together as expected. I can't
+test these in isolation, so I'm going to need to test them in cooperation. At
+this level, my confidence is fairly high around the composites so I'm already
+up and running, I'm more concerned here with a broader brush approach. I'm
+certainly not interested in re-testing all the lower level object tests, just
+how they operate together. So I change up a gear and as a developer, convince
+myself that these object work together <em>in context</em>. I'm most likely still
+using JUnit but I understand what gear I'm in.</p>
+
+<h3>Cruising with acceptance tests</h3>
+
+<p>So how about the value to the business? The unit tests in particular don't
+advertise value to the business, they're a developer tool and its all too easy
+to write individual classes well with good test coverage and yet combine them
+into something that doesn't work. Demonstrating to business that their
+specifications have been meet is the ultimate gear, and to change up to that
+gear and have overall confidence in the system means going through the
+previous gears to get there. Knowing that you'll be changing up whilst in
+lower gears can help you decide what to do in those lower gears.</p>
+
+<p>For example, lets assume the business want to <em>see</em> the affect of a
+configuration file in the system. When developing the code to load and decode
+the contents of the file, you started by proving the component works at the
+unit level so why would you test that the component is wired up correctly as a
+unit test? You'd be forced to mock that component in some higher level
+component and test it calls it. But what does this give you? You can still
+wire the higher level component up incorrectly. The acceptance test is going
+to have to test this to demonstrate the affect, so there's an argument to say
+you can leave it to the acceptance test to verify. This might have the added
+bonus of avoiding "breaking up" the higher level component albeit a minor
+point.</p>
+
+<h3>The missing gear?</h3>
+
+<p>When we build software in a componentised way, we're often left with objects
+that work in isolation with their dependencies passed in. We push up and up
+the assembly of the objects and their ultimate iterations and are left with
+parts of the system that are responsible for this assembly. This might be
+done in code or by some dependency injection framework. Either way,
+it feels like these 'assemblers' have a clear role
+and responsibility and so shouldn't they be tested? What gear do we test them
+in? Personally, I'm comfortable in limiting the assembly options and so reduce
+the combinations of testing required. With a single "builder" or "spring
+context", I'm comfortable with testing these through acceptance tests.</p>
+
+<p>In this article, I suppose I'm using "gears" as an analogy for pragmatism and
+certainly not pace. I'm not saying that good developers know when to rush,
+compromising quality but they do know how to optimise their testing
+strategies. I think its important not to get bogged down in exhaustive unit-
+style testing if its not of value and so understanding what gear you're in and
+what gear you'll soon be in can help focus your attentions. What to test and
+when is the question I find myself asking again and again.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Generate Concordion Overviews]]></title>
+    <link href="http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/"/>
+    <updated>2010-07-07T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews</id>
+    <content type="html"><![CDATA[<p>Creating customer authored acceptance tests is awesome! I love it. Getting your users to tell you exactly what they want (and don't want) in a form that they can (ghost) write can make for a world that even the Care Bears are jealous of.</p>
+
+<p>I can't comment on some of the BDD targeting frameworks like
+<a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or
+<a href="http://cukes.info/">Cucumber</a> but I do like using
+<a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to
+fit in with a BDD approach, its flexible enough to use in almost any approach
+in fact. That's probably why I like it so much. It's frequently cited closest
+comparator is probably Fit but that's a little unfair. As I say, Concordion
+tries really hard not to tie you into a particular approach, so to compare it
+against Fit (which leans towards the inflexible in my view), doesn't serve as
+a fair comparison.</p>
+
+<p>Anyway, the point to this post isn't really to comment on Concordion but to
+advertise a little Ant task I wrote to help auto-generate Concordion-friendly
+summary pages for your existing Concordion tests.</p>
+
+<!-- more -->
+
+
+<p>It's purpose is to collect your Concordion tests as an "overview page" which
+itself is a Concordion specification. You'd run just this specification and it
+would in turn run all your tests, giving you a nice red / green overview. You
+can fold it into your continuous itegration process (Ant or Maven) and publish
+the overview and related specifications straight to some HTTP server for your
+customers to review, per-build, 24/7. Nice.</p>
+
+<p>Check out the <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html">user manual</a>, written as Concordion
+specifications and download the binaries from <a href="http://code.google.com/p/badrobot/downloads/list">Google Code</a>.</p>
+
+<p><a href="http://code.google.com/p/badrobot/wiki/ConcordionAntTask"></a></p>
+
+<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s1600/concordion.png"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s640/concordion.png"></a></p>
+
+<p>As a closing note, as I mentioned Concordion, its only fair to mention
+<a href="http://code.google.com/p/xcordion/">Xcordion</a> (and more recently Xcordion2)
+which is essentially a fork of Concordion. The main difference being a
+philosophical one. If Concordion constrains some activities within the
+specification (mostly to encourage certain principles), Xcordion is more of a
+free for all. With great power comes great responsibility and all that. Whilst
+Xcordion2 is being worked on, be prepared to build from source. You'll notice
+a couple of features missing, at least in the short term.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+]]></content>
+  </entry>
+  
+</feed>
