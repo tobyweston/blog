@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SWTBot vs Window Licker - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="The title is a bit misleading because these guys aren&#8217;t really squaring off like Gozilla and Gigan,
+the projects aren&#8217;t competing and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/blog/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1 style="font-family: Typewriter"><a href="/">bad.robot</a></h1>
+  
+    <h2 style="font-family: Typewriter">because good robots do what they're told</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.baddotrobot.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">SWTBot vs Window Licker</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s1600-h/GodzillaBot1972.png"><img class="left" src="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s200/GodzillaBot1972.png"></a></p>
+
+<p>The title is a bit misleading because these guys aren&#8217;t really squaring off like Gozilla and Gigan,
+the projects aren&#8217;t competing and this blog isn&#8217;t really a full or fair comparison. For a start Window Licker doesn&#8217;t yet support SWT and as its name suggests SWTBot, er, does.</p>
+
+<p>My comments are really based on having a go at <a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">implementing some basic SWT support</a> in Window Licker and adding some
+features to SWTBot so it shouldn&#8217;t be taken as authoritative. This entry is
+more of an experience report after trying to contribute to both projects. I&#8217;ll
+try to follow up with an API usage report when I&#8217;ve used both more with my
+applications.</p>
+
+<!-- more -->
+
+
+<h3>The Code</h3>
+
+<p>Window Licker supports Swing and Html (including Ajax) very elegantly and uses
+the Java
+<a href="http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Robot.html">java.awt.robot</a>
+package to take control of the mouse and keyboard and generate native events.
+SWTBot simulates events using manual notification. That is to say it calls the
+SWT widget notifyListeners method directly where as Window Licker fires native
+GUI events. This wouldn&#8217;t necessarily be much of a distinction but it does
+mean SWTBot doesn&#8217;t always behave exactly as expected (for example, it doesn&#8217;t
+handle text caret movement or clearing text fields). An application under test
+from Window Licker behaves much more like an application driven by a user
+whereas SWTBot doesn&#8217;t always have to wait for visual ques to move along.</p>
+
+<p>Window Licker feels like a more mature framework, its nicely componentised and
+test driven where as SWTBot seems more evolutionary and although there are
+plenty of nice abstractions in common with Window Licker, it is harder to test
+due to the lack interfaces/mocks. SWTBot&#8217;s code base is sprawling and covers a
+lot of ground, Windows Licker feels more focused on the problem it tries to
+solve. Having said that, its much more straight forward contributing to
+SWTBot, I was able to contribute (and understand) more of the SWTBot code base
+upfront.</p>
+
+<blockquote><p>SWTBot&#8217;s project hosting presents itself as a confused, capricious old boy,
+shuffling papers and smelling mildly of pee</p></blockquote>
+
+<p>The other slight gripe I have with SWTBot is the project structure, its more
+suited to Eclipse than IntelliJ as its dependencies are provided via plugins
+rather than raw Jars. Window Licker comes with Eclipse and IntelliJ project
+files which is always nice. SWTBot also has several projects that make up the
+software, the build process isn&#8217;t as obvious as others and it uses some
+generated code that you&#8217;ll probably won&#8217;t spot but still need to know about.</p>
+
+<h3>The Project Hosting</h3>
+
+<p>SWTBot has recently moved to its new home on <a href="http://www.eclipse.%0Aorg/projects/project_summary.php?projectid=technology.swtbot">Eclipse.org</a> but the team
+lead hasn&#8217;t deprecated the <a href="http://swtbot.sourceforge.net/index.html">old site</a> and resources.
+Consequentially, it can be a bit confusing for a new user to follow when there
+are two subversion repositories, two sets of bug tracking instances, lots of
+mailings lists and so on. Window Licker is much more low key, at the time of
+writing there is no pre-packaged release to download, it has a minimal site on
+<a href="http://code.google.com/p/windowlicker/">Google Code</a> that invites you to just
+download the source and get stuck in! In lots of ways I prefer this approach.</p>
+
+<p>SWTBot has lots of broken links on the site and presents itself as a confused,
+capricious old boy, shuffling papers and smelling mildly of pee. Window Licker
+on the other hand, portrays itself confidently, most likely wears a monocle
+and speaks in a concise and authoritative tone. Even though some of what it
+has too say seems to go over my head.</p>
+
+<h3>Conclusion</h3>
+
+<p>For me, SWTBot really lets itself down is how it&#8217;s being run. We all realise
+that open source software often has to take a back seat to your day job but if
+you&#8217;re going to release something open source and encourage participation (say
+by hosting it on Eclipse.org) you should really be able to take the helm and
+support your community. As such, I had a bit of a bad experience with SWTBot
+trying to get a feature committed. In short, I did a whole bunch of work after
+explicitly being asked to do so in order to get it committed, then when it was
+done, the team lead ignored it and committed a previous version I&#8217;d submitted!
+The previous version works fine, it did the job but i was asked to re-jig
+things to better fit in with the project&#8217;s standards, yet it got dumped. See
+the <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=259860#c28">Bugzilla trail</a>
+less I waffle even more.</p>
+
+<p>It&#8217;s a shame because experiences like that just lower confidence in a project,
+I&#8217;m unlikely to want to push any changes back now. I guess though in summary,
+SWTBot&#8217;s code was easier to contribute to (although I was working in one small
+area of a large project structure). Window Licker is probably the superior
+technically and in terms of code quality but was harder (for me) to work with.
+I was working on essentially cloning some of the core Licker functionality to
+work with SWT and found that I didn&#8217;t fully understand all the abstractions
+and mechanisms. I suspect that in a pairing environment, it wouldn&#8217;t be a
+problem but contributing via email and patches is unlikely to get the most out
+of collaboration.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Toby Weston</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/" data-via="jamanifin" data-counturl="http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/02/26/less-is-more/" title="Previous Post: Less is More">&laquo; Less is More</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/05/29/convert-callable-to-runnable/" title="next Post: Convert a Callable to a Runnable">Convert a Callable to a Runnable &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jamanifin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2012 - Toby Weston -
+  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/';
+        var disqus_url = 'http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: uncategorized | bad.robot]]></title>
+  <link href="http://www.baddotrobot.com/blog/categories/uncategorized/atom.xml" rel="self"/>
+  <link href="http://www.baddotrobot.com/"/>
+  <updated>2012-02-08T18:36:44+00:00</updated>
+  <id>http://www.baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Thawte claim I'm not to be trusted...]]></title>
+    <link href="http://www.baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/"/>
+    <updated>2009-11-11T00:00:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted</id>
+    <content type="html"><![CDATA[<p> ...well, not quite, but they have recently announced that they'd be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I've been using them to sign my JARs for WebStart deployment. As Thawte are the root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I'm back to hiding in shadows.</p>
+
+<p>A couple of useful links below.</p>
+
+<ul>
+<li><a href="http://ciardhubh.de/node/4">http://ciardhubh.de/node/4</a></li>
+<li><a href="http://www.dallaway.com/acad/webstart/">http://www.dallaway.com/acad/webstart/</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New Blog]]></title>
+    <link href="http://www.baddotrobot.com/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/"/>
+    <updated>2006-03-14T00:00:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2006/03/14/new-blog-moved-to-new-blog-today-at</id>
+    <content type="html"><![CDATA[<p>Moved to a new blog today at blogspot.com. How exciting does life get?</p>
+]]></content>
+  </entry>
+  
+</feed>

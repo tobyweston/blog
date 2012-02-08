@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Generate Concordion Overviews - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Creating customer authored acceptance tests is awesome! I love it. Getting your users to tell you exactly what they want (and don&#8217;t want) in a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/blog/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1 style="font-family: Typewriter"><a href="/">bad.robot</a></h1>
+  
+    <h2 style="font-family: Typewriter">because good robots do what they're told</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.baddotrobot.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Generate Concordion Overviews</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-07T00:00:00+01:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Creating customer authored acceptance tests is awesome! I love it. Getting your users to tell you exactly what they want (and don&#8217;t want) in a form that they can (ghost) write can make for a world that even the Care Bears are jealous of.</p>
+
+<p>I can&#8217;t comment on some of the BDD targeting frameworks like
+<a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or
+<a href="http://cukes.info/">Cucumber</a> but I do like using
+<a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to
+fit in with a BDD approach, its flexible enough to use in almost any approach
+in fact. That&#8217;s probably why I like it so much. It&#8217;s frequently cited closest
+comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion
+tries really hard not to tie you into a particular approach, so to compare it
+against Fit (which leans towards the inflexible in my view), doesn&#8217;t serve as
+a fair comparison.</p>
+
+<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to
+advertise a little Ant task I wrote to help auto-generate Concordion-friendly
+summary pages for your existing Concordion tests.</p>
+
+<!-- more -->
+
+
+<p>It&#8217;s purpose is to collect your Concordion tests as an &#8220;overview page&#8221; which
+itself is a Concordion specification. You&#8217;d run just this specification and it
+would in turn run all your tests, giving you a nice red / green overview. You
+can fold it into your continuous itegration process (Ant or Maven) and publish
+the overview and related specifications straight to some HTTP server for your
+customers to review, per-build, 24/7. Nice.</p>
+
+<p>Check out the <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html">user manual</a>, written as Concordion
+specifications and download the binaries from <a href="http://code.google.com/p/badrobot/downloads/list">Google Code</a>.</p>
+
+<p><a href="http://code.google.com/p/badrobot/wiki/ConcordionAntTask"></a></p>
+
+<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s1600/concordion.png"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s640/concordion.png"></a></p>
+
+<p>As a closing note, as I mentioned Concordion, its only fair to mention
+<a href="http://code.google.com/p/xcordion/">Xcordion</a> (and more recently Xcordion2)
+which is essentially a fork of Concordion. The main difference being a
+philosophical one. If Concordion constrains some activities within the
+specification (mostly to encourage certain principles), Xcordion is more of a
+free for all. With great power comes great responsibility and all that. Whilst
+Xcordion2 is being worked on, be prepared to build from source. You&#8217;ll notice
+a couple of features missing, at least in the short term.</p>
+
+<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Toby Weston</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-07T00:00:00+01:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/" data-via="jamanifin" data-counturl="http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2010/06/17/objectives/" title="Previous Post: Objectives">&laquo; Objectives</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2010/07/09/changing-test-gears/" title="next Post: Changing Test Gears">Changing Test Gears &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jamanifin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2012 - Toby Weston -
+  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/';
+        var disqus_url = 'http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
