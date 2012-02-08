@@ -8,3 +8,4 @@
 * DONE Style bad.robot logo font
 * Copy over images
 * DONE Add 404 page
+* Add a "code" page, include the github aside there _only_
