@@ -29,7 +29,7 @@ email:
 root: /
 permalink: /blog/:year/:month/:day/:title/
 source: source
-destination: public
+destination: public/blog
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
@@ -94,7 +94,7 @@ disqus_show_comment_count: false
 
 # Google Analytics
 # UA-3327317-6
-google_analytics_tracking_id: UA-3327317-6
+google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
