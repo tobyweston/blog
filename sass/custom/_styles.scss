@@ -1,8 +1,45 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
-@import "typography.scss";
+@import "_typography.scss";
 
 time {
     font-size: .9em;
+}
+
+body > header h1 {
+    font-family: Typewriter;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+body > header h2 {
+    font-family: Typewriter;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+body > header h1:after {
+      content:"";
+      position:absolute;
+      right:0.9em;
+      top:0.3em;
+      bottom:0em;
+      height:128px;
+      width:128px;
+      overflow:hidden;
+      text-align:left;
+      background-image:url('../images/robot_devil_128x128.png');
+      background-repeat:no-repeat;
+      /*@media only screen and (min-width: 480px) {     */
+            /*imgage {*/
+                /*width: 60%;*/
+                /*height: 60%*/
+            /*}*/
+      /*}*/
+      /*@media only screen and (min-width: 768px) {*/
+          /*top:1em;*/
+            /*img {*/
+                /*width: 80%;*/
+                /*height: 80%*/
+            /*}*/
+      /*}*/
 }
