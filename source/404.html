@@ -3,6 +3,28 @@ layout: page
 title: Page Not Found
 footer: false
 ---
+<script type="text/javascript" src="javascripts/libs/jquery-1.7.1.min.js"/>
+<script type="text/javascript">
+    // Revert jQuery's '$' alias, to avoid clashes with ender.js.
+    // NOTE: Use jQuery(...), instead of $(...) from here on.
+    jQuery.noConflict();
+</script>
+<script type="text/javascript">
+
+    jQuery.getJSON('/javascripts/url_migrations.json?r=' + Math.random(), function (data) {
+        var found = false;
+        jQuery.each(data['redirects'], function (idx, url) {
+            if (url[0] == window.location.pathname) {
+                window.location.replace(url[1]);  // redirect
+                found = true;
+                return false;
+            }
+        });
+    });
+
+    alert("bye");
+</script>
+
 <p>
     Sorry, looks like these weren't the droids you were looking for after all.
 </p>
