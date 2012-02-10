@@ -29,17 +29,17 @@ body > header h1:after {
       text-align:left;
       background-image:url('../images/robot_devil_128x128.png');
       background-repeat:no-repeat;
-      /*@media only screen and (min-width: 480px) {     */
-            /*imgage {*/
-                /*width: 60%;*/
-                /*height: 60%*/
-            /*}*/
-      /*}*/
-      /*@media only screen and (min-width: 768px) {*/
-          /*top:1em;*/
-            /*img {*/
-                /*width: 80%;*/
-                /*height: 80%*/
-            /*}*/
-      /*}*/
+
+      @media only screen and (min-width: 360px) {
+           background-size: 50% 50%;
+      }
+      @media only screen and (min-width: 480px) {
+           background-size: 70% 70%;
+      }
+      @media only screen and (min-width: 768px) {
+           background-size: 80% 80%;
+      }
+      @media only screen and (min-width: 992px) {
+           background-size: 100% 100%;
+      }
 }
