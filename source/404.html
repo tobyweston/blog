@@ -10,11 +10,27 @@ footer: false
     jQuery.noConflict();
 </script>
 <script type="text/javascript">
+    jQuery.extend({
+        getUrlVars: function(url){
+            var vars = [], hash;
+            var hashes = url.slice(url.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function(url, name){
+            return jQuery.getUrlVars(url)[name];
+        }
+    });
 
-    jQuery.getJSON('/javascripts/url_migrations.json', function (data) {
+    jQuery.getJSON('http://baddotrobot.com/javascripts/url_migrations.json', function (data) {
         var found = false;
         jQuery.each(data['redirects'], function (idx, url) {
-            if (url[0] == window.location.pathname) {
+            if (jQuery.getUrlVar(url[0], 'source') == window.location.pathname) {
                 window.location.replace(url[1]);  // redirect
                 found = true;
                 return false;
