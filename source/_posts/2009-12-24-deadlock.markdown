@@ -77,6 +77,6 @@ dumps from within your code very often, but on the off chance you'll need to
 during debugging, they are both available for you to use in the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project.
 
   
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

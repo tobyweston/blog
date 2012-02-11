@@ -187,5 +187,5 @@ look at [Window Licker](http://code.google.com/p/windowlicker/) (and my [SWT pat
 above.
 
   
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 

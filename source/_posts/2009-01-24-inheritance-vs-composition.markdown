@@ -50,5 +50,5 @@ So I was surprised when looking at the Java source to see that
 `java.util.Stack` actually extends `Vector`! Naughty.
 
   
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 

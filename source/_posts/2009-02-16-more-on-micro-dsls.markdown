@@ -96,4 +96,4 @@ fun trying to turn the finder above into a generified class which I'll talk
 about in my next post. I bet you can't wait, you lucky people.
 
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+

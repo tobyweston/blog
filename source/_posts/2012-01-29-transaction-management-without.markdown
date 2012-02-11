@@ -214,9 +214,8 @@ public class AcmeBankCurrentAccount implements CurrentAccount {
     }
 }
 {% endcodeblock %}
-    
 
-  
+
 This can come in handy when testing as we can isolate and test the different
 responsibilities. We're also left with a handy framework to add ad-hoc data
 directly to the database and it's easy enough to wire up an in-memory only
@@ -224,10 +223,3 @@ directly to the database and it's easy enough to wire up an in-memory only
 approach leaves us with loosely composed objects which combine to provide high
 level behavior. The composites are simpler than the sum of its parts to borrow
 a phrase from [GOOS](http://www.growing-object-oriented-software.com/).
-
-  
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
-
-
-
-

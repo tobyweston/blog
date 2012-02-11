@@ -115,6 +115,6 @@ improve on the implementation above.
 __Update__: Since writing this entry, I created the[ tempus-fugit](http://code.google.com/p/tempus-fugit/) project to
 capture these kinds of ideas.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

@@ -40,7 +40,7 @@ whole. Collaboration has given the world some of its greatest achievements but
 you have to be honest that in this case, you might have to work for
 it.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 
 

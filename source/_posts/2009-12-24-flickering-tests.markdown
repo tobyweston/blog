@@ -73,5 +73,5 @@ once for each test repetition.
 The code is available as part of the [tempus-fugit](http://code.google.com/p/tempus-fugit/) library so feel free to [browse](http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency) and feedback your
 comments.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 

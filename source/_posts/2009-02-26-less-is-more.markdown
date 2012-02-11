@@ -62,6 +62,6 @@ properly, but that's another story all together.
 I'm sure Google can tell you more, but see this [random blog](http://www.egilh.com/blog/archive/2006/06/09/2811.aspx) for another
 description.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

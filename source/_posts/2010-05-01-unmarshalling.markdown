@@ -31,5 +31,5 @@ an marhsalling framework that can grow with you, fair play, but I'm heavily
 biased towards a more manual approach these days. Down with [insert your
 framework here].
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 

@@ -90,4 +90,4 @@ post](http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html) for
 more details and extended examples.
 
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+

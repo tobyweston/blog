@@ -50,6 +50,6 @@ If the Dreyfus scale seems a little too harsh, you could always try a scale to
 reflect general confidence in the area. This tool doesn't have to be about
 technologies, it can be about any competencies that you want analyse.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

@@ -84,6 +84,6 @@ why things are like this, so if you've got any more details, feel free to post
 a comment.
 
   
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

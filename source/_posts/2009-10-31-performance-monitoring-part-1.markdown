@@ -146,5 +146,5 @@ In the next exciting post in the series, I'll talk about interpreting the
 results you get. Hope that wasn't too dull.
 
   
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 

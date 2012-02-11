@@ -75,6 +75,6 @@ might be a neater solution. It's this kind of thing that your Mumma warned
 you about and I suspect its this is the real smell that's rubbed off on poor
 downtrodden `instanceof`.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

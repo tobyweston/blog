@@ -151,6 +151,6 @@ new features and download from
 [May edition of the JavaTech Journal](http://pequenoperro.blogspot.com/2011/06/jdk7-artcile-in-javatech-journal.html).
   
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
 
 

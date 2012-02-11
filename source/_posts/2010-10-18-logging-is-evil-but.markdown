@@ -220,4 +220,4 @@ write tests for logging.
 
 PS. Logging is evil.
 
-{% img http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png %}
+
