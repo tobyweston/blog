@@ -11,7 +11,7 @@ footer: false
 </script>
 <script type="text/javascript">
 
-    jQuery.getJSON('/javascripts/url_migrations.json?r=' + Math.random(), function (data) {
+    jQuery.getJSON('/javascripts/url_migrations.json', function (data) {
         var found = false;
         jQuery.each(data['redirects'], function (idx, url) {
             if (url[0] == window.location.pathname) {
