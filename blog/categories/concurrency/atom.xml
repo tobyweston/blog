@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -151,8 +151,6 @@ find out more about see the project <a href="http://tempus-fugit.googlecode.com/
 
 <p>oh and don't worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
 end.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -262,8 +260,6 @@ the additional information. grrrr.</p>
 <p>Shame on you Java for leading me on a merry dance! I'd love to know more about
 why things are like this, so if you've got any more details, feel free to post
 a comment.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -444,8 +440,6 @@ once for each test repetition.</p>
 
 <p>The code is available as part of the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> library so feel free to <a href="http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency">browse</a> and feedback your
 comments.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

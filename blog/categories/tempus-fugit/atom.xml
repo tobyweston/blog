@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -193,8 +193,6 @@ closed. The anonymous function that is left is effectively a lamda.</p>
 expressing the same ideas. It will support lamdas as a language feature
 although I can't quite figure out what the example would look like in those
 terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -303,8 +301,6 @@ the new exception, and forces the syntactically sugary <code>with</code> by taki
 if it gets some millage. Let me know if you find it useful. Source is
 <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
 the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -428,8 +424,6 @@ find out more about see the project <a href="http://tempus-fugit.googlecode.com/
 
 <p>oh and don't worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
 end.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -539,8 +533,6 @@ the additional information. grrrr.</p>
 <p>Shame on you Java for leading me on a merry dance! I'd love to know more about
 why things are like this, so if you've got any more details, feel free to post
 a comment.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

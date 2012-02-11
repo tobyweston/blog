@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -295,8 +295,6 @@ directly to the database and it&#8217;s easy enough to wire up an in-memory only
 approach leaves us with loosely composed objects which combine to provide high
 level behavior. The composites are simpler than the sum of its parts to borrow
 a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -336,8 +334,6 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
 <li>Have a cup of tea.</li>
 </ol>
 
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -454,8 +450,6 @@ behaving where we mentally start ticking off specifics for a candidate.</p>
 <p>I guess we have to keep reminding ourselves what&#8217;s important and what we&#8217;re
 looking for in a candidate. I guess I&#8217;m mellowing in the way I assess
 candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -623,7 +617,7 @@ that is consistent with how you&#8217;d expect to see regular exceptions.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
+
 ]]></content>
   </entry>
   
@@ -742,8 +736,6 @@ statement but if you have to, I hope the helper class helps keep you honest in
 your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
 post</a> for
 more details and extended examples.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -947,8 +939,6 @@ new features and download from
 
 <p><strong>UPDATE:</strong> An extended version of this post has been published in
 <a href="http://pequenoperro.blogspot.com/2011/06/jdk7-artcile-in-javatech-journal.html">May edition of the JavaTech Journal</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1265,8 +1255,6 @@ It seemed almost too easy&#8230; so I&#8217;d love to hear your comments and how
 write tests for logging.</p>
 
 <p>PS. Logging is evil.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1308,8 +1296,6 @@ but it can also be one of the most rewarding, personally and for the team as a
 whole. Collaboration has given the world some of its greatest achievements but
 you have to be honest that in this case, you might have to work for
 it.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1457,8 +1443,6 @@ closed. The anonymous function that is left is effectively a lamda.</p>
 expressing the same ideas. It will support lamdas as a language feature
 although I can&#8217;t quite figure out what the example would look like in those
 terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1509,8 +1493,6 @@ plants, sorry, teams.</p>
 <p>If the Dreyfus scale seems a little too harsh, you could always try a scale to
 reflect general confidence in the area. This tool doesn&#8217;t have to be about
 technologies, it can be about any competencies that you want analyse.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1621,8 +1603,6 @@ strategies. I think its important not to get bogged down in exhaustive unit-
 style testing if its not of value and so understanding what gear you&#8217;re in and
 what gear you&#8217;ll soon be in can help focus your attentions. What to test and
 when is the question I find myself asking again and again.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1673,8 +1653,6 @@ specification (mostly to encourage certain principles), Xcordion is more of a
 free for all. With great power comes great responsibility and all that. Whilst
 Xcordion2 is being worked on, be prepared to build from source. You&#8217;ll notice
 a couple of features missing, at least in the short term.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1744,8 +1722,6 @@ you&#8217;re all talking about this part of the code a lot might be a clue.</p>
 <p>The real benefit though is what you can take away from it, if you talk over
 your journal points with the team and keep an open mind, I&#8217;d hope it gets
 filled with lots of nuggets you can add to your toolbox.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1775,8 +1751,6 @@ than working around any framework mismatches. If you&#8217;re lucky enough to fi
 an marhsalling framework that can grow with you, fair play, but I&#8217;m heavily
 biased towards a more manual approach these days. Down with [insert your
 framework here].</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1813,8 +1787,6 @@ creating a system that is assembled in a complex, disheveled way? Are you
 leaning on external (ahem, xml) configuration to manage this? Alternatively,
 has a constructor centric approach left you with a system with a more concise
 declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -1915,8 +1887,6 @@ the new exception, and forces the syntactically sugary <code>with</code> by taki
 if it gets some millage. Let me know if you find it useful. Source is
 <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
 the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -2024,8 +1994,6 @@ find out more about see the project <a href="http://tempus-fugit.googlecode.com/
 
 <p>oh and don&#8217;t worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
 end.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -2133,8 +2101,6 @@ the additional information. grrrr.</p>
 <p>Shame on you Java for leading me on a merry dance! I&#8217;d love to know more about
 why things are like this, so if you&#8217;ve got any more details, feel free to post
 a comment.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -312,8 +312,6 @@ directly to the database and it's easy enough to wire up an in-memory only
 approach leaves us with loosely composed objects which combine to provide high
 level behavior. The composites are simpler than the sum of its parts to borrow
 a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -353,8 +351,6 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
 <li>Have a cup of tea.</li>
 </ol>
 
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -527,8 +523,6 @@ that is consistent with how you'd expect to see regular exceptions.</p>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -648,8 +642,6 @@ statement but if you have to, I hope the helper class helps keep you honest in
 your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
 post</a> for
 more details and extended examples.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

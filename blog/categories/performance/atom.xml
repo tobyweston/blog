@@ -4,7 +4,7 @@
   <title><![CDATA[Category: performance | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/performance/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -134,8 +134,6 @@ such objects per request type, don't create a new one per request for example.</
 
 <p>In the next exciting post in the series, I'll talk about interpreting the
 results you get. Hope that wasn't too dull.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -190,8 +188,6 @@ properly, but that's another story all together.</p>
 
 <p>I'm sure Google can tell you more, but see this <a href="http://www.egilh.com/blog/archive/2006/06/09/2811.aspx">random blog</a> for another
 description.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

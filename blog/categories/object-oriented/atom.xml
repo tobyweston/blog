@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -312,8 +312,6 @@ directly to the database and it's easy enough to wire up an in-memory only
 approach leaves us with loosely composed objects which combine to provide high
 level behavior. The composites are simpler than the sum of its parts to borrow
 a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -433,8 +431,6 @@ statement but if you have to, I hope the helper class helps keep you honest in
 your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
 post</a> for
 more details and extended examples.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -544,8 +540,6 @@ conditional logic making decisions based on class type where using polymorphism
 might be a neater solution. It's this kind of thing that your Mumma warned
 you about and I suspect its this is the real smell that's rubbed off on poor
 downtrodden <code>instanceof</code>.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -712,8 +706,6 @@ improve on the implementation above.</p>
 
 <p><strong>Update</strong>: Since writing this entry, I created the<a href="http://code.google.com/p/tempus-fugit/"> tempus-fugit</a> project to
 capture these kinds of ideas.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -785,8 +777,6 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
 
 <p>So I was surprised when looking at the Java source to see that
 <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   

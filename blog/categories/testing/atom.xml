@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-11T17:38:08+00:00</updated>
+  <updated>2012-02-11T18:13:53+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -129,8 +129,6 @@ statement but if you have to, I hope the helper class helps keep you honest in
 your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
 post</a> for
 more details and extended examples.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -483,8 +481,6 @@ It seemed almost too easy... so I'd love to hear your comments and how you
 write tests for logging.</p>
 
 <p>PS. Logging is evil.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -595,8 +591,6 @@ strategies. I think its important not to get bogged down in exhaustive unit-
 style testing if its not of value and so understanding what gear you're in and
 what gear you'll soon be in can help focus your attentions. What to test and
 when is the question I find myself asking again and again.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
@@ -647,8 +641,6 @@ specification (mostly to encourage certain principles), Xcordion is more of a
 free for all. With great power comes great responsibility and all that. Whilst
 Xcordion2 is being worked on, be prepared to build from source. You'll notice
 a couple of features missing, at least in the short term.</p>
-
-<p><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/s320/gibble_22x22.png"></p>
 ]]></content>
   </entry>
   
