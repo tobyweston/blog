@@ -30,7 +30,7 @@ footer: false
     jQuery.getJSON('http://baddotrobot.com/javascripts/url_migrations.json', function (data) {
         var found = false;
         jQuery.each(data['redirects'], function (idx, url) {
-            if (jQuery.getUrlVar(url[0], 'source') == window.location.pathname) {
+            if (url[0] == jQuery.getUrlVar(window.location.pathname, 'source')) {
                 window.location.replace(url[1]);  // redirect
                 found = true;
                 return false;
