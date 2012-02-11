@@ -2,187 +2,187 @@
     "redirects":[
         [
             "http://pequenoperro.blogspot.com/2012/01/transaction-managment-without.html",
-            "/2012/01/29/transaction-management-without/"
+            "/blog/2012/01/29/transaction-management-without/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/10/java-source-on-mac.html",
-            "/2011/10/29/java-source-on-mac/"
+            "/blog/2011/10/29/java-source-on-mac/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/08/reflecting-on-interviewing-mistakes.html",
-            "/2011/08/29/reflecting-on-interviewing-mistakes/"
+            "/blog/2011/08/29/reflecting-on-interviewing-mistakes/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/08/catching-multiple-exceptions-and.html",
-            "/2011/08/29/catching-multiple-exceptions-and/"
+            "/blog/2011/08/29/catching-multiple-exceptions-and/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/06/loggin-is-still-evil-but.html",
-            "/2011/06/22/loggin-is-still-evil-but/"
+            "/blog/2011/06/22/loggin-is-still-evil-but/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/06/jdk7-artcile-in-javatech-journal.html",
-            "/2011/06/10/artcile-in-javatech-journal/"
+            "/blog/2011/06/10/artcile-in-javatech-journal/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/04/tempus-fugit-11-released.html",
-            "/2011/04/13/tempus-fugit-1.1-released/"
+            "/blog/2011/04/13/tempus-fugit-1.1-released/"
         ],
         [
             "http://pequenoperro.blogspot.com/2011/03/jdk7-previwed.html",
-            "/2011/03/04/jdk-7-previewed/"
+            "/blog/2011/03/04/jdk-7-previewed/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html",
-            "/2010/10/18/logging-is-evil-but/"
+            "/blog/2010/10/18/logging-is-evil-but/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/08/pairing-honestly.html",
-            "/2010/08/15/pairing-honestly/"
+            "/blog/2010/08/15/pairing-honestly/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/07/lamdas-vs-closures.html",
-            "/2010/07/13/lamdas-vs-closures/"
+            "/blog/2010/07/13/lamdas-vs-closures/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/07/growing-team-skills.html",
-            "/2010/07/11/growing-team-skills/"
+            "/blog/2010/07/11/growing-team-skills/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/07/changing-test-gears.html",
-            "/2010/07/09/changing-test-gears/"
+            "/blog/2010/07/09/changing-test-gears/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/07/generate-concordion-overviews.html",
-            "/2010/07/07/generate-concordion-overviews/"
+            "/blog/2010/07/07/generate-concordion-overviews/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/06/objectives.html",
-            "/2010/06/17/objectives/"
+            "/blog/2010/06/17/objectives/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/05/unmarshalling.html",
-            "/2010/05/01/unmarshalling/"
+            "/blog/2010/05/01/unmarshalling/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/05/setter-vs-constructor-injection.html",
-            "/2010/05/01/setter-vs-constructor-injection/"
+            "/blog/2010/05/01/setter-vs-constructor-injection/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/04/wrapping-exceptions-zzzzz.html",
-            "/2010/04/25/wrapping-exceptions-is-dull/"
+            "/blog/2010/04/25/wrapping-exceptions-is-dull/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/03/nibbles-cat.html",
-            "/2010/03/19/nibbles-cat/"
+            "/blog/2010/03/19/nibbles-cat/"
         ],
         [
             "http://pequenoperro.blogspot.com/2010/01/type-safe-annotation.html",
-            "/2010/01/04/type-safe-annotation/"
+            "/blog/2010/01/04/type-safe-annotation/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/12/running-junit-tests-in-parallel.html",
-            "/2009/12/29/running-junit-tests-in-parallel/"
+            "/blog/2009/12/29/running-junit-tests-in-parallel/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/12/flickering-tests.html",
-            "/2009/12/24/flickering-tests/"
+            "/blog/2009/12/24/flickering-tests/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/12/deadlock.html",
-            "/2009/12/24/deadlock/"
+            "/blog/2009/12/24/deadlock/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/12/atomiticy-of-thread-class.html",
-            "/2009/12/10/atomiticy-of-thread-class/"
+            "/blog/2009/12/10/atomiticy-of-thread-class/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/11/time-flies.html",
-            "/2009/11/11/time-flies/"
+            "/blog/2009/11/11/time-flies/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/11/thawte-claim-im-not-to-be-trusted.html",
-            "/2009/11/11/thawte-claim-im-not-to-be-trusted/"
+            "/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/10/performance-monitoring-part-1.html",
-            "/2009/10/31/performance-monitoring-part-1/"
+            "/blog/2009/10/31/performance-monitoring-part-1/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/08/java-source-for-mac-osx.html",
-            "/2009/08/01/java-source-for-mac-osx/"
+            "/blog/2009/08/01/java-source-for-mac-osx/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/08/abstracting-reentrantreadwritelock.html",
-            "/2009/08/01/abstracting-reentrantreadwritelock/"
+            "/blog/2009/08/01/abstracting-reentrantreadwritelock/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/07/isnotinstanceofsmell.html",
-            "/2009/07/29/isnotinstanceofsmell/"
+            "/blog/2009/07/29/isnotinstanceofsmell/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/05/convert-callable-to-runnable.html",
-            "/2009/05/29/convert-callable-to-runnable/"
+            "/blog/2009/05/29/convert-callable-to-runnable/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/03/swtbot-vs-window-licker.html",
-            "/2009/03/15/swtbot-vs-window-licker/"
+            "/blog/2009/03/15/swtbot-vs-window-licker/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/02/less-is-more.html",
-            "/2009/02/26/less-is-more/"
+            "/blog/2009/02/26/less-is-more/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/02/infering-type-in-micro-dsl.html",
-            "/2009/02/23/infering-type-in-micro-dsl/"
+            "/blog/2009/02/23/infering-type-in-micro-dsl/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/02/more-on-micro-dsls.html",
-            "/2009/02/16/more-on-micro-dsls/"
+            "/blog/2009/02/16/more-on-micro-dsls/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/01/inheritance-vs-composition.html",
-            "/2009/01/24/inheritance-vs-composition/"
+            "/blog/2009/01/24/inheritance-vs-composition/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/01/deprecated-annotatio.html",
-            "/2009/01/22/deprecated-annotation/"
+            "/blog/2009/01/22/deprecated-annotation/"
         ],
         [
             "http://pequenoperro.blogspot.com/2009/01/be-more-expressive-with-builders.html",
-            "/2009/01/06/be-more-expressive-with-builders/"
+            "/blog/2009/01/06/be-more-expressive-with-builders/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/what-makes-good-pair.html",
-            "/2008/12/31/what-makes-good-pair/"
+            "/blog/2008/12/31/what-makes-good-pair/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/be-explicit-about-ui-thread-in-swt.html",
-            "/2008/12/30/be-explicit-about-ui-thread-in-swt/"
+            "/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/swt-support-for-window-licker.html",
-            "/2008/12/29/swt-support-for-window-licker/"
+            "/blog/2008/12/29/swt-support-for-window-licker/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/swt-applications-on-mac-os-x.html",
-            "/2008/12/29/swt-applications-on-mac-os-x/"
+            "/blog/2008/12/29/swt-applications-on-mac-os-x/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/interfaces-vs-class-imposterisers.html",
-            "/2008/12/24/interfaces-vs-class-imposterisers/"
+            "/blog/2008/12/24/interfaces-vs-class-imposterisers/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/junit-and-threaded-tests-i-recently.html",
-            "/2008/12/17/junit-and-threaded-tests-i-recently/"
+            "/blog/2008/12/17/junit-and-threaded-tests-i-recently/"
         ],
         [
             "http://pequenoperro.blogspot.com/2008/12/xpday-2008-bit-disappointing-this-year.html",
-            "/2008/12/11/bit-disappointing-this-year/"
+            "/blog/2008/12/11/bit-disappointing-this-year/"
         ],
         [
             "http://pequenoperro.blogspot.com/2006/03/new-blog-moved-to-new-blog-today-at.html",
-            "/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/"
+            "/blog/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/"
         ]
     ]
 }
