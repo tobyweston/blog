@@ -47,7 +47,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-11 17:28:21 +0000 -->
+    <!-- last update; 2012-02-11 17:35:06 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>because good robots do what they're told</h2>
@@ -110,7 +110,7 @@
     jQuery.getJSON('http://baddotrobot.com/javascripts/url_migrations.json', function (data) {
         var found = false;
         jQuery.each(data['redirects'], function (idx, url) {
-            if (url[0] == jQuery.getUrlVar(window.location.pathname, 'source')) {
+            if (url[0] == jQuery.getUrlVar(window.location.href, 'source')) {
                 window.location.replace(url[1]);  // redirect
                 found = true;
                 return false;
@@ -121,10 +121,7 @@
 </script>
 
 <p>
-    Sorry, looks like these weren&#8217;t the droids you were looking for after all.
-</p>
-<p>
-    On the plus side though, here&#8217;s a list of recently published posts.
+    Sorry, looks like these weren&#8217;t the droids you were looking for. Try one of these perhaps&#8230;
 </p>
 <div id="blog-archives" class="missing">
     
