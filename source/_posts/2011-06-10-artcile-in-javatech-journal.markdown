@@ -7,7 +7,7 @@ categories: java
 comments: true
 ---
 
-[{% img right http://jaxenter.com/assets/125/150/JTJ-2011-05.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf)
+[{% img right http://baddotrobot.com/images/JTJ-2011-05.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf)
 
 My article "Java the language vs Java the platform" (about the new release of JDK7) has been published in this months
 [Java Tech Journal](http://jaxenter.com/java-tech-journal/). Click on the image to download.
