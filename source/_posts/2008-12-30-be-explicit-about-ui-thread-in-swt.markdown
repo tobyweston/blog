@@ -7,7 +7,7 @@ categories: java testing concurrency
 comments: true
 ---
 
-Following up from the post [SWT Support in Window Licker](http://pequenoperro.blogspot.com/2008/12/swt-support-for-window-licker.html).
+Following up from the post [SWT Support in Window Licker](http://baddotrobot.com/blog/2008/12/29/swt-support-for-window-licker/).
   
 The thing I found most interesting about looking at this was having to be more
 explicit about the UI thread. When developing SWT applications, we're all

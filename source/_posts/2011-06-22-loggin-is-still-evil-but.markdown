@@ -7,7 +7,7 @@ categories: java object-oriented mocking testing
 comments: true
 ---
 
-In a [previous post](http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html), I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.
+In a [previous post](http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/), I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.
   
 Mocking Log4J however can be a real pain. I've managed it in the past using
 Apache's logging abstraction and configuring it to use Log4J under the covers
@@ -85,8 +85,7 @@ logger.assertThat(containsString(EXCEPTION_MESSAGE));
 
 I still think logging is evil and try _really_ hard not to use a single log
 statement but if you have to, I hope the helper class helps keep you honest in
-your tests ;) Have a look at the [previous
-post](http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html) for
+your tests ;) Have a look at the [previous post](http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/) for
 more details and extended examples.
 
 

@@ -144,11 +144,11 @@ self. Perhaps I'm being premenstrual, but I'm not a fan of this one.
   
 Have a look [here](http://download.java.net/jdk7/docs/#NewFeature) for on the
 new features and download from
-[here](http://www.oracle.com/technetwork/java/javase/downloads/ea- jsp-142245.html) (unfortunately, not for the Mac).
+[here](http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html) (unfortunately, not for the Mac).
 
   
 **UPDATE:** An extended version of this post has been published in
-[May edition of the JavaTech Journal](http://pequenoperro.blogspot.com/2011/06/jdk7-artcile-in-javatech-journal.html).
+[May edition of the JavaTech Journal](http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/).
   
 
 
