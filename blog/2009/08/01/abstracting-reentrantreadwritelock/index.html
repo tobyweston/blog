@@ -47,7 +47,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-12 10:22:15 +0000 -->
+    <!-- last update; 2012-02-12 10:48:51 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>because good robots do what they're told</h2>
@@ -326,12 +326,12 @@ points to note around generics.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Having the <a href="http://pequenoperro.blogspot.com/2009/02/more-on-micro-dsls.html">micro-DSL</a> pass in the generic <code>Callable</code> on the static constructor meant that I
+<p>Having the <a href="http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/">micro-DSL</a> pass in the generic <code>Callable</code> on the static constructor meant that I
 couldn&#8217;t make just the using method generic and instead had to link the types
 by making the class definition generic. You might also notice that the
 <code>Callable</code> used isn&#8217;t Java&#8217;s <code>Callable</code>, as Sun saw fit not to have the <code>Exception</code>
 as a generic type. By creating a new <code>Callable</code> interface with a generic exception, I was able to
-neaten up the <a href="http://pequenoperro.blogspot.com/2009/02/more-on-micro-dsls.html">micro-DSL</a> so that we&#8217;re not forced
+neaten up the DSL so that we&#8217;re not forced
 to throw <code>Exception</code> from a method that uses the <code>ExecuteUsingLock</code> class. Instead, you define your closure
 function to throw <code>RuntimeException</code>.</p>
 

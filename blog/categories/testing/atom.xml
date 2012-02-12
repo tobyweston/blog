@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-12T10:22:15+00:00</updated>
+  <updated>2012-02-12T10:48:51+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
     <id>http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
-    <content type="html"><![CDATA[<p>In a <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
+    <content type="html"><![CDATA[<p>In a <a href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
 
 <p>Mocking Log4J however can be a real pain. I've managed it in the past using
 Apache's logging abstraction and configuring it to use Log4J under the covers
@@ -126,8 +126,7 @@ because its not logged at the expected level.</p>
 
 <p>I still think logging is evil and try <em>really</em> hard not to use a single log
 statement but if you have to, I hope the helper class helps keep you honest in
-your tests ;) Have a look at the <a href="http://pequenoperro.blogspot.com/2010/10/logging-is-evil-but.html">previous
-post</a> for
+your tests ;) Have a look at the <a href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a> for
 more details and extended examples.</p>
 ]]></content>
   </entry>

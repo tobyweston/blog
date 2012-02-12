@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-12T10:22:15+00:00</updated>
+  <updated>2012-02-12T10:48:51+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -268,7 +268,7 @@ a comment.</p>
     <link href="http://www.baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/"/>
     <updated>2009-12-29T00:00:00+00:00</updated>
     <id>http://www.baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel</id>
-    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="http://pequenoperro.blogspot.com/2008/12/be-explicit-about-ui-thread-in-swt.html">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="http://baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
 
 <p>Looking more into recent versions of JUnit, there seems to be lots and lots of
 integration points for you to play with. I've been playing with <code>Rules</code>,
