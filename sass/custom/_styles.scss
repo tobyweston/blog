@@ -43,3 +43,73 @@ body > header h1:after {
            background-size: 100% 100%;
       }
 }
+
+html {
+    background: #252525 url('/images/line-tile.png?1328359347') top left
+}
+
+html .gist .gist-file .gist-meta {
+    background: #fef9ed url('/images/noise.png?1328359347') top left;
+}
+
+body > div {
+    background: #edeff4 url('/images/noise.png?1328359347') top left;
+}
+
+body > div > div {
+    background: #f8f8f8 url('/images/noise.png?1328359347') top left;
+}
+
+body > nav {
+    background: url('/images/noise.png?1328359347'), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dcead6), color-stop(50%, #c5dcbb), color-stop(100%, #a5c896));
+    background: url('/images/noise.png?1328359347'), -webkit-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -moz-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -o-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -ms-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), linear-gradient(#dcead6, #c5dcbb, #a5c896);
+}
+
+.no-placeholder body > nav .search {
+    background: #f0f6ed url('/images/search.png?1328359347') 0.3em 0.25em no-repeat;
+}
+
+.maskImage a[rel=subscribe-rss], .maskImage a[rel=subscribe-rss]:after {
+    -moz-mask-image: url('/images/rss.png?1328359347');
+    -webkit-mask-image: url('/images/rss.png?1328359347');
+    -o-mask-image: url('/images/rss.png?1328359347');
+    -ms-mask-image: url('/images/rss.png?1328359347');
+    -khtml-mask-image: url('/images/rss.png?1328359347');
+    mask-image: url('/images/rss.png?1328359347');
+}
+
+.highlight .line-numbers, html .gist .gist-file .gist-syntax .gist-highlight .line-numbers {
+    background: #fdf8e8 url('/images/noise.png?1328359347') top left !important;
+}
+
+pre {
+    background: #fdf6e3 url('/images/noise.png?1328359347') top left;
+}
+
+.pre-code, html .gist .gist-file .gist-syntax .gist-highlight pre, .highlight code {
+    background: #fdf6e3 url('/images/noise.png?1328359347') top left !important;
+}
+
+.code-title, html .gist .gist-file .gist-meta a[href*='#file'], h3.filename, figure.code figcaption {
+    background: #aaa url('/images/code_bg.png?1328359347') top repeat-x;
+}
+
+@media only screen and (min-width: 768px) {
+
+   .toggle-sidebar:after {
+       background: #f8f8f8 url('/images/noise.png?1328359347') top left;
+   }
+}      
+
+body > footer {
+    background: url('/images/noise.png?1328359347'), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dcead6), color-stop(50%, #c5dcbb), color-stop(100%, #a5c896));
+    background: url('/images/noise.png?1328359347'), -webkit-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -moz-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -o-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), -ms-linear-gradient(#dcead6, #c5dcbb, #a5c896);
+    background: url('/images/noise.png?1328359347'), linear-gradient(#dcead6, #c5dcbb, #a5c896);
+}
