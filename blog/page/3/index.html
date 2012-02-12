@@ -47,7 +47,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-12 14:26:31 +0000 -->
+    <!-- last update; 2012-02-12 14:39:07 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -863,36 +863,13 @@ handling code?</p>
   
 </section>
 
-
 <section>
-  <h1>Github Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/tobyweston">@tobyweston</a> on Github
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'tobyweston',
-            count: 4,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
+    <h1>Articles</h1>
+        <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="left" src="http://baddotrobot.com/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
+        <p>
+            My article in JavaTech Journal on JDK7 (May 2011)
+        </p>
 </section>
-
 
   
 </aside>
