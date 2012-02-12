@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>is(not(instanceOf(smell))); - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="For some reason, common perception is that using instanceof is a bit of smell. I think its fallen in with a bad
+crowd and isn&#8217;t really as bad &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+    <!-- last update; 2012-02-12 14:23:49 +0000 -->
+    <h1><a href="/">bad.robot</a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.baddotrobot.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">is(not(instanceOf(smell)));</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-29T00:00:00+01:00" pubdate data-updated="true">Jul 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For some reason, common perception is that using <code>instanceof</code> is a bit of smell. I think its fallen in with a bad
+crowd and isn&#8217;t really as bad as its cracked up to be. At the very least, we should consider <em>why</em> its got a bad
+reputation.</p>
+
+<p>For example, given the following, what&#8217;s clearer in the following exception
+handling code?</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">RuntimeException</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">().</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">()</span> <span class="k">instanceof</span> <span class="n">RuntimeException</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<p>There seems very little difference in the semantics of the two calls, both
+handle class hierarchies and both handle interfaces. I think the legitimate
+use for <code>Class.isAssignableFrom</code> is around scenarios where reflective-type
+checks are more suited (for example, where the class to check against is only
+known or may change at runtime). Using <code>Class.isInstance</code> is a similar
+alternative. The other point that the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Class.html#isAssignableFrom%28java.lang.Class">API documentation</a>
+points out is that <code>isAssignableFrom</code> works with primitives whereas <code>instanceof</code>
+can not.</p>
+
+<p>I wonder if the bad reputation <code>instanceof</code> suffers from is more due to often
+being seen in the company of strange conditional logic than anything else. The
+kind of stuff that seems to go against your Mumma&#8217;s good advice. It may just
+have fallen in with a bad crowd but is itself a good kid at heart&#8230;</p>
+
+<p>I suspect <code>instanceof</code>, being around since forever, is seen as a bit antiquated
+but given the example above using <code>Class.isAssignableFrom</code> seems to just
+obfuscate things. The example needs to find out why a dynamic proxy throws an
+exception and because the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/InvocationTargetException.html">InvocationTargetException</a> wraps the
+underlying cause, it kind of breaks checked exception handling and it feels
+like we need to do some conditional check. If there is a smell here, that&#8217;s
+it. The above is trying to hide the symptom of the smell (<code>instanceof</code>) but the
+smell is still there, its just harder to see. I often catch similar whiffs
+when catching <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/ExecutionException.html">ExecutionException</a>.</p>
+
+<p>More conventional cases where <code>instanceof</code> is a genuine smell may be around
+conditional logic making decisions based on class type where using polymorphism
+might be a neater solution. It&#8217;s this kind of thing that your Mumma warned
+you about and I suspect its this is the real smell that&#8217;s rubbed off on poor
+downtrodden <code>instanceof</code>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-29T00:00:00+01:00" pubdate data-updated="true">Jul 29<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/" data-via="jamanifin" data-counturl="http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/05/29/convert-callable-to-runnable/" title="Previous Post: Convert a Callable to a Runnable">&laquo; Convert a Callable to a Runnable</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/08/01/abstracting-reentrantreadwritelock/" title="next Post: Abstracting ReentrantReadWriteLock">Abstracting ReentrantReadWriteLock &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but...</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jamanifin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2012 - Toby Weston -
+  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/';
+        var disqus_url = 'http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to GUI testing) and am settling on a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/page/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+    <!-- last update; 2012-02-12 14:23:49 +0000 -->
+    <h1><a href="/">bad.robot</a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.baddotrobot.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/29/running-junit-tests-in-parallel/">Running JUnit tests in parallel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-29T00:00:00+00:00" pubdate data-updated="true">Dec 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="http://baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I&#8217;m trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+
+<p>Looking more into recent versions of JUnit, there seems to be lots and lots of
+integration points for you to play with. I&#8217;ve been playing with <code>Rules</code>,
+<code>Statements</code> and <code>Runners</code> mostly and when creating your own
+<code>BlockJUnit4ClassRunner</code>, I spotted you can override the scheduler which, er,
+schedules the actual test methods to be run.</p>
+
+<p>After experimenting with much less straight forward integrations, overriding
+the scheduler gave the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setScheduler</span><span class="o">(</span><span class="k">new</span> <span class="n">ConcurrentScheduler</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ConcurrentScheduler</span> <span class="kd">implements</span> <span class="n">RunnerScheduler</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">executor</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="nf">ConcurrentScheduler</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">executor</span> <span class="o">=</span> <span class="n">newCachedThreadPool</span><span class="o">(</span><span class="k">new</span> <span class="n">ThreadFactory</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">});</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">childStatement</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">childStatement</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">finished</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">shutdown</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">waitingForCompletion</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This results in all the test methods within a given class running in parallel.
+I&#8217;m excited about speeding up the execution time of my tests, next step would
+be run all tests across classes in parallel! hmmm.</p>
+
+<p>This is all available to use via the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project by the way.
+See the tempus-fugit <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Parallel_Tests">documentation</a>
+for more details on the runner.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/24/flickering-tests/">Flickering Tests and a JUnit Rule</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
+
+<p>In an attempt to ease this heavy burden and make light work of this drudgery,
+I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and
+<code>Runner</code>. Now, I can mark up a suspect test and get someone else to do the
+repetition. Joy.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="nd">@Intermittent</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s interesting here is the way in which the <code>Rule</code> and <code>Runner</code> interact with
+JUnit. Newer versions of JUnit have introduced the idea of <code>Rule</code>s and
+<code>Statement</code>s. Using a <code>Rule</code> allows access to the underlying <code>Statement</code> which in
+our case is the action to run the test method. So we&#8217;re able to run the
+underlying statement again and again. Nice.</p>
+
+<p>The <code>Runner</code> however can hook into JUnit&#8217;s framework in a different way. It can
+access more than one statement and so can position itself slightly differently.
+What this means for us is that when using the <code>Rule</code> above, any <code>@Before</code> or <code>@After</code>
+methods will only be run once but the test method will run multiple times.
+Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
+once for each test repetition.</p>
+
+<p>The code is available as part of the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> library so feel free to <a href="http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency">browse</a> and feedback your
+comments.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/24/deadlock/">Deadlock detection in Java</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. The
+<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency/DeadlockDetector.java">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>DeadlockDecector</code> class can only spot Java monitor cyclic locking
+problems. It&#8217;s implementation is basically the same as that used by <code>jconsole</code>
+and <code>jstack</code> although Java 1.6 versions<code>` can additionally detect</code>Lock` based
+cyclic problems. The types of deadlock it can detect can be illustrated in the
+example below.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/24/deadlock/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true">Dec 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread
+and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for
+shutdown method above. Either way, the test above is testing the the thread
+created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt
+is called and the interrupt flag is set immediately after the sleeping thread
+is woken. However, when the test reached the assert, it was false. Weird.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/11/11/time-flies/">Time Flies 1.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to <a href="http://search.maven.org/">maven central repository</a>.</p>
+
+<p>oh, I should mention&#8230; tempus-fugit represents two things to me</p>
+
+<ol>
+<li>A focal point to a lot of head scratching around the theme of testing concurrency and time sensitive code.</li>
+<li>An attempt to consolidate this thinking into a single place that can be easily reused.</li>
+</ol>
+
+
+<p>What it actually is, is</p>
+
+<ol>
+<li>a dozen or so classes that capture key abstractions we&#8217;ve found are frequently shared across domains.</li>
+<li>an even smaller number of wrapper or helper classes that we&#8217;ve found can help using concurrency in Java that little bit nicer.</li>
+<li>all with an underlying theme of testing and improving testability.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/">Thawte claim I&#8217;m not to be trusted&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are the root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
+
+<p>A couple of useful links below.</p>
+
+<ul>
+<li><a href="http://ciardhubh.de/node/4">http://ciardhubh.de/node/4</a></li>
+<li><a href="http://www.dallaway.com/acad/webstart/">http://www.dallaway.com/acad/webstart/</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/10/31/performance-monitoring-part-1/">Performance Monitoring (Part 1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-31T00:00:00+00:00" pubdate data-updated="true">Oct 31<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?</p>
+
+<p>I&#8217;ve been doing a fair bit of this lately (blowing off that is) and thought it
+might be a good idea to capture a few thoughts in a mini-series of posts that
+will be rivaled in drama only by the likes of Dynasty and Dallas. Enjoy&#8230;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/10/31/performance-monitoring-part-1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/08/01/java-source-for-mac-osx/">Java source for Mac OSX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-01T00:00:00+01:00" pubdate data-updated="true">Aug 1<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Grrrr arrrrh Apple, <a href="https://connect.apple.com/cgi-bin/WebObjects/MemberSite%0A.woa/106/wo/w6of3SKKyobz2KekZhju0abCRtK/0.0">grrrr</a>&#8230;</p>
+
+<p>See <a href="http://tech.puredanger.com/2007/09/21/java-source-mac/">here</a> for a more
+balanced view.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Abstracting ReentrantReadWriteLock</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-01T00:00:00+01:00" pubdate data-updated="true">Aug 1<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread requests a lock that it already holds, it&#8217;ll be given it. Without this, a subclass couldn&#8217;t override a snynchronised method and then call the superclass method without deadlocking.</p>
+
+<p>Java&#8217;s <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReentrantReadWriteLock</a> is about acquiring seperate
+read and write locks for efficiency. For example, in the case where you may
+have infrequent writes but frequent reads, it <em>may</em> be more efficient to not
+synchronise all access with just one lock. Instead, <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReenstrantReadWriteLock</a> can allow all read access to only block when a write is taking
+place. You&#8217;ll end up with multiple simultaneous reads but synchronised writes
+and all the reads will have guaranteed visibility of the writes.</p>
+
+<p>With all <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html">Lock</a> implementations, you specifically acquire the lock and are
+politely asked to release the lock within a finally block. Makes sense but it
+always bugs me that we&#8217;re forced into Java&#8217;s verbosity trap, yet again.</p>
+
+<p>So, vanilla Java would have you;</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Lock</span> <span class="n">l</span> <span class="o">=</span> <span class="o">...;</span>
+</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// access the resource protected by this lock</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">l</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So why not wrap the boiler plate code up in a micro-DSL and pass a closure to execute? Any implementation must
+call both lock and unlock and re-throw any exceptions. The following test shows this to be true.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/07/29/isnotinstanceofsmell/">is(not(instanceOf(smell)));</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-29T00:00:00+01:00" pubdate data-updated="true">Jul 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For some reason, common perception is that using <code>instanceof</code> is a bit of smell. I think its fallen in with a bad
+crowd and isn&#8217;t really as bad as its cracked up to be. At the very least, we should consider <em>why</em> its got a bad
+reputation.</p>
+
+<p>For example, given the following, what&#8217;s clearer in the following exception
+handling code?</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">RuntimeException</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">().</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">()</span> <span class="k">instanceof</span> <span class="n">RuntimeException</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/07/29/isnotinstanceofsmell/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/4/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/2/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <p>
+      <a href="blog/categories/agile/">agile</a>
+      <a href="blog/categories/coaching/">coaching</a>
+      <a href="blog/categories/concurrency/">concurrency</a>
+      <a href="blog/categories/java/">java</a>
+      <a href="blog/categories/mocking/">mocking</a>
+      <a href="blog/categories/object-oriented/">object-oriented</a>
+      <a href="blog/categories/performance/">performance</a>
+      <a href="blog/categories/tempus-fugit/">tempus-fugit</a>
+      <a href="blog/categories/testing/">testing</a>
+  </p>
+</section>
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("jamanifin", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
+  
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/tobyweston">@tobyweston</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'tobyweston',
+            count: 4,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2012 - Toby Weston -
+  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
