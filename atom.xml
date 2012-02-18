@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-12T14:49:03+00:00</updated>
+  <updated>2012-02-18T14:37:29+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
+    <updated>2012-02-13T21:24:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
+    <content type="html"><![CDATA[<p>There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that it production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
+
+<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we&#8217;re usually horrified by the previous paragraph and ask the question <em>&#8220;shouldn&#8217;t we start up the entire stack in an acceptance test?&#8221;</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
+
+<p>Taking inspiration from Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<h2>Conway&#8217;s Law</h2>
+
+<p>To paraphrase something <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> recently said</p>
+
+<blockquote><p>&#8220;people are usually happy to test interactions with other systems &#8216;by specification&#8217; but are less happy to do so when testing their internal systems&#8221;</p><footer><strong>@Jazzatola</strong> <cite><a href='https://twitter.com/#!/Jazzatola'>twitter.com/#!/Jazzatola/&hellip;</a></cite></footer></blockquote>
+
+
+<p>As he points out; we&#8217;re happy to say &#8220;given the external system responds with <code>X</code>, when we send a message <code>Y</code> then our system behaves <code>Z</code>&#8221;. We know the API and test against it as a <em>specification</em>, typically via <em>mocking</em> the behaviour of the external system and testing against the response. We&#8217;re less happy to talk about our internal interactions as internal APIs in the same way.</p>
+
+<p>I find this interesting for a couple of reasons. <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> was suggesting that this is an example of <a href="http://en.wikipedia.org/wiki/Conway's_law">Conway&#8217;s law</a>; where the communication structures within an organisation are leading design. We&#8217;re physically separated from our external system actors but intimately acquainted with the internal communication flows. After all, we wrote them.</p>
+
+<p>It&#8217;s also interesting because it can limit how we go about implementing our acceptance tests.</p>
+
+<h2>Hexagonal Implementation</h2>
+
+<p>If we look at our system as a series of <em>ports</em> and <em>adaptors</em> (as in Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>), we can start to test it as a series of internal, co-operating handoffs. Don&#8217;t we already test our systems like this; with conventional mocking? The difference is that this kind of mocking is at a finer grained level; we mock <em>collaborators</em> to create unit-style tests and drive out design. When we mock external systems and the <em>ports</em> in our internal systems, we&#8217;re mocking coarse grained <em>behaviours</em>. We&#8217;re confirming an established design rather than driving one out. We can formalise this established design as <em>ports</em>.</p>
+
+<p>If you look closely at the last few sentences you&#8217;ll notice that I&#8217;m talking about <em>test confirm</em> at the coarse grained level rather than the <em>test driving</em> techniques we apply with unit-style tests. I think this is natural fit for acceptance testing where we should be thinking about testing the external affects produced by internal flows (more black than white box).</p>
+
+<p>So, given we expect an internal interaction to behave in such-and-such way, why do we need to startup the entire application to exercise the effect of that behaviour? We don&#8217;t. We can <em>simulate</em> the specification internally by mocking and produce a series of overlapping tests. Each one supporting and giving more confidence to the last.</p>
+
+<p>We&#8217;ve certainly had some great successes with this technique. We&#8217;ve produced faster running test suites that customers were happy to &#8220;accept&#8221; or sign-off against. We built trust working with the customers to understand the approach and put ourselves more easily in their &#8216;voice&#8217; describing the system as a series of internal API interactions.</p>
+
+<h3>Conventional Hexagonal Architecture Footnote</h3>
+
+<p>In the original article, Cockburn talks about ports and adaptors as a fairly abstract architectural approach. He describes it in terms of a pattern which have slightly different motivations than those described here.</p>
+
+<p>He talks about a relatively small number of <em>ports</em> (say ~4-5) and decoupling <em>major</em> components of a system (for example, the database and the GUI) so that it can be driven and tested by different <em>external</em> actors.</p>
+
+<p>I&#8217;m talking more about changing the <em>external</em> nature of these actors to be more <em>internal</em>. If we have a much larger number of ports (say >30), decoupling <em>minor</em> components we can achieve this substutatabiliy on a bigger scale and be more flexible on how we test the system.</p>
+
+<p>Conway described an approach where we can test the system at end-to-end via it&#8217;s ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
+
+<p>Have a go and see if it works for you&#8230;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Transaction Management without the Frameworks]]></title>
@@ -1993,113 +2046,6 @@ find out more about see the project <a href="http://tempus-fugit.googlecode.com/
 
 <p>oh and don&#8217;t worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
 end.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Type Safe Annotation]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
-    <updated>2010-01-04T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
-    <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&amp;tag=diyfiesta&amp;link_code=btl&amp;camp=213689&amp;creative=392969">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">CLASS</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">CLASS</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, here&#8217;s where the trouble began.</p>
-
-<!-- more -->
-
-
-<p>Using the static constructor method is
-fine when I want to create an instance of a Type but not when I want to
-annotate some method. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">);</span> <span class="c1">// fine</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The compiler very quickly complains that the attribute value must be constant.
-Specifically,</p>
-
-<pre><code>an enum annotation value must be an enum constant
-</code></pre>
-
-<p>To get round things, you can just create several attributes for the
-annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a
-description, I was forced to have one attribute of type and another to capture
-the additional information. grrrr.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">String</span> <span class="nf">details</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Shame on you Java for leading me on a merry dance! I&#8217;d love to know more about
-why things are like this, so if you&#8217;ve got any more details, feel free to post
-a comment.</p>
 ]]></content>
   </entry>
   

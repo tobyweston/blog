@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about &hellip;">
+  <meta name="description" content="Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -48,7 +47,7 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-12 14:49:03 +0000 -->
+    <!-- last update; 2012-02-18 14:37:29 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -79,6 +78,47 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-15T00:00:00+01:00" pubdate data-updated="true">Aug 15<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="http://baddotrobot.com/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/08/15/pairing-honestly/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -673,97 +713,6 @@ in his arms.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/01/04/type-safe-annotation/">Type Safe Annotation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-04T00:00:00+00:00" pubdate data-updated="true">Jan 4<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&amp;tag=diyfiesta&amp;link_code=btl&amp;camp=213689&amp;creative=392969">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">CLASS</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">CLASS</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, here&#8217;s where the trouble began.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/01/04/type-safe-annotation/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -779,6 +728,10 @@ in his arms.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
@@ -814,10 +767,6 @@ in his arms.</p>
     
       <li class="post">
         <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a>
       </li>
     
   </ul>
@@ -870,7 +819,8 @@ in his arms.</p>
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2006-2012 - Toby Weston -
-  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+    - <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 </footer>

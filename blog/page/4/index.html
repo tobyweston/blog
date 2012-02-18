@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Every time I come across it, it bugs me. The Executors class has helper methods to convert from a Runnable to a
-Callable, presumably so you can &hellip;">
+  <meta name="description" content="For some reason, common perception is that using instanceof is a bit of smell. I think its fallen in with a bad
+crowd and isn&#8217;t really as bad &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -48,7 +48,7 @@ Callable, presumably so you can &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-12 14:49:03 +0000 -->
+    <!-- last update; 2012-02-18 14:37:29 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -79,6 +79,94 @@ Callable, presumably so you can &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/07/29/isnotinstanceofsmell/">is(not(instanceOf(smell)));</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-29T00:00:00+01:00" pubdate data-updated="true">Jul 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For some reason, common perception is that using <code>instanceof</code> is a bit of smell. I think its fallen in with a bad
+crowd and isn&#8217;t really as bad as its cracked up to be. At the very least, we should consider <em>why</em> its got a bad
+reputation.</p>
+
+<p>For example, given the following, what&#8217;s clearer in the following exception
+handling code?</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">RuntimeException</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">().</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">()</span> <span class="k">instanceof</span> <span class="n">RuntimeException</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/07/29/isnotinstanceofsmell/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -810,242 +898,6 @@ in a good pair that you realise what you&#8217;re missing working in a bad pairi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">Be Explicit with the UI Thread</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-12-30T00:00:00+00:00" pubdate data-updated="true">Dec 30<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Following up from the post <a href="http://baddotrobot.com/blog/2008/12/29/swt-support-for-window-licker/">SWT Support in Window Licker</a>.</p>
-
-<p>The thing I found most interesting about looking at this was having to be more
-explicit about the UI thread. When developing SWT applications, we&#8217;re all
-aware that accessing almost anything graphical in SWT from any other thread
-than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more
-explicit about the &#8220;UI thread&#8221;.</p>
-
-<p>When I started to look at how I go about writing SWT applications, I noticed
-that</p>
-
-<ul>
-<li>I often run the application from a main somewhere.</li>
-<li>I often discover invalid thread access problems at run time.</li>
-<li>I often plug the problem by wrapping the offender in a <code>Display.a/sync(...)</code> call.</li>
-<li>I often have very few long running processes that need to spawn a thread and update the UI.</li>
-</ul>
-
-
-<p>It wasn&#8217;t until I started looking at being able to run the application from
-the context of a JUnit test that I started to think in more detail about
-these.</p>
-
-<h3>Running the application from a main method</h3>
-
-<p>This seems simple but being more explicit about the UI thread means that this
-is worth a closer look. I always used to start an SWT application from the
-main, in variations of the code below.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">SwtCalculator</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">SwtCalculator</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">display</span> <span class="o">=</span> <span class="n">Display</span><span class="o">.</span><span class="na">detDefault</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">shell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shell</span><span class="o">(</span><span class="n">display</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">shell</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Calculator&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">// shell setup</span>
-</span><span class='line'>        <span class="n">startEventLoop</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startEVentLoop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">shell</span><span class="o">.</span><span class="na">isDisposed</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(!</span><span class="n">display</span><span class="o">.</span><span class="na">readAndDispatch</span><span class="o">())</span>
-</span><span class='line'>                <span class="n">display</span><span class="o">.</span><span class="na">sleep</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">display</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The default constructor would do or delegate the work to setup the various
-shells and widgets and finally start the event loop. When using JFace&#8217;s
-<code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling
-<code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the
-event loop to the <code>ApplicationWindow class</code>. If you call
-<code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event
-loop.</p>
-
-<p>However you do it, getting into that event loop blocks the client and its the
-thread that executes this event loop that is called the UI thread. It just so
-happens that most SWT applications will hit that loop from the main thread as
-you can see from the following partial thread dump.</p>
-
-<pre><code>Name: main
-State: RUNNABLE
-Total blocked: 0 Total waited: 0
-
-Stack trace:
-    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
-    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
-    com.objogate...SwtCalculator.startEventLoop(SwtCalculator.java:104)
-    com.objogate...SwtCalculator.main(SwtCalculator.java:113)
-</code></pre>
-
-<p>At this point, the SWT event loop is doing its thing, waiting for UI events
-(mouse clicks, keyboard input etc) and dispatching them to the appropriate
-listeners. We&#8217;ve also defined what we mean by the UI thread;</p>
-
-<blockquote><p>The UI thread or event dispatching thread is the thread that executes the standard SWT event loop.</p></blockquote>
-
-<h3>Running the tests and GUI in different threads</h3>
-
-<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in
-a test, the test would block until the event loop finished, the display would
-be disposed and any subsequent tests against the GUI elements would quickly
-discover that they no longer exist.</p>
-
-<p>It should be pretty clear then that in order to test GUI elements the event
-loop has to be started in a different thread than the tests run in. The gotcha
-is that the test thread will likely want to interact with this UI thread in
-order to push buttons and make assertions and that&#8217;s when we get into invalid
-thread access territory with SWT.</p>
-
-<p>The way I implemented this was to use a class extending <code>Thread</code> to represent
-the UI thread and to start the event loop in its <code>run()</code> method. The tests can
-interact with the UI thread by either searching for the display with
-<code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the
-default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
-
-<p>A minor change to the application&#8217;s main method is required to optionally not
-call the event loop when calling main. For example;</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
-</span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The tests can then explicitly create a UI thread delegating shell setup to the
-<code>SwtCalculator</code> class before starting the event loop and allowing the test
-thread to continue.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">SwtCalculator</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">DONT_BLOCK_ON_OPEN</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>    <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculatorDriver</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@After</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopTheApplication</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run
-inside the UI thread. This uses the strategy pattern but an alternative design
-could just as easily sub-class the <code>UIThread</code> and use the template pattern in a
-similar way.</p>
-
-<p>The interrupt allows the event loop on the UI thread to be interrupted and
-stop gracefully.</p>
-
-<p>The following partial thread dump shows it in action. As you can see, a
-explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
-are the hints).</p>
-
-<pre><code>Name: SWT-Event-Dispatcher-Thread-1
-State: RUNNABLE
-Total blocked: 0 Total waited: 0
-
-Stack trace:
-    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
-    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
-    com.objogate.wl.swt.UIThread.startEventLoop(UIThread.java:90)
-    com.objogate.wl.swt.UIThread.run(UIThread.java:68)
-    - locked java.lang.Class@1d7fbfb
-</code></pre>
-
-<p>It was a good exercise exploring the UI thread and I encourage you to take a
-look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took
-above.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1061,6 +913,10 @@ above.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
@@ -1096,10 +952,6 @@ above.</p>
     
       <li class="post">
         <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a>
       </li>
     
   </ul>
@@ -1152,7 +1004,8 @@ above.</p>
   </div>
   <footer role="contentinfo"><p>
   Copyright &copy; 2006-2012 - Toby Weston -
-  <span class="credit">Powered by the awesome <a href="http://octopress.org">Octopress</a></span>
+    - <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
 </footer>
