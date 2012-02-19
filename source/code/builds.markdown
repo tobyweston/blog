@@ -6,8 +6,8 @@ sharing: true
 footer: false
 ---
 
-# Virtual Lights
+### Virtual Lights
 {% img ../images/virtual_lights.png %}
 
-# Build Screen Saver
+### Build Screen Saver
 [{% img ../images/screensaver_small.png %}](../images/screensaver_big.png)
