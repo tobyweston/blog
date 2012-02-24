@@ -20,7 +20,6 @@ body > header h2 {
 body > header h1:after {
       content:"";
       position:absolute;
-      right:0.9em;
       top:0.3em;
       bottom:0em;
       height:128px;
@@ -31,15 +30,19 @@ body > header h1:after {
       background-repeat:no-repeat;
 
       @media only screen and (min-width: 0px) {
+           right: -1.0em;
            background-size: 50% 50%;
       }
       @media only screen and (min-width: 480px) {
+           right: -0.5em;
            background-size: 70% 70%;
       }
       @media only screen and (min-width: 768px) {
+           right: 0.125em;
            background-size: 80% 80%;
       }
       @media only screen and (min-width: 992px) {
+           right: 0.9em;
            background-size: 100% 100%;
       }
 }
