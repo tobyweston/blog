@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-24T13:59:22+00:00</updated>
+  <updated>2012-02-24T14:03:21+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -1825,7 +1825,7 @@ Maven) and publish the overview and related specifications straight to some HTTP
 <p>Check out the <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html">user manual</a>, written as Concordion
 specifications and download the binaries from the <a href="http://robotooling.com/maven/bad/robot/concordion-ant-task/">bad.robot.repo repository</a>.</p>
 
-<p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html"><img src="../../../../concordion-ant-manual.png"></a></p>
+<p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html"><img src="../../../../images/concordion-ant-manual.png"></a></p>
 
 <p>As I mentioned Concordion, its only fair to mention
 <a href="http://code.google.com/p/xcordion/">Xcordion</a> (and more recently Xcordion2)
