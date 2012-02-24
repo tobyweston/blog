@@ -1,5 +1,5 @@
 ---
-name: previwed
+name: previewed
 layout: post
 title: JDK7 Previewed
 time: 2011-03-04 15:44:00 +00:00
