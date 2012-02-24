@@ -30,7 +30,7 @@ body > header h1:after {
       background-image:url('../images/robot_devil_128x128.png');
       background-repeat:no-repeat;
 
-      @media only screen and (min-width: 360px) {
+      @media only screen and (min-width: 0px) {
            background-size: 50% 50%;
       }
       @media only screen and (min-width: 480px) {
