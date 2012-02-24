@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Page Not Found - bad.robot</title>
+  <title>Category: REST - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Page Not Found // Revert jQuery's '$' alias, to avoid clashes with ender.js. // NOTE: Use jQuery(...), instead of $(...) from here on. jQuery. &hellip;">
+  <meta name="description" content="Category: REST">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.baddotrobot.com/404.html">
+  <link rel="canonical" href="http://www.baddotrobot.comblog/categories/rest">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,54 +80,19 @@
 <article role="article">
   
   <header>
-    <h1 class="entry-title">Page Not Found</h1>
+    <h1 class="entry-title">Category: REST</h1>
     
   </header>
   
-  <script type="text/javascript" src="javascripts/libs/jquery-1.7.1.min.js"/>
-<script type="text/javascript">
-    // Revert jQuery's '$' alias, to avoid clashes with ender.js.
-    // NOTE: Use jQuery(...), instead of $(...) from here on.
-    jQuery.noConflict();
-</script>
-<script type="text/javascript">
-    jQuery.extend({
-        getUrlVars: function(url){
-            var vars = [], hash;
-            var hashes = url.slice(url.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        },
-        getUrlVar: function(url, name){
-            return jQuery.getUrlVars(url)[name];
-        }
-    });
+  <div id="blog-archives" class="category">
 
-    jQuery.getJSON('http://baddotrobot.com/javascripts/url_migrations.json', function (data) {
-        var found = false;
-        jQuery.each(data['redirects'], function (idx, url) {
-            if (url[0] == jQuery.getUrlVar(window.location.href, 'source')) {
-                window.location.replace(url[1]);  // redirect
-                found = true;
-                return false;
-            }
-        });
-    });
 
-</script>
 
-<p>
-    Sorry, looks like these weren&#8217;t the droids you were looking for. Try one of these perhaps&#8230;
-</p>
-<div id="blog-archives" class="missing">
-    
-    <article>
-        
+  
+  <h2>2012</h2>
+
+<article>
+  
 <h1><a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a></h1>
 <time datetime="2012-02-21T06:27:00+00:00" pubdate><span class='month'>Feb</span> <span class='day'>21</span> <span class='year'>2012</span></time>
 
@@ -136,68 +101,8 @@
 </footer>
 
 
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a></h1>
-<time datetime="2012-02-13T21:24:00+00:00" pubdate><span class='month'>Feb</span> <span class='day'>13</span> <span class='year'>2012</span></time>
+</article>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a></span>
-</footer>
-
-
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a></h1>
-<time datetime="2012-01-29T00:00:00+00:00" pubdate><span class='month'>Jan</span> <span class='day'>29</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a></span>
-</footer>
-
-
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a></h1>
-<time datetime="2011-10-29T00:00:00+01:00" pubdate><span class='month'>Oct</span> <span class='day'>29</span> <span class='year'>2011</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a></span>
-</footer>
-
-
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a></h1>
-<time datetime="2011-08-29T00:00:00+01:00" pubdate><span class='month'>Aug</span> <span class='day'>29</span> <span class='year'>2011</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/coaching/'>coaching</a></span>
-</footer>
-
-
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
-<time datetime="2011-08-29T00:00:00+01:00" pubdate><span class='month'>Aug</span> <span class='day'>29</span> <span class='year'>2011</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a></span>
-</footer>
-
-
-    </article>
-    
 </div>
 
   

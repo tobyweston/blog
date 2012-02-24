@@ -130,7 +130,7 @@
     </url>
     <url>
         <loc>http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/</loc>
-        <lastmod>2012-02-11T18:11:04+00:00</lastmod>
+        <lastmod>2012-02-24T13:57:41+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/</loc>
@@ -154,7 +154,7 @@
     </url>
     <url>
         <loc>http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed/</loc>
-        <lastmod>2012-02-12T10:27:40+00:00</lastmod>
+        <lastmod>2012-02-24T13:24:16+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/</loc>
@@ -189,12 +189,16 @@
         <lastmod>2012-02-18T14:31:58+00:00</lastmod>
     </url>
     <url>
+        <loc>http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8/</loc>
+        <lastmod>2012-02-24T13:42:44+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.baddotrobot.com/404.html</loc>
         <lastmod>2012-02-11T17:34:02+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.baddotrobot.com/blog/archives/</loc>
-        <lastmod>2012-02-18T14:31:58+00:00</lastmod>
+        <lastmod>2012-02-24T13:57:41+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.baddotrobot.com/code/builds.html</loc>
@@ -202,7 +206,7 @@
     </url>
     <url>
         <loc>http://www.baddotrobot.com/code/</loc>
-        <lastmod>2012-02-19T20:12:50+00:00</lastmod>
+        <lastmod>2012-02-21T06:26:32+00:00</lastmod>
     </url>
     <url>
         <loc>http://www.baddotrobot.com/code/pokimon.html</loc>
@@ -210,6 +214,6 @@
     </url>
     <url>
         <loc>http://www.baddotrobot.com/</loc>
-        <lastmod>2012-02-18T14:31:58+00:00</lastmod>
+        <lastmod>2012-02-24T13:57:41+00:00</lastmod>
     </url>
 </urlset>

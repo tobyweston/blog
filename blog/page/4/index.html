@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="For some reason, common perception is that using instanceof is a bit of smell. I think its fallen in with a bad
-crowd and isn&#8217;t really as bad &hellip;">
+  <meta name="description" content="All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -48,7 +47,7 @@ crowd and isn&#8217;t really as bad &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-02-19 20:21:51 +0000 -->
+    <!-- last update; 2012-02-24 13:59:22 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -79,6 +78,80 @@ crowd and isn&#8217;t really as bad &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Abstracting ReentrantReadWriteLock</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-01T00:00:00+01:00" pubdate data-updated="true">Aug 1<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread requests a lock that it already holds, it&#8217;ll be given it. Without this, a subclass couldn&#8217;t override a snynchronised method and then call the superclass method without deadlocking.</p>
+
+<p>Java&#8217;s <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReentrantReadWriteLock</a> is about acquiring seperate
+read and write locks for efficiency. For example, in the case where you may
+have infrequent writes but frequent reads, it <em>may</em> be more efficient to not
+synchronise all access with just one lock. Instead, <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReenstrantReadWriteLock</a> can allow all read access to only block when a write is taking
+place. You&#8217;ll end up with multiple simultaneous reads but synchronised writes
+and all the reads will have guaranteed visibility of the writes.</p>
+
+<p>With all <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html">Lock</a> implementations, you specifically acquire the lock and are
+politely asked to release the lock within a finally block. Makes sense but it
+always bugs me that we&#8217;re forced into Java&#8217;s verbosity trap, yet again.</p>
+
+<p>So, vanilla Java would have you;</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Lock</span> <span class="n">l</span> <span class="o">=</span> <span class="o">...;</span>
+</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// access the resource protected by this lock</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">l</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So why not wrap the boiler plate code up in a micro-DSL and pass a closure to execute? Any implementation must
+call both lock and unlock and re-throw any exceptions. The following test shows this to be true.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -856,48 +929,6 @@ suggest its a good pattern to follow. The finished class is shown below in full.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2008/12/31/what-makes-good-pair/">What Makes a Good Pair?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-12-31T00:00:00+00:00" pubdate data-updated="true">Dec 31<span>st</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s1600-h/q71195623.png"><img class="right" src="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s200/q71195623.png"></a></p>
-
-<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code,
-conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive,
-communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work.
-When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working
-in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -913,6 +944,10 @@ in a good pair that you realise what you&#8217;re missing working in a bad pairi
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
@@ -950,10 +985,6 @@ in a good pair that you realise what you&#8217;re missing working in a bad pairi
         <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -966,6 +997,7 @@ in a good pair that you realise what you&#8217;re missing working in a bad pairi
       <a href="blog/categories/mocking/">mocking</a>
       <a href="blog/categories/object-oriented/">object-oriented</a>
       <a href="blog/categories/performance/">performance</a>
+      <a href="blog/categories/rest/">REST</a>
       <a href="blog/categories/tempus-fugit/">tempus-fugit</a>
       <a href="blog/categories/testing/">testing</a>
   </p>

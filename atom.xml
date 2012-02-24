@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-02-19T20:21:51+00:00</updated>
+  <updated>2012-02-24T13:59:22+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,141 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
+    <updated>2012-02-21T06:27:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
+    <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON &#8216;in-browser&#8217; like in Firefox and Chrome. If you&#8217;re using <a href="http://jersey.java.net/">Jersey</a>, Oracle&#8217;s JAX-RS reference implementation, here&#8217;s how to make IE8 play nice.</p>
+
+<!-- more -->
+
+
+<p>The problem is in IE8&#8217;s default set of <code>Accept</code> header values. For some reason, it&#8217;ll ask for a very specific set of Microsoft types in the request;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the server responds with a <code>Content-Type</code> of anything other than what&#8217;s in the accept list,
+IE will prompt the user to save the resource instead of attempting to display it. That&#8217;s fair enough as I imagine its
+saying &#8220;I didn&#8217;t say I could accept this so therefore, I don&#8217;t know how to display it&#8221;.</p>
+
+<p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure>
+
+
+<p>will prompt IE8 to save the file rather than display &#8216;in-browser&#8217;.</p>
+
+<p>When we return a response with a JSON content type, IE won&#8217;t know how to handle it. We could send back our JSON as <code>text/plain</code> for all cases, but that kind of defeats the object of using <code>Content-Type</code> all together.</p>
+
+<p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
+by sending back plain text but still return JSON for all other cases.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@GET</span>
+</span><span class='line'>    <span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getAllCustomers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nf">allCustomersAsJson</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@GET</span>
+</span><span class='line'>    <span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/x-ms-application&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">TextPlainOkResponse</span> <span class="nf">getAllCustomersForInternetExplorer</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">getAllCustomersAsJson</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The class above will return a list of all Customers as JSON. The <code>getAllCustomers</code> method will be dispatched to via
+Jersey and send back the <code>String</code> with a <code>Content-Type</code> of <code>application/json</code> for all cases <em>unless</em>
+the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
+constructed, we&#8217;ll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">json</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getEntity</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStatus</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">200</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">MultivaluedMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">getMetadata</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">MetadataMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{{</span>
+</span><span class='line'>            <span class="n">put</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="n">asList</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}};</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So for all clients asking for <code>application/x-ms-application</code>, they&#8217;ll actually get <code>text/plain</code>. In the case of
+Internet Explorer 8, it will display the JSON &#8216;in-browser&#8217;. It won&#8217;t apply any formatting though, so you may want to
+pretty print the response before sending it back.</p>
+
+<p>If it doesn&#8217;t work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
+something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
+headers
+ are going over.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
@@ -1663,41 +1798,36 @@ when is the question I find myself asking again and again.</p>
     <link href="http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/"/>
     <updated>2010-07-07T00:00:00+01:00</updated>
     <id>http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews</id>
-    <content type="html"><![CDATA[<p>Creating customer authored acceptance tests is awesome! I love it. Getting your users to tell you exactly what they want (and don&#8217;t want) in a form that they can (ghost) write can make for a world that even the Care Bears are jealous of.</p>
+    <content type="html"><![CDATA[<p>Customer authored acceptance tests are great. Getting your users to tell you exactly what they want
+and don&#8217;t want in the form of a <em>specification</em> can be liberating. You&#8217;ll thrash out the details and come up
+ with <em>examples</em> that can be exercised against the running system. Everybody wins.</p>
 
-<p>I can&#8217;t comment on some of the BDD targeting frameworks like
-<a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or
-<a href="http://cukes.info/">Cucumber</a> but I do like using
-<a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to
-fit in with a BDD approach, its flexible enough to use in almost any approach
-in fact. That&#8217;s probably why I like it so much. It&#8217;s frequently cited closest
-comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion
-tries really hard not to tie you into a particular approach, so to compare it
-against Fit (which leans towards the inflexible in my view), doesn&#8217;t serve as
-a fair comparison.</p>
+<p>I can&#8217;t really comment on some of the BDD targeting frameworks like <a href="http://jbehave.org/">JBehave</a>,
+<a href="http://www.easyb.org/">EasyB</a> or <a href="http://cukes.info/">Cucumber</a> but I do like using <a href="http://www.concordion.org/">Concordion</a>.
+We try and use it in such as way to fit in with a BDD approach, it&#8217;s actually flexible enough to use with almost any
+approach.</p>
 
-<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to
-advertise a little Ant task I wrote to help auto-generate Concordion-friendly
-summary pages for your existing Concordion tests.</p>
+<p>It&#8217;s frequently cited closest comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion tries really
+hard not to tie you into a particular approach, whereas Fit invariably leads you down a certain route. So to compare it
+against the less flexible Fit, isn&#8217;t really accurate.</p>
+
+<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to advertise a little Ant task I wrote to
+help auto-generate Concordion-friendly summary pages for your existing Concordion tests.</p>
 
 <!-- more -->
 
 
 <p>It&#8217;s purpose is to collect your Concordion tests as an &#8220;overview page&#8221; which
-itself is a Concordion specification. You&#8217;d run just this specification and it
-would in turn run all your tests, giving you a nice red / green overview. You
-can fold it into your continuous itegration process (Ant or Maven) and publish
-the overview and related specifications straight to some HTTP server for your
-customers to review, per-build, 24/7. Nice.</p>
+itself is a Concordion specification. You&#8217;d run <em>just</em> this specification as part of your build and it&#8217;ll run all your
+tests, generating a nice red / green overview page. You can fold it into your continuous integration process (Ant or
+Maven) and publish the overview and related specifications straight to some HTTP server for your customers to review, every build, 24/7. Nice.</p>
 
 <p>Check out the <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html">user manual</a>, written as Concordion
-specifications and download the binaries from <a href="http://code.google.com/p/badrobot/downloads/list">Google Code</a>.</p>
+specifications and download the binaries from the <a href="http://robotooling.com/maven/bad/robot/concordion-ant-task/">bad.robot.repo repository</a>.</p>
 
-<p><a href="http://code.google.com/p/badrobot/wiki/ConcordionAntTask"></a></p>
+<p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html"><img src="../../../../concordion-ant-manual.png"></a></p>
 
-<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s1600/concordion.png"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/TDTpijCjrxI/AAAAAAAAEoA/ZYmfILds2MY/s640/concordion.png"></a></p>
-
-<p>As a closing note, as I mentioned Concordion, its only fair to mention
+<p>As I mentioned Concordion, its only fair to mention
 <a href="http://code.google.com/p/xcordion/">Xcordion</a> (and more recently Xcordion2)
 which is essentially a fork of Concordion. The main difference being a
 philosophical one. If Concordion constrains some activities within the
@@ -1939,113 +2069,6 @@ the new exception, and forces the syntactically sugary <code>with</code> by taki
 if it gets some millage. Let me know if you find it useful. Source is
 <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
 the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Nibbles the Cat]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat/"/>
-    <updated>2010-03-19T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat</id>
-    <content type="html"><![CDATA[<p>What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
-
-<p>I&#8217;m talking here about Java level deadlocks really and to illustrate the
-point, poor old <code>Nibbles</code> got himself in quite a pickle. This situation is like
-this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
-a dialogue&#8230;</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code>
-is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the
-<code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back
-in his arms.</p>
-
-<!-- more -->
-
-
-<p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more
-specifically his monitor) until the end of the synchronised block. However,
-within this block the  <code>Kidnapper</code> is trying
-to take the cash. The access to this method is itself synchronised on the
-cash, meaning that no one else can access the cash whilst
-the  <code>Kidnapper</code> is grabbing it. Meanwhile,
-the <code>Negotiator</code> is synchronising on the
-cash, holding onto it (or again, more specifically, it&#8217;s monitor) until the
-end of the synchronised block then within that block, it requires nibbles. We
-can start to see the potential for deadlock.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">take</span><span class="o">(</span><span class="n">cash</span><span class="o">);</span>
-</span><span class='line'>         <span class="o">}</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Negotiator</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">take</span><span class="o">(</span><span class="n">nibbles</span><span class="o">);</span>
-</span><span class='line'>         <span class="o">}</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The deadlock detector displays this woeful situation as follows.</p>
-
-<pre><code>Deadlock detected
-=================
-
-"Negotiator-Thread-1":
-  waiting to lock Monitor of com.google.code.tempusfugit.concurrency.DeadlockDetectorTest$Cat@ce4a8a
-  which is held by "Kidnapper-Thread-0"
-
-"Kidnapper-Thread-0":
-  waiting to lock Monitor of com.google.code.tempusfugit.concurrency.DeadlockDetectorTest$Cash@7fc8b2
-  which is held by "Negotiator-Thread-1"
-</code></pre>
-
-<p>If you fire up the example and point jconsole at it, you&#8217;ll get similar
-results from the Thread tab. You can see how tempus-fugit tests the
-DeadlockDetector class <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/xref-test/com/google/code/tempusfugit/concurrency/DeadlockDetectorTest.html">here</a> and to
-find out more about see the project <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Deadlock_Detection">documentation</a>.</p>
-
-<p>oh and don&#8217;t worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
-end.</p>
 ]]></content>
   </entry>
   
