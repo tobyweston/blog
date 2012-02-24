@@ -34,7 +34,7 @@ Maven) and publish the overview and related specifications straight to some HTTP
 Check out the [user manual](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html), written as Concordion
 specifications and download the binaries from the [bad.robot.repo repository](http://robotooling.com/maven/bad/robot/concordion-ant-task/).
 
-[{% img ../../../../images/concordion-ant-manual.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html)
+[{% img ../../../../../images/concordion-ant-manual.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html)
 
   
 As I mentioned Concordion, its only fair to mention
