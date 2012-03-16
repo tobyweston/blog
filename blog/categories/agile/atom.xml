@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-03-01T20:00:18+00:00</updated>
+  <updated>2012-03-16T20:10:24+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
     <updated>2012-02-13T21:24:00+00:00</updated>
     <id>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
-    <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that it production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
+    <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
 
 <p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question <em>"shouldn't we start up the entire stack in an acceptance test?"</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
 
