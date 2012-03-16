@@ -6,7 +6,7 @@ comments: true
 categories: java testing agile
 ---
 
-There's no reason a unit test can't also be an acceptance test. If you can prove that the _unit_ behaves a certain way _and_ that it production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.
+There's no reason a unit test can't also be an acceptance test. If you can prove that the _unit_ behaves a certain way _and_ that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.
 
 What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question _"shouldn't we start up the entire stack in an acceptance test?"_. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing. 
 
