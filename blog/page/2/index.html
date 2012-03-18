@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of &hellip;">
+  <meta name="description" content="Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded
+(will 8 see lamdas?) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -47,7 +47,7 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-03-16 20:10:24 +0000 -->
+    <!-- last update; 2012-03-18 16:15:53 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -78,6 +78,69 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-04T00:00:00+00:00" pubdate data-updated="true">Mar 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded
+(will <a href="http://openjdk.java.net/projects/lambda/">8 see lamdas</a>?) but still has one or two interesting language features.
+A few that caught my eye include&#8230;</p>
+
+<h3>Type Inference on Generic Object Creation</h3>
+
+<p>Which allows a little brevity to the garrulity of the language, at least
+against generic object instantiation where the type can be inferred. For
+example,</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>can be reduced to</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/03/04/jdk-7-previewed/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -593,133 +656,6 @@ declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/04/25/wrapping-exceptions-is-dull/">Wrapping Exceptions is Dull</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-25T00:00:00+01:00" pubdate data-updated="true">Apr 25<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m totally bored of wrapping exceptions in Java,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// do something</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BoredomException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// do something else</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It&#8217;s verbose, ugly and has nothing to do with what you&#8217;re really trying to
-convey. It&#8217;s just noise (more or less). For example, when using the just
-<em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of
-underlying Google services to be able to mock. Each service wanted to throw a
-bunch of Google specific exceptions which I, of course, wanted to rethrow as
-application specific. Boring&#8230;</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">O</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CalendarException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>  <span class="c1">// the call to the google service</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">BAD_URL_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">IO_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AuthenticationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">AUTHENTICATION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ServiceException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">SERVICE_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If I didn&#8217;t delegate like this, every service call would have to wrap and
-handle the google exceptions. As I&#8217;ve done this a few times, I decided to add
-it to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> as a
-<code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to
-rethrow any caught exception as some other (including the underlying exception
-as the <code>cause</code>).</p>
-
-<p>So, in a similar way to the above, the client can ignore any declared
-exceptions and just rethrow them in-line. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="k">new</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServiceException</span> <span class="o">{</span>
-</span><span class='line'>         <span class="c1">// nasty code throwing a bunch of exceptions</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">},</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>when this is in-lined further, it hopefully becomes more succinct.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="n">serviceCall</span><span class="o">(),</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to
-include as the cause any underlying exception. It uses reflection to create
-the new exception, and forces the syntactically sugary <code>with</code> by taking a
-<code>WithException</code> as the second parameter.</p>
-
-<p>It&#8217;s a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful. Source is
-<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
-the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -735,6 +671,10 @@ the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/temp
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/tools-for-bad-dot-robots/">tools for bad.robots</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
@@ -770,10 +710,6 @@ the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/temp
     
       <li class="post">
         <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
       </li>
     
   </ul>

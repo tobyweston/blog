@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java, | bad.robot]]></title>
+  <link href="http://www.baddotrobot.com/blog/categories/java-/atom.xml" rel="self"/>
+  <link href="http://www.baddotrobot.com/"/>
+  <updated>2012-03-18T16:15:53+00:00</updated>
+  <id>http://www.baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[tools for bad.robots]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
+    <updated>2012-03-18T15:58:00+00:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
+    <content type="html"><![CDATA[<p>Just a quick post to introduce you to the <a href="http://robotooling.com">robotooling</a> project,
+a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.</p>
+
+<p>Rather than re-implement the same utility code again and again, I've started to collect them under the bad.robot
+banner. So far, we have...</p>
+
+<!-- more -->
+
+
+<ul>
+<li>simple-http; a simple way to build a HTTP client and work with the HTTP verbs. No more lengthy configuration,
+it just works out of the box.</li>
+<li>simple-excel; a simple DSL-wrapper over Apache POI to work with sheets</li>
+<li>concordion-ant-task; build <a href="http://www.concordion.org/">Concordion</a> overview pages for your specifications</li>
+<li>a collection of domain driven design classes so you can quickly incorporate <em>value types</em> and alike in your project.</li>
+</ul>
+
+
+<p>Head over to <a href="http://robotooling.com">robotooling.com</a> or <a href="https://github.com/tobyweston">github</a> to find out
+more.</p>
+]]></content>
+  </entry>
+  
+</feed>
