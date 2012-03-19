@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-03-19T22:17:36+00:00</updated>
+  <updated>2012-03-19T22:18:30+00:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,9 +18,9 @@
     <link href="http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
     <updated>2012-03-18T15:58:00+00:00</updated>
     <id>http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
-    <content type="html"><![CDATA[<p>Just a quick post to introduce you to the <a href="http://robotooling.com">robotooling</a> project,
+    <content type="html"><![CDATA[<p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
 a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
-Rather than re-implement the same utility code again and again, I&#8217;ve started to collect them under the bad.robot
+Rather than re-implement the same utility code again and again, I&#8217;ve started to collect things under the bad.robot
 banner. So far, we have&#8230;</p>
 
 <!-- more -->
