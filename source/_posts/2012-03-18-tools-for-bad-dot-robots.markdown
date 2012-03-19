@@ -6,9 +6,9 @@ comments: true
 categories: java, robotooling
 ---
 
-Just a quick post to introduce you to the [robotooling](http://robotooling.com) project,
+Just a quick post to introduce the [robotooling](http://robotooling.com) project;
 a collection of useful Java tools available for download via the [bad.robot.repo](http://robotooling.com/maven).
-Rather than re-implement the same utility code again and again, I've started to collect them under the bad.robot
+Rather than re-implement the same utility code again and again, I've started to collect things under the bad.robot
 banner. So far, we have...
 
 <!-- more -->
