@@ -9,7 +9,7 @@ comments: true
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idom or the `expected` element of the `@Test` annotation. Dispite being more concise that the alternative, there is an argument that using `expected` doesn't support all the cases you might want to test. Tthe examples being additional testing after an expected exception or testing the exception details. JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of both worlds.
 
-This articles describes the new syntax and wieghs up the pros and cons of each approach. It also offers a general approach to exception handling that if followed, means that when testing for exceptions, you need _never_ assert on the contents of the exception message...
+This articles wieghs up the pros and cons of each approach and takes a closer look at the syntax of each. It also offers a general approach to exception handling that if followed, means that when testing for exceptions, you need _never_ assert on the contents of the exception message...
 
 <!-- more -->
 
@@ -80,5 +80,9 @@ For example, if you're using an old version of JMock, `@RunWith(JMock.class)` ma
 
 ## General Approach
 
-We shouldn't care about the exception message. There, I've said it.
+So earlier I said that _we should never assert against the exception message_. That's rather an extreme position so I should probably explain what I mean by that.
+
+As a general approach, exceptions should be dealt with at the boundaries of your system. Examples include architectural "layers' such as the UI or the API. I use API in the general sense; it could be a concrete RESTful API or something less formal like the API between two internal components of your system.
+
+(the implication being a user would benefit from seeing that some problem occurred), 
 
