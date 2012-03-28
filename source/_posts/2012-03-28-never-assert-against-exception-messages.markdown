@@ -2,7 +2,7 @@
 name: never-assert-against-exception-messages
 layout: post
 title: never-assert-against-exception-messages
-time: 2012-01-30 10:00:00 +00:00
+time: 2012-03-28 06:00:00 +00:00
 categories: java 
 comments: true
 ---

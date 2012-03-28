@@ -2,7 +2,7 @@
 name: expecting-exception-with-junit-rule
 layout: post
 title: Expecting Exceptions with a JUnit Rule
-time: 2012-01-29 13:58:00 +00:00
+time: 2012-03-27 06:00:00 +00:00
 categories: java 
 comments: true
 ---
