@@ -15,10 +15,59 @@ This articles describes the new syntax and wieghs up the pros and cons of each a
 
 ## try/fail/catch
 
+The typical pattern is the catch an exception or fail the test excplitily if it was never thrown. For example.
+
+    @Test
+    public void expectingExceptionExample1() {
+        try {
+            find("something");
+            fail();
+        } catch (NotFoundException e) {
+            assertThat(e.getMessage(), containsString("could not find something"));
+        }
+		// ... could have more assertions here
+    }
+
+which will result in the following in the negative case.	
+	
+	java.lang.AssertionError: expected an exception
+		at org.junit.Assert.fail(Assert.java:91)
+		at bad.roboot.example.ExceptionTest.expectingExceptionExample1(ExceptionTest.java:20)
+		...
+	
+This idiom has one potential advantage in that it offers the opertunity to assert on the actual exception and potentially perform additional work after the expectation. The drawback however is that its very easy to forget to include the `fail` call. If genuniely doing test first, where we always run the test red, this wouldn't be a problem but all too often things slip through the net. In practice, I've seen far too many examples with a missing `fail` giving false positives.
+
 ## @Test (expected = NotFoundException.class)
 
+    @Test (expected = NotFoundException.class)
+    public void expectingExceptionExample2() {
+        find("something");
+    }
+
+	java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
+
 ## @Rule public ExpectedException 
+
+    @Rule public ExpectedException exception = ExpectedException.none();
+    
+    @Test
+    public void expectingExceptionExample3() {
+        exception.expect(NotFoundException.class);
+        exception.expectMessage(containsString("expected an exception"));
+        find("something");
+    }
+
+	java.lang.AssertionError: Expected test to throw (exception with message a string containing "expected an exception" and an instance of bad.robot.example.NotFoundException)
+		at org.junit.rules.ExpectedException$ExpectedExceptionStatement.evaluate(ExpectedException.java:118)
+		...
+	
+Beware thought that if you combine this with some `@RunWith` class annotations, you may get a false positive. Specifically, if you were to run with a `JUnit4ClassRunner` in the above example, the test would no longer fail. You'd get a false positive. 
+
+Watch out for versions of older versions of JMock excibiting this behavour. Older versions of the JMock running extend `JUnit4ClassRunner` which would cause the problem using `@RunWith(JMock.class)`. Newer version extend `BlockJUnit4ClassRunner` which works fine.
+
+If the class in question extends `JUnit4ClassRunner` rather than `BlockJUnit4ClassRunner`, JUnit will ignore the rule.
 
 ## General Approach
 
 We shouldn't care about the exception message. There, I've said it.
+
