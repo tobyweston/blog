@@ -7,9 +7,9 @@ categories: java
 comments: true
 ---
 
-To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idom or the `expected` element of the `@Test` annotation. Dispite being more concise that the alternative, there is an argument that using `expected` doesn't support all the cases you might want to test. Tthe examples being additional testing after an expected exception or testing the exception details. JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of both worlds.
+To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idom or the `expected` element of the `@Test` annotation. Dispite being more concise than the alternative, there is an argument that using `expected` doesn't support all the cases you may want to test. The examples being additional testing after an expected exception or testing the exception message. JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of both worlds.
 
-This articles wieghs up the pros and cons of each approach and takes a closer look at the syntax of each. It also offers a general approach to exception handling that if followed, means that when testing for exceptions, you need _never_ assert on the contents of the exception message...
+This articles wieghs up the pros and cons of each approach and takes a closer look at the syntax of each. 
 
 <!-- more -->
 
@@ -60,7 +60,7 @@ Using the `ExpectedException` we define a [JUnit rule](http://www.infoq.com/news
     @Rule public ExpectedException exception = ExpectedException.none();
     
     @Test
-    public void expectingExceptionExample3() throws NotFoundException {
+    public void example3() throws NotFoundException {
         exception.expect(NotFoundException.class);
         exception.expectMessage(containsString("exception message"));
         find("something");
@@ -78,11 +78,8 @@ Beware though that if you combine this with some `@RunWith` class annotations, y
 For example, if you're using an old version of JMock, `@RunWith(JMock.class)` may exhibit this behaviour. Older versions of the `JMock.class` extend `JUnit4ClassRunner` which don't support rules whereas newer versions extend `BlockJUnit4ClassRunner` which does.
 
 
-## General Approach
+## Summary
 
-So earlier I said that _we should never assert against the exception message_. That's rather an extreme position so I should probably explain what I mean by that.
+The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the `expected` element (in `example2`) offers the most straight forward solution. The rule comes with its own bagage. For the simple case `exception.expect(NotFoundException.class)`, the declarative nature of the rule means _magic_ just happens and there is new 'noise' in the test. You may or may not be comfortable with this.
 
-As a general approach, exceptions should be dealt with at the boundaries of your system. Examples include architectural "layers' such as the UI or the API. I use API in the general sense; it could be a concrete RESTful API or something less formal like the API between two internal components of your system.
-
-(the implication being a user would benefit from seeing that some problem occurred), 
-
+In my next article [Never Assert Against Exception Messages], I describe a general exception handling approach which negates the need to assert against messages and so seemingly argues against using the new rule.
