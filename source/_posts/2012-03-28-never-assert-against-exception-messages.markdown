@@ -81,18 +81,43 @@ With this addition, we've implemented our system wide policy. All exceptions wil
 
 ### Database Transaction Boundary
 
-When, how
+When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we wont to rollback otherwise we'll be left in an inconsistent state. 
+
+Database transactions are the typical solution to this class of problem. We'l like to start a trasaction and perform some unit of work before committing. If a problem occurs during the execution, we can rollback. We don't want to do this ad-hoc with various catch statements, if we did, it would be hard to manage and ensure we've got all the cases. We could even 'double up' and handle the exception twice.
+
+So for the _when_, unlike the declarative examples above, we can put a more imperitive mechanism in place and ensure all database work uses the method below.
+
+{% codeblock lang:java %}
+public <T, E extends Exception> T run(UnitOfWork<T, E> unitOfWork) throws Throwable {
+	Session session = sessionProvider.getCurrentSession();
+	Transaction transaction = session.beginTransaction();
+	try {
+		T result = unitOfWork.execute(sessionProvider);
+		transaction.commit();
+		return result;
+	} catch (Throwable e) {
+		transaction.rollback();
+		throw e;
+	} finally {
+		if (session.isOpen())
+			session.close();
+	}
+}
+{% endcodeblock %}
+
+This also describes the _how_. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propogate up to the UI. We've handled the exception here to maintain data integrity _and_ allowed other exception handling policies to be applied.
+
+For example; two sales clerks try and update a customer's details at the same time in their web app. Hibernate detects the problem and throws a `OptimisticLockException`. Our database exception handling policy kicks to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to decide what to do.
+
+See a [previous article]({{ root_url }}/blog/2012/01/29/transaction-management-without/) for more details about this kind of approach to transaction management.
 
 
-## Only using Runtime Exceptions
-
-Translating or respond. (?)
 
 ## The Impact on Testing
 
 If we handle exceptions _only_ at the boundaries, we do so based on _type_ in the `catch` block. Even here,
 we shouldn't be concerned with the internals of the exception. The handler can _tell_ the exception rather than _ask_. We can start to be more specific with our exception types; our sub-classes can encapsulate, for example,
-the exception message. To see an example of building more specific exception sub-types, see the next article [Building Better Exceptions]().
+the exception message. To see an example of building more specific exception sub-types, see the next article [Building Better Exceptions]({{ root_url }}/blog/2012/03/29/building-better-exceptions/).
 
 A further inference is that we should never need to test the content of the message in a unit test for a class
 that throws it. To test that a class throws an exception, we should do just that and nothing more. That's not to say that the boundary classes that actually _use_ the exception shouldn't be tested. It's at this point that, for example, we could test that messages originating within an exception appear on a UI but this is more of an _itegration_ test. Applying OO goodness to the exception type also means that the unit test for the exception itself can exercise more and do so in a de-coupled way. Nom nom nom.
