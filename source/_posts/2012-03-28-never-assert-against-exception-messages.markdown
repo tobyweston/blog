@@ -133,7 +133,9 @@ We've talked about a lot but here's a few parting tips.
 * Define a general handling approach for each boundary (the _how_ to handle)
 * Application specific exception subclasses should be _specialised_.
 * Exceptions are objects too; think OO.
-* Never rethrow an exception verbatim. 
+* Never catch an exception and rethrow verbatim. 
 * However, if required, do _translate_ an exception into another _only_ at the boundaries.
 
-Happy coding!
+Remember though, there is no spoon. Feel free to discard these "rules" if they don't apply. You may have different constraints or you may just know better.
+
+--- what about internal boundaries --- logically distincy context (see DDD bounded contenxts
