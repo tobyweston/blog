@@ -7,9 +7,7 @@ categories: java rest testing
 comments: true
 ---
 
-It's not ok to handle exceptions ad-hoc. To get the most out of it, exception handling should be a **system wide
-concern**. That means catching an exception, arbitrarily logging before rethrowing isn't a good idea. We
-should be carefully considering _when_ and _how_ to handle exceptions. With a top level strategy, things just become easier. You focus exception handling to just a few places and make it easy to apply consistently.
+It's not ok to handle exceptions in an ad-hoc way. To get the most out of it, exception handling should be a **system wide concern**. That means catching an exception, arbitrarily logging before rethrowing isn't a good idea. We should be carefully considering _when_ and _how_ to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to apply consistently.
 
 To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each
 of the following.
@@ -22,7 +20,7 @@ of the following.
 
 ### UI Boundary
 
-A user probably isn't interested in seeing details of the majority of your exceptions. For public facing web apps, its a pretty poor show if somebody sees a stack trace in thier browser. For arguments sake though, lets use a `SessionExpiredException` as our example.
+A user probably isn't interested in seeing details of the majority of your exceptions. For public facing web apps, its a pretty poor show if somebody sees a stack trace in thier browser. For this example, we'll use a `SessionExpiredException` as our example.
 
 For the _when_, most web UI frameworks have a convient mechanism. For example, in the servlet space, you can declaratively configure a page to be displayed based on an exception type.
 
@@ -38,26 +36,26 @@ For the _when_, most web UI frameworks have a convient mechanism. For example, i
 {% endcodeblock %}
 
 
-For the _how_, the approach at this layer is to _translate_ un underlying exception into something approprate. This could mean something that is presentable to the user or perhaps something that the browser can respond to programatically. In our example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompted to user to log back in.
+For the _how_, the approach at this layer is to _translate_ un underlying exception into something approprate. This could mean something that is presentable to the user or perhaps something that the browser can respond to programatically. In our example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.
 
 ### API Boundary
 
-Lets consider a RESTful web service that allows a client to `GET` customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code `404` (Not Found). In the backend however, we though a `CustomerNotFoundException`.
+Lets consider a RESTful web service that allows a client to `GET` customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code `404` (Not Found). In the backend however, we throw a `CustomerNotFoundException`.
 
-For the _when_, again, this layer is about _translation_. We would like to turn an `Exception` into a HTTP response code at the point at which the response is generated.
+For the _when_, again, this layer is about _translation_. We would like to turn the `Exception` into a HTTP response code at the point at which the response is generated. We can propogate the exception up through the stack until the last point before returning the response.
 
-For Jersey, this means the _how_ is taken care of declarativly by providing an `ExceptionMapper` as below.
+For [Jersey](http://jersey.java.net/), this means the _how_ is taken care of declarativly by providing an [`ExceptionMapper`](http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435) as below.
 
 {% codeblock lang:java %}
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
     public Response toResponse(CustomerNotFoundException notFound) {
-        return Response.status(NOT_FOUND).entity(notFound.getMessage()).build();
+        return Response.status(404).entity(notFound.getMessage()).build();
     }
 }
 {% endcodeblock %}
 
-The above turns a `CustomerNotFoundException` into the correct response code and adds a message to the response body. We encapuslate the `CustomerNotFoundException` by only allowing a narrow constructor.
+The above turns a `CustomerNotFoundException` into the correct response code and adds a message to the response body. We encapuslate the `CustomerNotFoundException` by only allowing a single, narrow constructor.
 
 {% codeblock lang:java %}
 public class NotFoundException {
@@ -68,13 +66,13 @@ public class NotFoundException {
 {% endcodeblock %}
 
 
-Then we can complete the task by defining a default exception handler.
+Then we can complete the task by defining a default exception handler to turn unexpecetd exceptions into an internal server error (HTTP `500`).
 
 {% codeblock lang:java %}
 @Provider
 public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
-        return Response.status(INTERNAL_SERVER_ERROR).entity(exception).build();
+        return Response.status(500).entity(exception).build();
     }
 }
 {% endcodeblock %}
