@@ -9,8 +9,7 @@ comments: true
 
 It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a **system wide concern**. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering _when_ and _how_ to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.
 
-To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each
-of the following.
+To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each of the following.
 
 * Low level exceptions which propogate to the UI
 * An example of an externally facing API, in our case, a RESTful service
@@ -117,25 +116,21 @@ See a [previous article]({{ root_url }}/blog/2012/01/29/transaction-management-w
 
 ## The Impact on Testing
 
-If we handle exceptions _only_ at the boundaries, we do so based on _type_ in the `catch` block. Even here,
-we shouldn't be concerned with the internals of the exception. The handler can _tell_ the exception rather than _ask_. We can start to be more specific with our exception types; our sub-classes can encapsulate, for example,
-the exception message. To see an example of building more specific exception sub-types, see the next article [Building Better Exceptions]({{ root_url }}/blog/2012/03/29/building-better-exceptions/).
+If we handle exceptions _only_ at the boundaries, we do so based on _type_ in the `catch` block. Even here, we shouldn't be concerned with the internals of the exception. The handler can _tell_ the exception rather than _ask_. We can start to be more specific with our exception types; our sub-classes can encapsulate, for example, the exception message. To see an example of building more specific exception sub-types, see the next article [Building Better Exceptions]({{ root_url }}/blog/2012/03/29/building-better-exceptions/).
 
-A further inference is that we should never need to test the content of the message in a unit test for a class
-that throws it. To test that a class throws an exception, we should do just that and nothing more. That's not to say that the boundary classes that actually _use_ the exception shouldn't be tested. It's at this point that, for example, we could test that messages originating within an exception appear on a UI but this is more of an _itegration_ test. Applying OO goodness to an exception means it can carry more _behaviour_ and so the unit test for it can do more. How many _unit_ tests have you written for an `Exception` class?
+A further inference is that we should never need to test the content of the message in a unit test for a class that throws it. To test that a class throws an exception, we should do just that and nothing more. That's not to say that the boundary classes that actually _use_ the exception shouldn't be tested. It's at this point that, for example, we could test that messages originating within an exception appear on a UI but this is more of an _itegration_ test. Applying OO goodness to an exception means it can carry more _behaviour_ and so the unit test for it can do more. How many _unit_ tests have you written for an `Exception` class?
 
 
 ## Summary
 
-We've talked about a lot but here's a few parting tips. 
+We've talked about a lot here. Hopefully, the examples give demonstrate the idea but here's a few parting tips to take away.
 
-* Identify the boundaries (and so _when_ to handle)
-* Define a general handling approach for each boundary (the _how_ to handle)
+* Identify the boundaries (and so _when_ to handle).
+* Define a general handling approach for each boundary (_how_ to handle).
 * Application specific exception subclasses should be _specialised_.
-* Exceptions are objects too; think OO.
+* Exceptions are objects too; think object oritentedly.
 * Never catch an exception and rethrow verbatim. 
 * However, if required, do _translate_ an exception into another _only_ at the boundaries.
+* Don't forget that boundaries can be internal, just be explicit about where they are.
 
 Remember though, there is no spoon. Feel free to discard these "rules" if they don't apply. You may have different constraints or you may just know better.
-
---- what about internal boundaries --- logically distincy context (see DDD bounded contenxts
