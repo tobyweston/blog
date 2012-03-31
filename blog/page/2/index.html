@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded
-(will 8 see lamdas?) &hellip;">
+  <meta name="description" content="My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
+Java Tech Journal &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -47,7 +47,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-03-21 22:44:46 +0000 -->
+    <!-- last update; 2012-03-31 18:41:30 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -78,6 +78,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-10T00:00:00+01:00" pubdate data-updated="true">Jun 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="right" src="http://baddotrobot.com/images/JTJ-2011-05.png"></a></p>
+
+<p>My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
+<a href="http://jaxenter.com/java-tech-journal/">Java Tech Journal</a>. Click on the image to download.</p>
+
+<p>I&#8217;d love to get some feedback, so please feel free to comment here.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-13T00:00:00+01:00" pubdate data-updated="true">Apr 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project&#8217;s website</p>
+
+<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
+
+<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">Maven Central</a>
+repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">java.net</a>
+since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
+and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
+
+<p>See the <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/changes.html">change list</a> for what&#8217;s included in this release.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -537,125 +623,6 @@ help auto-generate Concordion-friendly summary pages for your existing Concordio
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/05/01/unmarshalling/">Un/Marshalling</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
-who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
-
-<p>I was using Castor to do the former some time ago. It sounded like a good
-idea, and I got going really quickly. However, I quickly didn&#8217;t like the
-objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the
-marshalling. Still fine, this was ok for a while but soon enough I descended
-into Castor mapping hell. I seriously spent days trying to tweak things and
-had to compromise the model in the end.</p>
-
-<p>After reflection, I thought I&#8217;d try and dump Castor. I replaced the
-marshalling with merging to a template and produced cleaner XML in under an
-hour. The unmarshalling, replaced with manually parsing the XML and inserting
-elements directly into objects. I couldn&#8217;t believe how much less pain I was
-feeling!</p>
-
-<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less
-than working around any framework mismatches. If you&#8217;re lucky enough to find
-an marhsalling framework that can grow with you, fair play, but I&#8217;m heavily
-biased towards a more manual approach these days. Down with [insert your
-framework here].</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/05/01/setter-vs-constructor-injection/">Setter vs Constructor Injection</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
-
-<p>You can say that constructor injection forces an object to have its
-dependencies set explicitly and setter injection is open to forgetfulness but
-how powerful an argument is that really? Surely the tests would catch it if
-you miss a set call? Constructor injection does say upfront &#8220;this is what I
-need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its
-explicit and you don&#8217;t need to know the internals that setters try and expose.
-That&#8217;s useful. But on the small, how complex do the combination of set calls
-get?</p>
-
-<p>I don&#8217;t think that a large number of constructor arguments justifies defecting
-to the setter camp as the real smell here is often that the class is doing too
-much and/or has too many dependencies. It&#8217;s often cited that the reason
-there are lots of setters is because of particular dependency injection
-framework leads you in that direction but why compromise (I should probably
-say, <em>comply</em>) because you&#8217;re <em>told</em> to?</p>
-
-<p>How about the way the system would grow using constructors vs setters? I think
-this is where the real argument lies. You can move forward perfectly happily
-with either approach, content with the fact that dependencies are isolated.
-Testing becomes simpler, more focused on the objects under test and the earth
-continues to orbit the sun. Its only much later when the system is all but
-grown up that you can look back and reflect. Have setters contributed to
-creating a system that is assembled in a complex, disheveled way? Are you
-leaning on external (ahem, xml) configuration to manage this? Alternatively,
-has a constructor centric approach left you with a system with a more concise
-declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -671,6 +638,14 @@ declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/03/18/tools-for-bad-dot-robots/">tools for bad.robots</a>
@@ -702,14 +677,6 @@ declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
     
       <li class="post">
         <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but&#8230;</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
       </li>
     
   </ul>
@@ -762,6 +729,9 @@ declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
     <ul>
         <li><a href="http://dan.bodar.com/">Dan Bodart</a></li>
         <li><a href="http://www.natpryce.com/">Nat Pryce</a></li>
+        <li><a href="http://www.higherorderlogic.com/">Steve Freeman</a></li>
+        <li><a href="http://langrsoft.com/">Jeff Langr</a></li>
+        <li><a href="http://tech.puredanger.com/">Alex Miller</a></li>
     </ul>
 </section>
 

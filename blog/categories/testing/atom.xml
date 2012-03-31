@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-03-21T22:44:46+00:00</updated>
+  <updated>2012-03-31T18:41:30+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,361 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <updated>2012-03-28T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
+
+<p>In this post, we'll take a closer look with some examples.</p>
+
+<!-- more -->
+
+
+<p>To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, <em>when</em> to catch exceptions and <em>how</em> to deal with them. Effectively, we'll define a system wide strategy for each of the following.</p>
+
+<ul>
+<li>Low level exceptions which propagate to the UI</li>
+<li>An example of an externally facing API, in our case, a RESTful service</li>
+<li>Maintaining data atomicity in the face of failures</li>
+</ul>
+
+
+<h3>The UI Boundary</h3>
+
+<p>A user probably isn't interested in seeing details of the majority of your exceptions. A user should certainly not be presented with a Java stack trace when visiting a public web site.</p>
+
+<p>Lets have a look at the example when a user's session times out. The server will generate a <code>SessionExpiredException</code> on subsequent requests but we don't want to relay this to the user.</p>
+
+<p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.SessionExpiredException<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/login<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
+</span><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.Defect<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/internalServerError<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>For the <em>how</em>, the approach at this layer is to <em>translate</em> un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
+
+<h3>The API Boundary</h3>
+
+<p>Lets consider a RESTful web service that allows a client to <code>GET</code> customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code <code>404</code> (Not Found). In the backend however, we throw a <code>CustomerNotFoundException</code>.</p>
+
+<p>For the <em>when</em>, again, this layer is about <em>translation</em>. We would like to turn the <code>Exception</code> into a HTTP response code at the point at which the response is generated. We can propagate the exception up through the stack until the last possible point.</p>
+
+<p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of <code>Throwable</code>.</p>
+
+<h3>The Database Transaction Boundary</h3>
+
+<p>When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we want to rollback. Otherwise we'd be left in an inconsistent state.</p>
+
+<p>Database transactions are the typical solution to this class of problem. We'll like to start a transaction and perform some <em>unit of work</em> before finally committing. If a problem occurs during the execution, we should rollback. We don't want to do this ad-hoc with various catch statements. If we did, it would be hard to manage and to be sure we've got all the cases. We could even 'double up' and handle exceptions twice.</p>
+
+<p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
+</span><span class='line'><span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">unitOfWork</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isOpen</span><span class="o">())</span>
+</span><span class='line'>        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This also describes the <em>how</em>. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propagate up to the UI. We've handled the exception here to maintain data integrity <em>and</em> allowed other exception handling policies to be applied. It's a good example of an <em>internal boundary</em>.</p>
+
+<p>For example; two sales clerks try and update a customer's details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a <code>OptimisticLockException</code>. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.</p>
+
+<p>See a <a href="/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
+
+<h2>Some Parting Tips</h2>
+
+<p>We've talked about a lot here. Hopefully, the examples demonstrate the idea and here's a few parting tips.</p>
+
+<ul>
+<li>Identify the boundaries (and so <em>when</em> to handle).</li>
+<li>Define a general handling approach for each boundary (<em>how</em> to handle).</li>
+<li>Application specific exception subclasses should be <em>specialised</em>.</li>
+<li>Exceptions are objects too; think OO.</li>
+<li>Never catch an exception and rethrow verbatim.</li>
+<li>However, if required, do <em>translate</em> an exception into another <em>only</em> at the boundaries.</li>
+<li>Don't forget that boundaries can be internal, just be explicit about where they are.</li>
+</ul>
+
+
+<p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <updated>2012-03-27T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
+the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
+there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The examples being
+to perform additional testing after the exception or testing against the actual exception message.</p>
+
+<p>JUnit 4.7 introduces the next progression, a <code>@Rule</code> that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.</p>
+
+<!-- more -->
+
+
+<h2>The try/fail/catch Idiom</h2>
+
+<p>The typical pattern is to catch an exception or fail explicitly if it was never thrown.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example1</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">fail</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;could not find something&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="c1">// ... could have more assertions here</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which would highlight a failure in the following way.</p>
+
+<pre><code>java.lang.AssertionError: expected an exception
+    at org.junit.Assert.fail(Assert.java:91)
+    at bad.roboot.example.ExceptionTest.example1(ExceptionTest.java:20)
+    ...
+</code></pre>
+
+<p>The idiom has potential advantages in that it offers the opportunity to assert against the actual exception as well as performing additional work after the expectation. Aside from the noise, the major drawback however is that its very easy to forget to include the <code>fail</code> call. If genuinely doing test first, where we always run the test red, this wouldn't be a problem but all too often things slip through the net. In practice, I've seen far too many examples with a missing <code>fail</code> giving false positives.</p>
+
+<h2>@Test (expected = Exception.class)</h2>
+
+<p>Using the <code>expected</code> element, we can rewrite the test as follows.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span> <span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which will result in the following failure.</p>
+
+<pre><code>java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
+</code></pre>
+
+<p>Much more concise, we've done away with all the noise at the cost of not being able to assert against the exception
+message. We've also lost the ability to make more assertions after <code>find</code>. However, you might decide that smaller focused tests are in fact a good thing. Using this syntax, we're lead into writing a test focused on just one thing; that an exception is thrown when we call <code>find</code>.</p>
+
+<p>The test feedback has also become clearer.</p>
+
+<h2>ExpectedException Rule</h2>
+
+<p>Using an instance of <code>ExpectedException</code>, we define a <a href="http://www.infoq.com/news/2009/07/junit-4.7-rules">JUnit rule</a>
+that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
+setting up expectations in mocking frameworks like <a href="http://www.jmock.org">JMock</a>.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example3</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;exception message&quot;</span><span class="o">));</span>
+</span><span class='line'><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Which would show the failure below.</p>
+
+<pre><code>java.lang.AssertionError: Expected test to throw (exception with message a string containing "exception message" and an instance of bad.robot.example.NotFoundException)
+    at org.junit.rules.ExpectedException$ExpectedExceptionStatement.evaluate(ExpectedException.java:118)
+    ...
+</code></pre>
+
+<p>The rule allows us to assert the exception is thrown and make assertions against the message. We still can't make
+additional assertions after the <code>find</code> method call, but this may not be a bad thing.</p>
+
+<p>Beware though that if you combine the rule with certain <code>@RunWith</code> classes,
+you may get a false positive. Specifically, if you were to run with a class that extends <code>JUnit4ClassRunner</code> in the
+above example, the test would no longer fail. You'd get a false positive.</p>
+
+<p>For example, if you're using an old version of JMock and use <code>@RunWith(JMock.class)</code> you may see this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code>. <code>JUnit4ClassRunner</code> ignores rules whereas the newer <code>BlockJUnit4ClassRunner</code> supports rules and newer versions of <code>JMock.class</code> extends this runner.</p>
+
+<h2>Summary</h2>
+
+<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in
+asserting against the exception's message, the <code>expected</code> element offers the most straight forward
+syntax. In the next article <a href="/blog/2012/03/28/never-assert-against-exception-messages/">Never Assert Against Exception Messages</a>,
+I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+
+<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just
+happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
+
+<p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
@@ -198,450 +553,6 @@ since their migration (and no longer being able to publish, see this <a href="ht
 and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you're interested).</p>
 
 <p>See the <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/changes.html">change list</a> for what's included in this release.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Logging is evil but...]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/"/>
-    <updated>2010-10-18T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
-    <content type="html"><![CDATA[<p>Logging is a nightmare. I don't mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of over eager
-developers and [<em>insert your current logging framework here</em>] is a recipe
-for disaster. We've all seen too much of</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">somethingRisky</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which is just one example where the exception handling policy for the system
-(it's a system-wide concern remember) is muddled at best. Nothing is saying
-that the same exception isn't logged elsewhere or that the exception is even
-handled correctly or the right people notified. It's not ok to just log and
-rethrow and every single time we go to declare a new logger, we should think
-twice.</p>
-
-<!-- more -->
-
-
-<p>We've taken this very literally in my current project and everyone is actively
-discouraged from instantiating a logger. I'd rather be explicit that some
-exception event has occurred and fire an event that some interested party can
-listen for. This makes perfect sense when you think about the huge log files
-that someone has to trawl through, armed only with for some vague clue as to
-what went wrong, a grep manual and the futile hope that developers actually
-log something useful. All without the context of the code to actually guide
-them. Good luck.</p>
-
-<p>The disseminated log problem is exacerbated if there is no clear audit trail
-tying pieces of information together. In a system with thousands of request
-per second, how do you tie the logged request inputs to some stack trace
-embedded in the middle of another thousand requests? What should have been a
-clear set of requirements from the business (in this case, presumably the
-support team) can easily get lost in the technical translation.</p>
-
-<blockquote><p>Logging is evil, but if I really <em>have</em> to log, be honest about it...</p></blockquote>
-
-<p>Asking the business <em>"what information do you want to see in the event of x
-happening"</em> rather than assuming they want to see some stack trace in a huge
-log can make a lot of sense. We're often not logging for ourselves (we have
-debuggers for that), we're often logging for our customers. If we start to
-think about this stuff early, in terms of exception events and their audience,
-we can build systems that tell the outside world something meaningful in
-flexible ways. We start to define a system wide exception handling policy
-rather than relying of the default exception handler (<code>System.out</code> is rarely
-the right choice!).</p>
-
-<p>So back to my current project... people are regularly beaten with a chair leg
-for creating loggers but I'll admit that on occasion, I've actually logged
-stuff and didn't resort to some Opus Dei style self-flagellation. Logging is
-evil, but if I really <em>have</em> to log, my saving grace is to be explicit about
-it. I'll hunt down a customer and I'll write a test to advertise the fact the
-log contains what they asked for.</p>
-
-<p>Most of the common logging frameworks make it troublesome to inject a logger
-instance, and I'm reluctant to subvert behaviour just because some logging
-framework wants me to. Logging (or preferably, firing an event) should be
-orthogonal to the classes core behaviour, why should I compromise? My
-preferred approach is the canonical example of using Aspects, or less
-esoterically, using decorators.</p>
-
-<p>For example, I created a interface to handle HTTP POST requests, imaginatively
-called <code>Post</code>. Why should I add logging to implementations and open the door
-to ad-hoc, erratic logging? I shouldn't, but when my implementation
-<code>CustomerPost</code> requires logging of the request and response, I can decorate
-with a <code>LoggingPost</code></p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">Post</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">delegate</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">Response</span> <span class="nf">post</span><span class="o">(</span><span class="n">Body</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>       <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
-</span><span class='line'>   <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>       <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>       <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>You might be concerned that the try/catch above looks very similar to the
-original negative example. The good thing about our decorated example above is
-that by being explicit about this classes responsibility, declaring the usage
-in the correct context, we can actually define the system wide policy for
-logging the <code>Post</code> calls in one place, without affecting the contract of the
-interface. We'd do this for example, on the system boundary, for example where
-the RESTful API is implemented.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Resource</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerServlet</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">doPost</span><span class="o">(</span><span class="n">Request</span> <span class="n">chuck</span><span class="o">,</span> <span class="n">Response</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>    <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomerPost</span><span class="o">(...));</span>
-</span><span class='line'>    <span class="n">customer</span><span class="o">.</span><span class="na">post</span><span class="o">(...)</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>In our <code>LoggingPost</code> above, we haven't even tried to inject a logger in to
-make the testing easier. Instead, mostly because I was being lazy, I used the
-helper class below. This is intended to represent Log4J in the context of a
-test and give access to the logger for assertion purposes.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Using it in the test for <code>LoggingPost</code> is shown below</p>
-
-<p>
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPostTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Post</span> <span class="n">mock</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">EXCEPTION_MESSAGE</span> <span class="o">=</span> <span class="s">&quot;bar bar black sheep...&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDelegate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'>    <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldLogWhenExceptionIsThrown</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">postWill</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="k">new</span> <span class="n">IOException</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">allOf</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;ERROR&quot;</span><span class="o">),</span> <span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@After</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">cleanupLogger</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">clean</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kt">void</span> <span class="nf">postWill</span><span class="o">(</span><span class="kd">final</span> <span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">(){{</span>
-</span><span class='line'>        <span class="n">allowing</span><span class="o">(</span><span class="n">mock</span><span class="o">);</span> <span class="n">will</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>It relies on nasty statics to dynamically add a logger to Log4J's list of
-loggers and thereby appending any generated logs to something that the <code>Log4J</code>
-test helper can assert on. I can't decide if I like this or not. It gives you
-an extra test that your class under test is using a logger with the name that
-you expect (<code>"Post.class"</code> in the example above), testing your logger
-configuration as a by-product.</p>
-
-<p>What I found interesting about this though was that it was always seemed a lot
-of effort making some logging framework play nicely with mocks, or writing and
-configuring a custom in memory appender and asserting on it. With the above
-example, I very quickly added confirmation to existing Log4J infrastructure.
-It seemed almost too easy... so I'd love to hear your comments and how you
-write tests for logging.</p>
-
-<p>PS. Logging is evil.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Changing Test Gears]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
-    <updated>2010-07-09T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
-    <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.</p>
-
-<p>To put it development terms, good developers know when to change gears. They
-know when to change their testing style from cautious to aggressive as the
-code evolves.</p>
-
-<p>Lets pretend there is just three types of testing; unit, integration and
-acceptance. In the interest of stereotyping, we'll define them simplistically
-as</p>
-
-<ul>
-<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
-<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
-<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
-</ul>
-
-
-<!-- more -->
-
-
-<h3>Starting in a low gear with unit tests</h3>
-
-<p>People are probably most comfortable with this type of testing. The term unit
-testing and the technology JUnit have become so intertwined in the Java world,
-that people often confuse tests written with JUnit as unit tests. They may be,
-but they may not be. So where's the value in defining the term unit testing
-and how does knowing what type of test you've just written in JUnit help with
-changing gears?</p>
-
-<p>Knowing what gear you're in and knowing the terrain that’s coming up is
-essential for you to select the right gear. Writing a non-unit test in JUnit
-has value, of course it does (assuming it actually tests something) so why
-should I care if it’s a unit test or a chazzwazzer? Knowing where you are and
-where you want to be is useful because you can defer some things and avoid
-duplication. So for me, unit testing is good for testing the edge cases (Right
-BICEP) and exploring the class you're writing. It can be especially useful
-when you <em>test drive</em> towards something or explore relationships and your
-understanding of the classes roles and responsibilities. In this sense,
-testing becomes a design activity or an analysis activity, a chance to phrase
-your thinking and understanding in code. The regression element can quickly
-lose value here. For example, writing a test with mocks to explore the
-interaction between two collaborators, A and B. Then writing a separate test
-to explore the same for classes B and C. Then a test for A, B and C. There was
-value in each test individually, but is there still value in all three when
-there is obvious cross-over? When might I consciously choose <em>not</em> to write
-unit tests?</p>
-
-<h3>Changing up to integration tests</h3>
-
-<p>If I know the context that a set of objects are going to work together in, I'm
-going to want to be confident that they work together as expected. I can't
-test these in isolation, so I'm going to need to test them in cooperation. At
-this level, my confidence is fairly high around the composites so I'm already
-up and running, I'm more concerned here with a broader brush approach. I'm
-certainly not interested in re-testing all the lower level object tests, just
-how they operate together. So I change up a gear and as a developer, convince
-myself that these object work together <em>in context</em>. I'm most likely still
-using JUnit but I understand what gear I'm in.</p>
-
-<h3>Cruising with acceptance tests</h3>
-
-<p>So how about the value to the business? The unit tests in particular don't
-advertise value to the business, they're a developer tool and its all too easy
-to write individual classes well with good test coverage and yet combine them
-into something that doesn't work. Demonstrating to business that their
-specifications have been meet is the ultimate gear, and to change up to that
-gear and have overall confidence in the system means going through the
-previous gears to get there. Knowing that you'll be changing up whilst in
-lower gears can help you decide what to do in those lower gears.</p>
-
-<p>For example, lets assume the business want to <em>see</em> the affect of a
-configuration file in the system. When developing the code to load and decode
-the contents of the file, you started by proving the component works at the
-unit level so why would you test that the component is wired up correctly as a
-unit test? You'd be forced to mock that component in some higher level
-component and test it calls it. But what does this give you? You can still
-wire the higher level component up incorrectly. The acceptance test is going
-to have to test this to demonstrate the affect, so there's an argument to say
-you can leave it to the acceptance test to verify. This might have the added
-bonus of avoiding "breaking up" the higher level component albeit a minor
-point.</p>
-
-<h3>The missing gear?</h3>
-
-<p>When we build software in a componentised way, we're often left with objects
-that work in isolation with their dependencies passed in. We push up and up
-the assembly of the objects and their ultimate iterations and are left with
-parts of the system that are responsible for this assembly. This might be
-done in code or by some dependency injection framework. Either way,
-it feels like these 'assemblers' have a clear role
-and responsibility and so shouldn't they be tested? What gear do we test them
-in? Personally, I'm comfortable in limiting the assembly options and so reduce
-the combinations of testing required. With a single "builder" or "spring
-context", I'm comfortable with testing these through acceptance tests.</p>
-
-<p>In this article, I suppose I'm using "gears" as an analogy for pragmatism and
-certainly not pace. I'm not saying that good developers know when to rush,
-compromising quality but they do know how to optimise their testing
-strategies. I think its important not to get bogged down in exhaustive unit-
-style testing if its not of value and so understanding what gear you're in and
-what gear you'll soon be in can help focus your attentions. What to test and
-when is the question I find myself asking again and again.</p>
 ]]></content>
   </entry>
   

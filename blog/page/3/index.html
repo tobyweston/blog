@@ -9,14 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;m totally bored of wrapping exceptions in Java, 1
-2
-3
-4
-5
-try { // do something
-} catch (BoredomException e) { // do something else
-} It&# &hellip;">
+  <meta name="description" content="This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
+who wants to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -53,7 +47,7 @@ try { // do something
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-03-21 22:44:46 +0000 -->
+    <!-- last update; 2012-03-31 18:41:30 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -84,6 +78,125 @@ try { // do something
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/05/01/unmarshalling/">Un/Marshalling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
+who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
+
+<p>I was using Castor to do the former some time ago. It sounded like a good
+idea, and I got going really quickly. However, I quickly didn&#8217;t like the
+objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the
+marshalling. Still fine, this was ok for a while but soon enough I descended
+into Castor mapping hell. I seriously spent days trying to tweak things and
+had to compromise the model in the end.</p>
+
+<p>After reflection, I thought I&#8217;d try and dump Castor. I replaced the
+marshalling with merging to a template and produced cleaner XML in under an
+hour. The unmarshalling, replaced with manually parsing the XML and inserting
+elements directly into objects. I couldn&#8217;t believe how much less pain I was
+feeling!</p>
+
+<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less
+than working around any framework mismatches. If you&#8217;re lucky enough to find
+an marhsalling framework that can grow with you, fair play, but I&#8217;m heavily
+biased towards a more manual approach these days. Down with [insert your
+framework here].</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/05/01/setter-vs-constructor-injection/">Setter vs Constructor Injection</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
+
+<p>You can say that constructor injection forces an object to have its
+dependencies set explicitly and setter injection is open to forgetfulness but
+how powerful an argument is that really? Surely the tests would catch it if
+you miss a set call? Constructor injection does say upfront &#8220;this is what I
+need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its
+explicit and you don&#8217;t need to know the internals that setters try and expose.
+That&#8217;s useful. But on the small, how complex do the combination of set calls
+get?</p>
+
+<p>I don&#8217;t think that a large number of constructor arguments justifies defecting
+to the setter camp as the real smell here is often that the class is doing too
+much and/or has too many dependencies. It&#8217;s often cited that the reason
+there are lots of setters is because of particular dependency injection
+framework leads you in that direction but why compromise (I should probably
+say, <em>comply</em>) because you&#8217;re <em>told</em> to?</p>
+
+<p>How about the way the system would grow using constructors vs setters? I think
+this is where the real argument lies. You can move forward perfectly happily
+with either approach, content with the fact that dependencies are isolated.
+Testing becomes simpler, more focused on the objects under test and the earth
+continues to orbit the sun. Its only much later when the system is all but
+grown up that you can look back and reflect. Have setters contributed to
+creating a system that is assembled in a complex, disheveled way? Are you
+leaning on external (ahem, xml) configuration to manage this? Alternatively,
+has a constructor centric approach left you with a system with a more concise
+declarative assembly strategy? Which has more noise? You tell me&#8230;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -770,95 +883,6 @@ is woken. However, when the test reached the assert, it was false. Weird.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/">Thawte claim I&#8217;m not to be trusted&#8230;</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true">Nov 11<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are the root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
-
-<p>A couple of useful links below.</p>
-
-<ul>
-<li><a href="http://ciardhubh.de/node/4">http://ciardhubh.de/node/4</a></li>
-<li><a href="http://www.dallaway.com/acad/webstart/">http://www.dallaway.com/acad/webstart/</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/10/31/performance-monitoring-part-1/">Performance Monitoring (Part 1)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-31T00:00:00+00:00" pubdate data-updated="true">Oct 31<span>st</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?</p>
-
-<p>I&#8217;ve been doing a fair bit of this lately (blowing off that is) and thought it
-might be a good idea to capture a few thoughts in a mini-series of posts that
-will be rivaled in drama only by the likes of Dynasty and Dallas. Enjoy&#8230;</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/10/31/performance-monitoring-part-1/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -874,6 +898,14 @@ will be rivaled in drama only by the likes of Dynasty and Dallas. Enjoy&#8230;</
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/03/18/tools-for-bad-dot-robots/">tools for bad.robots</a>
@@ -905,14 +937,6 @@ will be rivaled in drama only by the likes of Dynasty and Dallas. Enjoy&#8230;</
     
       <li class="post">
         <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Loggin is still evil but&#8230;</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Artcile in JavaTech Journal</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a>
       </li>
     
   </ul>
@@ -965,6 +989,9 @@ will be rivaled in drama only by the likes of Dynasty and Dallas. Enjoy&#8230;</
     <ul>
         <li><a href="http://dan.bodar.com/">Dan Bodart</a></li>
         <li><a href="http://www.natpryce.com/">Nat Pryce</a></li>
+        <li><a href="http://www.higherorderlogic.com/">Steve Freeman</a></li>
+        <li><a href="http://langrsoft.com/">Jeff Langr</a></li>
+        <li><a href="http://tech.puredanger.com/">Alex Miller</a></li>
     </ul>
 </section>
 
