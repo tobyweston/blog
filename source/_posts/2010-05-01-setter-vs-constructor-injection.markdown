@@ -36,7 +36,7 @@ grown up that you can look back and reflect. Have setters contributed to
 creating a system that is assembled in a complex, disheveled way? Are you
 leaning on external (ahem, xml) configuration to manage this? Alternatively,
 has a constructor centric approach left you with a system with a more concise
-declarative assembly strategy? Which has more noise? You tell me...
+assembly strategy? Which has more noise? You tell me...
 
   
 
