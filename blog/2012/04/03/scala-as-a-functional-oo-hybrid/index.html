@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Java source on Mac - bad.robot</title>
+  <title>Scala as a Functional OO Hybrid - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Mostly as a reminder to myself, getting the Java source on your Mac involves the following. Go to the Apple Developer Connection downloads page, &hellip;">
+  <meta name="description" content="Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala are &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac">
+  <link rel="canonical" href="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Java source on Mac</h1>
+      <h1 class="entry-title">Scala as a Functional OO Hybrid</h1>
     
     
       <p class="meta">
@@ -96,44 +96,48 @@
   
 
 
-<time datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2011</time>
+<time datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
+<div class="entry-content"><p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
 
 <!-- more -->
 
 
-<ol>
-<li>Go to the <a href="https://developer.apple.com/downloads">Apple Developer Connection downloads page</a>, search for <strong>Java for Mac OS X 10.x Developer Package</strong> where 10.x matches your version of OS X. The developer bundle includes the source whereas the regular software update version does not.</li>
-<li>Download and install. Running <code>/Applications/Utilities/Java Preferences.app</code> should now show &#8220;Java SE 6 (System)&#8221; in the list.</li>
-<li>Open a Terminal.app window</li>
-<li><code>cd $JAVA_HOME</code> (aka <code>/System/Library/Frameworks/JavaVM.framework/Home</code>)</li>
-<li>Setup a symlink to the source archive with <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_26-b03-383.jdk/Contents/Home/src.jar</code></li>
-<li>And for the JavaDoc, <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_24-b07-334.jdk/Contents/Home/docs.jar</code></li>
-<li>Now point your IDE of choice to the new source folder symlink.</li>
-</ol>
+<h2>Object-Oriented</h2>
 
+<p>Scala is a pure object-oriented language. There&#8217;s no subverting it, there are no non-objects (such as Java&#8217;s primitives like <code>int</code>) or static fields or methods which aren&#8217;t members of an object (although there is the related idea of <em>companion object</em>). Every <em>value</em> is an object including numeric types and <em>functions</em>. We have classes and traits and flexible mixin-based composition.</p>
 
-<p>Any update to Java will set things up to point to Maven 3, so if you use Maven 2, it&#8217;ll break things with</p>
+<h2>Functional</h2>
 
-<pre><code>java.lang.NoClassDefFoundError: org/codehaus/plexus/classworlds/launcher/Launcher
-</code></pre>
+<p>Scala is also a functional language; it allows you define both <em>pure functions</em> and <em>higher order functions</em>. It doesn&#8217;t enforce this though which makes it even more important to understand if you&#8217;re actually working with these ideas. Porting a Java application verbatim doesn&#8217;t necessarily mean you&#8217;re building with purely functional blocks.</p>
 
-<p>Reset things by;</p>
+<p>Lets review these two ideas.</p>
 
-<ol>
-<li><code>cd /usr/share</code></li>
-<li><code>sudo mv maven maven.new</code> (a symlink which should incorrectly be pointing to <code>java/maven-3.0.3)</code></li>
-<li><code>sudo ln -s /maven2/install/folder maven</code></li>
-<li>run <code>maven -version</code> to check its back up.</li>
-<li>Have a cup of tea.</li>
-</ol>
+<h3>Functions are First Class</h3>
 
+<p>Programming with higher order functions means that you can pass functions as arguments to other functions, create and return them or just store them. This allows us to build richer behaviour with function composition just like object composition in the object-oriented world. In practice, function composition tends to be finer grained but still allows us to test the <em>composites rather than the composition</em>. It&#8217;s easier to test correctness of small functions like this especially when they are <em>pure functions</em>.</p>
+
+<h3>Pure Functions</h3>
+
+<p>Another aspect of a functional language is that functions should not cause any side affects. They should operate by <em>transformation</em> rather than <em>mutation</em>. That is to say a pure function should take arguments and return results but not modify the environment in which they operate. This <a href="http://en.wikipedia.org/wiki/Pure_function"><em>purity of function</em></a> is what enables <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)"><em>referential transparency</em></a>.</p>
+
+<p>Although Odersky et al [1] describe referential transparency as literally being able to substitute a method call with its result without changing the semantics of a program, Subramaniam further relates the idea to facilitating concurrent programming [2].</p>
+
+<h2>Final Thoughts</h2>
+
+<p>I think its important to bear these definitions in mind when working with Scala, if for no other reason than to be aware of the idioms available to each style and how best to leverage them.</p>
+
+<p>A functional style can give great results for certain classes of problems but lets not forget that object-oriented solutions give huge advantages for other types of problems. It&#8217;s easy to get caught up in the hype and think we&#8217;ve left object-oriented design behind when hybrid languages blur the lines, but if we&#8217;re clear about what approach to use and when, we can blend approaches as appropriate. Just don&#8217;t expect it to be easy!</p>
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12.
+[2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
 </div>
 
 
@@ -156,12 +160,12 @@
   
 
 
-<time datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2011</time>
+<time datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
   
 </span>
 
@@ -170,7 +174,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac/" data-via="jamanifin" data-counturl="http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/" data-via="jamanifin" data-counturl="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/" >Tweet</a>
   
   
   
@@ -179,14 +183,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/" title="Previous Post: Reflecting on Interviewing Mistakes">&laquo; Reflecting on Interviewing Mistakes</a>
+        <a class="basic-alignment left" href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/" title="Previous Post: Exception Handling as a System Wide Concern">&laquo; Exception Handling as a System Wide Concern</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/29/transaction-management-without/" title="next Post: Transaction Management without the Frameworks">Transaction Management without the Frameworks &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -278,7 +286,10 @@
       var disqus_shortname = 'badrobot';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/';
+        var disqus_url = 'http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

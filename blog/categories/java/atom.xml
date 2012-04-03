@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-03-31T18:41:30+01:00</updated>
+  <updated>2012-04-03T21:15:26+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -356,13 +356,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <h2>Summary</h2>
 
-<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in
-asserting against the exception's message, the <code>expected</code> element offers the most straight forward
-syntax. In the next article <a href="/blog/2012/03/28/never-assert-against-exception-messages/">Never Assert Against Exception Messages</a>,
-I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Never Assert Against Exception Messages</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
 
-<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just
-happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
+<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
 
 <p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
 ]]></content>

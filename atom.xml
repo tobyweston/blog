@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-03-31T18:41:30+01:00</updated>
+  <updated>2012-04-03T21:15:26+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scala as a Functional OO Hybrid]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
+    <updated>2012-04-03T19:33:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
+    <content type="html"><![CDATA[<p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
+
+<!-- more -->
+
+
+<h2>Object-Oriented</h2>
+
+<p>Scala is a pure object-oriented language. There&#8217;s no subverting it, there are no non-objects (such as Java&#8217;s primitives like <code>int</code>) or static fields or methods which aren&#8217;t members of an object (although there is the related idea of <em>companion object</em>). Every <em>value</em> is an object including numeric types and <em>functions</em>. We have classes and traits and flexible mixin-based composition.</p>
+
+<h2>Functional</h2>
+
+<p>Scala is also a functional language; it allows you define both <em>pure functions</em> and <em>higher order functions</em>. It doesn&#8217;t enforce this though which makes it even more important to understand if you&#8217;re actually working with these ideas. Porting a Java application verbatim doesn&#8217;t necessarily mean you&#8217;re building with purely functional blocks.</p>
+
+<p>Lets review these two ideas.</p>
+
+<h3>Functions are First Class</h3>
+
+<p>Programming with higher order functions means that you can pass functions as arguments to other functions, create and return them or just store them. This allows us to build richer behaviour with function composition just like object composition in the object-oriented world. In practice, function composition tends to be finer grained but still allows us to test the <em>composites rather than the composition</em>. It&#8217;s easier to test correctness of small functions like this especially when they are <em>pure functions</em>.</p>
+
+<h3>Pure Functions</h3>
+
+<p>Another aspect of a functional language is that functions should not cause any side affects. They should operate by <em>transformation</em> rather than <em>mutation</em>. That is to say a pure function should take arguments and return results but not modify the environment in which they operate. This <a href="http://en.wikipedia.org/wiki/Pure_function"><em>purity of function</em></a> is what enables <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)"><em>referential transparency</em></a>.</p>
+
+<p>Although Odersky et al [1] describe referential transparency as literally being able to substitute a method call with its result without changing the semantics of a program, Subramaniam further relates the idea to facilitating concurrent programming [2].</p>
+
+<h2>Final Thoughts</h2>
+
+<p>I think its important to bear these definitions in mind when working with Scala, if for no other reason than to be aware of the idioms available to each style and how best to leverage them.</p>
+
+<p>A functional style can give great results for certain classes of problems but lets not forget that object-oriented solutions give huge advantages for other types of problems. It&#8217;s easy to get caught up in the hype and think we&#8217;ve left object-oriented design behind when hybrid languages blur the lines, but if we&#8217;re clear about what approach to use and when, we can blend approaches as appropriate. Just don&#8217;t expect it to be easy!</p>
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12.
+[2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
@@ -310,13 +353,9 @@ above example, the test would no longer fail. You&#8217;d get a false positive.<
 
 <h2>Summary</h2>
 
-<p>The new rule offers a balance between concise syntax and function. In practice though if you&#8217;re not interested in
-asserting against the exception&#8217;s message, the <code>expected</code> element offers the most straight forward
-syntax. In the next article <a href="http://www.baddotrobot.com/blog/2012/03/28/never-assert-against-exception-messages/">Never Assert Against Exception Messages</a>,
-I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+<p>The new rule offers a balance between concise syntax and function. In practice though if you&#8217;re not interested in asserting against the exception&#8217;s message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Never Assert Against Exception Messages</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
 
-<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just
-happens and so there is a new kind of &#8220;noise&#8221; to cope with in the test. You may or may not be comfortable with this.</p>
+<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of &#8220;noise&#8221; to cope with in the test. You may or may not be comfortable with this.</p>
 
 <p>I&#8217;d love to hear which approach you prefer, so feel free to post a comment below.</p>
 ]]></content>
@@ -2171,75 +2210,6 @@ specification (mostly to encourage certain principles), Xcordion is more of a
 free for all. With great power comes great responsibility and all that. Whilst
 Xcordion2 is being worked on, be prepared to build from source. You&#8217;ll notice
 a couple of features missing, at least in the short term.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objectives]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/06/17/objectives/"/>
-    <updated>2010-06-17T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/06/17/objectives</id>
-    <content type="html"><![CDATA[<p>It&#8217;s objective setting time for the guys at work. Aligning what&#8217;s really good for you with what&#8217;s good for the company shouldn&#8217;t be difficult, right? Your generally heading in the same direction and have similar interests at heart. Why then do we end up with generic meaningless objectives like &#8220;attend a XXX course&#8221;? I think you can get the most out of the objective setting exercise by thinking about what you want <em>personally</em> out of your career, don&#8217;t settle for the bland, phrase your objectives so there is real value in them. So, if the company think of them in terms of</p>
-
-<blockquote><p>S.M.A.R.T</p></blockquote>
-
-<p>I like the think of them as</p>
-
-<blockquote><p>S.M.A.R.T.Y</p></blockquote>
-
-<p>Where the Y is all about <em>YOU</em>; make it personal.</p>
-
-<!-- more -->
-
-
-<p>For example, we all want to be better developers but how do you phrase that as
-an acceptable business objective that management can neatly label it, put in a
-box and pull out in twelve months time to see if it&#8217;s flourished? Defining
-&#8220;better&#8221; in terms of SMART isn&#8217;t going to be easy. How about rephrasing it and
-thinking about it as reflecting on your coding practice? Keep a code journal
-of good and bad coding choices, yours and your teams. Reflect on it regularly
-and update entries. Was choosing a ThreadsafeDooDar here the right decision
-three months on, did it ever get used in a threaded context? How about that
-choice of using setter over constructor injection? How&#8217;s that working out for
-you? The responsibility to reflect is yours but you can get outside
-perspectives from your peers.</p>
-
-<p><span class='pullquote-right' data-pullquote='The key personal objective here is to keep learning, the company objective is to become a better developer '>
-The key personal objective here is to keep learning, the company objective is to become a better developer. It can be <em>specific</em> because your wording will
-reflect something along the lines of &#8220;demonstrate a self-assessment of
-personal and the team coding standard and style&#8221;. It&#8217;s hard to avoid the word
-&#8220;quality&#8221; but if you do mention it, you should define it (not easy). The point
-is there&#8217;s something the company can buy into but there&#8217;s something more
-subtle that you can really buy into and get value from. It&#8217;s all about YOU
-after all.</p>
-
-<p></span></p>
-
-<p>It&#8217;s measurable (at least from the companies perspective, and so can get
-signed off on) because you have your journal as evidence along with dates and
-conclusions. You can even emphasize a few key learning points / techniques
-that you&#8217;ve changed your opinion on. Change is good and demonstrates learning.</p>
-
-<p>You might be able to extend this by talking in terms of coaching. I poo poo&#8217;ed
-a XXX training course earlier because I feel corporate training camps are the
-worst place to learn anything (well, there are probably worse places but
-there&#8217;s certainly plenty of better environments). Anyway, asking for
-professional and formal coaching is a great way to develop and the journal
-idea can be used as evidence. The coach can co-author to give it that
-&#8220;official stamp&#8221;.</p>
-
-<p>An example journal template might include date, initial description (the
-approach you took), pros/cons of the initial decision (why you took the
-approach), updated thoughts (including what caused you to reflect on this
-specific entry), updated pros/cons, conclusion, peer comments. Try and keep an
-entry specific to a single decision you made in the code (coarse or fine
-grained). Getting a feel about what to journal and what not to journal should
-be pretty natural, any &#8220;niggles&#8221; you get might prompt you or spotting that
-you&#8217;re all talking about this part of the code a lot might be a clue.</p>
-
-<p>The real benefit though is what you can take away from it, if you talk over
-your journal points with the team and keep an open mind, I&#8217;d hope it gets
-filled with lots of nuggets you can add to your toolbox.</p>
 ]]></content>
   </entry>
   
