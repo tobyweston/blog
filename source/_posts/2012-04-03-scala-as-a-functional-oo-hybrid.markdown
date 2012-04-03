@@ -38,6 +38,6 @@ A functional style can give great results for certain classes of problems but le
 
 ## References
 
-[1] [Programming in Scala](http://www.artima.com/shop/programming_in_scala), Martin Odersky et al, pg. 11-12.
+[1] [Programming in Scala](http://www.artima.com/shop/programming_in_scala), Martin Odersky et al, pg. 11-12.   
 [2] [Functional Style of Programming](http://pragprog.com/magazines/2011-12/scala-for-the-intrigued) Venkat Subramaniam
 
