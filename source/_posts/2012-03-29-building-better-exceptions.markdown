@@ -3,7 +3,7 @@ name: building-better-exceptions
 layout: post
 title: Building Better Exceptions
 time: 2012-03-28 06:00:00 +00:00
-categories: java testing
+categories: java testing object-oriented
 comments: true
 published: false
 ---
