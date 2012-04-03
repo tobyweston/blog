@@ -2,7 +2,10 @@
   <dictionary name="toby">
     <words>
       <w>endpullquote</w>
+      <w>odersky</w>
       <w>pullquote</w>
+      <w>scala</w>
+      <w>subramaniam</w>
     </words>
   </dictionary>
 </component>
