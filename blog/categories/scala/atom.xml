@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-03T21:15:26+01:00</updated>
+  <updated>2012-04-03T21:26:11+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -51,7 +51,7 @@
 
 <h2>References</h2>
 
-<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12.
+<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12. <br/>
 [2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
 ]]></content>
   </entry>
