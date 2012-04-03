@@ -100,13 +100,9 @@ For example, if you're using an old version of JMock and use `@RunWith(JMock.cla
 
 ## Summary
 
-The new rule offers a balance between concise syntax and function. In practice though if you're not interested in
-asserting against the exception's message, the `expected` element offers the most straight forward
-syntax. In the next article [Never Assert Against Exception Messages]({{ root_url }}/blog/2012/03/28/never-assert-against-exception-messages/),
-I describe a general exception handling approach which negates the need to assert against exception messages.
+The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the `expected` element offers the most straight forward syntax. In the next article [Never Assert Against Exception Messages]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern/), I describe a general exception handling approach which negates the need to assert against exception messages.
 
-The `ExpectedException` rule comes with its own baggage. The declarative nature of the rule means _magic_ just
-happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.
+The `ExpectedException` rule comes with its own baggage. The declarative nature of the rule means _magic_ just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.
 
 I'd love to hear which approach you prefer, so feel free to post a comment below.
 
