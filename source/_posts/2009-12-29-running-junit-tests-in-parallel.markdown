@@ -7,7 +7,7 @@ categories: java concurrency tempus-fugit
 comments: true
 ---
 
-I've been playing with running tests in their own threads for a while now (in particular with reference to [GUI testing](http://baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/)) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project and today I was working on running tests in parallel with JUnit.
+I've been playing with running tests in their own threads for a while now (in particular with reference to [GUI testing]({{ root_url }}/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/)) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project and today I was working on running tests in parallel with JUnit.
   
 Looking more into recent versions of JUnit, there seems to be lots and lots of
 integration points for you to play with. I've been playing with `Rules`,

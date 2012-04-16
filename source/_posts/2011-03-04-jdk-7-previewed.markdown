@@ -148,7 +148,7 @@ new features and download from
 
   
 **UPDATE:** An extended version of this post has been published in
-[May edition of the JavaTech Journal](http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/).
+[May edition of the JavaTech Journal]({{ root_url }}/blog/2011/06/10/artcile-in-javatech-journal/).
   
 
 

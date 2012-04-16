@@ -141,7 +141,7 @@ public class ExecuteUsingLock<T, E extends Exception> {
 
 
   
-Having the [micro-DSL](http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I
+Having the [micro-DSL]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I
 couldn't make just the using method generic and instead had to link the types
 by making the class definition generic. You might also notice that the
 `Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception`

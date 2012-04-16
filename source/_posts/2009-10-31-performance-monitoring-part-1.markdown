@@ -63,7 +63,7 @@ avoiding resources starvation and spotting bottlenecks.
 
   * __IO__ - I mean here things like handles, database connections, physical network connections and other tasty bites. Without these, all is lost and managing these to avoid resource starvation can be of primary importance.
 
-  * __Threads__ - there is a relationship between the number of threads your software requires and hardware resources available to you, threads are not unbounded in your application so the prudent coder will seek insight into the affect creating lots of threads will have. See a previous [post](http://baddotrobot.com/blog/2009/02/26/less-is-more/).
+  * __Threads__ - there is a relationship between the number of threads your software requires and hardware resources available to you, threads are not unbounded in your application so the prudent coder will seek insight into the affect creating lots of threads will have. See a previous [post]({{ root_url }}/blog/2009/02/26/less-is-more/).
   
 
 ### Statistic Gathering

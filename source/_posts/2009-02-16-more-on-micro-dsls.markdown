@@ -7,7 +7,7 @@ categories: java
 comments: true
 ---
 
-I was recently talking about what I call [micro DSLs](http://baddotrobot.com/blog/2009/01/06/be-more-expressive-with-builders/) and I thought I'd follow up with another example.
+I was recently talking about what I call [micro DSLs]({{ root_url }}/blog/2009/01/06/be-more-expressive-with-builders/) and I thought I'd follow up with another example.
 
 So, another example of a micro DSL I found myself writing is one of finding
 some object within a collection of differently typed objects. In my example, I

@@ -7,7 +7,7 @@ categories: java testing
 comments: true
 ---
 
-In a recent [post](http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/), I was talking about a micro DSL to create a simple "find x in a list" service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x's.
+In a recent [post]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/), I was talking about a micro DSL to create a simple "find x in a list" service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x's.
   
 Just to recap then, to find something in a list, the original client code
 (using a static import) looks like this.
