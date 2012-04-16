@@ -3,7 +3,7 @@ name: wrapping-exceptions-is-dull
 layout: post
 title: Wrapping Exceptions is Dull
 time: 2010-04-25 18:19:00 +01:00
-categories: java tempus-fugit
+categories: java tempus-fugit exceptions
 comments: true
 ---
 

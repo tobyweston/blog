@@ -3,7 +3,7 @@ name: expecting-exception-with-junit-rule
 layout: post
 title: Expecting Exceptions JUnit Rule
 time: 2012-03-27 06:00:00 +00:00
-categories: java testing
+categories: java testing exceptions
 comments: true
 ---
 
@@ -105,5 +105,3 @@ The new rule offers a balance between concise syntax and function. In practice t
 The `ExpectedException` rule comes with its own baggage. The declarative nature of the rule means _magic_ just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.
 
 I'd love to hear which approach you prefer, so feel free to post a comment below.
-
-

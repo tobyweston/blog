@@ -3,7 +3,7 @@ layout: post
 title: "Scala Exception Handling"
 date: 2012-03-21 22:47
 comments: true
-categories: java scala
+categories: java scala exceptions
 published: false
 ---
 

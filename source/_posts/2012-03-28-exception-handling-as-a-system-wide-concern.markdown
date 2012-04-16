@@ -3,7 +3,7 @@ name: exception-handling-as-a-system-wide-concern
 layout: post
 title: Exception Handling as a System Wide Concern
 time: 2012-03-28 06:00:00 +00:00
-categories: java rest object-oriented
+categories: java rest object-oriented exceptions
 comments: true
 ---
 

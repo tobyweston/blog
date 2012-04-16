@@ -3,7 +3,7 @@ name: logging-is-evil-but
 layout: post
 title: Logging is evil but...
 time: 2010-10-18 20:51:00 +01:00
-categories: java mocking testing
+categories: java mocking testing exceptions
 comments: true
 ---
 

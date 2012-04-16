@@ -3,12 +3,12 @@ name: building-better-exceptions
 layout: post
 title: Building Better Exceptions
 time: 2012-03-28 06:00:00 +00:00
-categories: java testing object-oriented
+categories: java testing object-oriented exceptions
 comments: true
 published: false
 ---
 
-In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern) in the series, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you issolate the points at which you handle exceptions. 
+In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern) in the series, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.
 
 This post takes the idea further by talking about exceptions as _real_ objects and suggests only ever creating sub-classes of `RuntimeException` for your application exceptions. Once exception handling points are issolated, testing becomes more straightforward and we can reduce the noise checked exceptions promote.
 
