@@ -79,7 +79,7 @@ If you isolate exception handling to a specific boundary, you emphasise the poin
 
 Checked exceptions cause noise. That's all. Nothing else bad about them but they imply a defensive style of programming that has no place in the brave world of XP. The alternative, to throw only runtime exceptions, seems fraught with danger. What if you forget to catch it? If you've setup a exception handling as a system wide policy, you would have already established where to catch them and you'll have programmatically prevented that scenario.
 
- If that's truely the case, you can create application specific exceptions that sub-class `RuntimeException` and clean up the code base considerably. However, it's a potentially bad idea to actually throw `RuntimeException` as this subverts the explicit catching strategy. I generally consider `RuntimeException` as an abstract class. It doesn't make sense on its own because it implies any `catch` clause is too generic. Instead, create an root application exception that extends `RuntimeException`.
+ If that's truly the case, you can create application specific exceptions that sub-class `RuntimeException` and clean up the code base considerably. However, it's a potentially bad idea to actually throw `RuntimeException` as this subverts the explicit catching strategy. I generally consider `RuntimeException` as an abstract class. It doesn't make sense on its own because it implies any `catch` clause is too generic. Instead, create an root application exception that extends `RuntimeException`.
 
  {% codeblock lang:java %}
  public class BadRobotApplicationException extends RuntimeException {
