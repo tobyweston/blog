@@ -89,5 +89,5 @@ Checked exceptions cause noise. That's all. Nothing else bad about them but they
 
 
 
-In the next post [Scala Exception Handling]({ root_url }}/blog/2012/03/30/scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.
+In the next post [Scala Exception Handling]({{ root_url }}/blog/2012/03/30/scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.
 
