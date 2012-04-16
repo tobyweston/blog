@@ -81,7 +81,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {
 }
 {% endcodeblock %}
 
-With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of `Throwable`.
+With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of `Throwable`. 
 
 ### The Database Transaction Boundary
 
@@ -128,5 +128,7 @@ We've talked about a lot here. Hopefully, the examples demonstrate the idea and 
 * Never catch an exception and rethrow verbatim. 
 * However, if required, do _translate_ an exception into another _only_ at the boundaries.
 * Don't forget that boundaries can be internal, just be explicit about where they are.
+
+To see an example of more specialism in exception-types, see the next article [Building Better Exceptions]({{ root_url }}/blog/2012/03/29/building-better-exceptions/).
 
 Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.

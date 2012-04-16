@@ -8,16 +8,41 @@ comments: true
 published: false
 ---
 
-blar blar blar
+In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern) in the series, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you issolate the points at which you handle exceptions. 
+
+This post takes the idea further by talking about exceptions as _real_ objects and suggests only ever creating sub-classes of `RuntimeException` for your application exceptions. Once exception handling points are issolated, testing becomes more straightforward and we can reduce the noise checked exceptions promote.
 
 <!-- more -->
 
 ## Exceptions are Objects
 
+We tend to think of exceptions as beans; objects with a `message` that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same codebase.
+
+	throw new BadRequestException("the field 'customer' is missing from the request");
+	throw new BadRequestException("'customer' is missing");
+	throw new BadRequestException("can not parse request" );
+
+It's an example of bad encapsulation in the `BadRequestException`. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsitency between the wording of the first two. It's not clear where the message is going to end up? A better idea would be to create sub-classes for each.
+
+	public class MissingFieldException extends BadRequestException {
+		public MissingFieldException(Field field) {
+			super();
+			this.field = field;
+		} 	
+	}
+
+All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a `catch` block built for `BadRequest` [and it's here that we would decide how to map the exception type to a presentable form]. We've intentionally avoided something like
+
+	public MissingFieldException(Field field) {
+		super("the field '" + "'" is missing from the request");
+	} 		
+	
+becuase we're saying the message is completly unimportant to the exception. It's the handling that's important and its in the catch block that we can map to a message (if appropriate). For example, at the UI, we may map the	exception to a message for display but at an internal boundary, we may generate an event for support which maps to a different message.
+	
 Tell don't ask
 Encapsulate
 
-To see an example of building more specific exception sub-types, see the next article [Building Better Exceptions]({{ root_url }}/blog/2012/03/29/building-better-exceptions/).
+
 
 ## The Impact on Testing
 
