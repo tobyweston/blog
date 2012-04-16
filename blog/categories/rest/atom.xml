@@ -4,7 +4,7 @@
   <title><![CDATA[Category: rest | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-03T21:26:11+01:00</updated>
+  <updated>2012-04-16T16:26:06+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -212,6 +212,8 @@
 <li>Don't forget that boundaries can be internal, just be explicit about where they are.</li>
 </ul>
 
+
+<p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
 ]]></content>

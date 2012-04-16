@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-03 21:26:11 +0100 -->
+    <!-- last update; 2012-04-16 16:26:06 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -149,7 +149,7 @@ avoiding resources starvation and spotting bottlenecks.</p>
 <li><p><strong>CPU</strong></p></li>
 <li><p><strong>Memory</strong> - The JVM can theoretically allocate only 2GB to the heap on 32 bit machines and 16GB on 64 bit machines. In practice, hitting this upper bound with -Xmx can be tricky. Either way, you&#8217;ll want to understand the memory characteristics of your application and how it behaves if you start to reach the upper bound of the heap.</p></li>
 <li><p><strong>IO</strong> - I mean here things like handles, database connections, physical network connections and other tasty bites. Without these, all is lost and managing these to avoid resource starvation can be of primary importance.</p></li>
-<li><p><strong>Threads</strong> - there is a relationship between the number of threads your software requires and hardware resources available to you, threads are not unbounded in your application so the prudent coder will seek insight into the affect creating lots of threads will have. See a previous <a href="http://baddotrobot.com/blog/2009/02/26/less-is-more/">post</a>.</p></li>
+<li><p><strong>Threads</strong> - there is a relationship between the number of threads your software requires and hardware resources available to you, threads are not unbounded in your application so the prudent coder will seek insight into the affect creating lots of threads will have. See a previous <a href="/blog/2009/02/26/less-is-more/">post</a>.</p></li>
 </ul>
 
 
@@ -292,6 +292,10 @@ results you get. Hope that wasn&#8217;t too dull.</p>
       </li>
     
       <li class="post">
+        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
       </li>
     
@@ -321,10 +325,6 @@ results you get. Hope that wasn&#8217;t too dull.</p>
     
       <li class="post">
         <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
       </li>
     
   </ul>

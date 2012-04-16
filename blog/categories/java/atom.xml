@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://www.baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-03T21:26:11+01:00</updated>
+  <updated>2012-04-16T16:26:06+01:00</updated>
   <id>http://www.baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Building Better Exceptions]]></title>
+    <link href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <updated>2012-03-29T00:00:00+01:00</updated>
+    <id>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+
+<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
+
+<!-- more -->
+
+
+<h2>Exceptions are Objects</h2>
+
+<p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It's an example of bad encapsulation in the <code>BadRequestException</code> class. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsistency between the wording of the first two. Are they the same error? It's also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it's there that we would decide how to map the exception type to a presentable form). We've intentionally <em>avoided</em> something like</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>because the message is completely unimportant to the exception. It's the handling that's important and it's in the catch block that we can map to a message (if appropriate). We're encapsulating the internal details. For example, at the UI, we may map the exception to a message for display but at an internal boundary, we may generate an event for support staff that maps to a different message.</p>
+
+<p>Applying object oriented principles like encapsulation to exceptions means that they can do more than just be <em>caught</em>. As first class objects, they can carry <em>behaviour</em> and so can be tested appropriately. How many <em>unit</em> tests have you written for an <code>Exception</code> class?</p>
+
+<h2>Tell. Don't ask</h2>
+
+<p>We can take this further and try to apply the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">law of demeter</a> to our objects. Rather than <em>get</em> something and perform conditional logic based on it, we should be able to <em>tell</em> the object to do something. It can make decisions based on its internal, encapsulated data which means decision points are localised to appropriate places.</p>
+
+<p>How do we apply this to exceptions? Well, now we've got nicely encapsulated data it's clear that the exception itself is responsible for <em>using</em> it. In the example above, we've encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>The Impact on Testing</h2>
+
+<p>If we handle exceptions <em>only</em> at the boundaries, we do so based on <em>type</em> in the <code>catch</code> block. Even at this point, we shouldn't ask for the internals of the exception and so we shouldn't have to <em>test against them</em>. The handler can <em>tell</em> the exception rather than <em>ask</em> and testing becomes much more straight forward.</p>
+
+<p><span class='pullquote-right' data-pullquote='we should never need to test the content of the message in a unit test '>
+If a class throws an exception, <em>we should never need to test the content of the message in a unit test</em> for that class. It's the class that would use the message that should be tested. However, if we've done things correctly, then no behaviour should depend on the message so what can we test?
+</span></p>
+
+<p>The first part is to test that the handling class responds appropriately to the exception <em>type</em> and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply <em>tell don't ask</em> and so can write simpler tests.</p>
+
+<p>In this way, we're just applying the <a href="/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
+
+<h2>Only using Runtime Exceptions</h2>
+
+<p>If you isolate exception handling to a specific boundary, you emphasise the point at which exceptions are caught. If you're catching and dealing with exceptions in a single, well known place, why would you need to use checked exceptions?</p>
+
+<p>Checked exceptions cause noise. That's all. Nothing else bad about them but they imply a defensive style of programming that has no place in the brave world of XP. The alternative, to throw only runtime exceptions, seems fraught with danger. What if you forget to catch it? If you've setup a exception handling as a system wide policy, you would have already established where to catch them and you'll have programmatically prevented that scenario.</p>
+
+<p> If that's truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it's a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn't make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
+
+<p> <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// ...</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="o">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the next post <a href="/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
@@ -213,6 +339,8 @@
 </ul>
 
 
+<p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
+
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
 ]]></content>
   </entry>
@@ -356,7 +484,7 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <h2>Summary</h2>
 
-<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Never Assert Against Exception Messages</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
 
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
 
@@ -528,58 +656,6 @@ pretty print the response before sending it back.</p>
 something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
 headers
  are going over.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
-    <updated>2012-02-13T21:24:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
-    <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
-
-<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question <em>"shouldn't we start up the entire stack in an acceptance test?"</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
-
-<p>Taking inspiration from Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
-
-<!-- more -->
-
-
-<p></p>
-
-<h2>Conway's Law</h2>
-
-<p>To paraphrase something <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> recently said</p>
-
-<p><blockquote><p>"people are usually happy to test interactions with other systems 'by specification' but are less happy to do so when testing their internal systems"</p><footer><strong>@Jazzatola</strong> <cite><a href='https://twitter.com/#!/Jazzatola'>twitter.com/#!/Jazzatola/&hellip;</a></cite></footer></blockquote></p>
-
-<p>As he points out; we're happy to say "given the external system responds with <code>X</code>, when we send a message <code>Y</code> then our system behaves <code>Z</code>". We know the API and test against it as a <em>specification</em>, typically via <em>mocking</em> the behaviour of the external system and testing against the response. We're less happy to talk about our internal interactions as internal APIs in the same way.</p>
-
-<p>I find this interesting for a couple of reasons. <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> was suggesting that this is an example of <a href="http://en.wikipedia.org/wiki/Conway's_law">Conway's law</a>; where the communication structures within an organisation are leading design. We're physically separated from our external system actors but intimately acquainted with the internal communication flows. After all, we wrote them.</p>
-
-<p>It's also interesting because it can limit how we go about implementing our acceptance tests.</p>
-
-<h2>Hexagonal Implementation</h2>
-
-<p>If we look at our system as a series of <em>ports</em> and <em>adaptors</em> (as in Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>), we can start to test it as a series of internal, co-operating handoffs. Don't we already test our systems like this; with conventional mocking? The difference is that this kind of mocking is at a finer grained level; we mock <em>collaborators</em> to create unit-style tests and drive out design. When we mock external systems and the <em>ports</em> in our internal systems, we're mocking coarse grained <em>behaviours</em>. We're confirming an established design rather than driving one out. We can formalise this established design as <em>ports</em>.</p>
-
-<p>If you look closely at the last few sentences you'll notice that I'm talking about <em>test confirm</em> at the coarse grained level rather than the <em>test driving</em> techniques we apply with unit-style tests. I think this is natural fit for acceptance testing where we should be thinking about testing the external affects produced by internal flows (more black than white box).</p>
-
-<p>So, given we expect an internal interaction to behave in such-and-such way, why do we need to startup the entire application to exercise the effect of that behaviour? We don't. We can <em>simulate</em> the specification internally by mocking and produce a series of overlapping tests. Each one supporting and giving more confidence to the last.</p>
-
-<p>We've certainly had some great successes with this technique. We've produced faster running test suites that customers were happy to "accept" or sign-off against. We built trust working with the customers to understand the approach and put ourselves more easily in their 'voice' describing the system as a series of internal API interactions.</p>
-
-<h3>Conventional Hexagonal Architecture Footnote</h3>
-
-<p>In the original article, Cockburn talks about ports and adaptors as a fairly abstract architectural approach. He describes it in terms of a pattern which have slightly different motivations than those described here.</p>
-
-<p>He talks about a relatively small number of <em>ports</em> (say ~4-5) and decoupling <em>major</em> components of a system (for example, the database and the GUI) so that it can be driven and tested by different <em>external</em> actors.</p>
-
-<p>I'm talking more about changing the <em>external</em> nature of these actors to be more <em>internal</em>. If we have a much larger number of ports (say >30), decoupling <em>minor</em> components we can achieve this substutatabiliy on a bigger scale and be more flexible on how we test the system.</p>
-
-<p>Conway described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
-
-<p>Have a go and see if it works for you...</p>
 ]]></content>
   </entry>
   

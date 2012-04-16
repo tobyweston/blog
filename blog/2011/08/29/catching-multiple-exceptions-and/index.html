@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-03 21:26:11 +0100 -->
+    <!-- last update; 2012-04-16 16:26:06 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -105,11 +105,7 @@
 
 <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
 
-<p>This got me thinking about how we should deal with this kind of thing. In the
-end, I came up with the idea of a collection class to capture the <code>Exceptions</code>
-and a sub-class of <code>Exception</code> to represent an exception containing other,
-embedded exceptions. When you&#8217;re done collecting exceptions, you can just
-check and rethrow as a new exception type.</p>
+<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
 
 <!-- more -->
 
@@ -160,13 +156,9 @@ containing the underlying problems when we&#8217;re done.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>We simply add to the exception collection class (<code>exceptions.add(e)</code>) and then
-when we&#8217;re done, we can check it and throw a composite exception if needed
-with <code>exceptions.checkAndThrow()</code>.</p>
+<p>We simply add to the exception collection class (<code>exceptions.add(e)</code>) and then when we&#8217;re done, we can check it and throw a composite exception if needed with <code>exceptions.checkAndThrow()</code>.</p>
 
-<p>So far, we&#8217;ve only been interested in the fact that multiple exception can be
-handled and so haven&#8217;t needed to programmatically query for specific exception
-types. For example, we&#8217;ve only needed this up until now.</p>
+<p>So far, we&#8217;ve only been interested in the fact that multiple exception can be handled and so haven&#8217;t needed to programmatically query for specific exception types. For example, we&#8217;ve only needed this up until now.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -222,8 +214,7 @@ types. For example, we&#8217;ve only needed this up until now.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way
-that is consistent with how you&#8217;d expect to see regular exceptions.</p>
+<p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way that is consistent with how you&#8217;d expect to see regular exceptions.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -290,7 +281,7 @@ that is consistent with how you&#8217;d expect to see regular exceptions.</p>
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/categories/java/'>java</a>
   
 </span>
 
@@ -336,6 +327,10 @@ that is consistent with how you&#8217;d expect to see regular exceptions.</p>
       </li>
     
       <li class="post">
+        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
       </li>
     
@@ -365,10 +360,6 @@ that is consistent with how you&#8217;d expect to see regular exceptions.</p>
     
       <li class="post">
         <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
       </li>
     
   </ul>

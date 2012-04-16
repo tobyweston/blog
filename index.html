@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-03 21:26:11 +0100 -->
+    <!-- last update; 2012-04-16 16:26:06 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -113,6 +113,49 @@
   
     <footer>
       <a rel="full-article" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-29T00:00:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+
+<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/29/building-better-exceptions/">Read on &rarr;</a>
     </footer>
   
 
@@ -474,53 +517,6 @@ lightweight in our tests.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
-
-<p>This got me thinking about how we should deal with this kind of thing. In the
-end, I came up with the idea of a collection class to capture the <code>Exceptions</code>
-and a sub-class of <code>Exception</code> to represent an exception containing other,
-embedded exceptions. When you&#8217;re done collecting exceptions, you can just
-check and rethrow as a new exception type.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/29/catching-multiple-exceptions-and/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -537,6 +533,10 @@ check and rethrow as a new exception type.</p>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
       </li>
     
       <li class="post">
@@ -571,10 +571,6 @@ check and rethrow as a new exception type.</p>
         <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -583,6 +579,7 @@ check and rethrow as a new exception type.</p>
       <a href="/blog/categories/agile/">agile</a>
       <a href="/blog/categories/coaching/">coaching</a>
       <a href="/blog/categories/concurrency/">concurrency</a>
+      <a href="/blog/categories/exceptions/">exception-handling</a>
       <a href="/blog/categories/java/">java</a>
       <a href="/blog/categories/mocking/">mocking</a>
       <a href="/blog/categories/object-oriented/">object-oriented</a>
@@ -613,7 +610,7 @@ check and rethrow as a new exception type.</p>
 <section>
     <h1>Articles</h1>
         <br/>
-        <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="left" src="http://baddotrobot.com/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
+        <a href="/resources/JTJ-2011-05.pdf"><img class="left" src="/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
         <p>
             My article on JDK7 in JavaTech Journal (May 2011)
         </p>

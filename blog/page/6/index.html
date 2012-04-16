@@ -9,7 +9,19 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Bit disappointing really. Things didn&#8217;t get started properly will around 12:00 on day 1. I got to attend two really interesting talks of ~30 &hellip;">
+  <meta name="description" content="I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example; 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +58,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-03 21:26:11 +0100 -->
+    <!-- last update; 2012-04-16 16:26:06 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +89,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2008/12/17/junit-and-threaded-tests-i-recently/">JUnit and Threaded Tests</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-17T00:00:00+00:00" pubdate data-updated="true">Dec 17<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">exaple</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isDaemon</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">NON_DAEMON</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method
+finishes it somehow messes with the threads&#8230;</p>
+
+<p>Looking into things, it seems in my case that naughty Eclipse is muddying the
+water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up
+calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java
+process. Even if we changed the daemon status of the thread, you&#8217;d get the
+same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
+
+<p>So, in some situations it is possible to interrupt a thread in a JUnit test
+bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ
+actually seems to have the same behaviour but I can&#8217;t review to source to
+confirm.</p>
+
+<p><a href="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"><img src="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -169,6 +270,10 @@
       </li>
     
       <li class="post">
+        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
       </li>
     
@@ -200,10 +305,6 @@
         <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -212,6 +313,7 @@
       <a href="/blog/categories/agile/">agile</a>
       <a href="/blog/categories/coaching/">coaching</a>
       <a href="/blog/categories/concurrency/">concurrency</a>
+      <a href="/blog/categories/exceptions/">exception-handling</a>
       <a href="/blog/categories/java/">java</a>
       <a href="/blog/categories/mocking/">mocking</a>
       <a href="/blog/categories/object-oriented/">object-oriented</a>
@@ -242,7 +344,7 @@
 <section>
     <h1>Articles</h1>
         <br/>
-        <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="left" src="http://baddotrobot.com/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
+        <a href="/resources/JTJ-2011-05.pdf"><img class="left" src="/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
         <p>
             My article on JDK7 in JavaTech Journal (May 2011)
         </p>

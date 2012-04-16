@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to maven central repository. oh, I should mention&#8230; tempus-fugit represents two things to me &hellip;">
+  <meta name="description" content="I had an interesting time getting a couple of tests running for tempus-fugit recently. It threw up a couple of interesting aspects about using &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-03 21:26:11 +0100 -->
+    <!-- last update; 2012-04-16 16:26:06 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +77,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true">Dec 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread
+and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for
+shutdown method above. Either way, the test above is testing the the thread
+created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt
+is called and the interrupt flag is set immediately after the sleeping thread
+is woken. However, when the test reached the assert, it was false. Weird.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -605,60 +678,6 @@ description.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/02/23/infering-type-in-micro-dsl/">Infering the Type in a Micro DSL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-02-23T00:00:00+00:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a recent <a href="http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
-
-<p>Just to recap then, to find something in a list, the original client code
-(using a static import) looks like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The class (in this case <code>NeedleFinder</code>) implements the DSL and specifically
-decides in the <code>in</code> method how to compare a <code>Needle</code> object to whatever is in the
-haystack list. I wanted to create a more generic class so started to implement
-the <code>ListFinder</code> to use generics and a couple of interesting things came out.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/02/23/infering-type-in-micro-dsl/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -677,6 +696,10 @@ the <code>ListFinder</code> to use generics and a couple of interesting things c
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
       </li>
     
       <li class="post">
@@ -711,10 +734,6 @@ the <code>ListFinder</code> to use generics and a couple of interesting things c
         <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -723,6 +742,7 @@ the <code>ListFinder</code> to use generics and a couple of interesting things c
       <a href="/blog/categories/agile/">agile</a>
       <a href="/blog/categories/coaching/">coaching</a>
       <a href="/blog/categories/concurrency/">concurrency</a>
+      <a href="/blog/categories/exceptions/">exception-handling</a>
       <a href="/blog/categories/java/">java</a>
       <a href="/blog/categories/mocking/">mocking</a>
       <a href="/blog/categories/object-oriented/">object-oriented</a>
@@ -753,7 +773,7 @@ the <code>ListFinder</code> to use generics and a couple of interesting things c
 <section>
     <h1>Articles</h1>
         <br/>
-        <a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="left" src="http://baddotrobot.com/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
+        <a href="/resources/JTJ-2011-05.pdf"><img class="left" src="/images/JTJ-2011-05.png" alt="Read my JDK7 article"></a>
         <p>
             My article on JDK7 in JavaTech Journal (May 2011)
         </p>
