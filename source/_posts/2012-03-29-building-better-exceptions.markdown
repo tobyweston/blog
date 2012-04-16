@@ -5,7 +5,6 @@ title: Building Better Exceptions
 time: 2012-03-28 06:00:00 +00:00
 categories: java testing object-oriented exceptions
 comments: true
-published: false
 ---
 
 In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern), we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.
@@ -90,5 +89,5 @@ Checked exceptions cause noise. That's all. Nothing else bad about them but they
 
 
 
-In the [next post]({ root_url }}/blog/2012/03/30/scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.
+In the next post [Scala Exception Handling]({ root_url }}/blog/2012/03/30/scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.
 
