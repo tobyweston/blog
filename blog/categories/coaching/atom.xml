@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: coaching | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
+    <link href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
     <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
+    <id>http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
     <content type="html"><![CDATA[<p>Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.</p>
 
 <p>Let's take an example from two teams.</p>
@@ -131,9 +131,9 @@ candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
   
   <entry>
     <title type="html"><![CDATA[Pairing Honestly]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
+    <link href="http://baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
     <updated>2010-08-15T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
+    <id>http://baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
     <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team {" were able to admit that each of us has had difference experiences pairing "}. We were honest in saying that despite having "done pairing" we'd all done different amounts of pairing and that, at times, we weren't even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we're getting something out of it?</p>
 
 <!-- more -->
@@ -172,9 +172,9 @@ it.</p>
   
   <entry>
     <title type="html"><![CDATA[Growing Team Skills]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
     <updated>2010-07-11T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
+    <id>http://baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
     <content type="html"><![CDATA[<p>I love the idea of growing teams, the lure of the gardening analogy is just too strong... they have to be nurtured to flourish blar blar blar. What is obvious though is that team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well we, the team, are doing. It's useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
 
 <p>Often, new or junior developers worry about the barrage of new and unfamiliar
@@ -222,9 +222,9 @@ technologies, it can be about any competencies that you want analyse.</p>
   
   <entry>
     <title type="html"><![CDATA[Changing Test Gears]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
     <updated>2010-07-09T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
+    <id>http://baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
     <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.</p>
 
 <p>To put it development terms, good developers know when to change gears. They
@@ -332,9 +332,9 @@ when is the question I find myself asking again and again.</p>
   
   <entry>
     <title type="html"><![CDATA[Objectives]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/06/17/objectives/"/>
+    <link href="http://baddotrobot.com/blog/2010/06/17/objectives/"/>
     <updated>2010-06-17T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/06/17/objectives</id>
+    <id>http://baddotrobot.com/blog/2010/06/17/objectives</id>
     <content type="html"><![CDATA[<p>It's objective setting time for the guys at work. Aligning what's really good for you with what's good for the company shouldn't be difficult, right? Your generally heading in the same direction and have similar interests at heart. Why then do we end up with generic meaningless objectives like "attend a XXX course"? I think you can get the most out of the objective setting exercise by thinking about what you want <em>personally</em> out of your career, don't settle for the bland, phrase your objectives so there is real value in them. So, if the company think of them in terms of</p>
 
 <blockquote><p>S.M.A.R.T</p></blockquote>

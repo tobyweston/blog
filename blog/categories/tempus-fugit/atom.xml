@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
+    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
+    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
     <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project's website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
@@ -33,9 +33,9 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
   
   <entry>
     <title type="html"><![CDATA[Lamdas vs. Closures]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
     <updated>2010-07-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
+    <id>http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
     <content type="html"><![CDATA[<p>When writing Java in a functional style, apart from the verbosity of it all,
 it always bugged me about the terminology we use. I tend to talk about
 closure-like arguments but revisiting some old University materials when
@@ -198,9 +198,9 @@ terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">s
   
   <entry>
     <title type="html"><![CDATA[Wrapping Exceptions is Dull]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull/"/>
+    <link href="http://baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull/"/>
     <updated>2010-04-25T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull</id>
+    <id>http://baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull</id>
     <content type="html"><![CDATA[<p>I'm totally bored of wrapping exceptions in Java,</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -306,9 +306,9 @@ the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/temp
   
   <entry>
     <title type="html"><![CDATA[Nibbles the Cat]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat/"/>
+    <link href="http://baddotrobot.com/blog/2010/03/19/nibbles-cat/"/>
     <updated>2010-03-19T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat</id>
+    <id>http://baddotrobot.com/blog/2010/03/19/nibbles-cat</id>
     <content type="html"><![CDATA[<p>What has Nibbles the Cat got to do with deadlocks? I'm glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
 
 <p>I'm talking here about Java level deadlocks really and to illustrate the
@@ -429,9 +429,9 @@ end.</p>
   
   <entry>
     <title type="html"><![CDATA[Type Safe Annotation]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
+    <link href="http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
     <updated>2010-01-04T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
+    <id>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
     <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&amp;tag=diyfiesta&amp;link_code=btl&amp;camp=213689&amp;creative=392969">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

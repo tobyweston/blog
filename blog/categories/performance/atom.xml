@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: performance | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/performance/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/performance/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Performance Monitoring (Part 1)]]></title>
-    <link href="http://www.baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1/"/>
+    <link href="http://baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1/"/>
     <updated>2009-10-31T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1</id>
+    <id>http://baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1</id>
     <content type="html"><![CDATA[<p>Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?</p>
 
 <p>I've been doing a fair bit of this lately (blowing off that is) and thought it
@@ -139,9 +139,9 @@ results you get. Hope that wasn't too dull.</p>
   
   <entry>
     <title type="html"><![CDATA[Less is More]]></title>
-    <link href="http://www.baddotrobot.com/blog/2009/02/26/less-is-more/"/>
+    <link href="http://baddotrobot.com/blog/2009/02/26/less-is-more/"/>
     <updated>2009-02-26T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2009/02/26/less-is-more</id>
+    <id>http://baddotrobot.com/blog/2009/02/26/less-is-more</id>
     <content type="html"><![CDATA[<p><a href="https://twitter.com/#!/tarkaTheRotter">Denton</a> was trying to
 convince me the other day that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror... creating threads in Java takes up non-VM managed memory!</p>
 

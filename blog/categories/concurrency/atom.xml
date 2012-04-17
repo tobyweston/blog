@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
+    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
+    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
     <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project's website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
@@ -33,9 +33,9 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
   
   <entry>
     <title type="html"><![CDATA[Nibbles the Cat]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat/"/>
+    <link href="http://baddotrobot.com/blog/2010/03/19/nibbles-cat/"/>
     <updated>2010-03-19T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat</id>
+    <id>http://baddotrobot.com/blog/2010/03/19/nibbles-cat</id>
     <content type="html"><![CDATA[<p>What has Nibbles the Cat got to do with deadlocks? I'm glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
 
 <p>I'm talking here about Java level deadlocks really and to illustrate the
@@ -156,9 +156,9 @@ end.</p>
   
   <entry>
     <title type="html"><![CDATA[Type Safe Annotation]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
+    <link href="http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
     <updated>2010-01-04T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
+    <id>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
     <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&amp;tag=diyfiesta&amp;link_code=btl&amp;camp=213689&amp;creative=392969">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -265,9 +265,9 @@ a comment.</p>
   
   <entry>
     <title type="html"><![CDATA[Running JUnit tests in parallel]]></title>
-    <link href="http://www.baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/"/>
+    <link href="http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/"/>
     <updated>2009-12-29T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel</id>
+    <id>http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel</id>
     <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
 
 <p>Looking more into recent versions of JUnit, there seems to be lots and lots of
@@ -345,9 +345,9 @@ for more details on the runner.</p>
   
   <entry>
     <title type="html"><![CDATA[Flickering Tests and a JUnit Rule]]></title>
-    <link href="http://www.baddotrobot.com/blog/2009/12/24/flickering-tests/"/>
+    <link href="http://baddotrobot.com/blog/2009/12/24/flickering-tests/"/>
     <updated>2009-12-24T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2009/12/24/flickering-tests</id>
+    <id>http://baddotrobot.com/blog/2009/12/24/flickering-tests</id>
     <content type="html"><![CDATA[<p>Occasionally I'll see flickering tests. Sometimes they're green, sometimes they're red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven't just been lucky and the green I'm seeing isn't really a false positive. I'll have to manually run the test several times before my confidence grows.</p>
 
 <p>In an attempt to ease this heavy burden and make light work of this drudgery,

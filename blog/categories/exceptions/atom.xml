@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: exceptions | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Building Better Exceptions]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
     <updated>2012-03-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
     <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
 
 <p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
@@ -141,9 +141,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
     <updated>2012-03-28T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
     <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
 
 <p>In this post, we'll take a closer look with some examples.</p>
@@ -347,9 +347,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
     <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
     <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
 the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
 there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The examples being
@@ -494,9 +494,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   
   <entry>
     <title type="html"><![CDATA[Catching Multiple Exceptions (and rethrowing them all!)]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/"/>
+    <link href="http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/"/>
     <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and</id>
+    <id>http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and</id>
     <content type="html"><![CDATA[<p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don't want to loose any information and should really allow the client to catch the exception in a standard way.</p>
 
 <p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you're done collecting exceptions, you can just check and rethrow as a new exception type.</p>
@@ -657,9 +657,9 @@ containing the underlying problems when we're done.</p>
   
   <entry>
     <title type="html"><![CDATA[JDK7 Previewed]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed/"/>
+    <link href="http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed/"/>
     <updated>2011-03-04T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed</id>
+    <id>http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed</id>
     <content type="html"><![CDATA[<p>Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it's not what was once heralded
 (will <a href="http://openjdk.java.net/projects/lambda/">8 see lamdas</a>?) but still has one or two interesting language features.
 A few that caught my eye include...</p>

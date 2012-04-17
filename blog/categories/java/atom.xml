@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: java | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Building Better Exceptions]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
     <updated>2012-03-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
     <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
 
 <p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
@@ -141,9 +141,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
     <updated>2012-03-28T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
     <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
 
 <p>In this post, we'll take a closer look with some examples.</p>
@@ -347,9 +347,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
     <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
     <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
 the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
 there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The examples being
@@ -494,9 +494,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   
   <entry>
     <title type="html"><![CDATA[tools for bad.robots]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
     <updated>2012-03-18T15:58:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
+    <id>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
     <content type="html"><![CDATA[<p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
 a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
 Rather than re-implement the same utility code again and again, I've started to collect things under the bad.robot
@@ -521,9 +521,9 @@ more.</p>
   
   <entry>
     <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
+    <link href="http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
     <updated>2012-02-21T06:27:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
+    <id>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
     <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using <a href="http://jersey.java.net/">Jersey</a>, Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.</p>
 
 <!-- more -->

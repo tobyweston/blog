@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: rest | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
     <updated>2012-03-28T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
     <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
 
 <p>In this post, we'll take a closer look with some examples.</p>

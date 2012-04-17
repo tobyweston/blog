@@ -1,241 +1,241 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/</loc>
+        <loc>http://baddotrobot.com/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/</loc>
         <lastmod>2012-02-07T21:01:10+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/11/bit-disappointing-this-year/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/11/bit-disappointing-this-year/</loc>
         <lastmod>2012-02-07T21:09:18+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/24/interfaces-vs-class-imposterisers/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/24/interfaces-vs-class-imposterisers/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/29/swt-applications-on-mac-os-x/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/29/swt-applications-on-mac-os-x/</loc>
         <lastmod>2012-02-07T21:09:24+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/29/swt-support-for-window-licker/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/29/swt-support-for-window-licker/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2008/12/31/what-makes-good-pair/</loc>
+        <loc>http://baddotrobot.com/blog/2008/12/31/what-makes-good-pair/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/01/06/be-more-expressive-with-builders/</loc>
+        <loc>http://baddotrobot.com/blog/2009/01/06/be-more-expressive-with-builders/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/01/22/deprecated-annotation/</loc>
+        <loc>http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/</loc>
+        <loc>http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/</loc>
+        <loc>http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/02/23/infering-type-in-micro-dsl/</loc>
+        <loc>http://baddotrobot.com/blog/2009/02/23/infering-type-in-micro-dsl/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/02/26/less-is-more/</loc>
+        <loc>http://baddotrobot.com/blog/2009/02/26/less-is-more/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/</loc>
+        <loc>http://baddotrobot.com/blog/2009/03/15/swtbot-vs-window-licker/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/05/29/convert-callable-to-runnable/</loc>
+        <loc>http://baddotrobot.com/blog/2009/05/29/convert-callable-to-runnable/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/</loc>
+        <loc>http://baddotrobot.com/blog/2009/07/29/isnotinstanceofsmell/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/08/01/abstracting-reentrantreadwritelock/</loc>
+        <loc>http://baddotrobot.com/blog/2009/08/01/abstracting-reentrantreadwritelock/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/08/01/java-source-for-mac-osx/</loc>
+        <loc>http://baddotrobot.com/blog/2009/08/01/java-source-for-mac-osx/</loc>
         <lastmod>2012-02-07T21:01:10+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1/</loc>
+        <loc>http://baddotrobot.com/blog/2009/10/31/performance-monitoring-part-1/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/</loc>
+        <loc>http://baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/11/11/time-flies/</loc>
+        <loc>http://baddotrobot.com/blog/2009/11/11/time-flies/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/12/10/atomiticy-of-thread-class/</loc>
+        <loc>http://baddotrobot.com/blog/2009/12/10/atomiticy-of-thread-class/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/12/24/deadlock/</loc>
+        <loc>http://baddotrobot.com/blog/2009/12/24/deadlock/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/12/24/flickering-tests/</loc>
+        <loc>http://baddotrobot.com/blog/2009/12/24/flickering-tests/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/</loc>
+        <loc>http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/01/04/type-safe-annotation/</loc>
+        <loc>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/03/19/nibbles-cat/</loc>
+        <loc>http://baddotrobot.com/blog/2010/03/19/nibbles-cat/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull/</loc>
+        <loc>http://baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull/</loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/05/01/setter-vs-constructor-injection/</loc>
+        <loc>http://baddotrobot.com/blog/2010/05/01/setter-vs-constructor-injection/</loc>
         <lastmod>2012-03-31T19:00:39+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/05/01/unmarshalling/</loc>
+        <loc>http://baddotrobot.com/blog/2010/05/01/unmarshalling/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/06/17/objectives/</loc>
+        <loc>http://baddotrobot.com/blog/2010/06/17/objectives/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/</loc>
+        <loc>http://baddotrobot.com/blog/2010/07/07/generate-concordion-overviews/</loc>
         <lastmod>2012-04-16T13:07:31+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/</loc>
+        <loc>http://baddotrobot.com/blog/2010/07/09/changing-test-gears/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills/</loc>
+        <loc>http://baddotrobot.com/blog/2010/07/11/growing-team-skills/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/</loc>
+        <loc>http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly/</loc>
+        <loc>http://baddotrobot.com/blog/2010/08/15/pairing-honestly/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/</loc>
+        <loc>http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/</loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed/</loc>
+        <loc>http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed/</loc>
         <lastmod>2012-04-16T13:04:38+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/</loc>
+        <loc>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/</loc>
         <lastmod>2012-02-07T21:09:25+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/</loc>
+        <loc>http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/</loc>
         <lastmod>2012-04-16T15:37:15+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/</loc>
+        <loc>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/</loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/</loc>
+        <loc>http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/</loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/</loc>
+        <loc>http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac/</loc>
+        <loc>http://baddotrobot.com/blog/2011/10/29/java-source-on-mac/</loc>
         <lastmod>2012-02-11T18:11:04+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/01/29/transaction-management-without/</loc>
+        <loc>http://baddotrobot.com/blog/2012/01/29/transaction-management-without/</loc>
         <lastmod>2012-02-11T18:03:41+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/</loc>
+        <loc>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/</loc>
         <lastmod>2012-03-16T20:08:43+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8/</loc>
+        <loc>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/</loc>
         <lastmod>2012-02-24T13:42:44+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/</loc>
+        <loc>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/</loc>
         <lastmod>2012-03-28T20:28:05+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/</loc>
+        <loc>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/</loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
         <loc>
-            http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/
+            http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/
         </loc>
         <lastmod>2012-04-16T12:58:41+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/</loc>
+        <loc>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/</loc>
         <lastmod>2012-04-16T16:25:24+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/</loc>
+        <loc>http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/</loc>
         <lastmod>2012-04-03T21:25:07+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/404.html</loc>
+        <loc>http://baddotrobot.com/404.html</loc>
         <lastmod>2012-03-18T14:54:29+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/blog/archives/</loc>
+        <loc>http://baddotrobot.com/blog/archives/</loc>
         <lastmod>2012-04-16T16:25:24+01:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/code/builds.html</loc>
+        <loc>http://baddotrobot.com/code/builds.html</loc>
         <lastmod>2012-02-19T20:15:03+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/code/</loc>
+        <loc>http://baddotrobot.com/code/</loc>
         <lastmod>2012-02-21T06:26:32+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/code/pokimon.html</loc>
+        <loc>http://baddotrobot.com/code/pokimon.html</loc>
         <lastmod>2012-02-19T20:21:19+00:00</lastmod>
     </url>
     <url>
-        <loc>http://www.baddotrobot.com/</loc>
+        <loc>http://baddotrobot.com/</loc>
         <lastmod>2012-04-16T16:25:24+01:00</lastmod>
     </url>
 </urlset>

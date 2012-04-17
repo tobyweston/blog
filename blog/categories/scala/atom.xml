@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: scala | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scala as a Functional OO Hybrid]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
+    <link href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
     <updated>2012-04-03T19:33:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
+    <id>http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
     <content type="html"><![CDATA[<p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It's important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you're clear about the style you're applying, you can get the most from the approach. Functional programming isn't a panacea and to build effective systems, you'll need to blend the approaches.</p>
 
 <!-- more -->

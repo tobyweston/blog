@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scala as a Functional OO Hybrid]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
+    <link href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
     <updated>2012-04-03T19:33:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
+    <id>http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
     <content type="html"><![CDATA[<p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
 
 <!-- more -->
@@ -58,10 +58,10 @@
   
   <entry>
     <title type="html"><![CDATA[Building Better Exceptions]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
     <updated>2012-03-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
-    <content type="html"><![CDATA[<p>In the <a href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+    <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <content type="html"><![CDATA[<p>In the <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
 
 <p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
 
@@ -138,7 +138,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>The first part is to test that the handling class responds appropriately to the exception <em>type</em> and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply <em>tell don&#8217;t ask</em> and so can write simpler tests.</p>
 
-<p>In this way, we&#8217;re just applying the <a href="http://www.baddotrobot.com/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
+<p>In this way, we&#8217;re just applying the <a href="http://baddotrobot.com/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
 
 <h2>Only using Runtime Exceptions</h2>
 
@@ -159,15 +159,15 @@ If a class throws an exception, <em>we should never need to test the content of 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In the next post <a href="http://www.baddotrobot.com/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
+<p>In the next post <a href="http://baddotrobot.com/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
     <updated>2012-03-28T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
     <content type="html"><![CDATA[<p>It&#8217;s not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn&#8217;t a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
 
 <p>In this post, we&#8217;ll take a closer look with some examples.</p>
@@ -315,7 +315,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For example; two sales clerks try and update a customer&#8217;s details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a <code>OptimisticLockException</code>. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.</p>
 
-<p>See a <a href="http://www.baddotrobot.com/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
+<p>See a <a href="http://baddotrobot.com/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
 
 <h2>Some Parting Tips</h2>
 
@@ -332,7 +332,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 </ul>
 
 
-<p>To see an example of more specialism in exception-types, see the next article <a href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
+<p>To see an example of more specialism in exception-types, see the next article <a href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don&#8217;t apply. After all, you may have different constraints or you may just know better.</p>
 ]]></content>
@@ -340,9 +340,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
     <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
     <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it&#8217;s fairly common to use the try/fail/catch idiom or
 the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
 there is an argument that using <code>expected</code> doesn&#8217;t support all the cases you may want to test. The examples being
@@ -462,7 +462,7 @@ above example, the test would no longer fail. You&#8217;d get a false positive.<
 
 <h2>Summary</h2>
 
-<p>The new rule offers a balance between concise syntax and function. In practice though if you&#8217;re not interested in asserting against the exception&#8217;s message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="http://www.baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+<p>The new rule offers a balance between concise syntax and function. In practice though if you&#8217;re not interested in asserting against the exception&#8217;s message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
 
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of &#8220;noise&#8221; to cope with in the test. You may or may not be comfortable with this.</p>
 
@@ -472,9 +472,9 @@ above example, the test would no longer fail. You&#8217;d get a false positive.<
   
   <entry>
     <title type="html"><![CDATA[tools for bad.robots]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
     <updated>2012-03-18T15:58:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
+    <id>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
     <content type="html"><![CDATA[<p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
 a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
 Rather than re-implement the same utility code again and again, I&#8217;ve started to collect things under the bad.robot
@@ -499,9 +499,9 @@ more.</p>
   
   <entry>
     <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
+    <link href="http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
     <updated>2012-02-21T06:27:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
+    <id>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
     <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON &#8216;in-browser&#8217; like in Firefox and Chrome. If you&#8217;re using <a href="http://jersey.java.net/">Jersey</a>, Oracle&#8217;s JAX-RS reference implementation, here&#8217;s how to make IE8 play nice.</p>
 
 <!-- more -->
@@ -634,9 +634,9 @@ headers
   
   <entry>
     <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
+    <link href="http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
     <updated>2012-02-13T21:24:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
+    <id>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
     <content type="html"><![CDATA[<p>There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
 
 <p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we&#8217;re usually horrified by the previous paragraph and ask the question <em>&#8220;shouldn&#8217;t we start up the entire stack in an acceptance test?&#8221;</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
@@ -687,9 +687,9 @@ headers
   
   <entry>
     <title type="html"><![CDATA[Transaction Management without the Frameworks]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/01/29/transaction-management-without/"/>
+    <link href="http://baddotrobot.com/blog/2012/01/29/transaction-management-without/"/>
     <updated>2012-01-29T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/01/29/transaction-management-without</id>
+    <id>http://baddotrobot.com/blog/2012/01/29/transaction-management-without</id>
     <content type="html"><![CDATA[<p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
 containers do a good job of hiding all the details. However, it&#8217;s often more advantageous
 to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we?
@@ -972,9 +972,9 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
   
   <entry>
     <title type="html"><![CDATA[Java source on Mac]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac/"/>
+    <link href="http://baddotrobot.com/blog/2011/10/29/java-source-on-mac/"/>
     <updated>2011-10-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/10/29/java-source-on-mac</id>
+    <id>http://baddotrobot.com/blog/2011/10/29/java-source-on-mac</id>
     <content type="html"><![CDATA[<p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
 
 <!-- more -->
@@ -1011,9 +1011,9 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
   
   <entry>
     <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
+    <link href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
     <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
+    <id>http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
     <content type="html"><![CDATA[<p>Recruiting for the next guy on your team is hard. At first glance it doesn&#8217;t seem to be, we&#8217;ve developed techniques like pair tests but as I start to look at it more closely, I&#8217;ve started to notice that even the more progressive techniques don&#8217;t preclude us from making the same mistakes as the traditional interview.</p>
 
 <p>Let&#8217;s take an example from two teams.</p>
@@ -1127,9 +1127,9 @@ candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
   
   <entry>
     <title type="html"><![CDATA[Catching Multiple Exceptions (and rethrowing them all!)]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/"/>
+    <link href="http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/"/>
     <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and</id>
+    <id>http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and</id>
     <content type="html"><![CDATA[<p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
 
 <p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
@@ -1286,10 +1286,10 @@ containing the underlying problems when we&#8217;re done.</p>
   
   <entry>
     <title type="html"><![CDATA[Loggin is still evil but...]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
+    <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
-    <content type="html"><![CDATA[<p>In a <a href="http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of the post was that if you&#8217;re going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what&#8217;s important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
+    <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
+    <content type="html"><![CDATA[<p>In a <a href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of the post was that if you&#8217;re going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what&#8217;s important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
 
 <p>Mocking Log4J however can be a real pain. I&#8217;ve managed it in the past using Apache&#8217;s logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
 
@@ -1379,15 +1379,15 @@ containing the underlying problems when we&#8217;re done.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
+<p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[JDK7 Artcile in JavaTech Journal]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/"/>
+    <link href="http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/"/>
     <updated>2011-06-10T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal</id>
+    <id>http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal</id>
     <content type="html"><![CDATA[<p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="right" src="http://baddotrobot.com/images/JTJ-2011-05.png"></a></p>
 
 <p>My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
@@ -1399,9 +1399,9 @@ containing the underlying problems when we&#8217;re done.</p>
   
   <entry>
     <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
+    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
+    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
     <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project&#8217;s website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
@@ -1417,9 +1417,9 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
   
   <entry>
     <title type="html"><![CDATA[JDK7 Previewed]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed/"/>
+    <link href="http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed/"/>
     <updated>2011-03-04T00:00:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/03/04/jdk-7-previewed</id>
+    <id>http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed</id>
     <content type="html"><![CDATA[<p>Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded
 (will <a href="http://openjdk.java.net/projects/lambda/">8 see lamdas</a>?) but still has one or two interesting language features.
 A few that caught my eye include&#8230;</p>
@@ -1582,15 +1582,15 @@ new features and download from
 <a href="http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html">here</a> (unfortunately, not for the Mac).</p>
 
 <p><strong>UPDATE:</strong> An extended version of this post has been published in
-<a href="http://www.baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/">May edition of the JavaTech Journal</a>.</p>
+<a href="http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/">May edition of the JavaTech Journal</a>.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Logging is evil but...]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but/"/>
+    <link href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/"/>
     <updated>2010-10-18T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
+    <id>http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
     <content type="html"><![CDATA[<p>Logging is a nightmare. I don&#8217;t mean here that conveying information about
 exceptional circumstances is a nightmare, I mean the combination of over eager
 developers and [<em>insert your current logging framework here</em>] is a recipe
@@ -1904,10 +1904,10 @@ write tests for logging.</p>
   
   <entry>
     <title type="html"><![CDATA[Pairing Honestly]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
+    <link href="http://baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
     <updated>2010-08-15T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
-    <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="http://www.baddotrobot.com/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
+    <id>http://baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
+    <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="http://baddotrobot.com/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
 
 <!-- more -->
 
@@ -1945,9 +1945,9 @@ it.</p>
   
   <entry>
     <title type="html"><![CDATA[Lamdas vs. Closures]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
     <updated>2010-07-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
+    <id>http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
     <content type="html"><![CDATA[<p>When writing Java in a functional style, apart from the verbosity of it all,
 it always bugged me about the terminology we use. I tend to talk about
 closure-like arguments but revisiting some old University materials when
@@ -2092,9 +2092,9 @@ terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">s
   
   <entry>
     <title type="html"><![CDATA[Growing Team Skills]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
     <updated>2010-07-11T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
+    <id>http://baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
     <content type="html"><![CDATA[<p>I love the idea of growing teams, the lure of the gardening analogy is just too strong&#8230; they have to be nurtured to flourish blar blar blar. What is obvious though is that team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well we, the team, are doing. It&#8217;s useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
 
 <p>Often, new or junior developers worry about the barrage of new and unfamiliar
@@ -2142,9 +2142,9 @@ technologies, it can be about any competencies that you want analyse.</p>
   
   <entry>
     <title type="html"><![CDATA[Changing Test Gears]]></title>
-    <link href="http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
+    <link href="http://baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
     <updated>2010-07-09T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
+    <id>http://baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
     <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It&#8217;s the same with testing, you gotta know when to change gears.</p>
 
 <p>To put it development terms, good developers know when to change gears. They

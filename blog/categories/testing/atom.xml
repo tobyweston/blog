@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: testing | bad.robot]]></title>
-  <link href="http://www.baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
-  <link href="http://www.baddotrobot.com/"/>
-  <updated>2012-04-16T16:26:06+01:00</updated>
-  <id>http://www.baddotrobot.com/</id>
+  <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-04-17T11:20:11+01:00</updated>
+  <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Building Better Exceptions]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
     <updated>2012-03-29T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
     <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
 
 <p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
@@ -141,9 +141,9 @@ If a class throws an exception, <em>we should never need to test the content of 
   
   <entry>
     <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
     <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
     <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
 the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
 there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The examples being
@@ -288,9 +288,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   
   <entry>
     <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
-    <link href="http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
+    <link href="http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
     <updated>2012-02-13T21:24:00+00:00</updated>
-    <id>http://www.baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
+    <id>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
     <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
 
 <p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question <em>"shouldn't we start up the entire stack in an acceptance test?"</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
@@ -340,9 +340,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   
   <entry>
     <title type="html"><![CDATA[Loggin is still evil but...]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
+    <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
+    <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
     <content type="html"><![CDATA[<p>In a <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
 
 <p>Mocking Log4J however can be a real pain. I've managed it in the past using Apache's logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
@@ -440,9 +440,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   
   <entry>
     <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
+    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://www.baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
+    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
     <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project's website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
