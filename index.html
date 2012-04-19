@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-17 11:20:11 +0100 -->
+    <!-- last update; 2012-04-19 19:57:00 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -113,6 +113,51 @@
   
     <footer>
       <a rel="full-article" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
+
+<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
+
+<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
     </footer>
   
 
@@ -474,49 +519,6 @@ lightweight in our tests.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recruiting for the next guy on your team is hard. At first glance it doesn&#8217;t seem to be, we&#8217;ve developed techniques like pair tests but as I start to look at it more closely, I&#8217;ve started to notice that even the more progressive techniques don&#8217;t preclude us from making the same mistakes as the traditional interview.</p>
-
-<p>Let&#8217;s take an example from two teams.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -533,6 +535,10 @@ lightweight in our tests.</p>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
       <li class="post">
@@ -565,10 +571,6 @@ lightweight in our tests.</p>
     
       <li class="post">
         <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
       </li>
     
   </ul>

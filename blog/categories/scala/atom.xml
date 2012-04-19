@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-04-17T11:20:11+01:00</updated>
+  <updated>2012-04-19T19:57:00+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -53,6 +53,138 @@
 
 <p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12. <br/>
 [2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Scala Exception Handling]]></title>
+    <link href="http://baddotrobot.com/blog/2012/03/30/scala-exception-handling/"/>
+    <updated>2012-03-30T22:47:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/03/30/scala-exception-handling</id>
+    <content type="html"><![CDATA[<p>We're very used to Java's notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can't force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it's all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
+
+<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
+
+<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I've described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we'll take a quick look at Scala's syntax around exceptions and how pattern matching is employed.</p>
+
+<!-- more -->
+
+
+<h2>Exceptions</h2>
+
+<p>Scala essentially treats all exception types as <code>RuntimeException</code>. This means it doesn't <em>force</em> you to handle exceptions. Instead, it combines <em>pattern matching</em> with a single <code>catch</code> block to handle exceptions. For example</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">url</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">MalformURLException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;bad url &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">IOException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;other IO problem &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;anything else!&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">// cleanup</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Any cleanup can be achieved using the <code>finally</code> block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the <em><a href="https://wiki.scala-lang.org/display/SYGN/Loan">loan pattern</a></em>. You can see an example of the pattern in Java form in the <code>ExecuteUsingLock</code> <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/xref/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.html">class</a> from <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>.</p>
+
+<p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'>  <span class="k">throw</span> <span class="k">new</span> <span class="nc">IOException</span><span class="o">(</span><span class="s">&quot;failed to load&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>However, anyone calling this method won't be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the <code>throws</code> annotation but this still won't affect Scala clients.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
+</span><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Interestingly, Scala treats <code>throw</code> as an expression with a return type of <code>Nothing</code>. You can use it in place of any other expression even though the result wont actually evaluate to anything.</p>
+
+<h2>Pattern Matching</h2>
+
+<p>Pattern matching is a bit like a switch statement but unlike Java's switch statement, pattern matching in Scala can be used to match any kind of constant as well as other things (like <em>case objects</em>). It's not restricted to just primitives and enums as with Java (although Java 1.7 brought <code>String</code> <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html">support to switch</a>).</p>
+
+<p>Pattern matching is applied to the exception type when using <code>catch</code> above but it's also used in its vanilla form. For example, as described in <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, we can work out what to have with dinner in the example below.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">dinner</span> <span class="k">match</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;chips&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;mash&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;cheese&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="k">case</span> <span class="k">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;beans?&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Notice that there is no need for a <code>break</code> statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">def</span> <span class="nf">anotherAccompaniment</span><span class="o">(</span><span class="nl">dinner:</span> <span class="n">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">val</span> <span class="n">accompaniment</span> <span class="o">=&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">dinner</span> <span class="n">match</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;chips&quot;</span>
+</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;mash&quot;</span>
+</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;cheese&quot;</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">println</span><span class="o">(</span><span class="n">accompaniment</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Conclusion</h2>
+
+<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to <a href="/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 ]]></content>
   </entry>
   

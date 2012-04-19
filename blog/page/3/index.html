@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don&#8217;t want in the form of a &hellip;">
+  <meta name="description" content="Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-17 11:20:11 +0100 -->
+    <!-- last update; 2012-04-19 19:57:00 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +77,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/07/09/changing-test-gears/">Changing Test Gears</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-09T00:00:00+01:00" pubdate data-updated="true">Jul 9<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It&#8217;s the same with testing, you gotta know when to change gears.</p>
+
+<p>To put it development terms, good developers know when to change gears. They
+know when to change their testing style from cautious to aggressive as the
+code evolves.</p>
+
+<p>Lets pretend there is just three types of testing; unit, integration and
+acceptance. In the interest of stereotyping, we&#8217;ll define them simplistically
+as</p>
+
+<ul>
+<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
+<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
+<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/07/09/changing-test-gears/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -799,59 +855,6 @@ comments.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/12/24/deadlock/">Deadlock detection in Java</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. The
-<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency/DeadlockDetector.java">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>DeadlockDecector</code> class can only spot Java monitor cyclic locking
-problems. It&#8217;s implementation is basically the same as that used by <code>jconsole</code>
-and <code>jstack</code> although Java 1.6 versions<code>` can additionally detect</code>Lock` based
-cyclic problems. The types of deadlock it can detect can be illustrated in the
-example below.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/12/24/deadlock/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -870,6 +873,10 @@ example below.</p>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
       <li class="post">
@@ -902,10 +909,6 @@ example below.</p>
     
       <li class="post">
         <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a>
       </li>
     
   </ul>
