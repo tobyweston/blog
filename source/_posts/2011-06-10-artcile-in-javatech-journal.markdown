@@ -1,7 +1,7 @@
 ---
 name: artcile-in-javatech-journal
 layout: post
-title: JDK7 Artcile in JavaTech Journal
+title: JDK7 Article in JavaTech Journal
 time: 2011-06-10 16:52:00 +01:00
 categories: java
 comments: true
