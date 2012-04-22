@@ -19,35 +19,23 @@
 
   
   <link rel="canonical" href="http://baddotrobot.com/blog/2012/03/30/scala-exception-handling">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="/blog/javascripts/ender.js"></script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-04-22 19:56:38 +0100 -->
-    <h1><a href="/">bad.robot</a></h1>
+    <!-- last update; 2012-04-22 20:11:33 +0100 -->
+    <h1><a href="/blog/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
     
@@ -67,9 +55,9 @@
 </form>
   
 <ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/code">Code</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/code">Code</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
 </ul>
 
 </nav>
@@ -107,7 +95,7 @@
 
 <p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
 
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
+<p>In a <a href="/blog/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
 
 <!-- more -->
 
@@ -219,7 +207,7 @@
 
 <h2>Conclusion</h2>
 
-<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it&#8217;s even more important to understand where potential exceptions will bubble up and how to <a href="/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
+<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it&#8217;s even more important to understand where potential exceptions will bubble up and how to <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 </div>
 
 
@@ -247,7 +235,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
+    <a class='category' href='/blog/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/blog/categories/java/'>java</a>, <a class='category' href='/blog/blog/categories/scala/'>scala</a>
   
 </span>
 
@@ -265,10 +253,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/03/29/building-better-exceptions/" title="Previous Post: Building Better Exceptions">&laquo; Building Better Exceptions</a>
+        <a class="basic-alignment left" href="/blog/blog/2012/03/29/building-better-exceptions/" title="Previous Post: Building Better Exceptions">&laquo; Building Better Exceptions</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/" title="next Post: Scala as a Functional OO Hybrid">Scala as a Functional OO Hybrid &raquo;</a>
+        <a class="basic-alignment right" href="/blog/blog/2012/04/03/scala-as-a-functional-oo-hybrid/" title="next Post: Scala as a Functional OO Hybrid">Scala as a Functional OO Hybrid &raquo;</a>
       
     </p>
   </footer>
@@ -289,43 +277,43 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
+        <a href="/blog/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
+        <a href="/blog/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
+        <a href="/blog/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
+        <a href="/blog/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a>
+        <a href="/blog/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/18/tools-for-bad-dot-robots/">tools for bad.robots</a>
+        <a href="/blog/blog/2012/03/18/tools-for-bad-dot-robots/">tools for bad.robots</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
+        <a href="/blog/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
+        <a href="/blog/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
+        <a href="/blog/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
+        <a href="/blog/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
       </li>
     
   </ul>
@@ -341,7 +329,7 @@
       getTwitterFeed("jamanifin", 4, false);
     });
   </script>
-  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  <script src="/blog/javascripts/twitter.js" type="text/javascript"> </script>
   
     <a href="http://twitter.com/jamanifin" class="twitter-follow-button" data-show-count="false">Follow @jamanifin</a>
   
