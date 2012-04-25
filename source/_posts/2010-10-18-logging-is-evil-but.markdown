@@ -3,7 +3,7 @@ name: logging-is-evil-but
 layout: post
 title: Logging is evil but...
 time: 2010-10-18 20:51:00 +01:00
-categories: java mocking testing exceptions
+categories: java mocking testing exceptions rest
 comments: true
 ---
 
@@ -50,7 +50,7 @@ embedded in the middle of another thousand requests? What should have been a
 clear set of requirements from the business (in this case, presumably the
 support team) can easily get lost in the technical translation.
 
-> Logging is evil, but if I really *have* to log, be honest about it...
+> Logging is evil, but if you really *have* to, be honest about it...
 
 Asking the business _"what information do you want to see in the event of x
 happening"_ rather than assuming they want to see some stack trace in a huge
