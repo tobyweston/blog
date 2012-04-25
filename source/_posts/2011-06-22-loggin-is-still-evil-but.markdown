@@ -1,7 +1,7 @@
 ---
 name: loggin-is-still-evil-but
 layout: post
-title: Loggin is still evil but...
+title: Logging is still evil but...
 time: 2011-06-22 21:14:00 +01:00
 categories: java object-oriented mocking testing
 comments: true
