@@ -95,7 +95,7 @@ Beware though that if you combine the rule with certain `@RunWith` classes,
 you may get a false positive. Specifically, if you were to run with a class that extends `JUnit4ClassRunner` in the
 above example, the test would no longer fail. You'd get a false positive.
 
-For example, if you're using an old version of JMock and use `@RunWith(JMock.class)` you may see this. Older versions of the `JMock.class` extend `JUnit4ClassRunner`. `JUnit4ClassRunner` ignores rules whereas the newer `BlockJUnit4ClassRunner` supports rules and newer versions of `JMock.class` extends this runner.
+For example, if you're using a version of JMock prior to 2.6.0 and use `@RunWith(JMock.class)` you'll encounter this. Older versions of the `JMock.class` extend `JUnit4ClassRunner` and `JUnit4ClassRunner` ignores rules. The newer `BlockJUnit4ClassRunner` supports rules and JMock post 2.6.0 extend this in `JMock.class`.
 
 
 ## Summary
