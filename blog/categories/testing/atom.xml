@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-04-22T20:14:50+01:00</updated>
+  <updated>2012-05-03T20:23:59+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -274,7 +274,7 @@ additional assertions after the <code>find</code> method call, but this may not 
 you may get a false positive. Specifically, if you were to run with a class that extends <code>JUnit4ClassRunner</code> in the
 above example, the test would no longer fail. You'd get a false positive.</p>
 
-<p>For example, if you're using an old version of JMock and use <code>@RunWith(JMock.class)</code> you may see this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code>. <code>JUnit4ClassRunner</code> ignores rules whereas the newer <code>BlockJUnit4ClassRunner</code> supports rules and newer versions of <code>JMock.class</code> extends this runner.</p>
+<p>For example, if you're using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you'll encounter this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules. The newer <code>BlockJUnit4ClassRunner</code> supports rules and JMock post 2.6.0 extend this in <code>JMock.class</code>.</p>
 
 <h2>Summary</h2>
 
@@ -339,7 +339,7 @@ above example, the test would no longer fail. You'd get a false positive.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Loggin is still evil but...]]></title>
+    <title type="html"><![CDATA[Logging is still evil but...]]></title>
     <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>

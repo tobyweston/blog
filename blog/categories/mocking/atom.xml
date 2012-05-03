@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mocking | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/mocking/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-04-22T20:14:50+01:00</updated>
+  <updated>2012-05-03T20:23:59+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Loggin is still evil but...]]></title>
+    <title type="html"><![CDATA[Logging is still evil but...]]></title>
     <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
@@ -173,7 +173,7 @@ embedded in the middle of another thousand requests? What should have been a
 clear set of requirements from the business (in this case, presumably the
 support team) can easily get lost in the technical translation.</p>
 
-<blockquote><p>Logging is evil, but if I really <em>have</em> to log, be honest about it...</p></blockquote>
+<blockquote><p>Logging is evil, but if you really <em>have</em> to, be honest about it...</p></blockquote>
 
 <p>Asking the business <em>"what information do you want to see in the event of x
 happening"</em> rather than assuming they want to see some stack trace in a huge

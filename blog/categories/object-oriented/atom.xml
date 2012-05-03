@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-04-22T20:14:50+01:00</updated>
+  <updated>2012-05-03T20:23:59+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -691,7 +691,7 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Loggin is still evil but...]]></title>
+    <title type="html"><![CDATA[Logging is still evil but...]]></title>
     <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>

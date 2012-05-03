@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: rest | bad.robot]]></title>
+  <title><![CDATA[Category: REST | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-04-22T20:14:50+01:00</updated>
+  <updated>2012-05-03T20:23:59+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -14,145 +14,35 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
-    <updated>2012-03-28T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
-    <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
-
-<p>In this post, we'll take a closer look with some examples.</p>
+    <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
+    <link href="http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
+    <updated>2012-02-21T06:27:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
+    <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using <a href="http://jersey.java.net/">Jersey</a>, Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.</p>
 
 <!-- more -->
 
 
-<p>To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, <em>when</em> to catch exceptions and <em>how</em> to deal with them. Effectively, we'll define a system wide strategy for each of the following.</p>
+<p>The problem is in IE8's default set of <code>Accept</code> header values. For some reason, it'll ask for a very specific set of Microsoft types in the request;</p>
 
-<ul>
-<li>Low level exceptions which propagate to the UI</li>
-<li>An example of an externally facing API, in our case, a RESTful service</li>
-<li>Maintaining data atomicity in the face of failures</li>
-</ul>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, &lt;em>/&lt;/em></span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
+<p>When the server responds with a <code>Content-Type</code> of anything other than what's in the accept list,
+IE will prompt the user to save the resource instead of attempting to display it. That's fair enough as I imagine its
+saying "I didn't say I could accept this so therefore, I don't know how to display it".</p>
 
-<h3>The UI Boundary</h3>
+<p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
 
-<p>A user probably isn't interested in seeing details of the majority of your exceptions. A user should certainly not be presented with a Java stack trace when visiting a public web site.</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Lets have a look at the example when a user's session times out. The server will generate a <code>SessionExpiredException</code> on subsequent requests but we don't want to relay this to the user.</p>
+<p>will prompt IE8 to save the file rather than display 'in-browser'.</p>
 
-<p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
+<p>When we return a response with a JSON content type, IE won't know how to handle it. We could send back our JSON as <code>text/plain</code> for all cases, but that kind of defeats the object of using <code>Content-Type</code> all together.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.SessionExpiredException<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/login<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
-</span><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.Defect<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/internalServerError<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>For the <em>how</em>, the approach at this layer is to <em>translate</em> un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
-
-<h3>The API Boundary</h3>
-
-<p>Lets consider a RESTful web service that allows a client to <code>GET</code> customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code <code>404</code> (Not Found). In the backend however, we throw a <code>CustomerNotFoundException</code>.</p>
-
-<p>For the <em>when</em>, again, this layer is about <em>translation</em>. We would like to turn the <code>Exception</code> into a HTTP response code at the point at which the response is generated. We can propagate the exception up through the stack until the last possible point.</p>
-
-<p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of <code>Throwable</code>.</p>
-
-<h3>The Database Transaction Boundary</h3>
-
-<p>When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we want to rollback. Otherwise we'd be left in an inconsistent state.</p>
-
-<p>Database transactions are the typical solution to this class of problem. We'll like to start a transaction and perform some <em>unit of work</em> before finally committing. If a problem occurs during the execution, we should rollback. We don't want to do this ad-hoc with various catch statements. If we did, it would be hard to manage and to be sure we've got all the cases. We could even 'double up' and handle exceptions twice.</p>
-
-<p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
+<p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
+by sending back plain text but still return JSON for all other cases.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -171,51 +61,95 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
-</span><span class='line'><span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">unitOfWork</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isOpen</span><span class="o">())</span>
-</span><span class='line'>        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@GET</span>
+</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getAllCustomers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">allCustomersAsJson</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@GET</span>
+</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/x-ms-application&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">TextPlainOkResponse</span> <span class="nf">getAllCustomersForInternetExplorer</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">getAllCustomersAsJson</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>This also describes the <em>how</em>. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propagate up to the UI. We've handled the exception here to maintain data integrity <em>and</em> allowed other exception handling policies to be applied. It's a good example of an <em>internal boundary</em>.</p>
+<p>The class above will return a list of all Customers as JSON. The <code>getAllCustomers</code> method will be dispatched to via
+Jersey and send back the <code>String</code> with a <code>Content-Type</code> of <code>application/json</code> for all cases <em>unless</em>
+the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
+constructed, we'll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
 
-<p>For example; two sales clerks try and update a customer's details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a <code>OptimisticLockException</code>. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.</p>
+<p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">json</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">getEntity</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStatus</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">200</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">MultivaluedMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">getMetadata</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">MetadataMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{{</span>
+</span><span class='line'>        <span class="n">put</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span><span class="n">asList</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}};</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>See a <a href="/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
+<p>So for all clients asking for <code>application/x-ms-application</code>, they'll actually get <code>text/plain</code>. In the case of
+Internet Explorer 8, it will display the JSON 'in-browser'. It won't apply any formatting though, so you may want to
+pretty print the response before sending it back.</p>
 
-<h2>Some Parting Tips</h2>
-
-<p>We've talked about a lot here. Hopefully, the examples demonstrate the idea and here's a few parting tips.</p>
-
-<ul>
-<li>Identify the boundaries (and so <em>when</em> to handle).</li>
-<li>Define a general handling approach for each boundary (<em>how</em> to handle).</li>
-<li>Application specific exception subclasses should be <em>specialised</em>.</li>
-<li>Exceptions are objects too; think OO.</li>
-<li>Never catch an exception and rethrow verbatim.</li>
-<li>However, if required, do <em>translate</em> an exception into another <em>only</em> at the boundaries.</li>
-<li>Don't forget that boundaries can be internal, just be explicit about where they are.</li>
-</ul>
-
-
-<p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
-
-<p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
+<p>If it doesn't work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
+something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
+headers
+ are going over.</p>
 ]]></content>
   </entry>
   
