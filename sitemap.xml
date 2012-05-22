@@ -219,12 +219,16 @@
         <lastmod>2012-04-03T21:25:07+01:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/</loc>
+        <lastmod>2012-05-22T19:49:43+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/404.html</loc>
         <lastmod>2012-03-18T14:54:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2012-05-03T20:23:33+01:00</lastmod>
+        <lastmod>2012-05-22T19:49:43+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -240,6 +244,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2012-05-03T20:23:33+01:00</lastmod>
+        <lastmod>2012-05-22T19:49:43+01:00</lastmod>
     </url>
 </urlset>

@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I recently added a basic deadlock detection mechanism to tempus-fugit. The
-DeadlockDetector class allows you to programmatically detect basic &hellip;">
+  <meta name="description" content="Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -47,7 +46,7 @@ DeadlockDetector class allows you to programmatically detect basic &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-05-03 20:23:59 +0100 -->
+    <!-- last update; 2012-05-22 19:51:49 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -78,6 +77,128 @@ DeadlockDetector class allows you to programmatically detect basic &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/24/flickering-tests/">Flickering Tests and a JUnit Rule</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
+
+<p>In an attempt to ease this heavy burden and make light work of this drudgery,
+I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and
+<code>Runner</code>. Now, I can mark up a suspect test and get someone else to do the
+repetition. Joy.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="nd">@Intermittent</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s interesting here is the way in which the <code>Rule</code> and <code>Runner</code> interact with
+JUnit. Newer versions of JUnit have introduced the idea of <code>Rule</code>s and
+<code>Statement</code>s. Using a <code>Rule</code> allows access to the underlying <code>Statement</code> which in
+our case is the action to run the test method. So we&#8217;re able to run the
+underlying statement again and again. Nice.</p>
+
+<p>The <code>Runner</code> however can hook into JUnit&#8217;s framework in a different way. It can
+access more than one statement and so can position itself slightly differently.
+What this means for us is that when using the <code>Rule</code> above, any <code>@Before</code> or <code>@After</code>
+methods will only be run once but the test method will run multiple times.
+Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
+once for each test repetition.</p>
+
+<p>The code is available as part of the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> library so feel free to <a href="http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency">browse</a> and feedback your
+comments.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -601,56 +722,6 @@ tend to think of <code>Runnable</code> as simply something that can run, not in 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/03/15/swtbot-vs-window-licker/">SWTBot vs Window Licker</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-03-15T00:00:00+00:00" pubdate data-updated="true">Mar 15<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s1600-h/GodzillaBot1972.png"><img class="left" src="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s200/GodzillaBot1972.png"></a></p>
-
-<p>The title is a bit misleading because these guys aren&#8217;t really squaring off like Gozilla and Gigan,
-the projects aren&#8217;t competing and this blog isn&#8217;t really a full or fair comparison. For a start Window Licker doesn&#8217;t yet support SWT and as its name suggests SWTBot, er, does.</p>
-
-<p>My comments are really based on having a go at <a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">implementing some basic SWT support</a> in Window Licker and adding some
-features to SWTBot so it shouldn&#8217;t be taken as authoritative. This entry is
-more of an experience report after trying to contribute to both projects. I&#8217;ll
-try to follow up with an API usage report when I&#8217;ve used both more with my
-applications.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/03/15/swtbot-vs-window-licker/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -666,6 +737,10 @@ applications.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
@@ -701,10 +776,6 @@ applications.</p>
     
       <li class="post">
         <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a>
       </li>
     
   </ul>

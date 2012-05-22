@@ -5,23 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>JUnit and Threaded Tests - bad.robot</title>
+  <title>Stop Ignoring @Rules - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example; 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13 &hellip;">
+  <meta name="description" content="If you&#8217;re using a version of JMock prior to 2.6.0 and use @RunWith(JMock.class) you may have spotted that your @Rules are actually being &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -92,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">JUnit and Threaded Tests</h1>
+      <h1 class="entry-title">Stop Ignoring @Rules</h1>
     
     
       <p class="meta">
@@ -108,67 +96,16 @@
   
 
 
-<time datetime="2008-12-17T00:00:00+00:00" pubdate data-updated="true">Dec 17<span>th</span>, 2008</time>
+<time datetime="2012-05-05T10:50:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;</p>
+<div class="entry-content"><p>If you&#8217;re using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It&#8217;s because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">exaple</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isDaemon</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">NON_DAEMON</span><span class="o">));</span>
-</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method
-finishes it somehow messes with the threads&#8230;</p>
-
-<p>Looking into things, it seems in my case that naughty Eclipse is muddying the
-water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up
-calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java
-process. Even if we changed the daemon status of the thread, you&#8217;d get the
-same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
-
-<p>So, in some situations it is possible to interrupt a thread in a JUnit test
-bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ
-actually seems to have the same behaviour but I can&#8217;t review to source to
-confirm.</p>
-
-<p><a href="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"><img src="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"></a></p>
+<p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
 </div>
 
 
@@ -191,12 +128,12 @@ confirm.</p>
   
 
 
-<time datetime="2008-12-17T00:00:00+00:00" pubdate data-updated="true">Dec 17<span>th</span>, 2008</time>
+<time datetime="2012-05-05T10:50:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a>
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/mocking/'>mocking</a>
   
 </span>
 
@@ -205,7 +142,7 @@ confirm.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/" >Tweet</a>
   
   
   
@@ -214,10 +151,8 @@ confirm.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2008/12/11/bit-disappointing-this-year/" title="Previous Post: XPDay 2008">&laquo; XPDay 2008</a>
+        <a class="basic-alignment left" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/" title="Previous Post: Scala as a Functional OO Hybrid">&laquo; Scala as a Functional OO Hybrid</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2008/12/24/interfaces-vs-class-imposterisers/" title="next Post: Interfaces vs Class impostorisers">Interfaces vs Class impostorisers &raquo;</a>
       
     </p>
   </footer>
@@ -320,8 +255,8 @@ confirm.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/';
-        var disqus_url = 'http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/';
         var disqus_script = 'embed.js';
       
     (function () {

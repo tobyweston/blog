@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-05-03T20:23:59+01:00</updated>
+  <updated>2012-05-22T19:51:49+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stop Ignoring @Rules]]></title>
+    <link href="http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/"/>
+    <updated>2012-05-05T10:50:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules</id>
+    <content type="html"><![CDATA[<p>If you're using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It's because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
+
+<p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scala Exception Handling]]></title>
@@ -621,33 +632,6 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
 
 <p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[tools for bad.robots]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
-    <updated>2012-03-18T15:58:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
-    <content type="html"><![CDATA[<p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
-a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
-Rather than re-implement the same utility code again and again, I've started to collect things under the bad.robot
-banner. So far, we have...</p>
-
-<!-- more -->
-
-
-<ul>
-<li>simple-http; a simple way to build a HTTP client and work with the HTTP verbs. No more lengthy configuration,
-it just works out of the box.</li>
-<li>simple-excel; a simple DSL-wrapper over Apache POI to work with sheets</li>
-<li>concordion-ant-task; build <a href="http://www.concordion.org/">Concordion</a> overview pages for your specifications</li>
-<li>a collection of domain driven design classes so you can quickly incorporate <em>value types</em> and alike in your project.</li>
-</ul>
-
-
-<p>Head over to <a href="http://robotooling.com">robotooling.com</a> or <a href="https://github.com/tobyweston">github</a> to find out
-more.</p>
 ]]></content>
   </entry>
   
