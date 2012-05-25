@@ -5,6 +5,7 @@ title: Transaction Management without the Frameworks
 time: 2012-01-29 13:58:00 +00:00
 categories: java object-oriented
 comments: true
+sidebar : false
 ---
 
 It's easy to avoid manually managing transactions when frameworks like Spring and

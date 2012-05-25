@@ -4,6 +4,7 @@ layout: post
 title: Java source on Mac
 time: 2011-10-29 11:11:00 +01:00
 categories: java
+sidebar : false
 ---
 
 Mostly as a reminder to myself, getting the Java source on your Mac involves the following.

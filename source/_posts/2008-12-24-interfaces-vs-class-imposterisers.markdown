@@ -5,6 +5,7 @@ title: Interfaces vs Class impostorisers
 time: 2008-12-24 11:36:00 +00:00
 categories: java testing mocking
 comments: true
+sidebar : false
 ---
 
 I've been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I'm not sure I get the resistance when people want to use class impostorisers.

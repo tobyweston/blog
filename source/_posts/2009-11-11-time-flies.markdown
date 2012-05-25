@@ -5,6 +5,7 @@ title: Time Flies 1.0
 time: 2009-11-11 22:01:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
+sidebar : false
 ---
 
 I've just published tempus-fugit 1.0-SNAPSHOT to [maven central repository](http://search.maven.org/).

@@ -5,6 +5,7 @@ title: Pairing Honestly
 time: 2010-08-15 11:39:00 +01:00
 categories: agile coaching
 comments: true
+sidebar : false
 ---
 
 Recently we had particularly good retrospective where the team {" were able to admit that each of us has had difference experiences pairing "}. We were honest in saying that despite having "done pairing" we'd all done different amounts of pairing and that, at times, we weren't even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a [previous post]({{ root_url }}/blog/2008/12/31/what-makes-good-pair/)) and how do we know that we're getting something out of it?

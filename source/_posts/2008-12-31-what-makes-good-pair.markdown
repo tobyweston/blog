@@ -5,6 +5,7 @@ title: What Makes a Good Pair?
 time: 2008-12-31 09:15:00 +00:00
 categories: agile coaching
 comments: true
+sidebar : false
 ---
 
 [{% img right http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s200/q71195623.png %}](http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s1600-h/q71195623.png)

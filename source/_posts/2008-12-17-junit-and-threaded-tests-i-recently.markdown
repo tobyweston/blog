@@ -5,6 +5,7 @@ title: JUnit and Threaded Tests
 time: 2008-12-17 18:52:00 +00:00
 categories: java concurrency testing
 comments: true
+sidebar : false
 ---
 
 I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;

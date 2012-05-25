@@ -5,6 +5,7 @@ title: Generate Concordion Overviews
 time: 2010-07-07 22:01:00 +01:00
 categories: java agile testing
 comments: true
+sidebar : false
 ---
 
 Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don't want in the form of a _specification_ can be liberating. You'll thrash out the details and come up with _examples_ that can be exercised against the running system. Everybody wins.

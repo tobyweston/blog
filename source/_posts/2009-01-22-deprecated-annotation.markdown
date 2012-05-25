@@ -5,6 +5,7 @@ title: Deprecated Annotation
 time: 2009-01-22 15:25:00 +00:00
 categories: java
 comments: true
+sidebar : false
 ---
 
 Why didn't Sun add a `value` property to the `@Deprecated` annotation? Instead of

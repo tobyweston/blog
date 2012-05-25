@@ -5,6 +5,7 @@ title: SWTBot vs Window Licker
 time: 2009-03-15 11:30:00 +00:00
 categories: java testing
 comments: true
+sidebar : false
 ---
 
 [{% img left http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s200/GodzillaBot1972.png %}](http://4.bp.blogspot.com/_-uMxV_fCbC4/Sb02LJ0YQQI/AAAAAAAADDc/7ubGC1lAmMs/s1600-h/GodzillaBot1972.png)

@@ -5,6 +5,7 @@ title: Less is More
 time: 2009-02-26 19:20:00 +00:00
 categories: java performance
 comments: true
+sidebar : false
 ---
 
 [Denton](https://twitter.com/#!/tarkaTheRotter) was trying to

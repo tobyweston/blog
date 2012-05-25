@@ -5,6 +5,7 @@ title: Building Better Exceptions
 time: 2012-03-28 06:00:00 +00:00
 categories: java testing object-oriented exceptions
 comments: true
+sidebar : false
 ---
 
 In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern), we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.

@@ -4,6 +4,7 @@ title: "tools for bad.robots"
 date: 2012-03-18 15:58
 comments: true
 categories: java robotooling
+sidebar : false
 ---
 
 Just a quick post to introduce the [robotooling](http://robotooling.com) project;

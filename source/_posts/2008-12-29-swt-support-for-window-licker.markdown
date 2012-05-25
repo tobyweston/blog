@@ -5,6 +5,7 @@ title: SWT Support for Window Licker
 time: 2008-12-29 14:05:00 +00:00
 categories: java
 comments: true
+sidebar : false
 ---
 
 [Window Licker](http://code.google.com/p/windowlicker/) is a framework designed to help you define your own fluent API for GUI testing. It provides a driver style API that your Swing or Ajax applications plug into before you go about writing GUI tests in a language natural to your application.

@@ -5,6 +5,7 @@ title: Expecting Exceptions JUnit Rule
 time: 2012-03-27 06:00:00 +00:00
 categories: java testing exceptions
 comments: true
+sidebar : false
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or

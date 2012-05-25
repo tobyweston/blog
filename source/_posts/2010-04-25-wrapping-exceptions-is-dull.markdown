@@ -5,6 +5,7 @@ title: Wrapping Exceptions is Dull
 time: 2010-04-25 18:19:00 +01:00
 categories: java tempus-fugit exceptions
 comments: true
+sidebar : false
 ---
 
 I'm totally bored of wrapping exceptions in Java,

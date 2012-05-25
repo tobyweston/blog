@@ -5,6 +5,7 @@ title: Be Explicit with the UI Thread
 time: 2008-12-30 12:00:00 +00:00
 categories: java testing concurrency
 comments: true
+sidebar : false
 ---
 
 Following up from the post [SWT Support in Window Licker]({{ root_url }}/blog/2008/12/29/swt-support-for-window-licker/).

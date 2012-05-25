@@ -5,6 +5,7 @@ title: "Force IE8 to Display JSON with Jersey"
 date: 2012-02-21 06:27
 comments: true
 categories: java REST
+sidebar : false
 ---
 
 If Internet Explorer 8 performs a HTTP `GET` against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using [Jersey](http://jersey.java.net/), Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.

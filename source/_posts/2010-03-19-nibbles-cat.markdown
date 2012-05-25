@@ -1,10 +1,11 @@
 ---
 name: nibbles-cat
 layout: post
-title: Nibbles the Cat
+title: Nibbles the Cat & Concurrency
 time: 2010-03-19 21:39:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
+sidebar : false
 ---
 
 What has Nibbles the Cat got to do with deadlocks? I'm glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we _actually _see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.

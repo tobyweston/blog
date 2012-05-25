@@ -5,6 +5,7 @@ title: Inheritance vs Composition
 time: 2009-01-24 12:12:00 +00:00
 categories: java object-oriented
 comments: true
+sidebar : false
 ---
 
 When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a `Stack` as an example.

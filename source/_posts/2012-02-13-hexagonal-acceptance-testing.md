@@ -1,9 +1,11 @@
 ---
+sidebar : false
 layout: post
 title: Hexagonal Acceptance Testing
 date: 2012-02-13 21:24
 comments: true
 categories: java testing agile
+sidebar : false
 ---
 
 There's no reason a unit test can't also be an acceptance test. If you can prove that the _unit_ behaves a certain way _and_ that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.

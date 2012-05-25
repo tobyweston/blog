@@ -5,6 +5,7 @@ title: Type Safe Annotation
 time: 2010-01-04 20:51:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
+sidebar : false
 ---
 
 A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from [Concurrency In Practice](http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&tag=diyfiesta&link_code=btl&camp=213689&creative=392969), I wanted to include an enum as a parameter type. Kind of like this

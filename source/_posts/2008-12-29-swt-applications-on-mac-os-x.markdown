@@ -5,6 +5,7 @@ title: SWT Applications on Mac OS X
 time: 2008-12-29 12:03:00 +00:00
 categories: java
 comments: true
+sidebar : false
 ---
 
 I've had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option `-XstartOnFirstThread` is the cure to what ails ya! It even addresses the bug I reported [here](https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218)!

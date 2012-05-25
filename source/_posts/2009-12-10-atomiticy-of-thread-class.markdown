@@ -5,6 +5,7 @@ title: Atomiticy of the Thread class
 time: 2009-12-10 09:18:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
+sidebar : false
 ---
 
 I had an interesting time getting a couple of tests running for [tempus-fugit](http://code.google.com/p/tempus-fugit/) recently. It threw up a couple of interesting aspects about using threads that I hadn't come across before.

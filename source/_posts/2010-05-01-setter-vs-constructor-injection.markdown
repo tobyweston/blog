@@ -5,6 +5,7 @@ title: Setter vs Constructor Injection
 time: 2010-05-01 09:18:00 +01:00
 categories: java
 comments: true
+sidebar : false
 ---
 
 So what is the argument for / against? It can be a tough one to describe as I recently discovered.

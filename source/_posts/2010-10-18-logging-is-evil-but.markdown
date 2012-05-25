@@ -5,6 +5,7 @@ title: Logging is evil but...
 time: 2010-10-18 20:51:00 +01:00
 categories: java mocking testing exceptions rest
 comments: true
+sidebar : false
 ---
 
 Logging is a nightmare. I don't mean here that conveying information about
