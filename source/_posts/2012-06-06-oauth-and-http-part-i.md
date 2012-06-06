@@ -8,7 +8,7 @@ sidebar: false
 published: false
 ---
 
-## A typical OAuth / FreeAgent flow using Google's oauthplayground
+# A typical OAuth / FreeAgent flow using Google's oauthplayground
 
 <!-- more -->
 
@@ -123,3 +123,49 @@ Which on successful submission redirects back to the orginal redirection url.
     Location: https://code.google.com/oauthplayground?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&state
 
     <html><body>You are being <a href="https://code.google.com/oauthplayground?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&amp;state">redirected</a>.</body></html>
+
+
+# Using raw HTTP message (from a Java client)
+
+## GET /approve_app
+
+### Request
+
+    GET /v2/approve_app?client_id=4ta9v9JrXqSGdcdNuzTUtA&response_type=code HTTP/1.1
+    Host: api.sandbox.freeagent.com
+    User-Agent: Apache-HttpClient/4.1.3 (java 1.5)
+
+
+### Response
+
+    HTTP/1.1 302 Found
+    Content-Type: text/html; charset=utf-8
+    Location: https://api.sandbox.freeagent.com/v2/login
+
+    <html><body>You are being <a href="https://api.sandbox.freeagent.com/v2/login">redirected</a>.</body></html>
+
+## GET /login
+
+### Request
+
+Notice basic auth is set but doesn't do anything
+
+    GET /v2/login HTTP/1.1
+    Host: api.sandbox.freeagent.com
+    User-Agent: Apache-HttpClient/4.1.3 (java 1.5)
+    Cookie2: $Version=1
+    Authorization: Basic NXDRh1F....SWRYUWnFR
+
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Type: text/html; charset=utf-8
+
+    <html>
+        ... asking for username password
+    </html>
+
+
+
+Should I follow up with a POST?
