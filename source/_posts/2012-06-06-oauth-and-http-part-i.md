@@ -167,5 +167,4 @@ Notice basic auth is set but doesn't do anything
     </html>
 
 
-
-Should I follow up with a POST?
+I can get a bit further following the steps from the playground (ie, manually POSTing etc), I hit problems though on the last step because I don't seem to get back the `authenticity_token` from anywhere so I can't supply the correct body to the final `/grant_approval` POST :(
