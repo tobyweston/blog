@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-06T20:09:31+01:00</updated>
+  <updated>2012-06-09T21:11:00+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
-    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project's website</p>
+    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project's website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
 
@@ -40,7 +40,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 it always bugged me about the terminology we use. I tend to talk about
 closure-like arguments but revisiting some old University materials when
 clearing out the loft, I've adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>
+<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
 as an example, passing an anonymous class instance as a parameter to a method
  that will later call the instance is a kind of functional programming. I say
   kind-of because its not really functional programming,
@@ -258,7 +258,7 @@ application specific. Boring...</p>
 
 <p>If I didn't delegate like this, every service call would have to wrap and
 handle the google exceptions. As I've done this a few times, I decided to add
-it to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> as a
+it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a
 <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to
 rethrow any caught exception as some other (including the underlying exception
 as the <code>cause</code>).</p>
@@ -298,9 +298,7 @@ the new exception, and forces the syntactically sugary <code>with</code> by taki
 <code>WithException</code> as the second parameter.</p>
 
 <p>It's a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful. Source is
-<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
-the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
+if it gets some millage. Let me know if you find it useful.</p>
 ]]></content>
   </entry>
   

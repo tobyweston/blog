@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-06T20:09:31+01:00</updated>
+  <updated>2012-06-09T21:11:00+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
     <updated>2011-04-13T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
-    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. From the project's website</p>
+    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project's website</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
 
@@ -268,7 +268,7 @@ a comment.</p>
     <link href="http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/"/>
     <updated>2009-12-29T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel</id>
-    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I'm trying to capture this warm feeling more explicitly in the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
 
 <p>Looking more into recent versions of JUnit, there seems to be lots and lots of
 integration points for you to play with. I've been playing with <code>Rules</code>,
@@ -337,9 +337,7 @@ the scheduler gave the following.</p>
 I'm excited about speeding up the execution time of my tests, next step would
 be run all tests across classes in parallel! hmmm.</p>
 
-<p>This is all available to use via the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project by the way.
-See the tempus-fugit <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Parallel_Tests">documentation</a>
-for more details on the runner.</p>
+<p>This is all available to use via the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project by the way.</p>
 ]]></content>
   </entry>
   
@@ -438,8 +436,7 @@ methods will only be run once but the test method will run multiple times.
 Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
 once for each test repetition.</p>
 
-<p>The code is available as part of the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> library so feel free to <a href="http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency">browse</a> and feedback your
-comments.</p>
+<p>The code is available as part of the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> library, feel free to look around.</p>
 ]]></content>
   </entry>
   

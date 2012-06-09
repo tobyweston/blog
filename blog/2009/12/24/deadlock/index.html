@@ -47,7 +47,7 @@ DeadlockDetector class allows you to programmatically detect basic &hellip;">
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-06 20:09:31 +0100 -->
+    <!-- last update; 2012-06-09 21:11:00 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -104,8 +104,8 @@ DeadlockDetector class allows you to programmatically detect basic &hellip;">
   </header>
 
 
-<div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>. The
-<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency/DeadlockDetector.java">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+<div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The
+<a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
@@ -195,10 +195,11 @@ situation as follows.</p>
 
 <p>I don&#8217;t imagine you&#8217;ll need to print out information about deadlocks or thread
 dumps from within your code very often, but on the off chance you&#8217;ll need to
-during debugging, they are both available for you to use in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project.</p>
+during debugging, they are both available for you to use in the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project.</p>
 </div>
 
 
+  
   <footer>
     <p class="meta">
       

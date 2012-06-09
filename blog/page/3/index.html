@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-06 20:09:31 +0100 -->
+    <!-- last update; 2012-06-09 21:11:00 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -478,7 +478,7 @@ application specific. Boring&#8230;</p>
 
 <p>If I didn&#8217;t delegate like this, every service call would have to wrap and
 handle the google exceptions. As I&#8217;ve done this a few times, I decided to add
-it to <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> as a
+it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a
 <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to
 rethrow any caught exception as some other (including the underlying exception
 as the <code>cause</code>).</p>
@@ -514,9 +514,7 @@ the new exception, and forces the syntactically sugary <code>with</code> by taki
 <code>WithException</code> as the second parameter.</p>
 
 <p>It&#8217;s a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful. Source is
-<a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java">here</a> with
-the test <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java">here</a>.</p>
+if it gets some millage. Let me know if you find it useful.</p>
 </div>
   
   
@@ -705,7 +703,7 @@ in his arms.</p>
   </header>
 
 
-  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I&#8217;m trying to capture this warm feeling more explicitly in the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I&#8217;m trying to capture this warm feeling more explicitly in the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
 
 <p>Looking more into recent versions of JUnit, there seems to be lots and lots of
 integration points for you to play with. I&#8217;ve been playing with <code>Rules</code>,
@@ -771,9 +769,7 @@ the scheduler gave the following.</p>
 I&#8217;m excited about speeding up the execution time of my tests, next step would
 be run all tests across classes in parallel! hmmm.</p>
 
-<p>This is all available to use via the <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> project by the way.
-See the tempus-fugit <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Parallel_Tests">documentation</a>
-for more details on the runner.</p>
+<p>This is all available to use via the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project by the way.</p>
 </div>
   
   

@@ -46,7 +46,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-06 20:09:31 +0100 -->
+    <!-- last update; 2012-06-09 21:11:00 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -103,7 +103,7 @@
   </header>
 
 
-<div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+<div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
 
 <p>In one particular test, I wanted to show that interrupt is called on a thread
 and so followed what&#8217;s becoming a common pattern for me.</p>
@@ -183,10 +183,11 @@ interrupt status flag, its a good idea to avoid side affects by using the
 terribly named method <code>Thread.interrupted</code> rather than <code>isIntrrupted</code>. I also had
 to use a stubbed thread to reliably tell if the interrupt was called.</p>
 
-<p>See the code <a href="http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java">here</a>.</p>
+<p>See the code <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java">here</a>.</p>
 </div>
 
 
+  
   <footer>
     <p class="meta">
       

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-06T20:09:31+01:00</updated>
+  <updated>2012-06-09T21:11:00+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -62,7 +62,7 @@
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Any cleanup can be achieved using the <code>finally</code> block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the <em><a href="https://wiki.scala-lang.org/display/SYGN/Loan">loan pattern</a></em>. You can see an example of the pattern in Java form in the <code>ExecuteUsingLock</code> <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/xref/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.html">class</a> from <a href="http://code.google.com/p/tempus-fugit/">tempus-fugit</a>.</p>
+<p>Any cleanup can be achieved using the <code>finally</code> block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the <em><a href="https://wiki.scala-lang.org/display/SYGN/Loan">loan pattern</a></em>. You can see an example of the pattern in Java form in the <code>ExecuteUsingLock</code> <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/main/java/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.java">class</a> in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>.</p>
 
 <p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
 
