@@ -7,7 +7,7 @@ footer: false
 ---
 Some of my current projects:
 
-* [tempus-fugit](http://code.google.com/p/tempus-fugit/) - utility classes focused around concurrency and testing
+* [tempus-fugit](http://tempusfugitlibrary.org/) - utility classes focused around concurrency and testing
 * [robotooling](http://www.robotooling.com) - a collection of useful tools including a HTTP client that's actually easy to use and reusable domain driven design abstractions
 * [concordion-ant-task](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html) - an Ant task to collect Concordion specs in a single HTML overview
 

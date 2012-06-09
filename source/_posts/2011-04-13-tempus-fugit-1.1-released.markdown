@@ -8,7 +8,7 @@ comments: true
 sidebar : false
 ---
 
-Yesterday, I released the 1.1 version of my micro-library [tempus-fugit](http://code.google.com/p/tempus-fugit/). From the project's website
+Yesterday, I released the 1.1 version of my micro-library [tempus-fugit](http://tempusfugitlibrary.org/). From the project's website
 
 > The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.
 

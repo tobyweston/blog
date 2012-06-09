@@ -12,7 +12,7 @@ When writing Java in a functional style, apart from the verbosity of it all,
 it always bugged me about the terminology we use. I tend to talk about
 closure-like arguments but revisiting some old University materials when
 clearing out the loft, I've adjusted my vocabulary somewhat. Taking the
-`WaitFor` class from [tempus-fugit](http://code.google.com/p/tempus-fugit/)
+`WaitFor` class from [tempus-fugit](http://tempusfugitlibrary.org/)
 as an example, passing an anonymous class instance as a parameter to a method
  that will later call the instance is a kind of functional programming. I say
   kind-of because its not really functional programming,

@@ -45,7 +45,7 @@ public O call() throws CalendarException {
   
 If I didn't delegate like this, every service call would have to wrap and
 handle the google exceptions. As I've done this a few times, I decided to add
-it to [tempus-fugit](http://code.google.com/p/tempus-fugit/) as a
+it to [tempus-fugit](http://tempusfugitlibrary.org/) as a
 `ExceptionWrapper` class. Using this class, you can wrap a `Callable` to
 rethrow any caught exception as some other (including the underlying exception
 as the `cause`).
@@ -77,10 +77,7 @@ the new exception, and forces the syntactically sugary `with` by taking a
 
   
 It's a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful. Source is
-[here](http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/ExceptionWrapper.java) with
-the test [here](http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/ExceptionWrapperTest.java).
-
+if it gets some millage. Let me know if you find it useful.
 
 
 

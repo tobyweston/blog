@@ -71,8 +71,7 @@ Using the `Runner` above however, will run any `@Before` or `@After` methods
 once for each test repetition.
 
   
-The code is available as part of the [tempus-fugit](http://code.google.com/p/tempus-fugit/) library so feel free to [browse](http://code.google.com/p/tempus-fugit/source/browse/#svn/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency) and feedback your
-comments.
+The code is available as part of the [tempus-fugit](http://tempusfugitlibrary.org/) library, feel free to look around.
 
 
 

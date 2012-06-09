@@ -33,7 +33,7 @@ try {
 {% endcodeblock %}
 
 
-Any cleanup can be achieved using the `finally` block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the _[loan pattern](https://wiki.scala-lang.org/display/SYGN/Loan)_. You can see an example of the pattern in Java form in the `ExecuteUsingLock` [class](http://tempus-fugit.googlecode.com/svn/site/documentation/xref/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.html) from [tempus-fugit](http://code.google.com/p/tempus-fugit/).
+Any cleanup can be achieved using the `finally` block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the _[loan pattern](https://wiki.scala-lang.org/display/SYGN/Loan)_. You can see an example of the pattern in Java form in the `ExecuteUsingLock` [class](https://github.com/tobyweston/tempus-fugit/blob/master/src/main/java/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.java) in [tempus-fugit](http://tempusfugitlibrary.org/).
 
 Throwing exceptions is done in the same way as Java, as in the example below.
 

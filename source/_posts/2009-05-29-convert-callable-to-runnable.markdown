@@ -113,7 +113,7 @@ Let me know if you've got any comments, great ideas on the subject or can
 improve on the implementation above.
 
 
-__Update__: Since writing this entry, I created the[ tempus-fugit](http://code.google.com/p/tempus-fugit/) project to
+__Update__: Since writing this entry, I created the[tempus-fugit](http://tempusfugitlibrary.org/) project to
 capture these kinds of ideas.
 
 

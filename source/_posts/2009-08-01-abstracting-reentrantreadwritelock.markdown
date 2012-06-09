@@ -186,7 +186,7 @@ private Callable<Status, RuntimeException> gettingStatus() {
 
 All this to avoid the boiler plate code! Fresh.
 
-__Update__: Since writing this entry, I created the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project to
+__Update__: Since writing this entry, I created the [tempus-fugit](http://tempusfugitlibrary.org/) project to
 capture these kinds of ideas.
 
   

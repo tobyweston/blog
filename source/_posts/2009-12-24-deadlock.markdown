@@ -8,8 +8,8 @@ comments: true
 sidebar : false
 ---
 
-I recently added a basic deadlock detection mechanism to [tempus-fugit](http://code.google.com/p/tempus-fugit/). The
-[DeadlockDetector](http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/main/java/com/google/code/tempusfugit/concurrency/DeadlockDetector.java) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
+I recently added a basic deadlock detection mechanism to [tempus-fugit](http://tempusfugitlibrary.org/). The
+[DeadlockDetector](http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
 
 {% codeblock lang:java %}
 DeadlockDetector.printDeadlocks(System.out);
@@ -75,7 +75,7 @@ situation as follows.
   
 I don't imagine you'll need to print out information about deadlocks or thread
 dumps from within your code very often, but on the off chance you'll need to
-during debugging, they are both available for you to use in the [tempus-fugit](http://code.google.com/p/tempus-fugit/) project.
+during debugging, they are both available for you to use in the [tempus-fugit](http://tempusfugitlibrary.org/) project.
 
   
 

@@ -8,7 +8,7 @@ comments: true
 sidebar : false
 ---
 
-I had an interesting time getting a couple of tests running for [tempus-fugit](http://code.google.com/p/tempus-fugit/) recently. It threw up a couple of interesting aspects about using threads that I hadn't come across before.
+I had an interesting time getting a couple of tests running for [tempus-fugit](http://tempusfugitlibrary.org/) recently. It threw up a couple of interesting aspects about using threads that I hadn't come across before.
   
 In one particular test, I wanted to show that interrupt is called on a thread
 and so followed what's becoming a common pattern for me.
@@ -88,7 +88,7 @@ terribly named method `Thread.interrupted` rather than `isIntrrupted`. I also ha
 to use a stubbed thread to reliably tell if the interrupt was called.
 
   
-See the code [here](http://code.google.com/p/tempus-fugit/source/browse/trunk/tempus-fugit/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java).
+See the code [here](https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java).
 
   
 
