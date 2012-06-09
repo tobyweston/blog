@@ -6,6 +6,7 @@ time: 2012-03-28 06:00:00 +00:00
 categories: java rest object-oriented exceptions
 comments: true
 sidebar : false
+series: Exception Handling
 ---
 
 It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a **system wide concern**. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering _when_ and _how_ to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.

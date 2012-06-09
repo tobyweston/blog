@@ -5,6 +5,7 @@ date: 2012-03-30 22:47
 comments: true
 categories: java scala exceptions
 sidebar : false
+series: Exception Handling
 ---
 
 We're very used to Java's notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can't force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it's all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.

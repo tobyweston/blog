@@ -6,6 +6,7 @@ time: 2012-03-27 06:00:00 +00:00
 categories: java testing exceptions
 comments: true
 sidebar : false
+series: Exception Handling
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
