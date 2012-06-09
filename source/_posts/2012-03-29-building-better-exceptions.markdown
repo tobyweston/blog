@@ -72,7 +72,7 @@ If a class throws an exception, _{" we should never need to test the content of 
 
 The first part is to test that the handling class responds appropriately to the exception _type_ and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply _tell don't ask_ and so can write simpler tests.
 
-In this way, we're just applying the [ports and adaptors]({{ root_url }}/2012/02/13/hexagonal-acceptance-testing) idea to write overlapping tests which combine for coverage but are still simple on their own.
+In this way, we're just applying the [ports and adaptors]({{ root_url }}/blog/2012/02/13/hexagonal-acceptance-testing) idea to write overlapping tests which combine for coverage but are still simple on their own.
 
 
 ## Only using Runtime Exceptions
