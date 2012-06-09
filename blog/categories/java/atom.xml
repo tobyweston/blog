@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-09T21:11:00+01:00</updated>
+  <updated>2012-06-09T21:20:00+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -252,7 +252,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>The first part is to test that the handling class responds appropriately to the exception <em>type</em> and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply <em>tell don't ask</em> and so can write simpler tests.</p>
 
-<p>In this way, we're just applying the <a href="/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
+<p>In this way, we're just applying the <a href="/blog/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
 
 <h2>Only using Runtime Exceptions</h2>
 
