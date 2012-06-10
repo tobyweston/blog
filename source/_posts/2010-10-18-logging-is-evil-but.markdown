@@ -175,7 +175,7 @@ public class LoggingPostTest {
 
     @Test
     public void shouldDelegate() throws Exception {
-        context.checking(new Expectations() { {
+        context.checking(new Expectations() {{ braces }}
             one(mock).post(...);
         }});
         new LoggingPost(mock).post(...);
