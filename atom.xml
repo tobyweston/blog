@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-09T21:20:00+01:00</updated>
+  <updated>2012-06-10T18:24:52+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,169 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[HTTP Should be Simple]]></title>
+    <link href="http://baddotrobot.com/blog/2012/06/10/http-simple/"/>
+    <updated>2012-06-10T10:06:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
+    <content type="html"><![CDATA[<p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. The Java <a href="https://github.com/tobyweston/simple-http">simple-http</a> library offers a simpler API, sensible defaults and one line requests.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h2>The API</h2>
+
+<p>The library provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()</span>
+</span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">httpTimeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">30</span><span class="o">)))</span>
+</span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">proxy</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://proxy.com:8999&quot;</span><span class="o">)))</span>
+</span><span class='line'>    <span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">),</span>
+</span><span class='line'>        <span class="n">headers</span><span class="o">(</span>
+</span><span class='line'>            <span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;text/html&quot;</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">)</span>
+</span><span class='line'>    <span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s supposed to be so simple, it&#8217;s self explanatory. If it&#8217;s not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient</code>.</p>
+
+<h2>Separation of Concerns</h2>
+
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with <a href="https://github.com/tobyweston/simple-http">simple-http</a> are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
+
+<h2>Configuration</h2>
+
+<p>Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that&#8217;s fine but as it comes sensible defaults, for the most part all you&#8217;ll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>SSL Authentication is straight forward, just add a username and password to your client.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Helping you Test</h2>
+
+<p>As <a href="https://github.com/tobyweston/simple-http">simple-http</a> ships with a bunch of <code>Matcher</code>s, it&#8217;s easy to make assertions or set expectations. For a simple case, compare the following.</p>
+
+<p>Using Apache directly, you might write something like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which, when it fails presents you with the following.</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: is &lt;200&gt;
+     got: &lt;404&gt;
+</code></pre>
+
+<p>With <a href="https://github.com/tobyweston/simple-http">simple-http</a>, you write.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which is much more helpful when it fails, showing the response&#8217;s status code, message, content and headers.</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: a HttpMessage with status code &lt;200&gt;
+     got: &lt;DefaultHttpResponse{statusCode=404, statusMessage='Not Found', content='{ "message", "not found" }', headers='SimpleHeaders{headers=[SimpleHeader{name='Content-Type', value='application/json'}]}'}&gt;
+</code></pre>
+
+<p>Of course, you can enrich the assertions, for example.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>        <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
+</span><span class='line'>        <span class="o">...</span>
+</span><span class='line'>    <span class="o">}});</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Download</h2>
+
+<p>You can download from the <a href="http://robotooling.com/maven/">bad.robot.repo</a> Maven repository or get the source from <a href="https://github.com/tobyweston/simple-http">Github</a>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;repositories&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;repository&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;id&gt;</span>bad.robot<span class="nt">&lt;/id&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;name&gt;</span>bad.robot repository for robotooling<span class="nt">&lt;/name&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;url&gt;</span>http://www.robotooling.com/maven/<span class="nt">&lt;/url&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/repository&gt;</span>
+</span><span class='line'><span class="nt">&lt;/repositories&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;dependency&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>bad.robot<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>simple-http<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enjoy and <a href="https://twitter.com/#!/jamanifin">let me know</a> how you get on.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stop Ignoring @Rules]]></title>
@@ -1989,7 +2152,7 @@ test and give access to the logger for assertion purposes.</p>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@Test</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDelegate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
 </span><span class='line'>            <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'>        <span class="o">}});</span>
 </span><span class='line'>        <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
@@ -2076,153 +2239,6 @@ but it can also be one of the most rewarding, personally and for the team as a
 whole. Collaboration has given the world some of its greatest achievements but
 you have to be honest that in this case, you might have to work for
 it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Lamdas vs. Closures]]></title>
-    <link href="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
-    <updated>2010-07-13T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
-    <content type="html"><![CDATA[<p>When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about
-closure-like arguments but revisiting some old University materials when
-clearing out the loft, I&#8217;ve adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
-as an example, passing an anonymous class instance as a parameter to a method
- that will later call the instance is a kind of functional programming. I say
-  kind-of because its not really functional programming,
-  Java isn&#8217;t a functional language but we can bend it into a style that&#8217;s similar. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="nd">@Override</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">},</span> <span class="n">timeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">)));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The anonymous class implementing <code>Condition</code> is evaluated by the method
-<code>waitOrTimeout</code> (it&#8217;s that which will call the <code>isSatisfied</code>) method.</p>
-
-<p>The recent shift to this functional style has lead to eager anticipation of
-JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion
-of <em>lamdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been
-available in Java since 1.1, so what&#8217;s the difference?</p>
-
-<!-- more -->
-
-
-<h3>Lambs to the Slaughter</h3>
-
-<p>So, we want to be able to define anonymous functions on the fly, the result of
-the function is purely dependent on it&#8217;s arguments and this is called a lamda.
-Those functions that depend on external values (not just it&#8217;s arguments) are
-when closures come into it. The act of binding those external values to the
-anonymous function is referred to as <em>closure</em>. After closure, when all
-variables have been captured and bound to the function, the term is closed.</p>
-
-<p>For example, the code snippet above will return a new <code>Condition</code> instance on
-each invocation. Because it will bind the variable server to the anonymous
-function, it will return a closure. To put it another way, we&#8217;ll extract the
-anonymous part to a method to explicitly create a new instance, such</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">(</span><span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="nf">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="nd">@Override</span>
-</span><span class='line'>      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">};</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This should make it more obvious that the variable outside the scope of the
-anonymous <code>Condition</code> is required (the server variable), each call to the
-<code>isRunning</code> method will return a closure over the argument, the instance of
-which captures the value of server. Java implements the closure by passing a
-reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class
-(<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field
- in the outer class directly in the bytecode</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span><span class="n">$1</span> <span class="kd">implements</span> <span class="n">Condition</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">final</span> <span class="n">Foo</span> <span class="k">this</span><span class="n">$0</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Foo$1</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="n">$0</span> <span class="o">=</span> <span class="n">Foo</span><span class="o">.</span><span class="na">this</span><span class="o">;</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">Foo</span><span class="o">.</span><span class="na">access</span><span class="n">$000</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">this</span><span class="o">).</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So, if, we have update the example again, this time removing the out of scope
-variable, we&#8217;re left with something like this;</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="nf">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="nd">@Override</span>
-</span><span class='line'>      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// optimistic!</span>
-</span><span class='line'>      <span class="o">};</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then no out of scope variables are required, the term doesn&#8217;t need to be
-closed. The anonymous function that is left is effectively a lamda.</p>
-
-<p>What JDK7 will (finger&#8217;s crossed) bring is more explicit, concise way of
-expressing the same ideas. It will support lamdas as a language feature
-although I can&#8217;t quite figure out what the example would look like in those
-terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
 ]]></content>
   </entry>
   

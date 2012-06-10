@@ -9,7 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Mostly as a reminder to myself, getting the Java source on your Mac involves the following. ">
+  <meta name="description" content="It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
+containers do a good job of hiding all the details. However, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +47,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-09 21:20:00 +0100 -->
+    <!-- last update; 2012-06-10 18:24:52 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +78,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
+containers do a good job of hiding all the details. However, it&#8217;s often more advantageous
+to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we?
+ Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
+
+<p>Moving from a declarative approach to a more imperative one can help us with
+testing and by virtue; <em>composability</em>. We can move from something which can
+only be tested using the framework or container (implying an integration or
+end-to-end style test) to a more focused style (without the need of said
+frameworks or containers). If we manage things ourselves and are explicit
+about the transactional boundaries in production code, we can be more
+lightweight in our tests.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/29/transaction-management-without/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -508,82 +561,6 @@ twice.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/07/13/lamdas-vs-closures/">Lamdas vs. Closures</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-13T00:00:00+01:00" pubdate data-updated="true">Jul 13<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about
-closure-like arguments but revisiting some old University materials when
-clearing out the loft, I&#8217;ve adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
-as an example, passing an anonymous class instance as a parameter to a method
- that will later call the instance is a kind of functional programming. I say
-  kind-of because its not really functional programming,
-  Java isn&#8217;t a functional language but we can bend it into a style that&#8217;s similar. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="nd">@Override</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">},</span> <span class="n">timeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">)));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The anonymous class implementing <code>Condition</code> is evaluated by the method
-<code>waitOrTimeout</code> (it&#8217;s that which will call the <code>isSatisfied</code>) method.</p>
-
-<p>The recent shift to this functional style has lead to eager anticipation of
-JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion
-of <em>lamdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been
-available in Java since 1.1, so what&#8217;s the difference?</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/07/13/lamdas-vs-closures/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -599,6 +576,10 @@ available in Java since 1.1, so what&#8217;s the difference?</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a>
@@ -634,10 +615,6 @@ available in Java since 1.1, so what&#8217;s the difference?</p>
     
       <li class="post">
         <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
       </li>
     
   </ul>

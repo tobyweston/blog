@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes &hellip;">
+  <meta name="description" content="I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to GUI testing) and am settling on a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-09 21:20:00 +0100 -->
+    <!-- last update; 2012-06-10 18:24:52 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +77,108 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/12/29/running-junit-tests-in-parallel/">Running JUnit tests in parallel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-29T00:00:00+00:00" pubdate data-updated="true">Dec 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I&#8217;m trying to capture this warm feeling more explicitly in the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+
+<p>Looking more into recent versions of JUnit, there seems to be lots and lots of
+integration points for you to play with. I&#8217;ve been playing with <code>Rules</code>,
+<code>Statements</code> and <code>Runners</code> mostly and when creating your own
+<code>BlockJUnit4ClassRunner</code>, I spotted you can override the scheduler which, er,
+schedules the actual test methods to be run.</p>
+
+<p>After experimenting with much less straight forward integrations, overriding
+the scheduler gave the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setScheduler</span><span class="o">(</span><span class="k">new</span> <span class="n">ConcurrentScheduler</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ConcurrentScheduler</span> <span class="kd">implements</span> <span class="n">RunnerScheduler</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">executor</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="nf">ConcurrentScheduler</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">executor</span> <span class="o">=</span> <span class="n">newCachedThreadPool</span><span class="o">(</span><span class="k">new</span> <span class="n">ThreadFactory</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">});</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">childStatement</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">childStatement</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">finished</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">shutdown</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">waitingForCompletion</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This results in all the test methods within a given class running in parallel.
+I&#8217;m excited about speeding up the execution time of my tests, next step would
+be run all tests across classes in parallel! hmmm.</p>
+
+<p>This is all available to use via the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project by the way.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -668,59 +770,6 @@ handling code?</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2009/05/29/convert-callable-to-runnable/">Convert a Callable to a Runnable</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-29T00:00:00+01:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Every time I come across it, it bugs me.</p>
-
-<p>The <code>Executors</code> class has helper methods to convert from a <code>Runnable</code> to a
-<code>Callable</code>, presumably so you can submit an old school <code>Runnable</code> task to an
-executor, but I can never find the counterpart helper. Something to convert a
-<code>Callable</code> to a <code>Runnable</code>.</p>
-
-<p>I seem to keep finding myself needing one and you might think me silly for
-doing so but it&#8217;s because I&#8217;m into the habit of coding as <code>Callable</code>s now. I
-tend to think of <code>Runnable</code> as simply something that can run, not in terms of a
-<code>Thread</code> or concurrent task. I like the way I think about <code>Runnable</code>.</p>
-
-<p>Lets have a go at converting <code>Callable</code> to a <code>Runnable</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/05/29/convert-callable-to-runnable/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -736,6 +785,10 @@ tend to think of <code>Runnable</code> as simply something that can run, not in 
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a>
@@ -771,10 +824,6 @@ tend to think of <code>Runnable</code> as simply something that can run, not in 
     
       <li class="post">
         <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a>
       </li>
     
   </ul>

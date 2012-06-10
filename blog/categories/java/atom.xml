@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-09T21:20:00+01:00</updated>
+  <updated>2012-06-10T18:24:52+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,185 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[HTTP Should be Simple]]></title>
+    <link href="http://baddotrobot.com/blog/2012/06/10/http-simple/"/>
+    <updated>2012-06-10T10:06:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
+    <content type="html"><![CDATA[<p>Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. The Java <a href="https://github.com/tobyweston/simple-http">simple-http</a> library offers a simpler API, sensible defaults and one line requests.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!-- more -->
+
+
+<h2>The API</h2>
+
+<p>The library provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;.</span><span class="na">with</span><span class="o">(</span><span class="n">httpTimeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">30</span><span class="o">)))</span>
+</span><span class='line'><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">proxy</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://proxy.com:8999&quot;</span><span class="o">)))</span>
+</span><span class='line'><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">),</span>
+</span><span class='line'>    <span class="n">headers</span><span class="o">(</span>
+</span><span class='line'>        <span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;text/html&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">)</span>
+</span><span class='line'><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It's supposed to be so simple, it's self explanatory. If it's not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient</code>.</p>
+
+<h2>Separation of Concerns</h2>
+
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache's implementations. In that way, your application's interactions with <a href="https://github.com/tobyweston/simple-http">simple-http</a> are in terms of the <em>HTTP verbs</em> and not Apache's technical details.</p>
+
+<h2>Configuration</h2>
+
+<p>Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that's fine but as it comes sensible defaults, for the most part all you'll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>SSL Authentication is straight forward, just add a username and password to your client.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Helping you Test</h2>
+
+<p>As <a href="https://github.com/tobyweston/simple-http">simple-http</a> ships with a bunch of <code>Matcher</code>s, it's easy to make assertions or set expectations. For a simple case, compare the following.</p>
+
+<p>Using Apache directly, you might write something like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which, when it fails presents you with the following.</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: is &lt;200&gt;
+     got: &lt;404&gt;
+</code></pre>
+
+<p>With <a href="https://github.com/tobyweston/simple-http">simple-http</a>, you write.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which is much more helpful when it fails, showing the response's status code, message, content and headers.</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: a HttpMessage with status code &lt;200&gt;
+     got: &lt;DefaultHttpResponse{statusCode=404, statusMessage='Not Found', content='{ "message", "not found" }', headers='SimpleHeaders{headers=[SimpleHeader{name='Content-Type', value='application/json'}]}'}&gt;
+</code></pre>
+
+<p>Of course, you can enrich the assertions, for example.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
+
+<p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}});</span>
+</span><span class='line'><span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Download</h2>
+
+<p>You can download from the <a href="http://robotooling.com/maven/">bad.robot.repo</a> Maven repository or get the source from <a href="https://github.com/tobyweston/simple-http">Github</a>.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;repositories&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>repository<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>id<span class="ni">&amp;gt;</span>bad.robot<span class="ni">&amp;lt;</span>/id<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>name<span class="ni">&amp;gt;</span>bad.robot repository for robotooling<span class="ni">&amp;lt;</span>/name<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>url<span class="ni">&amp;gt;</span>http://www.robotooling.com/maven/<span class="ni">&amp;lt;</span>/url<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/repository<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/repositories&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;dependency&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>bad.robot<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>simple-http<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.0-SNAPSHOT<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Enjoy and <a href="https://twitter.com/#!/jamanifin">let me know</a> how you get on.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stop Ignoring @Rules]]></title>
@@ -485,153 +664,6 @@ If a class throws an exception, <em>we should never need to test the content of 
 <p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
-    <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
-    <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
-the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
-there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The examples being
-to perform additional testing after the exception or testing against the actual exception message.</p>
-
-<p>JUnit 4.7 introduces the next progression, a <code>@Rule</code> that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.</p>
-
-<!-- more -->
-
-
-<h2>The try/fail/catch Idiom</h2>
-
-<p>The typical pattern is to catch an exception or fail explicitly if it was never thrown.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example1</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">fail</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;could not find something&quot;</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="c1">// ... could have more assertions here</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which would highlight a failure in the following way.</p>
-
-<pre><code>java.lang.AssertionError: expected an exception
-    at org.junit.Assert.fail(Assert.java:91)
-    at bad.roboot.example.ExceptionTest.example1(ExceptionTest.java:20)
-    ...
-</code></pre>
-
-<p>The idiom has potential advantages in that it offers the opportunity to assert against the actual exception as well as performing additional work after the expectation. Aside from the noise, the major drawback however is that its very easy to forget to include the <code>fail</code> call. If genuinely doing test first, where we always run the test red, this wouldn't be a problem but all too often things slip through the net. In practice, I've seen far too many examples with a missing <code>fail</code> giving false positives.</p>
-
-<h2>@Test (expected = Exception.class)</h2>
-
-<p>Using the <code>expected</code> element, we can rewrite the test as follows.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span> <span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which will result in the following failure.</p>
-
-<pre><code>java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
-</code></pre>
-
-<p>Much more concise, we've done away with all the noise at the cost of not being able to assert against the exception
-message. We've also lost the ability to make more assertions after <code>find</code>. However, you might decide that smaller focused tests are in fact a good thing. Using this syntax, we're lead into writing a test focused on just one thing; that an exception is thrown when we call <code>find</code>.</p>
-
-<p>The test feedback has also become clearer.</p>
-
-<h2>ExpectedException Rule</h2>
-
-<p>Using an instance of <code>ExpectedException</code>, we define a <a href="http://www.infoq.com/news/2009/07/junit-4.7-rules">JUnit rule</a>
-that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
-setting up expectations in mocking frameworks like <a href="http://www.jmock.org">JMock</a>.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example3</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;exception message&quot;</span><span class="o">));</span>
-</span><span class='line'><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Which would show the failure below.</p>
-
-<pre><code>java.lang.AssertionError: Expected test to throw (exception with message a string containing "exception message" and an instance of bad.robot.example.NotFoundException)
-    at org.junit.rules.ExpectedException$ExpectedExceptionStatement.evaluate(ExpectedException.java:118)
-    ...
-</code></pre>
-
-<p>The rule allows us to assert the exception is thrown and make assertions against the message. We still can't make
-additional assertions after the <code>find</code> method call, but this may not be a bad thing.</p>
-
-<p>Beware though that if you combine the rule with certain <code>@RunWith</code> classes,
-you may get a false positive. Specifically, if you were to run with a class that extends <code>JUnit4ClassRunner</code> in the
-above example, the test would no longer fail. You'd get a false positive.</p>
-
-<p>For example, if you're using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you'll encounter this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules. The newer <code>BlockJUnit4ClassRunner</code> supports rules and JMock post 2.6.0 extend this in <code>JMock.class</code>.</p>
-
-<h2>Summary</h2>
-
-<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
-
-<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
-
-<p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
 ]]></content>
   </entry>
   

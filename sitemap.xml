@@ -150,7 +150,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/</loc>
-        <lastmod>2012-06-09T20:17:25+01:00</lastmod>
+        <lastmod>2012-06-10T17:33:03+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed/</loc>
@@ -186,7 +186,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/</loc>
-        <lastmod>2012-06-09T20:17:25+01:00</lastmod>
+        <lastmod>2012-06-10T10:09:01+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/</loc>
@@ -223,12 +223,16 @@
         <lastmod>2012-06-09T20:17:25+01:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2012/06/10/http-simple/</loc>
+        <lastmod>2012-06-10T18:00:42+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/404.html</loc>
         <lastmod>2012-03-18T14:54:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2012-06-09T21:18:41+01:00</lastmod>
+        <lastmod>2012-06-10T18:00:42+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -244,6 +248,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2012-06-09T21:18:41+01:00</lastmod>
+        <lastmod>2012-06-10T18:00:42+01:00</lastmod>
     </url>
 </urlset>
