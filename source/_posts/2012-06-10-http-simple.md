@@ -7,7 +7,7 @@ categories: java REST
 sidebar: false
 ---
 
-Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. The Java [simple-http](https://github.com/tobyweston/simple-http) library offers a simpler API, sensible defaults and one line requests.
+Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.
 
 {% codeblock lang:java %}
 HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
@@ -17,7 +17,7 @@ HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
 
 ## The API
 
-The library provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.
+The library, [simple-http](https://github.com/tobyweston/simple-http), provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.
 
 {% codeblock lang:java %}
 HttpResponse response = anApacheClient()
