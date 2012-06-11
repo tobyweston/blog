@@ -31,11 +31,11 @@ HttpResponse response = anApacheClient()
 {% endcodeblock %}
 
 
-It's supposed to be so simple, it's self explanatory. If it's not, [let me know](https://twitter.com/#!/jamanifin). The starting point is just `HttpClients.anApacheClient`.
+It's supposed to be so simple, it's self explanatory. If it's not, [let me know](https://twitter.com/#!/jamanifin). The starting point is just `HttpClients.anApacheClient()`.
 
 ## Separation of Concerns
 
-First and foremost, [simple-http](https://github.com/tobyweston/simple-http) helps with separation of concern. It provides a basic `HttpClient` interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the [simple-http](https://github.com/tobyweston/simple-http) interfaces and not Apache's implementations. In that way, your application's interactions with [simple-http](https://github.com/tobyweston/simple-http) are in terms of the _HTTP verbs_ and not Apache's technical details.
+First and foremost, [simple-http](https://github.com/tobyweston/simple-http) helps with separation of concern. It provides a basic `HttpClient` interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the [simple-http](https://github.com/tobyweston/simple-http) interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the _HTTP verbs_ and not Apache's technical details.
 
 ## Configuration
 
@@ -45,7 +45,7 @@ Secondarily, the library provides a fluent, straight-forward interface to instan
 HttpClient http = anApacheClient().withTrustingSsl();
 {% endcodeblock %}
 
-SSL Authentication is straight forward, just add a username and password to your client.
+Regular SSL authentication is straight forward too, just add a username and password to your client.
 
 {% codeblock lang:java %}
 HttpClient http = anApacheClient().with("bobby brown", "secret");
@@ -87,6 +87,13 @@ Of course, you can enrich the assertions, for example.
 {% codeblock lang:java %}
 assertThat(response, allOf(has(status(200)), has(headerWithValue("Content-Type", containsString("json")))));
 {% endcodeblock %}
+
+or assert against the message body, for example.
+
+{% codeblock lang:java %}
+assertThat(response, has(content(not(containsString("\"error\"")))));
+{% endcodeblock %}
+
 
 Or use them in an expectation, for example using [JMock](http://jmock.org/) below, we expect a HTTP `GET` to the URL [http://acme.com/stock](http://acme.com/stock) when we call the method `inventoryCount()`.
 
