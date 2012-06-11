@@ -100,7 +100,7 @@ Or use them in an expectation, for example using [JMock](http://jmock.org/) belo
 {% assign braces = '{{' %}
 {% codeblock lang:java %}
 @Test
-public void anotherExample() throws MalformedURLException {
+public void anExample() throws MalformedURLException {
     final HttpClient http = context.mock(HttpClient.class);
     context.checking(new Expectations() {{ braces }}
         oneOf(http).get(with(new URL("http://acme.com/stock")), with(headers(header("Accept", "application/json")))); will(returnValue(...));
@@ -111,6 +111,16 @@ public void anotherExample() throws MalformedURLException {
 }
 {% endcodeblock %}
 
+Or here where we expect a HTTP `POST` to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like `stock=%7Bsome%3A+json+message%7D`. Notice how [bad.robot.repo](http://robotooling.com/maven/) avoids this complexity.
+
+{% codeblock lang:java %}
+public void anotherExample() throws Exception {
+	checking(new Expectations() {{ braces }}
+		oneOf(http).post(with(new URL("http://acme.com/stock")), with(post(content(params("stock", "{some: json message}").asString()))));
+	}});
+	new StockRoom(http).addStock(...);
+}
+{% endcodeblock %}
 
 ## Download
 
