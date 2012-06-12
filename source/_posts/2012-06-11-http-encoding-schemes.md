@@ -6,6 +6,8 @@ comments: true
 categories: java REST
 sidebar: false
 published: false
+description: "Find out the difference between URL Encoding and Form URL Encoding and how to encode to both schemes in Java"
+keywords: "URL vs form encoding, URL encoding in Java, URL form encoding, percent encoding, x-www-form-urlencoded"
 ---
 
 What's the difference between URL Encoding and Form URL Encoding?
