@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Page Not Found - bad.robot</title>
+  <title>Category: recipes - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Page Not Found // Revert jQuery's '$' alias, to avoid clashes with ender.js. // NOTE: Use jQuery(...), instead of $(...) from here on. jQuery. &hellip;">
+  <meta name="description" content="Category: recipes">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/404.html">
+  <link rel="canonical" href="http://baddotrobot.comblog/categories/recipes">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,78 +79,19 @@
 <article role="article">
   
   <header>
-    <h1 class="entry-title">Page Not Found</h1>
+    <h1 class="entry-title">Category: recipes</h1>
     
   </header>
   
-  <script type="text/javascript" src="javascripts/libs/jquery-1.7.1.min.js"/>
-<script type="text/javascript">
-    // Revert jQuery's '$' alias, to avoid clashes with ender.js.
-    // NOTE: Use jQuery(...), instead of $(...) from here on.
-    jQuery.noConflict();
-</script>
-<script type="text/javascript">
-    jQuery.extend({
-        getUrlVars: function(url){
-            var vars = [], hash;
-            var hashes = url.slice(url.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        },
-        getUrlVar: function(url, name){
-            return jQuery.getUrlVars(url)[name];
-        }
-    });
-
-    jQuery.getJSON('http://baddotrobot.com/javascripts/url_migrations.json', function (data) {
-        var found = false;
-        jQuery.each(data['redirects'], function (idx, url) {
-            if (url[0] == jQuery.getUrlVar(window.location.href, 'source')) {
-                window.location.replace(url[1]);  // redirect
-                found = true;
-                return false;
-            }
-        });
-    });
-
-</script>
-
-<p>
-    Sorry, looks like these weren&#8217;t the droids you were looking for. Try one of these perhaps&#8230;
-</p>
-<div id="blog-archives" class="missing">
-    
-    <article>
-        
-<h1><a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a></h1>
-<time datetime="2012-06-11T18:06:00+01:00" pubdate><span class='month'>Jun</span> <span class='day'>11</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/rest/'>REST</a>, <a class='category' href='/blog/categories/java/'>java</a></span>
-</footer>
+  <div id="blog-archives" class="category">
 
 
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a></h1>
-<time datetime="2012-06-10T10:06:00+01:00" pubdate><span class='month'>Jun</span> <span class='day'>10</span> <span class='year'>2012</span></time>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/rest/'>REST</a>, <a class='category' href='/blog/categories/java/'>java</a></span>
-</footer>
+  
+  <h2>2012</h2>
 
-
-    </article>
-    
-    <article>
-        
+<article>
+  
 <h1><a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a></h1>
 <time datetime="2012-05-05T10:50:00+01:00" pubdate><span class='month'>May</span> <span class='day'>05</span> <span class='year'>2012</span></time>
 
@@ -159,44 +100,22 @@
 </footer>
 
 
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a></h1>
-<time datetime="2012-04-03T19:33:00+01:00" pubdate><span class='month'>Apr</span> <span class='day'>03</span> <span class='year'>2012</span></time>
+</article>
+
+
+
+<article>
+  
+<h1><a href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a></h1>
+<time datetime="2012-03-27T00:00:00+01:00" pubdate><span class='month'>Mar</span> <span class='day'>27</span> <span class='year'>2012</span></time>
 
 <footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>, <a class='category' href='/blog/categories/scala/'>scala</a></span>
+  <span class="categories">posted in <a class='category' href='/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/recipes/'>recipes</a>, <a class='category' href='/blog/categories/testing/'>testing</a></span>
 </footer>
 
 
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
-<time datetime="2012-03-30T22:47:00+01:00" pubdate><span class='month'>Mar</span> <span class='day'>30</span> <span class='year'>2012</span></time>
+</article>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/scala/'>scala</a></span>
-</footer>
-
-
-    </article>
-    
-    <article>
-        
-<h1><a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a></h1>
-<time datetime="2012-03-29T00:00:00+01:00" pubdate><span class='month'>Mar</span> <span class='day'>29</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/exceptions/'>exceptions</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>, <a class='category' href='/blog/categories/testing/'>testing</a></span>
-</footer>
-
-
-    </article>
-    
 </div>
 
   
