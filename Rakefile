@@ -109,6 +109,8 @@ task :new_post, :title do |t, args|
     post.puts "categories: "
     post.puts "sidebar: false"
     post.puts "published: false"
+    post.puts "keywords: "
+    post.puts "description: "
     post.puts "---"
   end
 end
