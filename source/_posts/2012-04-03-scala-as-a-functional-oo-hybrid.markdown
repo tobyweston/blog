@@ -5,6 +5,7 @@ date: 2012-04-03 19:33
 comments: true
 categories: scala object-oriented
 sidebar : false
+keywords: "scala exceptions, object oriented vs functional, java vs scala, java, blending object oriented and functional, blending oo, oo"
 ---
 
 Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala _are_ objects. It's important to realise that Scala can be used to write programs in an _imperative_ style as well as a _functional_ style and to understand the context your working in. If you're clear about the style you're applying, you can get the most from the approach. Functional programming isn't a panacea and to build effective systems, you'll need to blend the approaches.

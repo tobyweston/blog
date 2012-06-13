@@ -7,6 +7,8 @@ categories: java testing object-oriented exceptions
 comments: true
 sidebar : false
 series: Exception Handling
+description: "Isolate the internal boundaries within your system and isolate exception handling. Extend the idea and treat exceptions as real objects. Add behaviour, tell them do do things, don't ask"
+keywords: "checked vs runtime exceptions, exception handling, java, LoD, tell don't ask, test exception message, never test exception message, testing exceptions, ports and adaptors"
 ---
 
 In the [previous post]({{ root_url }}/blog/2012/03/28/exception-handling-as-a-system-wide-concern), we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.

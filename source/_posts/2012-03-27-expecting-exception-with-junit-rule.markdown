@@ -3,10 +3,11 @@ name: expecting-exception-with-junit-rule
 layout: post
 title: Expecting Exceptions JUnit Rule
 time: 2012-03-27 06:00:00 +00:00
-categories: java testing exceptions
+categories: java testing exceptions recipes
 comments: true
 sidebar : false
 series: Exception Handling
+keywords: "try catch, junit, junit rule, expected =, ExpectedException, ExpectedException rule"
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or

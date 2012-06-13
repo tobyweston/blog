@@ -5,6 +5,8 @@ date: 2012-03-18 15:58
 comments: true
 categories: java robotooling
 sidebar : false
+description: "Introducing the robotooling project; a collection of useful Java tools (capturing the things I do again and again)"
+keywords: "java, tempus-fugit, simple-http, simple-excel, concordion ant task"
 ---
 
 Just a quick post to introduce the [robotooling](http://robotooling.com) project;
