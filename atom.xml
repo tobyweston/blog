@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-10T18:24:52+01:00</updated>
+  <updated>2012-06-13T20:44:21+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -14,11 +14,73 @@
 
   
   <entry>
+    <title type="html"><![CDATA[HTTP Encoding Schemes]]></title>
+    <link href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/"/>
+    <updated>2012-06-11T18:06:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes</id>
+    <content type="html"><![CDATA[<p>What&#8217;s the difference between URL Encoding and Form URL Encoding?</p>
+
+<!-- more -->
+
+
+<h2>URL Encoding</h2>
+
+<p>Sometimes refered to as <a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent Encoding</a>, this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like <code>#</code> have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by <code>%20</code>.</p>
+
+<p>In Java, you can create an encoded URL using</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which in this case produces</p>
+
+<pre><code>http:baddotrobot.com#/cheese%20sandwich
+</code></pre>
+
+<h2>Form URL Encoding</h2>
+
+<p>Refered to by the <code>application/x-www-form-urlencoded</code> mime-type. This scheme was based on an early version of URL Encoding but at some point diverged. For example, the space character gets replaced by the <code>+</code> rather than <code>%20</code>. It&#8217;s typically used for encoding <code>POST</code> message content by HTML forms.</p>
+
+<p>For example, a HTML form with <code>name</code> and <code>address</code> would send over the following.</p>
+
+<pre><code>POST http://baddotrobot.com/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+name=bad.robot&amp;address=the+land+of+make+believe
+</code></pre>
+
+<p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Base64 Encoding</h2>
+
+<p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which, for example, could be used to send the following HTTP message</p>
+
+<pre><code>GET /login HTTP/1.1
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[HTTP Should be Simple]]></title>
     <link href="http://baddotrobot.com/blog/2012/06/10/http-simple/"/>
     <updated>2012-06-10T10:06:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
-    <content type="html"><![CDATA[<p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. The Java <a href="https://github.com/tobyweston/simple-http">simple-http</a> library offers a simpler API, sensible defaults and one line requests.</p>
+    <content type="html"><![CDATA[<p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I&#8217;ve been working on a library offering a straight forward API with sensible defaults. Typically, you&#8217;ll make HTTP requests with just one line of code.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
@@ -32,7 +94,7 @@
 
 <h2>The API</h2>
 
-<p>The library provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
+<p>The library, <a href="https://github.com/tobyweston/simple-http">simple-http</a>, provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -53,11 +115,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s supposed to be so simple, it&#8217;s self explanatory. If it&#8217;s not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient</code>.</p>
+<p>It&#8217;s supposed to be so simple, it&#8217;s self explanatory. If it&#8217;s not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient()</code>.</p>
 
 <h2>Separation of Concerns</h2>
 
-<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with <a href="https://github.com/tobyweston/simple-http">simple-http</a> are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
 
 <h2>Configuration</h2>
 
@@ -68,7 +130,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>SSL Authentication is straight forward, just add a username and password to your client.</p>
+<p>Regular SSL authentication is straight forward too, just add a username and password to your client.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
@@ -114,6 +176,13 @@ Expected: a HttpMessage with status code &lt;200&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>or assert against the message body, for example.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -127,7 +196,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
 </span><span class='line'>        <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
@@ -135,6 +204,23 @@ Expected: a HttpMessage with status code &lt;200&gt;
 </span><span class='line'>    <span class="o">}});</span>
 </span><span class='line'>    <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or here where we expect a HTTP <code>POST</code> to submit a URL form encoded body to add some stock. In the example, the form parameter we&#8217;re expecting should look like <code>stock=%7Bsome%3A+json+message%7D</code>. Notice how <a href="http://robotooling.com/maven/">bad.robot.repo</a> avoids this complexity.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>      <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">post</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">params</span><span class="o">(</span><span class="s">&quot;stock&quot;</span><span class="o">,</span> <span class="s">&quot;{some: json message}&quot;</span><span class="o">).</span><span class="na">asString</span><span class="o">()))));</span>
+</span><span class='line'>  <span class="o">}});</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">addStock</span><span class="o">(...);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -2198,47 +2284,6 @@ It seemed almost too easy&#8230; so I&#8217;d love to hear your comments and how
 write tests for logging.</p>
 
 <p>PS. Logging is evil.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pairing Honestly]]></title>
-    <link href="http://baddotrobot.com/blog/2010/08/15/pairing-honestly/"/>
-    <updated>2010-08-15T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
-    <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="http://baddotrobot.com/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
-
-<!-- more -->
-
-
-<p>Once we honest in our experiences and expectations around pairing, we were
-able to be explicit in what we <em>want</em> to achieve. We had the conversation
-along the lines of &#8220;do we even believe we <em>could</em> get something out of
-pairing? Do we want to try?&#8221; and when the team bought into that idea we could
-be explicit about starting from scratch and putting tools in place to help us.</p>
-
-<p>Some techniques I favour include</p>
-
-<ul>
-<li><p>when sitting down to start a session, stating explicitly what each individual hopes to get out of the session and what isn&#8217;t helpful. In short, what they think a pairing session should be like.</p></li>
-<li><p>each pair can set up one or two &#8220;rules&#8221;, written on cards and placed prominently to remind each other about something they feel is important to the session. For example, I often have a rule &#8220;ask don&#8217;t tell&#8221; to remind me to be asked before I go rambling on about something in the code.</p></li>
-<li><p>the silent partner; saying up front that when not driving, the silent partner should hold their tongue and make notes / record a task stack. Interruption is interruption, so be considerate about when to make a comment. This one should be agreed up front, it may or may not be appropriate for your pair.</p></li>
-<li><p><strong>most important one of all</strong>; have a mini pair-retrospective at the end of the session. It&#8217;s a great chance to ask the question &#8220;how was that for you?&#8221; and a great way to let the other person know if some aspect didn&#8217;t go well.</p></li>
-</ul>
-
-
-<p>Another useful tool can be the pair stairs. It&#8217;s very easy to avoid pairing
-rather than face it&#8217;s challenges so <a href="http://www.natpryce.com/articles/000522.html">pair stairs</a> can be a good way to
-keep you honest. Probably the most helpful thing though is
-having people on the team that have lots of experience pairing, know what the
-team can get out of it and are able to help guide pairing sessions for the
-less experienced.</p>
-
-<p>Pairing is hard. It&#8217;s probably one of the hardest things we do as developers
-but it can also be one of the most rewarding, personally and for the team as a
-whole. Collaboration has given the world some of its greatest achievements but
-you have to be honest that in this case, you might have to work for
-it.</p>
 ]]></content>
   </entry>
   

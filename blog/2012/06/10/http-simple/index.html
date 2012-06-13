@@ -46,7 +46,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-10 18:24:52 +0100 -->
+    <!-- last update; 2012-06-13 20:44:21 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -103,7 +103,7 @@
   </header>
 
 
-<div class="entry-content"><p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. The Java <a href="https://github.com/tobyweston/simple-http">simple-http</a> library offers a simpler API, sensible defaults and one line requests.</p>
+<div class="entry-content"><p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I&#8217;ve been working on a library offering a straight forward API with sensible defaults. Typically, you&#8217;ll make HTTP requests with just one line of code.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
@@ -117,7 +117,7 @@
 
 <h2>The API</h2>
 
-<p>The library provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
+<p>The library, <a href="https://github.com/tobyweston/simple-http">simple-http</a>, provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -138,11 +138,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s supposed to be so simple, it&#8217;s self explanatory. If it&#8217;s not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient</code>.</p>
+<p>It&#8217;s supposed to be so simple, it&#8217;s self explanatory. If it&#8217;s not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient()</code>.</p>
 
 <h2>Separation of Concerns</h2>
 
-<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with <a href="https://github.com/tobyweston/simple-http">simple-http</a> are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
 
 <h2>Configuration</h2>
 
@@ -153,7 +153,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>SSL Authentication is straight forward, just add a username and password to your client.</p>
+<p>Regular SSL authentication is straight forward too, just add a username and password to your client.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
@@ -199,6 +199,13 @@ Expected: a HttpMessage with status code &lt;200&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>or assert against the message body, for example.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -212,7 +219,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
 </span><span class='line'>        <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
@@ -220,6 +227,23 @@ Expected: a HttpMessage with status code &lt;200&gt;
 </span><span class='line'>    <span class="o">}});</span>
 </span><span class='line'>    <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or here where we expect a HTTP <code>POST</code> to submit a URL form encoded body to add some stock. In the example, the form parameter we&#8217;re expecting should look like <code>stock=%7Bsome%3A+json+message%7D</code>. Notice how <a href="http://robotooling.com/maven/">bad.robot.repo</a> avoids this complexity.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>      <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">post</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">params</span><span class="o">(</span><span class="s">&quot;stock&quot;</span><span class="o">,</span> <span class="s">&quot;{some: json message}&quot;</span><span class="o">).</span><span class="na">asString</span><span class="o">()))));</span>
+</span><span class='line'>  <span class="o">}});</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">addStock</span><span class="o">(...);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -308,6 +332,8 @@ Expected: a HttpMessage with status code &lt;200&gt;
       
         <a class="basic-alignment left" href="/blog/2012/05/05/stop-ignoring-at-rules/" title="Previous Post: Stop Ignoring @Rules">&laquo; Stop Ignoring @Rules</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2012/06/11/http-encoding-schemes/" title="next Post: HTTP Encoding Schemes">HTTP Encoding Schemes &raquo;</a>
       
     </p>
   </footer>

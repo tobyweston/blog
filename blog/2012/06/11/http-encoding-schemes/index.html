@@ -5,19 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Inheritance vs Composition - bad.robot</title>
+  <title>HTTP Encoding Schemes - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a Stack as an example. Example 1. 1
-2
-3
-4
-5
-6
-7
-8 &hellip;">
-  
+  <meta name="description" content="Find out the difference between URL Encoding and Form URL Encoding and how to encode to both schemes in Java">
+  <meta name="keywords" content="URL vs form encoding, URL encoding in Java, URL form encoding, percent encoding, x-www-form-urlencoded">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -25,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -87,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Inheritance vs Composition</h1>
+      <h1 class="entry-title">HTTP Encoding Schemes</h1>
     
     
       <p class="meta">
@@ -103,66 +96,67 @@
   
 
 
-<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+<time datetime="2012-06-11T18:06:00+01:00" pubdate data-updated="true">Jun 11<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+<div class="entry-content"><p>What&#8217;s the difference between URL Encoding and Form URL Encoding?</p>
 
-<h3>Example 1.</h3>
+<!-- more -->
+
+
+<h2>URL Encoding</h2>
+
+<p>Sometimes refered to as <a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent Encoding</a>, this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like <code>#</code> have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by <code>%20</code>.</p>
+
+<p>In Java, you can create an encoded URL using</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Example 2</h3>
+<p>which in this case produces</p>
+
+<pre><code>http:baddotrobot.com#/cheese%20sandwich
+</code></pre>
+
+<h2>Form URL Encoding</h2>
+
+<p>Refered to by the <code>application/x-www-form-urlencoded</code> mime-type. This scheme was based on an early version of URL Encoding but at some point diverged. For example, the space character gets replaced by the <code>+</code> rather than <code>%20</code>. It&#8217;s typically used for encoding <code>POST</code> message content by HTML forms.</p>
+
+<p>For example, a HTML form with <code>name</code> and <code>address</code> would send over the following.</p>
+
+<pre><code>POST http://baddotrobot.com/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+name=bad.robot&amp;address=the+land+of+make+believe
+</code></pre>
+
+<p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
-Suddenly, methods to get and insert elements at specific positions are
-available to clients of the stack. We move from trying to create a well
-behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+<h2>Base64 Encoding</h2>
 
-<p>So I was surprised when looking at the Java source to see that
-<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+<p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which, for example, could be used to send the following HTTP message</p>
+
+<pre><code>GET /login HTTP/1.1
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+</code></pre>
 </div>
 
 
@@ -186,12 +180,12 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
   
 
 
-<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+<time datetime="2012-06-11T18:06:00+01:00" pubdate data-updated="true">Jun 11<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>
+    <a class='category' href='/blog/categories/rest/'>REST</a>, <a class='category' href='/blog/categories/java/'>java</a>
   
 </span>
 
@@ -200,7 +194,7 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -211,10 +205,8 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/01/22/deprecated-annotation/" title="Previous Post: Deprecated Annotation">&laquo; Deprecated Annotation</a>
+        <a class="basic-alignment left" href="/blog/2012/06/10/http-simple/" title="Previous Post: HTTP Should be Simple">&laquo; HTTP Should be Simple</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2009/02/16/more-on-micro-dsls/" title="next Post: More on Micro DSLs">More on Micro DSLs &raquo;</a>
       
     </p>
   </footer>
@@ -245,8 +237,8 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
-        var disqus_url = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/';
         var disqus_script = 'embed.js';
       
     (function () {

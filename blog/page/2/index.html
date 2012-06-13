@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
-containers do a good job of hiding all the details. However, &hellip;">
+  <meta name="description" content="There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the unit behaves a certain way and that in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -47,7 +46,7 @@ containers do a good job of hiding all the details. However, &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-10 18:24:52 +0100 -->
+    <!-- last update; 2012-06-13 20:44:21 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -78,6 +77,51 @@ containers do a good job of hiding all the details. However, &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-13T21:24:00+00:00" pubdate data-updated="true">Feb 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
+
+<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we&#8217;re usually horrified by the previous paragraph and ask the question <em>&#8220;shouldn&#8217;t we start up the entire stack in an acceptance test?&#8221;</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
+
+<p>Taking inspiration from Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/13/hexagonal-acceptance-testing/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -520,47 +564,6 @@ twice.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/08/15/pairing-honestly/">Pairing Honestly</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-15T00:00:00+01:00" pubdate data-updated="true">Aug 15<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/08/15/pairing-honestly/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -576,6 +579,10 @@ twice.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
@@ -611,10 +618,6 @@ twice.</p>
     
       <li class="post">
         <a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a>
       </li>
     
   </ul>
