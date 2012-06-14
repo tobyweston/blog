@@ -5,6 +5,8 @@ date: 2012-02-13 21:24
 comments: true
 categories: java testing agile
 sidebar : false
+description: "By splitting your application up, you can compose your acceptance tests differently and test without starting the entire stack. Applying an ports and adaptors architecture helps built and test in more flexible ways."
+keywords: "ports and adaptors, hexagonal architecture, acceptance testing"
 ---
 
 There's no reason a unit test can't also be an acceptance test. If you can prove that the _unit_ behaves a certain way _and_ that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.

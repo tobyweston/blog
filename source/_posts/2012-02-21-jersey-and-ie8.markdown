@@ -4,8 +4,10 @@ layout: post
 title: "Force IE8 to Display JSON with Jersey"
 date: 2012-02-21 06:27
 comments: true
-categories: java REST
+categories: java REST recipe
 sidebar : false
+description: "Force IE8 to open JSON content within the browser with Jersey rather than prompt you to download and save as a file."
+keywords: "ie8, json, in-browser, jersey, application/x-ms-application"
 ---
 
 If Internet Explorer 8 performs a HTTP `GET` against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using [Jersey](http://jersey.java.net/), Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.
@@ -92,6 +94,4 @@ Internet Explorer 8, it will display the JSON 'in-browser'. It won't apply any f
 pretty print the response before sending it back.
 
 If it doesn't work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like [ieHttpHeaders](http://www.blunck.info/iehttpheaders.html) or the awesome [Membrane](http://www.membrane-soa.org/soap-monitor/) to see what
-headers
- are going over.
+something like [ieHttpHeaders](http://www.blunck.info/iehttpheaders.html) or the awesome [Membrane](http://www.membrane-soa.org/soap-monitor/) to see what headers are going over the wire.
