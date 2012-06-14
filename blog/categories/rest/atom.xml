@@ -4,7 +4,7 @@
   <title><![CDATA[Category: REST | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-13T21:19:42+01:00</updated>
+  <updated>2012-06-14T21:15:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -413,9 +413,7 @@ Internet Explorer 8, it will display the JSON 'in-browser'. It won't apply any f
 pretty print the response before sending it back.</p>
 
 <p>If it doesn't work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
-headers
- are going over.</p>
+something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what headers are going over the wire.</p>
 ]]></content>
   </entry>
   

@@ -9,9 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
-containers do a good job of hiding all the details. However, &hellip;">
-  
+  <meta name="description" content="Avoid frameworks like Spring and roll your own transaction management. Declarative approaches like Spring, by definition, take away control. Moving &hellip;">
+  <meta name="keywords" content="transactions, acid, transaction management, transactionality, GOOS, unit of work, declarative vs imperative, spring">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -47,7 +46,7 @@ containers do a good job of hiding all the details. However, &hellip;">
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-13 21:19:42 +0100 -->
+    <!-- last update; 2012-06-14 21:15:01 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -104,37 +103,18 @@ containers do a good job of hiding all the details. However, &hellip;">
   </header>
 
 
-<div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
-containers do a good job of hiding all the details. However, it&#8217;s often more advantageous
-to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we?
- Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
+<div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it&#8217;s often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
 
-<p>Moving from a declarative approach to a more imperative one can help us with
-testing and by virtue; <em>composability</em>. We can move from something which can
-only be tested using the framework or container (implying an integration or
-end-to-end style test) to a more focused style (without the need of said
-frameworks or containers). If we manage things ourselves and are explicit
-about the transactional boundaries in production code, we can be more
-lightweight in our tests.</p>
+<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
 
 <!-- more -->
 
 
 <p>Lets take a look at an example in detail.</p>
 
-<p>It&#8217;s probably helpful to be clear what we mean by a <em>unit of work</em> here.
-Intimately related to the idea of a database transaction, a unit of work is a
-series of database operations that when applied together adhere to all the
-transactional characteristics (<em>atomic</em>, <em>coherent</em>, <em>isolated</em> and
-<em>durable</em>). For example, when updating the database to increment one bank
-account and decrementing another, things should be atomic (both operations
-happen or neither does), consistent (the bank accounts actually exist),
-isolated (protected from concurrent updates to the same accounts) and durable
-(permanently applied). Describing both operations as a unit of work and
-applying then transactionally achieves this.</p>
+<p>It&#8217;s probably helpful to be clear what we mean by a <em>unit of work</em> here. Intimately related to the idea of a database transaction, a unit of work is a series of database operations that when applied together adhere to all the transactional characteristics (<em>atomic</em>, <em>coherent</em>, <em>isolated</em> and <em>durable</em>). For example, when updating the database to increment one bank account and decrementing another, things should be atomic (both operations happen or neither does), consistent (the bank accounts actually exist), isolated (protected from concurrent updates to the same accounts) and durable (permanently applied). Describing both operations as a unit of work and applying then transactionally achieves this.</p>
 
-<p>So we can think of the unit of work as something that can be executed and when
-it is, it&#8217;ll be under the conditions described above.</p>
+<p>So we can think of the unit of work as something that can be executed and when it is, it&#8217;ll be under the conditions described above.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -156,10 +136,7 @@ it is, it&#8217;ll be under the conditions described above.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When it comes to using Hibernate, we might have a concrete <code>UnitOfWorkRunner</code>
-look something like the following. The key thing here is that the transaction
-management is handled here, its a simple try catch finally pattern and as you
-can see, is very simple.</p>
+<p>When it comes to using Hibernate, we might have a concrete <code>UnitOfWorkRunner</code> look something like the following. The key thing here is that the transaction management is handled here, its a simple try catch finally pattern and as you can see, is very simple.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -222,20 +199,9 @@ can see, is very simple.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s this class and interface that allows us to be explicit about our
-transactional boundary. Clients to this define the transaction boundary. In
-most containers and frameworks, the transactional boundary is around the
-request/response cycle and the developer has little influence. Using the
-<code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can
-use a servlet filter to achieve a similar request/response scoped transaction
-or you can be finer grained and produce what I prefer; a transaction scoped to
-a coherent <em>business operation</em>.</p>
+<p>It&#8217;s this class and interface that allows us to be explicit about our transactional boundary. Clients to this define the transaction boundary. In most containers and frameworks, the transactional boundary is around the request/response cycle and the developer has little influence. Using the <code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can use a servlet filter to achieve a similar request/response scoped transaction or you can be finer grained and produce what I prefer; a transaction scoped to a coherent <em>business operation</em>.</p>
 
-<p>For example, lets have a interface describing current account business
-functions that work on bank account entities. The <code>CurrentAccount</code> interface
-represents business functions and should define the transactional boundary.
-The <code>BankAccount</code> on the other hand represents the entities involved which
-themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
+<p>For example, lets have a interface describing current account business functions that work on bank account entities. The <code>CurrentAccount</code> interface represents business functions and should define the transactional boundary. The <code>BankAccount</code> on the other hand represents the entities involved which themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -248,8 +214,7 @@ themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When we implement the <code>CurrentAccount</code>, we can define the transactional
-behavior as a separate concern from the business behavior. For example,</p>
+<p>When we implement the <code>CurrentAccount</code>, we can define the transactional behavior as a separate concern from the business behavior. For example,</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -264,10 +229,7 @@ behavior as a separate concern from the business behavior. For example,</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Where <code>transactionally</code> is a statically imported creation method that wires up
-the <code>AcmeBankCurrentAccount</code> (the business services) with transactional
-behavior. It does this via decoration but essentially creates an anonymous
-<code>UnitOfWork</code> in which to execute the business operation within.</p>
+<p>Where <code>transactionally</code> is a statically imported creation method that wires up the <code>AcmeBankCurrentAccount</code> (the business services) with transactional behavior. It does this via decoration but essentially creates an anonymous <code>UnitOfWork</code> in which to execute the business operation within.</p>
 
 <p>The full class looks like this</p>
 
@@ -330,10 +292,7 @@ behavior. It does this via decoration but essentially creates an anonymous
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The underlying business functionality within the <code>AcmeBankCurrentAccount</code>
-isn&#8217;t concerned with transactions. Instead, its decorated with
-transactionality and we can use this decorating proxy to wrap any business
-interface as a transaction.</p>
+<p>The underlying business functionality within the <code>AcmeBankCurrentAccount</code> isn&#8217;t concerned with transactions. Instead, its decorated with transactionality and we can use this decorating proxy to wrap any business interface as a transaction.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -374,13 +333,7 @@ interface as a transaction.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This can come in handy when testing as we can isolate and test the different
-responsibilities. We&#8217;re also left with a handy framework to add ad-hoc data
-directly to the database and it&#8217;s easy enough to wire up an in-memory only
-<code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall
-approach leaves us with loosely composed objects which combine to provide high
-level behavior. The composites are simpler than the sum of its parts to borrow
-a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
+<p>This can come in handy when testing as we can isolate and test the different responsibilities. We&#8217;re also left with a handy framework to add ad-hoc data directly to the database and it&#8217;s easy enough to wire up an in-memory only <code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
 </div>
 
 
@@ -390,7 +343,11 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
       
   
 
-<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston</span></span>
+<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston
+<a href="https://plus.google.com/116267404189265967722?rel=author"><img class="right" src="http://www.google.com/images/icons/ui/gprofile_button-16.png" /></a>
+
+
+</span></span>
 
       
 

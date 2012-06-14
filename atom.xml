@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-13T21:19:42+01:00</updated>
+  <updated>2012-06-14T21:15:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -856,7 +856,7 @@ above example, the test would no longer fail. You&#8217;d get a false positive.<
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[tools for bad.robots]]></title>
+    <title type="html"><![CDATA[Tools for bad.robots]]></title>
     <link href="http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
     <updated>2012-03-18T15:58:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
@@ -1011,9 +1011,7 @@ Internet Explorer 8, it will display the JSON &#8216;in-browser&#8217;. It won&#
 pretty print the response before sending it back.</p>
 
 <p>If it doesn&#8217;t work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
-headers
- are going over.</p>
+something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what headers are going over the wire.</p>
 ]]></content>
   </entry>
   
@@ -1075,37 +1073,18 @@ headers
     <link href="http://baddotrobot.com/blog/2012/01/29/transaction-management-without/"/>
     <updated>2012-01-29T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2012/01/29/transaction-management-without</id>
-    <content type="html"><![CDATA[<p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and
-containers do a good job of hiding all the details. However, it&#8217;s often more advantageous
-to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we?
- Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
+    <content type="html"><![CDATA[<p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it&#8217;s often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
 
-<p>Moving from a declarative approach to a more imperative one can help us with
-testing and by virtue; <em>composability</em>. We can move from something which can
-only be tested using the framework or container (implying an integration or
-end-to-end style test) to a more focused style (without the need of said
-frameworks or containers). If we manage things ourselves and are explicit
-about the transactional boundaries in production code, we can be more
-lightweight in our tests.</p>
+<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
 
 <!-- more -->
 
 
 <p>Lets take a look at an example in detail.</p>
 
-<p>It&#8217;s probably helpful to be clear what we mean by a <em>unit of work</em> here.
-Intimately related to the idea of a database transaction, a unit of work is a
-series of database operations that when applied together adhere to all the
-transactional characteristics (<em>atomic</em>, <em>coherent</em>, <em>isolated</em> and
-<em>durable</em>). For example, when updating the database to increment one bank
-account and decrementing another, things should be atomic (both operations
-happen or neither does), consistent (the bank accounts actually exist),
-isolated (protected from concurrent updates to the same accounts) and durable
-(permanently applied). Describing both operations as a unit of work and
-applying then transactionally achieves this.</p>
+<p>It&#8217;s probably helpful to be clear what we mean by a <em>unit of work</em> here. Intimately related to the idea of a database transaction, a unit of work is a series of database operations that when applied together adhere to all the transactional characteristics (<em>atomic</em>, <em>coherent</em>, <em>isolated</em> and <em>durable</em>). For example, when updating the database to increment one bank account and decrementing another, things should be atomic (both operations happen or neither does), consistent (the bank accounts actually exist), isolated (protected from concurrent updates to the same accounts) and durable (permanently applied). Describing both operations as a unit of work and applying then transactionally achieves this.</p>
 
-<p>So we can think of the unit of work as something that can be executed and when
-it is, it&#8217;ll be under the conditions described above.</p>
+<p>So we can think of the unit of work as something that can be executed and when it is, it&#8217;ll be under the conditions described above.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1127,10 +1106,7 @@ it is, it&#8217;ll be under the conditions described above.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When it comes to using Hibernate, we might have a concrete <code>UnitOfWorkRunner</code>
-look something like the following. The key thing here is that the transaction
-management is handled here, its a simple try catch finally pattern and as you
-can see, is very simple.</p>
+<p>When it comes to using Hibernate, we might have a concrete <code>UnitOfWorkRunner</code> look something like the following. The key thing here is that the transaction management is handled here, its a simple try catch finally pattern and as you can see, is very simple.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1193,20 +1169,9 @@ can see, is very simple.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s this class and interface that allows us to be explicit about our
-transactional boundary. Clients to this define the transaction boundary. In
-most containers and frameworks, the transactional boundary is around the
-request/response cycle and the developer has little influence. Using the
-<code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can
-use a servlet filter to achieve a similar request/response scoped transaction
-or you can be finer grained and produce what I prefer; a transaction scoped to
-a coherent <em>business operation</em>.</p>
+<p>It&#8217;s this class and interface that allows us to be explicit about our transactional boundary. Clients to this define the transaction boundary. In most containers and frameworks, the transactional boundary is around the request/response cycle and the developer has little influence. Using the <code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can use a servlet filter to achieve a similar request/response scoped transaction or you can be finer grained and produce what I prefer; a transaction scoped to a coherent <em>business operation</em>.</p>
 
-<p>For example, lets have a interface describing current account business
-functions that work on bank account entities. The <code>CurrentAccount</code> interface
-represents business functions and should define the transactional boundary.
-The <code>BankAccount</code> on the other hand represents the entities involved which
-themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
+<p>For example, lets have a interface describing current account business functions that work on bank account entities. The <code>CurrentAccount</code> interface represents business functions and should define the transactional boundary. The <code>BankAccount</code> on the other hand represents the entities involved which themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1219,8 +1184,7 @@ themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When we implement the <code>CurrentAccount</code>, we can define the transactional
-behavior as a separate concern from the business behavior. For example,</p>
+<p>When we implement the <code>CurrentAccount</code>, we can define the transactional behavior as a separate concern from the business behavior. For example,</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1235,10 +1199,7 @@ behavior as a separate concern from the business behavior. For example,</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Where <code>transactionally</code> is a statically imported creation method that wires up
-the <code>AcmeBankCurrentAccount</code> (the business services) with transactional
-behavior. It does this via decoration but essentially creates an anonymous
-<code>UnitOfWork</code> in which to execute the business operation within.</p>
+<p>Where <code>transactionally</code> is a statically imported creation method that wires up the <code>AcmeBankCurrentAccount</code> (the business services) with transactional behavior. It does this via decoration but essentially creates an anonymous <code>UnitOfWork</code> in which to execute the business operation within.</p>
 
 <p>The full class looks like this</p>
 
@@ -1301,10 +1262,7 @@ behavior. It does this via decoration but essentially creates an anonymous
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The underlying business functionality within the <code>AcmeBankCurrentAccount</code>
-isn&#8217;t concerned with transactions. Instead, its decorated with
-transactionality and we can use this decorating proxy to wrap any business
-interface as a transaction.</p>
+<p>The underlying business functionality within the <code>AcmeBankCurrentAccount</code> isn&#8217;t concerned with transactions. Instead, its decorated with transactionality and we can use this decorating proxy to wrap any business interface as a transaction.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1345,13 +1303,7 @@ interface as a transaction.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This can come in handy when testing as we can isolate and test the different
-responsibilities. We&#8217;re also left with a handy framework to add ad-hoc data
-directly to the database and it&#8217;s easy enough to wire up an in-memory only
-<code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall
-approach leaves us with loosely composed objects which combine to provide high
-level behavior. The composites are simpler than the sum of its parts to borrow
-a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
+<p>This can come in handy when testing as we can isolate and test the different responsibilities. We&#8217;re also left with a handy framework to add ad-hoc data directly to the database and it&#8217;s easy enough to wire up an in-memory only <code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
 ]]></content>
   </entry>
   
@@ -1406,107 +1358,35 @@ a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a
 <!-- more -->
 
 
-<p>Team A&#8217;s process starts off by favoring buzz word heavy CVs and CVs that meet
-a minimum number of years of experience. A unattended pen and paper test,
-characterised by very closed questioning against specialist areas of the
-programming language. This might include questions around language syntax
-semantics (keywords and modifiers, object equality etc etc). Things like
-bubble sorts algorithms are requested. Scores out of 100 are tallied. Things
-are fairly black and white.</p>
+<p>Team A&#8217;s process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.</p>
 
 <p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
-Team B&#8217;s process favors mention of agile experience in the CV. Follow up
-questions prompt genuine conversation but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221;.
-The unattended coding exercise is not a test, at least it should be more of an
-exercise to explore the way a candidate approaches things. The team might
-require the presence of unit tests and evidence of TDD but should actively not
-persecute style or syntax. Something that&#8217;s harder in practice to do than in
-theory.
-</span></p>
+Team B&#8217;s process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221;. The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that&#8217;s harder in practice to do than in theory.
+ </span></p>
 
-<p>Hopefully, its clear that Team A&#8217;s selection process is heavily biased towards
-developers with good memories. It&#8217;s probably unfairly prejudice against
-candidates that haven&#8217;t had specific exposure to specific scenarios /
-solutions. I experienced this when I was asked to write a algorithm to
-calculate prime numbers with pen and paper. I fumbled through and handed over
-my scrawl. I explained that I&#8217;d prefer write tests, experiment with the code
-and improve the design; basically to learn as I went along. The response from
-the interviewer, looking down at my scribbling, was &#8220;that&#8217;s not really what
-we&#8217;re looking for&#8230; have you heard of the Sieve of Eratosthenes?&#8221;. Obviously,
-I hadn&#8217;t.</p>
+<p>Hopefully, its clear that Team A&#8217;s selection process is heavily biased towards developers with good memories. It&#8217;s probably unfairly prejudice against candidates that haven&#8217;t had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I&#8217;d prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was &#8220;that&#8217;s not really what we&#8217;re looking for&#8230; have you heard of the Sieve of Eratosthenes?&#8221;. Obviously, I hadn&#8217;t.</p>
 
-<p>Rather than assess my approach, the interviewer was looking for a specific
-piece of knowledge but what for? If I got the job I&#8217;m pretty sure my first
-task wouldn&#8217;t be to write something to work out prime numbers. Would that fix
-some production problem? Would it introduce a new feature that had no other
-solution? No.</p>
+<p>Rather than assess my approach, the interviewer was looking for a specific piece of knowledge but what for? If I got the job I&#8217;m pretty sure my first task wouldn&#8217;t be to write something to work out prime numbers. Would that fix some production problem? Would it introduce a new feature that had no other solution? No.</p>
 
-<p>A huge part of what we do is learn, or at least it should be. Failure is what
-makes us better and in environments where failure is embraced and we write
-code that we can (fairly) easily rework, we get better systems (as we refine
-our understanding). We never now what the real problems are going to be when
-we start a story. The interviewer above simply brushed over this, it seemed he
-wanted me to reach the same conclusion he had without explaining the steps I
-took to get there. Without any advocacy on my part, how would he know I could
-do it again with a different problem?</p>
+<p>A huge part of what we do is learn, or at least it should be. Failure is what makes us better and in environments where failure is embraced and we write code that we can (fairly) easily rework, we get better systems (as we refine our understanding). We never now what the real problems are going to be when we start a story. The interviewer above simply brushed over this, it seemed he wanted me to reach the same conclusion he had without explaining the steps I took to get there. Without any advocacy on my part, how would he know I could do it again with a different problem?</p>
 
-<blockquote><p>&#8220;Right or wrong answers don&#8217;t really have a place because there&#8217;s never a
-right or wrong answer in what we do.&#8221;</p></blockquote>
+<blockquote><p>&#8220;Right or wrong answers don&#8217;t really have a place because there&#8217;s never a right or wrong answer in what we do.&#8221;</p></blockquote>
 
-<p>Having said all that, I&#8217;m sure we&#8217;d all favour a process like Team Bs but I&#8217;m
-starting to see that Team B are making at least some of the same mistakes just
-in a more subtle way&#8230;</p>
+<p>Having said all that, I&#8217;m sure we&#8217;d all favour a process like Team Bs but I&#8217;m starting to see that Team B are making at least some of the same mistakes just in a more subtle way&#8230;</p>
 
-<p>For the CV selection, Team A look for &#8220;spring&#8221;, &#8220;hibernate&#8221; and other
-technology buzzwords. Team B look for &#8220;refactoring&#8221;, &#8220;TDD&#8221;, &#8220;XP&#8221; and other
-development buzz words, the reason usually cited as being because the
-technologies aren&#8217;t as import. Team B are favouring the <em>why</em> over the <em>how</em>,
-they&#8217;re assuming given the right approach and smart people, specifics around
-technologies can be learnt. Both teams are trying to expose characteristics of
-the candidates that mirror their own.</p>
+<p>For the CV selection, Team A look for &#8220;spring&#8221;, &#8220;hibernate&#8221; and other technology buzzwords. Team B look for &#8220;refactoring&#8221;, &#8220;TDD&#8221;, &#8220;XP&#8221; and other development buzz words, the reason usually cited as being because the technologies aren&#8217;t as import. Team B are favouring the <em>why</em> over the <em>how</em>, they&#8217;re assuming given the right approach and smart people, specifics around technologies can be learnt. Both teams are trying to expose characteristics of the candidates that mirror their own.</p>
 
-<p>Team B asks candidates to complete a short programming exercise off-line.
-Implement a library, a DVD store, a robot explorer, whatever. It should only
-take an hour or so and demonstrates the candidates style. I&#8217;ve certainly seen
-it as an effective tool to eliminate people that really can&#8217;t code for toffee
-but I&#8217;ve also seen people fall into the same old trap and eliminate people who
-missed something specific hidden there. A trivial example might be &#8220;oh! they
-didn&#8217;t use dependency injection. Fail!&#8221;.</p>
+<p>Team B asks candidates to complete a short programming exercise off-line. Implement a library, a DVD store, a robot explorer, whatever. It should only take an hour or so and demonstrates the candidates style. I&#8217;ve certainly seen it as an effective tool to eliminate people that really can&#8217;t code for toffee but I&#8217;ve also seen people fall into the same old trap and eliminate people who missed something specific hidden there. A trivial example might be &#8220;oh! they didn&#8217;t use dependency injection. Fail!&#8221;.</p>
 
-<p>Team B&#8217;s pair test should be a great way to understand how a candidate
-operates in front of an IDE and if you&#8217;ll actually be able to work with him. A
-bit like the unattended test, it&#8217;s a good way to eliminate extreme cases. If
-the candidate behaves completely anti-socially, wont listen and codes like mad
-man, you can probably reject him with confidence. It&#8217;s easy to let bad
-interview habits creep in though; to focus more on some obscure gotcha in the
-code than how the candidate is actually pairing.</p>
+<p>Team B&#8217;s pair test should be a great way to understand how a candidate operates in front of an IDE and if you&#8217;ll actually be able to work with him. A bit like the unattended test, it&#8217;s a good way to eliminate extreme cases. If the candidate behaves completely anti-socially, wont listen and codes like mad man, you can probably reject him with confidence. It&#8217;s easy to let bad interview habits creep in though; to focus more on some obscure gotcha in the code than how the candidate is actually pairing.</p>
 
-<blockquote><p>&#8220;I think the problem with both these techniques (unattended exercise and the
-pair test) is when too much specificity comes in at the start. When you are
-looking for something specific, you&#8217;ll often be disappointed.&#8221;</p></blockquote>
+<blockquote><p>&#8220;I think the problem with both these techniques (unattended exercise and the pair test) is when too much specificity comes in at the start. When you are looking for something specific, you&#8217;ll often be disappointed.&#8221;</p></blockquote>
 
-<p>I&#8217;ve certainly heard myself say &#8220;oh, he didn&#8217;t spot that there was a precision
-issue with double there&#8230;&#8221;. In all honesty, I&#8217;d miss that kind of bug as
-often as I&#8217;d spot it but I&#8217;d hire me! The upshot there, especially when we
-doing a couple of pair tests a week, is to stay focused on why you&#8217;re doing
-the pair test and not on the test itself. Are we doing this to see if the
-candidate can spot all the traps and pitfalls that we spent so long putting in
-or do we want to see how they pair? In my view, if they get the &#8220;right&#8221; answer
-is almost irrelevant, it&#8217;s how they explore the problem.</p>
+<p>I&#8217;ve certainly heard myself say &#8220;oh, he didn&#8217;t spot that there was a precision issue with double there&#8230;&#8221;. In all honesty, I&#8217;d miss that kind of bug as often as I&#8217;d spot it but I&#8217;d hire me! The upshot there, especially when we doing a couple of pair tests a week, is to stay focused on why you&#8217;re doing the pair test and not on the test itself. Are we doing this to see if the candidate can spot all the traps and pitfalls that we spent so long putting in or do we want to see how they pair? In my view, if they get the &#8220;right&#8221; answer is almost irrelevant, it&#8217;s how they explore the problem.</p>
 
-<p>I guess what I&#8217;m reflecting on here is how as a peer group, we pretty much
-realise that closed questioning limits our choices and that open ended
-questions lead to real conversations that are more relevant to the types of
-conversations we have day to day. Right or wrong answers don&#8217;t really have a
-place because there&#8217;s never a right or wrong answer in what we do. If I
-implement a prime number finder without the Colander of Eratosthenes, am I
-wrong? The tests still pass so I must be right? Is Eratosthenes more right?
-Despite this realisation though, we can easily fall into a more subtle way of
-behaving where we mentally start ticking off specifics for a candidate.</p>
+<p>I guess what I&#8217;m reflecting on here is how as a peer group, we pretty much realise that closed questioning limits our choices and that open ended questions lead to real conversations that are more relevant to the types of conversations we have day to day. Right or wrong answers don&#8217;t really have a place because there&#8217;s never a right or wrong answer in what we do. If I implement a prime number finder without the Colander of Eratosthenes, am I wrong? The tests still pass so I must be right? Is Eratosthenes more right? Despite this realisation though, we can easily fall into a more subtle way of behaving where we mentally start ticking off specifics for a candidate.</p>
 
-<p>I guess we have to keep reminding ourselves what&#8217;s important and what we&#8217;re
-looking for in a candidate. I guess I&#8217;m mellowing in the way I assess
-candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
+<p>I guess we have to keep reminding ourselves what&#8217;s important and what we&#8217;re looking for in a candidate. I guess I&#8217;m mellowing in the way I assess candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
 ]]></content>
   </entry>
   
@@ -1522,10 +1402,7 @@ candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
 <!-- more -->
 
 
-<p>For example, the domain cleaning class below can throw an exception during the
-<code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we
-can employ this tactic to continue the cleanup and throw an exception
-containing the underlying problems when we&#8217;re done.</p>
+<p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we&#8217;re done.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

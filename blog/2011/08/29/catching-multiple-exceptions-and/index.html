@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I &hellip;">
-  
+  <meta name="keywords" content="rethrowing multiple exceptions, exception handling in java">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -46,7 +46,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-13 21:19:42 +0100 -->
+    <!-- last update; 2012-06-14 21:15:01 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -110,10 +110,7 @@
 <!-- more -->
 
 
-<p>For example, the domain cleaning class below can throw an exception during the
-<code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we
-can employ this tactic to continue the cleanup and throw an exception
-containing the underlying problems when we&#8217;re done.</p>
+<p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we&#8217;re done.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -263,7 +260,11 @@ containing the underlying problems when we&#8217;re done.</p>
       
   
 
-<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston</span></span>
+<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston
+<a href="https://plus.google.com/116267404189265967722?rel=author"><img class="right" src="http://www.google.com/images/icons/ui/gprofile_button-16.png" /></a>
+
+
+</span></span>
 
       
 

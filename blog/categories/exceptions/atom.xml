@@ -4,7 +4,7 @@
   <title><![CDATA[Category: exceptions | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-06-13T21:19:42+01:00</updated>
+  <updated>2012-06-14T21:15:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -636,10 +636,7 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 <!-- more -->
 
 
-<p>For example, the domain cleaning class below can throw an exception during the
-<code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we
-can employ this tactic to continue the cleanup and throw an exception
-containing the underlying problems when we're done.</p>
+<p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we're done.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

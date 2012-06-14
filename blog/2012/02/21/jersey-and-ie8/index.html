@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <meta name="description" content="Force IE8 to open JSON content within the browser with Jersey rather than prompt you to download and save as a file.">
+  <meta name="keywords" content="ie8, json, in-browser, jersey, application/x-ms-application">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -46,7 +46,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-06-13 21:19:42 +0100 -->
+    <!-- last update; 2012-06-14 21:15:01 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -227,9 +227,7 @@ Internet Explorer 8, it will display the JSON &#8216;in-browser&#8217;. It won&#
 pretty print the response before sending it back.</p>
 
 <p>If it doesn&#8217;t work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what
-headers
- are going over.</p>
+something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what headers are going over the wire.</p>
 </div>
 
 
@@ -239,7 +237,11 @@ headers
       
   
 
-<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston</span></span>
+<span class="byline author vcard"><img class="left" src="http://baddotrobot.com/images/robot_devil_16x16.png">Posted by <span class="fn">Toby Weston
+<a href="https://plus.google.com/116267404189265967722?rel=author"><img class="right" src="http://www.google.com/images/icons/ui/gprofile_button-16.png" /></a>
+
+
+</span></span>
 
       
 
@@ -258,7 +260,7 @@ headers
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rest/'>REST</a>, <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/rest/'>REST</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/recipe/'>recipe</a>
   
 </span>
 
@@ -281,7 +283,7 @@ headers
         <a class="basic-alignment left" href="/blog/2012/02/13/hexagonal-acceptance-testing/" title="Previous Post: Hexagonal Acceptance Testing">&laquo; Hexagonal Acceptance Testing</a>
       
       
-        <a class="basic-alignment right" href="/blog/2012/03/18/tools-for-bad-dot-robots/" title="next Post: tools for bad.robots">tools for bad.robots &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/03/18/tools-for-bad-dot-robots/" title="next Post: Tools for bad.robots">Tools for bad.robots &raquo;</a>
       
     </p>
   </footer>
