@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "tools for bad.robots"
+title: "Tools for bad.robots"
 date: 2012-03-18 15:58
 comments: true
 categories: java robotooling
