@@ -23,7 +23,7 @@ It's purpose is to collect your Concordion tests as an "overview page" which its
 
 Check out the [user manual](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html), written as Concordion specifications and download the binaries from the [bad.robot.repo repository](http://robotooling.com/maven/bad/robot/concordion-ant-task/).
 
-[{% img {{ root_url }}/images/concordion-ant-manual.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html)
+[{% img ../../../../../images/concordion-ant-manual.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html)
 
   
 As I mentioned Concordion, its only fair to mention [Xcordion](http://code.google.com/p/xcordion/) (and more recently Xcordion2) which is essentially a fork of Concordion. The main difference being a philosophical one. If Concordion constrains some activities within the specification (mostly to encourage certain principles), Xcordion is more of a free for all. With great power comes great responsibility and all that. Whilst Xcordion2 is being worked on, be prepared to build from source. You'll notice a couple of features missing, at least in the short term.
