@@ -37,7 +37,7 @@ It's supposed to be so simple, it's self explanatory. If it's not, [let me know]
 
 ## Separation of Concerns
 
-First and foremost, [simple-http](https://github.com/tobyweston/simple-http) helps with separation of concern. It provides a basic `HttpClient` interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the [simple-http](https://github.com/tobyweston/simple-http) interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the _HTTP verbs_ and not Apache's technical details.
+First and foremost, [simple-http](https://github.com/tobyweston/simple-http) helps with separation of concern. It provides a basic `HttpClient` interface which you can easily mock in your code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the [simple-http](https://github.com/tobyweston/simple-http) interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the _HTTP verbs_ and not Apache's technical details.
 
 ## Configuration
 
