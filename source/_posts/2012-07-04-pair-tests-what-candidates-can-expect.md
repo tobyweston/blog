@@ -12,7 +12,7 @@ description: "This post talks a little about what to expect from a pair test and
 
 {% img right ../../../../../images/pairing.jpg %}
 
-If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to attend a _test_ on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means _pairing_. The trouble is, its often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.
+If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be _tested_ on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means _pairing_. The trouble is, _pair tests_ are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.
 
 This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.
 
