@@ -29,7 +29,7 @@ I decided the only way to know if I could trust Allen's system was to try it.
 
 ## From Inbox to Options
 
-Allen suggests that if something is "on your mind", you want it to be different than it currently is. He defines this "stuff" (as in the title of the book) as anything that is on your mind that you haven't yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of "stuff" or partial reminders into a an inventory of actionable tasks that move us towards our objectives.
+Allen suggests that if something is "on your mind", you want it to be different than it currently is. He defines this "stuff" as anything that is on your mind that you haven't yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of "stuff" or partial reminders into a an inventory of actionable tasks that move us towards our objectives.
 
 A summary of actions and _front-end decisions_ that need to be made for all "open loops" is
 
