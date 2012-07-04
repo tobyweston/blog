@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the unit behaves a certain way and that in &hellip;">
+  <meta name="description" content="If Internet Explorer 8 performs a HTTP GET against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-03 18:52:52 +0100 -->
+    <!-- last update; 2012-07-04 20:22:02 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -77,6 +77,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-21T06:27:00+00:00" pubdate data-updated="true">Feb 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON &#8216;in-browser&#8217; like in Firefox and Chrome. If you&#8217;re using <a href="http://jersey.java.net/">Jersey</a>, Oracle&#8217;s JAX-RS reference implementation, here&#8217;s how to make IE8 play nice.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/02/21/jersey-and-ie8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -485,76 +526,6 @@ example,</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-18T00:00:00+01:00" pubdate data-updated="true">Oct 18<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of over eager
-developers and [<em>insert your current logging framework here</em>] is a recipe
-for disaster. We&#8217;ve all seen too much of</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">somethingRisky</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which is just one example where the exception handling policy for the system
-(it&#8217;s a system-wide concern remember) is muddled at best. Nothing is saying
-that the same exception isn&#8217;t logged elsewhere or that the exception is even
-handled correctly or the right people notified. It&#8217;s not ok to just log and
-rethrow and every single time we go to declare a new logger, we should think
-twice.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/10/18/logging-is-evil-but/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -570,6 +541,10 @@ twice.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/04/pair-tests-what-candidates-can-expect/">Pair Tests: What Candidates Can Expect</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a>
@@ -605,10 +580,6 @@ twice.</p>
     
       <li class="post">
         <a href="/blog/2012/03/18/tools-for-bad-dot-robots/">Tools for bad.robots</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a>
       </li>
     
   </ul>

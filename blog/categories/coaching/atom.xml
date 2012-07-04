@@ -4,7 +4,7 @@
   <title><![CDATA[Category: coaching | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-03T18:52:52+01:00</updated>
+  <updated>2012-07-04T20:22:02+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/"/>
+    <updated>2012-07-04T18:58:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect</id>
+    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/pairing.jpg"></p>
+
+<p>If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
+
+<p>This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.</p>
+
+<!-- more -->
+
+
+<h2>What To Expect</h2>
+
+<p>Typically, you'll sit down with one or two developers, be introduced to a basic problem and asked to solve it. If it's a good sample problem, you can expect to be asked to implement or fix small, incremental pieces of functionality. It's unfortunate that we use the term "pair test". I don't see it as a "test" but as an exercise or discussion. There shouldn't be a single right or wrong answer. The prospective employer should really be looking at <em>how you work</em> rather than <em>did she solve the problem?</em> A good <em>coding exercise</em> is simple and open ended.</p>
+
+<p>Expect to be put at ease. The interviewer should make every effort to relax you and communicate their expectations. If you find that your dropped in the deep end and bombarded with all kinds of devious scenarios, you have to question the organisation's values.</p>
+
+<p>Expect a choice of IDE. If you're not given a choice, don't expect to be judged on your knowledge of the IDE.</p>
+
+<p>Expect to be coding for an hour to two. They inevitably take a while and it's unrealistic to expect a productive pairing session in just thirty minutes.</p>
+
+<p>After the exercise, you may be asked "how did you find that?". If not, I like to ask the interviewer "how was that? Was it the kind of thing you were looking for?". It may lead to further conversations that give you the chance to talk about things in more depth, discuss alternatives and generally impress.</p>
+
+<h2>Be Yourself</h2>
+
+<p>There's often an unspoken expectation that you'll be demonstrating your mad TDD skills. I think deep down though, people are interested in seeing how you work, not necessarily that you work in a test driven way. I think its fair to say people do expect to see some tests, so make sure write some. My point is that you shouldn't be penalised if you right them retrospectively rather than first. If you're not comfortable doing TDD in your day job, don't suddenly make out it's your bread and butter. Try and work how you would on your own. Don't fake it.</p>
+
+<p>Another motivation for the pairing exercise is to see if, as a prospective pair, you can get on. If you relax and let your personality come through, you'll both have a better idea what it would be like pairing day in, day out.</p>
+
+<h2>Hang ups</h2>
+
+<p>Don't get hung up on the IDE, the API or even the problem. The interviewer shouldn't be judging you based on what shortcuts your know or what API you know off by heart. If they do, then you should question what's important to them; an adaptive, bright, enthusiastic developer or a robot that knows emacs keyboard bindings?</p>
+
+<p>With regards to the problem; if its not obvious, ask. A well set pairing exercise should be simple enough to quickly understand what's required and get you coding. Bogging you down with the complexities of the problem doesn't help anyone. Really. Don't be afraid to ask, it's what we do in our day jobs right?</p>
+
+<h2>Nerves</h2>
+
+<p>The thing that always gets me is nerves. I put way too much pressure on myself with an involuntary, internal commentary saying "am I doing enough? is that what they want to see? do they want to see this fancy thing? or that fancy thing?". Don't be like me, give yourself a break. You're a professional and good at what you do, you don't need to show off.</p>
+
+<p>I guess this all leads to my final point...</p>
+
+<h2>Summary</h2>
+
+<p>Discuss the problem. Discuss what you're thinking. Discuss what you plan to do. Discuss. Discuss. Discuss.</p>
+
+<p>If you get the chance, even mention some of the awesome things you've done. It's a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats <em>their</em> boat. Remember that you're interviewing them as much as the other way round.</p>
+
+<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
+
+<p>Good luck!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
@@ -255,75 +311,6 @@ strategies. I think its important not to get bogged down in exhaustive unit-
 style testing if its not of value and so understanding what gear you're in and
 what gear you'll soon be in can help focus your attentions. What to test and
 when is the question I find myself asking again and again.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Objectives]]></title>
-    <link href="http://baddotrobot.com/blog/2010/06/17/objectives/"/>
-    <updated>2010-06-17T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/06/17/objectives</id>
-    <content type="html"><![CDATA[<p>It's objective setting time for the guys at work. Aligning what's really good for you with what's good for the company shouldn't be difficult, right? Your generally heading in the same direction and have similar interests at heart. Why then do we end up with generic meaningless objectives like "attend a XXX course"? I think you can get the most out of the objective setting exercise by thinking about what you want <em>personally</em> out of your career, don't settle for the bland, phrase your objectives so there is real value in them. So, if the company think of them in terms of</p>
-
-<blockquote><p>S.M.A.R.T</p></blockquote>
-
-<p>I like the think of them as</p>
-
-<blockquote><p>S.M.A.R.T.Y</p></blockquote>
-
-<p>Where the Y is all about <em>YOU</em>; make it personal.</p>
-
-<!-- more -->
-
-
-<p>For example, we all want to be better developers but how do you phrase that as
-an acceptable business objective that management can neatly label it, put in a
-box and pull out in twelve months time to see if it's flourished? Defining
-"better" in terms of SMART isn't going to be easy. How about rephrasing it and
-thinking about it as reflecting on your coding practice? Keep a code journal
-of good and bad coding choices, yours and your teams. Reflect on it regularly
-and update entries. Was choosing a ThreadsafeDooDar here the right decision
-three months on, did it ever get used in a threaded context? How about that
-choice of using setter over constructor injection? How's that working out for
-you? The responsibility to reflect is yours but you can get outside
-perspectives from your peers.</p>
-
-<p><span class='pullquote-right' data-pullquote='The key personal objective here is to keep learning, the company objective is to become a better developer '>
-The key personal objective here is to keep learning, the company objective is to become a better developer. It can be <em>specific</em> because your wording will
-reflect something along the lines of "demonstrate a self-assessment of
-personal and the team coding standard and style". It's hard to avoid the word
-"quality" but if you do mention it, you should define it (not easy). The point
-is there's something the company can buy into but there's something more
-subtle that you can really buy into and get value from. It's all about YOU
-after all.</p>
-
-<p></span></p>
-
-<p>It's measurable (at least from the companies perspective, and so can get
-signed off on) because you have your journal as evidence along with dates and
-conclusions. You can even emphasize a few key learning points / techniques
-that you've changed your opinion on. Change is good and demonstrates learning.</p>
-
-<p>You might be able to extend this by talking in terms of coaching. I poo poo'ed
-a XXX training course earlier because I feel corporate training camps are the
-worst place to learn anything (well, there are probably worse places but
-there's certainly plenty of better environments). Anyway, asking for
-professional and formal coaching is a great way to develop and the journal
-idea can be used as evidence. The coach can co-author to give it that
-"official stamp".</p>
-
-<p>An example journal template might include date, initial description (the
-approach you took), pros/cons of the initial decision (why you took the
-approach), updated thoughts (including what caused you to reflect on this
-specific entry), updated pros/cons, conclusion, peer comments. Try and keep an
-entry specific to a single decision you made in the code (coarse or fine
-grained). Getting a feel about what to journal and what not to journal should
-be pretty natural, any "niggles" you get might prompt you or spotting that
-you're all talking about this part of the code a lot might be a clue.</p>
-
-<p>The real benefit though is what you can take away from it, if you talk over
-your journal points with the team and keep an open mind, I'd hope it gets
-filled with lots of nuggets you can add to your toolbox.</p>
 ]]></content>
   </entry>
   
