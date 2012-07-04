@@ -5,8 +5,7 @@ date: 2012-07-04 18:58
 comments: true
 categories: agile coaching
 sidebar: false
-published: false
-keywords: "pair tests, interview, tdd, pairing exercise"
+keywords: "pair tests, interview, tdd, pairing exercise, agile pair test"
 description: "This post talks a little about what to expect from a pair test and offers a few tips to surviving the ordeal."
 ---
 
