@@ -77,7 +77,7 @@ def accompaniment(dinner: String) {
 
 Notice that there is no need for a `break` statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.
 
-{% codeblock lang:java %}
+{% codeblock lang:scala %}
 def anotherAccompaniment(dinner: String) {
   val accompaniment =
     dinner match {
@@ -93,4 +93,4 @@ def anotherAccompaniment(dinner: String) {
 
 ## Conclusion
 
-The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the `catch` when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to [handle them as a system wide concern]({{ root_url}}/2012/03/28/exception-handling-as-a-system-wide-concern).
+The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the `catch` when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to [handle them as a system wide concern]({{ root_url}}/blog/2012/03/28/exception-handling-as-a-system-wide-concern).
