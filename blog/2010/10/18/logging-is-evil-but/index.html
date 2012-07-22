@@ -9,9 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of &hellip;">
-  
+  <meta name="description" content="Don't let logging clutter up your code, follow these tips to separate concerns and move towards logging as a feature. We also look at how to actually &hellip;">
+  <meta name="keywords" content="logging, log4j, testing log4j, logging as a feature.">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -47,7 +46,7 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-04 20:22:02 +0100 -->
+    <!-- last update; 2012-07-22 11:21:04 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -104,10 +103,7 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
   </header>
 
 
-<div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of over eager
-developers and [<em>insert your current logging framework here</em>] is a recipe
-for disaster. We&#8217;ve all seen too much of</p>
+<div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [<em>insert your current logging framework here</em>] is a recipe for disaster. We&#8217;ve all seen too much of</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -128,63 +124,26 @@ for disaster. We&#8217;ve all seen too much of</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>which is just one example where the exception handling policy for the system
-(it&#8217;s a system-wide concern remember) is muddled at best. Nothing is saying
-that the same exception isn&#8217;t logged elsewhere or that the exception is even
-handled correctly or the right people notified. It&#8217;s not ok to just log and
-rethrow and every single time we go to declare a new logger, we should think
-twice.</p>
+<p>which is just one example where the exception handling policy for the system (it&#8217;s a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn&#8217;t logged elsewhere or that the exception is even handled correctly or the right people notified. It&#8217;s not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.</p>
 
 <!-- more -->
 
 
-<p>We&#8217;ve taken this very literally in my current project and everyone is actively
-discouraged from instantiating a logger. I&#8217;d rather be explicit that some
-exception event has occurred and fire an event that some interested party can
-listen for. This makes perfect sense when you think about the huge log files
-that someone has to trawl through, armed only with for some vague clue as to
-what went wrong, a grep manual and the futile hope that developers actually
-log something useful. All without the context of the code to actually guide
-them. Good luck.</p>
+<p>We&#8217;ve taken this very literally in my current project and everyone is actively discouraged from instantiating a logger. I&#8217;d rather be explicit that some exception event has occurred and fire an event that some interested party can listen for. This makes perfect sense when you think about the huge log files that someone has to trawl through, armed only with for some vague clue as to what went wrong, a grep manual and the futile hope that developers actually log something useful. All without the context of the code to actually guide them. Good luck.</p>
 
-<p>The disseminated log problem is exacerbated if there is no clear audit trail
-tying pieces of information together. In a system with thousands of request
-per second, how do you tie the logged request inputs to some stack trace
-embedded in the middle of another thousand requests? What should have been a
-clear set of requirements from the business (in this case, presumably the
-support team) can easily get lost in the technical translation.</p>
+<p>The disseminated log problem is exacerbated if there is no clear audit trail tying pieces of information together. In a system with thousands of request per second, how do you tie the logged request inputs to some stack trace embedded in the middle of another thousand requests? What&#8217;s the correlation ID? What should have been a clear set of requirements from the business (in this case, presumably the support team), can easily get lost in the technical translation.</p>
 
 <blockquote><p>Logging is evil, but if you really <em>have</em> to, be honest about it&#8230;</p></blockquote>
 
-<p>Asking the business <em>&#8220;what information do you want to see in the event of x
-happening&#8221;</em> rather than assuming they want to see some stack trace in a huge
-log can make a lot of sense. We&#8217;re often not logging for ourselves (we have
-debuggers for that), we&#8217;re often logging for our customers. If we start to
-think about this stuff early, in terms of exception events and their audience,
-we can build systems that tell the outside world something meaningful in
-flexible ways. We start to define a system wide exception handling policy
-rather than relying of the default exception handler (<code>System.out</code> is rarely
-the right choice!).</p>
+<p>Asking the business <em>&#8220;what information do you want to see in the event of x happening&#8221;</em> rather than assuming they want to see some stack trace in a huge log can make a lot of sense. We&#8217;re often not logging for ourselves (we have debuggers for that), we&#8217;re often logging for our customers. If we start to think about this stuff early, in terms of exception events and their audience, we can build systems that tell the outside world something meaningful in flexible ways. We start to define a system wide exception handling policy rather than relying of the default exception handler (<code>System.out</code> is rarely the right choice!).</p>
 
-<p>So back to my current project&#8230; people are regularly beaten with a chair leg
-for creating loggers but I&#8217;ll admit that on occasion, I&#8217;ve actually logged
-stuff and didn&#8217;t resort to some Opus Dei style self-flagellation. Logging is
-evil, but if I really <em>have</em> to log, my saving grace is to be explicit about
-it. I&#8217;ll hunt down a customer and I&#8217;ll write a test to advertise the fact the
-log contains what they asked for.</p>
+<p>So back to my current project. Logging is evil, but if I really <em>have</em> to log, my saving grace is to be explicit about it. I&#8217;ll hunt down a customer and I&#8217;ll write a test to advertise the fact the log contains what they asked for.</p>
 
-<p>Most of the common logging frameworks make it troublesome to inject a logger
-instance, and I&#8217;m reluctant to subvert behaviour just because some logging
-framework wants me to. Logging (or preferably, firing an event) should be
-orthogonal to the classes core behaviour, why should I compromise? My
-preferred approach is the canonical example of using Aspects, or less
-esoterically, using decorators.</p>
+<h2>Separating Concerns</h2>
 
-<p>For example, I created a interface to handle HTTP POST requests, imaginatively
-called <code>Post</code>. Why should I add logging to implementations and open the door
-to ad-hoc, erratic logging? I shouldn&#8217;t, but when my implementation
-<code>CustomerPost</code> requires logging of the request and response, I can decorate
-with a <code>LoggingPost</code></p>
+<p>Most of the common logging frameworks make it troublesome to inject a logger instance (for testing). Logging (or preferably, firing an event) should be orthogonal to the classes core behaviour. My preferred approach is the canonical example of using Aspects, or less esoterically, using decorators.</p>
+
+<p>For example, I created a interface <code>Post</code>, to handle HTTP POST requests. Why should I add logging to implementations and open the door to ad-hoc, erratic logging? I shouldn&#8217;t, but when my implementation <code>CustomerPost</code> requires logging of the request and response, I can decorate with a <code>LoggingPost</code></p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -225,13 +184,7 @@ with a <code>LoggingPost</code></p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You might be concerned that the try/catch above looks very similar to the
-original negative example. The good thing about our decorated example above is
-that by being explicit about this classes responsibility, declaring the usage
-in the correct context, we can actually define the system wide policy for
-logging the <code>Post</code> calls in one place, without affecting the contract of the
-interface. We&#8217;d do this for example, on the system boundary, for example where
-the RESTful API is implemented.</p>
+<p>You might be concerned that the try/catch above looks very similar to the original negative example. The good thing about our decorated example above is that by being explicit about this classes responsibility, declaring the usage in the correct context, we can actually define the system wide policy for logging the <code>Post</code> calls in one place, without affecting the contract of the interface. We&#8217;d do this for example, on the system boundary, for example where the RESTful API is implemented.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -256,10 +209,9 @@ the RESTful API is implemented.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In our <code>LoggingPost</code> above, we haven&#8217;t even tried to inject a logger in to
-make the testing easier. Instead, mostly because I was being lazy, I used the
-helper class below. This is intended to represent Log4J in the context of a
-test and give access to the logger for assertion purposes.</p>
+<h2>Testing the Logger</h2>
+
+<p>In our <code>LoggingPost</code> above, we haven&#8217;t even tried to inject a logger in to make the testing easier. Instead, mostly because I was being lazy, I used the helper class below. This is intended to represent Log4J in the context of a test and give access to the logger for assertion purposes.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -397,21 +349,13 @@ test and give access to the logger for assertion purposes.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It relies on nasty statics to dynamically add a logger to Log4J&#8217;s list of
-loggers and thereby appending any generated logs to something that the <code>Log4J</code>
-test helper can assert on. I can&#8217;t decide if I like this or not. It gives you
-an extra test that your class under test is using a logger with the name that
-you expect (<code>"Post.class"</code> in the example above), testing your logger
-configuration as a by-product.</p>
+<p>It relies on Log4J&#8217;s static instances to dynamically add a logger to the list of loggers and thereby appending any generated logs to something that the <code>Log4J</code> test helper can check against. I can&#8217;t decide if I like this or not. It gives you an extra test that your class under test is using a logger with the name that you expect (<code>"Post.class"</code> in the example above), testing your logger configuration as a by-product.</p>
 
-<p>What I found interesting about this though was that it was always seemed a lot
-of effort making some logging framework play nicely with mocks, or writing and
-configuring a custom in memory appender and asserting on it. With the above
-example, I very quickly added confirmation to existing Log4J infrastructure.
-It seemed almost too easy&#8230; so I&#8217;d love to hear your comments and how you
-write tests for logging.</p>
+<p>What I found interesting about this though was that it was always seemed a lot of effort making some logging framework play nicely with mocks, or writing and configuring a custom in memory appender and asserting on it. With the above example, I very quickly added confirmation to existing Log4J infrastructure.</p>
 
-<p>PS. Logging is evil.</p>
+<p>I&#8217;d love to hear your comments and how you write tests for logging.</p>
+
+<p>PS. Logging really is evil.</p>
 </div>
 
 

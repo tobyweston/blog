@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-04T20:22:02+01:00</updated>
+  <updated>2012-07-22T11:21:04+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -167,14 +167,14 @@
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">def</span> <span class="nf">anotherAccompaniment</span><span class="o">(</span><span class="nl">dinner:</span> <span class="n">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">val</span> <span class="n">accompaniment</span> <span class="o">=&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="o">=&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">dinner</span> <span class="n">match</span> <span class="o">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;chips&quot;</span>
 </span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;mash&quot;</span>
 </span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;cheese&quot;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -184,7 +184,7 @@
 
 <h2>Conclusion</h2>
 
-<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to <a href="/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
+<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 ]]></content>
   </entry>
   

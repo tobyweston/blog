@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-04T20:22:02+01:00</updated>
+  <updated>2012-07-22T11:21:04+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -175,7 +175,7 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 <h2>Separation of Concerns</h2>
 
-<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in your code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache&#8217;s implementations. In that way, your application&#8217;s interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache&#8217;s technical details.</p>
 
 <h2>Configuration</h2>
 
@@ -478,13 +478,13 @@ Expected: a HttpMessage with status code &lt;200&gt;
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">def</span> <span class="nf">anotherAccompaniment</span><span class="o">(</span><span class="nl">dinner:</span> <span class="n">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">val</span> <span class="n">accompaniment</span> <span class="o">=</span>
-</span><span class='line'>    <span class="n">dinner</span> <span class="n">match</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;chips&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;mash&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;cheese&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="k">=</span>
+</span><span class='line'>    <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;chips&quot;</span>
+</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;mash&quot;</span>
+</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;cheese&quot;</span>
+</span><span class='line'>      <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">accompaniment</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
@@ -493,7 +493,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <h2>Conclusion</h2>
 
-<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it&#8217;s even more important to understand where potential exceptions will bubble up and how to <a href="http://baddotrobot.com/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
+<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it&#8217;s even more important to understand where potential exceptions will bubble up and how to <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 ]]></content>
   </entry>
   
@@ -1724,12 +1724,10 @@ Team B&#8217;s process favors mention of agile experience in the CV. Follow up q
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
 
-<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">java.net</a>
+<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
+repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
 since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
 and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
-
-<p>See the <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/changes.html">change list</a> for what&#8217;s included in this release.</p>
 ]]></content>
   </entry>
   

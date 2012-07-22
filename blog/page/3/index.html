@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of &hellip;">
+  <meta name="description" content="Logging is a nightmare. I don&#8217;t mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -47,7 +46,7 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-04 20:22:02 +0100 -->
+    <!-- last update; 2012-07-22 11:21:04 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -107,10 +106,7 @@ exceptional circumstances is a nightmare, I mean the combination of &hellip;">
   </header>
 
 
-  <div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about
-exceptional circumstances is a nightmare, I mean the combination of over eager
-developers and [<em>insert your current logging framework here</em>] is a recipe
-for disaster. We&#8217;ve all seen too much of</p>
+  <div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [<em>insert your current logging framework here</em>] is a recipe for disaster. We&#8217;ve all seen too much of</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -131,12 +127,7 @@ for disaster. We&#8217;ve all seen too much of</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>which is just one example where the exception handling policy for the system
-(it&#8217;s a system-wide concern remember) is muddled at best. Nothing is saying
-that the same exception isn&#8217;t logged elsewhere or that the exception is even
-handled correctly or the right people notified. It&#8217;s not ok to just log and
-rethrow and every single time we go to declare a new logger, we should think
-twice.</p>
+<p>which is just one example where the exception handling policy for the system (it&#8217;s a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn&#8217;t logged elsewhere or that the exception is even handled correctly or the right people notified. It&#8217;s not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.</p>
 
 </div>
   
@@ -177,7 +168,9 @@ twice.</p>
   </header>
 
 
-  <div class="entry-content"><p>Recently we had particularly good retrospective where the team {&#8221; were able to admit that each of us has had difference experiences pairing &#8220;}. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it. There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
+  <div class="entry-content"><p>Recently we had particularly good retrospective where the team were able to admit that each of us has had difference experiences pairing. We were honest in saying that despite having &#8220;done pairing&#8221; we&#8217;d all done different amounts of pairing and that, at times, we weren&#8217;t even sure what we were supposed to get out of it.</p>
+
+<p>There can be a fair amount of peer pressure to pair but if the pair don&#8217;t know what they can get out of it, it&#8217;s unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we&#8217;re getting something out of it?</p>
 
 </div>
   
@@ -195,7 +188,7 @@ twice.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2010/07/13/lamdas-vs-closures/">Lamdas vs. Closures</a></h1>
+      <h1 class="entry-title"><a href="/blog/2010/07/13/lambdas-vs-closures/">Lambdas vs. Closures</a></h1>
     
     
       <p class="meta">
@@ -218,48 +211,15 @@ twice.</p>
   </header>
 
 
-  <div class="entry-content"><p>When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about
-closure-like arguments but revisiting some old University materials when
-clearing out the loft, I&#8217;ve adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
-as an example, passing an anonymous class instance as a parameter to a method
- that will later call the instance is a kind of functional programming. I say
-  kind-of because its not really functional programming,
-  Java isn&#8217;t a functional language but we can bend it into a style that&#8217;s similar. For example,</p>
+  <div class="entry-content"><p><img class="right" src="../../../../../images/lambda.png" title="'The Lambda greek character'" ></p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="nd">@Override</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">},</span> <span class="n">timeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">)));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The anonymous class implementing <code>Condition</code> is evaluated by the method
-<code>waitOrTimeout</code> (it&#8217;s that which will call the <code>isSatisfied</code>) method.</p>
-
-<p>The recent shift to this functional style has lead to eager anticipation of
-JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion
-of <em>lamdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been
-available in Java since 1.1, so what&#8217;s the difference?</p>
+<p>When writing Java in a functional style, things tend to get very verbose. We often create a bunch on anonymous implementation fragments and pass them around akin to a <em>function</em> in functional languages. These fragments often get called closures or lambdas, but what&#8217;s the difference between the two terms?</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2010/07/13/lamdas-vs-closures/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2010/07/13/lambdas-vs-closures/">Read on &rarr;</a>
     </footer>
   
 
@@ -294,14 +254,9 @@ available in Java since 1.1, so what&#8217;s the difference?</p>
   </header>
 
 
-  <div class="entry-content"><p>I love the idea of growing teams, the lure of the gardening analogy is just too strong&#8230; they have to be nurtured to flourish blar blar blar. What is obvious though is that team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well we, the team, are doing. It&#8217;s useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
+  <div class="entry-content"><p>I love the idea of growing teams. Team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well the team are doing. It&#8217;s useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
 
-<p>Often, new or junior developers worry about the barrage of new and unfamiliar
-technologies. Technologies are such a small part of what we do in my opinion
-but it can be useful to be explicit about individual competencies to re-assure
-the bedazzled new developer. In this post, I present a tool I came up with to
-help, a kind of competency depth distribution chart (that makes a nice
-palindrome so it&#8217;s a good a name as any).</p>
+<p>Often, new or junior developers worry about the barrage of new and unfamiliar technologies. In my opinion, technologies are such a small part of what we do but it can be useful to be explicit about individual competencies to re-assure the bedazzled new developer. In this post, I present a tool I came up with to help, a kind of competency depth distribution chart.</p>
 
 </div>
   

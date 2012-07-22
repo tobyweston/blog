@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Lamdas vs. Closures - bad.robot</title>
+  <title>Lambdas vs. Closures - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about &hellip;">
-  
+  <meta name="description" content="What's the difference between a lambda and a closure? Find out here!">
+  <meta name="keywords" content="lambda vs closures, closures vs lambdas, functional style java, higher order functions, pure functions">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -19,7 +18,7 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -47,7 +46,7 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-04 20:22:02 +0100 -->
+    <!-- last update; 2012-07-22 11:21:04 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,7 +80,7 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
   
   <header>
     
-      <h1 class="entry-title">Lamdas vs. Closures</h1>
+      <h1 class="entry-title">Lambdas vs. Closures</h1>
     
     
       <p class="meta">
@@ -104,15 +103,16 @@ it always bugged me about the terminology we use. I tend to talk about &hellip;"
   </header>
 
 
-<div class="entry-content"><p>When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about
-closure-like arguments but revisiting some old University materials when
-clearing out the loft, I&#8217;ve adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
-as an example, passing an anonymous class instance as a parameter to a method
- that will later call the instance is a kind of functional programming. I say
-  kind-of because its not really functional programming,
-  Java isn&#8217;t a functional language but we can bend it into a style that&#8217;s similar. For example,</p>
+<div class="entry-content"><p><img class="right" src="../../../../../images/lambda.png" title="'The Lambda greek character'" ></p>
+
+<p>When writing Java in a functional style, things tend to get very verbose. We often create a bunch on anonymous implementation fragments and pass them around akin to a <em>function</em> in functional languages. These fragments often get called closures or lambdas, but what&#8217;s the difference between the two terms?</p>
+
+<!-- more -->
+
+
+<p>Lets take the <code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as an example where we pass an anonymous instance as a parameter to the <code>waitOrTimeout</code> method. We define a function here that will be called at some later point by <code>waitOrTimeout</code>. We can think of this as <em>lazy invocation</em>. Java isn&#8217;t a functional language but we&#8217;ve simulated at least one characteristic of a functional language using <code>WaitFor</code> and an anonymous function. We&#8217;ve created a <em>higher order function</em> but not necessarily a <em>pure function</em> (<a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">1</a>).</p>
+
+<p>For example,</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -124,7 +124,7 @@ as an example, passing an anonymous class instance as a parameter to a method
 <span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
 </span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="n">WaitFor</span><span class="o">.</span><span class="na">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="nd">@Override</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
@@ -133,30 +133,15 @@ as an example, passing an anonymous class instance as a parameter to a method
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The anonymous class implementing <code>Condition</code> is evaluated by the method
-<code>waitOrTimeout</code> (it&#8217;s that which will call the <code>isSatisfied</code>) method.</p>
+<p>The anonymous class implementing <code>Condition</code> is evaluated by the method <code>waitOrTimeout</code> (which will call the <code>isSatisfied</code>) method.</p>
 
-<p>The recent shift to this functional style has lead to eager anticipation of
-JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion
-of <em>lamdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been
-available in Java since 1.1, so what&#8217;s the difference?</p>
-
-<!-- more -->
-
+<p>The recent shift to this functional style has lead to eager anticipation of JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion of <em>lambdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been available in Java since 1.1, so what&#8217;s the difference?</p>
 
 <h3>Lambs to the Slaughter</h3>
 
-<p>So, we want to be able to define anonymous functions on the fly, the result of
-the function is purely dependent on it&#8217;s arguments and this is called a lamda.
-Those functions that depend on external values (not just it&#8217;s arguments) are
-when closures come into it. The act of binding those external values to the
-anonymous function is referred to as <em>closure</em>. After closure, when all
-variables have been captured and bound to the function, the term is closed.</p>
+<p>So, we want to be able to define anonymous functions on the fly, the result of the function is purely dependent on it&#8217;s arguments and this is called a lambda. Those functions that depend on external values (not just it&#8217;s arguments) are when closures come into it. The act of binding those external values to the anonymous function is referred to as <em>closure</em>. After closure, when all variables have been captured and bound to the function, the term is closed.</p>
 
-<p>For example, the code snippet above will return a new <code>Condition</code> instance on
-each invocation. Because it will bind the variable server to the anonymous
-function, it will return a closure. To put it another way, we&#8217;ll extract the
-anonymous part to a method to explicitly create a new instance, such</p>
+<p>For example, the code snippet above will return a new <code>Condition</code> instance on each invocation. Because it will bind the variable server to the anonymous function, it will return a closure. To put it another way, we&#8217;ll extract the anonymous part to a method to explicitly create a new instance, such</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -177,13 +162,7 @@ anonymous part to a method to explicitly create a new instance, such</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This should make it more obvious that the variable outside the scope of the
-anonymous <code>Condition</code> is required (the server variable), each call to the
-<code>isRunning</code> method will return a closure over the argument, the instance of
-which captures the value of server. Java implements the closure by passing a
-reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class
-(<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field
- in the outer class directly in the bytecode</p>
+<p>This should make it more obvious that the variable outside the scope of the anonymous <code>Condition</code> is required (the <code>server</code> variable), each call to the <code>isRunning</code> method will return a closure over the argument, the instance of which captures the value of server. Java implements the closure by passing a reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class (<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field in the outer class directly in the bytecode</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -214,8 +193,7 @@ reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>So, if, we have update the example again, this time removing the out of scope
-variable, we&#8217;re left with something like this;</p>
+<p>So, if, we have update the example again, this time removing the out of scope variable, we&#8217;re left with something like this;</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -236,13 +214,9 @@ variable, we&#8217;re left with something like this;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then no out of scope variables are required, the term doesn&#8217;t need to be
-closed. The anonymous function that is left is effectively a lamda.</p>
+<p>Then no out of scope variables are required, the term doesn&#8217;t need to be closed. The anonymous function that is left is effectively a lambda.</p>
 
-<p>What JDK7 will (finger&#8217;s crossed) bring is more explicit, concise way of
-expressing the same ideas. It will support lamdas as a language feature
-although I can&#8217;t quite figure out what the example would look like in those
-terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
+<p>What JDK7 will (finger&#8217;s crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can&#8217;t quite figure out what the example would look like in those terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
 </div>
 
 
@@ -284,7 +258,7 @@ terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">s
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -329,8 +303,8 @@ terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">s
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/';
-        var disqus_url = 'http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/';
+        var disqus_url = 'http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/';
         var disqus_script = 'embed.js';
       
     (function () {

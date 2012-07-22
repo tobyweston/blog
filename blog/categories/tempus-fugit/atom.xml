@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-04T20:22:02+01:00</updated>
+  <updated>2012-07-22T11:21:04+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -22,29 +22,28 @@
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
 
-<p>It's now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">java.net</a>
+<p>It's now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
+repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
 since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
 and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you're interested).</p>
-
-<p>See the <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/changes.html">change list</a> for what's included in this release.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Lamdas vs. Closures]]></title>
-    <link href="http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures/"/>
+    <title type="html"><![CDATA[Lambdas vs. Closures]]></title>
+    <link href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/"/>
     <updated>2010-07-13T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/07/13/lamdas-vs-closures</id>
-    <content type="html"><![CDATA[<p>When writing Java in a functional style, apart from the verbosity of it all,
-it always bugged me about the terminology we use. I tend to talk about
-closure-like arguments but revisiting some old University materials when
-clearing out the loft, I've adjusted my vocabulary somewhat. Taking the
-<code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>
-as an example, passing an anonymous class instance as a parameter to a method
- that will later call the instance is a kind of functional programming. I say
-  kind-of because its not really functional programming,
-  Java isn't a functional language but we can bend it into a style that's similar. For example,</p>
+    <id>http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures</id>
+    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/lambda.png" title="'The Lambda greek character'" ></p>
+
+<p>When writing Java in a functional style, things tend to get very verbose. We often create a bunch on anonymous implementation fragments and pass them around akin to a <em>function</em> in functional languages. These fragments often get called closures or lambdas, but what's the difference between the two terms?</p>
+
+<!-- more -->
+
+
+<p>Lets take the <code>WaitFor</code> class from <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as an example where we pass an anonymous instance as a parameter to the <code>waitOrTimeout</code> method. We define a function here that will be called at some later point by <code>waitOrTimeout</code>. We can think of this as <em>lazy invocation</em>. Java isn't a functional language but we've simulated at least one characteristic of a functional language using <code>WaitFor</code> and an anonymous function. We've created a <em>higher order function</em> but not necessarily a <em>pure function</em> (<a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">1</a>).</p>
+
+<p>For example,</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -59,7 +58,7 @@ as an example, passing an anonymous class instance as a parameter to a method
 <span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
 </span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="n">WaitFor</span><span class="o">.</span><span class="na">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="nd">@Override</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -70,30 +69,15 @@ as an example, passing an anonymous class instance as a parameter to a method
 </span><span class='line'><span class="o">},</span> <span class="n">timeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">5</span><span class="o">)));</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>The anonymous class implementing <code>Condition</code> is evaluated by the method
-<code>waitOrTimeout</code> (it's that which will call the <code>isSatisfied</code>) method.</p>
+<p>The anonymous class implementing <code>Condition</code> is evaluated by the method <code>waitOrTimeout</code> (which will call the <code>isSatisfied</code>) method.</p>
 
-<p>The recent shift to this functional style has lead to eager anticipation of
-JDK7 and the promise of closures. More accurately however, it's the inclusion
-of <em>lamdas</em> that we're waiting for, not <em>closures</em>. Closures have in fact been
-available in Java since 1.1, so what's the difference?</p>
-
-<!-- more -->
-
+<p>The recent shift to this functional style has lead to eager anticipation of JDK7 and the promise of closures. More accurately however, it's the inclusion of <em>lambdas</em> that we're waiting for, not <em>closures</em>. Closures have in fact been available in Java since 1.1, so what's the difference?</p>
 
 <h3>Lambs to the Slaughter</h3>
 
-<p>So, we want to be able to define anonymous functions on the fly, the result of
-the function is purely dependent on it's arguments and this is called a lamda.
-Those functions that depend on external values (not just it's arguments) are
-when closures come into it. The act of binding those external values to the
-anonymous function is referred to as <em>closure</em>. After closure, when all
-variables have been captured and bound to the function, the term is closed.</p>
+<p>So, we want to be able to define anonymous functions on the fly, the result of the function is purely dependent on it's arguments and this is called a lambda. Those functions that depend on external values (not just it's arguments) are when closures come into it. The act of binding those external values to the anonymous function is referred to as <em>closure</em>. After closure, when all variables have been captured and bound to the function, the term is closed.</p>
 
-<p>For example, the code snippet above will return a new <code>Condition</code> instance on
-each invocation. Because it will bind the variable server to the anonymous
-function, it will return a closure. To put it another way, we'll extract the
-anonymous part to a method to explicitly create a new instance, such</p>
+<p>For example, the code snippet above will return a new <code>Condition</code> instance on each invocation. Because it will bind the variable server to the anonymous function, it will return a closure. To put it another way, we'll extract the anonymous part to a method to explicitly create a new instance, such</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -119,13 +103,7 @@ anonymous part to a method to explicitly create a new instance, such</p>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>This should make it more obvious that the variable outside the scope of the
-anonymous <code>Condition</code> is required (the server variable), each call to the
-<code>isRunning</code> method will return a closure over the argument, the instance of
-which captures the value of server. Java implements the closure by passing a
-reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class
-(<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field
- in the outer class directly in the bytecode</p>
+<p>This should make it more obvious that the variable outside the scope of the anonymous <code>Condition</code> is required (the <code>server</code> variable), each call to the <code>isRunning</code> method will return a closure over the argument, the instance of which captures the value of server. Java implements the closure by passing a reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class (<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field in the outer class directly in the bytecode</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -159,8 +137,7 @@ reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>So, if, we have update the example again, this time removing the out of scope
-variable, we're left with something like this;</p>
+<p>So, if, we have update the example again, this time removing the out of scope variable, we're left with something like this;</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -186,13 +163,9 @@ variable, we're left with something like this;</p>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Then no out of scope variables are required, the term doesn't need to be
-closed. The anonymous function that is left is effectively a lamda.</p>
+<p>Then no out of scope variables are required, the term doesn't need to be closed. The anonymous function that is left is effectively a lambda.</p>
 
-<p>What JDK7 will (finger's crossed) bring is more explicit, concise way of
-expressing the same ideas. It will support lamdas as a language feature
-although I can't quite figure out what the example would look like in those
-terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda%0A/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
+<p>What JDK7 will (finger's crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can't quite figure out what the example would look like in those terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
 ]]></content>
   </entry>
   

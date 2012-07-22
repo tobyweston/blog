@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-04T20:22:02+01:00</updated>
+  <updated>2012-07-22T11:21:04+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -447,12 +447,10 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
 
-<p>It's now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-%20fugit/">java.net</a>
+<p>It's now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
+repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
 since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
 and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you're interested).</p>
-
-<p>See the <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/changes.html">change list</a> for what's included in this release.</p>
 ]]></content>
   </entry>
   

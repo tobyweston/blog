@@ -4,7 +4,7 @@
   <title><![CDATA[Category: REST | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-04T20:22:02+01:00</updated>
+  <updated>2012-07-22T11:21:04+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -120,7 +120,7 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 <h2>Separation of Concerns</h2>
 
-<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in you code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache's technical details.</p>
+<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in your code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache's technical details.</p>
 
 <h2>Configuration</h2>
 
