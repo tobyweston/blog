@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Getting Things Done, Part I"
-date: 2012-06-29 15:50
+date: 2012-07-20 15:50
 comments: true
 categories: coaching
 sidebar: false
