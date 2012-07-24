@@ -6,6 +6,8 @@ time: 2011-06-22 21:14:00 +01:00
 categories: java object-oriented mocking testing
 comments: true
 sidebar : false
+keywords: "logging, log4j, event driven vs logging, event driven"
+description: "This post shows how to make assertions against Log4J and test your application's logging. If you can't avoid it, treat logging as a requirement and test against it."
 ---
 
 In a [previous post]({{ root_url }}/blog/2010/10/18/logging-is-evil-but/), I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.
