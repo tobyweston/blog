@@ -6,7 +6,7 @@ comments: true
 categories: java object-oriented
 sidebar: false
 published: false
-keywords: "OO, object-oriented, stop watch, example"
+keywords: "OO, object-oriented, stop watch"
 description: ""
 ---
 
@@ -29,7 +29,7 @@ Let's say we're interested in timing an update to our stock levels.
         }
     }    
 
-This works but violates the single responsibility principle; out `StockControlSystem` is now responsible for both updating stock levels and timing itself as it does so. If we try and seperate these responsbilities, we may decide that one belongs to a `StopWatch`.
+This works but violates the single responsibility principle; our `StockControlSystem` is now responsible for both updating stock levels and timing itself as it does so. If we try and seperate these responsbilities, we may decide that one belongs to a `StopWatch`.
 
 A typical stop watch interface might look like the following.
 
@@ -39,10 +39,12 @@ A typical stop watch interface might look like the following.
 	    Duration elapsedTime();
 	}
 
+	
+What about looping whilst not timed out? eg to re-assess a timeout?
 
 ## Encapsulation?
 	
-It's a shame that we can actually get the elapsed time but lets go with it for now. Why do I say its a shame? Any kind of _getter_ like `elapsedTime` can (but not always) be a smell that some internal data has leaked from the object. In our case, the timing result is returned allowing clients to access it. This doesn't mean to say its breaking encapsulation as there are lots of geuine reasons why clients may need access to it but lets make sure.
+It's a shame that we can actually get the elapsed time but lets go with it for now. Why do I say its a shame? Any kind of _getter_ like `elapsedTime` can (but not always) be a smell that some internal data has leaked from the object. In our case, the timing result is returned allowing clients to access it. This doesn't mean to say its breaking encapsulation or data hiding principles as there are lots of geuine reasons why clients may need access to it but lets make sure.
 
 What are the kind of things a client might like to do with a timing result? It might want to work out if a timeout has been reached or perhaps calculate some average timings? For example, we may want to observe the time taken to make a request to update our stock control system;
 
