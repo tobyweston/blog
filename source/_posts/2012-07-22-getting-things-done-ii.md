@@ -47,9 +47,11 @@ Another example, the _open loop_ being to "Improve my blog's SEO" was captured i
 
 ## Conclusion so Far
 
-I sometimes forget to follow up on the "waiting (for someone)" list.
-Dates don't seem important yet
-I'm intentionally not using contexts, tags and to a degree, avoid using the calendar.
-
+- I sometimes forget to follow up on the "waiting (for someone)" list.
+- Dates don't seem important yet
+- I'm intentionally not using contexts, tags and to a degree, avoid using the calendar.
+- So far, I havn't been stressed by seeing a large options list. I think just having it written down is enough.
+- I like the next step process, it frees me up from stress because I conscoously say to myself "its ok not to know all the  steps, literally, what is the next single step?"
+- Requires discipline
 
 I think I'll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I've intentionally avoided. I expect I'll finish this mini-series off in a month or two with my final reflections.
