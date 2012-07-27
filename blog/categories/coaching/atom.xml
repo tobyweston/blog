@@ -4,7 +4,7 @@
   <title><![CDATA[Category: coaching | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-27T17:05:05+01:00</updated>
+  <updated>2012-07-27T17:07:06+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part II]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
+    <updated>2012-07-22T12:38:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
+    <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="/blog/2012/06/29/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+
+<p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
+
+<!-- more -->
+
+
+<h2>The "Think It Through Principle"</h2>
+
+<p>I wanted to apply what I started to think of as the <em>think it through principle</em> to my old items, what Allen calls <em>front end decisions</em>. So everything got put back into the global "inbox" until I performed the mental checklist; what is it?; is it actionable?; what's the next action?</p>
+
+<p>Things started to get interesting for me here as going through this process, I started to draw parallels between the way Allen talks about <em>describing, in a single written sentence, the intended successful outcome</em> and the agile dictum of identifying acceptance criteria. In both cases, a clear and distinct step is made to clarify intent and recognise when a task is actually <em>done</em>.</p>
+
+<p>In resetting my tasks, I also dropped all the dates. I was just ignoring them anyway. I had so many overdue items, they became meaningless. Allen suggests that if an item has a date, then it pretty much <em>has to get done on that date</em>, no excuses.</p>
+
+<h2>Next Steps</h2>
+
+<p>I liked the movement from "inbox" to say "options". It felt like working up a user story and moving a card on a board when the acceptance criteria had been identified. To solidify this for myself, I try to change the wording of my tasks as they move from the "inbox" to some other list. From a vague, fluffy description to something sounding more like a user story. I'll add a short description if needed.</p>
+
+<p>I also like the idea of the "next steps" part of the think it through principle. Getting things out of your mind and into a <em>trusted</em> system feels like it could free up head space; the <em>trusted</em> part being key. Focusing only on the smallest possible next step seems to concentrate the idea. Again, the similarities to the agile principle of <em>doing to simplest thing possible</em> appealed.</p>
+
+<p>So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo <a href="http://www.appigo.com/todo">Todo</a>.</p>
+
+<h3>A Couple of Examples,</h3>
+
+<blockquote><p>On receiving my first reminder from HMRC, I filed "Self Assessment 2011/12" into my "stuff" inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my "options" list having changed the one line description to be "Pay 2011/12 Self Assessment". The deliberate steps were to pause and turn an <em>open loop</em> into something that I can tick off as done. I came up with the <em>acceptance criteria</em> and gave it a date.</p>
+
+<p>I wasn't clear about the dates though and had a question I wanted to ask my accountant. So my "next step" was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my "waiting (for someone)" file.</p>
+
+<p>Another example, the <em>open loop</em> being to "Improve my blog's SEO" was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be "signed off"), and moved it into the "options" list with no date and a description "add keyword and description metadata to old articles". It's sitting in my backlog now.</p></blockquote>
+
+<h2>Conclusion so Far</h2>
+
+<p>Having Appigo's <a href="http://www.appigo.com/todo">Todo</a> on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn't seem to be huge. So far, I'm averaging around thirty items. The inbox has the same five or so I started with. That's telling me I'm not doing anything about those; I think they're just not that important and I should really move them to "trash". All in all, I'm now in the habbit of using the list, so I'm starting to trust the system.</p>
+
+<p>I'm certainly feeling less stress about things hanging over me. I'm kind of deferring responsibility because I know they're not lost, just in a list on my phone. It's nice to immediately put something out of my mind because I know it's not going to be forgotten. I think the trick for me is to stay disciplined, not let the "inbox" fill up and keep putting things (even really trivial things) into my lists <em>as I think of them</em>.</p>
+
+<p>I'll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I've intentionally avoided. I expect I'll finish this mini-series off in a month or two with my final reflections.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part I]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/"/>
+    <updated>2012-07-20T15:50:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i</id>
+    <content type="html"><![CDATA[<p>Having toyed with the ideas from <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a> and not really getting much out of it, I thought I'd revisit David Allen's ideas with a little more rigour. I'd causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I'd look at them every now and then but I didn't exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I'd have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+
+<p>In this first post, I'll talk a little about Allen's ideas, summarising the first section of the book. In the <a href="/blog/2012/06/30/getting-things-done-ii">second post</a>, I reflect a little on it's application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+
+<!-- more -->
+
+
+<h2>Open Loops and Front-end Decisions</h2>
+
+<p>Allen begins by defining two key objectives; to capture <em>all</em> the things you need to get done in a <em>trusted system</em> and being disciplined to make <em>front-end decisions</em> about these inputs.</p>
+
+<p>The things that need to get done represent "open loops". Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you're freed up from worrying about them. Capturing them in a system that you <em>absolutely trust</em> is key. You must have faith that the system not only records the inputs but helps you process them in a way that works for you. You <em>have</em> to be confident that you're not just brushing them under the carpet, that you'll got back to the system and that it'll work.</p>
+
+<p>I decided the only way to know if I could trust Allen's system was to try it.</p>
+
+<h2>From Inbox to Options</h2>
+
+<p>Allen suggests that if something is "on your mind", you want it to be different than it currently is. He defines this "stuff" as anything that is on your mind that you haven't yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of "stuff" or partial reminders into a an inventory of actionable tasks that move us towards our objectives.</p>
+
+<p>A summary of actions and <em>front-end decisions</em> that need to be made for all "open loops" is</p>
+
+<ol>
+<li>Clarify the intended outcome. Quantify the results. When is it done?</li>
+<li>Decide the very next physical action that will take you towards that goal</li>
+<li>Put reminders in place of the two previous steps</li>
+</ol>
+
+
+<p>I visualise this process as moving from a general dumping ground; the "inbox" to an "options" list. The list of concrete things I <em>could</em> do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I'm not concerned with dates or follow up tasks, just in getting things off of my mind and onto paper.</p>
+
+<h2>The Workflow</h2>
+
+<p><a href="../../../../../images/gtd-basic.png"><img class="left" src="../../../../../images/gtd-basic.png" width="350" height="467" title="'Abbreviated workflow'" ></a></p>
+
+<p>So far, I've focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It's probably a good time to introduce a few other of Allen's ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen's workflow looks like the diagram opposite.</p>
+
+<p>It describes the journey from "stuff" to either some concrete action (<em>do it</em>) or one of the other lists Allen talks about (the yellow leaf nodes). It describes how firstly, any "open loops" get captured in an "inbox". Raw data capture, nothing fancy. The next step (<em>what is it?</em>) is to apply the first <em>front-end decision</em> and quantify the objective. The next step (<em>is it actionable?</em>) is about identifying the next definite step you can take; firming up the next action.</p>
+
+<p>At this point, if its not actionable, it's either binned (<em>trash</em>) or moved to some other list (<em>...</em>). If it is actionable and quick, just do it. Otherwise, the next step is moved to another list. Either a list of "options" or after delegating it, a list to track external dependencies (<em>waiting</em>). The calendar captures tasks that have a definitive date associated with them.</p>
+
+<p>So, we've clarified our intended outcome, decided the next physical action to take and recorded that action in an appropriate bucket. The next thing is to put reminders in place. For this, Allen doesn't prescribe any particular system. You may feel Outlook fits the bill or find a tool that "supports" <em>Getting Things Done</em> on your phone.</p>
+
+<h2>Summary</h2>
+
+<p>I've missed a lot out here. I've skipped over <em>projects</em>, <em>contexts</em> and a bunch of other stuff. I found it easier to absorb the basic principles like this though and in the next post, we'll have a look at some examples where I've tried to apply just these basics to my own list of "stuff".</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
@@ -141,89 +242,6 @@ Team B's process favors mention of agile experience in the CV. Follow up questio
 <p>Another useful tool can be the pair stairs. It's very easy to avoid pairing rather than face it's challenges so <a href="http://www.natpryce.com/articles/000522.html">pair stairs</a> can be a good way to keep you honest. Probably the most helpful thing though is having people on the team that have lots of experience pairing, know what the team can get out of it and are able to help guide pairing sessions for the less experienced.</p>
 
 <p>Pairing is hard. It's probably one of the hardest things we do as developers but it can also be one of the most rewarding, personally and for the team as a whole. Collaboration has given the world some of its greatest achievements but you have to be honest that in this case, you might have to work for it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Growing Team Skills]]></title>
-    <link href="http://baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
-    <updated>2010-07-11T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
-    <content type="html"><![CDATA[<p>I love the idea of growing teams. Team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well the team are doing. It's useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
-
-<p>Often, new or junior developers worry about the barrage of new and unfamiliar technologies. In my opinion, technologies are such a small part of what we do but it can be useful to be explicit about individual competencies to re-assure the bedazzled new developer. In this post, I present a tool I came up with to help, a kind of competency depth distribution chart.</p>
-
-<!-- more -->
-
-
-<p>It works like this;</p>
-
-<p>As a team, define the technologies that are important / exotic / of interest. Rank them by importance. Try to limit to around 5-10. Start the distribution chart, along the Y axis you'll list the technologies, ranked by importance and on the X, the <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">Dreyfus Scale of Competency</a>. The team must agree on the ranking of technologies and agree on their understanding of the Dreyfus scale.</p>
-
-<p>Next, each team member grades themselves on the scale for each technology. It's important to be honest. The team can then agree and plot the desired competency in each area on a separate sheet (the black line in the example below). Each individual can then see immediately their delta and use it to focus their personal development.</p>
-
-<p><a href="../../../../../images/depth-chart.png"><img src="../../../../../images/depth-chart.png" width="640" height="342" title="'Competency Depth Distribution Chart'" ></a></p>
-
-<p>If the team choose to come together and share their individual charts, they'll be able to see how the team compares to their minimum requirements. It might be that some people are strong in some area and others less so. In this case, there's an obvious knowledge sharing opportunity and it might be that the urgency to close the delta changes. For example, if there is already an expert in some technology on the team, the others may not need to stress. Hopefully, you can start to look at the needs of the team and not the individual. Working through this as a team can also help build trust which is vital to healthy plants, sorry, teams.</p>
-
-<p>If the Dreyfus scale seems a little too harsh, you could always try a scale to reflect general confidence in the area. This tool doesn't have to be about technologies, it can be about any competencies that you want analyse.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Changing Test Gears]]></title>
-    <link href="http://baddotrobot.com/blog/2010/07/09/changing-test-gears/"/>
-    <updated>2010-07-09T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/07/09/changing-test-gears</id>
-    <content type="html"><![CDATA[<p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.</p>
-
-<p>To put it development terms, good developers know when to change gears. They know when to change their testing style from cautious to aggressive as the code evolves.</p>
-
-<p>Lets pretend there is just three types of testing; <em>unit</em>, <em>integration</em> and <em>acceptance</em>. In the interest of stereotyping, we'll define them simplistically as</p>
-
-<ul>
-<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
-<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
-<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
-</ul>
-
-
-<!-- more -->
-
-
-<h2>Starting in a Low Gear with Unit Tests</h2>
-
-<p>People are probably most comfortable with this type of testing. The term unit testing and the technology JUnit have become so intertwined in the Java world, that people often confuse tests written with JUnit as unit tests. They may be, but they may not be. So where's the value in defining the term unit testing and how does knowing what type of test you've just written in JUnit help with changing gears?</p>
-
-<p>Knowing what gear you're in and knowing the terrain that’s coming up is essential for you to select the right gear. Writing a non-unit test in JUnit has value, of course it does, so why should I care if it’s a unit test or an integration test? Knowing where you are and where you want to be is useful because you can defer some things and avoid duplication. So for me, unit testing is good for testing the edge cases (<a href="http://lmgtfy.com/?q=right+bicep+junit+testing">Right BICEP</a>) and exploring the class you're writing.</p>
-
-<p>It can be especially useful when you <em>test drive</em> towards something or explore relationships and your understanding of the classes roles and responsibilities. In this sense, testing becomes a design or analysis activity; a chance to phrase your thinking and understanding in code.</p>
-
-<p>The regression element can quickly lose value here. For example, writing a test with mocks to explore the interaction between two collaborators, A and B. Then writing a separate test to explore the same for classes B and C. Then a test for A, B and C. There was value in each test individually, but is there still value in all three when there is obvious cross-over? When might I consciously choose <em>not</em> to write unit tests?</p>
-
-<h2>Changing up to Integration Tests</h2>
-
-<p>If I know the context that a set of objects are going to work together in, I'm going to want to be confident that they work together as expected. I can't test these in isolation, so I'm going to need to test them in cooperation. At this level, my confidence is fairly high around the composites so I'm already up and running. I'm more concerned here with a broader brush approach. I'm certainly not interested in re-testing all the lower level object tests, just how they operate together.</p>
-
-<p>So I change up a gear and as a developer, convince myself that these object work together <em>in context</em>. I'm most likely still using JUnit but I do so with a clear understanding of what gear I'm in.</p>
-
-<h2>Cruising with Acceptance Tests</h2>
-
-<p>So how about the value to the business? The unit tests in particular don't advertise value to the business, they're a developer tool and its all too easy to write individual classes well with good test coverage and yet combine them into something that doesn't work for the business.</p>
-
-<p>Demonstrating to business that their specifications have been meet is the ultimate gear, and to change up to that gear and have supreme confidence in the system means going through the previous gears. Knowing that you'll be changing up whilst in lower gears can help you decide what to do (and what to leave out) in those lower gears.</p>
-
-<p>For example, lets assume the business want to <em>see</em> the affect of a configuration file in the system. When developing the code to load and decode the contents of the file, you started by proving the component works at the unit level so why would you test that the component is wired up correctly as a unit test? You'd be forced to mock that component in some higher level component and test it calls it. But what does this give you? You can still wire the higher level component up incorrectly in production. The acceptance test is going to have to test this to demonstrate the affect, so there's an argument to say you can leave it to the acceptance test to verify.</p>
-
-<h2>The Missing Gear?</h2>
-
-<p>When we build software in a componentised way, we're often left with objects that work in isolation with their dependencies passed in. We push up and up the assembly of the objects and are left with parts of the system that are responsible for this assembly. This might be done in code or by some dependency injection framework. I'm really talking about the <em>configuration</em> of your application here, be it done declaratively via Spring's application context or imperatively in code.</p>
-
-<p>Either way, it feels like these 'assemblers' have a clear role and responsibility and so shouldn't they be tested? What gear do we test them in? Personally, I'm comfortable in limiting the assembly options and so reduce the combinations of testing required. With a single "builder" or "spring context", I'm comfortable with testing these through acceptance tests.</p>
-
-<p>In this article, I suppose I'm using "gears" as an analogy for pragmatism and certainly not pace. I'm not saying that good developers know when to rush, compromising quality but they do know how to optimise their testing strategies. I think its important not to get bogged down in exhaustive unit-style testing if its not of value. Understanding what gear you're in and what gear you'll soon be in can help focus your attentions and avoid retesting the same thing again and again.</p>
-
-<p>"What to test and when to test it" is a question I find myself asking again and again.</p>
 ]]></content>
   </entry>
   

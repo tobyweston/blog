@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-27T17:05:05+01:00</updated>
+  <updated>2012-07-27T17:07:06+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part II]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
+    <updated>2012-07-22T12:38:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
+    <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="http://baddotrobot.com/blog/2012/06/29/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
+
+<p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
+
+<!-- more -->
+
+
+<h2>The &#8220;Think It Through Principle&#8221;</h2>
+
+<p>I wanted to apply what I started to think of as the <em>think it through principle</em> to my old items, what Allen calls <em>front end decisions</em>. So everything got put back into the global &#8220;inbox&#8221; until I performed the mental checklist; what is it?; is it actionable?; what&#8217;s the next action?</p>
+
+<p>Things started to get interesting for me here as going through this process, I started to draw parallels between the way Allen talks about <em>describing, in a single written sentence, the intended successful outcome</em> and the agile dictum of identifying acceptance criteria. In both cases, a clear and distinct step is made to clarify intent and recognise when a task is actually <em>done</em>.</p>
+
+<p>In resetting my tasks, I also dropped all the dates. I was just ignoring them anyway. I had so many overdue items, they became meaningless. Allen suggests that if an item has a date, then it pretty much <em>has to get done on that date</em>, no excuses.</p>
+
+<h2>Next Steps</h2>
+
+<p>I liked the movement from &#8220;inbox&#8221; to say &#8220;options&#8221;. It felt like working up a user story and moving a card on a board when the acceptance criteria had been identified. To solidify this for myself, I try to change the wording of my tasks as they move from the &#8220;inbox&#8221; to some other list. From a vague, fluffy description to something sounding more like a user story. I&#8217;ll add a short description if needed.</p>
+
+<p>I also like the idea of the &#8220;next steps&#8221; part of the think it through principle. Getting things out of your mind and into a <em>trusted</em> system feels like it could free up head space; the <em>trusted</em> part being key. Focusing only on the smallest possible next step seems to concentrate the idea. Again, the similarities to the agile principle of <em>doing to simplest thing possible</em> appealed.</p>
+
+<p>So far, I think its working for me. I certainly feel like I&#8217;m starting to trust the system. It feels like there&#8217;s a real difference between keeping things in my head and off loading them to Appigo <a href="http://www.appigo.com/todo">Todo</a>.</p>
+
+<h3>A Couple of Examples,</h3>
+
+<blockquote><p>On receiving my first reminder from HMRC, I filed &#8220;Self Assessment 2011/12&#8221; into my &#8220;stuff&#8221; inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my &#8220;options&#8221; list having changed the one line description to be &#8220;Pay 2011/12 Self Assessment&#8221;. The deliberate steps were to pause and turn an <em>open loop</em> into something that I can tick off as done. I came up with the <em>acceptance criteria</em> and gave it a date.</p>
+
+<p>I wasn&#8217;t clear about the dates though and had a question I wanted to ask my accountant. So my &#8220;next step&#8221; was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my &#8220;waiting (for someone)&#8221; file.</p>
+
+<p>Another example, the <em>open loop</em> being to &#8220;Improve my blog&#8217;s SEO&#8221; was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be &#8220;signed off&#8221;), and moved it into the &#8220;options&#8221; list with no date and a description &#8220;add keyword and description metadata to old articles&#8221;. It&#8217;s sitting in my backlog now.</p></blockquote>
+
+<h2>Conclusion so Far</h2>
+
+<p>Having Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn&#8217;t seem to be huge. So far, I&#8217;m averaging around thirty items. The inbox has the same five or so I started with. That&#8217;s telling me I&#8217;m not doing anything about those; I think they&#8217;re just not that important and I should really move them to &#8220;trash&#8221;. All in all, I&#8217;m now in the habbit of using the list, so I&#8217;m starting to trust the system.</p>
+
+<p>I&#8217;m certainly feeling less stress about things hanging over me. I&#8217;m kind of deferring responsibility because I know they&#8217;re not lost, just in a list on my phone. It&#8217;s nice to immediately put something out of my mind because I know it&#8217;s not going to be forgotten. I think the trick for me is to stay disciplined, not let the &#8220;inbox&#8221; fill up and keep putting things (even really trivial things) into my lists <em>as I think of them</em>.</p>
+
+<p>I&#8217;ll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I&#8217;ve intentionally avoided. I expect I&#8217;ll finish this mini-series off in a month or two with my final reflections.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part I]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/"/>
+    <updated>2012-07-20T15:50:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i</id>
+    <content type="html"><![CDATA[<p>Having toyed with the ideas from <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+
+<p>In this first post, I&#8217;ll talk a little about Allen&#8217;s ideas, summarising the first section of the book. In the <a href="http://baddotrobot.com/blog/2012/06/30/getting-things-done-ii">second post</a>, I reflect a little on it&#8217;s application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+
+<!-- more -->
+
+
+<h2>Open Loops and Front-end Decisions</h2>
+
+<p>Allen begins by defining two key objectives; to capture <em>all</em> the things you need to get done in a <em>trusted system</em> and being disciplined to make <em>front-end decisions</em> about these inputs.</p>
+
+<p>The things that need to get done represent &#8220;open loops&#8221;. Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you&#8217;re freed up from worrying about them. Capturing them in a system that you <em>absolutely trust</em> is key. You must have faith that the system not only records the inputs but helps you process them in a way that works for you. You <em>have</em> to be confident that you&#8217;re not just brushing them under the carpet, that you&#8217;ll got back to the system and that it&#8217;ll work.</p>
+
+<p>I decided the only way to know if I could trust Allen&#8217;s system was to try it.</p>
+
+<h2>From Inbox to Options</h2>
+
+<p>Allen suggests that if something is &#8220;on your mind&#8221;, you want it to be different than it currently is. He defines this &#8220;stuff&#8221; as anything that is on your mind that you haven&#8217;t yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of &#8220;stuff&#8221; or partial reminders into a an inventory of actionable tasks that move us towards our objectives.</p>
+
+<p>A summary of actions and <em>front-end decisions</em> that need to be made for all &#8220;open loops&#8221; is</p>
+
+<ol>
+<li>Clarify the intended outcome. Quantify the results. When is it done?</li>
+<li>Decide the very next physical action that will take you towards that goal</li>
+<li>Put reminders in place of the two previous steps</li>
+</ol>
+
+
+<p>I visualise this process as moving from a general dumping ground; the &#8220;inbox&#8221; to an &#8220;options&#8221; list. The list of concrete things I <em>could</em> do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I&#8217;m not concerned with dates or follow up tasks, just in getting things off of my mind and onto paper.</p>
+
+<h2>The Workflow</h2>
+
+<p><a href="../../../../../images/gtd-basic.png"><img class="left" src="../../../../../images/gtd-basic.png" width="350" height="467" title="'Abbreviated workflow'" ></a></p>
+
+<p>So far, I&#8217;ve focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It&#8217;s probably a good time to introduce a few other of Allen&#8217;s ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen&#8217;s workflow looks like the diagram opposite.</p>
+
+<p>It describes the journey from &#8220;stuff&#8221; to either some concrete action (<em>do it</em>) or one of the other lists Allen talks about (the yellow leaf nodes). It describes how firstly, any &#8220;open loops&#8221; get captured in an &#8220;inbox&#8221;. Raw data capture, nothing fancy. The next step (<em>what is it?</em>) is to apply the first <em>front-end decision</em> and quantify the objective. The next step (<em>is it actionable?</em>) is about identifying the next definite step you can take; firming up the next action.</p>
+
+<p>At this point, if its not actionable, it&#8217;s either binned (<em>trash</em>) or moved to some other list (<em>&#8230;</em>). If it is actionable and quick, just do it. Otherwise, the next step is moved to another list. Either a list of &#8220;options&#8221; or after delegating it, a list to track external dependencies (<em>waiting</em>). The calendar captures tasks that have a definitive date associated with them.</p>
+
+<p>So, we&#8217;ve clarified our intended outcome, decided the next physical action to take and recorded that action in an appropriate bucket. The next thing is to put reminders in place. For this, Allen doesn&#8217;t prescribe any particular system. You may feel Outlook fits the bill or find a tool that &#8220;supports&#8221; <em>Getting Things Done</em> on your phone.</p>
+
+<h2>Summary</h2>
+
+<p>I&#8217;ve missed a lot out here. I&#8217;ve skipped over <em>projects</em>, <em>contexts</em> and a bunch of other stuff. I found it easier to absorb the basic principles like this though and in the next post, we&#8217;ll have a look at some examples where I&#8217;ve tried to apply just these basics to my own list of &#8220;stuff&#8221;.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
@@ -1712,193 +1813,6 @@ Team B&#8217;s process favors mention of agile experience in the CV. Follow up q
 <a href="http://jaxenter.com/java-tech-journal/">Java Tech Journal</a>. <strong>Click on the image to download the PDF</strong> or read the article <a href="http://jaxenter.com/new-and-noteworthy-in-jdk7-36843.html">online</a>.</p>
 
 <p>I&#8217;d love to get some feedback, so please feel free to comment here.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
-    <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
-    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project&#8217;s website</p>
-
-<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
-
-<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
-since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
-and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JDK7 Previewed]]></title>
-    <link href="http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed/"/>
-    <updated>2011-03-04T00:00:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2011/03/04/jdk-7-previewed</id>
-    <content type="html"><![CDATA[<p>Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded
-(will <a href="http://openjdk.java.net/projects/lambda/">8 see lamdas</a>?) but still has one or two interesting language features.
-A few that caught my eye include&#8230;</p>
-
-<h3>Type Inference on Generic Object Creation</h3>
-
-<p>Which allows a little brevity to the garrulity of the language, at least
-against generic object instantiation where the type can be inferred. For
-example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>can be reduced to</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<!-- more -->
-
-
-<p>where the <em>diamond operator</em> can be filled in or inferred from the
-declaration. It&#8217;s subtly different than leaving out the generic completely
-which will reduce your type to being of <code>Object</code> Things don&#8217;t get much better
-than this.</p>
-
-<p>Actually, it does. Just a little. Constructor generics always used to be fun
-and that hasn&#8217;t really changed, although with JDK7 you can do a little more.
-For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bob</span><span class="o">&lt;</span><span class="n">Y</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Bob</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">Bob</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">bob</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bob</span><span class="o">&lt;&gt;(</span><span class="s">&quot;yum&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">Bob</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">bob</span> <span class="o">=</span> <span class="k">new</span> <span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">Bob</span><span class="o">&lt;&gt;(</span><span class="s">&quot;yum&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The examples are the same as the one Oracle gives, they both work with JDK7
-only and show the <code>Integer</code> type inferred as the class generic (<code>Y</code>) in
-combination with the diamond operator. The second example shows new syntax to
-explicitly set type of the method generic and give some additional compile
-time checks.</p>
-
-<h3>try-with-resource and <code>AutoClosable</code></h3>
-
-<p>Another bugbear with the verbosity of Java has always been the try-catch-
-finally syntax. The new language feature try-with-resource allows you to chop
-this down some what in combination with auto-closable resources. Here, rather
-than the familiar, try-finally to close a resource, you can &#8220;open&#8221; the
-resource within the parenthesis of the try statement (as long as the object
-implements <code>AutoCloassable</code> and the resource will always close itself in a
-<code>finally</code> like way.</p>
-
-<p>For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">String</span> <span class="nf">example</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(...);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>gets replaced with</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">String</span> <span class="nf">example</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span><span class="o">(</span><span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(...)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Dr Heinz combined this technique with a way to automatically unlock locked
-resources in a <a href="http://www.javaspecialists.eu/archive/Issue190.html">recent news letter</a>.</p>
-
-<p>There may be a little gotcha using this where exceptions can be suppressed and
-have to be retrieved using <code>Throwable.getSuppressed()</code>. This seems like it
-could be nasty.</p>
-
-<h3>Catching Multiple Exceptions</h3>
-
-<p>This one allows you to catch multiple exceptions using a pipe to separate the
-exception types. This looks like another work around for the general grips
-with Java but removes the duplicated code you often get catching several
-exceptions and treating them in the same way. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="o">|</span> <span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">throw</span> <span class="n">ex</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I usually end up pushing the code to execute as a <code>Callable</code> and dealing with
-the exception in a lamda-like piece of code, or decorating the fragment to
-deal with exceptions (logging or wrapping) or even trying really hard to throw
-around runtime exceptions, so this one is at odds with my general approach.
-Given the example from Oracle above, I suspect this will just facilitate ugly,
-jammed in code. It seems to say &#8220;it&#8217;s ok to deal with a bunch of exceptions in
-the same way. in fact, we&#8217;ll make it easier for you&#8221; without any warning about
-if you actually <em>should</em> be doing this type of thing. The fact the example
-above (Oracle&#8217;s example, by the way) logs then re-throws is a smell in it&#8217;s
-self. Perhaps I&#8217;m being premenstrual, but I&#8217;m not a fan of this one.</p>
-
-<p>Have a look <a href="http://download.java.net/jdk7/docs/#NewFeature">here</a> for on the
-new features and download from
-<a href="http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html">here</a> (unfortunately, not for the Mac).</p>
-
-<p><strong>UPDATE:</strong> An extended version of this post has been published in
-<a href="http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/">May edition of the JavaTech Journal</a>.</p>
 ]]></content>
   </entry>
   
