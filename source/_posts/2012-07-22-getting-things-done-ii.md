@@ -7,13 +7,13 @@ categories: coaching
 sidebar: false
 published: false
 keywords: "getting things done, GTD, Appigo Todo, task management, David Allen, Stree-free productivity, agile vs GTD"
-description: "In the previous post, I summarised some of the ideas from David Allen's book Getting Things Done. In this post, I talk more about applying the basic ideas and reflect on how it's working out. I also talk about parallels between GTD and agile software development"
+description: "In the previous post, I summarised some of the ideas from David Allen's book Getting Things Done. In this post, I talk more about applying the basic ideas and talk about the parallels between GTD and agile software development."
 series: Getting Things Done
 ---
 
 [{% img right ../../../../../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../../../../../images/appigo_todo.png)
 
-In the [previous post]({{ root_url }}/blog/2012/06/29/getting-things-done-i) in the series, I summarised some of the ideas from David Allen's book [Getting Things Done](http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=diyfiesta&linkCode=as2&camp=1634&creative=6738&creativeASIN=0749922648). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
+In the [preceding post]({{ root_url }}/blog/2012/06/29/getting-things-done-i), I summarised some of the ideas from David Allen's book [Getting Things Done](http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=diyfiesta&linkCode=as2&camp=1634&creative=6738&creativeASIN=0749922648). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
 
 I'd already been using Appigo's [Todo](http://www.appigo.com/todo) app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious `Home`, `Work`, `Other` lists and replaced them with `Inbox`, `Options`, `Reference`, `Someday / Maybe`, `Waiting (for someone)` and `Trash`.
 
@@ -34,7 +34,7 @@ I liked the movement from "inbox" to say "options". It felt like working up a us
 
 I also like the idea of the "next steps" part of the think it through principle. Getting things out of your mind and into a _trusted_ system feels like it could free up head space; the _trusted_ part being key. Focusing only on the smallest possible next step seems to concentrate the idea. Again, the similarities to the agile principle of _doing to simplest thing possible_ appealed.
 
-So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo Todo.
+So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo [Todo](http://www.appigo.com/todo).
 
 ### A Couple of Examples,
 
@@ -47,8 +47,8 @@ So far, I think its working for me. I certainly feel like I'm starting to trust 
 
 ## Conclusion so Far
 
-Having Appigo's Todo on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn't seem to be huge. So far, I'm averaging around thirty items. The inbox has the same five or so I started with. That's telling me I'm not doing anything about those; I think they're just not that important and I should really move them to "trash". All in all, I'm now in the habbit of using the list, so I'm starting to trust the system.
+Having Appigo's [Todo](http://www.appigo.com/todo) on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn't seem to be huge. So far, I'm averaging around thirty items. The inbox has the same five or so I started with. That's telling me I'm not doing anything about those; I think they're just not that important and I should really move them to "trash". All in all, I'm now in the habbit of using the list, so I'm starting to trust the system.
 
-I'm certainly feeling less stress about things hanging over me. I'm kind of deferring responsibility becuase I know they're not lost, just in a list on my phone. It's nice to immediately put something out of my mind becuase I know it's not going to be forgotten. I think the trick for me is to stay disciplined, not let the "inbox" fill up and keep putting things (even really trivial things) into my lists _as I think of them_.
+I'm certainly feeling less stress about things hanging over me. I'm kind of deferring responsibility because I know they're not lost, just in a list on my phone. It's nice to immediately put something out of my mind because I know it's not going to be forgotten. I think the trick for me is to stay disciplined, not let the "inbox" fill up and keep putting things (even really trivial things) into my lists _as I think of them_.
 
 I'll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I've intentionally avoided. I expect I'll finish this mini-series off in a month or two with my final reflections.
