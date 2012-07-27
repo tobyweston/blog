@@ -20,9 +20,9 @@ In this first post, I'll talk a little about Allen's ideas, summarising the firs
 
 ## Open Loops and Front-end Decisions
 
-Allen begins by defining two key objectives; to capture _all_ the things you need to get done in a _trusted system_ and being disciplined to make _front-end decisions_ about these "inputs".
+Allen begins by defining two key objectives; to capture _all_ the things you need to get done in a _trusted system_ and being disciplined to make _front-end decisions_ about these inputs.
 
-The things that need to get done represent "open loops". Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you're freed up from worrying about them. Capturing them in a system that you _absolutely trust_ is key. You must have faith that the "system" not only records the inputs but helps you process them in a way that works for you. You _have_ to be confident that you're not just brushing them under the carpet, that you'll got back to the system and that it'll work.
+The things that need to get done represent "open loops". Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you're freed up from worrying about them. Capturing them in a system that you _absolutely trust_ is key. You must have faith that the system not only records the inputs but helps you process them in a way that works for you. You _have_ to be confident that you're not just brushing them under the carpet, that you'll got back to the system and that it'll work.
 
 I decided the only way to know if I could trust Allen's system was to try it.
 
@@ -38,7 +38,7 @@ A summary of actions and _front-end decisions_ that need to be made for all "ope
 1. Put reminders in place of the two previous steps
 
 
-I visualise this process as moving from a general dumping ground; the "inbox" to an "options" list. The list of concrete things I _could_ do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I'm not concerned with dates, follow up tasks just getting things off of my mind and onto paper.
+I visualise this process as moving from a general dumping ground; the "inbox" to an "options" list. The list of concrete things I _could_ do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I'm not concerned with dates or follow up tasks, just in getting things off of my mind and onto paper.
 
 ## The Workflow
 
