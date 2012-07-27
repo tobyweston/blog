@@ -3,9 +3,11 @@ name: wrapping-exceptions-is-dull
 layout: post
 title: Wrapping Exceptions is Dull
 time: 2010-04-25 18:19:00 +01:00
-categories: java tempus-fugit exceptions
+categories: java tempus-fugit exceptions recipes
 comments: true
 sidebar : false
+description: "Wrapping exceptions to rethrow in Java is verbose, use this handy class to auto-wrap exceptions."
+keywords: "exception wrapping, wrap exceptions, auto-wrap"
 ---
 
 I'm totally bored of wrapping exceptions in Java,
@@ -18,12 +20,7 @@ try {
 }
 {% endcodeblock %}
 
-It's verbose, ugly and has nothing to do with what you're really trying to
-convey. It's just noise (more or less). For example, when using the just
-_dreadful_ Google Data API to access my calendar, I wrapped a couple of
-underlying Google services to be able to mock. Each service wanted to throw a
-bunch of Google specific exceptions which I, of course, wanted to rethrow as
-application specific. Boring...
+It's verbose, ugly and has nothing to do with what you're really trying to convey. It's just noise. For example, when using the _dreadful_ Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.
 
 {% codeblock lang:java %}
 public O call() throws CalendarException {
@@ -43,12 +40,9 @@ public O call() throws CalendarException {
 
 
   
-If I didn't delegate like this, every service call would have to wrap and
-handle the google exceptions. As I've done this a few times, I decided to add
-it to [tempus-fugit](http://tempusfugitlibrary.org/) as a
-`ExceptionWrapper` class. Using this class, you can wrap a `Callable` to
-rethrow any caught exception as some other (including the underlying exception
-as the `cause`).
+If I didn't delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There's no class hierarchy in Google's API here.
+
+As I've done this a few times, I decided to add it to [tempus-fugit](http://tempusfugitlibrary.org/) as a `ExceptionWrapper` class. Using this class, you can wrap a `Callable` to rethrow any caught exception as some other (including the underlying exception as the `cause`).
 
   
 So, in a similar way to the above, the client can ignore any declared
@@ -70,14 +64,10 @@ wrapAnyException(serviceCall(), with(CalendarException.class));
 {% endcodeblock %}
 
   
-This will wrap any exception and rethrow as a new `CalendarException` to
-include as the cause any underlying exception. It uses reflection to create
-the new exception, and forces the syntactically sugary `with` by taking a
-`WithException` as the second parameter.
+This will wrap any exception and rethrow as a new `CalendarException` to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary `with` by taking a `WithException` as the second parameter.
 
   
-It's a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful.
+It's in [tempus-fugit](http://tempusfugitlibrary.org/), let me know if you find it useful.
 
 
 

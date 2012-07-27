@@ -6,6 +6,8 @@ time: 2010-07-07 22:01:00 +01:00
 categories: java agile testing
 comments: true
 sidebar : false
+description: "Generate a Concordion test overview page with the Concordion Ant Task"
+keywords: "Concordion, David Peterson, acceptance testing, java, FIT, Fitnesse, Yatspec, Xcordion"
 ---
 
 Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don't want in the form of a _specification_ can be liberating. You'll thrash out the details and come up with _examples_ that can be exercised against the running system. Everybody wins.
@@ -26,7 +28,7 @@ Check out the [user manual](http://badrobot.googlecode.com/svn/trunk/bad.robot/c
 [{% img ../../../../../images/concordion-ant-manual.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html)
 
   
-As I mentioned Concordion, its only fair to mention [Xcordion](http://code.google.com/p/xcordion/) (and more recently Xcordion2) which is essentially a fork of Concordion. The main difference being a philosophical one. If Concordion constrains some activities within the specification (mostly to encourage certain principles), Xcordion is more of a free for all. With great power comes great responsibility and all that. Whilst Xcordion2 is being worked on, be prepared to build from source. You'll notice a couple of features missing, at least in the short term.
+As I mentioned Concordion, its only fair to mention [Xcordion](http://code.google.com/p/xcordion/) (and more recently Xcordion2) which is essentially a fork of Concordion. The main difference being a philosophical one. If Concordion constrains some activities within the specification (mostly to encourage certain principles), Xcordion is more of a free for all. With great power comes great responsibility and all that. Whilst Xcordion2 is being worked on, be prepared to build from source. You'll also probably notice a couple of features missing.
 
 
 
