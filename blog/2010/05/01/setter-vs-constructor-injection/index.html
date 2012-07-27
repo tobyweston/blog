@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="So what is the argument for / against? It can be a tough one to describe as I recently discovered. You can say that constructor injection forces an &hellip;">
-  
+  <meta name="description" content="Setter vs constructor injection. Explore the options here.">
+  <meta name="keywords" content="setter vs constructor injection, spring, setter, getter, constructor, java">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -46,7 +46,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-22 11:21:04 +0100 -->
+    <!-- last update; 2012-07-27 16:55:58 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -105,32 +105,13 @@
 
 <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
 
-<p>You can say that constructor injection forces an object to have its
-dependencies set explicitly and setter injection is open to forgetfulness but
-how powerful an argument is that really? Surely the tests would catch it if
-you miss a set call? Constructor injection does say upfront &#8220;this is what I
-need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its
-explicit and you don&#8217;t need to know the internals that setters try and expose.
-That&#8217;s useful. But on the small, how complex do the combination of set calls
-get?</p>
+<p>You can say that constructor injection forces an object to have its <strong>dependencies set explicitly</strong> and setter injection is <strong>open to forgetfulness or misuse</strong> but how powerful an argument is that really? Surely the tests would catch it if you miss a set call? Constructor injection does say upfront &#8220;this is what I need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its explicit and you don&#8217;t need to know about the internals that setters expose. That&#8217;s useful. But on the small, how complex do the combination of set calls get?</p>
 
-<p>I don&#8217;t think that a large number of constructor arguments justifies defecting
-to the setter camp as the real smell here is often that the class is doing too
-much and/or has too many dependencies. It&#8217;s often cited that the reason
-there are lots of setters is because of particular dependency injection
-framework leads you in that direction but why compromise (I should probably
-say, <em>comply</em>) because you&#8217;re <em>told</em> to?</p>
+<p>If you use your IDE effectively, <strong>constructor injection will have better rafactoring support</strong>. There&#8217;s no way an IDE will interpret adding a field to mean calling setter for it. However, if add a constructor parameter, the IDE can push a default value out to all usages.</p>
 
-<p>How about the way the system would grow using constructors vs setters? I think
-this is where the real argument lies. You can move forward perfectly happily
-with either approach, content with the fact that dependencies are isolated.
-Testing becomes simpler, more focused on the objects under test and the earth
-continues to orbit the sun. Its only much later when the system is all but
-grown up that you can look back and reflect. Have setters contributed to
-creating a system that is assembled in a complex, disheveled way? Are you
-leaning on external (ahem, xml) configuration to manage this? Alternatively,
-has a constructor centric approach left you with a system with a more concise
-assembly strategy? Which has more noise? You tell me&#8230;</p>
+<p>I don&#8217;t think that a <strong>large number of constructor arguments</strong> justifies defecting to the setter camp as the real smell here is often that the class is doing too much and/or has too many dependencies. It&#8217;s often cited that the reason there are lots of setters is because of particular <strong>dependency injection framework leads you</strong> in that direction but why compromise (I should probably say, <em>comply</em>) because you&#8217;re <em>told</em> to? What if that compromises other design goals?</p>
+
+<p>How about the way the system would <strong>grow using constructors vs setters</strong>? I think this is where the real argument lies. You can move forward perfectly happily with either approach, content with the fact that dependencies are isolated. Testing becomes simpler, more focused on the objects under test and the earth continues to orbit the sun. Its only much later when the system is all but grown up that you can look back and reflect. Have setters contributed to creating a system that is assembled in a complex, disheveled way? Are you leaning on external (ahem, xml) configuration to manage this? Alternatively, has a constructor centric approach left you with a system with a more concise assembly strategy? Which has more noise? You tell me&#8230;</p>
 </div>
 
 

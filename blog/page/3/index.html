@@ -46,7 +46,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-22 11:21:04 +0100 -->
+    <!-- last update; 2012-07-27 16:55:58 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -299,13 +299,9 @@
 
   <div class="entry-content"><p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It&#8217;s the same with testing, you gotta know when to change gears.</p>
 
-<p>To put it development terms, good developers know when to change gears. They
-know when to change their testing style from cautious to aggressive as the
-code evolves.</p>
+<p>To put it development terms, good developers know when to change gears. They know when to change their testing style from cautious to aggressive as the code evolves.</p>
 
-<p>Lets pretend there is just three types of testing; unit, integration and
-acceptance. In the interest of stereotyping, we&#8217;ll define them simplistically
-as</p>
+<p>Lets pretend there is just three types of testing; <em>unit</em>, <em>integration</em> and <em>acceptance</em>. In the interest of stereotyping, we&#8217;ll define them simplistically as</p>
 
 <ul>
 <li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
@@ -408,7 +404,7 @@ as</p>
 
 <blockquote><p>S.M.A.R.T.Y</p></blockquote>
 
-<p>Where the Y is all about <em>YOU</em>; make it personal.</p>
+<p>Where the Y is all about <strong>YOU</strong>; make it personal.</p>
 
 </div>
   
@@ -452,24 +448,11 @@ as</p>
   <div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
 who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
 
-<p>I was using Castor to do the former some time ago. It sounded like a good
-idea, and I got going really quickly. However, I quickly didn&#8217;t like the
-objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the
-marshalling. Still fine, this was ok for a while but soon enough I descended
-into Castor mapping hell. I seriously spent days trying to tweak things and
-had to compromise the model in the end.</p>
+<p>I was using Castor to do the former some time ago. It sounded like a good idea, and I got going really quickly. However, I quickly didn&#8217;t like the objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the marshalling. Still fine, this was ok for a while but soon enough I descended into a kind of Castor mapping hell. I seriously spent days trying to tweak things and had to compromise the model in the end.</p>
 
-<p>After reflection, I thought I&#8217;d try and dump Castor. I replaced the
-marshalling with merging to a template and produced cleaner XML in under an
-hour. The unmarshalling, replaced with manually parsing the XML and inserting
-elements directly into objects. I couldn&#8217;t believe how much less pain I was
-feeling!</p>
+<p>After some reflection, I thought I&#8217;d try and dump Castor. I replaced the marshalling with merging to a Freemarker template and produced cleaner XML in under an hour. The unmarshalling, replaced with manually parsing the XML and inserting elements directly into objects. I couldn&#8217;t believe how much less pain I was feeling.</p>
 
-<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less
-than working around any framework mismatches. If you&#8217;re lucky enough to find
-an marhsalling framework that can grow with you, fair play, but I&#8217;m heavily
-biased towards a more manual approach these days. Down with [insert your
-framework here].</p>
+<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less than working around any framework mismatches. If you&#8217;re lucky enough to find a marhsalling framework that can grow with you, fair play, but I&#8217;m heavily biased towards a more manual approach these days. Down with [insert framework here].</p>
 </div>
   
   
@@ -507,32 +490,13 @@ framework here].</p>
 
   <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
 
-<p>You can say that constructor injection forces an object to have its
-dependencies set explicitly and setter injection is open to forgetfulness but
-how powerful an argument is that really? Surely the tests would catch it if
-you miss a set call? Constructor injection does say upfront &#8220;this is what I
-need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its
-explicit and you don&#8217;t need to know the internals that setters try and expose.
-That&#8217;s useful. But on the small, how complex do the combination of set calls
-get?</p>
+<p>You can say that constructor injection forces an object to have its <strong>dependencies set explicitly</strong> and setter injection is <strong>open to forgetfulness or misuse</strong> but how powerful an argument is that really? Surely the tests would catch it if you miss a set call? Constructor injection does say upfront &#8220;this is what I need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its explicit and you don&#8217;t need to know about the internals that setters expose. That&#8217;s useful. But on the small, how complex do the combination of set calls get?</p>
 
-<p>I don&#8217;t think that a large number of constructor arguments justifies defecting
-to the setter camp as the real smell here is often that the class is doing too
-much and/or has too many dependencies. It&#8217;s often cited that the reason
-there are lots of setters is because of particular dependency injection
-framework leads you in that direction but why compromise (I should probably
-say, <em>comply</em>) because you&#8217;re <em>told</em> to?</p>
+<p>If you use your IDE effectively, <strong>constructor injection will have better rafactoring support</strong>. There&#8217;s no way an IDE will interpret adding a field to mean calling setter for it. However, if add a constructor parameter, the IDE can push a default value out to all usages.</p>
 
-<p>How about the way the system would grow using constructors vs setters? I think
-this is where the real argument lies. You can move forward perfectly happily
-with either approach, content with the fact that dependencies are isolated.
-Testing becomes simpler, more focused on the objects under test and the earth
-continues to orbit the sun. Its only much later when the system is all but
-grown up that you can look back and reflect. Have setters contributed to
-creating a system that is assembled in a complex, disheveled way? Are you
-leaning on external (ahem, xml) configuration to manage this? Alternatively,
-has a constructor centric approach left you with a system with a more concise
-assembly strategy? Which has more noise? You tell me&#8230;</p>
+<p>I don&#8217;t think that a <strong>large number of constructor arguments</strong> justifies defecting to the setter camp as the real smell here is often that the class is doing too much and/or has too many dependencies. It&#8217;s often cited that the reason there are lots of setters is because of particular <strong>dependency injection framework leads you</strong> in that direction but why compromise (I should probably say, <em>comply</em>) because you&#8217;re <em>told</em> to? What if that compromises other design goals?</p>
+
+<p>How about the way the system would <strong>grow using constructors vs setters</strong>? I think this is where the real argument lies. You can move forward perfectly happily with either approach, content with the fact that dependencies are isolated. Testing becomes simpler, more focused on the objects under test and the earth continues to orbit the sun. Its only much later when the system is all but grown up that you can look back and reflect. Have setters contributed to creating a system that is assembled in a complex, disheveled way? Are you leaning on external (ahem, xml) configuration to manage this? Alternatively, has a constructor centric approach left you with a system with a more concise assembly strategy? Which has more noise? You tell me&#8230;</p>
 </div>
   
   
@@ -583,12 +547,7 @@ assembly strategy? Which has more noise? You tell me&#8230;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>It&#8217;s verbose, ugly and has nothing to do with what you&#8217;re really trying to
-convey. It&#8217;s just noise (more or less). For example, when using the just
-<em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of
-underlying Google services to be able to mock. Each service wanted to throw a
-bunch of Google specific exceptions which I, of course, wanted to rethrow as
-application specific. Boring&#8230;</p>
+<p>It&#8217;s verbose, ugly and has nothing to do with what you&#8217;re really trying to convey. It&#8217;s just noise. For example, when using the <em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -619,12 +578,9 @@ application specific. Boring&#8230;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If I didn&#8217;t delegate like this, every service call would have to wrap and
-handle the google exceptions. As I&#8217;ve done this a few times, I decided to add
-it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a
-<code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to
-rethrow any caught exception as some other (including the underlying exception
-as the <code>cause</code>).</p>
+<p>If I didn&#8217;t delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There&#8217;s no class hierarchy in Google&#8217;s API here.</p>
+
+<p>As I&#8217;ve done this a few times, I decided to add it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to rethrow any caught exception as some other (including the underlying exception as the <code>cause</code>).</p>
 
 <p>So, in a similar way to the above, the client can ignore any declared
 exceptions and just rethrow them in-line. For example,</p>
@@ -651,13 +607,9 @@ exceptions and just rethrow them in-line. For example,</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to
-include as the cause any underlying exception. It uses reflection to create
-the new exception, and forces the syntactically sugary <code>with</code> by taking a
-<code>WithException</code> as the second parameter.</p>
+<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary <code>with</code> by taking a <code>WithException</code> as the second parameter.</p>
 
-<p>It&#8217;s a candidate feature for tempus-fugit 1.1 for now, and will go in for sure
-if it gets some millage. Let me know if you find it useful.</p>
+<p>It&#8217;s in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>, let me know if you find it useful.</p>
 </div>
   
   

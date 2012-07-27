@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-22T11:21:04+01:00</updated>
+  <updated>2012-07-27T16:55:58+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -168,6 +168,100 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
 
 <p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Wrapping Exceptions is Dull]]></title>
+    <link href="http://baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull/"/>
+    <updated>2010-04-25T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2010/04/25/wrapping-exceptions-is-dull</id>
+    <content type="html"><![CDATA[<p>I'm totally bored of wrapping exceptions in Java,</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BoredomException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something else</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It's verbose, ugly and has nothing to do with what you're really trying to convey. It's just noise. For example, when using the <em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">O</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CalendarException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>  <span class="c1">// the call to the google service</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">BAD_URL_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">IO_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AuthenticationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">AUTHENTICATION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ServiceException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">SERVICE_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>If I didn't delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There's no class hierarchy in Google's API here.</p>
+
+<p>As I've done this a few times, I decided to add it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to rethrow any caught exception as some other (including the underlying exception as the <code>cause</code>).</p>
+
+<p>So, in a similar way to the above, the client can ignore any declared
+exceptions and just rethrow them in-line. For example,</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="k">new</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServiceException</span> <span class="o">{</span>
+</span><span class='line'>     <span class="c1">// nasty code throwing a bunch of exceptions</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;},</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>when this is in-lined further, it hopefully becomes more succinct.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="n">serviceCall</span><span class="o">(),</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary <code>with</code> by taking a <code>WithException</code> as the second parameter.</p>
+
+<p>It's in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>, let me know if you find it useful.</p>
 ]]></content>
   </entry>
   
