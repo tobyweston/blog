@@ -9,13 +9,14 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Why didn&#8217;t Sun add a value property to the @Deprecated annotation? Instead of 1
+  <meta name="description" content="When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a Stack as an example. Example 1. 1
 2
 3
 4
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-public @ &hellip;">
+5
+6
+7
+8 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -52,7 +53,7 @@ public @ &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-07-27 17:07:06 +0100 -->
+    <!-- last update; 2012-07-28 19:38:40 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -83,6 +84,94 @@ public @ &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2009/01/24/inheritance-vs-composition/">Inheritance vs Composition</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+
+<h3>Example 1.</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Example 2</h3>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
+Suddenly, methods to get and insert elements at specific positions are
+available to clients of the stack. We move from trying to create a well
+behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+
+<p>So I was surprised when looking at the Java source to see that
+<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -878,43 +967,9 @@ confirm.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/">New Blog</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-14T00:00:00+00:00" pubdate data-updated="true">Mar 14<span>th</span>, 2006</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Moved to a new blog today at blogspot.com. How exciting does life get?</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/7/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -927,6 +982,10 @@ confirm.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/22/getting-things-done-ii/">Getting Things Done, Part II</a>
@@ -962,10 +1021,6 @@ confirm.</p>
     
       <li class="post">
         <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>
       </li>
     
   </ul>

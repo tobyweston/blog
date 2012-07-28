@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-07-27T17:07:06+01:00</updated>
+  <updated>2012-07-28T19:38:40+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mountain Lion Carnage]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage/"/>
+    <updated>2012-07-28T12:28:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage</id>
+    <content type="html"><![CDATA[<p>After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. I went through these steps to bring them back.</p>
+
+<!-- more -->
+
+
+<h2>Git</h2>
+
+<p>On my machine, before the update, Git used to live in</p>
+
+<pre><code>/usr/bin/git
+</code></pre>
+
+<p>Which I think was a symbolic link pointing to <code>/usr/local/git</code>. This gets wiped out by Mountain Lion, to preserve tools using the old reference (IntelliJ IDEA in my case), I created a new sym link.</p>
+
+<pre><code>sudo ln -s /usr/local/git/bin/git /usr/bin/git
+</code></pre>
+
+<p>The <code>/usr/bin</code> folder should be on the <code>$PATH</code> so it should get the terminal working again too.</p>
+
+<h2>Subversion</h2>
+
+<p><a href="http://www.sublimetext.com/forum/viewtopic.php?f=3&amp;p=34790">Apparently</a>, Apple removed Subversion with 10.8 so there&#8217;s nothing to do other than install it manually.</p>
+
+<p>You can install Xcode which should put Subversion in <code>/Applications/Xcode.app/Contents/Developer/usr/bin/svn</code>. Victor Quinn talks about <a href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/">reinstalling Xcode</a> to fix similar problems.</p>
+
+<h2>Java</h2>
+
+<p>OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for <code>mvn</code> to point to Maven 3 which may need adjusting if you&#8217;re still using Maven 2. See <a href="http://baddotrobot.com/2011/10/29/java-source-on-mac">this post</a> for the fix.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting Things Done, Part II]]></title>
@@ -1799,20 +1835,6 @@ Team B&#8217;s process favors mention of agile experience in the CV. Follow up q
 
 
 <p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JDK7 Article in JavaTech Journal]]></title>
-    <link href="http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/"/>
-    <updated>2011-06-10T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal</id>
-    <content type="html"><![CDATA[<p><a href="http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf"><img class="right" src="http://baddotrobot.com/images/JTJ-2011-05.png"></a></p>
-
-<p>My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
-<a href="http://jaxenter.com/java-tech-journal/">Java Tech Journal</a>. <strong>Click on the image to download the PDF</strong> or read the article <a href="http://jaxenter.com/new-and-noteworthy-in-jdk7-36843.html">online</a>.</p>
-
-<p>I&#8217;d love to get some feedback, so please feel free to comment here.</p>
 ]]></content>
   </entry>
   
