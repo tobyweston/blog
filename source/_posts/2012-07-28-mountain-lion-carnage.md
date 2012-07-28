@@ -13,11 +13,6 @@ After installing Mountain Lion, I discovered Java was gone along with Subversion
 
 <!-- more -->
 
-## Java
-
-OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for `mvn` to point to Maven 3 which may need adjusting if you're still using Maven 2. See [this post]({{ root_url}}/2011/10/29/java-source-on-mac) for the fix.
-
-
 ## Git
 
 On my machine, before the update, Git used to live in
@@ -37,3 +32,8 @@ The `/usr/bin` folder should be on the `$PATH` so it should get the terminal wor
 [Apparently](http://www.sublimetext.com/forum/viewtopic.php?f=3&p=34790), Apple removed Subversion with 10.8 so there's nothing to do other than install it manually.
 
 You can install Xcode which should put Subversion in `/Applications/Xcode.app/Contents/Developer/usr/bin/svn`. Victor Quinn talks about [reinstalling Xcode](http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/) to fix similar problems.
+
+
+## Java
+
+OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for `mvn` to point to Maven 3 which may need adjusting if you're still using Maven 2. See [this post]({{ root_url}}/2011/10/29/java-source-on-mac) for the fix.
