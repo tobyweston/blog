@@ -17,7 +17,7 @@ When we model a domain, we often try and model the real world. Sometimes that's 
 
 ## Identifying the Object
 
-Let's say we're interested in timing an update to our stock levels.
+Let's say we're interested in timing how long it takes to update to our stock levels within our system.
 
     public class BadlyImplementedTimedStockControlSystem implements StockControlSystem {   
         @Override
@@ -29,16 +29,25 @@ Let's say we're interested in timing an update to our stock levels.
         }
     }    
 
-This works but violates the single responsibility principle; our `StockControlSystem` is now responsible for both updating stock levels and timing itself as it does so. If we try and seperate these responsbilities, we may decide that one belongs to a `StopWatch`.
+This works but violates the single responsibility principle; our `StockControlSystem` is now responsible for both updating stock levels and timing itself as it does so. If we try and seperate these responsbilities, we may decide that one belongs to a `StopWatch`. We've identified a new _role_.
 
-A typical stop watch interface might look like the following.
+A naive stop watch interface might look like the following.
+
+	public interface StopWatch {
+	    Date start();
+	    Date stop();
+	}
+
+Which would leave the client to calculate the difference between start and stop time.	
+	
+or
 
 	public interface StopWatch {
 	    void start();
 	    void stop();
 	    Duration elapsedTime();
 	}
-
+	
 	
 What about looping whilst not timed out? eg to re-assess a timeout?
 
