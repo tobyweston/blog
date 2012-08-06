@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-08-04T17:31:21+01:00</updated>
+  <updated>2012-08-06T20:00:14+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage/"/>
     <updated>2012-07-28T12:28:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage</id>
-    <content type="html"><![CDATA[<p>After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. I went through these steps to bring them back.</p>
+    <content type="html"><![CDATA[<p>After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.</p>
 
 <!-- more -->
 
@@ -46,6 +46,10 @@
 <h2>Java</h2>
 
 <p>OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for <code>mvn</code> to point to Maven 3 which may need adjusting if you're still using Maven 2. See <a href="/2011/10/29/java-source-on-mac">this post</a> for the fix.</p>
+
+<h2>Rake / Python</h2>
+
+<p>It even managed to mess with my Python installation which gets used when building this blog using the <code>rake generate</code> command. Thanks though to <a href="http://www.sebastien-han.fr/blog/2012/07/26/broken-rake-after-update-to-mountain-lion/">Sébastien Han</a> for getting me out of it.</p>
 ]]></content>
   </entry>
   
