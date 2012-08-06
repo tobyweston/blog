@@ -9,7 +9,7 @@ keywords: "mountain lion, mac osx, 10.8, java, svn, git, git broken after mounta
 description: "The Mountain Lion upgrade blasts Java, svn and git. Find out how to get them back"
 ---
 
-After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. I went through these steps to bring them back.
+After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.
 
 <!-- more -->
 
@@ -37,3 +37,9 @@ You can install Xcode which should put Subversion in `/Applications/Xcode.app/Co
 ## Java
 
 OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for `mvn` to point to Maven 3 which may need adjusting if you're still using Maven 2. See [this post]({{ root_url}}/2011/10/29/java-source-on-mac) for the fix.
+
+
+## Rake / Python
+
+It even managed to mess with my Python installation which gets used when building this blog using the `rake generate` command. Thanks though to [Sébastien Han](http://www.sebastien-han.fr/blog/2012/07/26/broken-rake-after-update-to-mountain-lion/) for getting me out of it.
+
