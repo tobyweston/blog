@@ -8,7 +8,7 @@ categories: java recipes
 sidebar: false
 published: false
 description: "Access FreeAgent OAuth from a desktop app has it's idiosyncrasies, the hardest part is covering the redirect part of the protocol. Find out how I did it here."
-keywords: "FreeAgent, OAuth, OAuth and FreeAgent, FreeAgent OAuth tutorial"
+keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
 
 Although OAuth is intended for web, mobile and desktop applications, I've been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I'm trying to access FreeAgent's API. Their [documentation is pretty thin](https://dev.freeagent.com/docs/oauth) on background. The [support](https://groups.google.com/forum/#!forum/freeagent_api) is fairly focused on web apps and I found it difficult getting a desktop client hooked up.
@@ -44,18 +44,20 @@ There is an "out of band" option in the OAuth specification. Using this, you wou
 
 In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request. If you set the `redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth`, the request will be redirected here after you've manually confirmed authorisation. Crucially, it will pass along the _authorisation code_ in the URL.
 
-    http://localhost:8080/oauth?code=2A16aT62YDK_3H3sYSk32VC_a4dk2CfddkaajdF
+    http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
 
-All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow looks like this.
+All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow, it looks like this.
 
 {% img ../../../../../images/freeagent_oob_spoof.png 'OOB Spoof' %}
 
 
-At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be true. The FreeAgent documentation doesn't make it when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.
+At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be true. The FreeAgent documentation doesn't make it very clear when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.
 
 {% img ../../../../../images/freeagent_authorised.png 'My app is authorised' %}
 
 ## Next Up
 
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_.
+
+I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
 
