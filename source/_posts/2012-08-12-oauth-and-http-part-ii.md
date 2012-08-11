@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "OAuth &amp; HTTP (Part I)"
-date: 2012-06-06 19:20
+series: OAuth &amp; Desktop Applications
+date: 2012-08-12 19:20
 comments: true
 categories: java
 sidebar: false
