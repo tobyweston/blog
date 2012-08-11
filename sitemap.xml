@@ -247,6 +247,10 @@
         <lastmod>2012-08-06T19:57:42+01:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i/</loc>
+        <lastmod>2012-08-11T19:33:37+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii/</loc>
         <lastmod>2012-08-11T19:30:24+01:00</lastmod>
     </url>
@@ -256,7 +260,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2012-08-11T19:30:24+01:00</lastmod>
+        <lastmod>2012-08-11T19:33:37+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -272,6 +276,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2012-08-11T19:30:24+01:00</lastmod>
+        <lastmod>2012-08-11T19:33:37+01:00</lastmod>
     </url>
 </urlset>

@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="It&#8217;s objective setting time for the guys at work. Aligning what&#8217;s really good for you with what&#8217;s good for the company shouldn&# &hellip;">
+  <meta name="description" content="Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don&#8217;t want in the form of a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-11 19:31:46 +0100 -->
+    <!-- last update; 2012-08-11 19:33:57 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/07/07/generate-concordion-overviews/">Generate Concordion Overviews</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-07T00:00:00+01:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don&#8217;t want in the form of a <em>specification</em> can be liberating. You&#8217;ll thrash out the details and come up with <em>examples</em> that can be exercised against the running system. Everybody wins.</p>
+
+<p>I can&#8217;t really comment on some of the BDD targeting frameworks like <a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or <a href="http://cukes.info/">Cucumber</a> but I do like using <a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to fit in with a BDD approach, it&#8217;s actually flexible enough to use with almost any approach.</p>
+
+<p>It&#8217;s frequently cited closest comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion tries really hard not to tie you into a particular approach, whereas Fit invariably leads you down a certain route. So to compare it against the less flexible Fit, isn&#8217;t really accurate.</p>
+
+<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to advertise a little Ant task I wrote to help auto-generate Concordion-friendly summary pages for your existing Concordion tests.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/07/07/generate-concordion-overviews/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -778,81 +827,6 @@ example below.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true">Dec 10<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
-
-<p>In one particular test, I wanted to show that interrupt is called on a thread
-and so followed what&#8217;s becoming a common pattern for me.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
-</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
-</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The alternative patten is to wait for the assertion and avoid the wait for
-shutdown method above. Either way, the test above is testing the the thread
-created has been interrupted by checking the interrupt flag.</p>
-
-<p>The test was failing for me even though I was able to show that the interrupt
-is called and the interrupt flag is set immediately after the sleeping thread
-is woken. However, when the test reached the assert, it was false. Weird.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -871,6 +845,10 @@ is woken. However, when the test reached the assert, it was false. Weird.</p>
     
       <li class="post">
         <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
       </li>
     
       <li class="post">
@@ -903,10 +881,6 @@ is woken. However, when the test reached the assert, it was false. Weird.</p>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
   </ul>

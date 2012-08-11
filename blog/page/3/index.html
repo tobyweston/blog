@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In a previous post, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of &hellip;">
+  <meta name="description" content="Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-11 19:31:46 +0100 -->
+    <!-- last update; 2012-08-11 19:33:57 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
+
+<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/29/catching-multiple-exceptions-and/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -533,55 +578,6 @@ example,</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/07/07/generate-concordion-overviews/">Generate Concordion Overviews</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-07T00:00:00+01:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don&#8217;t want in the form of a <em>specification</em> can be liberating. You&#8217;ll thrash out the details and come up with <em>examples</em> that can be exercised against the running system. Everybody wins.</p>
-
-<p>I can&#8217;t really comment on some of the BDD targeting frameworks like <a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or <a href="http://cukes.info/">Cucumber</a> but I do like using <a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to fit in with a BDD approach, it&#8217;s actually flexible enough to use with almost any approach.</p>
-
-<p>It&#8217;s frequently cited closest comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion tries really hard not to tie you into a particular approach, whereas Fit invariably leads you down a certain route. So to compare it against the less flexible Fit, isn&#8217;t really accurate.</p>
-
-<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to advertise a little Ant task I wrote to help auto-generate Concordion-friendly summary pages for your existing Concordion tests.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/07/07/generate-concordion-overviews/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -600,6 +596,10 @@ example,</p>
     
       <li class="post">
         <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
       </li>
     
       <li class="post">
@@ -632,10 +632,6 @@ example,</p>
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
   </ul>

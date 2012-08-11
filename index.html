@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-11 19:31:46 +0100 -->
+    <!-- last update; 2012-08-11 19:33:57 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -119,6 +119,51 @@
   
     <footer>
       <a rel="full-article" href="/blog/2012/08/12/oauth-and-http-part-ii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-11T19:20:00+01:00" pubdate data-updated="true">Aug 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Although OAuth is intended for web, mobile and desktop applications, I&#8217;ve been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I&#8217;m trying to access FreeAgent&#8217;s API. Their <a href="https://dev.freeagent.com/docs/oauth">documentation is pretty thin</a> on background. The <a href="https://groups.google.com/forum/#!forum/freeagent_api">support</a> is fairly focused on web apps and I found it difficult getting a desktop client hooked up.</p>
+
+<p>As a result, I&#8217;m journaling my experiences and hopefully learning a thing or two about OAuth along the way.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/11/oauth-and-http-part-i/">Read on &rarr;</a>
     </footer>
   
 
@@ -483,53 +528,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
-
-<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
-
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -546,6 +544,10 @@
     
       <li class="post">
         <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
       </li>
     
       <li class="post">
@@ -578,10 +580,6 @@
     
       <li class="post">
         <a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
       </li>
     
   </ul>

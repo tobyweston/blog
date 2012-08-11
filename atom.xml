@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-08-11T19:31:46+01:00</updated>
+  <updated>2012-08-11T19:33:57+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -111,6 +111,64 @@ X-Host: web4
 <h2>Next Up</h2>
 
 <p>That&#8217;s about it for now. Hopefully its been useful. I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (no OAuth library) if there&#8217;s interest. Let me know.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part I)]]></title>
+    <link href="http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i/"/>
+    <updated>2012-08-11T19:20:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i</id>
+    <content type="html"><![CDATA[<p>Although OAuth is intended for web, mobile and desktop applications, I&#8217;ve been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I&#8217;m trying to access FreeAgent&#8217;s API. Their <a href="https://dev.freeagent.com/docs/oauth">documentation is pretty thin</a> on background. The <a href="https://groups.google.com/forum/#!forum/freeagent_api">support</a> is fairly focused on web apps and I found it difficult getting a desktop client hooked up.</p>
+
+<p>As a result, I&#8217;m journaling my experiences and hopefully learning a thing or two about OAuth along the way.</p>
+
+<!-- more -->
+
+
+<h2>OAuth</h2>
+
+<p><a href="http://www.oauth.net">OAuth</a> is described as &#8220;an open protocol to allow secure authorisation from web, mobile and desktop applications&#8221;. It&#8217;s intended as a handshaking protocol whereby an application is granted authorisation to another without having to know the target application&#8217;s user credentials. The application requesting access never knows the end users details.</p>
+
+<p>It&#8217;s probably best described in terms of it&#8217;s typical <a href="http://hueniverse.com/oauth/guide/workflow/">workflow</a>.</p>
+
+<h2>Authorisation Request</h2>
+
+<p>Once you have an application <em>client id</em> and <em>client secret</em>, you can request an <em>authorisation code</em>. This affectively means you&#8217;re application is asking the target application for authorisation and to remember that your application is a valid &#8220;user&#8221;. In API terms, it means you&#8217;re asking for authorised access to the target&#8217;s API.</p>
+
+<p>A <code>GET</code> is made to the target <em>authorisation endpoint</em> with the <em>client id</em> and a <em>redirect URL</em> in the query string.</p>
+
+<pre><code>GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&amp;response_type=code&amp;client_id=YYY HTTP/1.1
+</code></pre>
+
+<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you&#8217;re trying to programmatically do HTTPS <code>GET</code> request. At least, things got complicated for me when I tried.</p>
+
+<p>If you do make the request in a browser environment, you&#8217;ll log into FreeAgent with your user account and be asked to authorise the client application.</p>
+
+<p><img src="../../../../../images/freeagent_auth_confirmation.png" title="'Authorisation confirmation'" ></p>
+
+<p>At this point, FreeAgent will redirect to the <em>redirect URL</em> you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it&#8217;s only required a HTTP <em>client</em>, not a running <em>server</em>.</p>
+
+<p>There is an &#8220;out of band&#8221; option in the OAuth specification. Using this, you would supply the query parameter <code>oauth_callback=oob</code> instead of a <code>redirect_url</code>. In this case, you&#8217;ll be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent <a href="https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA">don&#8217;t support this</a> &#8220;out of band&#8221; option.</p>
+
+<p>In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on <code>localhost:8088/oauth</code> for example, and will extract the code from the response to the original authorisation request. If you set the <code>redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth</code>, the request will be redirected here after you&#8217;ve manually confirmed authorisation. Crucially, it will pass along the <em>authorisation code</em> in the URL.</p>
+
+<pre><code>http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
+</code></pre>
+
+<p>All that&#8217;s left to do is extract it programmatically or display it for some cut and paste action. In my spoofed &#8220;out of band&#8221; workflow, it looks like this.</p>
+
+<p><img src="../../../../../images/freeagent_oob_spoof.png" title="'OOB Spoof'" ></p>
+
+<p>At this point, you&#8217;re application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be true. The FreeAgent documentation doesn&#8217;t make it very clear when it says the next step happens &#8220;out of band&#8221;, but once you&#8217;ve got your authorisation code, it&#8217;ll be valid for a while. You don&#8217;t need to go through this step every time your application uses the target API.</p>
+
+<p><img src="../../../../../images/freeagent_authorised.png" title="'My app is authorised'" ></p>
+
+<h2>Next Up</h2>
+
+<p>Once you&#8217;ve got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>.</p>
+
+<p>I think that&#8217;s quiet enough for now though, so we&#8217;ll take a look at how that&#8217;s done in the <a href="http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii">next post</a>.</p>
 ]]></content>
   </entry>
   
@@ -1685,162 +1743,6 @@ Team B&#8217;s process favors mention of agile experience in the CV. Follow up q
 <p>I guess what I&#8217;m reflecting on here is how as a peer group, we pretty much realise that closed questioning limits our choices and that open ended questions lead to real conversations that are more relevant to the types of conversations we have day to day. Right or wrong answers don&#8217;t really have a place because there&#8217;s never a right or wrong answer in what we do. If I implement a prime number finder without the Colander of Eratosthenes, am I wrong? The tests still pass so I must be right? Is Eratosthenes more right? Despite this realisation though, we can easily fall into a more subtle way of behaving where we mentally start ticking off specifics for a candidate.</p>
 
 <p>I guess we have to keep reminding ourselves what&#8217;s important and what we&#8217;re looking for in a candidate. I guess I&#8217;m mellowing in the way I assess candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Catching Multiple Exceptions (and rethrowing them all!)]]></title>
-    <link href="http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and/"/>
-    <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/08/29/catching-multiple-exceptions-and</id>
-    <content type="html"><![CDATA[<p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
-
-<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
-
-<!-- more -->
-
-
-<p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we&#8217;re done.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">(</span><span class="n">Domain</span> <span class="n">domain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">Exceptions</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Exceptions</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">customers</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">suppliers</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">invoices</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">exceptions</span><span class="o">.</span><span class="na">checkAndThrow</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">(</span><span class="n">Repository</span> <span class="n">repository</span><span class="o">,</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>            <span class="o">((</span><span class="n">TestRepository</span><span class="o">)</span> <span class="n">repository</span><span class="o">).</span><span class="na">deleteAll</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">RepositoryException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">exceptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We simply add to the exception collection class (<code>exceptions.add(e)</code>) and then when we&#8217;re done, we can check it and throw a composite exception if needed with <code>exceptions.checkAndThrow()</code>.</p>
-
-<p>So far, we&#8217;ve only been interested in the fact that multiple exception can be handled and so haven&#8217;t needed to programmatically query for specific exception types. For example, we&#8217;ve only needed this up until now.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ... something that calls checkAndThrow()</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CompositeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ... this is enough for now</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The details of the classes are below.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">exceptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="n">iterator</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">exceptions</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkAndThrow</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">exceptions</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
-</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">CompositeException</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way that is consistent with how you&#8217;d expect to see regular exceptions.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">CompositeException</span><span class="o">(</span><span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="s">&quot;composite exception was thrown with embedded exceptions (see details)&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">exceptions</span> <span class="o">=</span> <span class="n">exceptions</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
-</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span> <span class="o">:</span> <span class="n">exceptions</span><span class="o">)</span>
-</span><span class='line'>            <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="sc">&#39;\t&#39;</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="k">new</span> <span class="n">ExceptionToString</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">toString</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="sc">&#39;\n&#39;</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%s\n{composite exceptions=\n%s}\n%s&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">(),</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="kd">super</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   
