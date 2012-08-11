@@ -6,7 +6,6 @@ date: 2012-08-11 19:20
 comments: true
 categories: java recipes
 sidebar: false
-published: false
 description: "Access FreeAgent OAuth from a desktop app has it's idiosyncrasies, the hardest part is covering the redirect part of the protocol. Find out how I did it here."
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
