@@ -4,11 +4,11 @@ title: "FreeAgent, OAuth &amp; HTTP (Part I)"
 series: FreeAgent OAuth
 date: 2012-08-11 19:20
 comments: true
-categories: java
+categories: java recipes
 sidebar: false
 published: false
-description: ""
-keywords: "FreeAgent, OAuth, OAuth and FreeAgent"
+description: "Access FreeAgent OAuth from a desktop app has it's idiosyncrasies, the hardest part is covering the redirect part of the protocol. Find out how I did it here."
+keywords: "FreeAgent, OAuth, OAuth and FreeAgent, FreeAgent OAuth tutorial"
 ---
 
 Although OAuth is intended for web, mobile and desktop applications, I've been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I'm trying to access FreeAgent's API. Their [documentation is pretty thin](https://dev.freeagent.com/docs/oauth) on background. The [support](https://groups.google.com/forum/#!forum/freeagent_api) is fairly focused on web apps and I found it difficult getting a desktop client hooked up.
