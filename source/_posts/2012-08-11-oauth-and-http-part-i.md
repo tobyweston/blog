@@ -36,13 +36,15 @@ The FreeAgent documentation talks about your application making this request but
 
 If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.
 
-{% img ../../../../../images/freeagent_auth_request.png 'Authorisation request' %}
-
 {% img ../../../../../images/freeagent_auth_confirmation.png 'Authorisation confirmation' %}
 
-At this point, FreeAgent will redirect to the _redirect URL_ you supplied along with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? There's an out of band option in the OAuth specification. You would supply the query parameter `oauth_callback=oob` instead of a `redirect_url`. In this case, you should be redirected to a page maintained by the implementers (FreeAgent in our example) where authorisation code is displayed for you to copy. Unfortunately, FreeAgent don't support this option.
+At this point, FreeAgent will redirect to the _redirect URL_ you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? There's an out of band option in the OAuth specification. Using this, you would supply the query parameter `oauth_callback=oob` instead of a `redirect_url`. In which case, you'd be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent don't support this "out of band" option.
 
-In lieu of this, I fire up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request.
+In lieu of this, I fire up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request. The browser request above will redirect here after you've manually confirmed authorisation and pass along the _authorisation code_ in the URL.
+
+    http://localhost:8080/oauth?code=2A16aT62YDK_3H3sYSk32VC_a4dk2CfddkaajdF
+
+Which in my spoofed "out of band" workflow looks like this.
 
 {% img ../../../../../images/freeagent_oob_spoof.png 'OOB Spoof' %}
 
@@ -51,13 +53,7 @@ At this point, you're application is now authorised to access the target. Jumpin
 
 {% img ../../../../../images/freeagent_authorised.png 'My app is authorised' %}
 
+## Next Up
 
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. I think that's quiet enough for now though, so we'll take a look at that in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
 
-## Access Token Request
-
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. This is done in the form of a HTTPS `POST` to the (access) _token endpoint_.
-
-
-## Google's OAuth Playground
-
-Useless.
