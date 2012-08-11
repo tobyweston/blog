@@ -11,7 +11,7 @@ description: ""
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent"
 ---
 
-Although OAuth is intended for web, mobile and desktop applications, I've been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I'm access FreeAgent's API. Their [documentation is pretty thin](https://dev.freeagent.com/docs/oauth) on background. The [support](https://groups.google.com/forum/#!forum/freeagent_api) is fairly focused on web apps and I found it difficult getting a rich desktop client hooked up.
+Although OAuth is intended for web, mobile and desktop applications, I've been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I'm trying to access FreeAgent's API. Their [documentation is pretty thin](https://dev.freeagent.com/docs/oauth) on background. The [support](https://groups.google.com/forum/#!forum/freeagent_api) is fairly focused on web apps and I found it difficult getting a desktop client hooked up.
 
 As a result, I'm journaling my experiences and hopefully learning a thing or two about OAuth along the way.
 
@@ -21,7 +21,7 @@ As a result, I'm journaling my experiences and hopefully learning a thing or two
 
 [OAuth](http://www.oauth.net) is described as "an open protocol to allow secure authorisation from web, mobile and desktop applications". It's intended as a handshaking protocol whereby an application is granted authorisation to another without having to know the target application's user credentials. The application requesting access never knows the end users details.
 
-It's probably best described in terms of the [workflow](http://hueniverse.com/oauth/guide/workflow/).
+It's probably best described in terms of it's typical [workflow](http://hueniverse.com/oauth/guide/workflow/).
 
 
 ## Authorisation Request
@@ -32,19 +32,21 @@ A `GET` is made to the target _authorisation endpoint_ with the _client id_ and 
 
     GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&response_type=code&client_id=YYY HTTP/1.1
 
-The FreeAgent documentation talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is web app. Not fine, if you're trying to programmatically do HTTPS `GET` request. At least, things got complicated for me when I tried to.
+The [FreeAgent documentation](https://dev.freeagent.com/docs/oauth) talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you're trying to programmatically do HTTPS `GET` request. At least, things got complicated for me when I tried.
 
 If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.
 
 {% img ../../../../../images/freeagent_auth_confirmation.png 'Authorisation confirmation' %}
 
-At this point, FreeAgent will redirect to the _redirect URL_ you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? There's an out of band option in the OAuth specification. Using this, you would supply the query parameter `oauth_callback=oob` instead of a `redirect_url`. In which case, you'd be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent don't support this "out of band" option.
+At this point, FreeAgent will redirect to the _redirect URL_ you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it's only required a HTTP _client_, not a running _server_.
 
-In lieu of this, I fire up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request. The browser request above will redirect here after you've manually confirmed authorisation and pass along the _authorisation code_ in the URL.
+There is an "out of band" option in the OAuth specification. Using this, you would supply the query parameter `oauth_callback=oob` instead of a `redirect_url`. In this case, you'll be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent [don't support this](https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA) "out of band" option.
+
+In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request. If you set the `redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth`, the request will be redirected here after you've manually confirmed authorisation. Crucially, it will pass along the _authorisation code_ in the URL.
 
     http://localhost:8080/oauth?code=2A16aT62YDK_3H3sYSk32VC_a4dk2CfddkaajdF
 
-Which in my spoofed "out of band" workflow looks like this.
+All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow looks like this.
 
 {% img ../../../../../images/freeagent_oob_spoof.png 'OOB Spoof' %}
 
@@ -55,5 +57,5 @@ At this point, you're application is now authorised to access the target. Jumpin
 
 ## Next Up
 
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. I think that's quiet enough for now though, so we'll take a look at that in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
 
