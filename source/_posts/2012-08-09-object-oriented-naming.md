@@ -1,3 +1,14 @@
+---
+layout: post
+title: "Object Oriented Naming"
+date: 2012-08-09 09:25
+comments: true
+categories: java, object-oriented
+sidebar: false
+published: false
+keywords: "java, object-oriented, variable naming"
+description: ""
+---
 
 ``` java
 public interface TemplateProcessor {
