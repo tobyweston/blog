@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "OAuth &amp; HTTP (Part III)"
-series: OAuth &amp; Desktop Applications
+title: "FreeAgent, OAuth &amp; HTTP (Part III)"
+series: FreeAgent OAuth
 date: 2012-08-13 19:13
 comments: true
 categories: java
