@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these &hellip;">
+  <meta name="description" content="In the previous post, we walked through requesting &#8220;authorisation&#8221; from FreeAgent using OAuth. In this next post, we&#8217;ll look at the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-08 19:50:22 +0100 -->
+    <!-- last update; 2012-08-11 19:31:46 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-12T11:13:00+01:00" pubdate data-updated="true">Aug 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting &#8220;authorisation&#8221; from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we&#8217;ll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/12/oauth-and-http-part-ii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -487,51 +530,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-29T00:00:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
-
-<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/29/building-better-exceptions/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -545,6 +543,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
@@ -580,10 +582,6 @@
     
       <li class="post">
         <a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>
       </li>
     
   </ul>
