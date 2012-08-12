@@ -50,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-11 19:33:57 +0100 -->
+    <!-- last update; 2012-08-12 10:37:26 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -131,28 +131,30 @@
 <pre><code>GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&amp;response_type=code&amp;client_id=YYY HTTP/1.1
 </code></pre>
 
-<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you&#8217;re trying to programmatically do HTTPS <code>GET</code> request. At least, things got complicated for me when I tried.</p>
+<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you&#8217;re trying to programmatically do the HTTP <code>GET</code> request. At least, things got complicated for me when I tried.</p>
 
 <p>If you do make the request in a browser environment, you&#8217;ll log into FreeAgent with your user account and be asked to authorise the client application.</p>
 
-<p><img src="../../../../../images/freeagent_auth_confirmation.png" title="'Authorisation confirmation'" ></p>
+<p><a href="../../../../../images/freeagent_auth_confirmation.png"><img src="../../../../../images/freeagent_auth_confirmation.png" title="'Authorisation confirmation'" ></a></p>
 
 <p>At this point, FreeAgent will redirect to the <em>redirect URL</em> you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it&#8217;s only required a HTTP <em>client</em>, not a running <em>server</em>.</p>
 
-<p>There is an &#8220;out of band&#8221; option in the OAuth specification. Using this, you would supply the query parameter <code>oauth_callback=oob</code> instead of a <code>redirect_url</code>. In this case, you&#8217;ll be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent <a href="https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA">don&#8217;t support this</a> &#8220;out of band&#8221; option.</p>
+<p>There is an &#8220;out of band&#8221; option in the OAuth specification. Using this, you would supply the query parameter <code>oauth_callback=oob</code> instead of a <code>redirect_url</code>. In this case, you&#8217;ll be redirected to a page maintained by the target application (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent <a href="https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA">don&#8217;t support this</a> &#8220;out of band&#8221; option.</p>
 
-<p>In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on <code>localhost:8088/oauth</code> for example, and will extract the code from the response to the original authorisation request. If you set the <code>redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth</code>, the request will be redirected here after you&#8217;ve manually confirmed authorisation. Crucially, it will pass along the <em>authorisation code</em> in the URL.</p>
+<h2>Fake OOB</h2>
+
+<p>In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on <code>localhost:8088/oauth</code> for example, and will extract the code from the response to the original authorisation request. If you set the <code>redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth</code>, the request will be redirected here after you&#8217;ve manually confirmed authorisation in the browser. Crucially, it will pass along the <em>authorisation code</em> in the URL.</p>
 
 <pre><code>http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
 </code></pre>
 
 <p>All that&#8217;s left to do is extract it programmatically or display it for some cut and paste action. In my spoofed &#8220;out of band&#8221; workflow, it looks like this.</p>
 
-<p><img src="../../../../../images/freeagent_oob_spoof.png" title="'OOB Spoof'" ></p>
+<p><a href="../../../../../images/freeagent_oob_spoof.png"><img src="../../../../../images/freeagent_oob_spoof.png" title="'OOB Spoof'" ></a></p>
 
-<p>At this point, you&#8217;re application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be true. The FreeAgent documentation doesn&#8217;t make it very clear when it says the next step happens &#8220;out of band&#8221;, but once you&#8217;ve got your authorisation code, it&#8217;ll be valid for a while. You don&#8217;t need to go through this step every time your application uses the target API.</p>
+<p>At this point, you&#8217;re application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be the case. The FreeAgent documentation doesn&#8217;t make it very clear when it says the next step happens &#8220;out of band&#8221;, but once you&#8217;ve got your authorisation code, it&#8217;ll be valid for a while. You don&#8217;t need to go through this step every time your application uses the target API.</p>
 
-<p><img src="../../../../../images/freeagent_authorised.png" title="'My app is authorised'" ></p>
+<p><a href="../../../../../images/freeagent_authorised.png"><img src="../../../../../images/freeagent_authorised.png" title="'My app is authorised'" ></a></p>
 
 <h2>Next Up</h2>
 

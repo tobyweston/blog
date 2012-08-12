@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-08-11T19:33:57+01:00</updated>
+  <updated>2012-08-12T10:37:26+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -25,11 +25,11 @@
 
 <h2>After Authorisation</h2>
 
-<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>. This is done in the form of a HTTPS <code>POST</code> to the (access) <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
+<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>. This is done in the form of a HTTP <code>POST</code> to the (access) <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
 
 <h2>Access Token Request</h2>
 
-<p>The HTTPS <code>POST</code> for FreeAgent requires <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic auth</a> using <em>client id</em> and <em>client secret</em> as username and password. That means supplying a <code>Authorization</code> header with base 64 encoded username and password, separated by a colon. So,</p>
+<p>The HTTP <code>POST</code> for FreeAgent requires <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic auth</a> using <em>client id</em> and <em>client secret</em> as the username and password. That means supplying a <code>Authorization</code> header with base 64 encoded username and password, separated by a colon. So,</p>
 
 <pre><code>client_id:client_secret
 </code></pre>
@@ -48,7 +48,7 @@
 </ul>
 
 
-<p>FreeAgent differs from a lot of other OAuth implementations where the information is pass along as query parameters to a <code>GET</code>.</p>
+<p>FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a <code>GET</code> request.</p>
 
 <p>The request should also include an <code>Accept</code> header of <code>application/xml</code> or <code>application/json</code>.</p>
 
@@ -65,12 +65,12 @@ Host: api.freeagent.com
 Connection: close
 Content-Length: 127
 
-grant_type=authorization_code&amp;code=19P34sFZRwAsXjd7SLOE1ddsaX84jfjoCgix&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
+grant_type=authorization_code&amp;code=12P3AsFZXwXjd7SLOE1dsaX8oCgix&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
 </code></pre>
 
 <h2>The Response</h2>
 
-<p>Which should give back the response below</p>
+<p>Which should give back a response similar to below</p>
 
 <pre><code>HTTP/1.1 200 OK
 Server: nginx/1.0.14
@@ -110,7 +110,7 @@ X-Host: web4
 
 <h2>Next Up</h2>
 
-<p>That's about it for now. Hopefully its been useful. I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (no OAuth library) if there's interest. Let me know.</p>
+<p>That's about it for now. Hopefully its been useful. If there's interest, I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (not using an OAuth library). Let me know.</p>
 ]]></content>
   </entry>
   
@@ -141,28 +141,30 @@ X-Host: web4
 <pre><code>GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&amp;response_type=code&amp;client_id=YYY HTTP/1.1
 </code></pre>
 
-<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you're trying to programmatically do HTTPS <code>GET</code> request. At least, things got complicated for me when I tried.</p>
+<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you're trying to programmatically do the HTTP <code>GET</code> request. At least, things got complicated for me when I tried.</p>
 
 <p>If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.</p>
 
-<p><img src="../../../../../images/freeagent_auth_confirmation.png" title="'Authorisation confirmation'" ></p>
+<p><a href="../../../../../images/freeagent_auth_confirmation.png"><img src="../../../../../images/freeagent_auth_confirmation.png" title="'Authorisation confirmation'" ></a></p>
 
 <p>At this point, FreeAgent will redirect to the <em>redirect URL</em> you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it's only required a HTTP <em>client</em>, not a running <em>server</em>.</p>
 
-<p>There is an "out of band" option in the OAuth specification. Using this, you would supply the query parameter <code>oauth_callback=oob</code> instead of a <code>redirect_url</code>. In this case, you'll be redirected to a page maintained by the implementers (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent <a href="https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA">don't support this</a> "out of band" option.</p>
+<p>There is an "out of band" option in the OAuth specification. Using this, you would supply the query parameter <code>oauth_callback=oob</code> instead of a <code>redirect_url</code>. In this case, you'll be redirected to a page maintained by the target application (FreeAgent in our example) where the authorisation code is displayed for you to copy. Unfortunately, FreeAgent <a href="https://groups.google.com/forum/?fromgroups#!topic/freeagent_api/Rbld9sm0GOA">don't support this</a> "out of band" option.</p>
 
-<p>In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on <code>localhost:8088/oauth</code> for example, and will extract the code from the response to the original authorisation request. If you set the <code>redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth</code>, the request will be redirected here after you've manually confirmed authorisation. Crucially, it will pass along the <em>authorisation code</em> in the URL.</p>
+<h2>Fake OOB</h2>
+
+<p>In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on <code>localhost:8088/oauth</code> for example, and will extract the code from the response to the original authorisation request. If you set the <code>redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth</code>, the request will be redirected here after you've manually confirmed authorisation in the browser. Crucially, it will pass along the <em>authorisation code</em> in the URL.</p>
 
 <pre><code>http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
 </code></pre>
 
 <p>All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow, it looks like this.</p>
 
-<p><img src="../../../../../images/freeagent_oob_spoof.png" title="'OOB Spoof'" ></p>
+<p><a href="../../../../../images/freeagent_oob_spoof.png"><img src="../../../../../images/freeagent_oob_spoof.png" title="'OOB Spoof'" ></a></p>
 
-<p>At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be true. The FreeAgent documentation doesn't make it very clear when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.</p>
+<p>At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be the case. The FreeAgent documentation doesn't make it very clear when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.</p>
 
-<p><img src="../../../../../images/freeagent_authorised.png" title="'My app is authorised'" ></p>
+<p><a href="../../../../../images/freeagent_authorised.png"><img src="../../../../../images/freeagent_authorised.png" title="'My app is authorised'" ></a></p>
 
 <h2>Next Up</h2>
 
