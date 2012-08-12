@@ -17,12 +17,12 @@ In the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i), we
 
 ## After Authorisation
 
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i). This is done in the form of a HTTPS `POST` to the (access) _token endpoint_. The request should give you back a _temporary_ token which is required in _every subsequent_ request to the target resources.
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i). This is done in the form of a HTTP `POST` to the (access) _token endpoint_. The request should give you back a _temporary_ token which is required in _every subsequent_ request to the target resources.
 
 
 ## Access Token Request
 
-The HTTPS `POST` for FreeAgent requires [basic auth](http://en.wikipedia.org/wiki/Basic_access_authentication) using _client id_ and _client secret_ as username and password. That means supplying a `Authorization` header with base 64 encoded username and password, separated by a colon. So,
+The HTTP `POST` for FreeAgent requires [basic auth](http://en.wikipedia.org/wiki/Basic_access_authentication) using _client id_ and _client secret_ as the username and password. That means supplying a `Authorization` header with base 64 encoded username and password, separated by a colon. So,
 
     client_id:client_secret
 
@@ -36,7 +36,7 @@ The `POST` body should include the following [x-www-form-urlencoded](/blog/2012/
  * `code=`the authorisation code (see [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i))
  * `redirect_uri=`your redirect URI
 
-FreeAgent differs from a lot of other OAuth implementations where the information is pass along as query parameters to a `GET`.
+FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a `GET` request.
 
 The request should also include an `Accept` header of `application/xml` or `application/json`.
 
@@ -53,12 +53,12 @@ So, an example request would look like this.
     Connection: close
     Content-Length: 127
 
-    grant_type=authorization_code&code=19P34sFZRwAsXjd7SLOE1ddsaX84jfjoCgix&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
+    grant_type=authorization_code&code=12P3AsFZXwXjd7SLOE1dsaX8oCgix&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
 
 
 ## The Response
 
-Which should give back the response below
+Which should give back a response similar to below
 
     HTTP/1.1 200 OK
     Server: nginx/1.0.14
@@ -99,4 +99,4 @@ The access token will eventually expire (FreeAgent have set it to expire in seve
 
 ## Next Up
 
-That's about it for now. Hopefully its been useful. I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (no OAuth library) if there's interest. Let me know.
+That's about it for now. Hopefully its been useful. If there's interest, I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (not using an OAuth library). Let me know.
