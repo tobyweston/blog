@@ -31,7 +31,7 @@ A `GET` is made to the target _authorisation endpoint_ with the _client id_ and 
 
     GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&response_type=code&client_id=YYY HTTP/1.1
 
-The [FreeAgent documentation](https://dev.freeagent.com/docs/oauth) talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you're trying to programmatically do the HTTP `GET` request. At least, things got complicated for me when I tried.
+The [FreeAgent documentation](https://dev.freeagent.com/docs/oauth) talks about your application making this request but it really needs to be done in a browser environment. Fine, if your application is a web app. Not fine, if you're trying to programmatically do the HTTP `GET` request. At least, things got complicated for me when I tried.
 
 If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.
 

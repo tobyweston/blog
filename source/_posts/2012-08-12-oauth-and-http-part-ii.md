@@ -17,7 +17,9 @@ In the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i), we
 
 ## After Authorisation
 
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i). This is done in the form of a HTTP `POST` to the (access) _token endpoint_. The request should give you back a _temporary_ token which is required in _every subsequent_ request to the target resources.
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i). 
+
+To request the access token, you make a HTTP `POST` to the _token endpoint_. The request should give you back a _temporary_ token which is required in _every subsequent_ request to the target resources.
 
 
 ## Access Token Request
