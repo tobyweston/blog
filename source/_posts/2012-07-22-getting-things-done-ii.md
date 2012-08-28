@@ -3,7 +3,7 @@ layout: post
 title: "Getting Things Done, Part II"
 date: 2012-07-22 12:38
 comments: true
-categories: coaching
+categories: coaching ios
 sidebar: false
 keywords: "getting things done, GTD, Appigo Todo, task management, David Allen, Stree-free productivity, agile vs GTD"
 description: "In the previous post, I summarised some of the ideas from David Allen's book Getting Things Done. In this post, I talk more about applying the basic ideas and talk about the parallels between GTD and agile software development."
