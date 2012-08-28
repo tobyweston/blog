@@ -8,7 +8,7 @@ footer: false
 Some of my current projects:
 
 * [tempus-fugit](http://tempusfugitlibrary.org/) - utility classes focused around concurrency and testing
-* [simple-http](https://github.com/tobyweston/simple-http) - an improved API over the Apache HC HTTP library. [Read on...](http://baddotrobot.com/blog/2012/06/10/http-simple/).
+* [simple-http](https://github.com/tobyweston/simple-http) - an improved API over the Apache HC HTTP library. [Read on](http://baddotrobot.com/blog/2012/06/10/http-simple/).
 * [simple-excel](https://github.com/tobyweston/simple-excel) - an improved API over the Apache POI project. Generate and test spreadsheets.
 * [concordion-ant-task](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html) - an Ant task to collect Concordion specs in a single HTML overview
 
