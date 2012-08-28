@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ios | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2012-08-28T19:48:07+01:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Play it Next App]]></title>
+    <link href="http://baddotrobot.com/blog/2012/08/28/play-it-next/"/>
+    <updated>2012-08-28T19:29:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/08/28/play-it-next</id>
+    <content type="html"><![CDATA[<p><a href="../../../../../images/play_it_next.png"><img class="right" src="../../../../../images/play_it_next.png" width="224" height="336" title="'Play it Next'" ></a></p>
+
+<p>I'm often listening to something on my iPhone whilst thinking about what track to play next. It's a shame the iPod app doesn't let me queue up the next track without interrupting the one that's playing.</p>
+
+<p>I didn't realise how much this bothered me until I found the workaround in the form of the awesome <a href="http://playitnextapp.com/">Play it Next</a> app. Now I can queue up the next track and get all deejay without breaks in my music. I like it so much, I just had to mention it here.</p>
+
+<p>Find it on the <a href="http://itunes.apple.com/us/app/play-it-next/id549859020?ls=1&amp;mt=8">app store</a>; I definitely recommend it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part II]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
+    <updated>2012-07-22T12:38:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
+    <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="/blog/2012/06/29/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+
+<p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
+
+<!-- more -->
+
+
+<h2>The "Think It Through Principle"</h2>
+
+<p>I wanted to apply what I started to think of as the <em>think it through principle</em> to my old items, what Allen calls <em>front end decisions</em>. So everything got put back into the global "inbox" until I performed the mental checklist; what is it?; is it actionable?; what's the next action?</p>
+
+<p>Things started to get interesting for me here as going through this process, I started to draw parallels between the way Allen talks about <em>describing, in a single written sentence, the intended successful outcome</em> and the agile dictum of identifying acceptance criteria. In both cases, a clear and distinct step is made to clarify intent and recognise when a task is actually <em>done</em>.</p>
+
+<p>In resetting my tasks, I also dropped all the dates. I was just ignoring them anyway. I had so many overdue items, they became meaningless. Allen suggests that if an item has a date, then it pretty much <em>has to get done on that date</em>, no excuses.</p>
+
+<h2>Next Steps</h2>
+
+<p>I liked the movement from "inbox" to say "options". It felt like working up a user story and moving a card on a board when the acceptance criteria had been identified. To solidify this for myself, I try to change the wording of my tasks as they move from the "inbox" to some other list. From a vague, fluffy description to something sounding more like a user story. I'll add a short description if needed.</p>
+
+<p>I also like the idea of the "next steps" part of the think it through principle. Getting things out of your mind and into a <em>trusted</em> system feels like it could free up head space; the <em>trusted</em> part being key. Focusing only on the smallest possible next step seems to concentrate the idea. Again, the similarities to the agile principle of <em>doing to simplest thing possible</em> appealed.</p>
+
+<p>So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo <a href="http://www.appigo.com/todo">Todo</a>.</p>
+
+<h3>A Couple of Examples,</h3>
+
+<blockquote><p>On receiving my first reminder from HMRC, I filed "Self Assessment 2011/12" into my "stuff" inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my "options" list having changed the one line description to be "Pay 2011/12 Self Assessment". The deliberate steps were to pause and turn an <em>open loop</em> into something that I can tick off as done. I came up with the <em>acceptance criteria</em> and gave it a date.</p>
+
+<p>I wasn't clear about the dates though and had a question I wanted to ask my accountant. So my "next step" was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my "waiting (for someone)" file.</p>
+
+<p>Another example, the <em>open loop</em> being to "Improve my blog's SEO" was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be "signed off"), and moved it into the "options" list with no date and a description "add keyword and description metadata to old articles". It's sitting in my backlog now.</p></blockquote>
+
+<h2>Conclusion so Far</h2>
+
+<p>Having Appigo's <a href="http://www.appigo.com/todo">Todo</a> on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn't seem to be huge. So far, I'm averaging around thirty items. The inbox has the same five or so I started with. That's telling me I'm not doing anything about those; I think they're just not that important and I should really move them to "trash". All in all, I'm now in the habbit of using the list, so I'm starting to trust the system.</p>
+
+<p>I'm certainly feeling less stress about things hanging over me. I'm kind of deferring responsibility because I know they're not lost, just in a list on my phone. It's nice to immediately put something out of my mind because I know it's not going to be forgotten. I think the trick for me is to stay disciplined, not let the "inbox" fill up and keep putting things (even really trivial things) into my lists <em>as I think of them</em>.</p>
+
+<p>I'll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I've intentionally avoided. I expect I'll finish this mini-series off in a month or two with my final reflections.</p>
+]]></content>
+  </entry>
+  
+</feed>

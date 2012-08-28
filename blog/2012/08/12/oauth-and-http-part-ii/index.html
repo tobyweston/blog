@@ -50,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-12 10:37:26 +0100 -->
+    <!-- last update; 2012-08-28 19:48:07 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -116,7 +116,9 @@
 
 <h2>After Authorisation</h2>
 
-<p>Once you&#8217;ve got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don&#8217;t know what I&#8217;m talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>. This is done in the form of a HTTP <code>POST</code> to the (access) <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
+<p>Once you&#8217;ve got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don&#8217;t know what I&#8217;m talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>.</p>
+
+<p>To request the access token, you make a HTTP <code>POST</code> to the <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
 
 <h2>Access Token Request</h2>
 
@@ -266,6 +268,8 @@ X-Host: web4
       
         <a class="basic-alignment left" href="/blog/2012/08/11/oauth-and-http-part-i/" title="Previous Post: FreeAgent, OAuth &amp; HTTP (Part I)">&laquo; FreeAgent, OAuth &amp; HTTP (Part I)</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2012/08/28/play-it-next/" title="next Post: Play it Next App">Play it Next App &raquo;</a>
       
     </p>
   </footer>

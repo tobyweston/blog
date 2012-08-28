@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-08-12T10:37:26+01:00</updated>
+  <updated>2012-08-28T19:48:07+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -25,7 +25,9 @@
 
 <h2>After Authorisation</h2>
 
-<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>. This is done in the form of a HTTP <code>POST</code> to the (access) <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
+<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>.</p>
+
+<p>To request the access token, you make a HTTP <code>POST</code> to the <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
 
 <h2>Access Token Request</h2>
 
@@ -141,7 +143,7 @@ X-Host: web4
 <pre><code>GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&amp;response_type=code&amp;client_id=YYY HTTP/1.1
 </code></pre>
 
-<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if you application is a web app. Not fine, if you're trying to programmatically do the HTTP <code>GET</code> request. At least, things got complicated for me when I tried.</p>
+<p>The <a href="https://dev.freeagent.com/docs/oauth">FreeAgent documentation</a> talks about your application making this request but it really needs to be done in a browser environment. Fine, if your application is a web app. Not fine, if you're trying to programmatically do the HTTP <code>GET</code> request. At least, things got complicated for me when I tried.</p>
 
 <p>If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.</p>
 

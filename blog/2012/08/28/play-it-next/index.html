@@ -5,19 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Inheritance vs Composition - bad.robot</title>
+  <title>Play it Next App - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a Stack as an example. Example 1. 1
-2
-3
-4
-5
-6
-7
-8 &hellip;">
-  
+  <meta name="description" content="Queue songs without interrupting the currently playing track with Play it Next">
+  <meta name="keywords" content="iTunes, ipod, ios, queue up songs">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -25,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/08/28/play-it-next/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -92,7 +85,7 @@
   <header>
     
       
-        <h1 class="entry-title">Inheritance vs Composition</h1>
+        <h1 class="entry-title">Play it Next App</h1>
       
     
     
@@ -109,66 +102,20 @@
   
 
 
-<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+<time datetime="2012-08-28T19:29:00+01:00" pubdate data-updated="true">Aug 28<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+<div class="entry-content"><p><a href="../../../../../images/play_it_next.png"><img class="right" src="../../../../../images/play_it_next.png" width="224" height="336" title="'Play it Next'" ></a></p>
 
-<h3>Example 1.</h3>
+<p>I&#8217;m often listening to something on my iPhone whilst thinking about what track to play next. It&#8217;s a shame the iPod app doesn&#8217;t let me queue up the next track without interrupting the one that&#8217;s playing.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>I didn&#8217;t realise how much this bothered me until I found the workaround in the form of the awesome <a href="http://playitnextapp.com/">Play it Next</a> app. Now I can queue up the next track and get all deejay without breaks in my music. I like it so much, I just had to mention it here.</p>
 
-
-<h3>Example 2</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
-Suddenly, methods to get and insert elements at specific positions are
-available to clients of the stack. We move from trying to create a well
-behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
-
-<p>So I was surprised when looking at the Java source to see that
-<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+<p>Find it on the <a href="http://itunes.apple.com/us/app/play-it-next/id549859020?ls=1&amp;mt=8">app store</a>; I definitely recommend it.</p>
 </div>
 
 
@@ -196,12 +143,12 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
   
 
 
-<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
+<time datetime="2012-08-28T19:29:00+01:00" pubdate data-updated="true">Aug 28<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>
+    <a class='category' href='/blog/categories/ios/'>ios</a>
   
 </span>
 
@@ -210,7 +157,7 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2012/08/28/play-it-next/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2012/08/28/play-it-next/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -221,10 +168,8 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/01/22/deprecated-annotation/" title="Previous Post: Deprecated Annotation">&laquo; Deprecated Annotation</a>
+        <a class="basic-alignment left" href="/blog/2012/08/12/oauth-and-http-part-ii/" title="Previous Post: FreeAgent, OAuth &amp; HTTP (Part II)">&laquo; FreeAgent, OAuth &amp; HTTP (Part II)</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2009/02/16/more-on-micro-dsls/" title="next Post: More on Micro DSLs">More on Micro DSLs &raquo;</a>
       
     </p>
   </footer>
@@ -255,8 +200,8 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
-        var disqus_url = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/08/28/play-it-next/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/08/28/play-it-next/';
         var disqus_script = 'embed.js';
       
     (function () {
