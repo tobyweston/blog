@@ -7,167 +7,48 @@ comments: true
 categories: java
 sidebar: false
 published: false
-description: ""
-keywords: "FreeAgent, OAuth, OAuth and FreeAgent"
+description: "Caveats access the FreeAgent API using OAuth"
+keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
+
 ---
 
-# A typical OAuth / FreeAgent flow using Google's oauthplayground
+In previous posts, we looked at setting up authentication with OAuth to access FreeAgent's API. We've got something working but a couple of caveats remain when working with it from a rich client.
 
 <!-- more -->
 
-## GET /approve_app
+## The Workflow
 
-### Request
+To summarise the workflow;
 
-    GET /v2/approve_app?redirect_uri=https%3A%2F%2Fcode.google.com%2Foauthplayground&response_type=code&client_id=4ta9v9JrXqSGdcdNuzTUtA&scope=https%3A%2F%2Fapi.sandbox.freeagent.com%2Fv2%2Fapprove_app+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.file&access_type=offline HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
-    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Referer: https://code.google.com/oauthplayground/?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&state
+ 1. Ask your user to authorise your application (on the target application's servers).
+ 1. You'll be given an _authorisation token_ from the above. Stash it.
+ 1. Exchange your _authorisation token_ for an _access token_. Stash this too (along with the _refresh token_).
+ 1. Make requests passing along the _access token_ to prove you're you.
 
-### Response
 
-    HTTP/1.1 302 Found
+## The Authorisation Request
+
+It's not always clear, but step 1. above is a one time operation. You don't make this request every time your programmatically want to access the target application. It also implies that the `GET` request is made from the browser. There are "out of band" options but in-browser is the simplest.
+
+
+## The Access Token Request
+
+Again, it's not always clear but the _access token_ request only needs to be made once. In fact, if you've successfully retrieved an _access token_ and then request a new one, FreeAgent will error with a basic authentication failure.
+
+    HTTP/1.1 401 Unauthorized
+    Server: nginx/1.0.14
+    Date: Mon, 13 Aug 2012 18:13:44 GMT
     Content-Type: text/html; charset=utf-8
-    Location: https://api.sandbox.freeagent.com/v2/login
+    Status: 401 Unauthorized
+    WWW-Authenticate: Basic realm="Application"
+    X-UA-Compatible: IE=Edge,chrome=1
+    X-Runtime: 0.099212
+    X-Rev: 9301db5
+    X-Host: web3
 
-    <html><body>You are being <a href="https://api.sandbox.freeagent.com/v2/login">redirected</a>.</body></html>
+    HTTP Basic: Access denied.
 
-## GET /login
+I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.
 
-### Request
+## Refreshing the Access Token
 
-    GET /v2/login HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    Referer: https://code.google.com/oauthplayground/?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&state
-    If-None-Match: "edf508dcf787ca438f1a28bbac4a6ff1"
-    Cookie: _freeagent_session=BAh7CUkiD3Nlc3N...988a3e907ab901054d
-    Connection: keep-alive
-    Proxy-Connection: keep-alive
-
-### Response
-
-    HTTP/1.1 304 Not Modified
-
-## POST /handle_login
-
-### Request
-
-    POST /v2/handle_login HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
-    Content-Length: 52
-    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Origin: https://api.sandbox.freeagent.com
-    Content-Type: application/x-www-form-urlencoded
-    Referer: https://api.sandbox.freeagent.com/v2/login
-
-    email=my.email%40gmail.com&password=secretstuff
-
-### Response
-
-Which gives back a `302`
-
-    HTTP/1.1 302 Found
-    Content-Type: text/html; charset=utf-8
-    Location: https://api.sandbox.freeagent.com/v2/request_approval
-
-    <html><body>You are being <a href="https://api.sandbox.freeagent.com/v2/request_approval">redirected</a>.</body></html>
-
-## GET /request_approval
-
-### Request
-
-Follow this to get `/request_approval`
-
-    GET /v2/request_approval HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Origin: https://api.sandbox.freeagent.com
-    Referer: https://api.sandbox.freeagent.com/v2/login
-
-Which gives you the web page to login
-
-### Response
-
-    HTTP/1.1 200 OK
-    Content-Type: text/html; charset=utf-8
-
-    <html>
-        ... HTML requesting Authorisation
-    </html>
-
-
-## POST /grant_approval
-
-### Request
-
-Which on successful submission redirects back to the orginal redirection url.
-
-    POST /v2/grant_approval HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/534.57.2 (KHTML, like Gecko) Version/5.1.7 Safari/534.57.2
-    Content-Length: 113
-    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Origin: https://api.sandbox.freeagent.com
-    Content-Type: application/x-www-form-urlencoded
-    Referer: https://api.sandbox.freeagent.com/v2/request_approval
-    Accept-Language: en-us
-    Accept-Encoding: gzip, deflate
-    Cookie: _freeagent_session=BAh7CUkiD3Nlc3Npb25faWQGOgZFRiIlN2RhMDcyYmNmMzljZTY4NmM4Mjg5OTMwODY0MDkzYmZJIgphcGl2MgY7AEZ7CjoYb2F1dGhfcmVzcG9uc2VfdHlwZUkiCWNvZGUGOwBUOhRvYXV0aF9jbGllbnRfaWRJIhs0dGE5djlKclhxU0dkY2ROdXpUVXRBBjsAVDoXb2F1dGhfY2xpZW50X3N0YXRlMDoXb2F1dGhfcmVkaXJlY3RfdXJpSSIsaHR0cHM6Ly9jb2RlLmdvb2dsZS5jb20vb2F1dGhwbGF5Z3JvdW5kBjsAVDoTb2F1dGhfYWNjb3VudHNbBlsHSSInQmFkIFJvYm90IChEZXZlbG9wbWVudCkgKGJhZHJvYm90KQY7AFRpAfpJIg9leHBpcmVzX2F0BjsARkl1OglUaW1lDdIUHIChjS7FCjoLQF96b25lSSIIVVRDBjsAVDoNbmFub19udW1pAiYBOg1uYW5vX2RlbmkGOg1zdWJtaWNybyIHKUA6C29mZnNldGkASSIQX2NzcmZfdG9rZW4GOwBGSSIxZzg4UWFNd1NTcC9yVmJPdUQ1a1lrLzM5NHRhM2JhS3laQ1Rxc25UUGJUND0GOwBG--954c4bc953caf4c9e9e3481e6b7c56b3672fa33e
-    Connection: keep-alive
-    Proxy-Connection: keep-alive
-
-    utf8=%E2%9C%93&authenticity_token=g88QaMwSSp%2FrVbOuD5kYk%2F394ta3baKyZCTqsnTPbT4%3D&user_id=250&commit=Authorise
-
-### Response
-
-    HTTP/1.1 302 Found
-    Location: https://code.google.com/oauthplayground?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&state
-
-    <html><body>You are being <a href="https://code.google.com/oauthplayground?code=1ZhV9346i6dDT3vZ7g7AH3GS3WYRvVhDrQsdYjKxA&amp;state">redirected</a>.</body></html>
-
-
-# Using raw HTTP message (from a Java client)
-
-## GET /approve_app
-
-### Request
-
-    GET /v2/approve_app?client_id=4ta9v9JrXqSGdcdNuzTUtA&response_type=code HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    User-Agent: Apache-HttpClient/4.1.3 (java 1.5)
-
-
-### Response
-
-    HTTP/1.1 302 Found
-    Content-Type: text/html; charset=utf-8
-    Location: https://api.sandbox.freeagent.com/v2/login
-
-    <html><body>You are being <a href="https://api.sandbox.freeagent.com/v2/login">redirected</a>.</body></html>
-
-## GET /login
-
-### Request
-
-Notice basic auth is set but doesn't do anything
-
-    GET /v2/login HTTP/1.1
-    Host: api.sandbox.freeagent.com
-    User-Agent: Apache-HttpClient/4.1.3 (java 1.5)
-    Cookie2: $Version=1
-    Authorization: Basic NXDRh1F....SWRYUWnFR
-
-
-### Response
-
-    HTTP/1.1 200 OK
-    Content-Type: text/html; charset=utf-8
-
-    <html>
-        ... asking for username password
-    </html>
-
-
-I can get a bit further following the steps from the playground (ie, manually POSTing etc), I hit problems though on the last step because I don't seem to get back the `authenticity_token` from anywhere so I can't supply the correct body to the final `/grant_approval` POST :(
