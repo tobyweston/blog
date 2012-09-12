@@ -55,9 +55,9 @@ Lets say we have a class, `InvoiceItem` representing a sale item. We'd like to a
 
 The `appendTo` method uses [simple-excel](http://github.com/tobyweston/simple-excel) to append the row to the invoice (ignore the details for now) but we'd like to verify that the sheet has been modified in the right way. Using the `CellMatcher`, you can do something like this.	
 
-	assertThat(getCellForCoordinate(coordinate(E, 1)), is(equalTo(stringCell("Mac Book Pro"))));
-	assertThat(getCellForCoordinate(coordinate(E, 2)), is(equalTo(numberCell(999.99D))));
-	assertThat(getCellForCoordinate(coordinate(E, 3)), is(equalTo(blankCell()));
+	assertThat(getCellForCoordinate(coordinate(E, 1), invoice), is(equalTo(stringCell("Mac Book Pro"))));
+	assertThat(getCellForCoordinate(coordinate(E, 2), invoice), is(equalTo(numberCell(999.99D))));
+	assertThat(getCellForCoordinate(coordinate(E, 3), invoice), is(equalTo(blankCell()));
 
 Where the `getCellForCoordinate` returns a POI `Cell` object and `equalTo` is statically imported from `bad.robot.excel.matchers.Matchers` (not regular Hamcrest `equalTo`);
 	
@@ -67,7 +67,7 @@ When it fails, you'll get something friendly like this;
 	Expected: is <999.99D>
 		 but: cell at "E2" contained <1999.99D> expected <999.99D>
 	
-It matches on type and content of the cell. So a string cell `"999.99"` is different than a numeric cell `999.99`.
+It matches on type and content of the cell. So the string cell `"999.99"` is different than the numeric cell `999.99`.
 
 	
 	
