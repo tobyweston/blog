@@ -36,7 +36,7 @@ You can install Xcode which should put Subversion in `/Applications/Xcode.app/Co
 
 ## Java
 
-OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for `mvn` to point to Maven 3 which may need adjusting if you're still using Maven 2. See [this post]({{ root_url}}/2011/10/29/java-source-on-mac) for the fix.
+OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for `mvn` to point to Maven 3 which may need adjusting if you're still using Maven 2. See [this post]({{ root_url}}/blog/2011/10/29/java-source-on-mac) for the fix.
 
 
 ## Rake / Python
