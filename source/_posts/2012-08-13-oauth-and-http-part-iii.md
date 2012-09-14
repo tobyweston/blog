@@ -49,3 +49,6 @@ Again, it's not always clear but the _access token_ request only needs to be mad
 
 I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.
 
+## Refreshing the Access Token
+
+I haven't had a go at refreshing the token yet but will post here when I do.
