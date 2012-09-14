@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not &hellip;">
+  <meta name="description" content="I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-08-28 19:48:07 +0100 -->
+    <!-- last update; 2012-09-14 13:33:56 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2008/12/29/swt-applications-on-mac-os-x/">SWT Applications on Mac OS X</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-29T00:00:00+00:00" pubdate data-updated="true">Dec 29<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure to what ails ya! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
+
+<p>It seems that by default, Java will not start on the main thread.
+Cocoa/Carbon/[insert mac vodoo here] starts it all and as a consequence, the
+SWT UI thread might get associated with it and not your main application
+thread. Therefore, whenever the application tries to access it (even though it
+looks like it owns it in your code), it may not and invalid thread access
+hilarity will ensue.</p>
+
+<p>The flip side to this is that AWT/Swing apps and plugins might have problems.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -327,6 +374,10 @@ confirm.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/08/28/play-it-next/">Play it Next App</a>
       </li>
     
@@ -360,10 +411,6 @@ confirm.</p>
     
       <li class="post">
         <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a>
       </li>
     
   </ul>

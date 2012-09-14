@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-08-28T19:48:07+01:00</updated>
+  <updated>2012-09-14T13:33:56+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Diff Excel with Java and Hamcrest]]></title>
+    <link href="http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest/"/>
+    <updated>2012-09-14T13:21:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest</id>
+    <content type="html"><![CDATA[<p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don&#8217;t offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find differences.</p>
+
+<!-- more -->
+
+
+<h2>Building Spreadsheets</h2>
+
+<p><a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> takes a sheet as a template and allows you to apply changes programmatically to it. For example, you can start with a blank invoice sheet and insert items and totals from your Java code. It wraps Apache POI to make things easier to work with.</p>
+
+<p>However you create your sheet, it&#8217;d be nice to be able to unit test it. <a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> offers <code>Matcher</code>s to do just that. You can write unit style tests, making assertions against individual cells or rows or you can write coarser grained tests that compare every cell of one sheet against every cell of another.</p>
+
+<h2>Matchers</h2>
+
+<p>The matchers you&#8217;re most likely to use can be found in the <code>bad.robot.excel.matchers.Matchers</code> class. They include <code>WorkbookMatcher</code> and <code>CellMatcher</code> but there are a bunch of finer grained matchers in the <code>bad.robot.excel.matchers</code> package.</p>
+
+<h2>Comparing Sheets</h2>
+
+<p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using the POI.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+</span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you use the <code>MatcherAssert.assertThat</code> from Hamcrest rather than the vanilla JUnit version (<code>org.junit.Assert.assertThat</code>), you&#8217;ll see useful information on a failure.</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: entire workbook to be equal
+     but: cell at "C14" contained &lt;"bananas"&gt; expected &lt;nothing&gt;,
+          cell at "C15" contained &lt;"£1,850,000"&gt; expected &lt;"£1,850,000.00"&gt;,
+          cell at "D16" contained &lt;nothing&gt; expected &lt;"Tue Sep 04 06:30:00"&gt;
+</code></pre>
+
+<p>Other failures might include differing number of sheets, differently named sheets, different number of rows or columns. They&#8217;re all aggregated in the failure message so you don&#8217;t need to fix one and run the test again. It&#8217;ll try and report all errors up front.</p>
+
+<h2>Finer Grained Comparisons</h2>
+
+<p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We&#8217;d like to append this line item to an invoice. It might look something like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
+</span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
+</span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we&#8217;d like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where the <code>getCellForCoordinate</code> returns a POI <code>Cell</code> object and <code>equalTo</code> is statically imported from <code>bad.robot.excel.matchers.Matchers</code> (not regular Hamcrest <code>equalTo</code>);</p>
+
+<p>When it fails, you&#8217;ll get something friendly like this;</p>
+
+<pre><code>java.lang.AssertionError:
+Expected: is &lt;999.99D&gt;
+     but: cell at "E2" contained &lt;1999.99D&gt; expected &lt;999.99D&gt;
+</code></pre>
+
+<p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>.</p>
+
+<p>The project is open source. As always, I&#8217;d love to hear how you get on using it. Check out the leave me a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Play it Next App]]></title>
@@ -223,7 +308,7 @@ X-Host: web4
 
 <h2>Java</h2>
 
-<p>OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for <code>mvn</code> to point to Maven 3 which may need adjusting if you&#8217;re still using Maven 2. See <a href="http://baddotrobot.com/2011/10/29/java-source-on-mac">this post</a> for the fix.</p>
+<p>OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for <code>mvn</code> to point to Maven 3 which may need adjusting if you&#8217;re still using Maven 2. See <a href="http://baddotrobot.com/blog/2011/10/29/java-source-on-mac">this post</a> for the fix.</p>
 
 <h2>Rake / Python</h2>
 
@@ -238,7 +323,7 @@ X-Host: web4
     <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
     <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
 
-<p>In the <a href="http://baddotrobot.com/blog/2012/06/29/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
+<p>In the <a href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=diyfiesta&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=0749922648">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 
@@ -1679,45 +1764,6 @@ something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders
 
 
 <p>This can come in handy when testing as we can isolate and test the different responsibilities. We&#8217;re also left with a handy framework to add ad-hoc data directly to the database and it&#8217;s easy enough to wire up an in-memory only <code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java source on Mac]]></title>
-    <link href="http://baddotrobot.com/blog/2011/10/29/java-source-on-mac/"/>
-    <updated>2011-10-29T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/10/29/java-source-on-mac</id>
-    <content type="html"><![CDATA[<p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
-
-<!-- more -->
-
-
-<ol>
-<li>Go to the <a href="https://developer.apple.com/downloads">Apple Developer Connection downloads page</a>, search for <strong>Java for Mac OS X 10.x Developer Package</strong> where 10.x matches your version of OS X. The developer bundle includes the source whereas the regular software update version does not.</li>
-<li>Download and install. Running <code>/Applications/Utilities/Java Preferences.app</code> should now show &#8220;Java SE 6 (System)&#8221; in the list.</li>
-<li>Open a Terminal.app window</li>
-<li><code>cd $JAVA_HOME</code> (aka <code>/System/Library/Frameworks/JavaVM.framework/Home</code>)</li>
-<li>Setup a symlink to the source archive with <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_26-b03-383.jdk/Contents/Home/src.jar</code></li>
-<li>And for the JavaDoc, <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_24-b07-334.jdk/Contents/Home/docs.jar</code></li>
-<li>Now point your IDE of choice to the new source folder symlink.</li>
-</ol>
-
-
-<p>Any update to Java will set things up to point to Maven 3, so if you use Maven 2, it&#8217;ll break things with</p>
-
-<pre><code>java.lang.NoClassDefFoundError: org/codehaus/plexus/classworlds/launcher/Launcher
-</code></pre>
-
-<p>Reset things by;</p>
-
-<ol>
-<li><code>cd /usr/share</code></li>
-<li><code>sudo mv maven maven.new</code> (a symlink which should incorrectly be pointing to <code>java/maven-3.0.3)</code></li>
-<li><code>sudo ln -s /maven2/install/folder maven</code></li>
-<li>run <code>maven -version</code> to check its back up.</li>
-<li>Have a cup of tea.</li>
-</ol>
-
 ]]></content>
   </entry>
   
