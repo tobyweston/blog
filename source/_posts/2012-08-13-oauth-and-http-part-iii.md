@@ -9,7 +9,6 @@ sidebar: false
 published: false
 description: "Caveats access the FreeAgent API using OAuth"
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
-
 ---
 
 In previous posts, we looked at setting up authentication with OAuth to access FreeAgent's API. We've got something working but a couple of caveats remain when working with it from a rich client.
