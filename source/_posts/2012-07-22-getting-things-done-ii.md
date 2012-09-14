@@ -12,7 +12,7 @@ series: Getting Things Done
 
 [{% img right ../../../../../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../../../../../images/appigo_todo.png)
 
-In the [preceding post]({{ root_url }}/blog/2012/06/29/getting-things-done-i), I summarised some of the ideas from David Allen's book [Getting Things Done](http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=diyfiesta&linkCode=as2&camp=1634&creative=6738&creativeASIN=0749922648). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
+In the [preceding post]({{ root_url }}/blog/2012/07/20/getting-things-done-i), I summarised some of the ideas from David Allen's book [Getting Things Done](http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=diyfiesta&linkCode=as2&camp=1634&creative=6738&creativeASIN=0749922648). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
 
 I'd already been using Appigo's [Todo](http://www.appigo.com/todo) app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious `Home`, `Work`, `Other` lists and replaced them with `Inbox`, `Options`, `Reference`, `Someday / Maybe`, `Waiting (for someone)` and `Trash`.
 
