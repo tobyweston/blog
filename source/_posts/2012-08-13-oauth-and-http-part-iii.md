@@ -6,7 +6,7 @@ date: 2012-08-13 19:13
 comments: true
 categories: java
 sidebar: false
-published: false
+published: true
 description: "Caveats access the FreeAgent API using OAuth"
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
@@ -48,6 +48,4 @@ Again, it's not always clear but the _access token_ request only needs to be mad
     HTTP Basic: Access denied.
 
 I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.
-
-## Refreshing the Access Token
 
