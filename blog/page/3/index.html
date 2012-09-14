@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Mostly as a reminder to myself, getting the Java source on your Mac involves the following. ">
+  <meta name="description" content="It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-09-14 13:33:56 +0100 -->
+    <!-- last update; 2012-09-14 13:53:54 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it&#8217;s often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
+
+<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/01/29/transaction-management-without/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -522,51 +567,6 @@ example,</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/07/13/lambdas-vs-closures/">Lambdas vs. Closures</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-13T00:00:00+01:00" pubdate data-updated="true">Jul 13<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="right" src="../../../../../images/lambda.png" title="'The Lambda greek character'" ></p>
-
-<p>When writing Java in a functional style, things tend to get very verbose. We often create a bunch on anonymous implementation fragments and pass them around akin to a <em>function</em> in functional languages. These fragments often get called closures or lambdas, but what&#8217;s the difference between the two terms?</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/07/13/lambdas-vs-closures/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -589,6 +589,10 @@ example,</p>
     
       <li class="post">
         <a href="/blog/2012/08/28/play-it-next/">Play it Next App</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a>
       </li>
     
       <li class="post">
@@ -617,10 +621,6 @@ example,</p>
     
       <li class="post">
         <a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
       </li>
     
   </ul>

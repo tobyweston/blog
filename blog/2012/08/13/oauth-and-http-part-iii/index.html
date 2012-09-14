@@ -5,18 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Deprecated Annotation - bad.robot</title>
+  <title>FreeAgent, OAuth &amp; HTTP (Part III) - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Why didn&#8217;t Sun add a value property to the @Deprecated annotation? Instead of 1
-2
-3
-4
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-public @ &hellip;">
-  
+  <meta name="description" content="Caveats access the FreeAgent API using OAuth">
+  <meta name="keywords" content="FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -24,7 +18,7 @@ public @ &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -91,7 +85,7 @@ public @ &hellip;">
   <header>
     
       
-        <h1 class="entry-title">Deprecated Annotation</h1>
+        <h1 class="entry-title">FreeAgent, OAuth &amp; HTTP (Part III)</h1>
       
     
     
@@ -108,74 +102,69 @@ public @ &hellip;">
   
 
 
-<time datetime="2009-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2009</time>
+<time datetime="2012-08-13T19:13:00+01:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Why didn&#8217;t Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of</p>
+<div class="entry-content"><p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple of caveats remain when working with it from a rich client.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
-</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Deprecated</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<!-- more -->
 
 
-<p>which kind of implies we should do the following.</p>
+<h2>The Workflow</h2>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Deprecated</span>
-</span><span class='line'><span class="cm">/** @deprecated use {@link Foo} instead */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>To summarise the workflow;</p>
+
+<ol>
+<li>Ask your user to authorise your application (on the target application&#8217;s servers).</li>
+<li>You&#8217;ll be given an <em>authorisation token</em> from the above. Stash it.</li>
+<li>Exchange your <em>authorisation token</em> for an <em>access token</em>. Stash this too (along with the <em>refresh token</em>).</li>
+<li>Make requests passing along the <em>access token</em> to prove you&#8217;re you.</li>
+</ol>
 
 
-<p>why can&#8217;t we have</p>
+<h2>The Authorisation Request</h2>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
-</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyDeprecated</span><span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>It&#8217;s not always clear, but step 1. above is a one time operation. You don&#8217;t make this request every time your programmatically want to access the target application. It also implies that the <code>GET</code> request is made from the browser. There are &#8220;out of band&#8221; options but in-browser is the simplest.</p>
 
+<h2>The Access Token Request</h2>
 
-<p>which means we can use</p>
+<p>Again, it&#8217;s not always clear but the <em>access token</em> request only needs to be made once. In fact, if you&#8217;ve successfully retrieved an <em>access token</em> and then request a new one, FreeAgent will error with a basic authentication failure.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>HTTP/1.1 401 Unauthorized
+Server: nginx/1.0.14
+Date: Mon, 13 Aug 2012 18:13:44 GMT
+Content-Type: text/html; charset=utf-8
+Status: 401 Unauthorized
+WWW-Authenticate: Basic realm="Application"
+X-UA-Compatible: IE=Edge,chrome=1
+X-Runtime: 0.099212
+X-Rev: 9301db5
+X-Host: web3
 
+HTTP Basic: Access denied.
+</code></pre>
 
-
+<p>I think it&#8217;s trying to say that your application isn&#8217;t allowed to request a new access token whilst one is already valid.</p>
 </div>
 
 
   
+<h2>More in the FreeAgent OAuth Series</h2>
+
+<ul>
+    
+    <li class="post"><a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a></li>
+    
+    <li class="post"><a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a></li>
+    
+    <li class="post"><a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a></li>
+    
+</ul>
+
   <footer>
     <p class="meta">
       
@@ -199,7 +188,7 @@ public @ &hellip;">
   
 
 
-<time datetime="2009-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2009</time>
+<time datetime="2012-08-13T19:13:00+01:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time>
       
 
 <span class="categories">
@@ -213,7 +202,7 @@ public @ &hellip;">
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/" data-via="jamanifin" data-counturl="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -224,10 +213,10 @@ public @ &hellip;">
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/01/06/be-more-expressive-with-builders/" title="Previous Post: Be more Expressive with Builders">&laquo; Be more Expressive with Builders</a>
+        <a class="basic-alignment left" href="/blog/2012/08/12/oauth-and-http-part-ii/" title="Previous Post: FreeAgent, OAuth &amp; HTTP (Part II)">&laquo; FreeAgent, OAuth &amp; HTTP (Part II)</a>
       
       
-        <a class="basic-alignment right" href="/blog/2009/01/24/inheritance-vs-composition/" title="next Post: Inheritance vs Composition">Inheritance vs Composition &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/08/28/play-it-next/" title="next Post: Play it Next App">Play it Next App &raquo;</a>
       
     </p>
   </footer>
@@ -258,8 +247,8 @@ public @ &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/';
-        var disqus_url = 'http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/';
         var disqus_script = 'embed.js';
       
     (function () {

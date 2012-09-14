@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-09-14T13:33:56+01:00</updated>
+  <updated>2012-09-14T13:53:54+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -92,6 +92,54 @@ Expected: is &lt;999.99D&gt;
 <p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>.</p>
 
 <p>The project is open source. As always, I'd love to hear how you get on using it. Check out the leave me a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part III)]]></title>
+    <link href="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/"/>
+    <updated>2012-08-13T19:13:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii</id>
+    <content type="html"><![CDATA[<p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent's API. We've got something working but a couple of caveats remain when working with it from a rich client.</p>
+
+<!-- more -->
+
+
+<h2>The Workflow</h2>
+
+<p>To summarise the workflow;</p>
+
+<ol>
+<li>Ask your user to authorise your application (on the target application's servers).</li>
+<li>You'll be given an <em>authorisation token</em> from the above. Stash it.</li>
+<li>Exchange your <em>authorisation token</em> for an <em>access token</em>. Stash this too (along with the <em>refresh token</em>).</li>
+<li>Make requests passing along the <em>access token</em> to prove you're you.</li>
+</ol>
+
+
+<h2>The Authorisation Request</h2>
+
+<p>It's not always clear, but step 1. above is a one time operation. You don't make this request every time your programmatically want to access the target application. It also implies that the <code>GET</code> request is made from the browser. There are "out of band" options but in-browser is the simplest.</p>
+
+<h2>The Access Token Request</h2>
+
+<p>Again, it's not always clear but the <em>access token</em> request only needs to be made once. In fact, if you've successfully retrieved an <em>access token</em> and then request a new one, FreeAgent will error with a basic authentication failure.</p>
+
+<pre><code>HTTP/1.1 401 Unauthorized
+Server: nginx/1.0.14
+Date: Mon, 13 Aug 2012 18:13:44 GMT
+Content-Type: text/html; charset=utf-8
+Status: 401 Unauthorized
+WWW-Authenticate: Basic realm="Application"
+X-UA-Compatible: IE=Edge,chrome=1
+X-Runtime: 0.099212
+X-Rev: 9301db5
+X-Host: web3
+
+HTTP Basic: Access denied.
+</code></pre>
+
+<p>I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.</p>
 ]]></content>
   </entry>
   
@@ -295,65 +343,6 @@ X-Host: web4
 <h2>Rake / Python</h2>
 
 <p>It even managed to mess with my Python installation which gets used when building this blog using the <code>rake generate</code> command. Thanks though to <a href="http://www.sebastien-han.fr/blog/2012/07/26/broken-rake-after-update-to-mountain-lion/">Sébastien Han</a> for getting me out of it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[HTTP Encoding Schemes]]></title>
-    <link href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/"/>
-    <updated>2012-06-11T18:06:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes</id>
-    <content type="html"><![CDATA[<p>What's the difference between URL Encoding and Form URL Encoding?</p>
-
-<!-- more -->
-
-
-<h2>URL Encoding</h2>
-
-<p>Sometimes refered to as <a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent Encoding</a>, this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like <code>#</code> have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by <code>%20</code>.</p>
-
-<p>In Java, you can create an encoded URL using</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which in this case produces</p>
-
-<pre><code>http:baddotrobot.com#/cheese%20sandwich
-</code></pre>
-
-<h2>Form URL Encoding</h2>
-
-<p>Refered to by the <code>application/x-www-form-urlencoded</code> mime-type. This scheme was based on an early version of URL Encoding but at some point diverged. For example, the space character gets replaced by the <code>+</code> rather than <code>%20</code>. It's typically used for encoding <code>POST</code> message content by HTML forms.</p>
-
-<p>For example, a HTML form with <code>name</code> and <code>address</code> would send over the following.</p>
-
-<pre><code>POST http://baddotrobot.com/ HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-
-name=bad.robot&amp;address=the+land+of+make+believe
-</code></pre>
-
-<p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h2>Base64 Encoding</h2>
-
-<p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you'd do something like the following.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Which, for example, could be used to send the following HTTP message</p>
-
-<pre><code>GET /login HTTP/1.1
-Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
-</code></pre>
 ]]></content>
   </entry>
   

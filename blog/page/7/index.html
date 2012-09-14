@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread &hellip;">
+  <meta name="description" content="Window Licker is a framework designed to help you define your own fluent API for GUI testing. It provides a driver style API that your Swing or Ajax &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-09-14 13:33:56 +0100 -->
+    <!-- last update; 2012-09-14 13:53:54 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2008/12/29/swt-support-for-window-licker/">SWT Support for Window Licker</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-29T00:00:00+00:00" pubdate data-updated="true">Dec 29<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://code.google.com/p/windowlicker/">Window Licker</a> is a framework designed to help you define your own fluent API for GUI testing. It provides a driver style API that your Swing or Ajax applications plug into before you go about writing GUI tests in a language natural to your application.</p>
+
+<p>We&#8217;ve been doing some driver based GUI testing for our web apps using
+<a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> so I was naturally interested in
+Window Licker with regard to rich client based testing. I&#8217;ve been trying to
+test my SWT based apps at the unit level as much as possible, but it&#8217;s not
+always straight forward separating the behaviour of GUI classes from GUI
+elements. How do you test that all the validation behaviour is plumbed in
+correctly and fires at the right time in a text box? So, Window Licker seemed
+like a great candidate to getting some real user style testing. Great!</p>
+
+<p>The bad news is that Window Licker doesn&#8217;t yet support SWT. Boo! The good news
+is it gave me a great chance to have a go at implementing basic SWT support in
+Window Licker. Yey!</p>
+
+<p>Check out the <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">patch</a> I wrote, or the
+<a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">thread</a> where we discuss it.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -382,6 +436,10 @@ confirm.</p>
       </li>
     
       <li class="post">
+        <a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
       </li>
     
@@ -407,10 +465,6 @@ confirm.</p>
     
       <li class="post">
         <a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
       </li>
     
   </ul>
