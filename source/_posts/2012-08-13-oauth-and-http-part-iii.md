@@ -51,4 +51,21 @@ I think it's trying to say that your application isn't allowed to request a new 
 
 ## Refreshing the Access Token
 
-I haven't had a go at refreshing the token yet but will post here when I do.
+In a successful exchange of _authorisation code_ for _access token_, you should see a response like this.
+
+{% codeblock lang:js %}
+{
+    "access_token":"2YotasFasFzCXcCsMWp1",
+    "token_type":"bearer",
+    "expires_in":604800,
+    "refresh_token":"1Gzv0XG5Qx2T3JOkFlKWyj",
+}
+{% endcodeblock %}
+
+In OAuth, The `expires_in` value should be the time in seconds that the _access token_ is valid.
+
+{% blockquote OAuth 2.0 Specification https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2 %}
+RECOMMENDED. The lifetime in seconds of the access token. For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated. If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.
+{% endblockquote %}
+
+FreeAgent return `604800` which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I converted the number into a concrete date so that I could see later if I need to refresh the token.
