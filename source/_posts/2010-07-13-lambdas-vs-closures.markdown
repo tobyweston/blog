@@ -16,7 +16,7 @@ When writing Java in a functional style, things tend to get very verbose. We oft
 
 <!-- more -->
 
-Lets take the `WaitFor` class from [tempus-fugit](http://tempusfugitlibrary.org/) as an example where we pass an anonymous instance as a parameter to the `waitOrTimeout` method. We define a function here that will be called at some later point by `waitOrTimeout`. We can think of this as _lazy invocation_. Java isn't a functional language but we've simulated at least one characteristic of a functional language using `WaitFor` and an anonymous function. We've created a _higher order function_ but not necessarily a _pure function_ ([1]({{ blog_root}}/blog/2012/04/03/scala-as-a-functional-oo-hybrid/)).
+Lets take the `WaitFor` class from [tempus-fugit](http://tempusfugitlibrary.org/) as an example where we pass an anonymous instance as a parameter to the `waitOrTimeout` method. We define a function here that will be called at some later point by `waitOrTimeout`. We can think of this as _lazy invocation_. Java isn't a functional language but we've simulated at least one characteristic of a functional language using `WaitFor` and an anonymous function. We've created a _higher order function_ but not necessarily a _pure function_ ([1]({{ root_url }}/blog/2012/04/03/scala-as-a-functional-oo-hybrid/)).
 
 For example,
   

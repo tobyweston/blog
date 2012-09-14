@@ -58,7 +58,7 @@ In a successful exchange of _authorisation code_ for _access token_, you should 
     "access_token":"2YotasFasFzCXcCsMWp1",
     "token_type":"bearer",
     "expires_in":604800,
-    "refresh_token":"1Gzv0XG5Qx2T3JOkFlKWyj",
+    "refresh_token":"1Gzv0XG5Qx2T3JOkFlKWyj"
 }
 {% endcodeblock %}
 
@@ -68,4 +68,28 @@ In OAuth, The `expires_in` value should be the time in seconds that the _access 
 RECOMMENDED. The lifetime in seconds of the access token. For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated. If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.
 {% endblockquote %}
 
-FreeAgent return `604800` which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I converted the number into a concrete date so that I could see later if I need to refresh the token.
+FreeAgent return `604800` which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I convert the number into a concrete date when I get the response. That way, I can see later if I actually need to refresh the token. However, it seems that you can refresh your token at any point.
+
+The process is similar to the [requesting the original _access token_]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii). Make a Basic auth HTTP POST but with a slightly smaller body.
+
+    POST /v2/token_endpoint HTTP/1.1
+    Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+    Accept: application/json
+    Content-Type: application/x-www-form-urlencoded
+    User-Agent: Java/1.6.0_33
+    Host: api.freeagent.com
+    Connection: close
+    Content-Length: 127
+
+    grant_type=refresh_token&refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
+
+
+which will return something like
+
+{% codeblock lang:js %}
+{
+    "access_token":"2YotasFasFzCXcCsMWp1",
+    "token_type":"bearer",
+    "expires_in":604800
+}
+{% endcodeblock %}
