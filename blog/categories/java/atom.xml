@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-09-14T13:53:54+01:00</updated>
+  <updated>2012-09-14T14:18:59+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -140,6 +140,10 @@ HTTP Basic: Access denied.
 </code></pre>
 
 <p>I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.</p>
+
+<h2>Refreshing the Access Token</h2>
+
+<p>I haven't had a go at refreshing the token yet but will post here when I do.</p>
 ]]></content>
   </entry>
   
