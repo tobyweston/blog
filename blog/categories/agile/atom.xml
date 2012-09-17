@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-09-14T18:36:55+01:00</updated>
+  <updated>2012-09-17T20:00:57+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Daily Standups Don't Work]]></title>
+    <link href="http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work/"/>
+    <updated>2012-09-15T06:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work</id>
+    <content type="html"><![CDATA[<p>At some point it seems that the standups I've been attended have stopped working. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm not getting much out of them any more. It's led me to think that standups just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place and I think its just to <em>talk</em> more.</p>
+
+<!-- more -->
+
+
+<h2>Typical Problems</h2>
+
+<p>Some typical problems I see again and again include standups taking too long; standups becoming a tool to chase progress or apply pressure and attendees glazing over when it's not their turn to speak. <a href="http://jchyip.blogspot.co.uk/">Jason Yip</a> talks about some other <a href="http://martinfowler.com/articles/itsNotJustStandingUp.html#HowDoWeKnowWhenAStand-upIsGoingPoorly">common problems</a>. The biggest problem that I see though, is that standups have become more about the "status update" than communication and collaboration.</p>
+
+<h2>It's Not A Status Update</h2>
+
+<p>If your standup is more about the status update than anything else, the rot may have already set in. It's a shame  the first sentence of the <a href="https://en.wikipedia.org/wiki/Stand-up_meeting">wikipedia page</a> defines a standup as being a "status update". In fact, nearly every page on the subject talks about it in terms of a "status update". Nonsense.</p>
+
+<p>In my view, it should be about communication and collaboration. The trouble with "status update" as a phrase, is that it has dark undertones. It has <em>reporting</em> connotations and can promote a command and control relationship. It's pretty common for team leads, project managers or other stakeholders to coerce the standup into a tool for reporting. <strong>That's what the board is for.</strong></p>
+
+<p>When it becomes a tool to apply pressure or push a project management agenda, things can get pretty negative. Good team leads, managers and stakeholders will use the board for status updates and go round the team individually as they need to. It's all too easy to condense this into an intense experience at standup but it won't tell them the whole story. Those in project management roles have to work hard to preserve the spirit of the standup and get management information in other ways.</p>
+
+<h2>Communication &amp; Collaboration</h2>
+
+<p>If the spirit of the standup is really about communication and collaboration, why don't we apply the same principles we apply with Extreme Programming, namely, to apply it all the time? <strong>I'd prefer standups to be more organic.</strong> Why not jump up and start a conversation when you feel like it? Grab anyone who looks up. Why prescribe a meeting first thing, when you may not have anything to talk about? When you're working in the same physical proximity, it's natural to overhear and contribute to the conversations around you. Standup, get involved.</p>
+
+<p>The standard <a href="http://www.extremeprogramming.org/rules/standupmeeting.html">three report items</a> feel a bit arbitrary and anyway, they're really intended as a guide, not a mantra. I'd go further than that and suggest that even the idea of <em>reporting</em> at standup is the thin end of the wedge. The three questions promote the idea of <em>reporting</em> when we should be promoting the idea of <em>collaboration</em>.</p>
+
+<p>In the same way, wouldn't it be nice if you pair with whomever, whenever the time is right? Rather than move board avatars around in the morning at standup to organising pairs, wouldn't it be nice to seek a collaborator as you need to and change them often? A bit like socks.</p>
+
+<h2>The Good Bits</h2>
+
+<p>Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasis how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about <em>natural</em> conversation and social cohesion.</p>
+
+<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
+
+<h2>That's All Folks</h2>
+
+<p>It's down to individuals in the team to engage. Forcing a standup meeting isn't going to do that. Individuals should be nosey, keeping an eye on the board and the backlog. They don't need to stand in front of the board and watch cards go up or move to the right in a daily standup to do that. They don't need to listen to a synopsis of yesterday's work if they were listening to it unfold yesterday. Management need another forum if they're hijacking your standup and as an engaged individual, it's up to you to champion that change.</p>
+
+<p>Like a lot of the agile practices, its easy to fall into the habit of the daily standup without stopping to consider why we're doing so. If you really don't think you're getting much out of it, stop and question things. Following agile practices mechanically isn't the goal in itself; it's about more than that.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
@@ -193,32 +237,6 @@ Team B's process favors mention of agile experience in the CV. Follow up questio
 <p>Another useful tool can be the pair stairs. It's very easy to avoid pairing rather than face it's challenges so <a href="http://www.natpryce.com/articles/000522.html">pair stairs</a> can be a good way to keep you honest. Probably the most helpful thing though is having people on the team that have lots of experience pairing, know what the team can get out of it and are able to help guide pairing sessions for the less experienced.</p>
 
 <p>Pairing is hard. It's probably one of the hardest things we do as developers but it can also be one of the most rewarding, personally and for the team as a whole. Collaboration has given the world some of its greatest achievements but you have to be honest that in this case, you might have to work for it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Growing Team Skills]]></title>
-    <link href="http://baddotrobot.com/blog/2010/07/11/growing-team-skills/"/>
-    <updated>2010-07-11T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2010/07/11/growing-team-skills</id>
-    <content type="html"><![CDATA[<p>I love the idea of growing teams. Team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well the team are doing. It's useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
-
-<p>Often, new or junior developers worry about the barrage of new and unfamiliar technologies. In my opinion, technologies are such a small part of what we do but it can be useful to be explicit about individual competencies to re-assure the bedazzled new developer. In this post, I present a tool I came up with to help, a kind of competency depth distribution chart.</p>
-
-<!-- more -->
-
-
-<p>It works like this;</p>
-
-<p>As a team, define the technologies that are important / exotic / of interest. Rank them by importance. Try to limit to around 5-10. Start the distribution chart, along the Y axis you'll list the technologies, ranked by importance and on the X, the <a href="http://en.wikipedia.org/wiki/Dreyfus_model_of_skill_acquisition">Dreyfus Scale of Competency</a>. The team must agree on the ranking of technologies and agree on their understanding of the Dreyfus scale.</p>
-
-<p>Next, each team member grades themselves on the scale for each technology. It's important to be honest. The team can then agree and plot the desired competency in each area on a separate sheet (the black line in the example below). Each individual can then see immediately their delta and use it to focus their personal development.</p>
-
-<p><a href="../../../../../images/depth-chart.png"><img src="../../../../../images/depth-chart.png" width="640" height="342" title="'Competency Depth Distribution Chart'" ></a></p>
-
-<p>If the team choose to come together and share their individual charts, they'll be able to see how the team compares to their minimum requirements. It might be that some people are strong in some area and others less so. In this case, there's an obvious knowledge sharing opportunity and it might be that the urgency to close the delta changes. For example, if there is already an expert in some technology on the team, the others may not need to stress. Hopefully, you can start to look at the needs of the team and not the individual. Working through this as a team can also help build trust which is vital to healthy plants, sorry, teams.</p>
-
-<p>If the Dreyfus scale seems a little too harsh, you could always try a scale to reflect general confidence in the area. This tool doesn't have to be about technologies, it can be about any competencies that you want analyse.</p>
 ]]></content>
   </entry>
   
