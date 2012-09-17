@@ -10,9 +10,11 @@ keywords: "agile, daily standup, standup, lean"
 description: "The daily standup doesn't work for most teams. We've become brow beaten to mechanically go through the motions and we've stopped asking 'why are we doing this?'"
 ---
 
-At some point it seems that the standups I've been attended have stopped working. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm not getting much out of them any more. It's led me to think that standups just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place.
+At some point it seems that the standups I've been attended have stopped working. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm not getting much out of them any more. It's led me to think that standups just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place and I think its just to _talk_ more.
 
 <!-- more -->
+
+## Typical Problems
 
 Some typical problems I see again and again include standups taking too long; standups becoming a tool to chase progress or apply pressure and attendees glazing over when it's not their turn to speak. [Jason Yip](http://jchyip.blogspot.co.uk/) talks about some other [common problems](http://martinfowler.com/articles/itsNotJustStandingUp.html#HowDoWeKnowWhenAStand-upIsGoingPoorly). The biggest problem that I see though, is that standups have become more about the "status update" than communication and collaboration.
 
@@ -21,9 +23,9 @@ Some typical problems I see again and again include standups taking too long; st
 
 If your standup is more about the status update than anything else, the rot may have already set in. It's a shame  the first sentence of the [wikipedia page](https://en.wikipedia.org/wiki/Stand-up_meeting) defines a standup as being a "status update". In fact, nearly every page on the subject talks about it in terms of a "status update". Nonsense.
 
-In my view, it should be about communication and collaboration. The trouble with "status update" is that as a phrase, it has darker undertones. It has _reporting_ connotations and can promote a command and control relationship. It's pretty common for team leads, project managers or other stakeholders to coerce the standup into a tool for reporting. __That's what the board is for.__
+In my view, it should be about communication and collaboration. The trouble with "status update" as a phrase, is that it has dark undertones. It has _reporting_ connotations and can promote a command and control relationship. It's pretty common for team leads, project managers or other stakeholders to coerce the standup into a tool for reporting. __That's what the board is for.__
 
-When it becomes a tool to apply pressure or push a project management agenda, things can get pretty negative, pretty fast. Good team leads, managers and stakeholders will use the board for status updates and go round the team individually as they need to. It's all too easy to condense this into an intense experience at standup but it won't tell them the whole story. Those in project management roles have to work hard to preserve the spirit of the standup and get management information in other ways.
+When it becomes a tool to apply pressure or push a project management agenda, things can get pretty negative. Good team leads, managers and stakeholders will use the board for status updates and go round the team individually as they need to. It's all too easy to condense this into an intense experience at standup but it won't tell them the whole story. Those in project management roles have to work hard to preserve the spirit of the standup and get management information in other ways.
 
 
 ## Communication & Collaboration
@@ -42,7 +44,7 @@ Of course, none of this may be ringing true for you. Standups might be the perfe
 To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like [GTD]({{ root_url}}/blog/2012/07/20/getting-things-done-i) where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.
 
 
-## Summary
+## That's All Folks
 
 It's down to individuals in the team to engage. Forcing a standup meeting isn't going to do that. Individuals should be nosey, keeping an eye on the board and the backlog. They don't need to stand in front of the board and watch cards go up or move to the right in a daily standup to do that. They don't need to listen to a synopsis of yesterday's work if they were listening to it unfold yesterday. Management need another forum if they're hijacking your standup and as an engaged individual, it's up to you to champion that change.
 
