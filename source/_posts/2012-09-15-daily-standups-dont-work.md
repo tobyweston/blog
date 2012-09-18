@@ -39,7 +39,7 @@ In the same way, wouldn't it be nice if you pair with whomever, whenever the tim
 
 ## The Good Bits
 
-Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasis how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about _natural_ conversation and social cohesion.
+Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasise how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about _natural_ conversation and social cohesion.
 
 To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like [GTD]({{ root_url}}/blog/2012/07/20/getting-things-done-i) where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.
 
