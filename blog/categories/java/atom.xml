@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-09-18T18:52:37+01:00</updated>
+  <updated>2012-09-20T18:22:16+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest/"/>
     <updated>2012-09-14T13:21:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest</id>
-    <content type="html"><![CDATA[<p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don't offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find differences.</p>
+    <content type="html"><![CDATA[<p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don't offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find any differences.</p>
 
 <!-- more -->
 
@@ -35,7 +35,7 @@
 
 <h2>Comparing Sheets</h2>
 
-<p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using the POI.</p>
+<p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -58,7 +58,7 @@ Expected: entire workbook to be equal
 
 <h2>Finer Grained Comparisons</h2>
 
-<p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We'd like to append this line item to an invoice. It might look something like this.</p>
+<p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -89,9 +89,9 @@ Expected: is &lt;999.99D&gt;
      but: cell at "E2" contained &lt;1999.99D&gt; expected &lt;999.99D&gt;
 </code></pre>
 
-<p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>.</p>
+<p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>. It doesn't yet match against styling (things like borders or background colours).</p>
 
-<p>The project is open source. As always, I'd love to hear how you get on using it. Check out the leave me a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
+<p>The project is open source. As always, I'd love to hear how you get on using it. Check it out the leave me a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
 ]]></content>
   </entry>
   
