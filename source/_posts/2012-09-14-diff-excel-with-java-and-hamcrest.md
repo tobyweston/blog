@@ -78,5 +78,5 @@ It matches on type and content of the cell. So the string cell `"999.99"` is dif
 
 
 
-The project is open source. As always, I'd love to hear how you get on using it. Check it out the leave me a comment if you like it. Issues are tracked on the [project site](http://github.com/tobyweston/simple-excel/issues).
+The project is open source. As always, I'd love to hear how you get on using it. Check it out and the leave a comment if you like it. Issues are tracked on the [project site](http://github.com/tobyweston/simple-excel/issues).
 
