@@ -10,7 +10,7 @@ keywords: "excel, diff, compare excel, testing excel, testing, junit, hamcrest, 
 description: "Diff Excel using Java and Hamcrest. Build and compare Excel files using Java and Hamcrest."
 ---
 
-Comparing Excel spreadsheets programmatically can be tricky. Projects like [Apache POI](http://poi.apache.org/) and [JExcel](http://jexcelapi.sourceforge.net/) let you build and interrogate sheets but don't offer a built in compare function. Fortunately, [simple-excel](http://github.com/tobyweston/simple-excel) offers a simplified API for building sheets in Java and a bunch of [Hamcrest](http://hamcrest.org/) matchers to find differences.
+Comparing Excel spreadsheets programmatically can be tricky. Projects like [Apache POI](http://poi.apache.org/) and [JExcel](http://jexcelapi.sourceforge.net/) let you build and interrogate sheets but don't offer a built in compare function. Fortunately, [simple-excel](http://github.com/tobyweston/simple-excel) offers a simplified API for building sheets in Java and a bunch of [Hamcrest](http://hamcrest.org/) matchers to find any differences.
 
 <!-- more -->
 
@@ -26,7 +26,7 @@ The matchers you're most likely to use can be found in the `bad.robot.excel.matc
 
 ## Comparing Sheets
 
-Using the `WorkbookMatcher`, you can compare an entire workbook to another. The comparison is made against POI `Workbook` objects, so load these using the POI.
+Using the `WorkbookMatcher`, you can compare an entire workbook to another. The comparison is made against POI `Workbook` objects, so load these using POI.
 
 {% codeblock lang:java %}
 Workbook actual = new HSSFWorkbook(...);
@@ -49,7 +49,7 @@ Other failures might include differing number of sheets, differently named sheet
 
 ## Finer Grained Comparisons
 
-Lets say we have a class, `InvoiceItem` representing a sale item. We'd like to append this line item to an invoice. It might look something like this.
+Lets say we have a class, `InvoiceItem` representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.
 
 {% codeblock lang:java %}
 InputStream template = this.getClass().getResourceAsStream("invoiceTemplate.xls");
@@ -74,9 +74,9 @@ When it fails, you'll get something friendly like this;
 	Expected: is <999.99D>
 		 but: cell at "E2" contained <1999.99D> expected <999.99D>
 
-It matches on type and content of the cell. So the string cell `"999.99"` is different than the numeric cell `999.99`.
+It matches on type and content of the cell. So the string cell `"999.99"` is different than the numeric cell `999.99`. It doesn't yet match against styling (things like borders or background colours).
 
 
 
-The project is open source. As always, I'd love to hear how you get on using it. Check out the leave me a comment if you like it. Issues are tracked on the [project site](http://github.com/tobyweston/simple-excel/issues).
+The project is open source. As always, I'd love to hear how you get on using it. Check it out the leave me a comment if you like it. Issues are tracked on the [project site](http://github.com/tobyweston/simple-excel/issues).
 
