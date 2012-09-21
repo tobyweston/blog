@@ -50,4 +50,4 @@ It's down to individuals in the team to engage. Forcing a standup meeting isn't 
 
 Like a lot of the agile practices, its easy to fall into the habit of the daily standup without stopping to consider why we're doing so. If you really don't think you're getting much out of it, stop and question things. Following agile practices mechanically isn't the goal in itself; it's about more than that.
 
-If you fancy shaking things up, [Todd Charron](http://www.planningforfailure.com/)'s created an interactive course with practical ideas to improve your standup. [Check it out](http://www.udemy.com/improv-your-agile-scrum-stand-up/).
+If you fancy shaking things up, [Todd Charron](http://www.planningforfailure.com/)'s created an interactive course with practical ideas to improve your standup. [Check it out](http://www.udemy.com/improv-your-agile-scrum-stand-up?couponCode=pffcommented).
