@@ -49,3 +49,5 @@ To offer at least a token effort at balance; even in a dysfunctional standup, I 
 It's down to individuals in the team to engage. Forcing a standup meeting isn't going to do that. Individuals should be nosey, keeping an eye on the board and the backlog. They don't need to stand in front of the board and watch cards go up or move to the right in a daily standup to do that. They don't need to listen to a synopsis of yesterday's work if they were listening to it unfold yesterday. Management need another forum if they're hijacking your standup and as an engaged individual, it's up to you to champion that change.
 
 Like a lot of the agile practices, its easy to fall into the habit of the daily standup without stopping to consider why we're doing so. If you really don't think you're getting much out of it, stop and question things. Following agile practices mechanically isn't the goal in itself; it's about more than that.
+
+If you fancy shaking things up, [Todd Charron](http://www.planningforfailure.com/)'s created an interactive course with practical ideas to improve your standup. [Check it out](http://www.udemy.com/improv-your-agile-scrum-stand-up/).
