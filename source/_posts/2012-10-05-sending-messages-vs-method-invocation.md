@@ -10,43 +10,35 @@ keywords: "message sending, smalltalk, java, object-oriented, method invocation"
 description: "What's the difference between sending an object a message and just invoking a method on an object? Why is a function difference than a method?"
 ---
 
-People often talk about sending a message in object-oriented langauges whilst others talk about invoking methods on objects? What's the difference? Whilst we're there, what's the difference between a function and a method? Is there a difference between an object reference and a pointer?
+People often talk about sending a message in object-oriented languages whilst others talk about invoking methods on objects? What's the difference? Whilst we're on the topic, what's the difference between a function and a method? Is there a difference between an object reference and a pointer? What's a function pointer?
 
 <!-- more -->
 
 
-
-Languages with strong links to Smalltalk 
-
-As well as some other interesting assertions like functions are different than methods and why references are different than pointers.
-
-
 ## Sending Messages
 
-The terminology of sending an object a message is partly historical. Languages like Smalltalk adopted it as a metaphor when working with obhects. To understand why the metaphor is useful, we have to look at things before the advent of object oriented languages. In these dark times, procedural programming relied on subroutines (functions and procedures) to modify state. With no such concept of "objects", state was associated with data structures. So applying a function to a procedure would produce new state and applying a procedure would modify state. Simplistically speaking.
+The terminology of sending an a message to an object is partly historical. Languages like Smalltalk adopted it as a metaphor when working with objects. To understand why the metaphor is useful, we have to look at things before the advent of object oriented languages. In these days, procedural programming relied on subroutines (functions and procedures) to modify state. With no concept of "objects", state is simply associated with data structures. So applying a function to those structures would produce new state and applying a procedure would modify state.
 
-With the advent of "objects" that encapsulate state *and* behaviour, the messagine metaphore invites us to think about objects performing their own operations. Objects communicate by sending each other *messages*. Instead of calling a method as you would a function in procedural programming, you send a message to an object requesting it to perform one of its methods [2]. This allows us to think about *methods* in more abstract terms. Rather than think about data structures and the functions (and procedures) that affect them, we can focus on _behaviours_.
+With the advent of "objects" that encapsulate state *and* behaviour, the messaging metaphor invites us to think about objects performing their own operations. Objects communicate by sending each other *messages*. Instead of calling a method as you would a function in procedural programming, you send a message to an object requesting it to perform one of its methods. This allows us to think about *methods* in more abstract terms. Rather than think about data structures and the functions (and procedures) that affect them, we can focus on _behaviours_ [2].
 
+> So, sending messages helps us think in object-oriented terms rather than procedural or functional terms but there is also a more concrete, technical difference.
 
-
-
-So, sending messages helps us think in object-oriented terms rather than procedural or functional terms.
-
- Rather than tell an object to perform some action, traditionally implemented via efferial subroutines of functions or procedures, it's useful to think of it terms of asking the object itself
-
-requesting objects perform behaviours. It's a usful 
-
-The difference between sending a message and calling methods is subtle. Sending a message usually results in a method being called but not always. The recieving object decides how to handle a message whilst a call to a method is a more static thing [1]. In lanaguages like Java, the method lookup is still done, it's just done behind the schenes. By calling a method, for example, `apple.eat()`, the reference to `apple` allows this dynamic lookup.
+Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static thing [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it's just done behind the scenes at runtime. By calling a method, for example, `apple.eat()`, the reference to `apple` allows the JVM to associate the object `apple` with the procedure `eat`. This is called [dynamic dispatch](http://en.wikipedia.org/wiki/Dynamic_dispatch).
 
 It's very similar in concept (and in fact, implemented in some languages) as the distinction between functions and methods.
 
+
+
 ## Functions vs Methods
 
-Functions are class level operatation whereas methods are object level operations.
+Functions and procedures are [subroutines](http://en.wikipedia.org/wiki/Subroutine) disassociated from the data they act upon. Methods on the other hand are subroutines associated with objects. Functions are class level subroutines whereas methods are object level subroutines. For example, a *method* in Objective-C, is compiled down to a C *function* with additional parameters, one of which is the receiver object. It associates the function with an object. Our method above would produce a function `-(void) eat: (Apple*) apple`.
 
-Methods in Objective-C for example, are compiled down to C functions with additional parameters. One of which is the reciever. So, our method from above would produce a function `-(void) eat: (Apple*) apple`
+A C function is equivalent to a static class method in Java.
+
+
 
 http://stackoverflow.com/questions/3036330/method-vs-function-vs-procedure-vs-class
+
 
 [1] https://www.informit.com/articles/article.aspx?p=1568732
 [2] Object-Oriented Programming with Objective-C, Apple.
