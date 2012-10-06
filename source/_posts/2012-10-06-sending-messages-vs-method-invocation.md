@@ -81,7 +81,7 @@ struct person person;
 and dereferencing it would look similar to Java
 
 {% codeblock lang:c %}
-person.eat()
+person.eat(apple)
 {% endcodeblock %}
 
 
@@ -89,7 +89,7 @@ In the context of his article, Chisnall is highlighting that Objective-C makes i
 
 ## Roundup
 
-For me, the challenge of working with object-oriented designs is keeping my object-oriented head on. It's easy to slip into a procedural or functional way of coding but when the domain fits, I find that object-oriented solutions just *click*. To that end, I jump on any tool that helps remind me to think in terms of objects and their intercommunication, behaviours not accessors (tell don't ask). I find the message sending metaphor useful in reminding me.  
+For me, the challenge of working with object-oriented designs is keeping my object-oriented head on. It's easy to slip into a procedural or functional way of coding but when the domain fits, I find that object-oriented solutions just *click*. To that end, I jump on any tool that helps remind me to think in terms of objects and their intercommunication, behaviours not accessors (tell don't ask). I find the message sending metaphor useful in doing just that.  
 
 ## References
 
