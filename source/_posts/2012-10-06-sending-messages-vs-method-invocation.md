@@ -5,7 +5,7 @@ date: 2012-10-06 12:12
 comments: true
 categories: java object-oriented objective-c
 sidebar: false
-published: false
+published: true
 keywords: "message sending, objective-c, smalltalk, java, object-oriented, method invocation"
 description: "What's the difference between sending an object a message and just invoking a method on an object? Why is a function different than a method?"
 ---
