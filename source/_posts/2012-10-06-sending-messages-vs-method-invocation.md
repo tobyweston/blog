@@ -27,7 +27,7 @@ With the arrival of "objects" to encapsulate state *and* behaviour, the messagin
 
 Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it's just done behind the scenes at runtime. By calling a method, for example, `person.eat(apple)`, the reference to `person` allows the JVM to associate the object with the procedure `eat`. It's a process called [dynamic dispatch](http://en.wikipedia.org/wiki/Dynamic_dispatch).
 
-It's very similar in concept as the distinction between functions and methods.
+It's very similar in concept to the distinction between functions and methods.
 
 
 
@@ -96,4 +96,4 @@ For me, the challenge of working with object-oriented designs is keeping my obje
 [1] Objective-C for Java Programmers, [Part 1](https://www.informit.com/articles/printerfriendly.aspx?p=1568732), [Part 2](https://www.informit.com/articles/printerfriendly.aspx?p=1571983), David Chisnall   
 [2] [Object-Oriented Programming with Objective-C](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html), Apple.      
 [3] [Learn Objective-C for Java Developers](http://www.amazon.co.uk/Learn-Objective-C-Java-Developers-Series/dp/1430223693/ref=sr_1_fkmr0_1?ie=UTF8&qid=1349518202&sr=8-1-fkmr0), James Bucanek    
-[4] [Object-C Messages](http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html) Mike Ash    
+[4] [Object-C Messages](http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html), Mike Ash    
