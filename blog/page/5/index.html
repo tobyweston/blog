@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations &hellip;">
+  <meta name="description" content="What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-10-06 13:45:18 +0100 -->
+    <!-- last update; 2012-10-06 13:47:26 +0100 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -81,6 +81,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/03/19/nibbles-cat/">Nibbles the Cat & Concurrency</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-19T00:00:00+00:00" pubdate data-updated="true">Mar 19<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
+
+<p>I&#8217;m talking here about Java level deadlocks really and to illustrate the
+point, poor old <code>Nibbles</code> got himself in quite a pickle. This situation is like
+this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
+a dialogue&#8230;</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code>
+is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the
+<code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back
+in his arms.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/03/19/nibbles-cat/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -721,82 +785,6 @@ balanced view.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Abstracting ReentrantReadWriteLock</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-01T00:00:00+01:00" pubdate data-updated="true">Aug 1<span>st</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread requests a lock that it already holds, it&#8217;ll be given it. Without this, a subclass couldn&#8217;t override a snynchronised method and then call the superclass method without deadlocking.</p>
-
-<p>Java&#8217;s <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReentrantReadWriteLock</a> is about acquiring seperate
-read and write locks for efficiency. For example, in the case where you may
-have infrequent writes but frequent reads, it <em>may</em> be more efficient to not
-synchronise all access with just one lock. Instead, <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html">ReenstrantReadWriteLock</a> can allow all read access to only block when a write is taking
-place. You&#8217;ll end up with multiple simultaneous reads but synchronised writes
-and all the reads will have guaranteed visibility of the writes.</p>
-
-<p>With all <a href="http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html">Lock</a> implementations, you specifically acquire the lock and are
-politely asked to release the lock within a finally block. Makes sense but it
-always bugs me that we&#8217;re forced into Java&#8217;s verbosity trap, yet again.</p>
-
-<p>So, vanilla Java would have you;</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Lock</span> <span class="n">l</span> <span class="o">=</span> <span class="o">...;</span>
-</span><span class='line'><span class="n">l</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="c1">// access the resource protected by this lock</span>
-</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">l</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So why not wrap the boiler plate code up in a micro-DSL and pass a closure to execute? Any implementation must
-call both lock and unlock and re-throw any exceptions. The following test shows this to be true.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/08/01/abstracting-reentrantreadwritelock/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -812,6 +800,10 @@ call both lock and unlock and re-throw any exceptions. The following test shows 
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/09/15/daily-standups-dont-work/">Daily Standups Don&#8217;t Work</a>
@@ -855,10 +847,6 @@ call both lock and unlock and re-throw any exceptions. The following test shows 
     
       <li class="post">
         <a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a>
       </li>
     
   </ul>

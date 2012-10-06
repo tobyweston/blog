@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-10-06T13:45:18+01:00</updated>
+  <updated>2012-10-06T13:47:26+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,124 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sending Messages vs Method Invocation]]></title>
+    <link href="http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/"/>
+    <updated>2012-10-06T12:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation</id>
+    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
+
+<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we'll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we're on the topic, we'll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
+
+<!-- more -->
+
+
+<h2>Sending Messages</h2>
+
+<p>The terminology of sending a message to an object is partly historical. Languages like Smalltalk adopted it as a metaphor when working with objects. To understand why the metaphor is useful, we have to look at things before the advent of object oriented languages. In these days, procedural programming relied on subroutines (functions and procedures) to modify state. With no concept of "objects", state is simply associated with data structures. So applying a function to those structures would produce new state and applying a procedure would modify state.</p>
+
+<p>With the arrival of "objects" to encapsulate state <em>and</em> behaviour, the messaging metaphor invites us to think about objects performing their own operations. Objects communicate by sending each other <em>messages</em>. Instead of calling a function directly in procedural programming, you send a message to an object requesting it to perform one of it's own subroutines. This allows us to think about <em>methods</em> in more abstract terms. Rather than think about data structures and the functions (and procedures) that affect them, we can focus on <em>behaviours</em> [2].</p>
+
+<blockquote><p>So sending messages helps us think in object-oriented terms rather than procedural or functional terms; we think in terms of behaviours rather than data structures. However, there is also a more concrete, technical difference.</p></blockquote>
+
+<p>Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it's just done behind the scenes at runtime. By calling a method, for example, <code>person.eat(apple)</code>, the reference to <code>person</code> allows the JVM to associate the object with the procedure <code>eat</code>. It's a process called <a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">dynamic dispatch</a>.</p>
+
+<p>It's very similar in concept to the distinction between functions and methods.</p>
+
+<h2>Functions vs Methods</h2>
+
+<p>Functions and procedures are <a href="http://en.wikipedia.org/wiki/Subroutine">subroutines</a> disassociated from the data they act upon. Methods on the other hand are subroutines associated with objects. Functions are class level subroutines whereas methods are object level subroutines. For example, a <em>method</em> in Objective-C, is compiled down to a C <em>function</em> with additional parameters, one of which is the receiver object (<code>id</code>). It associates the function with this object.</p>
+
+<p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The equivalent C function, would look like this. It isn't associated with an instance of a class and would be globally available to all modules. It doesn't make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>C Function  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Object References</h2>
+
+<p>So where does object references come in?</p>
+
+<p>Java uses <em>object references</em> not <em>pointers</em>. Pointers are just integer values, literally pointing to an address in memory. For example, with pointer arithmetic, you can manually zip around memory locations. Java prevents you from directly accessing memory locations like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a <code>struct</code> or even to a function [3].</p>
+
+<p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says "in Java, a message call looks like a call to a function pointer in a C structure", he's referring to a C structure that contains a pointer to a function being dereferenced and how Java's method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>and dereferencing it would look similar to Java</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the context of his article, Chisnall is highlighting that Objective-C makes it's syntax as distinct as possible when talking about message sending. It's a useful idea as it makes the terminology of sending messages explicit and baked into the way you work with the language. With Java, you have to work harder to conceptually take up the metaphor. Java's terminology is around calling a method so it brushes over some of these subtleties.</p>
+
+<h2>Roundup</h2>
+
+<p>For me, the challenge of working with object-oriented designs is keeping my object-oriented head on. It's easy to slip into a procedural or functional way of coding but when the domain fits, I find that object-oriented solutions just <em>click</em>. To that end, I jump on any tool that helps remind me to think in terms of objects and their intercommunication, behaviours not accessors (tell don't ask). I find the message sending metaphor useful in doing just that.</p>
+
+<h2>References</h2>
+
+<p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
+[2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
+[3] <a href="http://www.amazon.co.uk/Learn-Objective-C-Java-Developers-Series/dp/1430223693/ref=sr_1_fkmr0_1?ie=UTF8&amp;qid=1349518202&amp;sr=8-1-fkmr0">Learn Objective-C for Java Developers</a>, James Bucanek  <br/>
+[4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Diff Excel with Java and Hamcrest]]></title>
@@ -367,46 +485,6 @@ X-Host: web4
 <p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>.</p>
 
 <p>I think that's quiet enough for now though, so we'll take a look at how that's done in the <a href="/blog/2012/08/12/oauth-and-http-part-ii">next post</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mountain Lion Carnage]]></title>
-    <link href="http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage/"/>
-    <updated>2012-07-28T12:28:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage</id>
-    <content type="html"><![CDATA[<p>After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.</p>
-
-<!-- more -->
-
-
-<h2>Git</h2>
-
-<p>On my machine, before the update, Git used to live in</p>
-
-<pre><code>/usr/bin/git
-</code></pre>
-
-<p>Which I think was a symbolic link pointing to <code>/usr/local/git</code>. This gets wiped out by Mountain Lion, to preserve tools using the old reference (IntelliJ IDEA in my case), I created a new sym link.</p>
-
-<pre><code>sudo ln -s /usr/local/git/bin/git /usr/bin/git
-</code></pre>
-
-<p>The <code>/usr/bin</code> folder should be on the <code>$PATH</code> so it should get the terminal working again too.</p>
-
-<h2>Subversion</h2>
-
-<p><a href="http://www.sublimetext.com/forum/viewtopic.php?f=3&amp;p=34790">Apparently</a>, Apple removed Subversion with 10.8 so there's nothing to do other than install it manually.</p>
-
-<p>You can install Xcode which should put Subversion in <code>/Applications/Xcode.app/Contents/Developer/usr/bin/svn</code>. Victor Quinn talks about <a href="http://victorquinn.com/blog/2012/02/19/fix-git-svn-in-mountain-lion/">reinstalling Xcode</a> to fix similar problems.</p>
-
-<h2>Java</h2>
-
-<p>OSX will install this for you the first time you try and start up a Java app. It sets up a symbolic link for <code>mvn</code> to point to Maven 3 which may need adjusting if you're still using Maven 2. See <a href="/blog/2011/10/29/java-source-on-mac">this post</a> for the fix.</p>
-
-<h2>Rake / Python</h2>
-
-<p>It even managed to mess with my Python installation which gets used when building this blog using the <code>rake generate</code> command. Thanks though to <a href="http://www.sebastien-han.fr/blog/2012/07/26/broken-rake-after-update-to-mountain-lion/">Sébastien Han</a> for getting me out of it.</p>
 ]]></content>
   </entry>
   

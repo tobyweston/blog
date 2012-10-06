@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-10-06T13:45:18+01:00</updated>
+  <updated>2012-10-06T13:47:26+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,111 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sending Messages vs Method Invocation]]></title>
+    <link href="http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/"/>
+    <updated>2012-10-06T12:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation</id>
+    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
+
+<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we&#8217;re on the topic, we&#8217;ll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
+
+<!-- more -->
+
+
+<h2>Sending Messages</h2>
+
+<p>The terminology of sending a message to an object is partly historical. Languages like Smalltalk adopted it as a metaphor when working with objects. To understand why the metaphor is useful, we have to look at things before the advent of object oriented languages. In these days, procedural programming relied on subroutines (functions and procedures) to modify state. With no concept of &#8220;objects&#8221;, state is simply associated with data structures. So applying a function to those structures would produce new state and applying a procedure would modify state.</p>
+
+<p>With the arrival of &#8220;objects&#8221; to encapsulate state <em>and</em> behaviour, the messaging metaphor invites us to think about objects performing their own operations. Objects communicate by sending each other <em>messages</em>. Instead of calling a function directly in procedural programming, you send a message to an object requesting it to perform one of it&#8217;s own subroutines. This allows us to think about <em>methods</em> in more abstract terms. Rather than think about data structures and the functions (and procedures) that affect them, we can focus on <em>behaviours</em> [2].</p>
+
+<blockquote><p>So sending messages helps us think in object-oriented terms rather than procedural or functional terms; we think in terms of behaviours rather than data structures. However, there is also a more concrete, technical difference.</p></blockquote>
+
+<p>Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it&#8217;s just done behind the scenes at runtime. By calling a method, for example, <code>person.eat(apple)</code>, the reference to <code>person</code> allows the JVM to associate the object with the procedure <code>eat</code>. It&#8217;s a process called <a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">dynamic dispatch</a>.</p>
+
+<p>It&#8217;s very similar in concept to the distinction between functions and methods.</p>
+
+<h2>Functions vs Methods</h2>
+
+<p>Functions and procedures are <a href="http://en.wikipedia.org/wiki/Subroutine">subroutines</a> disassociated from the data they act upon. Methods on the other hand are subroutines associated with objects. Functions are class level subroutines whereas methods are object level subroutines. For example, a <em>method</em> in Objective-C, is compiled down to a C <em>function</em> with additional parameters, one of which is the receiver object (<code>id</code>). It associates the function with this object.</p>
+
+<p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
+
+<figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The equivalent C function, would look like this. It isn&#8217;t associated with an instance of a class and would be globally available to all modules. It doesn&#8217;t make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
+
+<figure class='code'><figcaption><span>C Function  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
+
+<figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// nom nom nom</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Object References</h2>
+
+<p>So where does object references come in?</p>
+
+<p>Java uses <em>object references</em> not <em>pointers</em>. Pointers are just integer values, literally pointing to an address in memory. For example, with pointer arithmetic, you can manually zip around memory locations. Java prevents you from directly accessing memory locations like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a <code>struct</code> or even to a function [3].</p>
+
+<p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says &#8220;in Java, a message call looks like a call to a function pointer in a C structure&#8221;, he&#8217;s referring to a C structure that contains a pointer to a function being dereferenced and how Java&#8217;s method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and dereferencing it would look similar to Java</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the context of his article, Chisnall is highlighting that Objective-C makes it&#8217;s syntax as distinct as possible when talking about message sending. It&#8217;s a useful idea as it makes the terminology of sending messages explicit and baked into the way you work with the language. With Java, you have to work harder to conceptually take up the metaphor. Java&#8217;s terminology is around calling a method so it brushes over some of these subtleties.</p>
+
+<h2>Roundup</h2>
+
+<p>For me, the challenge of working with object-oriented designs is keeping my object-oriented head on. It&#8217;s easy to slip into a procedural or functional way of coding but when the domain fits, I find that object-oriented solutions just <em>click</em>. To that end, I jump on any tool that helps remind me to think in terms of objects and their intercommunication, behaviours not accessors (tell don&#8217;t ask). I find the message sending metaphor useful in doing just that.</p>
+
+<h2>References</h2>
+
+<p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
+[2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
+[3] <a href="http://www.amazon.co.uk/Learn-Objective-C-Java-Developers-Series/dp/1430223693/ref=sr_1_fkmr0_1?ie=UTF8&amp;qid=1349518202&amp;sr=8-1-fkmr0">Learn Objective-C for Java Developers</a>, James Bucanek  <br/>
+[4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Daily Standups Don't Work]]></title>
@@ -1488,139 +1593,6 @@ it just works out of the box.</li>
 
 <p>Head over to <a href="http://robotooling.com">robotooling.com</a> or <a href="https://github.com/tobyweston">github</a> to find out
 more.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
-    <link href="http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
-    <updated>2012-02-21T06:27:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
-    <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON &#8216;in-browser&#8217; like in Firefox and Chrome. If you&#8217;re using <a href="http://jersey.java.net/">Jersey</a>, Oracle&#8217;s JAX-RS reference implementation, here&#8217;s how to make IE8 play nice.</p>
-
-<!-- more -->
-
-
-<p>The problem is in IE8&#8217;s default set of <code>Accept</code> header values. For some reason, it&#8217;ll ask for a very specific set of Microsoft types in the request;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When the server responds with a <code>Content-Type</code> of anything other than what&#8217;s in the accept list,
-IE will prompt the user to save the resource instead of attempting to display it. That&#8217;s fair enough as I imagine its
-saying &#8220;I didn&#8217;t say I could accept this so therefore, I don&#8217;t know how to display it&#8221;.</p>
-
-<p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure>
-
-
-<p>will prompt IE8 to save the file rather than display &#8216;in-browser&#8217;.</p>
-
-<p>When we return a response with a JSON content type, IE won&#8217;t know how to handle it. We could send back our JSON as <code>text/plain</code> for all cases, but that kind of defeats the object of using <code>Content-Type</code> all together.</p>
-
-<p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
-by sending back plain text but still return JSON for all other cases.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@GET</span>
-</span><span class='line'>    <span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getAllCustomers</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nf">allCustomersAsJson</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@GET</span>
-</span><span class='line'>    <span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/x-ms-application&quot;</span><span class="o">)</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">TextPlainOkResponse</span> <span class="nf">getAllCustomersForInternetExplorer</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">getAllCustomersAsJson</span><span class="o">());</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The class above will return a list of all Customers as JSON. The <code>getAllCustomers</code> method will be dispatched to via
-Jersey and send back the <code>String</code> with a <code>Content-Type</code> of <code>application/json</code> for all cases <em>unless</em>
-the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
-constructed, we&#8217;ll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">json</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getEntity</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStatus</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="mi">200</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">MultivaluedMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">getMetadata</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">MetadataMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{{</span>
-</span><span class='line'>            <span class="n">put</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="n">asList</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}};</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So for all clients asking for <code>application/x-ms-application</code>, they&#8217;ll actually get <code>text/plain</code>. In the case of
-Internet Explorer 8, it will display the JSON &#8216;in-browser&#8217;. It won&#8217;t apply any formatting though, so you may want to
-pretty print the response before sending it back.</p>
-
-<p>If it doesn&#8217;t work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what headers are going over the wire.</p>
 ]]></content>
   </entry>
   
