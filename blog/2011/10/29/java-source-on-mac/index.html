@@ -50,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2012-10-06 13:47:26 +0100 -->
+    <!-- last update; 2012-11-09 11:23:20 +0000 -->
     <h1><a href="/">bad.robot</a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -115,8 +115,10 @@
 
 
 <ol>
-<li>Go to the <a href="https://developer.apple.com/downloads">Apple Developer Connection downloads page</a>, search for <strong>Java for Mac OS X 10.x Developer Package</strong> where 10.x matches your version of OS X. The developer bundle includes the source whereas the regular software update version does not.</li>
-<li>Download and install. Running <code>/Applications/Utilities/Java Preferences.app</code> should now show &#8220;Java SE 6 (System)&#8221; in the list.</li>
+<li>Go to the <a href="https://developer.apple.com/downloads">Apple Developer Connection downloads page</a>.</li>
+<li>For Lion and above, search for <strong>Java for Mac OS X (2006-2012) Developer Package</strong>. The developer bundle includes the source whereas the regular software update version does not.</li>
+<li>For older versions (pre-Lion), search for <strong>Java for Mac OS X 10.x Developer Package</strong> where 10.x matches your version of OS X.</li>
+<li>Download and install.</li>
 <li>Open a Terminal.app window</li>
 <li><code>cd $JAVA_HOME</code> (aka <code>/System/Library/Frameworks/JavaVM.framework/Home</code>)</li>
 <li>Setup a symlink to the source archive with <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_26-b03-383.jdk/Contents/Home/src.jar</code></li>
@@ -124,6 +126,8 @@
 <li>Now point your IDE of choice to the new source folder symlink.</li>
 </ol>
 
+
+<h2>Maven</h2>
 
 <p>Any update to Java will set things up to point to Maven 3, so if you use Maven 2, it&#8217;ll break things with</p>
 
@@ -140,6 +144,12 @@
 <li>Have a cup of tea.</li>
 </ol>
 
+
+<h2>Java Preferences.app</h2>
+
+<p>Prior to OS X 10.7, you could run the Java Preferences app <code>/Applications/Utilities/Java Preferences.app</code> to show your newly installed Java version. For example, after the install step above, you could check that &#8220;Java SE x (System)&#8221; was in the list.</p>
+
+<p>However, Apple have recently <a href="http://reviews.cnet.com/8301-13727_7-57533880-263/java-preferences-missing-after-latest-os-x-java-update/">removed this app</a> as they move away from in house support of Java.</p>
 </div>
 
 
