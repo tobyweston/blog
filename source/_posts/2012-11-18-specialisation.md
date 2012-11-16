@@ -25,9 +25,20 @@ People tend to talk in terms of inheritance when talking about the "is a" relati
 Inheritance is just one mechanism to implement specialisation and generalisation. Composition, aggregation and role based design are all alternatives.
 
 
+Generalization/specialization is an abstraction principle that allows to define classes as a refinement of other
+classes. [1]
+
+Calling "super" from a sub-class to its parent, couples the child to the parent [James]. UI frameworks are a good example where the domain isn't really a good application of OO. The noun has moved away from ...?... would aggregation be prefable here? Kind of means that inheritance is well suited for varying behaviour and not algorthmic variation. That is to say, varying the algorithm defined in the super type couples to that super type, whereas varying true behaviour doesn't. In the later case, you request an object responds to sending a message and don't care how, in the former, there's some implicit knowledge that to respond to the message, the reciever will ask its parent the same question.
+
 Aggregation vs Compoisition
 
 Inheritance vs Aggregation
 
+Inheritance for code reuse is a bad thing.
+
+
 See previous post.
 
+
+[1] GENERALIZATION/SPECIALIZATION AND ROLE IN OBJECT
+ORIENTED CONCEPTUAL MODELING, Monique Snoeck, Guido Dedene
