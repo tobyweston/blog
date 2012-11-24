@@ -14,6 +14,7 @@ sidebar : false
 Other character options
 
 [{% img /logo/design1b.jpeg 640 906 'by Alex' %}](/logo/design1b.jpeg)
+[{% img /logo/design1c.jpeg 640 906 'by Alex' %}](/logo/design1b.jpeg)
 
 
 ## Design 2
