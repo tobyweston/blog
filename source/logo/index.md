@@ -7,17 +7,7 @@ footer: false
 sidebar : false
 ---
 
-## Design 1
 
 [{% img /logo/design1.jpeg 640 906 'by Alex' %}](/logo/design1.jpeg)
-
-Other character options
-
 [{% img /logo/design1b.jpeg 640 906 'by Alex' %}](/logo/design1b.jpeg)
 [{% img /logo/design1c.jpeg 640 906 'by Alex' %}](/logo/design1c.jpeg)
-
-
-## Design 2
-
-[{% img /logo/design2b.jpeg 640 1011 'by Silver Fox Design'%}](/logo/design2b.jpeg)
-[{% img /logo/design2.jpeg 640 1011 'by Silver Fox Design'%}](/logo/design2.jpeg)
