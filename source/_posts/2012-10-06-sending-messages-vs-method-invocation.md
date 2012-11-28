@@ -95,5 +95,5 @@ For me, the challenge of working with object-oriented designs is keeping my obje
 
 [1] Objective-C for Java Programmers, [Part 1](https://www.informit.com/articles/printerfriendly.aspx?p=1568732), [Part 2](https://www.informit.com/articles/printerfriendly.aspx?p=1571983), David Chisnall   
 [2] [Object-Oriented Programming with Objective-C](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html), Apple.      
-[3] [Learn Objective-C for Java Developers](http://www.amazon.co.uk/Learn-Objective-C-Java-Developers-Series/dp/1430223693/ref=sr_1_fkmr0_1?ie=UTF8&qid=1349518202&sr=8-1-fkmr0), James Bucanek    
+[3] [Learn Objective-C for Java Developers](http://amzn.to/Tm1Sh1), James Bucanek
 [4] [Object-C Messages](http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html), Mike Ash    

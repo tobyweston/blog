@@ -10,7 +10,7 @@ description: "In this first of the series, I talk a little about Allen's ideas, 
 series: Getting Things Done
 ---
 
-Having toyed with the ideas from [Getting Things Done](http://www.amazon.co.uk/gp/product/0749922648/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=diyfiesta&linkCode=as2&camp=1634&creative=6738&creativeASIN=0749922648) and not really getting much out of it, I thought I'd revisit David Allen's ideas with a little more rigour. I'd causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I'd look at them every now and then but I didn't exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I'd have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.
+Having toyed with the ideas from [Getting Things Done](http://amzn.to/Tm1FdQ) and not really getting much out of it, I thought I'd revisit David Allen's ideas with a little more rigour. I'd causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I'd look at them every now and then but I didn't exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I'd have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.
 
 
 In this first post, I'll talk a little about Allen's ideas, summarising the first section of the book. In the [second post]({{ root_url }}/blog/2012/07/22/getting-things-done-ii), I reflect a little on it's application and the changes I made to my personal approach to _getting things done_.
