@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-11-25T10:13:05+00:00</updated>
+  <updated>2012-11-28T20:52:48+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -391,7 +391,7 @@ end.</p>
     <link href="http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
     <updated>2010-01-04T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
-    <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://www.amazon.co.uk/Java-Concurrency-Practice-Brian-Goetz/dp/0321349601?ie=UTF8&amp;tag=diyfiesta&amp;link_code=btl&amp;camp=213689&amp;creative=392969">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
+    <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>

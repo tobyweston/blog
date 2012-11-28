@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-11-25T10:13:05+00:00</updated>
+  <updated>2012-11-28T20:52:48+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -126,7 +126,7 @@
 
 <p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
-[3] <a href="http://www.amazon.co.uk/Learn-Objective-C-Java-Developers-Series/dp/1430223693/ref=sr_1_fkmr0_1?ie=UTF8&amp;qid=1349518202&amp;sr=8-1-fkmr0">Learn Objective-C for Java Developers</a>, James Bucanek  <br/>
+[3] <a href="http://amzn.to/Tm1Sh1">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
 ]]></content>
   </entry>
