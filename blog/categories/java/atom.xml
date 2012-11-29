@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2012-11-28T20:59:49+00:00</updated>
+  <updated>2012-11-29T21:44:09+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -96,7 +96,7 @@
 
 <p>So where does object references come in?</p>
 
-<p>Java uses <em>object references</em> not <em>pointers</em>. Pointers are just integer values, literally pointing to an address in memory. For example, with pointer arithmetic, you can manually zip around memory locations. Java prevents you from directly accessing memory locations like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a <code>struct</code> or even to a function [3].</p>
+<p>Java uses <em>object references</em> not <em>pointers</em>. Pointers are variables who's <em>value</em> is an address in memory. With pointer arithmetic, you can manually manipulate this value to zip around memory locations. Java prevents you from directly accessing memory locations directly like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a <code>struct</code> or even to a function [3]. Java's object references point to objects only.</p>
 
 <p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says "in Java, a message call looks like a call to a function pointer in a C structure", he's referring to a C structure that contains a pointer to a function being dereferenced and how Java's method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
 
@@ -210,6 +210,14 @@ Expected: is &lt;999.99D&gt;
 <p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>. It doesn't yet match against styling (things like borders or background colours).</p>
 
 <p>The project is open source. As always, I'd love to hear how you get on using it. Check it out and the leave a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
+
+<h2>Recommended Reading</h2>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="left" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=839348930X&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="left" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=839348930X&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21"" title="'Practice Unit Testing'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321784154&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="left" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321784154&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Acceptance Test Driven Development by Example'" ></a></p>
 ]]></content>
   </entry>
   
