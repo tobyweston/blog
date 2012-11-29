@@ -9,6 +9,8 @@ sidebar : false
 
 
 [{% img /logo/a.jpeg 640 906 'by Alex' %}](/logo/a.jpeg)
+[{% img /logo/f.jpeg 640 906 'by Alex' %}](/logo/f.jpeg)
+[{% img /logo/g.jpeg 640 906 'by Alex' %}](/logo/g.jpeg)
 [{% img /logo/d.jpeg 640 906 'by Alex' %}](/logo/d.jpeg)
 [{% img /logo/e.jpeg 640 906 'by Alex' %}](/logo/e.jpeg)
 [{% img /logo/b.jpeg 640 906 'by Alex' %}](/logo/b.jpeg)
