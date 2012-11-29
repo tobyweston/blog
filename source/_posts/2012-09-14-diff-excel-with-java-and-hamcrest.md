@@ -81,14 +81,12 @@ It matches on type and content of the cell. So the string cell `"999.99"` is dif
 The project is open source. As always, I'd love to hear how you get on using it. Check it out and the leave a comment if you like it. Issues are tracked on the [project site](http://github.com/tobyweston/simple-excel/issues).
 
 
-<a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21">
-<img border="0" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" >
-</a>
-<img src="http://www.assoc-amazon.co.uk/e/ir?t=baddotrobotco-21&l=as2&o=2&a=0321503627" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+## Recommended Reading
 
+[{% img left http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 'Growing Object Oriented Software' %}](http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21)
 
-<a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobotco-21"><img border="0" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=839348930X&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" ></a><img src="http://www.assoc-amazon.co.uk/e/ir?t=baddotrobotco-21&l=as2&o=2&a=839348930X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+[{% img left http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=839348930X&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" 'Practice Unit Testing' %}](http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobotco-21)
 
+[{% img left http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321784154&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 'Acceptance Test Driven Development by Example' %}](http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobotco-21)
 
-<a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobotco-21"><img border="0" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321784154&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" ></a><img src="http://www.assoc-amazon.co.uk/e/ir?t=baddotrobotco-21&l=as2&o=2&a=0321784154" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
