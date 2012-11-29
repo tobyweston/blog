@@ -67,7 +67,7 @@ void eat(id self, SEL _cmd, Food* food) {
 
 So where does object references come in?
 
-Java uses *object references* not *pointers*. Pointers are just integer values, literally pointing to an address in memory. For example, with pointer arithmetic, you can manually zip around memory locations. Java prevents you from directly accessing memory locations like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a `struct` or even to a function [3].
+Java uses *object references* not *pointers*. Pointers are variables who's *value* is an address in memory. With pointer arithmetic, you can manually manipulate this value to zip around memory locations. Java prevents you from directly accessing memory locations directly like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a `struct` or even to a function [3]. Java's object references point to objects only.
 
 So in [1] when [Chisnall](https://www.informit.com/articles/printerfriendly.aspx?p=1571983) says "in Java, a message call looks like a call to a function pointer in a C structure", he's referring to a C structure that contains a pointer to a function being dereferenced and how Java's method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.  
 
