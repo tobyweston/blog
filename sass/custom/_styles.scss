@@ -30,27 +30,27 @@ body > header h1:after {
       position:absolute;
       top:0.3em;
       bottom:0em;
-      height:128px;
-      width:128px;
+      height:132px;
+      width:105px;
       overflow:hidden;
       text-align:left;
-      background-image:url('../images/robot_devil_128x128.png');
+      background-image:url('../images/robot-logo_105x132.png');
       background-repeat:no-repeat;
 
       @media only screen and (min-width: 0px) {
-           right: -1.0em;
+           right: -0.750em;
            background-size: 60% 60%;
       }
       @media only screen and (min-width: 480px) {
-           right: -1.0em;
+           right: 0.100em;
            background-size: 60% 60%;
       }
       @media only screen and (min-width: 768px) {
-           right: 0.275em;
+           right: 0.250em;
            background-size: 70% 70%;
       }
       @media only screen and (min-width: 992px) {
-           right: 0.275em;
+           right: 0.475em;
            background-size: 80% 80%;
       }
 }
