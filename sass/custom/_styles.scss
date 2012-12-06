@@ -93,6 +93,16 @@ body > header h1:after {
       }
 }
 
+aside.sidebar:after {
+  position:absolute;
+  right:-17.0em;
+  bottom:0.5em;
+  height:166px;
+  width:104px;
+  background-image:url('../images/waving_with_cane_104x166.png');
+  background-repeat:no-repeat;
+}
+
 html {
     background: #252525 url('/images/line-tile.png?1328359347') top left
 }
