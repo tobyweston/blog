@@ -3,6 +3,11 @@
 
 @import "_typography.scss";
 
+$pad-header-min: 65px !default;
+$pad-header-narrow: 65px !default;
+$pad-header-medium: 75px !default;
+$pad-header-wide: 75px !default;
+
 time {
     font-size: .9em;
 }
@@ -16,13 +21,47 @@ section > h1 {
 }
 
 body > header h1 {
-    font-family: Typewriter;
+    font-family: 'Lobster', cursive;
+    font-weight: 400;
     text-shadow: 2px 2px 2px #000000;
+    @media only screen and (min-width: 0px) {
+        padding-left: $pad-header-min;
+        padding-right: $pad-header-min;
+    }
+    @media only screen and (min-width: 480px) {
+        padding-left: $pad-header-narrow;
+        padding-right: $pad-header-narrow;
+    }
+    @media only screen and (min-width: 768px) {
+        padding-left: $pad-header-medium;
+        padding-right: $pad-header-medium;
+    }
+    @media only screen and (min-width: 992px) {
+        padding-left: $pad-header-wide;
+        padding-right: $pad-header-wide;
+    }
 }
 
 body > header h2 {
-    font-family: Typewriter;
+    font-family: 'Lobster', cursive;
     text-shadow: 2px 2px 2px #000000;
+    padding-left: 65px;
+    @media only screen and (min-width: 0px) {
+        padding-left: $pad-header-min;
+        padding-right: $pad-header-min;
+    }
+    @media only screen and (min-width: 480px) {
+        padding-left: $pad-header-narrow;
+        padding-right: $pad-header-narrow;
+    }
+    @media only screen and (min-width: 768px) {
+        padding-left: $pad-header-medium;
+        padding-right: $pad-header-medium;
+    }
+    @media only screen and (min-width: 992px) {
+        padding-left: $pad-header-wide;
+        padding-right: $pad-header-wide;
+    }
 }
 
 body > header h1:after {
@@ -30,29 +69,39 @@ body > header h1:after {
       position:absolute;
       top:0.3em;
       bottom:0em;
-      height:128px;
-      width:128px;
+      height:132px;
+      width:105px;
       overflow:hidden;
       text-align:left;
-      background-image:url('../images/robot_devil_128x128.png');
+      background-image:url('../images/robot-logo_105x132.png');
       background-repeat:no-repeat;
 
       @media only screen and (min-width: 0px) {
-           right: -1.0em;
+           left: 0.200em;
            background-size: 60% 60%;
       }
       @media only screen and (min-width: 480px) {
-           right: -1.0em;
+           left: 0.300em;
            background-size: 60% 60%;
       }
       @media only screen and (min-width: 768px) {
-           right: 0.275em;
+           left: 0.350em;
            background-size: 70% 70%;
       }
       @media only screen and (min-width: 992px) {
-           right: 0.275em;
+           left: 0.475em;
            background-size: 80% 80%;
       }
+}
+
+aside.sidebar:after {
+  position:absolute;
+  right:-17.0em;
+  bottom:0.5em;
+  height:166px;
+  width:104px;
+  background-image:url('../images/waving_with_cane_104x166.png');
+  background-repeat:no-repeat;
 }
 
 html {
