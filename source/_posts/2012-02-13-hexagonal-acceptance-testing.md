@@ -49,8 +49,8 @@ He talks about a relatively small number of _ports_ (say ~4-5) and decoupling _m
 
 I'm talking more about changing the _external_ nature of these actors to be more _internal_. If we have a much larger number of ports (say >30), decoupling _minor_ components we can achieve this substutatabiliy on a bigger scale and be more flexible on how we test the system.
 
-Conway described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or _acceptance criteria_ is a logical progression and fits nicely into iterative development.
+Cockburn described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or _acceptance criteria_ is a logical progression and fits nicely into iterative development.
 
 Have a go and see if it works for you...
 
-
+{% wikipedia Conways_Law %}
