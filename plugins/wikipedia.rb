@@ -1,3 +1,6 @@
+
+# From https://github.com/pferreir/octopress-wikipedia
+
 require 'json'
 require 'nokogiri'
 
