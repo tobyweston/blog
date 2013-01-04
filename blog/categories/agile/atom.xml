@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-02T16:48:16+00:00</updated>
+  <updated>2013-01-04T19:39:52+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -161,9 +161,18 @@
 
 <p>I'm talking more about changing the <em>external</em> nature of these actors to be more <em>internal</em>. If we have a much larger number of ports (say >30), decoupling <em>minor</em> components we can achieve this substutatabiliy on a bigger scale and be more flexible on how we test the system.</p>
 
-<p>Conway described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
+<p>Cockburn described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
 
 <p>Have a go and see if it works for you...</p>
+
+<p><div class="wikipedia">
+  
+  <h2>Conway's law</h2>
+  <div>
+    <p><strong>Conway's law</strong> is an <a href="http://en.wikipedia.org/wiki/Adage" title="Adage">adage</a> named after <a href="http://en.wikipedia.org/wiki/Computer" title="Computer">computer</a> <a href="http://en.wikipedia.org/wiki/Programmer" title="Programmer">programmer</a> <a href="http://en.wikipedia.org/wiki/Melvin_Conway" title="Melvin Conway">Melvin Conway</a>, who introduced the idea in 1968. It states that "<i>organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations</i>". </p>
+  </div>
+  <a href="http://en.wikipedia.org/wiki/Conways_Law" target="_blank">Read more on Wikipedia</a>
+</div></p>
 ]]></content>
   </entry>
   
