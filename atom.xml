@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-04T19:39:52+00:00</updated>
+  <updated>2013-01-09T20:35:29+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,141 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java Stack vs Deque]]></title>
+    <link href="http://baddotrobot.com/blog/2013/01/10/stack-vs-deque./"/>
+    <updated>2013-01-10T12:12:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque.</id>
+    <content type="html"><![CDATA[<p>Java has long had a <a href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it&#8217;s supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It&#8217;s <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven&#8217;t made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
+
+<!-- more -->
+
+
+<h2>Don&#8217;t Use Deque</h2>
+
+<p>I can understand that Sun/Oracle never corrected the mistake given Java&#8217;s principle of backwards compatibility but I was surprised when I noticed they recommend using Deque instead.</p>
+
+<blockquote><p>A more complete and consistent set of LIFO stack operations is provided by the Deque interface and its implementations, which should be used in preference to this class.</p><footer><strong>Oracle Documentation for Stack</strong> <cite><a href='http://docs.oracle.com/javase/7/docs/api/index.html?java/util/Stack.html'>docs.oracle.com/javase/7/docs/&hellip;</a></cite></footer></blockquote>
+
+
+<p>A deque is a double ended queue, by definition it is <strong>not</strong> a stack. It allows LIFO <em>and</em> FIFO behaviour. I can&#8217;t see why Sun/Oracle are so happy to abandon encapsulation like this.</p>
+
+<h2>Why is this Important?</h2>
+
+<p>If you don&#8217;t control what operations a stack class can perform, you open up the class for non-stack like uses. For example, you might be able to insert objects into the middle of the stack. If client code starts using this behaviour, there&#8217;s immediately a  dependency on it. The client code now depends on the <em>implementation</em> and not the <em>role</em> of your class. You won&#8217;t be able to swap out the implementation of your stack without potentially forcing changes to clients.</p>
+
+<p>You could argue that this is the client code&#8217;s choice. For classes with well known semantics like the stack, any client using non-stack behaviour should appreciate the coupling and be able to make an informed decision. For more domain or business specific behaviours however, it&#8217;s very likely that clients will benefit by avoiding this coupling. Forcing clients to depend on defined roles rather than implementation allows for flexibility of substitution.</p>
+
+<h2>Use Encapsulation</h2>
+
+<p>It seems like we should really use a <code>Stack</code> abstraction to define the <em>role</em> and composition to implement the stack. That way, we&#8217;re able to substitute any implementation and expect our clients to still work. We won&#8217;t be able to break encapsulation by exposing methods we shouldn&#8217;t and we&#8217;ll allow clients to substitute alternative implementations.</p>
+
+<p>For example,</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">T</span> <span class="nf">pop</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Deque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">deque</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">deque</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s important to note that I&#8217;m not saying use composition to enforce encapsulation though. The example above restricts what can be done with the underlying <code>Deque</code>. It&#8217;s <em>hiding the implementation details</em> and exposing the role through an interface. It&#8217;s using information hiding to achieve encapsulation. That&#8217;s not to say that you can&#8217;t achieve the same thing using inheritance.</p>
+
+<p>For example, the naive <code>BoundedStack</code> implementation below is still a <code>Stack</code>. It inherits it, it has an &#8220;is a&#8221; relationship with <code>Stack</code>. Any stack implementation most certainly does not have a &#8220;is a&#8221; relationship with list (<code>Vector</code>) or double ended queue (<code>Deque</code>).</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&lt;</span> <span class="n">UPPER_BOUND</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">++;</span>
+</span><span class='line'>            <span class="n">deque</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">--;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">deque</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Related</h2>
+
+<div class="wikipedia">
+  
+  <h2>information hiding</h2>
+  <div>
+    <p>In <a href="http://en.wikipedia.org/wiki/Computer_science" title="Computer science">computer science</a>, <strong>information hiding</strong> is the principle of segregation of the <i><a href="http://en.wikipedia.org/wiki/Design" title="Design">design</a> decisions</i> in a <a href="http://en.wikipedia.org/wiki/Computer_program" title="Computer program">computer program</a> that are most likely to change, thus protecting other parts of the program from extensive modification if the design decision is changed. The protection involves providing a stable <a href="http://en.wikipedia.org/wiki/Interface_(computer_science)" title="Interface (computer science)" class="mw-redirect">interface</a> which protects the remainder of the program from the implementation (the details that are most likely to change).
+</p>
+  </div>
+  <a href="http://en.wikipedia.org/wiki/Information_hiding" target="_blank">Read more on Wikipedia</a>
+</div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sending Messages vs Method Invocation]]></title>
@@ -1577,33 +1712,6 @@ above example, the test would no longer fail. You&#8217;d get a false positive.<
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of &#8220;noise&#8221; to cope with in the test. You may or may not be comfortable with this.</p>
 
 <p>I&#8217;d love to hear which approach you prefer, so feel free to post a comment below.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tools for bad.robots]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots/"/>
-    <updated>2012-03-18T15:58:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/18/tools-for-bad-dot-robots</id>
-    <content type="html"><![CDATA[<p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
-a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
-Rather than re-implement the same utility code again and again, I&#8217;ve started to collect things under the bad.robot
-banner. So far, we have&#8230;</p>
-
-<!-- more -->
-
-
-<ul>
-<li>simple-http; a simple way to build a HTTP client and work with the HTTP verbs. No more lengthy configuration,
-it just works out of the box.</li>
-<li>simple-excel; a simple DSL-wrapper over Apache POI to work with sheets</li>
-<li>concordion-ant-task; build <a href="http://www.concordion.org/">Concordion</a> overview pages for your specifications</li>
-<li>a collection of domain driven design classes so you can quickly incorporate <em>value types</em> and alike in your project.</li>
-</ul>
-
-
-<p>Head over to <a href="http://robotooling.com">robotooling.com</a> or <a href="https://github.com/tobyweston">github</a> to find out
-more.</p>
 ]]></content>
   </entry>
   

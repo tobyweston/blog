@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-04T19:39:52+00:00</updated>
+  <updated>2013-01-09T20:35:29+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,146 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Java Stack vs Deque]]></title>
+    <link href="http://baddotrobot.com/blog/2013/01/10/stack-vs-deque./"/>
+    <updated>2013-01-10T12:12:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque.</id>
+    <content type="html"><![CDATA[<p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it's supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It's <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven't made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
+
+<!-- more -->
+
+
+<h2>Don't Use Deque</h2>
+
+<p>I can understand that Sun/Oracle never corrected the mistake given Java's principle of backwards compatibility but I was surprised when I noticed they recommend using Deque instead.</p>
+
+<p><blockquote><p>A more complete and consistent set of LIFO stack operations is provided by the Deque interface and its implementations, which should be used in preference to this class.</p><footer><strong>Oracle Documentation for Stack</strong> <cite><a href='http://docs.oracle.com/javase/7/docs/api/index.html?java/util/Stack.html'>docs.oracle.com/javase/7/docs/&hellip;</a></cite></footer></blockquote></p>
+
+<p>A deque is a double ended queue, by definition it is <strong>not</strong> a stack. It allows LIFO <em>and</em> FIFO behaviour. I can't see why Sun/Oracle are so happy to abandon encapsulation like this.</p>
+
+<h2>Why is this Important?</h2>
+
+<p>If you don't control what operations a stack class can perform, you open up the class for non-stack like uses. For example, you might be able to insert objects into the middle of the stack. If client code starts using this behaviour, there's immediately a  dependency on it. The client code now depends on the <em>implementation</em> and not the <em>role</em> of your class. You won't be able to swap out the implementation of your stack without potentially forcing changes to clients.</p>
+
+<p>You could argue that this is the client code's choice. For classes with well known semantics like the stack, any client using non-stack behaviour should appreciate the coupling and be able to make an informed decision. For more domain or business specific behaviours however, it's very likely that clients will benefit by avoiding this coupling. Forcing clients to depend on defined roles rather than implementation allows for flexibility of substitution.</p>
+
+<h2>Use Encapsulation</h2>
+
+<p>It seems like we should really use a <code>Stack</code> abstraction to define the <em>role</em> and composition to implement the stack. That way, we're able to substitute any implementation and expect our clients to still work. We won't be able to break encapsulation by exposing methods we shouldn't and we'll allow clients to substitute alternative implementations.</p>
+
+<p>For example,</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'><span class="n">T</span> <span class="nf">pop</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Deque</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">deque</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">deque</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It's important to note that I'm not saying use composition to enforce encapsulation though. The example above restricts what can be done with the underlying <code>Deque</code>. It's <em>hiding the implementation details</em> and exposing the role through an interface. It's using information hiding to achieve encapsulation. That's not to say that you can't achieve the same thing using inheritance.</p>
+
+<p>For example, the naive <code>BoundedStack</code> implementation below is still a <code>Stack</code>. It inherits it, it has an "is a" relationship with <code>Stack</code>. Any stack implementation most certainly does not have a "is a" relationship with list (<code>Vector</code>) or double ended queue (<code>Deque</code>).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// ...</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">UPPER_BOUND</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">count</span><span class="o">++;</span>
+</span><span class='line'>        <span class="n">deque</span><span class="o">.</span><span class="na">addFirst</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">count</span><span class="o">--;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">deque</span><span class="o">.</span><span class="na">removeFirst</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Related</h2>
+
+<p><div class="wikipedia">
+  
+  <h2>information hiding</h2>
+  <div>
+    <p>In <a href="http://en.wikipedia.org/wiki/Computer_science" title="Computer science">computer science</a>, <strong>information hiding</strong> is the principle of segregation of the <i><a href="http://en.wikipedia.org/wiki/Design" title="Design">design</a> decisions</i> in a <a href="http://en.wikipedia.org/wiki/Computer_program" title="Computer program">computer program</a> that are most likely to change, thus protecting other parts of the program from extensive modification if the design decision is changed. The protection involves providing a stable <a href="http://en.wikipedia.org/wiki/Interface_(computer_science)" title="Interface (computer science)" class="mw-redirect">interface</a> which protects the remainder of the program from the implementation (the details that are most likely to change).
+</p>
+  </div>
+  <a href="http://en.wikipedia.org/wiki/Information_hiding" target="_blank">Read more on Wikipedia</a>
+</div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sending Messages vs Method Invocation]]></title>
@@ -503,262 +643,6 @@ If a class throws an exception, <em>we should never need to test the content of 
 <p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Transaction Management without the Frameworks]]></title>
-    <link href="http://baddotrobot.com/blog/2012/01/29/transaction-management-without/"/>
-    <updated>2012-01-29T00:00:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/01/29/transaction-management-without</id>
-    <content type="html"><![CDATA[<p>It's easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it's often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we're not tied into yet another framework, why wouldn't we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
-
-<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
-
-<!-- more -->
-
-
-<p>Lets take a look at an example in detail.</p>
-
-<p>It's probably helpful to be clear what we mean by a <em>unit of work</em> here. Intimately related to the idea of a database transaction, a unit of work is a series of database operations that when applied together adhere to all the transactional characteristics (<em>atomic</em>, <em>coherent</em>, <em>isolated</em> and <em>durable</em>). For example, when updating the database to increment one bank account and decrementing another, things should be atomic (both operations happen or neither does), consistent (the bank accounts actually exist), isolated (protected from concurrent updates to the same accounts) and durable (permanently applied). Describing both operations as a unit of work and applying then transactionally achieves this.</p>
-
-<p>So we can think of the unit of work as something that can be executed and when it is, it'll be under the conditions described above.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">R</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">R</span> <span class="n">execute</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">E</span><span class="o">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Something that would be responsible for executing the unit of work might look like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UnitOfWorkRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span><span class="o">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>When it comes to using Hibernate, we might have a concrete <code>UnitOfWorkRunner</code> look something like the following. The key thing here is that the transaction management is handled here, its a simple try catch finally pattern and as you can see, is very simple.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TransactionalUnitOfWorkRunner</span> <span class="kd">implements</span> <span class="n">UnitOfWorkRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">TransactionalUnitOfWorkRunner</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">sessionProvider</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">unitOfWork</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isOpen</span><span class="o">())</span>
-</span><span class='line'>            <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">T</span> <span class="n">runInTransaction</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">,</span> <span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">TransactionalUnitOfWorkRunner</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">).</span><span class="na">run</span><span class="o">(</span><span class="n">unitOfWork</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>It's this class and interface that allows us to be explicit about our transactional boundary. Clients to this define the transaction boundary. In most containers and frameworks, the transactional boundary is around the request/response cycle and the developer has little influence. Using the <code>UnitOfWorkRunner</code> directly in your code gives more control over this. You can use a servlet filter to achieve a similar request/response scoped transaction or you can be finer grained and produce what I prefer; a transaction scoped to a coherent <em>business operation</em>.</p>
-
-<p>For example, lets have a interface describing current account business functions that work on bank account entities. The <code>CurrentAccount</code> interface represents business functions and should define the transactional boundary. The <code>BankAccount</code> on the other hand represents the entities involved which themselves are stored in an <code>Accounts</code> <em>repostiory</em>.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// &quot;business&quot; operations</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CurrentAccount</span> <span class="o">{</span>
-</span><span class='line'>   <span class="kt">void</span> <span class="nf">deposit</span><span class="o">(</span><span class="n">From</span><span class="o">&lt;</span><span class="n">BankAccount</span><span class="o">&gt;</span> <span class="n">from</span><span class="o">,</span> <span class="n">To</span><span class="o">&lt;</span><span class="n">BankAccount</span><span class="o">&gt;</span> <span class="n">to</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>When we implement the <code>CurrentAccount</code>, we can define the transactional behavior as a separate concern from the business behavior. For example,</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Accounts</span> <span class="n">repository</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AccountRepository</span><span class="o">();</span>
-</span><span class='line'><span class="n">CurrentAccount</span> <span class="n">currentAccount</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AcmeBankCurrentAccount</span><span class="o">(</span><span class="n">repository</span><span class="o">);</span>
-</span><span class='line'><span class="n">CurrentAccount</span> <span class="n">transactionally</span> <span class="o">=</span> <span class="n">transactionally</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">,</span> <span class="n">currentAccount</span><span class="o">);</span>
-</span><span class='line'><span class="c1">// ...</span>
-</span><span class='line'><span class="n">transactionally</span><span class="o">.</span><span class="na">deposit</span><span class="o">(...);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Where <code>transactionally</code> is a statically imported creation method that wires up the <code>AcmeBankCurrentAccount</code> (the business services) with transactional behavior. It does this via decoration but essentially creates an anonymous <code>UnitOfWork</code> in which to execute the business operation within.</p>
-
-<p>The full class looks like this</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TransactionWrapper</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">InvocationHandler</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">;</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">R</span> <span class="n">delegate</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">R</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">R</span> <span class="n">transactionally</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">,</span> <span class="n">R</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="o">(</span><span class="n">R</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">object</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span> <span class="n">object</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span> <span class="k">new</span> <span class="n">TransactionWrapper</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">,</span> <span class="n">object</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">TransactionWrapper</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">,</span> <span class="n">R</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">sessionProvider</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">delegate</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="kd">final</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">TransactionalUnitOfWorkRunner</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">).</span><span class="na">run</span><span class="o">(</span><span class="k">new</span> <span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Object</span><span class="o">,</span> <span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="nd">@Override</span>
-</span><span class='line'>            <span class="kd">public</span> <span class="n">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="n">SessionProvider</span> <span class="n">sessionProvider</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">delegate</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">});</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">throwable</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="n">throwable</span><span class="o">.</span><span class="na">getTargetException</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>The underlying business functionality within the <code>AcmeBankCurrentAccount</code> isn't concerned with transactions. Instead, its decorated with transactionality and we can use this decorating proxy to wrap any business interface as a transaction.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AcmeBankCurrentAccount</span> <span class="kd">implements</span> <span class="n">CurrentAccount</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">AccountRepository</span> <span class="n">accounts</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">AcmeBankCurrentAccount</span><span class="o">(</span><span class="n">AccountRepository</span> <span class="n">accounts</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">accounts</span> <span class="o">=</span> <span class="n">accounts</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">deposit</span><span class="o">(</span><span class="n">From</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">BankAccountIdentifier</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">from</span><span class="o">,</span> <span class="n">To</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">BankAccountIdentifier</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">to</span><span class="o">,</span> <span class="n">Amount</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">BankAccount</span> <span class="n">benefactor</span> <span class="o">=</span>  <span class="n">accounts</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">from</span><span class="o">.</span><span class="na">value</span><span class="o">());</span>
-</span><span class='line'>    <span class="n">BankAccount</span> <span class="n">beneficiary</span> <span class="o">=</span> <span class="n">accounts</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">to</span><span class="o">.</span><span class="na">value</span><span class="o">());</span>
-</span><span class='line'>    <span class="n">benefactor</span><span class="o">.</span><span class="na">withdraw</span><span class="o">(</span><span class="n">amount</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">beneficiary</span><span class="o">.</span><span class="na">deposit</span><span class="o">(</span><span class="n">amount</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">accounts</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">benefactor</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">accounts</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">beneficiary</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>This can come in handy when testing as we can isolate and test the different responsibilities. We're also left with a handy framework to add ad-hoc data directly to the database and it's easy enough to wire up an in-memory only <code>UnitOfWorkRunner</code>. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from <a href="http://www.growing-object-oriented-software.com/">GOOS</a>.</p>
 ]]></content>
   </entry>
   
