@@ -5,7 +5,7 @@ date: 2013-01-10 12:12
 comments: true
 categories: java object-oriented
 sidebar: false
-published: false
+published: true
 keywords: "java stack, inheritance vs composition, inheritance vs aggregation, deque, LIFO, FIFO"
 description: "Oracle broke encapsulation with their Stack implementation and haven't bothered fixing it and instead recommend using Deque instead."
 ---
