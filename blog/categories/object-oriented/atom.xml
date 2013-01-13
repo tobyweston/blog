@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-09T20:35:29+00:00</updated>
+  <updated>2013-01-13T19:47:53+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Java Stack vs Deque]]></title>
-    <link href="http://baddotrobot.com/blog/2013/01/10/stack-vs-deque./"/>
+    <link href="http://baddotrobot.com/blog/2013/01/10/stack-vs-deque/"/>
     <updated>2013-01-10T12:12:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque.</id>
+    <id>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque</id>
     <content type="html"><![CDATA[<p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it's supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It's <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven't made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
 
 <!-- more -->

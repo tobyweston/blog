@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread &hellip;">
-  
+  <meta name="description" content="Invalid thread access running SWT applications on the Mac fixed with -XstartOnFirstThread">
+  <meta name="keywords" content="SWT, mac, mac OSX, -XstartOnFirstThread, startOnFirstThread, thread, start on main thread">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -50,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-09 20:35:29 +0000 -->
+    <!-- last update; 2013-01-13 19:47:53 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -109,14 +109,9 @@
   </header>
 
 
-<div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure to what ails ya! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
+<div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
 
-<p>It seems that by default, Java will not start on the main thread.
-Cocoa/Carbon/[insert mac vodoo here] starts it all and as a consequence, the
-SWT UI thread might get associated with it and not your main application
-thread. Therefore, whenever the application tries to access it (even though it
-looks like it owns it in your code), it may not and invalid thread access
-hilarity will ensue.</p>
+<p>It seems that by default, Java will not start on the main thread. Cocoa/Carbon starts it all and as a consequence, the SWT UI thread might get associated with it and not your main application thread. Therefore, whenever the application tries to access it (even though it looks like it owns it in your code), it may not and invalid thread access hilarity will ensue.</p>
 
 <p>The flip side to this is that AWT/Swing apps and plugins might have problems.</p>
 </div>

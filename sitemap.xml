@@ -2,47 +2,47 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://baddotrobot.com/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T15:59:47+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/11/bit-disappointing-this-year/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:00:04+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/17/junit-and-threaded-tests-i-recently/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T15:58:01+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/24/interfaces-vs-class-imposterisers/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:11:09+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/29/swt-applications-on-mac-os-x/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:16:56+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/29/swt-support-for-window-licker/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:16:56+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:29:14+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2008/12/31/what-makes-good-pair/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:32:32+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/01/06/be-more-expressive-with-builders/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:39:57+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/01/22/deprecated-annotation/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:40:54+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/</loc>
-        <lastmod>2012-08-03T19:19:44+01:00</lastmod>
+        <lastmod>2013-01-13T16:48:47+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/</loc>
@@ -275,7 +275,7 @@
         <lastmod>2013-01-02T15:44:42+00:00</lastmod>
     </url>
     <url>
-        <loc>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque./</loc>
+        <loc>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque/</loc>
         <lastmod>2013-01-09T20:30:43+00:00</lastmod>
     </url>
     <url>
@@ -284,7 +284,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2013-01-09T20:30:43+00:00</lastmod>
+        <lastmod>2013-01-13T16:48:47+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -300,7 +300,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2013-01-09T20:30:43+00:00</lastmod>
+        <lastmod>2013-01-13T16:48:47+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/logo/</loc>

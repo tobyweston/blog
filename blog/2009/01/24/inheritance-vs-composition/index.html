@@ -9,15 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a Stack as an example. Example 1. 1
-2
-3
-4
-5
-6
-7
-8 &hellip;">
-  
+  <meta name="description" content="Java's stack class isn't a stack at all! It favours inheritance over composition causing it to no longer be just a stack.">
+  <meta name="keywords" content="inheritance vs composition, inheritance vs aggregation">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -57,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-09 20:35:29 +0000 -->
+    <!-- last update; 2013-01-13 19:47:53 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -139,7 +132,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Example 2</h3>
+<h3>Example 2.</h3>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -162,13 +155,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
-Suddenly, methods to get and insert elements at specific positions are
-available to clients of the stack. We move from trying to create a well
-behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
 
-<p>So I was surprised when looking at the Java source to see that
-<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+<p>So I was surprised when looking at the Java source to see that <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty and things <a href="/blog/2013/01/10/stack-vs-deque">aren&#8217;t any better in Java 7 and 8</a>.</p>
 </div>
 
 

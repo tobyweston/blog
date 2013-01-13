@@ -50,7 +50,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-09 20:35:29 +0000 -->
+    <!-- last update; 2013-01-13 19:47:53 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -112,15 +112,11 @@
   </header>
 
 
-  <div class="entry-content"><p>I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel for it using the CountDownLatch class as an example.</p>
+  <div class="entry-content"><p>I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel for it using the <code>CountDownLatch</code> class as an example.</p>
 
-<h3>CountDownLatch.await()</h3>
+<h2>CountDownLatch.await()</h2>
 
-<p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down
-to zero, blocking the calling thread before continuing. When using a timeout,
-the method returns true if the count reached zero or false if the timeout
-expires. To make the timeout more explicit in my application code, I started
-with the following.</p>
+<p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -143,12 +139,9 @@ with the following.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Using a Builder with Static Constructor</h3>
+<h2>Using a Builder with Static Constructor</h2>
 
-<p>To be more concise, I wanted to wrap the logic above in some kind of helper
-class. Thanks to lovely static imports, a private constructor and a static
-factory method called <code>await()</code>, I was able to express the same thing with the
-following.</p>
+<p>To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called <code>await()</code>, I was able to express the same thing with the following.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -167,18 +160,11 @@ following.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The <code>with(...)</code> method is the thing that actually wraps the call to the <code>await()</code>
-method on the latch. I created a <code>Duration</code> class in the above case to capture
-the timeout constant.</p>
+<p>The <code>with(...)</code> method is the thing that actually wraps the call to the <code>await()</code> method on the latch. I created a <code>Duration</code> class in the above case to capture the timeout constant.</p>
 
-<p>This can be a neat little pattern which when used sparingly can lead to little
-nuggets of really readable code. However, the helper class that employs the
-static factory can feel unnatural as the method names don&#8217;t really represent
-their function but rather their context within the DSL that the class defines.
-Using a private constructor and verifying the internal state is essential to
-ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very
-few methods and you make sure they can only be called in a sensible order, I&#8217;d
-suggest its a good pattern to follow. The finished class is shown below in full.</p>
+<p>This can be a neat little pattern which when used sparingly can lead to little nuggets of really readable code. However, the helper class that employs the static factory can feel unnatural as the method names don&#8217;t really represent their function but <strong>rather their context within the DSL that the class defines</strong>.</p>
+
+<p>Using a private constructor and verifying the internal state is essential to ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I&#8217;d suggest its a good pattern to follow. The finished class is shown below in full.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -255,13 +241,9 @@ suggest its a good pattern to follow. The finished class is shown below in full.
   </header>
 
 
-  <div class="entry-content"><p><a href="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s1600-h/q71195623.png"><img class="right" src="http://2.bp.blogspot.com/_-uMxV_fCbC4/SVs4hfSD7JI/AAAAAAAAC3Q/FVCbxckLt6E/s200/q71195623.png"></a></p>
+  <div class="entry-content"><p><a href="../../../../../images/cookies_milk.png"><img class="right" src="../../../../../images/cookies_milk.png"></a></p>
 
-<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code,
-conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive,
-communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work.
-When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working
-in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
+<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code, conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive, communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work. When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
 </div>
   
   
@@ -301,32 +283,23 @@ in a good pair that you realise what you&#8217;re missing working in a bad pairi
 
   <div class="entry-content"><p>Following up from the post <a href="/blog/2008/12/29/swt-support-for-window-licker/">SWT Support in Window Licker</a>.</p>
 
-<p>The thing I found most interesting about looking at this was having to be more
-explicit about the UI thread. When developing SWT applications, we&#8217;re all
-aware that accessing almost anything graphical in SWT from any other thread
-than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more
-explicit about the &#8220;UI thread&#8221;.</p>
+<p>The thing I found most interesting about looking at this was having to be more explicit about the UI thread. When developing SWT applications, we&#8217;re all aware that accessing almost anything graphical in SWT from any other thread than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more explicit about the &#8220;UI thread&#8221;.</p>
 
-<p>When I started to look at how I go about writing SWT applications, I noticed
-that</p>
+<p>When I started to look at how I go about writing SWT applications, I noticed that</p>
 
 <ul>
-<li>I often run the application from a main somewhere.</li>
+<li>I often run the application from a <code>main</code> method somewhere which runs on the <code>main</code> thread.</li>
 <li>I often discover invalid thread access problems at run time.</li>
-<li>I often plug the problem by wrapping the offender in a <code>Display.a/sync(...)</code> call.</li>
+<li>I often plug the problem by wrapping the offender in a <code>Display.sync(...)</code> or <code>Display.async(...)</code> call.</li>
 <li>I often have very few long running processes that need to spawn a thread and update the UI.</li>
 </ul>
 
 
-<p>It wasn&#8217;t until I started looking at being able to run the application from
-the context of a JUnit test that I started to think in more detail about
-these.</p>
+<p>It wasn&#8217;t until I started looking at being able to run the application from the context of a JUnit test that I started to think in more detail about these.</p>
 
-<h3>Running the application from a main method</h3>
+<h2>Running the application from a main method</h2>
 
-<p>This seems simple but being more explicit about the UI thread means that this
-is worth a closer look. I always used to start an SWT application from the
-main, in variations of the code below.</p>
+<p>This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the <code>main</code> method, in variations of the code below.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -373,18 +346,9 @@ main, in variations of the code below.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The default constructor would do or delegate the work to setup the various
-shells and widgets and finally start the event loop. When using JFace&#8217;s
-<code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling
-<code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the
-event loop to the <code>ApplicationWindow class</code>. If you call
-<code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event
-loop.</p>
+<p>The default constructor would do or delegate the work to setup the various shells and widgets and finally start the event loop. When using JFace&#8217;s <code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling <code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the event loop to the <code>ApplicationWindow class</code>. If you call <code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event loop.</p>
 
-<p>However you do it, getting into that event loop blocks the client and its the
-thread that executes this event loop that is called the UI thread. It just so
-happens that most SWT applications will hit that loop from the main thread as
-you can see from the following partial thread dump.</p>
+<p>However you do it, getting into that event loop blocks the client and <strong>it&#8217;s the thread that executes this event loop that is called the UI thread</strong>. It just so happens that most SWT applications will hit that loop from the main thread as you can see from the following partial thread dump.</p>
 
 <pre><code>Name: main
 State: RUNNABLE
@@ -397,33 +361,19 @@ Stack trace:
     com.objogate...SwtCalculator.main(SwtCalculator.java:113)
 </code></pre>
 
-<p>At this point, the SWT event loop is doing its thing, waiting for UI events
-(mouse clicks, keyboard input etc) and dispatching them to the appropriate
-listeners. We&#8217;ve also defined what we mean by the UI thread;</p>
+<p>At this point, the SWT event loop is doing its thing, waiting for UI events (mouse clicks, keyboard input etc) and dispatching them to the appropriate listeners. So, we can define what we mean by the UI thread;</p>
 
 <blockquote><p>The UI thread or event dispatching thread is the thread that executes the standard SWT event loop.</p></blockquote>
 
-<h3>Running the tests and GUI in different threads</h3>
+<h2>Running the tests and GUI in different threads</h2>
 
-<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in
-a test, the test would block until the event loop finished, the display would
-be disposed and any subsequent tests against the GUI elements would quickly
-discover that they no longer exist.</p>
+<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in a test, the test would block until the event loop finished, the display would be disposed and any subsequent tests against the GUI elements would quickly discover that they no longer exist.</p>
 
-<p>It should be pretty clear then that in order to test GUI elements the event
-loop has to be started in a different thread than the tests run in. The gotcha
-is that the test thread will likely want to interact with this UI thread in
-order to push buttons and make assertions and that&#8217;s when we get into invalid
-thread access territory with SWT.</p>
+<p>It should be pretty clear then that in order to test GUI elements the event loop has to be started in a different thread than the tests run in. The gotcha is that the test thread will likely want to interact with this UI thread in order to push buttons and make assertions and that&#8217;s when we get into invalid thread access territory with SWT.</p>
 
-<p>The way I implemented this was to use a class extending <code>Thread</code> to represent
-the UI thread and to start the event loop in its <code>run()</code> method. The tests can
-interact with the UI thread by either searching for the display with
-<code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the
-default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
+<p>The way I implemented this was to use a class extending <code>Thread</code> to represent the UI thread and to start the event loop in its <code>run()</code> method. The tests can interact with the UI thread by either searching for the display with <code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
 
-<p>A minor change to the application&#8217;s main method is required to optionally not
-call the event loop when calling main. For example;</p>
+<p>A minor change to the application&#8217;s main method is required to optionally not call the event loop when calling main. For example;</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -438,9 +388,7 @@ call the event loop when calling main. For example;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The tests can then explicitly create a UI thread delegating shell setup to the
-<code>SwtCalculator</code> class before starting the event loop and allowing the test
-thread to continue.</p>
+<p>The tests can then explicitly create a UI thread delegating shell setup to the <code>SwtCalculator</code> class before starting the event loop and allowing the test thread to continue.</p>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -456,6 +404,12 @@ thread to continue.</p>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
@@ -466,6 +420,12 @@ thread to continue.</p>
 </span><span class='line'>    <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculatorDriver</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">calculatorCanAddTwoNumbers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// testing the calculator whilst the main thread is running and</span>
+</span><span class='line'>    <span class="c1">// the UI has been started in another thread (from @Before)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
 </span><span class='line'><span class="nd">@After</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopTheApplication</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
@@ -473,16 +433,11 @@ thread to continue.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run
-inside the UI thread. This uses the strategy pattern but an alternative design
-could just as easily sub-class the <code>UIThread</code> and use the template pattern in a
-similar way.</p>
+<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run inside the UI thread. This uses the strategy pattern but an alternative design could just as easily sub-class the <code>UIThread</code> and use the template pattern in a similar way.</p>
 
-<p>The interrupt allows the event loop on the UI thread to be interrupted and
-stop gracefully.</p>
+<p>The interrupt allows the event loop on the UI thread to be interrupted and stop gracefully.</p>
 
-<p>The following partial thread dump shows it in action. As you can see, a
-explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
+<p>The following partial thread dump shows it in action. As you can see, an explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
 are the hints).</p>
 
 <pre><code>Name: SWT-Event-Dispatcher-Thread-1
@@ -497,9 +452,7 @@ Stack trace:
     - locked java.lang.Class@1d7fbfb
 </code></pre>
 
-<p>It was a good exercise exploring the UI thread and I encourage you to take a
-look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took
-above.</p>
+<p>It was a good exercise exploring the UI thread and I encourage you to take a look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took above.</p>
 </div>
   
   
@@ -537,23 +490,13 @@ above.</p>
   </header>
 
 
-  <div class="entry-content"><p><a href="http://code.google.com/p/windowlicker/">Window Licker</a> is a framework designed to help you define your own fluent API for GUI testing. It provides a driver style API that your Swing or Ajax applications plug into before you go about writing GUI tests in a language natural to your application.</p>
+  <div class="entry-content"><p><a href="http://code.google.com/p/windowlicker/">Window Licker</a> is a framework designed to help you define your own API for GUI testing. It provides a driver style API that your Swing or Ajax applications plug into before you go about writing GUI tests in a language natural to your application.</p>
 
-<p>We&#8217;ve been doing some driver based GUI testing for our web apps using
-<a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> so I was naturally interested in
-Window Licker with regard to rich client based testing. I&#8217;ve been trying to
-test my SWT based apps at the unit level as much as possible, but it&#8217;s not
-always straight forward separating the behaviour of GUI classes from GUI
-elements. How do you test that all the validation behaviour is plumbed in
-correctly and fires at the right time in a text box? So, Window Licker seemed
-like a great candidate to getting some real user style testing. Great!</p>
+<p>We&#8217;ve been doing some driver based GUI testing for our web apps using <a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> so I was naturally interested in Window Licker with regard to rich client based testing. I&#8217;ve been trying to test my SWT based apps at the unit level as much as possible, but it&#8217;s not always straight forward separating the behaviour of GUI classes from GUI elements. How do you test that all the validation behaviour is plumbed in correctly and fires at the right time in a text box? So, Window Licker seemed like a great candidate to getting some real user style testing. Great!</p>
 
-<p>The bad news is that Window Licker doesn&#8217;t yet support SWT. Boo! The good news
-is it gave me a great chance to have a go at implementing basic SWT support in
-Window Licker. Yey!</p>
+<p>The bad news is that Window Licker doesn&#8217;t yet support SWT. Boo! The good news is it gave me a great chance to have a go at implementing basic SWT support in Window Licker. Yey!</p>
 
-<p>Check out the <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">patch</a> I wrote, or the
-<a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">thread</a> where we discuss it.</p>
+<p>Check out the <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">patch</a> I wrote, or the <a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">thread</a> where it&#8217;s discussed.</p>
 </div>
   
   
@@ -591,14 +534,9 @@ Window Licker. Yey!</p>
   </header>
 
 
-  <div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure to what ails ya! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
+  <div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
 
-<p>It seems that by default, Java will not start on the main thread.
-Cocoa/Carbon/[insert mac vodoo here] starts it all and as a consequence, the
-SWT UI thread might get associated with it and not your main application
-thread. Therefore, whenever the application tries to access it (even though it
-looks like it owns it in your code), it may not and invalid thread access
-hilarity will ensue.</p>
+<p>It seems that by default, Java will not start on the main thread. Cocoa/Carbon starts it all and as a consequence, the SWT UI thread might get associated with it and not your main application thread. Therefore, whenever the application tries to access it (even though it looks like it owns it in your code), it may not and invalid thread access hilarity will ensue.</p>
 
 <p>The flip side to this is that AWT/Swing apps and plugins might have problems.</p>
 </div>
@@ -638,27 +576,11 @@ hilarity will ensue.</p>
   </header>
 
 
-  <div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class impostorisers.</p>
+  <div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class imposterisers.</p>
 
-<p>I&#8217;ve been doing a lot with SWT lately and always want to unit test the GUI
-elements. One way I&#8217;ve managed to do this is to mock parts of the GUI
-framework using impostorisers. Unless I want a full on GUI brought up, there
-just isn&#8217;t another way. The GUI API doesn&#8217;t offer me any convenient interfaces
-and I can&#8217;t even create sub-classed mocks myself as the framework prevents you
-sub-classing with run time checks.</p>
+<p>I&#8217;ve been doing a lot with SWT lately and generally want to unit test the UI elements. One way I&#8217;ve managed to do this is to mock parts of the GUI framework using impostorisers. Unless I want the full UI brought up, there just isn&#8217;t another way. The UI API doesn&#8217;t offer me any convenient interfaces and I can&#8217;t even create sub-classed mocks myself as SWT prevents you from sub-classing with run time checks.</p>
 
-<p>I understand that by slowly teasing out behaviour during the mocking / TDD
-process you can clearly express the collaborations a class may have but I feel
-that you can still be clear about a classes behaviour when impostorising. It&#8217;s
-just code right? I&#8217;m not sure I care that collaborations are documented as
-interfaces or not, my tests express the relationships and I&#8217;ve gone through
-the same thought process to understand clearly how the classes under test
-interact. So why is an impostor a bad guy?</p>
-
-<p>In the case of legacy code or third part code, you&#8217;re kind of stuck with
-impostorisers right? I mean you could build an application layer between your
-code and the third party stuff but I&#8217;d want better motivation for doing this
-than to avoid using impostorisers.</p>
+<p>I understand that by slowly teasing out behaviour during the mocking / TDD process you can clearly express the collaborations a class may have but I feel that you can still be clear about class behaviour when using an impostor. It&#8217;s just code right? I&#8217;m not sure I care that collaborations are documented as interfaces or not, my tests express the relationships and I&#8217;ve gone through the same thought process to understand clearly how the classes under test interact. So why is an impostor the bad guy?</p>
 
 </div>
   
@@ -740,21 +662,11 @@ than to avoid using impostorisers.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method
-finishes it somehow messes with the threads&#8230;</p>
+<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method finishes it somehow messes with the threads&#8230;</p>
 
-<p>Looking into things, it seems in my case that naughty Eclipse is muddying the
-water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up
-calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java
-process. Even if we changed the daemon status of the thread, you&#8217;d get the
-same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
+<p>Looking into things, it seems in my case that naughty Eclipse is muddying the water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java process. Even if we changed the daemon status of the thread, you&#8217;d get the same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
 
-<p>So, in some situations it is possible to interrupt a thread in a JUnit test
-bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ
-actually seems to have the same behaviour but I can&#8217;t review to source to
-confirm.</p>
-
-<p><a href="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"><img src="http://lh6.ggpht.com/_-uMxV_fCbC4/SVInGoVdYJI/AAAAAAAAC08/I4RV1KzCyPo/gibble_22x22.png"></a></p>
+<p>So, in some situations it is possible to kill a thread in a JUnit test bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ actually seems to have the same behaviour but I can&#8217;t review to source to confirm.</p>
 </div>
   
   
@@ -853,7 +765,7 @@ confirm.</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/01/10/stack-vs-deque./">Java Stack vs Deque</a>
+        <a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a>
       </li>
     
       <li class="post">
@@ -919,6 +831,32 @@ confirm.</p>
       <a href="/blog/categories/tempus-fugit/">tempus-fugit</a>
       <a href="/blog/categories/testing/">testing</a>
   </p>
+</section>
+<section>
+  <h1>Popular Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Article in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a>
+      </li>
+    
+  </ul>
 </section>
 
 <section>

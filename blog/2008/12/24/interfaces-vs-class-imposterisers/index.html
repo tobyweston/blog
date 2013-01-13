@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not &hellip;">
-  
+  <meta name="description" content="Mocking with JMock without using an interface, ie, using an impostor, isn't always a bad thing.">
+  <meta name="keywords" content="jmock, mocking, imposterizer, cg-lib">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -50,7 +50,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-09 20:35:29 +0000 -->
+    <!-- last update; 2013-01-13 19:47:53 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -109,51 +109,22 @@
   </header>
 
 
-<div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class impostorisers.</p>
+<div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class imposterisers.</p>
 
-<p>I&#8217;ve been doing a lot with SWT lately and always want to unit test the GUI
-elements. One way I&#8217;ve managed to do this is to mock parts of the GUI
-framework using impostorisers. Unless I want a full on GUI brought up, there
-just isn&#8217;t another way. The GUI API doesn&#8217;t offer me any convenient interfaces
-and I can&#8217;t even create sub-classed mocks myself as the framework prevents you
-sub-classing with run time checks.</p>
+<p>I&#8217;ve been doing a lot with SWT lately and generally want to unit test the UI elements. One way I&#8217;ve managed to do this is to mock parts of the GUI framework using impostorisers. Unless I want the full UI brought up, there just isn&#8217;t another way. The UI API doesn&#8217;t offer me any convenient interfaces and I can&#8217;t even create sub-classed mocks myself as SWT prevents you from sub-classing with run time checks.</p>
 
-<p>I understand that by slowly teasing out behaviour during the mocking / TDD
-process you can clearly express the collaborations a class may have but I feel
-that you can still be clear about a classes behaviour when impostorising. It&#8217;s
-just code right? I&#8217;m not sure I care that collaborations are documented as
-interfaces or not, my tests express the relationships and I&#8217;ve gone through
-the same thought process to understand clearly how the classes under test
-interact. So why is an impostor a bad guy?</p>
-
-<p>In the case of legacy code or third part code, you&#8217;re kind of stuck with
-impostorisers right? I mean you could build an application layer between your
-code and the third party stuff but I&#8217;d want better motivation for doing this
-than to avoid using impostorisers.</p>
+<p>I understand that by slowly teasing out behaviour during the mocking / TDD process you can clearly express the collaborations a class may have but I feel that you can still be clear about class behaviour when using an impostor. It&#8217;s just code right? I&#8217;m not sure I care that collaborations are documented as interfaces or not, my tests express the relationships and I&#8217;ve gone through the same thought process to understand clearly how the classes under test interact. So why is an impostor the bad guy?</p>
 
 <!-- more -->
 
 
-<p>In the traditional description of an interface, we&#8217;re taught to use interfaces
-when we want to share behaviour across multiple implementations. When driven
-to creating interfaces for mocking purposes we often only ever have one
-implementation in production which would seem at odds with this traditional
-definition. We do usually end up with a well designed applications which are
-nicely componentised and plugable, but we rarely plug anything different in.
-This in itself often leads us to testing the production configuration in
-larger end-to-end style tests.</p>
+<p>In the case of legacy code or third part code, you&#8217;re kind of stuck with impostorisers right? I mean you could build an application layer between your code and the third party stuff but I&#8217;d want better motivation for doing this than to avoid using impostorisers.</p>
 
-<p>So I feel that if you&#8217;re clear about what&#8217;s driving you to expose a public
-method on a class, your test exercises the collaboration clearly with mocks
-and your class under test is small and discrete then impostorising isn&#8217;t
-really the devils work. You&#8217;ve considered what you&#8217;re doing and why and at the
-end of the day, you&#8217;ve created a unit test that does what its supposed to.</p>
+<p>In the traditional description of an interface, we&#8217;re taught to use interfaces when we want to share behaviour across multiple implementations. When driven to creating interfaces for mocking purposes we often only ever have one implementation in production which would seem at odds with this traditional definition. We do usually end up with a well designed applications which are nicely componentised and plugable, but we rarely plug anything different in. This in itself often leads us to testing the production configuration in larger end-to-end style tests.</p>
 
-<p>If working naturally defining interfaces, then like me, mock away but at least
-consider not creating an interface if the only reason you&#8217;re doing this is for
-mocking. If you do end up creating an interface just for mocking, don&#8217;t do it
-just for mocking but take it further and be explicit in why you&#8217;re formalising
-the collaboration. Think about the behaviour and let it drive your design.</p>
+<p>So I feel that if you&#8217;re clear about what&#8217;s driving you to expose a public method on a class, your test exercises the collaboration clearly with mocks and your class under test is small and discrete then impostorising isn&#8217;t really the devils work. You&#8217;ve considered what you&#8217;re doing and why and at the end of the day, you&#8217;ve created a test that does what its supposed to.</p>
+
+<p>If you&#8217;re naturally defining interfaces, then like me, mock away but at least consider not creating an interface if the only reason you&#8217;re doing this is for mocking. If you do end up creating an interface just for mocking, don&#8217;t do it just for mocking but take it further and be explicit in why you&#8217;re formalising the collaboration. Think about the behaviour and let it drive your design.</p>
 </div>
 
 

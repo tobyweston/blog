@@ -52,7 +52,7 @@ balanced view.
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-09 20:35:29 +0000 -->
+    <!-- last update; 2013-01-13 19:47:53 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -721,7 +721,7 @@ about in my next post. I bet you can&#8217;t wait, you lucky people.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Example 2</h3>
+<h3>Example 2.</h3>
 
 <figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -744,13 +744,9 @@ about in my next post. I bet you can&#8217;t wait, you lucky people.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class.
-Suddenly, methods to get and insert elements at specific positions are
-available to clients of the stack. We move from trying to create a well
-behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
 
-<p>So I was surprised when looking at the Java source to see that
-<code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty.</p>
+<p>So I was surprised when looking at the Java source to see that <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty and things <a href="/blog/2013/01/10/stack-vs-deque">aren&#8217;t any better in Java 7 and 8</a>.</p>
 </div>
   
   
@@ -869,7 +865,7 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/01/10/stack-vs-deque./">Java Stack vs Deque</a>
+        <a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a>
       </li>
     
       <li class="post">
@@ -935,6 +931,32 @@ behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilSt
       <a href="/blog/categories/tempus-fugit/">tempus-fugit</a>
       <a href="/blog/categories/testing/">testing</a>
   </p>
+</section>
+<section>
+  <h1>Popular Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2010/10/18/logging-is-evil-but/">Logging is evil but&#8230;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Article in JavaTech Journal</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a>
+      </li>
+    
+  </ul>
 </section>
 
 <section>
