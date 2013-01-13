@@ -14,6 +14,7 @@ group :development do
   gem 'stringex'
   gem 'liquid', '2.2.2'
   gem 'nokogiri', '~> 1.5.4'
+  gem 'octopress-popular-posts'
 end
 
 gem 'sinatra', '1.2.6'
