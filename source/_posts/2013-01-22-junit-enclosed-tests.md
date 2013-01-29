@@ -10,6 +10,8 @@ keywords: ""
 description: ""
 ---
 
+Occasionally we might want our tests to span multiple files. One file for an acceptance style test and one for a unit style test. Sometimes, different file names make sense and we can easily locate them. If however, you want to create a test with a strange file name, it can get lost in your source. [JUnit](http://junit.org)'s `Enclosed` runner lets you embed multiple test classes within a single JUnit test.
+
 <!-- more -->
 
 @RunWith(Enclosed.class)
