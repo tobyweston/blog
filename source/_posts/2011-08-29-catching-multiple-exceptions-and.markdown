@@ -3,7 +3,7 @@ name: catching-multiple-exceptions-and
 layout: post
 title: Catching Multiple Exceptions (and rethrowing them all!)
 time: 2011-08-29 13:09:00 +01:00
-categories: java exceptions
+categories: java exceptions recipes
 comments: true
 sidebar : false
 keywords: "rethrowing multiple exceptions, exception handling in java"

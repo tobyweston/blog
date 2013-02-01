@@ -3,7 +3,7 @@ name: logging-is-evil-but
 layout: post
 title: Logging is evil but...
 time: 2010-10-18 20:51:00 +01:00
-categories: java mocking testing exceptions rest
+categories: java mocking testing exceptions rest recipes
 comments: true
 sidebar : false
 description: "Don't let logging clutter up your code, follow these tips to separate concerns and move towards logging as a feature. We also look at how to actually test against logging."

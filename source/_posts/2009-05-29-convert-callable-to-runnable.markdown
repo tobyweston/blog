@@ -3,7 +3,7 @@ name: convert-callable-to-runnable
 layout: post
 title: Convert a Callable to a Runnable
 time: 2009-05-29 21:37:00 +01:00
-categories: java object-oriented tempus-fugit
+categories: java object-oriented tempus-fugit recipes
 comments: true
 sidebar : false
 ---

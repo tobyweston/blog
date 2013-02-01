@@ -3,7 +3,7 @@ name: running-junit-tests-in-parallel
 layout: post
 title: Running JUnit tests in parallel
 time: 2009-12-29 19:03:00 +00:00
-categories: java concurrency tempus-fugit
+categories: java concurrency tempus-fugit recipes
 comments: true
 sidebar : false
 ---
