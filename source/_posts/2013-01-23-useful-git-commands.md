@@ -6,8 +6,8 @@ comments: true
 categories: 
 sidebar: false
 published: false
-keywords: "git, tips"
-description: "Some git commands I find useful but keep forgetting."
+keywords: "git, tips, delete remote branch, remove branch, github, ssh, https"
+description: "Some git commands I find useful but keep forgetting like removing a remote branch."
 ---
 
 <a id="top"></a>More as a reminder to myself than anything, here's a bunch of git commands I fund useful.
@@ -83,7 +83,7 @@ but won't associate the remote branch with a local one. You'll need to [set an u
 
 ## <a id="set_upstream_branch"></a>Set upstream branch
 
-Trying a `git pull` after the above will give you an error. Set the upstream thing (plurasight ref)
+Trying a `git pull` after the above will give you an error.
 
     You asked to pull from the remote 'origin', but did not specify
     a branch. Because this is not the default configured remote
@@ -138,3 +138,13 @@ $ git status -sb
  M LegoWars/BattleShip.h
  M LegoWars/BattleShip.m
 {% endcodeblock %}
+
+
+## Recommended Reading
+
+[{% img right http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg 'Pragmatic Guide to Git (Pragmatic Programmers)' %}](http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21)
+[{% img right http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg 'Pragmatic Version Control Using Git' %}](http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21)
+
+ * [Pragmatic Guide to Git (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21), Travis Swicegood
+ * [Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)](http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21), Travis Swicegood
+ * [Pro Git (Expert's Voice in Software Development)](http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21), Scott Chacon
