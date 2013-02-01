@@ -3,9 +3,9 @@ layout: post
 title: "Useful Git Commands"
 date: 2013-01-23 19:55
 comments: true
-categories: 
+categories: recipes
 sidebar: false
-published: false
+published: true
 keywords: "git, tips, delete remote branch, remove branch, github, ssh, https"
 description: "Some git commands I find useful but keep forgetting like removing a remote branch."
 ---
@@ -46,7 +46,7 @@ then delete remotely,
 
     git push origin --delete feature_branch
 
-which is short hand for the full for `git push origin :feature_branch`. The colon looks out of place but its really just the everyday syntax of `git push <remote> <local branch>:<remote branch>` with a empty string representing the local branch. Effectively, it's saying, take no branch from my local branch and push it to the remote branch.
+which is short hand for `git push origin :feature_branch`. The colon looks out of place but its really just the everyday syntax of `git push <remote> <local branch>:<remote branch>` with a empty string representing the local branch. Effectively, it's saying, take no branch from my local branch and push it to the remote branch.
 
 
 
@@ -58,7 +58,7 @@ More on remote branches from [git ready](http://gitready.com/beginner/2009/02/02
 
 ## <a id="switch_to_ssh"></a>Switch from HTTPS to git/ssh
 
-If you're using HTTPS as you fetch url (check you `.git/config` file), you'll likely be asked for your username and password on each push. Switch to git/ssh with the following (assuming you've [setup ssh](https://help.github.com/articles/generating-ssh-keys)).
+If you're using HTTPS as your fetch url (check your `.git/config` file), you'll likely be asked for your username and password on each push. Switch to git/ssh with the following (assuming you've [setup ssh](https://help.github.com/articles/generating-ssh-keys)).
 
     git remote rm origin
     git remote add origin git@github.com:tobyweston/playground
@@ -83,7 +83,7 @@ but won't associate the remote branch with a local one. You'll need to [set an u
 
 ## <a id="set_upstream_branch"></a>Set upstream branch
 
-Trying a `git pull` after the above will give you an error.
+Trying a `git pull` after [switching from HTTPS to git/ssh above](#switch_to_ssh) will give you an error.
 
     You asked to pull from the remote 'origin', but did not specify
     a branch. Because this is not the default configured remote
