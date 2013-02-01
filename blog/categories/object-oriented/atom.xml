@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-15T20:02:37+00:00</updated>
+  <updated>2013-02-01T11:02:28+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -43,14 +43,7 @@
 
 <p>For example,</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span>
 </span><span class='line'><span class="n">T</span> <span class="nf">pop</span><span class="o">();</span>
@@ -59,23 +52,7 @@
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Deque</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
 </span><span class='line'>
@@ -97,27 +74,7 @@
 
 <p>For example, the naive <code>BoundedStack</code> implementation below is still a <code>Stack</code>. It inherits it, it has an "is a" relationship with <code>Stack</code>. Any stack implementation most certainly does not have a "is a" relationship with list (<code>Vector</code>) or double ended queue (<code>Deque</code>).</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// ...</span>
 </span><span class='line'>
@@ -184,13 +141,7 @@
 <p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -201,13 +152,7 @@
 <p>The equivalent C function, would look like this. It isn't associated with an instance of a class and would be globally available to all modules. It doesn't make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>C Function  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -218,13 +163,7 @@
 <p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -240,11 +179,7 @@
 
 <p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says "in Java, a message call looks like a call to a function pointer in a C structure", he's referring to a C structure that contains a pointer to a function being dereferenced and how Java's method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
 </span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="p">);</span>
 </span><span class='line'><span class="p">};</span>
 </span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
@@ -252,8 +187,7 @@
 
 <p>and dereferencing it would look similar to Java</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>In the context of his article, Chisnall is highlighting that Objective-C makes it's syntax as distinct as possible when talking about message sending. It's a useful idea as it makes the terminology of sending messages explicit and baked into the way you work with the language. With Java, you have to work harder to conceptually take up the metaphor. Java's terminology is around calling a method so it brushes over some of these subtleties.</p>
@@ -330,26 +264,14 @@
 
 <p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>It's an example of bad encapsulation in the <code>BadRequestException</code> class. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsistency between the wording of the first two. Are they the same error? It's also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">();</span>
@@ -362,13 +284,7 @@
 
 <p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it's there that we would decide how to map the exception type to a presentable form). We've intentionally <em>avoided</em> something like</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -386,13 +302,7 @@
 
 <p>How do we apply this to exceptions? Well, now we've got nicely encapsulated data it's clear that the exception itself is responsible for <em>using</em> it. In the example above, we've encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -420,14 +330,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p> If that's truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it's a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn't make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
 
-<p> <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p> <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// ...</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -469,21 +372,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.SessionExpiredException<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
 </span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/login<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
@@ -509,16 +398,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
@@ -531,15 +411,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
@@ -551,16 +423,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
@@ -581,25 +444,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
 </span><span class='line'><span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>

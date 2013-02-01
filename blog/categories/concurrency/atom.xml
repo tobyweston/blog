@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-15T20:02:37+00:00</updated>
+  <updated>2013-02-01T11:02:28+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -41,14 +41,7 @@ point, poor old <code>Nibbles</code> got himself in quite a pickle. This situati
 this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
 a dialogue...</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'> <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
@@ -76,32 +69,7 @@ cash, holding onto it (or again, more specifically, it's monitor) until the
 end of the synchronised block then within that block, it requires nibbles. We
 can start to see the potential for deadlock.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
@@ -159,12 +127,7 @@ end.</p>
     <id>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
     <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
@@ -173,25 +136,7 @@ end.</p>
 
 <p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
@@ -220,11 +165,7 @@ end.</p>
 fine when I want to create an instance of a Type but not when I want to
 annotate some method. For example,</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">);</span> <span class="c1">// fine</span>
 </span><span class='line'><span class="o">}</span>
@@ -241,13 +182,7 @@ annotation. Rather than have a nice <code>CLASS</code> type which can optionally
 description, I was forced to have one attribute of type and another to capture
 the additional information. grrrr.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
 </span><span class='line'>   <span class="n">String</span> <span class="nf">details</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -277,33 +212,7 @@ schedules the actual test methods to be run.</p>
 <p>After experimenting with much less straight forward integrations, overriding
 the scheduler gave the following.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
@@ -351,12 +260,7 @@ I created an <code>@Intermittent</code> annotation with a corresponding JUnit <c
 <code>Runner</code>. Now, I can mark up a suspect test and get someone else to do the
 repetition. Joy.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="nd">@Intermittent</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ...</span>
@@ -365,19 +269,7 @@ repetition. Joy.</p>
 
 <p>I can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
 </span><span class='line'>
@@ -393,20 +285,7 @@ repetition. Joy.</p>
 
 <p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>

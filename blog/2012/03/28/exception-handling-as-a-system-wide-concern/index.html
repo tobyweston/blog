@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -133,15 +121,7 @@
 
 <p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;exception-type&gt;</span>bad.robot.example.SessionExpiredException<span class="nt">&lt;/exception-type&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;location&gt;</span>/login<span class="nt">&lt;/location&gt;</span>
 </span><span class='line'><span class="nt">&lt;/error-page&gt;</span>
@@ -162,13 +142,7 @@
 
 <p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
@@ -179,12 +153,7 @@
 
 <p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="nf">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
 </span><span class='line'>    <span class="o">}</span>
@@ -194,13 +163,7 @@
 
 <p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
@@ -219,22 +182,7 @@
 
 <p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
 </span><span class='line'>  <span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
 </span><span class='line'>  <span class="k">try</span> <span class="o">{</span>

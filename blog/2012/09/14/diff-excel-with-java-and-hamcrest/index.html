@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -128,10 +116,7 @@
 
 <p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -152,11 +137,7 @@ Expected: entire workbook to be equal
 
 <p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We&#8217;d like to append this line item as a row on an invoice. It might look something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
 </span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
 </span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
@@ -165,10 +146,7 @@ Expected: entire workbook to be equal
 
 <p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we&#8217;d like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure>

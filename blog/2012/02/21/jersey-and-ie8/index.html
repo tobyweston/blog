@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -116,8 +104,7 @@
 
 <p>The problem is in IE8&#8217;s default set of <code>Accept</code> header values. For some reason, it&#8217;ll ask for a very specific set of Microsoft types in the request;</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*</span></code></pre></td></tr></table></div></figure>
 
 
 <p>When the server responds with a <code>Content-Type</code> of anything other than what&#8217;s in the accept list,
@@ -126,8 +113,7 @@ saying &#8220;I didn&#8217;t say I could accept this so therefore, I don&#8217;t
 
 <p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure>
 
 
 <p>will prompt IE8 to save the file rather than display &#8216;in-browser&#8217;.</p>
@@ -137,22 +123,7 @@ saying &#8220;I didn&#8217;t say I could accept this so therefore, I don&#8217;t
 <p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
 by sending back plain text but still return JSON for all other cases.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@GET</span>
@@ -175,32 +146,7 @@ Jersey and send back the <code>String</code> with a <code>Content-Type</code> of
 the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
 constructed, we&#8217;ll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
 </span><span class='line'>

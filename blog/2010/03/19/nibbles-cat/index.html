@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -116,11 +104,7 @@ point, poor old <code>Nibbles</code> got himself in quite a pickle. This situati
 this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
 a dialogue&#8230;</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -146,26 +130,7 @@ cash, holding onto it (or again, more specifically, it&#8217;s monitor) until th
 end of the synchronised block then within that block, it requires nibbles. We
 can start to see the potential for deadlock.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-01-15T20:02:37+00:00</updated>
+  <updated>2013-02-01T11:02:28+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,161 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Git Commands]]></title>
+    <link href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands/"/>
+    <updated>2013-01-23T19:55:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2013/01/23/useful-git-commands</id>
+    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here&#8217;s a bunch of git commands I fund useful.</p>
+
+<ul>
+<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
+<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
+<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
+<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
+<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2><a id="create_remote_branch"></a>Create a branch on a remote (pushing a branch to a remote)</h2>
+
+<p>Having created a new feature branch locally, you can push to a remote, creating a new branch destination using.</p>
+
+<pre><code>git push -u origin feature_branch
+</code></pre>
+
+<p>The <code>-u</code> sets upstream tracking and is optional.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="delete_remote_branch"></a>Delete a remote branch</h2>
+
+<p>Having pushed your feature branch,</p>
+
+<pre><code>git push origin feature_branch
+</code></pre>
+
+<p>delete locally,</p>
+
+<pre><code>git branch -d feature_branch
+</code></pre>
+
+<p>then delete remotely,</p>
+
+<pre><code>git push origin --delete feature_branch
+</code></pre>
+
+<p>which is short hand for <code>git push origin :feature_branch</code>. The colon looks out of place but its really just the everyday syntax of <code>git push &lt;remote&gt; &lt;local branch&gt;:&lt;remote branch&gt;</code> with a empty string representing the local branch. Effectively, it&#8217;s saying, take no branch from my local branch and push it to the remote branch.</p>
+
+<p>More on remote branches from <a href="http://gitready.com/beginner/2009/02/02/push-and-delete-branches.html">git ready</a></p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="switch_to_ssh"></a>Switch from HTTPS to git/ssh</h2>
+
+<p>If you&#8217;re using HTTPS as your fetch url (check your <code>.git/config</code> file), you&#8217;ll likely be asked for your username and password on each push. Switch to git/ssh with the following (assuming you&#8217;ve <a href="https://help.github.com/articles/generating-ssh-keys">setup ssh</a>).</p>
+
+<pre><code>git remote rm origin
+git remote add origin git@github.com:tobyweston/playground
+</code></pre>
+
+<p>This will alter your <code>.git/config</code> file from</p>
+
+<pre><code>[remote "origin"]
+    url = https://github.com/tobyweston/playground.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+</code></pre>
+
+<p>to</p>
+
+<pre><code>[remote "origin"]
+    url = git@github.com:tobyweston/playground.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+</code></pre>
+
+<p>but won&#8217;t associate the remote branch with a local one. You&#8217;ll need to <a href="#set_upstream_branch">set an upstream branch</a> for that.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="set_upstream_branch"></a>Set upstream branch</h2>
+
+<p>Trying a <code>git pull</code> after <a href="#switch_to_ssh">switching from HTTPS to git/ssh above</a> will give you an error.</p>
+
+<pre><code>You asked to pull from the remote 'origin', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+</code></pre>
+
+<p>Set the upstream branch with</p>
+
+<pre><code>git branch --set-upstream master origin/master
+</code></pre>
+
+<p>which should report back,</p>
+
+<pre><code>Branch master set up to track remote branch master from origin.
+</code></pre>
+
+<p>and change your <code>.git/config</code> file from</p>
+
+<pre><code>[remote "origin"]
+</code></pre>
+
+<p>to</p>
+
+<pre><code>[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+</code></pre>
+
+<p>Do the same for any other remote branches.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="status"></a>Abbreviated status</h2>
+
+<p>The standard <code>git status</code> output</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status
+</span><span class='line'><span class="c"># On branch master</span>
+</span><span class='line'><span class="c"># Your branch is ahead of &#39;origin/master&#39; by 1 commit.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Changes not staged for commit:</span>
+</span><span class='line'><span class="c">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+</span><span class='line'><span class="c">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.h</span>
+</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.m</span>
+</span><span class='line'><span class="c">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The abbreviated <code>git status -sb</code> version</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb
+</span><span class='line'><span class="c">## master...origin/master [ahead 1]</span>
+</span><span class='line'> M LegoWars/BattleShip.h
+</span><span class='line'> M LegoWars/BattleShip.m
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Recommended Reading</h2>
+
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
+
+<ul>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1430218339&amp;linkCode=as2&amp;tag=baddotrobot-21">Pro Git (Expert&#8217;s Voice in Software Development)</a>, Scott Chacon</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java Stack vs Deque]]></title>
@@ -44,11 +199,7 @@
 
 <p>For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">T</span> <span class="nf">pop</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -57,21 +208,7 @@
 
 
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Deque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
 </span><span class='line'>
@@ -92,25 +229,7 @@
 
 <p>For example, the naive <code>BoundedStack</code> implementation below is still a <code>Stack</code>. It inherits it, it has an &#8220;is a&#8221; relationship with <code>Stack</code>. Any stack implementation most certainly does not have a &#8220;is a&#8221; relationship with list (<code>Vector</code>) or double ended queue (<code>Deque</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="c1">// ...</span>
 </span><span class='line'>
@@ -179,10 +298,7 @@
 <p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
 
 <figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -191,10 +307,7 @@
 <p>The equivalent C function, would look like this. It isn&#8217;t associated with an instance of a class and would be globally available to all modules. It doesn&#8217;t make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
 
 <figure class='code'><figcaption><span>C Function  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -203,10 +316,7 @@
 <p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
 
 <figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -220,11 +330,7 @@
 
 <p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says &#8220;in Java, a message call looks like a call to a function pointer in a C structure&#8221;, he&#8217;s referring to a C structure that contains a pointer to a function being dereferenced and how Java&#8217;s method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
 </span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
 </span><span class='line'><span class="p">};</span>
 </span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
@@ -233,8 +339,7 @@
 
 <p>and dereferencing it would look similar to Java</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -323,10 +428,7 @@
 
 <p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -347,11 +449,7 @@ Expected: entire workbook to be equal
 
 <p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We&#8217;d like to append this line item as a row on an invoice. It might look something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
 </span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
 </span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
@@ -360,10 +458,7 @@ Expected: entire workbook to be equal
 
 <p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we&#8217;d like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -460,13 +555,7 @@ HTTP Basic: Access denied.
 
 <p>In a successful exchange of <em>authorisation code</em> for <em>access token</em>, you should see a response like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span><span class="p">,</span>
@@ -498,12 +587,7 @@ grant_type=refresh_token&amp;refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
 
 <p>which will return something like</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
 </span><span class='line'>    <span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span>
@@ -889,8 +973,7 @@ X-Host: web4
 
 <p>In Java, you can create an encoded URL using</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -913,8 +996,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -922,8 +1004,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -942,8 +1023,7 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
     <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
     <content type="html"><![CDATA[<p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I&#8217;ve been working on a library offering a straight forward API with sensible defaults. Typically, you&#8217;ll make HTTP requests with just one line of code.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -956,15 +1036,7 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 <p>The library, <a href="https://github.com/tobyweston/simple-http">simple-http</a>, provides an implementation agnostic API. It ships with support for Apache&#8217;s HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It&#8217;s essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()</span>
 </span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">httpTimeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">30</span><span class="o">)))</span>
 </span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">proxy</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://proxy.com:8999&quot;</span><span class="o">)))</span>
 </span><span class='line'>    <span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">),</span>
@@ -985,15 +1057,13 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 <p>Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that&#8217;s fine but as it comes sensible defaults, for the most part all you&#8217;ll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Regular SSL authentication is straight forward too, just add a username and password to your client.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1003,8 +1073,7 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
 
 <p>Using Apache directly, you might write something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1017,8 +1086,7 @@ Expected: is &lt;200&gt;
 
 <p>With <a href="https://github.com/tobyweston/simple-http">simple-http</a>, you write.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1031,31 +1099,19 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Of course, you can enrich the assertions, for example.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>or assert against the message body, for example.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
@@ -1070,13 +1126,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Or here where we expect a HTTP <code>POST</code> to submit a URL form encoded body to add some stock. In the example, the form parameter we&#8217;re expecting should look like <code>stock=%7Bsome%3A+json+message%7D</code>. Notice how <a href="http://robotooling.com/maven/">bad.robot.repo</a> avoids this complexity.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
 </span><span class='line'>      <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">post</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">params</span><span class="o">(</span><span class="s">&quot;stock&quot;</span><span class="o">,</span> <span class="s">&quot;{some: json message}&quot;</span><span class="o">).</span><span class="na">asString</span><span class="o">()))));</span>
 </span><span class='line'>  <span class="o">}});</span>
@@ -1089,20 +1139,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>You can download from the <a href="http://robotooling.com/maven/">bad.robot.repo</a> Maven repository or get the source from <a href="https://github.com/tobyweston/simple-http">Github</a>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;repositories&gt;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;repositories&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;repository&gt;</span>
 </span><span class='line'>        <span class="nt">&lt;id&gt;</span>bad.robot<span class="nt">&lt;/id&gt;</span>
 </span><span class='line'>        <span class="nt">&lt;name&gt;</span>bad.robot repository for robotooling<span class="nt">&lt;/name&gt;</span>
@@ -1194,16 +1231,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Scala essentially treats all exception types as <code>RuntimeException</code>. This means it doesn&#8217;t <em>force</em> you to handle exceptions. Instead, it combines <em>pattern matching</em> with a single <code>catch</code> block to handle exceptions. For example</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">url</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">MalformURLException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;bad url &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
@@ -1219,11 +1247,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="c1">// ...</span>
 </span><span class='line'>  <span class="k">throw</span> <span class="k">new</span> <span class="nc">IOException</span><span class="o">(</span><span class="s">&quot;failed to load&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
@@ -1232,11 +1256,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>However, anyone calling this method won&#8217;t be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the <code>throws</code> annotation but this still won&#8217;t affect Scala clients.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
 </span><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="c1">// ...</span>
 </span><span class='line'><span class="o">}</span>
@@ -1251,15 +1271,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Pattern matching is applied to the exception type when using <code>catch</code> above but it&#8217;s also used in its vanilla form. For example, as described in <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, we can work out what to have with dinner in the example below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;chips&quot;</span><span class="o">)</span>
 </span><span class='line'>    <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;mash&quot;</span><span class="o">)</span>
@@ -1272,17 +1284,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Notice that there is no need for a <code>break</code> statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="k">=</span>
 </span><span class='line'>    <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;chips&quot;</span>
@@ -1317,10 +1319,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It&#8217;s easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1328,13 +1327,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>It&#8217;s an example of bad encapsulation in the <code>BadRequestException</code> class. It&#8217;s hard to tell if the examples above should be handled the same or differently. There&#8217;s certainly an inconsistency between the wording of the first two. Are they the same error? It&#8217;s also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">super</span><span class="o">();</span>
 </span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">;</span>
@@ -1345,10 +1338,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it&#8217;s there that we would decide how to map the exception type to a presentable form). We&#8217;ve intentionally <em>avoided</em> something like</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1364,10 +1354,7 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>How do we apply this to exceptions? Well, now we&#8217;ve got nicely encapsulated data it&#8217;s clear that the exception itself is responsible for <em>using</em> it. In the example above, we&#8217;ve encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1393,11 +1380,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p> If that&#8217;s truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it&#8217;s a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn&#8217;t make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="c1">// ...</span>
 </span><span class='line'> <span class="o">}</span>
 </span><span class='line'>
@@ -1437,15 +1420,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;exception-type&gt;</span>bad.robot.example.SessionExpiredException<span class="nt">&lt;/exception-type&gt;</span>
 </span><span class='line'>    <span class="nt">&lt;location&gt;</span>/login<span class="nt">&lt;/location&gt;</span>
 </span><span class='line'><span class="nt">&lt;/error-page&gt;</span>
@@ -1466,13 +1441,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
@@ -1483,12 +1452,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="nf">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
 </span><span class='line'>    <span class="o">}</span>
@@ -1498,13 +1462,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
@@ -1523,22 +1481,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
 </span><span class='line'>  <span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
 </span><span class='line'>  <span class="k">try</span> <span class="o">{</span>
@@ -1580,138 +1523,6 @@ If a class throws an exception, <em>we should never need to test the content of 
 <p>To see an example of more specialism in exception-types, see the next article <a href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don&#8217;t apply. After all, you may have different constraints or you may just know better.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
-    <updated>2012-03-27T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
-    <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it&#8217;s fairly common to use the try/fail/catch idiom or
-the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the alternative,
-there is an argument that using <code>expected</code> doesn&#8217;t support all the cases you may want to test. The examples being
-to perform additional testing after the exception or testing against the actual exception message.</p>
-
-<p>JUnit 4.7 introduces the next progression, a <code>@Rule</code> that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.</p>
-
-<!-- more -->
-
-
-<h2>The try/fail/catch Idiom</h2>
-
-<p>The typical pattern is to catch an exception or fail explicitly if it was never thrown.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example1</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">assertThat</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;could not find something&quot;</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="c1">// ... could have more assertions here</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which would highlight a failure in the following way.</p>
-
-<pre><code>java.lang.AssertionError: expected an exception
-    at org.junit.Assert.fail(Assert.java:91)
-    at bad.roboot.example.ExceptionTest.example1(ExceptionTest.java:20)
-    ...
-</code></pre>
-
-<p>The idiom has potential advantages in that it offers the opportunity to assert against the actual exception as well as performing additional work after the expectation. Aside from the noise, the major drawback however is that its very easy to forget to include the <code>fail</code> call. If genuinely doing test first, where we always run the test red, this wouldn&#8217;t be a problem but all too often things slip through the net. In practice, I&#8217;ve seen far too many examples with a missing <code>fail</code> giving false positives.</p>
-
-<h2>@Test (expected = Exception.class)</h2>
-
-<p>Using the <code>expected</code> element, we can rewrite the test as follows.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span> <span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which will result in the following failure.</p>
-
-<pre><code>java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
-</code></pre>
-
-<p>Much more concise, we&#8217;ve done away with all the noise at the cost of not being able to assert against the exception
-message. We&#8217;ve also lost the ability to make more assertions after <code>find</code>. However, you might decide that smaller focused tests are in fact a good thing. Using this syntax, we&#8217;re lead into writing a test focused on just one thing; that an exception is thrown when we call <code>find</code>.</p>
-
-<p>The test feedback has also become clearer.</p>
-
-<h2>ExpectedException Rule</h2>
-
-<p>Using an instance of <code>ExpectedException</code>, we define a <a href="http://www.infoq.com/news/2009/07/junit-4.7-rules">JUnit rule</a>
-that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
-setting up expectations in mocking frameworks like <a href="http://www.jmock.org">JMock</a>.</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example3</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;exception message&quot;</span><span class="o">));</span>
-</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which would show the failure below.</p>
-
-<pre><code>java.lang.AssertionError: Expected test to throw (exception with message a string containing "exception message" and an instance of bad.robot.example.NotFoundException)
-    at org.junit.rules.ExpectedException$ExpectedExceptionStatement.evaluate(ExpectedException.java:118)
-    ...
-</code></pre>
-
-<p>The rule allows us to assert the exception is thrown and make assertions against the message. We still can&#8217;t make
-additional assertions after the <code>find</code> method call, but this may not be a bad thing.</p>
-
-<p>Beware though that if you combine the rule with certain <code>@RunWith</code> classes,
-you may get a false positive. Specifically, if you were to run with a class that extends <code>JUnit4ClassRunner</code> in the
-above example, the test would no longer fail. You&#8217;d get a false positive.</p>
-
-<p>For example, if you&#8217;re using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you&#8217;ll encounter this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules. The newer <code>BlockJUnit4ClassRunner</code> supports rules and JMock post 2.6.0 extend this in <code>JMock.class</code>.</p>
-
-<h2>Summary</h2>
-
-<p>The new rule offers a balance between concise syntax and function. In practice though if you&#8217;re not interested in asserting against the exception&#8217;s message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
-
-<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of &#8220;noise&#8221; to cope with in the test. You may or may not be comfortable with this.</p>
-
-<p>I&#8217;d love to hear which approach you prefer, so feel free to post a comment below.</p>
 ]]></content>
   </entry>
   

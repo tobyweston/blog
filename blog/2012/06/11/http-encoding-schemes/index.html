@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -120,8 +108,7 @@
 
 <p>In Java, you can create an encoded URL using</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -144,8 +131,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -153,8 +139,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

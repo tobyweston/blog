@@ -33,24 +33,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -118,26 +106,7 @@
 
 <p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we&#8217;re done.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">(</span><span class="n">Domain</span> <span class="n">domain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
 </span><span class='line'>        <span class="n">Exceptions</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Exceptions</span><span class="o">();</span>
@@ -163,12 +132,7 @@
 
 <p>So far, we&#8217;ve only been interested in the fact that multiple exception can be handled and so haven&#8217;t needed to programmatically query for specific exception types. For example, we&#8217;ve only needed this up until now.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ... something that calls checkAndThrow()</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CompositeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ... this is enough for now</span>
@@ -178,25 +142,7 @@
 
 <p>The details of the classes are below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;();</span>
 </span><span class='line'>
@@ -219,24 +165,7 @@
 
 <p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way that is consistent with how you&#8217;d expect to see regular exceptions.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">;</span>
 </span><span class='line'>

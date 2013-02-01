@@ -9,7 +9,9 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel &hellip;">
+  <meta name="description" content="Why didn&#8217;t Sun add a value property to the @Deprecated annotation? Instead of @Documented
+@Retention(RetentionPolicy.RUNTIME)
+public @interface &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -33,24 +35,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3327317-6']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-01-15 20:02:37 +0000 -->
+    <!-- last update; 2013-02-01 11:02:28 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -88,6 +78,82 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/01/22/deprecated-annotation/">Deprecated Annotation</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-01-22T00:00:00+00:00" pubdate data-updated="true">Jan 22<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Why didn&#8217;t Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Deprecated</span> <span class="o">{</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which kind of implies we should do the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Deprecated</span>
+</span><span class='line'><span class="cm">/** @deprecated use {@link Foo} instead */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>why can&#8217;t we have</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyDeprecated</span><span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which means we can use</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
         <h1 class="entry-title"><a href="/blog/2009/01/06/be-more-expressive-with-builders/">Be more Expressive with Builders</a></h1>
       
     
@@ -118,16 +184,7 @@
 
 <p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">startup</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
 </span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -143,14 +200,7 @@
 
 <p>To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called <code>await()</code>, I was able to express the same thing with the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">startup</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
@@ -166,24 +216,7 @@
 
 <p>Using a private constructor and verifying the internal state is essential to ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I&#8217;d suggest its a good pattern to follow. The finished class is shown below in full.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
 </span><span class='line'>
@@ -301,28 +334,7 @@
 
 <p>This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the <code>main</code> method, in variations of the code below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">new</span> <span class="nf">SwtCalculator</span><span class="o">();</span>
 </span><span class='line'>    <span class="o">}</span>
@@ -375,12 +387,7 @@ Stack trace:
 
 <p>A minor change to the application&#8217;s main method is required to optionally not call the event loop when calling main. For example;</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
 </span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
@@ -390,27 +397,7 @@ Stack trace:
 
 <p>The tests can then explicitly create a UI thread delegating shell setup to the <code>SwtCalculator</code> class before starting the event loop and allowing the test thread to continue.</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>
@@ -625,24 +612,7 @@ Stack trace:
 
   <div class="entry-content"><p>I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">exaple</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
@@ -765,6 +735,10 @@ Stack trace:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a>
       </li>
     
@@ -808,10 +782,6 @@ Stack trace:
         <a href="/blog/2012/07/20/getting-things-done-i/">Getting Things Done, Part I</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/07/04/pair-tests-what-candidates-can-expect/">Pair Tests: What Candidates Can Expect</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -849,11 +819,11 @@ Stack trace:
       </li>
     
       <li class="post">
-        <a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a>
+        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a>
+        <a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a>
       </li>
     
   </ul>
