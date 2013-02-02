@@ -6,21 +6,19 @@ time: 2009-12-24 15:41:00 +00:00
 categories: java concurrency tempus-fugit recipes
 comments: true
 sidebar : false
+keywords: "deadlock detection, junit, deadlock, find deadlocks programmatically"
+description: "Detect deadlocks in Java code programmatically with the DeadlockDetector class"
 ---
 
-I recently added a basic deadlock detection mechanism to [tempus-fugit](http://tempusfugitlibrary.org/). The
-[DeadlockDetector](http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
+I recently added a basic deadlock detection mechanism to [tempus-fugit](http://tempusfugitlibrary.org/). The [DeadlockDetector](http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
 
 {% codeblock lang:java %}
 DeadlockDetector.printDeadlocks(System.out);
 {% endcodeblock %}
 
+<!-- more -->
 
-The `DeadlockDecector` class can only spot Java monitor cyclic locking
-problems. It's implementation is basically the same as that used by `jconsole`
-and `jstack` although Java 1.6 versions`` can additionally detect `Lock` based
-cyclic problems. The types of deadlock it can detect can be illustrated in the
-example below.
+The `DeadlockDetector` class will spot Java monitor cyclic locking problems and additionally detect `Lock` based cyclic problems. It's implementation is basically the same as that used by `jconsole` and `jstack`. An example is illustrated in the example below.
 
 <!-- more -->
     

@@ -6,14 +6,13 @@ time: 2010-03-19 21:39:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
+keywords: "concurrency, deadlock, deadlock detection,"
+description: ""
 ---
 
-What has Nibbles the Cat got to do with deadlocks? I'm glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we _actually _see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.
+I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we _actually _see them in real systems. In the end, I created a `DeadlockDetector` class.
   
-I'm talking here about Java level deadlocks really and to illustrate the
-point, poor old `Nibbles` got himself in quite a pickle. This situation is like
-this; `Nibbles` has been abducted and the  `Kidnapper` and `Negotiator` have started
-a dialogue...
+I'm talking here about Java level deadlocks and to illustrate the point, poor old `Nibbles` got himself into quite a pickle. The situation is like this; `Nibbles` has been abducted and the `Kidnapper` and `Negotiator` threads have started a dialogue.
 
 {% codeblock lang:java %}
 public void potentialDeadlock() {
@@ -23,23 +22,11 @@ public void potentialDeadlock() {
 {% endcodeblock %}
 
 
-However, in the process of negotiation it becomes apparent that the  `Kidnapper`
-is unwilling to release poor `Nibbles` until he has received the `Cash` and the
-`Negotiator` is unwilling to part with the `Cash` until he has poor `Nibbles` back
-in his arms.
+However, in the process of negotiation it becomes apparent that the  `Kidnapper` is unwilling to release poor `Nibbles` until he has received the `Cash` and the `Negotiator` is unwilling to part with the `Cash` until he has poor `Nibbles` back in his arms.
 
 <!-- more -->
   
-By synchronising on nibbles below, the  `Kidnapper` is holding onto him (more
-specifically his monitor) until the end of the synchronised block. However,
-within this block the  `Kidnapper` is trying
-to take the cash. The access to this method is itself synchronised on the
-cash, meaning that no one else can access the cash whilst
-the  `Kidnapper` is grabbing it. Meanwhile,
-the `Negotiator` is synchronising on the
-cash, holding onto it (or again, more specifically, it's monitor) until the
-end of the synchronised block then within that block, it requires nibbles. We
-can start to see the potential for deadlock.
+By synchronising on nibbles below, the  `Kidnapper` is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  `Kidnapper` is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  `Kidnapper` is grabbing it. Meanwhile, the `Negotiator` is synchronising on the cash, holding onto it (or again, more specifically, it's monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.
 
 {% codeblock lang:java %}
 public class Kidnapper extends Thread {
@@ -79,14 +66,9 @@ The deadlock detector displays this woeful situation as follows.
 
 
   
-If you fire up the example and point jconsole at it, you'll get similar
-results from the Thread tab. You can see how tempus-fugit tests the
-DeadlockDetector class [here](http://tempus-fugit.googlecode.com/svn/site/documentation/xref-test/com/google/code/tempusfugit/concurrency/DeadlockDetectorTest.html) and to
-find out more about see the project [documentation](http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Deadlock_Detection).
+If you fire up the example and point jconsole at it, you'll get similar results from the Thread tab. You can see how tempus-fugit tests the `DeadlockDetector` class [here](https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/DeadlockDetectorTest.java) and to find out more about see the project [documentation](http://tempusfugitlibrary.org/documentation/threading/deadlock/).
 
-  
-oh and don't worry, `Nibbles` was released and the  `Kidnapper` arrested in the
-end.
+Oh and don't worry, `Nibbles` was released and the `Kidnapper` arrested in the end.
 
 
 

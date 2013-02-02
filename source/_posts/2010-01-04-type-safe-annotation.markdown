@@ -6,6 +6,8 @@ time: 2010-01-04 20:51:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
+keywords: "java, annotation, goetz, enum annotation must be an enum constant"
+description: "Why does Java insist that an enum annotation value must be an enum constant?"
 ---
 
 A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from [Concurrency In Practice](http://amzn.to/TtEnWO), I wanted to include an enum as a parameter type. Kind of like this
@@ -18,6 +20,7 @@ public @interface GuardedBy {
 }
 {% endcodeblock %}
 
+<!-- more -->
 
 So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.
 
@@ -40,13 +43,9 @@ public @interface GuardedBy {
 {% endcodeblock %}
 
   
-Now, here's where the trouble began.
+Here's where the trouble began.
 
-<!-- more -->
-
-Using the static constructor method is
-fine when I want to create an instance of a Type but not when I want to
-annotate some method. For example,
+Using the static constructor method is fine when I want to create an instance of a type but not when I want to annotate some method. For example,
 
     
 {% codeblock lang:java %}
@@ -57,17 +56,13 @@ public void foo() {
 {% endcodeblock %}
 
   
-The compiler very quickly complains that the attribute value must be constant.
-Specifically,
+The compiler very quickly complains that the attribute value must be constant. Specifically,
 
     
     an enum annotation value must be an enum constant
 
   
-To get round things, you can just create several attributes for the
-annotation. Rather than have a nice `CLASS` type which can optionally have a
-description, I was forced to have one attribute of type and another to capture
-the additional information. grrrr.
+To get round things, you can just create several attributes for the annotation. Rather than have a nice `CLASS` type which can optionally have a description, I was forced to have one attribute of type and another to capture the additional information.
 
     
 {% codeblock lang:java %}
@@ -80,9 +75,7 @@ public @interface GuardedBy {
 {% endcodeblock %}
 
   
-Shame on you Java for leading me on a merry dance! I'd love to know more about
-why things are like this, so if you've got any more details, feel free to post
-a comment.
+Shame on you Java! I'd love to know more about why things are like this, so if you can help, please post a comment.
 
   
 
