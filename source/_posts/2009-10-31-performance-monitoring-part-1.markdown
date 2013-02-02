@@ -79,7 +79,7 @@ For example, typically you might be interested in the means, samples or percenti
  * [Percentile](http://en.wikipedia.org/wiki/Percentile_rank) based reporting gives more insight than a smoothed average figure. For example, if most of the requests are sub-second, it can be hard to spot the small number of slow requests. By reviewing at a particular percentile you can gain visibility of these and help determine what's an acceptable level. For example, the mean response time at the 95th percentile will likely be noticeably different than the mean.
 
 
-{% photo ../../../../../images/statistics/AdslCheckerRequestCounts.png default Chart showing request counts over time (a sliding window of one hour) left %}
+{% photo ../../../../../images/statistics/AdslCheckerRequestCounts.png default Chart showing request counts over time (a sliding window of one hour) %}
 
 Another option is to implement a sliding view on the data. Here, you record information for, say, an hour and as time progresses beyond that hour, you start to loose past data and include new data. At most, an hour of data is available. This can be useful as rather than cumulative counts, the sliding window is visually more responsive to changes (in particular, drops). For example, once charted, a drop in a cumulative chart will show as a slow in accent of the series where with a sliding window chart, it will show as a clear drop.
 
