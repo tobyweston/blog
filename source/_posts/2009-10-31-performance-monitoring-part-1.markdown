@@ -1,13 +1,13 @@
 ---
 name: performance-monitoring-part-1
 layout: post
-title: Performance Monitoring (Introduction)
+title: Performance Monitoring Basics
 time: 2009-10-31 20:15:00 +00:00
 categories: java performance
 comments: true
 sidebar : false
-keywords: "performance, monitoring, tuning, scalability"
-description: "Keeping an eye on performance is something that's easy to neglect. Get a few pointers about setting this up early and what to watch for."
+keywords: "performance, monitoring, tuning, scalability, instrumentation, aop, aspectj, requests per second, rps, java melody, jmx"
+description: "Keeping an eye on performance is something that's easy to neglect. Get a few pointers about setting this up early, what to watch for and a few implementation tips."
 ---
 
 Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?
@@ -42,7 +42,7 @@ Some things that are usually constant though are an emphasis on time, correctnes
 
 
 {% gallery %}
-../../../../../images/statistics/AdslCheckerResponseTimes.png: Response times showing total time from request to reponse against the critical path
+../../../../../images/statistics/AdslCheckerResponseTimes.png: Response times showing total time from request to response against the critical path
 ../../../../../images/statistics/AdslCheckerThroughput.png: Throughput in requests per second. 0.25 rps shows the system handling a modest 15 requests per minute. Check the load to see if this should be higher.
 ../../../../../images/statistics/CatalinaCPU.png: The CPU load of the web server (Tomcat/Catalina) is low.
 ../../../../../images/statistics/JVMThreads.png: The number of total threads the entire JVM is using over time.
@@ -89,7 +89,7 @@ This might give you results something like the image to the right. Without a sli
 ## Implementing
 
   
-There's plenty of ways to get statistics out of your application. Instrumenting the code at key points through decoration is a good option. Using something like AspectJ is another option and both free your code from any clutter that would otherwise pollute and distract from your classes real responsibilities. Logging is a good example of instrumentation polluting things. Typically, the act of logging has nothing to do with the role of the class doing the logging.
+There's plenty of ways to get statistics out of your application. Instrumenting the code at key points using [decoration](http://en.wikipedia.org/wiki/Composite_pattern) is a good option. Using something like AspectJ is another option and both free your code from any clutter that would otherwise pollute and distract from your classes real responsibilities. Logging is a good example of instrumentation polluting things. Typically, the act of logging has nothing to do with the role of the class doing the logging.
 
   
 The instrumenting code will likely be modifying objects in memory that collect and manipulate the raw data. You'll almost certainly want to make sure this memory object is thread safe and performant, it should be light weight and non-obtrusive.
