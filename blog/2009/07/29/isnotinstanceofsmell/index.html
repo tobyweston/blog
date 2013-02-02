@@ -9,9 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="For some reason, common perception is that using instanceof is a bit of smell. I think its fallen in with a bad
-crowd and isn&#8217;t really as bad &hellip;">
-  
+  <meta name="description" content="The instanceof operator in Java isn't always a bad thing">
+  <meta name="keywords" content="instanceof, smell">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -33,6 +32,48 @@ crowd and isn&#8217;t really as bad &hellip;">
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -51,7 +92,7 @@ crowd and isn&#8217;t really as bad &hellip;">
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -110,12 +151,9 @@ crowd and isn&#8217;t really as bad &hellip;">
   </header>
 
 
-<div class="entry-content"><p>For some reason, common perception is that using <code>instanceof</code> is a bit of smell. I think its fallen in with a bad
-crowd and isn&#8217;t really as bad as its cracked up to be. At the very least, we should consider <em>why</em> its got a bad
-reputation.</p>
+<div class="entry-content"><p>For some reason, common perception is that using <code>instanceof</code> is a bit of smell. I think its fallen in with a bad crowd and isn&#8217;t really as bad as its cracked up to be. At the very least, we should consider <em>why</em> its got a bad reputation.</p>
 
-<p>For example, given the following, what&#8217;s clearer in the following exception
-handling code?</p>
+<p>For example, given the following, what&#8217;s clearer in the following exception handling code?</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>    <span class="o">...</span>
@@ -146,35 +184,11 @@ handling code?</p>
 <!-- more -->
 
 
-<p>There seems very little difference in the semantics of the two calls, both
-handle class hierarchies and both handle interfaces. I think the legitimate
-use for <code>Class.isAssignableFrom</code> is around scenarios where reflective-type
-checks are more suited (for example, where the class to check against is only
-known or may change at runtime). Using <code>Class.isInstance</code> is a similar
-alternative. The other point that the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Class.html#isAssignableFrom%28java.lang.Class">API documentation</a>
-points out is that <code>isAssignableFrom</code> works with primitives whereas <code>instanceof</code>
-can not.</p>
+<p>There seems very little difference in the semantics of the two calls, both handle class hierarchies and both handle interfaces. I think the legitimate use for <code>Class.isAssignableFrom</code> is around scenarios where reflective-type checks are more suited (for example, where the class to check against is only known or may change at runtime). Using <code>Class.isInstance</code> is a similar alternative. The other point that the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Class.html#isAssignableFrom%28java.lang.Class">API documentation</a> points out is that <code>isAssignableFrom</code> works with primitives whereas <code>instanceof</code> can not.</p>
 
-<p>I wonder if the bad reputation <code>instanceof</code> suffers from is more due to often
-being seen in the company of strange conditional logic than anything else. The
-kind of stuff that seems to go against your Mumma&#8217;s good advice. It may just
-have fallen in with a bad crowd but is itself a good kid at heart&#8230;</p>
+<p>I suspect <code>instanceof</code> is seen as a bit antiquated but given the example above using <code>Class.isAssignableFrom</code> seems to just obfuscate things. The example needs to find out why a dynamic proxy throws an exception and because the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/InvocationTargetException.html">InvocationTargetException</a> wraps the underlying cause, it kind of breaks checked exception handling and it feels like we need to do some conditional check. If there is a smell here, that&#8217;s it. The above is trying to hide the symptom of the smell (<code>instanceof</code>) but the smell is still there, its just harder to see. I often catch similar whiffs when catching <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/ExecutionException.html">ExecutionException</a>.</p>
 
-<p>I suspect <code>instanceof</code>, being around since forever, is seen as a bit antiquated
-but given the example above using <code>Class.isAssignableFrom</code> seems to just
-obfuscate things. The example needs to find out why a dynamic proxy throws an
-exception and because the <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/reflect/InvocationTargetException.html">InvocationTargetException</a> wraps the
-underlying cause, it kind of breaks checked exception handling and it feels
-like we need to do some conditional check. If there is a smell here, that&#8217;s
-it. The above is trying to hide the symptom of the smell (<code>instanceof</code>) but the
-smell is still there, its just harder to see. I often catch similar whiffs
-when catching <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/concurrent/ExecutionException.html">ExecutionException</a>.</p>
-
-<p>More conventional cases where <code>instanceof</code> is a genuine smell may be around
-conditional logic making decisions based on class type where using polymorphism
-might be a neater solution. It&#8217;s this kind of thing that your Mumma warned
-you about and I suspect its this is the real smell that&#8217;s rubbed off on poor
-downtrodden <code>instanceof</code>.</p>
+<p>More conventional cases where <code>instanceof</code> is a genuine smell may be around conditional logic making decisions based on class type where using polymorphism might be a better solution.</p>
 </div>
 
 

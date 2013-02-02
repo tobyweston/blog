@@ -32,6 +32,48 @@
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -50,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -111,8 +153,7 @@
 
 <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
 
-<p>In one particular test, I wanted to show that interrupt is called on a thread
-and so followed what&#8217;s becoming a common pattern for me.</p>
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -126,19 +167,14 @@ and so followed what&#8217;s becoming a common pattern for me.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The alternative patten is to wait for the assertion and avoid the wait for
-shutdown method above. Either way, the test above is testing the the thread
-created has been interrupted by checking the interrupt flag.</p>
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
 
-<p>The test was failing for me even though I was able to show that the interrupt
-is called and the interrupt flag is set immediately after the sleeping thread
-is woken. However, when the test reached the assert, it was false. Weird.</p>
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
 
 <!-- more -->
 
 
-<p>I setup another thread to just poll the sleeping thread for its status and it
-showed the following.</p>
+<p>I setup another thread to just poll the sleeping thread for its status and it showed the following.</p>
 
 <pre><code>thread.isInterrupted() = false, thread.getState() = RUNNABLE  
 thread.isInterrupted() = false, thread.getState() = RUNNABLE  
@@ -148,10 +184,7 @@ thread.isInterrupted() = true, thread.getState() = RUNNABLE
 thread.isInterrupted() = false, thread.getState() TERMINATED  
 </code></pre>
 
-<p>So my thread was interrupted! It seems to say that when a thread terminates,
-it will reset the interrupt status flag. Looking at the source, it looks like
-Java maintains the flag at the native level and not as a member of the <code>Thread</code>
-class.</p>
+<p>So my thread was interrupted! It seems to say that when a thread terminates, it will reset the interrupt status flag. Looking at the source, it looks like Java maintains the flag at the native level and not as a member of the <code>Thread</code> class.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">interrupt0</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -167,17 +200,13 @@ thread.isInterrupted() = true, thread.getState() = TIMED_WAITING
 thread.isInterrupted() = false, thread.getState() = TERMINATED  
 </code></pre>
 
-<p>This is even more interesting as it would suggest that an interrupt doesn&#8217;t
-update the thread&#8217;s state and the interrupt flag atomically.</p>
+<p>This is even more interesting as it would suggest that an interrupt doesn&#8217;t update the thread&#8217;s state and the interrupt flag atomically.</p>
 
 <blockquote><p>It would seem thread termination will reset the interrupt status flag and
 that an interrupt doesn&#8217;t update the interrupt status flag and state
 atomically.</p></blockquote>
 
-<p>As an couple of caveats to the type of test above where I want to check the
-interrupt status flag, its a good idea to avoid side affects by using the
-terribly named method <code>Thread.interrupted</code> rather than <code>isIntrrupted</code>. I also had
-to use a stubbed thread to reliably tell if the interrupt was called.</p>
+<p>As an couple of caveats to the type of test above where I want to check the interrupt status flag, its a good idea to avoid side affects by using the terribly named method <code>Thread.interrupted</code> rather than <code>isInterrupted</code>. I also had to use a stubbed thread to reliably tell if the interrupt was called.</p>
 
 <p>See the code <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java">here</a>.</p>
 </div>

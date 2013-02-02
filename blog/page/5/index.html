@@ -32,6 +32,48 @@
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -50,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -248,12 +290,9 @@ exceptions and just rethrow them in-line. For example,</p>
   </header>
 
 
-  <div class="entry-content"><p>What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
+  <div class="entry-content"><p>I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems. In the end, I created a <code>DeadlockDetector</code> class.</p>
 
-<p>I&#8217;m talking here about Java level deadlocks really and to illustrate the
-point, poor old <code>Nibbles</code> got himself in quite a pickle. This situation is like
-this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
-a dialogue&#8230;</p>
+<p>I&#8217;m talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
@@ -262,10 +301,7 @@ a dialogue&#8230;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code>
-is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the
-<code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back
-in his arms.</p>
+<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
 
 </div>
   
@@ -318,27 +354,7 @@ in his arms.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">CLASS</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">return</span> <span class="n">CLASS</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, here&#8217;s where the trouble began.</p>
 
 </div>
   
@@ -381,51 +397,14 @@ in his arms.</p>
   </header>
 
 
-  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am settling on a warm fuzzy feeling towards my general approach. I&#8217;m trying to capture this warm feeling more explicitly in the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project and today I was working on running tests in parallel with JUnit.</p>
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.</p>
 
-<p>Looking more into recent versions of JUnit, there seems to be lots and lots of
-integration points for you to play with. I&#8217;ve been playing with <code>Rules</code>,
-<code>Statements</code> and <code>Runners</code> mostly and when creating your own
-<code>BlockJUnit4ClassRunner</code>, I spotted you can override the scheduler which, er,
-schedules the actual test methods to be run.</p>
-
-<p>After experimenting with much less straight forward integrations, overriding
-the scheduler gave the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">setScheduler</span><span class="o">(</span><span class="k">new</span> <span class="n">ConcurrentScheduler</span><span class="o">());</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ConcurrentScheduler</span> <span class="kd">implements</span> <span class="n">RunnerScheduler</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">executor</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="nf">ConcurrentScheduler</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">executor</span> <span class="o">=</span> <span class="n">newCachedThreadPool</span><span class="o">(</span><span class="k">new</span> <span class="n">ThreadFactory</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">});</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">childStatement</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">childStatement</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">finished</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">shutdown</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">waitingForCompletion</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This results in all the test methods within a given class running in parallel.
-I&#8217;m excited about speeding up the execution time of my tests, next step would
-be run all tests across classes in parallel! hmmm.</p>
-
-<p>This is all available to use via the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> project by the way.</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/29/running-junit-tests-in-parallel/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -461,12 +440,9 @@ be run all tests across classes in parallel! hmmm.</p>
   </header>
 
 
-  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
+  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
 
-<p>In an attempt to ease this heavy burden and make light work of this drudgery,
-I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and
-<code>Runner</code>. Now, I can mark up a suspect test and get someone else to do the
-repetition. Joy.</p>
+<p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="nd">@Intermittent</span>
@@ -476,7 +452,7 @@ repetition. Joy.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+<p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
 </span><span class='line'>
@@ -558,18 +534,13 @@ once for each test repetition.</p>
   </header>
 
 
-  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The
-<a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The <code>DeadlockDecector</code> class can only spot Java monitor cyclic locking
-problems. It&#8217;s implementation is basically the same as that used by <code>jconsole</code>
-and <code>jstack</code> although Java 1.6 versions<code>` can additionally detect</code>Lock` based
-cyclic problems. The types of deadlock it can detect can be illustrated in the
-example below.</p>
+
 
 </div>
   
@@ -614,8 +585,7 @@ example below.</p>
 
   <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
 
-<p>In one particular test, I wanted to show that interrupt is called on a thread
-and so followed what&#8217;s becoming a common pattern for me.</p>
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
@@ -629,13 +599,9 @@ and so followed what&#8217;s becoming a common pattern for me.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The alternative patten is to wait for the assertion and avoid the wait for
-shutdown method above. Either way, the test above is testing the the thread
-created has been interrupted by checking the interrupt flag.</p>
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
 
-<p>The test was failing for me even though I was able to show that the interrupt
-is called and the interrupt flag is set immediately after the sleeping thread
-is woken. However, when the test reached the assert, it was false. Weird.</p>
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
 
 </div>
   
@@ -733,7 +699,7 @@ is woken. However, when the test reached the assert, it was false. Weird.</p>
   </header>
 
 
-  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are the root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
+  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are a root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
 
 <p>A couple of useful links below.</p>
 

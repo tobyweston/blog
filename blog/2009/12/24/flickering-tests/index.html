@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes &hellip;">
-  
+  <meta name="description" content="Repeat intermittently failing tests automatically with a JUnit rule.">
+  <meta name="keywords" content="flickering tests, nondeterminism, intermittent tests, java, intermittent, junit">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -32,6 +32,48 @@
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -50,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -109,12 +151,9 @@
   </header>
 
 
-<div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
+<div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
 
-<p>In an attempt to ease this heavy burden and make light work of this drudgery,
-I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and
-<code>Runner</code>. Now, I can mark up a suspect test and get someone else to do the
-repetition. Joy.</p>
+<p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="nd">@Intermittent</span>
@@ -124,7 +163,7 @@ repetition. Joy.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>I can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+<p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
 </span><span class='line'>

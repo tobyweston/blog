@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance &hellip;">
-  
+  <meta name="description" content="">
+  <meta name="keywords" content="concurrency, deadlock, deadlock detection,">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -32,6 +32,48 @@
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -50,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -109,12 +151,9 @@
   </header>
 
 
-<div class="entry-content"><p>What has Nibbles the Cat got to do with deadlocks? I&#8217;m glad you asked. It all started when I introduced a deadlock in some performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems and gave rise to me creating the DeadlockDetector class in tempus-fugit.</p>
+<div class="entry-content"><p>I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems. In the end, I created a <code>DeadlockDetector</code> class.</p>
 
-<p>I&#8217;m talking here about Java level deadlocks really and to illustrate the
-point, poor old <code>Nibbles</code> got himself in quite a pickle. This situation is like
-this; <code>Nibbles</code> has been abducted and the  <code>Kidnapper</code> and <code>Negotiator</code> have started
-a dialogue&#8230;</p>
+<p>I&#8217;m talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
@@ -123,24 +162,12 @@ a dialogue&#8230;</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code>
-is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the
-<code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back
-in his arms.</p>
+<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
 
 <!-- more -->
 
 
-<p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more
-specifically his monitor) until the end of the synchronised block. However,
-within this block the  <code>Kidnapper</code> is trying
-to take the cash. The access to this method is itself synchronised on the
-cash, meaning that no one else can access the cash whilst
-the  <code>Kidnapper</code> is grabbing it. Meanwhile,
-the <code>Negotiator</code> is synchronising on the
-cash, holding onto it (or again, more specifically, it&#8217;s monitor) until the
-end of the synchronised block then within that block, it requires nibbles. We
-can start to see the potential for deadlock.</p>
+<p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  <code>Kidnapper</code> is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  <code>Kidnapper</code> is grabbing it. Meanwhile, the <code>Negotiator</code> is synchronising on the cash, holding onto it (or again, more specifically, it&#8217;s monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
@@ -178,13 +205,9 @@ can start to see the potential for deadlock.</p>
   which is held by "Negotiator-Thread-1"
 </code></pre>
 
-<p>If you fire up the example and point jconsole at it, you&#8217;ll get similar
-results from the Thread tab. You can see how tempus-fugit tests the
-DeadlockDetector class <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/xref-test/com/google/code/tempusfugit/concurrency/DeadlockDetectorTest.html">here</a> and to
-find out more about see the project <a href="http://tempus-fugit.googlecode.com/svn/site/documentation/concurrency.html#Deadlock_Detection">documentation</a>.</p>
+<p>If you fire up the example and point jconsole at it, you&#8217;ll get similar results from the Thread tab. You can see how tempus-fugit tests the <code>DeadlockDetector</code> class <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/DeadlockDetectorTest.java">here</a> and to find out more about see the project <a href="http://tempusfugitlibrary.org/documentation/threading/deadlock/">documentation</a>.</p>
 
-<p>oh and don&#8217;t worry, <code>Nibbles</code> was released and the  <code>Kidnapper</code> arrested in the
-end.</p>
+<p>Oh and don&#8217;t worry, <code>Nibbles</code> was released and the <code>Kidnapper</code> arrested in the end.</p>
 </div>
 
 

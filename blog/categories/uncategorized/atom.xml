@@ -4,7 +4,7 @@
   <title><![CDATA[Category: uncategorized | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/uncategorized/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-01T11:06:00+00:00</updated>
+  <updated>2013-02-02T18:54:58+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/"/>
     <updated>2009-11-11T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2009/11/11/thawte-claim-im-not-to-be-trusted</id>
-    <content type="html"><![CDATA[<p> ...well, not quite, but they have recently announced that they'd be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I've been using them to sign my JARs for WebStart deployment. As Thawte are the root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I'm back to hiding in shadows.</p>
+    <content type="html"><![CDATA[<p> ...well, not quite, but they have recently announced that they'd be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I've been using them to sign my JARs for WebStart deployment. As Thawte are a root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I'm back to hiding in shadows.</p>
 
 <p>A couple of useful links below.</p>
 

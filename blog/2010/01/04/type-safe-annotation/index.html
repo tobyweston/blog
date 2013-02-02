@@ -9,8 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations &hellip;">
-  
+  <meta name="description" content="Why does Java insist that an enum annotation value must be an enum constant?">
+  <meta name="keywords" content="java, annotation, goetz, enum annotation must be an enum constant">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -32,6 +32,48 @@
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -50,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-01 11:06:00 +0000 -->
+    <!-- last update; 2013-02-02 18:54:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -119,6 +161,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+
+
+<!-- more -->
+
+
 <p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
@@ -139,14 +186,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now, here&#8217;s where the trouble began.</p>
+<p>Here&#8217;s where the trouble began.</p>
 
-<!-- more -->
-
-
-<p>Using the static constructor method is
-fine when I want to create an instance of a Type but not when I want to
-annotate some method. For example,</p>
+<p>Using the static constructor method is fine when I want to create an instance of a type but not when I want to annotate some method. For example,</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
@@ -155,16 +197,12 @@ annotate some method. For example,</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The compiler very quickly complains that the attribute value must be constant.
-Specifically,</p>
+<p>The compiler very quickly complains that the attribute value must be constant. Specifically,</p>
 
 <pre><code>an enum annotation value must be an enum constant
 </code></pre>
 
-<p>To get round things, you can just create several attributes for the
-annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a
-description, I was forced to have one attribute of type and another to capture
-the additional information. grrrr.</p>
+<p>To get round things, you can just create several attributes for the annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a description, I was forced to have one attribute of type and another to capture the additional information.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
@@ -175,9 +213,7 @@ the additional information. grrrr.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Shame on you Java for leading me on a merry dance! I&#8217;d love to know more about
-why things are like this, so if you&#8217;ve got any more details, feel free to post
-a comment.</p>
+<p>Shame on you Java! I&#8217;d love to know more about why things are like this, so if you can help, please post a comment.</p>
 </div>
 
 
