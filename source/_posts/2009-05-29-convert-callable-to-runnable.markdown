@@ -6,53 +6,25 @@ time: 2009-05-29 21:37:00 +01:00
 categories: java object-oriented tempus-fugit recipes
 comments: true
 sidebar : false
+keywords: "callable, lambda, runnable, java, Executors framework, fixed rate delay, fixed rate, executors, doug lea"
+description: "Convert Java Callable objects to Runnable to schedule them at a fixed rate with the Executors framework"
 ---
 
-Every time I come across it, it bugs me.
-  
-The `Executors` class has helper methods to convert from a `Runnable` to a
-`Callable`, presumably so you can submit an old school `Runnable` task to an
-executor, but I can never find the counterpart helper. Something to convert a
-`Callable` to a `Runnable`.
-
-  
-I seem to keep finding myself needing one and you might think me silly for
-doing so but it's because I'm into the habit of coding as `Callable`s now. I
-tend to think of `Runnable` as simply something that can run, not in terms of a
-`Thread` or concurrent task. I like the way I think about `Runnable`.
-
-Lets have a go at converting `Callable` to a `Runnable`.
+The `Executors` class has helper methods to convert from a `Runnable` to a `Callable`, presumably so you can submit a `Runnable` task to an executor, but it doesn't offer the counterpart helper. Something to convert a `Callable` to a `Runnable`.
 
 <!-- more -->
 
-`Callable` is like the new cool kid, with its funky return value and the ability
-to throw an exception. Wow, why did I ever bother with `Runnable` in the first
-place? `Callable`, like `Runnable`, however is still just something that can be
-called, it just so happens to fit in nicely with the executor framework and
-kind of looks all bling.
+`Callable`, like `Runnable`, is still just something that can be called. It offers a return type but really has nothing to do with concurrency, it just so happens to fit in nicely with the executor framework like `Runnable` does with `Thread`.
+
+
+Often I'll have utility classes, useful nuggets of functionality dressed up as a `Callable`, and if I want to schedule them with an executor with a fixed delay or fixed rate, I can't. The interface wants a `Runnable` and only a `Runnable`. Most likely because it doesn't really make much sense to schedule a fixed rate execution of a task that returns something when it would take quite some thinking to actually do something with the return value.
 
   
-I digress... back to jusitifying why I think I'm always needing to convert
-from `Callable` to `Runnable`. As I say, if both interfaces represent something
-that can be called, I favour `Callable` becuase its more powerful. I can return
-useful things and catch useful exceptions. I'm in the habit of using `Callable`.
+None the less, I'd like to schedule something at a fixed rate (ignoring the result) that I also schedule elsewhere and actually do something with the result.
 
+## Test First
   
-Often then, I'll have utility classes, useful nuggets of functionality dressed
-up as a `Callable`, and if I want to schedule them with an executor with a fixed
-delay or fixed rate, I can't. The interface wants a `Runnable` and only a
-`Runnable`. Most likely becuase it doesn't really make much sense to schedule a
-fixed rate execution of a task that returns something when it would take quite
-some thinking to actually do something with the return value.
-
-  
-None the less, I'd like to schedule something at a fixed rate (ignoring the
-result) that I also schedule elsewhere and actually do something with the
-result.
-
-  
-Starting with the tests, any helper must delegate to the `Callable` and handle
-any exceptions.
+Starting with the tests, any helper must delegate to the `Callable` and handle any exceptions.
 
     
 {% assign braces = '{{' %}
@@ -85,6 +57,7 @@ public class CallableAdapterTest {
 {% endcodeblock %}
 
 
+## The Code
   
 To get a green light, the implementation is fairly trivial.
 
@@ -108,13 +81,7 @@ public class CallableAdapter {
 {% endcodeblock %}
 
 
-  
-Let me know if you've got any comments, great ideas on the subject or can
-improve on the implementation above.
-
-
-__Update__: Since writing this entry, I created the[tempus-fugit](http://tempusfugitlibrary.org/) project to
-capture these kinds of ideas.
+You can find the code in the [tempus-fugit](http://tempusfugitlibrary.org/) project.
 
 
 

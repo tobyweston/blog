@@ -6,23 +6,19 @@ time: 2009-08-01 10:47:00 +01:00
 categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
+keywords: "reentrant locks, java, locks, read write lock, concurrency, synchronized, ReentrantReadWriteLock"
+description: "All locks in Java are reentrant. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronized method and then call the superclass method without deadlocking"
 ---
 
-All locks in Java are reentrant, they have to be in case the owner of the monitor ends up calling a method that needs that monitor. So, if a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronised method and then call the superclass method without deadlocking.
+All locks in Java are reentrant. They have to be in so that the owner of a monitor can reenter protected code. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronised method and then call the superclass method without deadlocking.
   
-Java's [ReentrantReadWriteLock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html) is about acquiring seperate
-read and write locks for efficiency. For example, in the case where you may
-have infrequent writes but frequent reads, it _may_ be more efficient to not
-synchronise all access with just one lock. Instead, [ReenstrantReadWriteLock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html) can allow all read access to only block when a write is taking
-place. You'll end up with multiple simultaneous reads but synchronised writes
-and all the reads will have guaranteed visibility of the writes.
+Java's [ReentrantReadWriteLock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html) is about acquiring separate read and write locks for efficiency. For example, in the case where you may have infrequent writes but frequent reads, it _may_ be more efficient to not synchronise all access with just one lock. Instead, [ReentrantReadWriteLock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/ReentrantReadWriteLock.html) can allow all read access to only block when a write is taking place. You'll end up with multiple simultaneous reads but synchronised writes and all the reads will have guaranteed visibility of the writes.
 
-With all [Lock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html) implementations, you specifically acquire the lock and are
-politely asked to release the lock within a finally block. Makes sense but it
-always bugs me that we're forced into Java's verbosity trap, yet again.
+With all [Lock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html) implementations, you specifically acquire the lock and are politely asked to release the lock within a finally block. Makes sense but gives unlock responsibility on the developer.
 
+<!-- more -->
   
-So, vanilla Java would have you;
+Vanilla Java would have you;
 
 
 {% codeblock lang:java %}
@@ -36,8 +32,7 @@ try {
 {% endcodeblock %}
 
 
-So why not wrap the boiler plate code up in a micro-DSL and pass a closure to execute? Any implementation must
-call both lock and unlock and re-throw any exceptions. The following test shows this to be true.
+Why not wrap the boiler plate code up in a mini DSL and pass in a lambda to execute the cleanup? Any implementation must call both lock and unlock and re-throw any exceptions. The following test shows this to be true.
 
 <!-- more -->
 
@@ -103,8 +98,7 @@ public class ExecuteUsingLockTest {
 {% endcodeblock %}
 
 
-The implementation is fairly straight forward with a couple of interesting
-points to note around generics.
+The implementation is fairly straight forward with a couple of interesting points to note around generics.
 
     
 {% codeblock lang:java %}
@@ -142,18 +136,12 @@ public class ExecuteUsingLock<T, E extends Exception> {
 
 
   
-Having the [micro-DSL]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I
-couldn't make just the using method generic and instead had to link the types
-by making the class definition generic. You might also notice that the
-`Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception`
-as a generic type. By creating a new `Callable` interface with a generic exception, I was able to
-neaten up the DSL so that we're not forced
-to throw `Exception` from a method that uses the `ExecuteUsingLock` class. Instead, you define your closure
-function to throw `RuntimeException`.
+Having the [micro-DSL]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I couldn't make just the method generic and instead had to link the types by making the class definition generic. You might also notice that the `Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception` as a generic type.
+
+ By creating a new `Callable` interface with a generic exception, I was able to neaten up the DSL so that we're not forced to throw `Exception` from a method that uses the `ExecuteUsingLock` class. Instead, you define your closure function to throw `RuntimeException`.
 
   
-A real world example might be something that updates a status probe where the
-variable lock below is an instance of `ReentrantReadWriteLock`.
+A real world example might be something that updates a status probe where the variable lock below is an instance of `ReentrantReadWriteLock`.
 
     
 {% codeblock lang:java %}
@@ -184,10 +172,7 @@ private Callable<Status, RuntimeException> gettingStatus() {
 {% endcodeblock %}
 
 
-All this to avoid the boiler plate code! Fresh.
-
-__Update__: Since writing this entry, I created the [tempus-fugit](http://tempusfugitlibrary.org/) project to
-capture these kinds of ideas.
+All this to avoid the boiler plate code. You can try it for yourself by using the [tempus-fugit](http://tempusfugitlibrary.org/) project.
 
   
 

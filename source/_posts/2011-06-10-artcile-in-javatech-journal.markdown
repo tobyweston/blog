@@ -7,7 +7,7 @@ categories: java
 comments: true
 sidebar : false
 description: "My JDK7 article 'Java the language vs Java the platform' was recently published in the Java Tech Journal. Find out what's new and noteworthy in Java 7."
-keywords: "JDK7, Java 7, Open JDK, Java 8, Lamda, Java Tech Journal, jaxenter, JAX"
+keywords: "JDK7, Java 7, Open JDK, Java 8, Lambda, Java Tech Journal, jaxenter, JAX"
 ---
 
 [{% img right http://baddotrobot.com/images/JTJ-2011-05.png %}](http://baddotrobot.com/resources/JTJ-2011-05.pdf)
