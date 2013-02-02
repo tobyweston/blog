@@ -100,3 +100,6 @@ facebook_like: false
 
 # Posts in the sidebar Popular Posts section
 popular_posts_count: 5
+
+# fancybox
+photos_prefix:

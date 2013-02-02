@@ -175,3 +175,19 @@ body > footer {
 }
 
 @import "_wikipedia.scss";
+
+
+/* FancyBox Galleries */
+$rad: 3px;
+ul.gallery {
+  //border: thin solid gray;
+  //-webkit-border-radius: $rad;
+  //-moz-border-radius: $rad;
+  //border-radius: $rad;
+  text-align: center;
+  padding: 5px;
+  li {
+    display: inline;
+    padding: 5px;
+  }
+}
