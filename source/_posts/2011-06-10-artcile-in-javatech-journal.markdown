@@ -10,7 +10,7 @@ description: "My JDK7 article 'Java the language vs Java the platform' was recen
 keywords: "JDK7, Java 7, Open JDK, Java 8, Lamda, Java Tech Journal, jaxenter, JAX"
 ---
 
-[{% img right http://baddotrobot.com/images/JTJ-2011-05.png %}](http://badrobot.googlecode.com/svn/trunk/bad.robot/JTJ-2011-05.pdf)
+[{% img right http://baddotrobot.com/images/JTJ-2011-05.png %}](http://baddotrobot.com/resources/JTJ-2011-05.pdf)
 
 My article "Java the language vs Java the platform" (about the new release of JDK7) has been published in this months
 [Java Tech Journal](http://jaxenter.com/java-tech-journal/). __Click on the image to download the PDF__ or read the article [online](http://jaxenter.com/new-and-noteworthy-in-jdk7-36843.html).
