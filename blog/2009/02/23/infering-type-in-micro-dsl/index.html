@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Infering the Type in a Micro DSL - bad.robot</title>
+  <title>Infering the Types in a Micro DSL - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In a recent post, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines &hellip;">
-  
+  <meta name="description" content="Java can have trouble inferring multiple types, see and example and create a fluent API in Java using generics.">
+  <meta name="keywords" content="dsl, fluent api, generics, java">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-02 19:13:56 +0000 -->
+    <!-- last update; 2013-02-03 12:19:10 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -127,7 +127,7 @@
   <header>
     
       
-        <h1 class="entry-title">Infering the Type in a Micro DSL</h1>
+        <h1 class="entry-title">Infering the Types in a Micro DSL</h1>
       
     
     
@@ -153,17 +153,18 @@
 
 <div class="entry-content"><p>In a recent <a href="/blog/2009/02/16/more-on-micro-dsls/">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
 
-<p>Just to recap then, to find something in a list, the original client code
-(using a static import) looks like this.</p>
+<p>Just to recap then, to find something in a list, the original client code (using a static import) looks like this.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The class (in this case <code>NeedleFinder</code>) implements the DSL and specifically
-decides in the <code>in</code> method how to compare a <code>Needle</code> object to whatever is in the
-haystack list. I wanted to create a more generic class so started to implement
-the <code>ListFinder</code> to use generics and a couple of interesting things came out.</p>
+
+
+<!-- more -->
+
+
+<p>The class (in this case <code>NeedleFinder</code>) implements the DSL and specifically decides in the <code>in</code> method how to compare a <code>Needle</code> object to whatever is in the haystack list. I wanted to create a more generic class so started to implement the <code>ListFinder</code> to use generics and a couple of interesting things came out.</p>
 
 <!-- more -->
 
@@ -203,8 +204,7 @@ the <code>ListFinder</code> to use generics and a couple of interesting things c
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>With the following test case showing its usage (the <code>Needle</code> and <code>Bale</code> class
-aren&#8217;t show for brevity).</p>
+<p>With the following test case showing its usage (the <code>Needle</code> and <code>Bale</code> class aren&#8217;t show for brevity).</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ListFinderTest</span> <span class="o">{</span>
 </span><span class='line'>
@@ -239,27 +239,19 @@ aren&#8217;t show for brevity).</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here we&#8217;re defining the equality of a <code>Needle</code> in a list of <code>Bale</code> objects to be
-when the name of a <code>Needle</code> is contained in the name of the <code>Bale</code>. A silly
-example I know but it illustrates that we redefine what we mean by equality
-for the list finder by implementing the <code>ListFinder.Comparator</code>. The concrete
-example that spawned the idea was when searching for a Race object inside a
-list of <code>Event</code> objects; two completely different entities.</p>
+<h2>Equality</h2>
 
-<p>Anyway, what I thought was interesting about this example was the type
-inference going on in the static find method. I originally wanted to just use
-<code>ListFinder.find</code> method directly as in the following.</p>
+<p>Here we&#8217;re defining the equality of a <code>Needle</code> in a list of <code>Bale</code> objects to be when the name of a <code>Needle</code> is contained in the name of the <code>Bale</code>. A silly example I know but it illustrates that we redefine what we mean by equality for the list finder by implementing the <code>ListFinder.Comparator</code>. The concrete example that spawned the idea was when searching for a <code>Race</code> object inside a list of <code>Event</code> objects; two completely different entities.</p>
+
+<h2>Type inference over too many types</h2>
+
+<p>Anyway, what I thought was interesting about this example was the type inference going on in the static find method. I originally wanted to just use <code>ListFinder.find</code> method directly as in the following.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">ListFinder</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">).</span><span class="na">using</span><span class="o">(</span><span class="n">comparator</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Where <code>ListFinder</code> is statically imported. Usually, I&#8217;d rely on type inference
-here to work out that needle means <code>T</code> and therefore <code>T</code> is of type <code>Needle</code>.
-However, in the case above, the compiler will complain as the haystack
-parameter is not of type <code>Object</code>. The trick is that the generic method find in
-<code>ListFinder</code> needs to infer two types (<code>T</code> and <code>L</code>) but only has enough information
-for <code>T</code>. So it defaults <code>L</code> to type <code>Object</code>. grrr damn Javas indisputable logic.</p>
+<p>Where <code>ListFinder</code> is statically imported. Usually, I&#8217;d rely on type inference here to work out that needle means <code>T</code> and therefore <code>T</code> is of type <code>Needle</code>. However, in the case above, the compiler will complain as the haystack parameter is not of type <code>Object</code>. The trick is that the generic method <code>find</code> in <code>ListFinder</code> needs to infer two types (<code>T</code> and <code>L</code>) but only has enough information for <code>T</code>. So it defaults <code>L</code> to type <code>Object</code>.</p>
 
 <p>The alternative is to use the full notation as follows.</p>
 
@@ -267,20 +259,27 @@ for <code>T</code>. So it defaults <code>L</code> to type <code>Object</code>. g
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Or (as I&#8217;ve done in the test) use an internal method who&#8217;s return type gives
-the compiler enough information to infer both types. I prefer this approach as
-it makes the DSL expression to find a needle much more readable.</p>
+<p>Or (as I&#8217;ve done in the test) use an internal method who&#8217;s return type gives the compiler enough information to infer both types. I prefer this approach as it makes the DSL expression to find a needle much more readable.</p>
 
-<p>So, Java can&#8217;t chain methods to infer the types. I didn&#8217;t really expect it to
-be able to so, its a bit much to ask for. Although it would be pretty sweet if
-it could.</p>
+<h2>Summary</h2>
 
-<p>One last thing, <a href="http://codewax.blogspot.com/">Papa Ray</a> was showing me a
-<a href="http://docs.codehaus.org/display/JEDI/Home">Jedi</a> alternative to the finder.
-If we&#8217;re lucky, he might blog about it. It seems Jedi offers some measure of
-residence against the proliferation of anonymous inner classes in lieu of
-closures but in all honestly, I just wanted to get in some big words in before
+<p>So, Java can&#8217;t chain methods to infer the types. I didn&#8217;t really expect it to be able to so, its a bit much to ask for. Although it would be pretty sweet if it could.</p>
+
+<p>One last thing, <a href="http://codewax.blogspot.com/">Ray Barlow</a> was showing me a <a href="http://docs.codehaus.org/display/JEDI/Home">Jedi</a> alternative to the finder. If we&#8217;re lucky, he might blog about it. It seems Jedi offers some measure of residence against the proliferation of anonymous inner classes in lieu of closures but in all honestly, I just wanted to get in some big words in before
 signing off. TTFN.</p>
+
+<h2>Recommended Reading</h2>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321712943&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg" title="'Domain Specific Languages (Addison-Wesley Signature)'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1935182455&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg" title="'DSLs in Action'" ></a></p>
+
+<ul>
+<li><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321712943&amp;linkCode=as2&amp;tag=baddotrobot-21">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1935182455&amp;linkCode=as2&amp;tag=baddotrobot-21">DSLs in Action</a>, DSLs in Action</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356999&amp;linkCode=as2&amp;tag=baddotrobot-21">The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)</a>, Terence Parr</li>
+</ul>
+
 </div>
 
 

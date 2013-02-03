@@ -9,9 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Denton was trying to
-convince me the other day that less is more when it comes to maximum heap size in Java. After I finally got the point, I was &hellip;">
-  
+  <meta name="description" content="Allocating less heap size to the JVM actually means you can create more native threads. ">
+  <meta name="keywords" content="OutOfMemory, threads, -Xmx, heap, number of threads, less heap, more threads, unable to create new native thread">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -93,7 +92,7 @@ convince me the other day that less is more when it comes to maximum heap size i
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-02 19:13:56 +0000 -->
+    <!-- last update; 2013-02-03 12:19:10 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -152,51 +151,32 @@ convince me the other day that less is more when it comes to maximum heap size i
   </header>
 
 
-<div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Denton</a> was trying to
-convince me the other day that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
+<div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Dave Denton</a> were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
 
-<blockquote><p>After running a few tests I confirmed that the lower the max heap size is,
-the more threads I could create. I can easily get a OutOfMemoryError when
-allocating memory for threads way before any real heap space is used.</p></blockquote>
+<blockquote><p>After running a few tests I confirmed that the lower the max heap size is, the more threads I could create. I can easily get a OutOfMemoryError when allocating memory for threads way before any real heap space is used.</p></blockquote>
 
 <p>The helpful message you&#8217;ll get is.</p>
 
 <pre><code>java.lang.OutOfMemoryError: unable to create new native thread
 </code></pre>
 
-<p>I ran a simple loop that would create dozy threads (they sleep a lot) and
-watched how many threads could be created before the out of memory error
-above. I repeated this after setting the maximum heap size. Check out the
-results below, you can see that no real Java heap is used, still I get an out
-of memory error and am limited on the number of threads I can create. As a
-caveat, these results should in no way taken as representative on any other
-environment than my laptop running Java 1.6. Your mileage may vary.</p>
+<!-- more -->
 
-<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/SabxCtNlpUI/AAAAAAAADCM/er62bS1oW9Y/s1600-h/64.PNG"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/SabxCtNlpUI/AAAAAAAADCM/er62bS1oW9Y/s400/64.PNG"></a></p>
 
-<p><a href="http://2.bp.blogspot.com/_-uMxV_fCbC4/SabxJsaTCWI/AAAAAAAADCU/WM7e4EBwsSU/s1600-h/512.PNG"><img src="http://2.bp.blogspot.com/_-uMxV_fCbC4/SabxJsaTCWI/AAAAAAAADCU/WM7e4EBwsSU/s400/512.PNG"></a></p>
+<p>I ran a simple loop that would create threads that do nothing but sleep and watched how many could be created before the out of memory error above. I repeated this after setting the maximum heap size with <code>-Xmx</code>. Check out the results below, you can see that no real Java heap is used, still I get an out of memory error and am limited on the number of threads I can create. As a caveat, these results should in no way taken as representative on any other environment than my laptop running Java 1.6. Your mileage may vary.</p>
 
-<p><a href="http://1.bp.blogspot.com/_-uMxV_fCbC4/SabxQc8DBkI/AAAAAAAADCc/-O6ApHci_q4/s1600-h/1512.PNG"><img src="http://1.bp.blogspot.com/_-uMxV_fCbC4/SabxQc8DBkI/AAAAAAAADCc/-O6ApHci_q4/s400/1512.PNG"></a></p>
+<ul class="gallery">
+<li><a href="../../../../../images/less-is-more/64.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 64m"><img src="../../../../../images/less-is-more/64_t.png" alt="-Xmx 64m" /></a></li><li><a href="../../../../../images/less-is-more/512.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 512m"><img src="../../../../../images/less-is-more/512_t.png" alt="-Xmx 512m" /></a></li><li><a href="../../../../../images/less-is-more/1512.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 1512m"><img src="../../../../../images/less-is-more/1512_t.png" alt="-Xmx 1512m" /></a></li>
+</ul>
 
-<p><a href="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sab0EHyHXyI/AAAAAAAADCk/6ur4CTR3svI/s1600-h/results.PNG"><img src="http://4.bp.blogspot.com/_-uMxV_fCbC4/Sab0EHyHXyI/AAAAAAAADCk/6ur4CTR3svI/s400/results.PNG"></a></p>
 
-<p>I&#8217;d always considered OS native threads or light weight processes to be
-effectively unbounded with the restrictions being on the resources they are
-associated with. I don&#8217;t think this is really the case though as clearly, the
-act of creating a thread that does nothing and has no real resources
-associated with it (other than any native voodoo) requires OS memory
-allocation in my tests.</p>
+<p><a href="../../../../../images/less-is-more/results.png" class="fancybox" title="Heap size and the maximum number of threads created before failing "><img class="right" src="../../../../../images/less-is-more/results_t.png" alt="Heap size and the maximum number of threads created before failing " /></a></p>
 
-<p>I thought this was really interesting as it demonstrates how small decisions
-can have a big impact on the run-time characteristics of a system. Being able
-to tune your application to suit your production requirements is always
-tricky. Large memory models and data manipulation can often require large heap
-sizes but if in addition, you then want to create large numbers of threads,
-you might get into the murky world I&#8217;ve touched on here. Of course, thread
-pools are generally the way to go if you want to manage your resources
-properly, but that&#8217;s another story all together.</p>
+<p>I&#8217;d always considered OS native threads or light weight processes to be effectively unbounded with the restrictions being on the resources they are associated with. This isn&#8217;t the case though as clearly, the act of creating a thread that does nothing and has no real resources associated with it still requires OS memory allocation in my tests.</p>
 
-<p>I&#8217;m sure Google can tell you more, but see this <a href="http://www.egilh.com/blog/archive/2006/06/09/2811.aspx">random blog</a> for another
+<p>I thought this was really interesting as it demonstrates how small decisions can have a big impact on the run-time characteristics of a system. Being able to tune your application to suit your production requirements is always tricky. Large memory models and data manipulation can often require large heap sizes but if in addition, you want to create large numbers of threads, you might get into the murky world I&#8217;ve touched on here. Of course, thread pools are generally the way to go if you want to manage your resources properly, but that&#8217;s another story all together.</p>
+
+<p>I&#8217;m sure Google can tell you more, but see this <a href="http://www.egilh.com/blog/archive/2006/06/09/2811.aspx">blog post</a> for another
 description.</p>
 </div>
 
@@ -246,7 +226,7 @@ description.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/02/23/infering-type-in-micro-dsl/" title="Previous Post: Infering the Type in a Micro DSL">&laquo; Infering the Type in a Micro DSL</a>
+        <a class="basic-alignment left" href="/blog/2009/02/23/infering-type-in-micro-dsl/" title="Previous Post: Infering the Types in a Micro DSL">&laquo; Infering the Types in a Micro DSL</a>
       
       
         <a class="basic-alignment right" href="/blog/2009/03/15/swtbot-vs-window-licker/" title="next Post: SWTBot vs Window Licker">SWTBot vs Window Licker &raquo;</a>
