@@ -6,6 +6,8 @@ time: 2009-12-10 09:18:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
+keywords: "thread, interrupt status flag, interrupt, state, RUNNABLE, WAITING, TIMED_WAITING, TERMINATED"
+description: "Java's Thread seems not to maintain it's state (RUNNABLE, WAITING etc) atomically with it's interrupt status flag"
 ---
 
 I had an interesting time getting a couple of tests running for [tempus-fugit](http://tempusfugitlibrary.org/) recently. It threw up a couple of interesting aspects about using threads that I hadn't come across before.

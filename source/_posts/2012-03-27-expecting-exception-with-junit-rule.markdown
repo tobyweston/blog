@@ -8,6 +8,7 @@ comments: true
 sidebar : false
 series: Exception Handling
 keywords: "try catch, junit, junit rule, expected =, ExpectedException, ExpectedException rule"
+description: "Avoid the try-fail-catch idiom and use the ExpectedException JUnit rule when testing for exceptions."
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or

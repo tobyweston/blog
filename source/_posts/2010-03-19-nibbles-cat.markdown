@@ -7,7 +7,7 @@ categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
 keywords: "concurrency, deadlock, deadlock detection,"
-description: ""
+description: "Detect deadlocks programmatically with the DeadlockDetector class. Shows an example of deadlock."
 ---
 
 I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we _actually _see them in real systems. In the end, I created a `DeadlockDetector` class.
