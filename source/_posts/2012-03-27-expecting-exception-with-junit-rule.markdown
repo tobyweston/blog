@@ -12,8 +12,8 @@ description: "Avoid the try-fail-catch idiom and use the ExpectedException JUnit
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
-the `expected` element of the `@Test` annotation. Despite being more concise than the alternative,
-there is an argument that using `expected` doesn't support all the cases you may want to test. The examples being
+the `expected` element of the `@Test` annotation. Despite being more concise than the former,
+there is an argument that using `expected` doesn't support all the cases you may want to test. The example being
 to perform additional testing after the exception or testing against the actual exception message. 
 
 JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.
@@ -70,7 +70,7 @@ The test feedback has also become clearer.
 	
 ## ExpectedException Rule
 
-Using an instance of `ExpectedException`, we define a [JUnit rule](http://www.infoq.com/news/2009/07/junit-4.7-rules)
+Using an instance of `ExpectedException`, we can define a [JUnit rule](http://www.infoq.com/news/2009/07/junit-4.7-rules)
 that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
 setting up expectations in mocking frameworks like [JMock](http://www.jmock.org).
 
@@ -94,12 +94,14 @@ Which would show the failure below.
 	
 The rule allows us to assert the exception is thrown and make assertions against the message. We still can't make
 additional assertions after the `find` method call, but this may not be a bad thing.
-	
+
+## Beware combining Rules with @RunWith
+
 Beware though that if you combine the rule with certain `@RunWith` classes,
 you may get a false positive. Specifically, if you were to run with a class that extends `JUnit4ClassRunner` in the
 above example, the test would no longer fail. You'd get a false positive.
 
-For example, if you're using a version of JMock prior to 2.6.0 and use `@RunWith(JMock.class)` you'll encounter this. Older versions of the `JMock.class` extend `JUnit4ClassRunner` and `JUnit4ClassRunner` ignores rules. The newer `BlockJUnit4ClassRunner` supports rules and JMock post 2.6.0 extend this in `JMock.class`.
+For example, if you're using a version of JMock prior to 2.6.0 and use `@RunWith(JMock.class)` you'll encounter this. Older versions of the `JMock.class` extend `JUnit4ClassRunner` and `JUnit4ClassRunner` ignores rules. The newer `BlockJUnit4ClassRunner` supports rules and JMock post 2.6.0 extends this class in `JMock.class`.
 
 
 ## Summary
@@ -109,3 +111,15 @@ The new rule offers a balance between concise syntax and function. In practice t
 The `ExpectedException` rule comes with its own baggage. The declarative nature of the rule means _magic_ just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.
 
 I'd love to hear which approach you prefer, so feel free to post a comment below.
+
+
+
+[{% img right http://ecx.images-amazon.com/images/I/41t9iO0egKL._SL160_.jpg 'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)' %}](http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21)
+
+[{% img right http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 'Growing Object Oriented Software' %}](http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21)
+
+## Recommended Reading
+
+ * [Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21), Andy Hunt, Dave Thomas
+* [Growing Object-Oriented Software, Guided by Tests](http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21), Steve Freeman, Nat Pryce
+ * [Test Driven: TDD and Acceptance TDD for Java Developers](http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21), Lasse Koskela
