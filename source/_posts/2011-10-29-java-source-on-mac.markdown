@@ -3,10 +3,10 @@ name: java-source-on-mac
 layout: post
 title: Java source on Mac
 time: 2011-10-29 11:11:00 +01:00
-categories: java
+categories: java recipes
 sidebar : false
 description: "Getting Java source on your Mac"
-keywords: "mac, java source"
+keywords: "mac, java source, org/codehaus/plexus/classworlds/launcher/Launcher, maven, m2_home, mvn"
 ---
 
 Mostly as a reminder to myself, getting the Java source on your Mac involves the following.
@@ -39,6 +39,8 @@ Reset things by;
   1. `sudo ln -s /maven2/install/folder maven`
   1. run `maven -version` to check its back up.
   1. Have a cup of tea.
+
+This is most likely caused because you have an `M2_HOME` set, if you'd prefer to use Maven 3, remove the Maven too path setting with `export M2_HOME=`.
 
 
 ## Java Preferences.app

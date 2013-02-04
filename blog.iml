@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.page_ranks" />
+      <excludeFolder url="file://$MODULE_DIR$/.pygments-cache" />
       <excludeFolder url="file://$MODULE_DIR$/.sass-cache" />
       <excludeFolder url="file://$MODULE_DIR$/_deploy" />
       <excludeFolder url="file://$MODULE_DIR$/public" />

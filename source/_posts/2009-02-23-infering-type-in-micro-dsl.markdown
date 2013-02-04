@@ -1,28 +1,27 @@
 ---
 name: infering-type-in-micro-dsl
 layout: post
-title: Infering the Type in a Micro DSL
+title: Infering the Types in a Micro DSL
 time: 2009-02-23 19:34:00 +00:00
 categories: java testing
 comments: true
 sidebar : false
+keywords: "dsl, fluent api, generics, java"
+description: "Java can have trouble inferring multiple types, see and example and create a fluent API in Java using generics."
 ---
 
 In a recent [post]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/), I was talking about a micro DSL to create a simple "find x in a list" service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x's.
   
-Just to recap then, to find something in a list, the original client code
-(using a static import) looks like this.
+Just to recap then, to find something in a list, the original client code (using a static import) looks like this.
 
 {% codeblock lang:java %}
 find(needle).in(haystack)
 {% endcodeblock %}
 
 
+<!-- more -->
   
-The class (in this case `NeedleFinder`) implements the DSL and specifically
-decides in the `in` method how to compare a `Needle` object to whatever is in the
-haystack list. I wanted to create a more generic class so started to implement
-the `ListFinder` to use generics and a couple of interesting things came out.
+The class (in this case `NeedleFinder`) implements the DSL and specifically decides in the `in` method how to compare a `Needle` object to whatever is in the haystack list. I wanted to create a more generic class so started to implement the `ListFinder` to use generics and a couple of interesting things came out.
 
 <!-- more -->
   
@@ -64,8 +63,7 @@ public final class ListFinder<T, L> {
 
 
   
-With the following test case showing its usage (the `Needle` and `Bale` class
-aren't show for brevity).
+With the following test case showing its usage (the `Needle` and `Bale` class aren't show for brevity).
 
 {% codeblock lang:java %}
 public class ListFinderTest {
@@ -100,19 +98,13 @@ public class ListFinderTest {
 }
 {% endcodeblock %}
 
-
+## Equality
   
-Here we're defining the equality of a `Needle` in a list of `Bale` objects to be
-when the name of a `Needle` is contained in the name of the `Bale`. A silly
-example I know but it illustrates that we redefine what we mean by equality
-for the list finder by implementing the `ListFinder.Comparator`. The concrete
-example that spawned the idea was when searching for a Race object inside a
-list of `Event` objects; two completely different entities.
+Here we're defining the equality of a `Needle` in a list of `Bale` objects to be when the name of a `Needle` is contained in the name of the `Bale`. A silly example I know but it illustrates that we redefine what we mean by equality for the list finder by implementing the `ListFinder.Comparator`. The concrete example that spawned the idea was when searching for a `Race` object inside a list of `Event` objects; two completely different entities.
 
+## Type inference over too many types
   
-Anyway, what I thought was interesting about this example was the type
-inference going on in the static find method. I originally wanted to just use
-`ListFinder.find` method directly as in the following.
+Anyway, what I thought was interesting about this example was the type inference going on in the static find method. I originally wanted to just use `ListFinder.find` method directly as in the following.
 
 
 {% codeblock lang:java %}
@@ -122,12 +114,7 @@ ListFinder.find(needle).in(haystack).using(comparator)
     
 
   
-Where `ListFinder` is statically imported. Usually, I'd rely on type inference
-here to work out that needle means `T` and therefore `T` is of type `Needle`.
-However, in the case above, the compiler will complain as the haystack
-parameter is not of type `Object`. The trick is that the generic method find in
-`ListFinder` needs to infer two types (`T` and `L`) but only has enough information
-for `T`. So it defaults `L` to type `Object`. grrr damn Javas indisputable logic.
+Where `ListFinder` is statically imported. Usually, I'd rely on type inference here to work out that needle means `T` and therefore `T` is of type `Needle`. However, in the case above, the compiler will complain as the haystack parameter is not of type `Object`. The trick is that the generic method `find` in `ListFinder` needs to infer two types (`T` and `L`) but only has enough information for `T`. So it defaults `L` to type `Object`.
 
   
 The alternative is to use the full notation as follows.
@@ -139,25 +126,27 @@ ListFinder.<Needle, Bale>find(needle).in(haystack).using(comparator)
 {% endcodeblock %}
 
   
-Or (as I've done in the test) use an internal method who's return type gives
-the compiler enough information to infer both types. I prefer this approach as
-it makes the DSL expression to find a needle much more readable.
+Or (as I've done in the test) use an internal method who's return type gives the compiler enough information to infer both types. I prefer this approach as it makes the DSL expression to find a needle much more readable.
+
+
+## Summary
+  
+So, Java can't chain methods to infer the types. I didn't really expect it to be able to so, its a bit much to ask for. Although it would be pretty sweet if it could.
 
   
-So, Java can't chain methods to infer the types. I didn't really expect it to
-be able to so, its a bit much to ask for. Although it would be pretty sweet if
-it could.
-
-  
-One last thing, [Papa Ray](http://codewax.blogspot.com/) was showing me a
-[Jedi](http://docs.codehaus.org/display/JEDI/Home) alternative to the finder.
-If we're lucky, he might blog about it. It seems Jedi offers some measure of
-residence against the proliferation of anonymous inner classes in lieu of
-closures but in all honestly, I just wanted to get in some big words in before
+One last thing, [Ray Barlow](http://codewax.blogspot.com/) was showing me a [Jedi](http://docs.codehaus.org/display/JEDI/Home) alternative to the finder. If we're lucky, he might blog about it. It seems Jedi offers some measure of residence against the proliferation of anonymous inner classes in lieu of closures but in all honestly, I just wanted to get in some big words in before
 signing off. TTFN.
 
   
+## Recommended Reading
 
+[{% img right http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg 'Domain Specific Languages (Addison-Wesley Signature)' %}](http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21)
+
+[{% img right http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg 'DSLs in Action' %}](http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21)
+
+ * [Domain Specific Languages (Addison-Wesley Signature)](http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21), Martin Fowler
+ * [DSLs in Action](http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21), DSLs in Action
+ * [The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356999&linkCode=as2&tag=baddotrobot-21), Terence Parr
 
 
 

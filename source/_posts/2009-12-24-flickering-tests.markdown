@@ -6,14 +6,13 @@ time: 2009-12-24 15:55:00 +00:00
 categories: java concurrency tempus-fugit
 comments: true
 sidebar : false
+keywords: "flickering tests, nondeterminism, intermittent tests, java, intermittent, junit"
+description: "Repeat intermittently failing tests automatically with a JUnit rule."
 ---
 
-Occasionally I'll see flickering tests. Sometimes they're green, sometimes they're red and this can happen without any code changes! Something is afoul for sure. What bugs me the most though is that when trying to fix the problem, I can never be sure that I haven't just been lucky and the green I'm seeing isn't really a false positive. I'll have to manually run the test several times before my confidence grows.
+Occasionally I'll see flickering tests. Sometimes they're green, sometimes they're red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven't just been lucky and the green I'm seeing isn't really a false positive. I'll have to manually run the test several times before my confidence grows.
   
-In an attempt to ease this heavy burden and make light work of this drudgery,
-I created an `@Intermittent` annotation with a corresponding JUnit `Rule` and
-`Runner`. Now, I can mark up a suspect test and get someone else to do the
-repetition. Joy.
+In an attempt to ease the situation, I created an `@Intermittent` annotation with a corresponding JUnit `Rule` and `Runner`. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.
 
 
 {% codeblock lang:java %}
@@ -24,7 +23,7 @@ public void flickering() {
 }
 {% endcodeblock %}
 
-I can then use the `IntermittentRule` to run the test method repeatedly.
+You can then use the `IntermittentRule` to run the test method repeatedly.
 
       
 {% codeblock lang:java %}
