@@ -37,7 +37,7 @@ Reset things by;
   1. `cd /usr/share`  
   1. `sudo mv maven maven.new` (a symlink which should incorrectly be pointing to `java/maven-3.0.3)`
   1. `sudo ln -s /maven2/install/folder maven`
-  1. run `maven -version` to check its back up.
+  1. run `mvn -version` to check its back up.
   1. Have a cup of tea.
 
 This is most likely caused because you have an `M2_HOME` set, if you'd prefer to use Maven 3, remove the Maven too path setting with `export M2_HOME=`.
