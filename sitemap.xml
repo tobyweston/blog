@@ -178,7 +178,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2011/10/29/java-source-on-mac/</loc>
-        <lastmod>2013-02-01T11:10:42+00:00</lastmod>
+        <lastmod>2013-02-05T21:54:03+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/01/29/transaction-management-without/</loc>
@@ -288,7 +288,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2013-02-03T12:49:34+00:00</lastmod>
+        <lastmod>2013-02-05T21:54:03+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://baddotrobot.com/book/</loc>
+        <lastmod>2013-02-22T16:22:56+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -304,6 +308,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2013-02-03T12:49:34+00:00</lastmod>
+        <lastmod>2013-02-05T21:54:03+00:00</lastmod>
     </url>
 </urlset>
