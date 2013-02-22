@@ -10,9 +10,9 @@ keywords: "acceptance test, agile, lean"
 description: "Beta readers wanted for my book on agile acceptance testing"
 ---
 
-[{% img right ../images/eat_book.png 325 450 'ESSENTIAL Acceptance Testing is available on Leanpub'%}](https://leanpub.com/essential_acceptance_testing)
+[{% img right ../images/eat_book.png 325 450 'Essential Acceptance Testing is available on Leanpub'%}](https://leanpub.com/essential_acceptance_testing)
 
-I'm looking for beta readers to help with my book [ESSENTIAL Acceptance Testing](https://leanpub.com/essential_acceptance_testing). It's only short, probably around 10,000 words. It discusses the generally accepted testing strategies used in agile circles and critiques what has become the "norm".
+I'm looking for beta readers to help with my book [Essential Acceptance Testing](https://leanpub.com/essential_acceptance_testing). It's only short, probably around 15,000-20,000 words. It discusses the generally accepted testing strategies used in agile circles and critiques what has become the "norm".
 
 
 ## Lean Publishing
@@ -20,4 +20,4 @@ I'm looking for beta readers to help with my book [ESSENTIAL Acceptance Testing]
 It's a lean publishing effort. If there's no interest, I won't waste my time writing something nobody wants. What I really want though is to engage potential readers and encourage them to feedback, here or at [Leanpub](https://leanpub.com/essential_acceptance_testing). So if you don't mind reading it as it's being written, bag a copy at [Leanpub](https://leanpub.com/essential_acceptance_testing).
 
 
-> Use coupon code **`bUqh1aAXvaQh`** at [Leanpub](https://leanpub.com/essential_acceptance_testing) to download your **free** copy.
+If you'd like to get involved and help me by giving me your feedback, use coupon code **`bUqh1aAXvaQh`** at [Leanpub](https://leanpub.com/essential_acceptance_testing) to download your **free** copy until 27th March.
