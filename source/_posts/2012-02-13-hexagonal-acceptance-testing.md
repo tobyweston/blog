@@ -47,7 +47,7 @@ In the original article, Cockburn talks about ports and adaptors as a fairly abs
 
 He talks about a relatively small number of _ports_ (say ~4-5) and decoupling _major_ components of a system (for example, the database and the GUI) so that it can be driven and tested by different _external_ actors. 
 
-I'm talking more about changing the _external_ nature of these actors to be more _internal_. If we have a much larger number of ports (say >30), decoupling _minor_ components we can achieve this substutatabiliy on a bigger scale and be more flexible on how we test the system.
+I'm talking more about changing the _external_ nature of these actors to be more _internal_. If we have a much larger number of ports (say >30), decoupling _minor_ components we can achieve this substitutabiliy on a bigger scale and be more flexible on how we test the system.
 
 Cockburn described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or _acceptance criteria_ is a logical progression and fits nicely into iterative development.
 
