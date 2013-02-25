@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -156,13 +156,29 @@ for your current branch, you must specify a branch on the command line.
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
-<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1430218339&amp;linkCode=as2&amp;tag=baddotrobot-21">Pro Git (Expert&#8217;s Voice in Software Development)</a>, Scott Chacon</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pro Git (Expert&#8217;s Voice in Software Development)</a>, Scott Chacon</li>
 </ul>
 
 ]]></content>
@@ -351,9 +367,25 @@ for your current branch, you must specify a branch on the command line.
 
 <h2>References</h2>
 
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
 <p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
-[3] <a href="http://amzn.to/Tm1Sh1">Learn Objective-C for Java Developers</a>, James Bucanek
+[3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
 ]]></content>
   </entry>
@@ -479,12 +511,28 @@ Expected: is &lt;999.99D&gt;
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobot-21">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=839348930X&amp;linkCode=as2&amp;tag=baddotrobot-21">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321784154&amp;linkCode=as2&amp;tag=baddotrobot-21">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
+<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
 </ul>
 
 ]]></content>
@@ -805,9 +853,25 @@ X-Host: web4
     <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
     <updated>2012-07-22T12:38:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
-    <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<p>In the <a href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 
@@ -853,7 +917,23 @@ X-Host: web4
     <link href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/"/>
     <updated>2012-07-20T15:50:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i</id>
-    <content type="html"><![CDATA[<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
 
 <p>In this first post, I&#8217;ll talk a little about Allen&#8217;s ideas, summarising the first section of the book. In the <a href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it&#8217;s application and the changes I made to my personal approach to <em>getting things done</em>.</p>
 

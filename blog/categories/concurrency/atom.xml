@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -106,7 +106,23 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     <link href="http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/"/>
     <updated>2010-01-04T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation</id>
-    <content type="html"><![CDATA[<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>

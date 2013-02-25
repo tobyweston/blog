@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-22 17:18:40 +0000 -->
+    <!-- last update; 2013-02-25 15:38:18 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -204,14 +204,30 @@
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1935182455&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg" title="'DSLs in Action'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321712943&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg" title="'Domain Specific Languages (Addison-Wesley Signature)'" ></a></p>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg" title="'DSLs in Action'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg" title="'Domain Specific Languages (Addison-Wesley Signature)'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321712943&amp;linkCode=as2&amp;tag=baddotrobot-21">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1935182455&amp;linkCode=as2&amp;tag=baddotrobot-21">DSLs in Action</a>, DSLs in Action</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356999&amp;linkCode=as2&amp;tag=baddotrobot-21">The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)</a>, Terence Parr</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">DSLs in Action</a>, DSLs in Action</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356999&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)</a>, Terence Parr</li>
 </ul>
 
 </div>

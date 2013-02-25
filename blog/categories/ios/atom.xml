@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -33,9 +33,25 @@
     <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
     <updated>2012-07-22T12:38:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
-    <content type="html"><![CDATA[<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 

@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-22 17:18:40 +0000 -->
+    <!-- last update; 2013-02-25 15:38:18 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -231,9 +231,25 @@
 
 <h2>References</h2>
 
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
 <p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
-[3] <a href="http://amzn.to/Tm1Sh1">Learn Objective-C for Java Developers</a>, James Bucanek
+[3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
 </div>
 

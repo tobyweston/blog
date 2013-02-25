@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -166,13 +166,29 @@ The abbreviated</code>git status -sb` version</p>
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
-<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356727&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1934356158&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1430218339&amp;linkCode=as2&amp;tag=baddotrobot-21">Pro Git (Expert's Voice in Software Development)</a>, Scott Chacon</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pro Git (Expert's Voice in Software Development)</a>, Scott Chacon</li>
 </ul>
 
 ]]></content>
@@ -250,12 +266,28 @@ Expected: is &lt;999.99D&gt;
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobot-21">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=839348930X&amp;linkCode=as2&amp;tag=baddotrobot-21">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321784154&amp;linkCode=as2&amp;tag=baddotrobot-21">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
+<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
 </ul>
 
 ]]></content>

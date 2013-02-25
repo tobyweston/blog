@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-22 17:18:40 +0000 -->
+    <!-- last update; 2013-02-25 15:38:18 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -152,7 +152,23 @@
   </header>
 
 
-<div class="entry-content"><p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
+<div class="entry-content"><div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>

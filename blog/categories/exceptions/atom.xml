@@ -4,7 +4,7 @@
   <title><![CDATA[Category: exceptions | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -461,16 +461,32 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0974514012&amp;linkCode=as2&amp;tag=baddotrobot-21"><img class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <h2>Recommended Reading</h2>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0974514012&amp;linkCode=as2&amp;tag=baddotrobot-21">Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)</a>, Andy Hunt, Dave Thomas</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobot-21">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1932394850&amp;linkCode=as2&amp;tag=baddotrobot-21">Test Driven: TDD and Acceptance TDD for Java Developers</a>, Lasse Koskela</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)</a>, Andy Hunt, Dave Thomas</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Test Driven: TDD and Acceptance TDD for Java Developers</a>, Lasse Koskela</li>
 </ul>
 
 ]]></content>

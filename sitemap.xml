@@ -46,11 +46,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/02/16/more-on-micro-dsls/</loc>
-        <lastmod>2013-02-03T11:57:57+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/02/23/infering-type-in-micro-dsl/</loc>
-        <lastmod>2013-02-03T11:50:27+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2009/02/26/less-is-more/</loc>
@@ -106,7 +106,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/01/04/type-safe-annotation/</loc>
-        <lastmod>2013-02-01T11:30:19+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/03/19/nibbles-cat/</loc>
@@ -186,7 +186,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/</loc>
-        <lastmod>2013-01-04T19:27:39+00:00</lastmod>
+        <lastmod>2013-02-25T15:37:34+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/</loc>
@@ -198,7 +198,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/</loc>
-        <lastmod>2013-02-03T12:49:34+00:00</lastmod>
+        <lastmod>2013-02-25T15:34:53+00:00</lastmod>
     </url>
     <url>
         <loc>
@@ -236,11 +236,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/</loc>
-        <lastmod>2012-11-28T20:32:55+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/</loc>
-        <lastmod>2012-11-28T20:32:55+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/07/28/mountain-lion-carnage/</loc>
@@ -264,7 +264,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest/</loc>
-        <lastmod>2013-02-01T10:32:56+00:00</lastmod>
+        <lastmod>2013-02-25T15:20:12+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work/</loc>
@@ -272,7 +272,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/</loc>
-        <lastmod>2013-01-02T15:44:42+00:00</lastmod>
+        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque/</loc>
@@ -280,7 +280,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/01/23/useful-git-commands/</loc>
-        <lastmod>2013-02-01T11:00:20+00:00</lastmod>
+        <lastmod>2013-02-25T15:24:07+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -288,11 +288,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2013-02-05T21:54:03+00:00</lastmod>
+        <lastmod>2013-02-25T15:37:34+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
-        <lastmod>2013-02-22T17:15:18+00:00</lastmod>
+        <lastmod>2013-02-22T17:21:52+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -308,6 +308,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2013-02-05T21:54:03+00:00</lastmod>
+        <lastmod>2013-02-25T15:37:34+00:00</lastmod>
     </url>
 </urlset>

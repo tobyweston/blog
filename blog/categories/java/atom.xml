@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-02-22T17:18:40+00:00</updated>
+  <updated>2013-02-25T15:38:18+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -198,9 +198,25 @@
 
 <h2>References</h2>
 
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
 <p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
-[3] <a href="http://amzn.to/Tm1Sh1">Learn Objective-C for Java Developers</a>, James Bucanek
+[3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
 ]]></content>
   </entry>
@@ -277,12 +293,28 @@ Expected: is &lt;999.99D&gt;
 
 <h2>Recommended Reading</h2>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobotco-21"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321503627&amp;linkCode=as2&amp;tag=baddotrobot-21">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=839348930X&amp;linkCode=as2&amp;tag=baddotrobot-21">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=0321784154&amp;linkCode=as2&amp;tag=baddotrobot-21">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
+<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
 </ul>
 
 ]]></content>

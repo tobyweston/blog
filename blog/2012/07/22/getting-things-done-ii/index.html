@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-02-22 17:18:40 +0000 -->
+    <!-- last update; 2013-02-25 15:38:18 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -152,9 +152,25 @@
   </header>
 
 
-<div class="entry-content"><p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+<div class="entry-content"><div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 
