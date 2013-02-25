@@ -140,13 +140,28 @@ signing off. TTFN.
   
 ## Recommended Reading
 
-[{% img right http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg 'Domain Specific Languages (Addison-Wesley Signature)' %}](http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21)
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-[{% img right http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg 'DSLs in Action' %}](http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21)
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
 
- * [Domain Specific Languages (Addison-Wesley Signature)](http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21), Martin Fowler
- * [DSLs in Action](http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21), DSLs in Action
- * [The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356999&linkCode=as2&tag=baddotrobot-21), Terence Parr
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+<a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg 'Domain Specific Languages (Addison-Wesley Signature)' %}</a>
+
+<a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg 'DSLs in Action' %}</a>
+
+ * <a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler
+ * <a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">DSLs in Action</a>, DSLs in Action
+ * <a href="http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356999&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)</a>, Terence Parr
 
 
 

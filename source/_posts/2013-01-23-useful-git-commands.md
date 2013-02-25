@@ -142,9 +142,24 @@ $ git status -sb
 
 ## Recommended Reading
 
-[{% img right http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg 'Pragmatic Guide to Git (Pragmatic Programmers)' %}](http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21)
-[{% img right http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg 'Pragmatic Version Control Using Git' %}](http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21)
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
- * [Pragmatic Guide to Git (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21), Travis Swicegood
- * [Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)](http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21), Travis Swicegood
- * [Pro Git (Expert's Voice in Software Development)](http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21), Scott Chacon
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+<a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg 'Pragmatic Guide to Git (Pragmatic Programmers)' %}</a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg 'Pragmatic Version Control Using Git' %}</a>
+
+ * <a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood
+ * <a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood
+ * <a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pro Git (Expert's Voice in Software Development)</a>, Scott Chacon

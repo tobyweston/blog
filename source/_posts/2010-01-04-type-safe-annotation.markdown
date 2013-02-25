@@ -10,7 +10,22 @@ keywords: "java, annotation, goetz, enum annotation must be an enum constant"
 description: "Why does Java insist that an enum annotation value must be an enum constant?"
 ---
 
-A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from [Concurrency In Practice](http://amzn.to/TtEnWO), I wanted to include an enum as a parameter type. Kind of like this
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this
 
 {% codeblock lang:java %}
 public @interface GuardedBy {

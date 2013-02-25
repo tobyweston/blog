@@ -10,9 +10,24 @@ description: "In the previous post, I summarised some of the ideas from David Al
 series: Getting Things Done
 ---
 
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
 [{% img right ../../../../../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../../../../../images/appigo_todo.png)
 
-In the [preceding post]({{ root_url }}/blog/2012/07/20/getting-things-done-i), I summarised some of the ideas from David Allen's book [Getting Things Done](http://amzn.to/Tm1FdQ). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
+In the [preceding post]({{ root_url }}/blog/2012/07/20/getting-things-done-i), I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
 
 I'd already been using Appigo's [Todo](http://www.appigo.com/todo) app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious `Home`, `Work`, `Other` lists and replaced them with `Inbox`, `Options`, `Reference`, `Someday / Maybe`, `Waiting (for someone)` and `Trash`.
 

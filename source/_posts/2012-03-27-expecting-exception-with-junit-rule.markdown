@@ -113,13 +113,27 @@ The `ExpectedException` rule comes with its own baggage. The declarative nature 
 I'd love to hear which approach you prefer, so feel free to post a comment below.
 
 
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-[{% img right http://ecx.images-amazon.com/images/I/41t9iO0egKL._SL160_.jpg 'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)' %}](http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21)
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
 
-[{% img right http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 'Growing Object Oriented Software' %}](http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21)
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+<a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/41t9iO0egKL._SL160_.jpg 'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)' %}</a>
+
+<a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 'Growing Object Oriented Software' %}</a>
 
 ## Recommended Reading
 
- * [Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)](http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21), Andy Hunt, Dave Thomas
-* [Growing Object-Oriented Software, Guided by Tests](http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21), Steve Freeman, Nat Pryce
- * [Test Driven: TDD and Acceptance TDD for Java Developers](http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21), Lasse Koskela
+ * <a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)</a>, Andy Hunt, Dave Thomas
+* <a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce
+ * <a href="http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Test Driven: TDD and Acceptance TDD for Java Developers</a>, Lasse Koskela
