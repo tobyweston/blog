@@ -30,7 +30,7 @@ body > header h1 {
     }
     @media only screen and (min-width: 480px) {
         padding-left: $pad-header-narrow;
-        padding-right: $pad-header-narrow;
+        padding-right: 50px;
     }
     @media only screen and (min-width: 768px) {
         padding-left: $pad-header-medium;
