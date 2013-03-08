@@ -1,7 +1,7 @@
 ---
 name: infering-type-in-micro-dsl
 layout: post
-title: Infering the Types in a Micro DSL
+title: Inferring the Types in a Micro DSL
 time: 2009-02-23 19:34:00 +00:00
 categories: java testing
 comments: true
