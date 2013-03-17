@@ -17,14 +17,14 @@ In this post, we'll take a closer look with some examples.
 
 <!-- more -->
 
-To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each of the following.
+To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architectural "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each of the following.
 
 * Low level exceptions which propagate to the UI
 * An example of an externally facing API, in our case, a RESTful service
 * Maintaining data atomicity in the face of failures
 
 
-### The UI Boundary
+## The UI Boundary
 
 A user probably isn't interested in seeing details of the majority of your exceptions. A user should certainly not be presented with a Java stack trace when visiting a public web site. 
 
@@ -46,9 +46,9 @@ For the _when_, most web UI frameworks have a convenient mechanism. In the servl
 
 For the _how_, the approach at this layer is to _translate_ un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.
 
-### The API Boundary
+## The API Boundary
 
-Lets consider a RESTful web service that allows a client to `GET` customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code `404` (Not Found). In the backend however, we throw a `CustomerNotFoundException`.
+Lets consider a RESTful web service that allows a client to `GET` customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details is to return the HTTP response code `404` (Not Found). In the backend however, we throw a `CustomerNotFoundException`.
 
 For the _when_, again, this layer is about _translation_. We would like to turn the `Exception` into a HTTP response code at the point at which the response is generated. We can propagate the exception up through the stack until the last possible point.
 
@@ -87,7 +87,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {
 
 With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of `Throwable`. 
 
-### The Database Transaction Boundary
+## The Database Transaction Boundary
 
 When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we want to rollback. Otherwise we'd be left in an inconsistent state. 
 
