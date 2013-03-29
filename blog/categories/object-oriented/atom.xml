@@ -4,7 +4,7 @@
   <title><![CDATA[Category: object-oriented | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/object-oriented/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-03-05T19:53:13+00:00</updated>
+  <updated>2013-03-29T09:49:00+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -371,7 +371,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 <!-- more -->
 
 
-<p>To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architecture "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, <em>when</em> to catch exceptions and <em>how</em> to deal with them. Effectively, we'll define a system wide strategy for each of the following.</p>
+<p>To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architectural "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, <em>when</em> to catch exceptions and <em>how</em> to deal with them. Effectively, we'll define a system wide strategy for each of the following.</p>
 
 <ul>
 <li>Low level exceptions which propagate to the UI</li>
@@ -380,7 +380,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 </ul>
 
 
-<h3>The UI Boundary</h3>
+<h2>The UI Boundary</h2>
 
 <p>A user probably isn't interested in seeing details of the majority of your exceptions. A user should certainly not be presented with a Java stack trace when visiting a public web site.</p>
 
@@ -406,9 +406,9 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For the <em>how</em>, the approach at this layer is to <em>translate</em> un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
 
-<h3>The API Boundary</h3>
+<h2>The API Boundary</h2>
 
-<p>Lets consider a RESTful web service that allows a client to <code>GET</code> customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details should be to return the HTTP response code <code>404</code> (Not Found). In the backend however, we throw a <code>CustomerNotFoundException</code>.</p>
+<p>Lets consider a RESTful web service that allows a client to <code>GET</code> customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details is to return the HTTP response code <code>404</code> (Not Found). In the backend however, we throw a <code>CustomerNotFoundException</code>.</p>
 
 <p>For the <em>when</em>, again, this layer is about <em>translation</em>. We would like to turn the <code>Exception</code> into a HTTP response code at the point at which the response is generated. We can propagate the exception up through the stack until the last possible point.</p>
 
@@ -452,7 +452,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of <code>Throwable</code>.</p>
 
-<h3>The Database Transaction Boundary</h3>
+<h2>The Database Transaction Boundary</h2>
 
 <p>When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we want to rollback. Otherwise we'd be left in an inconsistent state.</p>
 
