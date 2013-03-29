@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Beta Readers Wanted
+title: Essential Acceptance Testing
 comments: true
 sharing: true
 footer: false
 sidebar: false
 published: true
-keywords: "acceptance test, agile, lean"
-description: "Beta readers wanted for my book on agile acceptance testing"
+keywords: "acceptance test, agile, lean, leanpub"
+description: "Read my book Essential Acceptance Testing about agile testing"
 ---
 <div>
     <script type="text/javascript">
@@ -26,12 +26,12 @@ description: "Beta readers wanted for my book on agile acceptance testing"
 
 <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right ../images/eat_book.png 325 450 'Essential Acceptance Testing is available on Leanpub'%}</a>
 
-I'm looking for beta readers to help with my book <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Essential Acceptance Testing</a>. It's only short, probably around 15,000-20,000 words. It discusses the generally accepted testing strategies used in agile circles and critiques what has become the "norm".
+My book questions the conventional acceptance testing techniques used by many teams today. It’s a Lean publishing effort. I regularly publish new chapters and listen to my readers. It's only short, something like 15,000-20,000 words.
 
+> Have traditional agile testing techniques become testing dogma? Have we adopted a cargo cult of testing? Do these techniques really help build great products? Do they help us get from concept to cash or are they holding us back?
 
 ## Lean Publishing
 
-It's a lean publishing effort. If there's no interest, I won't waste my time writing something nobody wants. What I really want though is to engage potential readers and encourage them to feedback, here or at <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a>. So if you don't mind reading it as it's being written, bag a copy at <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a>.
+In keeping with lean publishing principles, it's currently an in-progress subset of the complete book. I hope that readers will debate, ask questions and help steer the direction. If there's no interest, that's great too. Failing fast is always a better than failing slowly.
 
-
-If you'd like to get involved and help by giving me your feedback, use coupon code **`bUqh1aAXvaQh`** at <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to download your **free** copy until the 27th March.
+The beta reading period is now closed but you can still bag a copy over at <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a>.
