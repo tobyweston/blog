@@ -5,7 +5,7 @@ date: 2013-05-24 13:57
 comments: true
 categories: recipes testing
 sidebar: false
-published: false
+published: true
 keywords: "ebook, leanpub, effective acceptance testing, acceptance testing, concordion, yatspec, fit, fitnesse, ATDD, TDD"
 description: "Check out my book Essential Acceptance Testing where I talk about acceptance testing as dogma and when it's actually useful and when it can just hold you back."
 ---
