@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-05-24T12:43:18+01:00</updated>
+  <updated>2013-05-24T14:21:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Writing my Book]]></title>
+    <link href="http://baddotrobot.com/blog/2013/05/24/writing-my-book/"/>
+    <updated>2013-05-24T13:57:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/05/24/writing-my-book</id>
+    <content type="html"><![CDATA[<p>There haven't been many posts on the blog recently because I've been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It's published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it's driven by dogma rather than by a genuine testing need.</p>
+
+<p>Acceptance testing in it's generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn't have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
+
+<p>It also talks about when not to bother; how gaining software confidence isn't always about testing. Fast feedback and writing software that's cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
+
+<!-- more -->
+
+
+<p>Keep an eye on my <a href="/book">blog's book page</a> for the latest news and head over to <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to purchase a copy or <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">download a free sample</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Building Better Exceptions]]></title>
@@ -377,22 +395,6 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[tempus-fugit 1.1 released]]></title>
-    <link href="http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released/"/>
-    <updated>2011-04-13T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/04/13/tempus-fugit-1.1-released</id>
-    <content type="html"><![CDATA[<p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project's website</p>
-
-<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
-
-<p>It's now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
-since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
-and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you're interested).</p>
 ]]></content>
   </entry>
   
