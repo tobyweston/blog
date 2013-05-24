@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Essential Acceptance Testing
-comments: false
+comments: true
 sharing: true
 footer: false
 sidebar: false
