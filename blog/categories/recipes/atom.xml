@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-04-10T14:22:48+01:00</updated>
+  <updated>2013-05-24T12:40:55+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mac Tips]]></title>
+    <link href="http://baddotrobot.com/blog/2013/05/24/mac-tips/"/>
+    <updated>2013-05-24T10:28:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/05/24/mac-tips</id>
+    <content type="html"><![CDATA[<ul>
+<li><a href="/blog/2013/01/13/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
+<li><a href="/blog/2013/01/13/mac-tips#show_hidden_open">Show hidden files and folders from an application's Open dialog</a></li>
+<li><a href="/blog/2013/01/13/mac-tips#duplicates">Remove Duplicate Entries in 'Open With' Menu</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2><a id="show_hidden_finder"></a>Show hidden files and folders in Finder</h2>
+
+<p><img class="right" src="../../../../../images/relaunch_finder.png" width="220" height="290" title="'Relaunch Finder'" ></p>
+
+<p>From a terminal window</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>defaults write com.apple.Finder AppleShowAllFiles YES
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Alt" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
+
+<h2><a id="show_hidden_open"></a>Show hidden files and folders from an application's Open dialog</h2>
+
+<p>When you've got the dialog open, just hit Command (<img src="/images/ks_command.gif" alt="Alt" />) + Shift (<img src="/images/ks_shift.gif" alt="Alt" />) + <code>.</code> to toggle. Nice.</p>
+
+<h2><a id="duplicates"></a>Remove Duplicate Entries in 'Open With' Menu</h2>
+
+<p>Remove duplicate entries from the terminal window.</p>
+
+<p><img src="../../../../../images/duplicate_open_with_banner.png" title="'Relaunch Finder'" ></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Git Commands]]></title>
@@ -453,17 +494,6 @@ X-Host: web4
 <p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>.</p>
 
 <p>I think that's quiet enough for now though, so we'll take a look at how that's done in the <a href="/blog/2012/08/12/oauth-and-http-part-ii">next post</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Stop Ignoring @Rules]]></title>
-    <link href="http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules/"/>
-    <updated>2012-05-05T10:50:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/05/05/stop-ignoring-at-rules</id>
-    <content type="html"><![CDATA[<p>If you're using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It's because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
-
-<p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
 ]]></content>
   </entry>
   

@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Un/Marshalling - bad.robot</title>
+  <title>Mac Tips - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Almost all unmarshalling frameworks cause problems. By extension, all frameworks cause problems. There's generally idiosyncrasies or constraints that &hellip;">
-  <meta name="keywords" content="unmarshalling frameworks, castor, JAXB, json, xml">
+  <meta name="description" content="Useful Mac commands">
+  <meta name="keywords" content="mac fu, mac, terminal, tips, short cuts, commands, command line, shell, bash">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2010/05/01/unmarshalling/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2013/05/24/mac-tips/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 class="entry-title">Un/Marshalling</h1>
+        <h1 class="entry-title">Mac Tips</h1>
       
     
     
@@ -145,21 +145,50 @@
   
 
 
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+<time datetime="2013-05-24T10:28:00+01:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
-who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
+<div class="entry-content"><ul>
+<li><a href="/blog/2013/01/13/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
+<li><a href="/blog/2013/01/13/mac-tips#show_hidden_open">Show hidden files and folders from an application&#8217;s Open dialog</a></li>
+<li><a href="/blog/2013/01/13/mac-tips#duplicates">Remove Duplicate Entries in &#8216;Open With&#8217; Menu</a></li>
+</ul>
 
-<p>I was using Castor to do the former some time ago. It sounded like a good idea, and I got going really quickly. However, I quickly didn&#8217;t like the objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the marshalling. Still fine, this was ok for a while but soon enough I descended into a kind of Castor mapping hell. I seriously spent days trying to tweak things and had to compromise the model in the end.</p>
 
-<p>After some reflection, I thought I&#8217;d try and dump Castor. I replaced the marshalling with merging to a Freemarker template and produced cleaner XML in under an hour. The unmarshalling, replaced with manually parsing the XML and inserting elements directly into objects. I couldn&#8217;t believe how much less pain I was feeling.</p>
+<!-- more -->
 
-<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less than working around any framework mismatches. If you&#8217;re lucky enough to find a marhsalling framework that can grow with you, fair play, but I&#8217;m heavily biased towards a more manual approach these days. Down with [insert framework here].</p>
+
+<h2><a id="show_hidden_finder"></a>Show hidden files and folders in Finder</h2>
+
+<p><img class="right" src="../../../../../images/relaunch_finder.png" width="220" height="290" title="'Relaunch Finder'" ></p>
+
+<p>From a terminal window</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>defaults write com.apple.Finder AppleShowAllFiles YES
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Alt" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
+
+<h2><a id="show_hidden_open"></a>Show hidden files and folders from an application&#8217;s Open dialog</h2>
+
+<p>When you&#8217;ve got the dialog open, just hit Command (<img src="/images/ks_command.gif" alt="Alt" />) + Shift (<img src="/images/ks_shift.gif" alt="Alt" />) + <code>.</code> to toggle. Nice.</p>
+
+<h2><a id="duplicates"></a>Remove Duplicate Entries in &#8216;Open With&#8217; Menu</h2>
+
+<p>Remove duplicate entries from the terminal window.</p>
+
+<p><img src="../../../../../images/duplicate_open_with_banner.png" title="'Relaunch Finder'" ></p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 </div>
 
 
@@ -183,12 +212,12 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
   
 
 
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+<time datetime="2013-05-24T10:28:00+01:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/recipes/'>recipes</a>
   
 </span>
 
@@ -204,10 +233,8 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2010/05/01/setter-vs-constructor-injection/" title="Previous Post: Setter vs Constructor Injection">&laquo; Setter vs Constructor Injection</a>
+        <a class="basic-alignment left" href="/blog/2013/01/23/useful-git-commands/" title="Previous Post: Useful Git Commands">&laquo; Useful Git Commands</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2010/06/17/objectives/" title="next Post: Objectives">Objectives &raquo;</a>
       
     </p>
   </footer>
@@ -238,8 +265,8 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2010/05/01/unmarshalling/';
-        var disqus_url = 'http://baddotrobot.com/blog/2010/05/01/unmarshalling/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2013/05/24/mac-tips/';
+        var disqus_url = 'http://baddotrobot.com/blog/2013/05/24/mac-tips/';
         var disqus_script = 'embed.js';
       
     (function () {

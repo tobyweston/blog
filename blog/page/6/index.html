@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key &hellip;">
+  <meta name="description" content="&#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-04-10 14:22:48 +0100 -->
+    <!-- last update; 2013-05-24 12:40:55 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/">Thawte claim I&#8217;m not to be trusted&#8230;</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are a root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
+
+<p>A couple of useful links below.</p>
+
+<ul>
+<li><a href="http://ciardhubh.de/node/4">http://ciardhubh.de/node/4</a></li>
+<li><a href="http://www.dallaway.com/acad/webstart/">http://www.dallaway.com/acad/webstart/</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -635,75 +681,6 @@ balanced view.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/01/24/inheritance-vs-composition/">Inheritance vs Composition</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true">Jan 24<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
-
-<h3>Example 1.</h3>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Example 2.</h3>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
-
-<p>So I was surprised when looking at the Java source to see that <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty and things <a href="/blog/2013/01/10/stack-vs-deque">aren&#8217;t any better in Java 7 and 8</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -719,6 +696,10 @@ balanced view.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
@@ -762,10 +743,6 @@ balanced view.</p>
     
       <li class="post">
         <a href="/blog/2012/07/22/getting-things-done-ii/">Getting Things Done, Part II</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/20/getting-things-done-i/">Getting Things Done, Part I</a>
       </li>
     
   </ul>
