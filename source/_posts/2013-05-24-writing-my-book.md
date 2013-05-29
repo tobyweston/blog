@@ -2,7 +2,7 @@
 layout: post
 title: "Writing my Book"
 date: 2013-05-24 13:57
-comments: true
+comments: false
 categories: recipes testing
 sidebar: false
 published: true
