@@ -44,7 +44,7 @@ For the _when_, most web UI frameworks have a convenient mechanism. In the servl
 {% endcodeblock %}
 
 
-For the _how_, the approach at this layer is to _translate_ un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.
+For the _how_, the approach at this layer is to _translate_ an underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.
 
 ## The API Boundary
 
