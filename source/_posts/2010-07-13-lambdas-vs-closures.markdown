@@ -12,7 +12,7 @@ keywords: "lambda vs closures, closures vs lambdas, functional style java, highe
 
 {% img right ../../../../../images/lambda.png 'The Lambda greek character'%}
 
-When writing Java in a functional style, things tend to get very verbose. We often create a bunch on anonymous implementation fragments and pass them around akin to a _function_ in functional languages. These fragments often get called closures or lambdas, but what's the difference between the two terms?
+When writing Java in a functional style, things tend to get very verbose. We often create a bunch of anonymous implementation fragments and pass them around akin to a _function_ in functional languages. These fragments often get called closures or lambdas, but what's the difference between the two terms?
 
 <!-- more -->
 
