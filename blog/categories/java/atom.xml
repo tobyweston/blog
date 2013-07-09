@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-05-24T14:29:29+01:00</updated>
+  <updated>2013-07-09T20:25:42+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Calculate the Optimum Number of Threads]]></title>
+    <link href="http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/"/>
+    <updated>2013-06-01T20:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads</id>
+    <content type="html"><![CDATA[<p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
+
+<p>In this post, we look at how to work out a good thread pool size for your CPU and IO tasks..</p>
+
+<!-- more -->
+
+
+<h2>CPU Bound Tasks</h2>
+
+<p>For CPU bound tasks, Goetz (2002, 2006) recommends</p>
+
+<pre><code>threads = number of CPUs + 1
+</code></pre>
+
+<p>Which is intuitive as if a CPU is being kept busy, we can't do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don't agree and suggest just the number of CPUs is optimal.</p>
+
+<h2>IO Bound Tasks</h2>
+
+<p>Working out the optimal number for IO bound tasks is less obvious. During an IO bound task, a CPU will be left idle (waiting or blocking). This idle time can be better used in initiating another IO bound request.</p>
+
+<p>Subramaniam (2011, p.31) describes the optimal number of threads in terms of the following formula.</p>
+
+<pre><code>threads = number of cores /  (1 – blocking coefficient)
+</code></pre>
+
+<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
+
+<pre><code>threads = number of cores * (1 + wait time / service time)
+</code></pre>
+
+<p><img src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+
+<p>Where we can think of <code>wait time / service</code> time as a measure of how contended the task is.</p>
+
+<h2>Goetz and Subramaniam Agree</h2>
+
+<p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+
+<p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+
+<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>'s project site.</p>
+
+<h2>References</h2>
+
+<ul>
+<li>Goetz, B. 2002. <a href="http://www.ibm.com/developerworks/java/library/j-jtp0730/index.html">Java theory and practice: Thread pools and work queues</a>. IBM DeveloperWorks.</li>
+<li>Goetz, B. Peierls, T. Bloch, J. Bowbeer, J. Holmes, D. and Lea, D. 2006. <a href="http://amzn.to/NrXQPZ">Java Concurrency in Practice</a>. 1st Edition. Addison Wesley.</li>
+<li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Java Stack vs Deque]]></title>
@@ -412,109 +480,6 @@ grant_type=refresh_token&amp;refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part II)]]></title>
-    <link href="http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii/"/>
-    <updated>2012-08-12T11:13:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii</id>
-    <content type="html"><![CDATA[<p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting "authorisation" from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we'll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
-
-<!-- more -->
-
-
-<h2>After Authorisation</h2>
-
-<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>.</p>
-
-<p>To request the access token, you make a HTTP <code>POST</code> to the <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
-
-<h2>Access Token Request</h2>
-
-<p>The HTTP <code>POST</code> for FreeAgent requires <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic auth</a> using <em>client id</em> and <em>client secret</em> as the username and password. That means supplying a <code>Authorization</code> header with base 64 encoded username and password, separated by a colon. So,</p>
-
-<pre><code>client_id:client_secret
-</code></pre>
-
-<p>Should be encoded and sent over in the header. It'll look something like this.</p>
-
-<pre><code>Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-</code></pre>
-
-<p>The <code>POST</code> body should include the following <a href="/blog/2012/06/11/http-encoding-schemes">x-www-form-urlencoded</a> parameters.</p>
-
-<ul>
-<li><code>grant_type=authorization_code</code></li>
-<li><code>code=</code>the authorisation code (see <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>)</li>
-<li><code>redirect_uri=</code>your redirect URI</li>
-</ul>
-
-
-<p>FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a <code>GET</code> request.</p>
-
-<p>The request should also include an <code>Accept</code> header of <code>application/xml</code> or <code>application/json</code>.</p>
-
-<h2>The Request</h2>
-
-<p>So, an example request would look like this.</p>
-
-<pre><code>POST /v2/token_endpoint HTTP/1.1
-Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-Accept: application/json
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Java/1.6.0_33
-Host: api.freeagent.com
-Connection: close
-Content-Length: 127
-
-grant_type=authorization_code&amp;code=12P3AsFZXwXjd7SLOE1dsaX8oCgix&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
-</code></pre>
-
-<h2>The Response</h2>
-
-<p>Which should give back a response similar to below</p>
-
-<pre><code>HTTP/1.1 200 OK
-Server: nginx/1.0.14
-Date: Sat, 11 Aug 2012 17:35:19 GMT
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Connection: close
-Status: 200 OK
-Cache-Control: no-store
-Pragma: no-cache
-ETag: "6eabf5cd4b391a5d7e6e0ded90e73d7b"
-X-UA-Compatible: IE=Edge,chrome=1
-X-Runtime: 0.283021
-X-Rev: 9301db5
-X-Host: web4
-
-{
-   "access_token":"1GwfYDOaz_rG352X-gf88aBUasP5QrG9FSasfiD13",
-   "token_type":"bearer",
-   "expires_in":604800,
-   "refresh_token":"2sdf35SFdisaa1g-x1-MaBsdHsdO7ssgZfsSRhUVsjU"
-}
-</code></pre>
-
-<h2>Using the Access Token</h2>
-
-<p>To make fully authenticated calls to the target system, every request is made using the <em>access token</em>. Therefore, it must be extracted from the response above and stashed in your application. All that's left to do is pass this through on every request to a protected resource.</p>
-
-<p>In FreeAgent's case, the token should be supplied in the <code>Authorization</code> header.</p>
-
-<pre><code>Authorization: Bearer 1GwfYDOaz_rG35SSgf8y8aBUasP5QrG9FSasfiD13
-</code></pre>
-
-<h2>Refreshing the Access Token</h2>
-
-<p>The access token will eventually expire (FreeAgent have set it to expire in seven days but this may change). To refresh the FreeAgent token, you send a similar <code>POST</code> request to the access token request with a few minor differences. See the <a href="https://dev.freeagent.com/docs/oauth#refreshing-the-access-token">FreeAgent documentation</a> for details.</p>
-
-<h2>Next Up</h2>
-
-<p>That's about it for now. Hopefully its been useful. If there's interest, I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (not using an OAuth library). Let me know.</p>
 ]]></content>
   </entry>
   

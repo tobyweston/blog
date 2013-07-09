@@ -4,7 +4,7 @@
   <title><![CDATA[Category: exceptions | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-05-24T14:29:29+01:00</updated>
+  <updated>2013-07-09T20:25:42+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -244,7 +244,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 </span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>For the <em>how</em>, the approach at this layer is to <em>translate</em> un underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
+<p>For the <em>how</em>, the approach at this layer is to <em>translate</em> an underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
 
 <h2>The API Boundary</h2>
 

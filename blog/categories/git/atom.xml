@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2013-07-09T20:25:42+01:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically rebase on git pull]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/"/>
+    <updated>2013-07-09T17:29:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull</id>
+    <content type="html"><![CDATA[<p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
+
+<!-- more -->
+
+
+<p>To configure your repository to always rebase when pulling;</p>
+
+<p><code>
+git config branch.master.rebase true
+</code></p>
+
+<p>which turns the relevant section of your '.git/config' from</p>
+
+<p><code>
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+</code></p>
+
+<p>to</p>
+
+<p><code>
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+  rebase = true
+</code></p>
+
+<p>In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a <code>git fetch</code> followed by a <code>git merge</code> or in one command, <code>git pull --no-rebase</code>), a rebase (<code>git fetch</code>, <code>git rebase</code> or <code>git pull --rebase</code>) or rely on the setting above in your config.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Git Commands]]></title>
+    <link href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands/"/>
+    <updated>2013-01-23T19:55:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2013/01/23/useful-git-commands</id>
+    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.</p>
+
+<ul>
+<li><a href="/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2><a id="create_remote_branch"></a>Create a branch on a remote (pushing a branch to a remote)</h2>
+
+<p>Having created a new feature branch locally, you can push to a remote, creating a new branch destination using.</p>
+
+<pre><code>git push -u origin feature_branch
+</code></pre>
+
+<p>The <code>-u</code> sets upstream tracking and is optional.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="delete_remote_branch"></a>Delete a remote branch</h2>
+
+<p>Having pushed your feature branch,</p>
+
+<pre><code>git push origin feature_branch
+</code></pre>
+
+<p>delete locally,</p>
+
+<pre><code>git branch -d feature_branch
+</code></pre>
+
+<p>then delete remotely,</p>
+
+<pre><code>git push origin --delete feature_branch
+</code></pre>
+
+<p>which is short hand for <code>git push origin :feature_branch</code>. The colon looks out of place but its really just the everyday syntax of <code>git push &lt;remote&gt; &lt;local branch&gt;:&lt;remote branch&gt;</code> with a empty string representing the local branch. Effectively, it's saying, take no branch from my local branch and push it to the remote branch.</p>
+
+<p>More on remote branches from <a href="http://gitready.com/beginner/2009/02/02/push-and-delete-branches.html">git ready</a></p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="switch_to_ssh"></a>Switch from HTTPS to git/ssh</h2>
+
+<p>If you're using HTTPS as your fetch url (check your <code>.git/config</code> file), you'll likely be asked for your username and password on each push. Switch to git/ssh with the following (assuming you've <a href="https://help.github.com/articles/generating-ssh-keys">setup ssh</a>).</p>
+
+<pre><code>git remote rm origin
+git remote add origin git@github.com:tobyweston/playground
+</code></pre>
+
+<p>This will alter your <code>.git/config</code> file from</p>
+
+<pre><code>[remote "origin"]
+    url = https://github.com/tobyweston/playground.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+</code></pre>
+
+<p>to</p>
+
+<pre><code>[remote "origin"]
+    url = git@github.com:tobyweston/playground.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+</code></pre>
+
+<p>but won't associate the remote branch with a local one. You'll need to <a href="#set_upstream_branch">set an upstream branch</a> for that.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="set_upstream_branch"></a>Set upstream branch</h2>
+
+<p>Trying a <code>git pull</code> after <a href="#switch_to_ssh">switching from HTTPS to git/ssh above</a> will give you an error.</p>
+
+<pre><code>You asked to pull from the remote 'origin', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+</code></pre>
+
+<p>Set the upstream branch with</p>
+
+<pre><code>git branch --set-upstream master origin/master
+</code></pre>
+
+<p>which should report back,</p>
+
+<pre><code>Branch master set up to track remote branch master from origin.
+</code></pre>
+
+<p>and change your <code>.git/config</code> file from</p>
+
+<pre><code>[remote "origin"]
+</code></pre>
+
+<p>to</p>
+
+<pre><code>[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+</code></pre>
+
+<p>Do the same for any other remote branches.</p>
+
+<p><a href="#top">« Back to the list</a></p>
+
+<h2><a id="status"></a>Abbreviated status</h2>
+
+<p>The standard <code>git status</code> output</p>
+
+<p>``` sh
+$ git status</p>
+
+<h1>On branch master</h1>
+
+<h1>Your branch is ahead of 'origin/master' by 1 commit.</h1>
+
+<p>#</p>
+
+<h1>Changes not staged for commit:</h1>
+
+<h1>(use "git add <file>..." to update what will be committed)</h1>
+
+<h1>(use "git checkout -- <file>..." to discard changes in working directory)</h1>
+
+<p>#</p>
+
+<h1>modified:   LegoWars/BattleShip.h</h1>
+
+<h1>modified:   LegoWars/BattleShip.m</h1>
+
+<p>#
+<code>``
+The abbreviated</code>git status -sb` version</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead 1<span class="o">]</span>&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt; M LegoWars/BattleShip.h
+</span><span class='line'> M LegoWars/BattleShip.m
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Recommended Reading</h2>
+
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
+
+<ul>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pro Git (Expert's Voice in Software Development)</a>, Scott Chacon</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

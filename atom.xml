@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-05-24T14:29:29+01:00</updated>
+  <updated>2013-07-09T20:25:42+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically rebase on git pull]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/"/>
+    <updated>2013-07-09T17:29:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull</id>
+    <content type="html"><![CDATA[<p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
+
+<!-- more -->
+
+
+<p>To configure your repository to always rebase when pulling;</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>git config branch.master.rebase true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which turns the relevant section of your &#8216;.git/config&#8217; from</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
+</span><span class='line'>  remote = origin
+</span><span class='line'>  merge = refs/heads/master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
+</span><span class='line'>  remote = origin
+</span><span class='line'>  merge = refs/heads/master
+</span><span class='line'>  rebase = true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a <code>git fetch</code> followed by a <code>git merge</code> or in one command, <code>git pull --no-rebase</code>), a rebase (<code>git fetch</code>, <code>git rebase</code> or <code>git pull --rebase</code>) or rely on the setting above in your config.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Calculate the Optimum Number of Threads]]></title>
+    <link href="http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/"/>
+    <updated>2013-06-01T20:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads</id>
+    <content type="html"><![CDATA[<p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
+
+<p>In this post, we look at how to work out a good thread pool size for your CPU and IO tasks..</p>
+
+<!-- more -->
+
+
+<h2>CPU Bound Tasks</h2>
+
+<p>For CPU bound tasks, Goetz (2002, 2006) recommends</p>
+
+<pre><code>threads = number of CPUs + 1
+</code></pre>
+
+<p>Which is intuitive as if a CPU is being kept busy, we can&#8217;t do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don&#8217;t agree and suggest just the number of CPUs is optimal.</p>
+
+<h2>IO Bound Tasks</h2>
+
+<p>Working out the optimal number for IO bound tasks is less obvious. During an IO bound task, a CPU will be left idle (waiting or blocking). This idle time can be better used in initiating another IO bound request.</p>
+
+<p>Subramaniam (2011, p.31) describes the optimal number of threads in terms of the following formula.</p>
+
+<pre><code>threads = number of cores /  (1 – blocking coefficient)
+</code></pre>
+
+<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
+
+<pre><code>threads = number of cores * (1 + wait time / service time)
+</code></pre>
+
+<p><img src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+
+<p>Where we can think of <code>wait time / service</code> time as a measure of how contended the task is.</p>
+
+<h2>Goetz and Subramaniam Agree</h2>
+
+<p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+
+<p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+
+<p><img src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+
+<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>&#8217;s project site.</p>
+
+<h2>References</h2>
+
+<ul>
+<li>Goetz, B. 2002. <a href="http://www.ibm.com/developerworks/java/library/j-jtp0730/index.html">Java theory and practice: Thread pools and work queues</a>. IBM DeveloperWorks.</li>
+<li>Goetz, B. Peierls, T. Bloch, J. Bowbeer, J. Holmes, D. and Lea, D. 2006. <a href="http://amzn.to/NrXQPZ">Java Concurrency in Practice</a>. 1st Edition. Addison Wesley.</li>
+<li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Writing my Book]]></title>
@@ -40,6 +142,7 @@
 <li><a href="http://baddotrobot.com/blog/2013/05/24/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
 <li><a href="http://baddotrobot.com/blog/2013/05/24/mac-tips#show_hidden_open">Show hidden files and folders from an application&#8217;s Open dialog</a></li>
 <li><a href="http://baddotrobot.com/blog/2013/05/24/mac-tips#duplicates">Remove Duplicate Entries in &#8216;Open With&#8217; Menu</a></li>
+<li><a href="http://baddotrobot.com/blog/2013/05/24/mac-tips#calculator">Show your workings with Calculator</a></li>
 </ul>
 
 
@@ -56,11 +159,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then relaunch Finder with Option (<img src="http://baddotrobot.com/images/ks_option.gif" alt="Alt" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
+<p>Then relaunch Finder with Option (<img src="http://baddotrobot.com/images/ks_option.gif" alt="Option" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
 
 <h2><a id="show_hidden_open"></a>Show hidden files and folders from an application&#8217;s Open dialog</h2>
 
-<p>When you&#8217;ve got the dialog open, just hit Command (<img src="http://baddotrobot.com/images/ks_command.gif" alt="Alt" />) + Shift (<img src="http://baddotrobot.com/images/ks_shift.gif" alt="Alt" />) + <code>.</code> to toggle. Nice.</p>
+<p>When you&#8217;ve got the dialog open, just hit Command (<img src="http://baddotrobot.com/images/ks_command.gif" alt="Command" />) + Shift (<img src="http://baddotrobot.com/images/ks_shift.gif" alt="Shift" />) + <code>.</code> to toggle. Nice.</p>
 
 <h2><a id="duplicates"></a>Remove Duplicate Entries in &#8216;Open With&#8217; Menu</h2>
 
@@ -72,7 +175,11 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h2><a id="calculator"></a>Show your Workings with Calculator</h2>
 
+<p>Hitting Command (<img src="http://baddotrobot.com/images/ks_command.gif" alt="Command" />) + T in the Calculator app shows the paper tape so you can see you past calculations!</p>
+
+<p><img class="right" src="../../../../../images/calculator-paper-tape.png" width="205" height="258" title="'Calculator's Paper Tape'" ></p>
 ]]></content>
   </entry>
   
@@ -81,7 +188,7 @@
     <link href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands/"/>
     <updated>2013-01-23T19:55:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2013/01/23/useful-git-commands</id>
-    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here&#8217;s a bunch of git commands I fund useful.</p>
+    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here&#8217;s a bunch of Git commands I fund useful.</p>
 
 <ul>
 <li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
@@ -1310,139 +1417,6 @@ Expected: a HttpMessage with status code &lt;200&gt;
     <content type="html"><![CDATA[<p>If you&#8217;re using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It&#8217;s because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
 
 <p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala as a Functional OO Hybrid]]></title>
-    <link href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
-    <updated>2012-04-03T19:33:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
-    <content type="html"><![CDATA[<p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
-
-<!-- more -->
-
-
-<h2>Object-Oriented</h2>
-
-<p>Scala is a pure object-oriented language. There&#8217;s no subverting it, there are no non-objects (such as Java&#8217;s primitives like <code>int</code>) or static fields or methods which aren&#8217;t members of an object (although there is the related idea of <em>companion object</em>). Every <em>value</em> is an object including numeric types and <em>functions</em>. We have classes and traits and flexible mixin-based composition.</p>
-
-<h2>Functional</h2>
-
-<p>Scala is also a functional language; it allows you define both <em>pure functions</em> and <em>higher order functions</em>. It doesn&#8217;t enforce this though which makes it even more important to understand if you&#8217;re actually working with these ideas. Porting a Java application verbatim doesn&#8217;t necessarily mean you&#8217;re building with purely functional blocks.</p>
-
-<p>Lets review these two ideas.</p>
-
-<h3>Functions are First Class</h3>
-
-<p>Programming with higher order functions means that you can pass functions as arguments to other functions, create and return them or just store them. This allows us to build richer behaviour with function composition just like object composition in the object-oriented world. In practice, function composition tends to be finer grained but still allows us to test the <em>composites rather than the composition</em>. It&#8217;s easier to test correctness of small functions like this especially when they are <em>pure functions</em>.</p>
-
-<h3>Pure Functions</h3>
-
-<p>Another aspect of a functional language is that functions should not cause any side affects. They should operate by <em>transformation</em> rather than <em>mutation</em>. That is to say a pure function should take arguments and return results but not modify the environment in which they operate. This <a href="http://en.wikipedia.org/wiki/Pure_function"><em>purity of function</em></a> is what enables <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)"><em>referential transparency</em></a>.</p>
-
-<p>Although Odersky et al [1] describe referential transparency as literally being able to substitute a method call with its result without changing the semantics of a program, Subramaniam further relates the idea to facilitating concurrent programming [2].</p>
-
-<h2>Final Thoughts</h2>
-
-<p>I think its important to bear these definitions in mind when working with Scala, if for no other reason than to be aware of the idioms available to each style and how best to leverage them.</p>
-
-<p>A functional style can give great results for certain classes of problems but lets not forget that object-oriented solutions give huge advantages for other types of problems. It&#8217;s easy to get caught up in the hype and think we&#8217;ve left object-oriented design behind when hybrid languages blur the lines, but if we&#8217;re clear about what approach to use and when, we can blend approaches as appropriate. Just don&#8217;t expect it to be easy!</p>
-
-<h2>References</h2>
-
-<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12. <br/>
-[2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala Exception Handling]]></title>
-    <link href="http://baddotrobot.com/blog/2012/03/30/scala-exception-handling/"/>
-    <updated>2012-03-30T22:47:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/03/30/scala-exception-handling</id>
-    <content type="html"><![CDATA[<p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
-
-<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
-
-<p>In a <a href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
-
-<!-- more -->
-
-
-<h2>Exceptions</h2>
-
-<p>Scala essentially treats all exception types as <code>RuntimeException</code>. This means it doesn&#8217;t <em>force</em> you to handle exceptions. Instead, it combines <em>pattern matching</em> with a single <code>catch</code> block to handle exceptions. For example</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">url</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">MalformURLException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;bad url &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">IOException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;other IO problem &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;anything else!&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// cleanup</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Any cleanup can be achieved using the <code>finally</code> block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the <em><a href="https://wiki.scala-lang.org/display/SYGN/Loan">loan pattern</a></em>. You can see an example of the pattern in Java form in the <code>ExecuteUsingLock</code> <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/main/java/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.java">class</a> in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>.</p>
-
-<p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// ...</span>
-</span><span class='line'>  <span class="k">throw</span> <span class="k">new</span> <span class="nc">IOException</span><span class="o">(</span><span class="s">&quot;failed to load&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However, anyone calling this method won&#8217;t be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the <code>throws</code> annotation but this still won&#8217;t affect Scala clients.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
-</span><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Interestingly, Scala treats <code>throw</code> as an expression with a return type of <code>Nothing</code>. You can use it in place of any other expression even though the result wont actually evaluate to anything.</p>
-
-<h2>Pattern Matching</h2>
-
-<p>Pattern matching is a bit like a switch statement but unlike Java&#8217;s switch statement, pattern matching in Scala can be used to match any kind of constant as well as other things (like <em>case objects</em>). It&#8217;s not restricted to just primitives and enums as with Java (although Java 1.7 brought <code>String</code> <a href="http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html">support to switch</a>).</p>
-
-<p>Pattern matching is applied to the exception type when using <code>catch</code> above but it&#8217;s also used in its vanilla form. For example, as described in <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, we can work out what to have with dinner in the example below.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;chips&quot;</span><span class="o">)</span>
-</span><span class='line'>    <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;mash&quot;</span><span class="o">)</span>
-</span><span class='line'>    <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;cheese&quot;</span><span class="o">)</span>
-</span><span class='line'>    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;beans?&quot;</span><span class="o">)</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Notice that there is no need for a <code>break</code> statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="k">=</span>
-</span><span class='line'>    <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;chips&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;mash&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;cheese&quot;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="n">accompaniment</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Conclusion</h2>
-
-<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it&#8217;s even more important to understand where potential exceptions will bubble up and how to <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 ]]></content>
   </entry>
   

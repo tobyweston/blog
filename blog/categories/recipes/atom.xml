@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-05-24T14:29:29+01:00</updated>
+  <updated>2013-07-09T20:25:42+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically rebase on git pull]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/"/>
+    <updated>2013-07-09T17:29:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull</id>
+    <content type="html"><![CDATA[<p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
+
+<!-- more -->
+
+
+<p>To configure your repository to always rebase when pulling;</p>
+
+<p><code>
+git config branch.master.rebase true
+</code></p>
+
+<p>which turns the relevant section of your '.git/config' from</p>
+
+<p><code>
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+</code></p>
+
+<p>to</p>
+
+<p><code>
+[branch "master"]
+  remote = origin
+  merge = refs/heads/master
+  rebase = true
+</code></p>
+
+<p>In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a <code>git fetch</code> followed by a <code>git merge</code> or in one command, <code>git pull --no-rebase</code>), a rebase (<code>git fetch</code>, <code>git rebase</code> or <code>git pull --rebase</code>) or rely on the setting above in your config.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Writing my Book]]></title>
@@ -40,6 +77,7 @@
 <li><a href="/blog/2013/05/24/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
 <li><a href="/blog/2013/05/24/mac-tips#show_hidden_open">Show hidden files and folders from an application's Open dialog</a></li>
 <li><a href="/blog/2013/05/24/mac-tips#duplicates">Remove Duplicate Entries in 'Open With' Menu</a></li>
+<li><a href="/blog/2013/05/24/mac-tips#calculator">Show your workings with Calculator</a></li>
 </ul>
 
 
@@ -55,11 +93,11 @@
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>defaults write com.apple.Finder AppleShowAllFiles YES
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Alt" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
+<p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Option" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
 
 <h2><a id="show_hidden_open"></a>Show hidden files and folders from an application's Open dialog</h2>
 
-<p>When you've got the dialog open, just hit Command (<img src="/images/ks_command.gif" alt="Alt" />) + Shift (<img src="/images/ks_shift.gif" alt="Alt" />) + <code>.</code> to toggle. Nice.</p>
+<p>When you've got the dialog open, just hit Command (<img src="/images/ks_command.gif" alt="Command" />) + Shift (<img src="/images/ks_shift.gif" alt="Shift" />) + <code>.</code> to toggle. Nice.</p>
 
 <h2><a id="duplicates"></a>Remove Duplicate Entries in 'Open With' Menu</h2>
 
@@ -69,6 +107,12 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2><a id="calculator"></a>Show your Workings with Calculator</h2>
+
+<p>Hitting Command (<img src="/images/ks_command.gif" alt="Command" />) + T in the Calculator app shows the paper tape so you can see you past calculations!</p>
+
+<p><img class="right" src="../../../../../images/calculator-paper-tape.png" width="205" height="258" title="'Calculator's Paper Tape'" ></p>
 ]]></content>
   </entry>
   
@@ -77,7 +121,7 @@
     <link href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands/"/>
     <updated>2013-01-23T19:55:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2013/01/23/useful-git-commands</id>
-    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here's a bunch of git commands I fund useful.</p>
+    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.</p>
 
 <ul>
 <li><a href="/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
@@ -349,109 +393,6 @@ Expected: is &lt;999.99D&gt;
 <li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part II)]]></title>
-    <link href="http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii/"/>
-    <updated>2012-08-12T11:13:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii</id>
-    <content type="html"><![CDATA[<p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting "authorisation" from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we'll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
-
-<!-- more -->
-
-
-<h2>After Authorisation</h2>
-
-<p>Once you've got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don't know what I'm talking about in terms of authorisation, refer back to the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>.</p>
-
-<p>To request the access token, you make a HTTP <code>POST</code> to the <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
-
-<h2>Access Token Request</h2>
-
-<p>The HTTP <code>POST</code> for FreeAgent requires <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic auth</a> using <em>client id</em> and <em>client secret</em> as the username and password. That means supplying a <code>Authorization</code> header with base 64 encoded username and password, separated by a colon. So,</p>
-
-<pre><code>client_id:client_secret
-</code></pre>
-
-<p>Should be encoded and sent over in the header. It'll look something like this.</p>
-
-<pre><code>Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-</code></pre>
-
-<p>The <code>POST</code> body should include the following <a href="/blog/2012/06/11/http-encoding-schemes">x-www-form-urlencoded</a> parameters.</p>
-
-<ul>
-<li><code>grant_type=authorization_code</code></li>
-<li><code>code=</code>the authorisation code (see <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>)</li>
-<li><code>redirect_uri=</code>your redirect URI</li>
-</ul>
-
-
-<p>FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a <code>GET</code> request.</p>
-
-<p>The request should also include an <code>Accept</code> header of <code>application/xml</code> or <code>application/json</code>.</p>
-
-<h2>The Request</h2>
-
-<p>So, an example request would look like this.</p>
-
-<pre><code>POST /v2/token_endpoint HTTP/1.1
-Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-Accept: application/json
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Java/1.6.0_33
-Host: api.freeagent.com
-Connection: close
-Content-Length: 127
-
-grant_type=authorization_code&amp;code=12P3AsFZXwXjd7SLOE1dsaX8oCgix&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
-</code></pre>
-
-<h2>The Response</h2>
-
-<p>Which should give back a response similar to below</p>
-
-<pre><code>HTTP/1.1 200 OK
-Server: nginx/1.0.14
-Date: Sat, 11 Aug 2012 17:35:19 GMT
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Connection: close
-Status: 200 OK
-Cache-Control: no-store
-Pragma: no-cache
-ETag: "6eabf5cd4b391a5d7e6e0ded90e73d7b"
-X-UA-Compatible: IE=Edge,chrome=1
-X-Runtime: 0.283021
-X-Rev: 9301db5
-X-Host: web4
-
-{
-   "access_token":"1GwfYDOaz_rG352X-gf88aBUasP5QrG9FSasfiD13",
-   "token_type":"bearer",
-   "expires_in":604800,
-   "refresh_token":"2sdf35SFdisaa1g-x1-MaBsdHsdO7ssgZfsSRhUVsjU"
-}
-</code></pre>
-
-<h2>Using the Access Token</h2>
-
-<p>To make fully authenticated calls to the target system, every request is made using the <em>access token</em>. Therefore, it must be extracted from the response above and stashed in your application. All that's left to do is pass this through on every request to a protected resource.</p>
-
-<p>In FreeAgent's case, the token should be supplied in the <code>Authorization</code> header.</p>
-
-<pre><code>Authorization: Bearer 1GwfYDOaz_rG35SSgf8y8aBUasP5QrG9FSasfiD13
-</code></pre>
-
-<h2>Refreshing the Access Token</h2>
-
-<p>The access token will eventually expire (FreeAgent have set it to expire in seven days but this may change). To refresh the FreeAgent token, you send a similar <code>POST</code> request to the access token request with a few minor differences. See the <a href="https://dev.freeagent.com/docs/oauth#refreshing-the-access-token">FreeAgent documentation</a> for details.</p>
-
-<h2>Next Up</h2>
-
-<p>That's about it for now. Hopefully its been useful. If there's interest, I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (not using an OAuth library). Let me know.</p>
 ]]></content>
   </entry>
   
