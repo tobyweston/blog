@@ -10,7 +10,9 @@ keywords: "optimal number of threads, cpu bound, io bound, goetz, java, tempus-f
 description: "Calculate the theoretical optimal number of threads needed for both CPU and IO bound applications."
 ---
 
-Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO? A [good profiler](http://www.yourkit.com/) will help you to understand your applications profile.
+Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?
+
+In this post, we look at how to work out a good thread pool size for your CPU and IO tasks..
 
 <!-- more -->
 
