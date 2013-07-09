@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Useful Git Commands"
+series: Git
 date: 2013-01-23 19:55
 comments: true
 categories: recipes git

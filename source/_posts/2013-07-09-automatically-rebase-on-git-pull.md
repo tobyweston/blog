@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Automatically rebase on git pull"
+series: Git
 date: 2013-07-09 17:29
 comments: true
 categories: recipes git
@@ -37,4 +38,4 @@ to
   rebase = true
 ```
 
-In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (`git fetch`, `git merge` or `git pull --no-rebase`), a rebase (`git fetch`, `git rebase` or `git pull --rebase`) or rely on the setting above in your config.
+In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a `git fetch` followed by a `git merge` or in one command, `git pull --no-rebase`), a rebase (`git fetch`, `git rebase` or `git pull --rebase`) or rely on the setting above in your config.
