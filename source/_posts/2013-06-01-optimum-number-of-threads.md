@@ -16,11 +16,12 @@ Working out the theoretical optimal number of threads you should use for your ap
 
 ## CPU Bound Tasks
 
-For CPU bound tasks, Goetz (2002, 2006.) recommends
+For CPU bound tasks, Goetz (2002, 2006) recommends
 
     threads = number of CPUs + 1
 
-Which is intuitive as if a CPU is being kept busy, we can't do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006.), but others don't agree and suggest the number of CPUs is optimal.
+Which is intuitive as if a CPU is being kept busy, we can't do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don't agree and suggest just the number of CPUs is optimal.
+
 
 ## IO Bound Tasks
 
