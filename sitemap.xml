@@ -142,7 +142,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/</loc>
-        <lastmod>2012-09-14T18:22:39+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/08/15/pairing-honestly/</loc>
@@ -204,7 +204,7 @@
         <loc>
             http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/
         </loc>
-        <lastmod>2013-06-01T20:39:32+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/</loc>
@@ -280,7 +280,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/01/23/useful-git-commands/</loc>
-        <lastmod>2013-07-09T19:28:03+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/05/24/mac-tips/</loc>
@@ -292,11 +292,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/</loc>
-        <lastmod>2013-07-09T18:31:37+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/</loc>
-        <lastmod>2013-07-09T19:37:17+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -304,7 +304,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2013-07-09T19:37:17+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
@@ -324,6 +324,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2013-07-09T19:37:17+01:00</lastmod>
+        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
     </url>
 </urlset>
