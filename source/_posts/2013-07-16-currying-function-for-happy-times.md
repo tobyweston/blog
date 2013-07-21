@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Currying Functions for Happy Times"
+title: "Currying Functions in Java & Scala"
 date: 2013-07-17 06:58
 comments: true
+series: "Partial Functions and Currying"
 categories: java scala
 sidebar: false
 published: false
@@ -10,9 +11,12 @@ description: ""
 keywords: "loan pattern"
 ---
 
-Currying is the technique of transforming a function with multiple arguments into a function with just one argument which takes the first argument of the original function and returns another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.
+Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.
 
-You can turn any function with multiple arguments into it's curried equivalent.
+You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action and discuss why it can be useful.
+
+<!-- more -->
+
 
 ## Java
 
@@ -26,7 +30,6 @@ public static int add(int a, int b) {
 
 into something like this (where `Function1<A, B>` defines a single method `B apply(A a)`).
 
-<!-- more -->
 {% codeblock lang:java %}
 public static Function1<Integer, Function1<Integer, Integer>> add() {
     return new Function1<Integer, Function1<Integer, Integer>>() {
@@ -80,7 +83,7 @@ def add(x: Int)(y: Int): Int = {
 }
 {% endcodeblock %}
 
-Which is shorthand for writing it out in full like this.
+Which is shorthand for writing it out like this.
 
 {% codeblock lang:scala %}
 // longhand
@@ -110,6 +113,7 @@ scala> add(1)(1)
 res3: Int = 2
 {% endcodeblock %}
 
+Working with the longhand version from above means that Scala knows how to partially apply the function and won't complain if you try and work with it as such. For example,
 
 {% codeblock lang:sh %}
 scala> def add2(x: Int): (Int => Int) = {
@@ -120,8 +124,20 @@ scala> def add2(x: Int): (Int => Int) = {
 add2: (x: Int)Int => Int
 
 scala> add2(1).apply(1)
-res6: Int = 2
+res4: Int = 2
 {% endcodeblock %}
+
+Works fine, whereas working with `add` in the same way causes Scala to complain.
+
+{% codeblock lang:sh %}
+scala> add(1).apply(1)
+<console>:9: error: missing arguments for method add;
+follow this method with `_' if you want to treat it as a partially applied function
+              add(1).apply(1)
+                    ^
+{% endcodeblock %}
+
+
 
 
 ## References
