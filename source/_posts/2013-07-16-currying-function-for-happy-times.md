@@ -5,9 +5,9 @@ date: 2013-07-17 06:58
 comments: true
 categories: java scala
 sidebar: false
-published: false
-description: ""
-keywords: "loan pattern"
+published: true
+keywords: "curried function, partial application, java, scala, functional programming"
+description: "Currying in Java and Scala. A quick look at what curried functions are and how you'd curry a Java function and it's counterpart in Scala."
 ---
 
 Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.
