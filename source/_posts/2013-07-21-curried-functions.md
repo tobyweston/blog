@@ -139,7 +139,7 @@ follow this method with `_' if you want to treat it as a partially applied funct
 It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.
 
 
-## References
+## More Information
 
  * [Gist](https://gist.github.com/tobyweston/6027570)
  * [Function Currying in Scala](http://www.codecommit.com/blog/scala/function-currying-in-scala)
