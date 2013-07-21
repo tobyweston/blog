@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-07-10T20:28:40+01:00</updated>
+  <updated>2013-07-21T18:29:15+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,154 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Currying Functions in Java & Scala]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/21/curried-functions/"/>
+    <updated>2013-07-21T06:58:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/21/curried-functions</id>
+    <content type="html"><![CDATA[<p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
+
+<p>You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action.</p>
+
+<!-- more -->
+
+
+<h2>Java</h2>
+
+<p>For example, in Java, you can convert</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>into something like this (where <code>Function1&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="k">new</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">Function1</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="nd">@Override</span>
+</span><span class='line'>            <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">};</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">};</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Calling the original method</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>and calling the curried version</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function1&amp;lt;[A, B]&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function1&amp;lt;[A, B]&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Scala</h2>
+
+<p>In Scala, the regular uncurried function would look like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>As Scala supports curried functions, you can turn this into it's curried version simply by separating out the arguments.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// shorthand</span>
+</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Which is shorthand for writing it out like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// longhand</span>
+</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Using the REPL to show how they're called;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt; |   x + y
+</span><span class='line'> | <span class="o">}</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
+</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;function1&gt;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;scala&gt; add<span class="o">(</span>1<span class="o">)(</span>1<span class="o">)</span>
+</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Working with the longhand version from above means that Scala knows how to partially apply the function and won't complain if you try and work with it as such. For example,</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt; |   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
+</span><span class='line'> |     x + y
+</span><span class='line'> |   <span class="o">}</span>
+</span><span class='line'> | <span class="o">}</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;add2: <span class="o">(</span>x: Int<span class="o">)</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;scala&gt; add2<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Works fine, whereas working with <code>add</code> in the same way causes Scala to complain.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>&lt;console&gt;:9: error: missing arguments <span class="k">for </span>method add;
+</span><span class='line'>follow this method with <span class="sb">`</span>_<span class="err">&#39;</span> <span class="k">if </span>you want to treat it as a partially applied <span class="k">function</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;          add<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>                ^
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
+<li><a href="http://www.codecommit.com/blog/scala/function-currying-in-scala">Function Currying in Scala</a></li>
+<li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Calculate the Optimum Number of Threads]]></title>
@@ -385,101 +533,6 @@ Expected: is &lt;999.99D&gt;
 <li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part III)]]></title>
-    <link href="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/"/>
-    <updated>2012-08-13T19:13:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii</id>
-    <content type="html"><![CDATA[<p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent's API. We've got something working but a couple of caveats remain when working with it from a rich client.</p>
-
-<!-- more -->
-
-
-<h2>The Workflow</h2>
-
-<p>To summarise the workflow;</p>
-
-<ol>
-<li>Ask your user to authorise your application (on the target application's servers).</li>
-<li>You'll be given an <em>authorisation token</em> from the above. Stash it.</li>
-<li>Exchange your <em>authorisation token</em> for an <em>access token</em>. Stash this too (along with the <em>refresh token</em>).</li>
-<li>Make requests passing along the <em>access token</em> to prove you're you.</li>
-</ol>
-
-
-<h2>The Authorisation Request</h2>
-
-<p>It's not always clear, but step 1. above is a one time operation. You don't make this request every time your programmatically want to access the target application. It also implies that the <code>GET</code> request is made from the browser. There are "out of band" options but in-browser is the simplest.</p>
-
-<h2>The Access Token Request</h2>
-
-<p>Again, it's not always clear but the <em>access token</em> request only needs to be made once. In fact, if you've successfully retrieved an <em>access token</em> and then request a new one, FreeAgent will error with a basic authentication failure.</p>
-
-<pre><code>HTTP/1.1 401 Unauthorized
-Server: nginx/1.0.14
-Date: Mon, 13 Aug 2012 18:13:44 GMT
-Content-Type: text/html; charset=utf-8
-Status: 401 Unauthorized
-WWW-Authenticate: Basic realm="Application"
-X-UA-Compatible: IE=Edge,chrome=1
-X-Runtime: 0.099212
-X-Rev: 9301db5
-X-Host: web3
-
-HTTP Basic: Access denied.
-</code></pre>
-
-<p>I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.</p>
-
-<h2>Refreshing the Access Token</h2>
-
-<p>In a successful exchange of <em>authorisation code</em> for <em>access token</em>, you should see a response like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;refresh_token&quot;</span><span class="o">:</span><span class="s2">&quot;1Gzv0XG5Qx2T3JOkFlKWyj&quot;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>In OAuth, The <code>expires_in</code> value should be the time in seconds that the <em>access token</em> is valid.</p>
-
-<p><blockquote><p>RECOMMENDED. The lifetime in seconds of the access token. For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated. If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</p><footer><strong>OAuth 2.0 Specification</strong> <cite><a href='https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2'>tools.ietf.org/html/&hellip;</a></cite></footer></blockquote></p>
-
-<p>FreeAgent return <code>604800</code> which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I convert the number into a concrete date when I get the response. That way, I can see later if I actually need to refresh the token. However, it seems that you can refresh your token at any point.</p>
-
-<p>The process is similar to the <a href="/blog/2012/08/12/oauth-and-http-part-ii">requesting the original <em>access token</em></a>. Make a Basic auth HTTP POST but with a slightly smaller body.</p>
-
-<pre><code>POST /v2/token_endpoint HTTP/1.1
-Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-Accept: application/json
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Java/1.6.0_33
-Host: api.freeagent.com
-Connection: close
-Content-Length: 127
-
-grant_type=refresh_token&amp;refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
-</code></pre>
-
-<p>which will return something like</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
-</span><span class='line'><span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   

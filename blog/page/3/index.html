@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala are &hellip;">
+  <meta name="description" content="If you&#8217;re using a version of JMock prior to 2.6.0 and use @RunWith(JMock.class) you may have spotted that your @Rules are actually being &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-07-10 20:28:40 +0100 -->
+    <!-- last update; 2013-07-21 18:29:15 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-05T10:50:00+01:00" pubdate data-updated="true">May 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&#8217;re using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It&#8217;s because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
+
+<p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -534,49 +574,6 @@ banner. So far, we have&#8230;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/10/29/java-source-on-mac/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -592,6 +589,10 @@ banner. So far, we have&#8230;</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
@@ -635,10 +636,6 @@ banner. So far, we have&#8230;</p>
     
       <li class="post">
         <a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a>
       </li>
     
   </ul>
