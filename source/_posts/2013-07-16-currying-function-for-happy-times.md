@@ -12,7 +12,7 @@ keywords: "loan pattern"
 
 Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.
 
-You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action and discuss why it can be useful.
+You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action.
 
 <!-- more -->
 
@@ -136,7 +136,7 @@ follow this method with `_' if you want to treat it as a partially applied funct
                     ^
 {% endcodeblock %}
 
-It turns out that it's this partial application of functions that's really interesting. Currying is just a mechanism to allow us to defer execution. We'll have a look at that in the next article.
+It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.
 
 
 ## References
