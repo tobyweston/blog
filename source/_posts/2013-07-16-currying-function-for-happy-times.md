@@ -3,7 +3,6 @@ layout: post
 title: "Currying Functions in Java & Scala"
 date: 2013-07-17 06:58
 comments: true
-series: "Partial Functions and Currying"
 categories: java scala
 sidebar: false
 published: false
@@ -137,7 +136,7 @@ follow this method with `_' if you want to treat it as a partially applied funct
                     ^
 {% endcodeblock %}
 
-
+It turns out that it's this partial application of functions that's really interesting. Currying is just a mechanism to allow us to defer execution. We'll have a look at that in the next article.
 
 
 ## References
