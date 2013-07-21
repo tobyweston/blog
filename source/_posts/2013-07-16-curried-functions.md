@@ -94,11 +94,11 @@ def add(x: Int): (Int => Int) = {
 {% endcodeblock %}
 
 
-Using the REPL,
+Using the REPL to show how they're called;
 
 {% codeblock lang:sh %}
 scala> def add(x: Int)(y: Int): Int = {
-     | x + y
+     |   x + y
      | }
 add: (x: Int)(y: Int)Int
 
