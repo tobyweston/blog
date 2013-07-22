@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-07-21T18:29:15+01:00</updated>
+  <updated>2013-07-22T19:53:03+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -119,7 +119,7 @@
 </span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Working with the longhand version from above means that Scala knows how to partially apply the function and won't complain if you try and work with it as such. For example,</p>
+<p>and working with the longhand version;</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>&lt;/p&gt;
 </span><span class='line'>
@@ -135,22 +135,9 @@
 </span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Works fine, whereas working with <code>add</code> in the same way causes Scala to complain.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>&lt;console&gt;:9: error: missing arguments <span class="k">for </span>method add;
-</span><span class='line'>follow this method with <span class="sb">`</span>_<span class="err">&#39;</span> <span class="k">if </span>you want to treat it as a partially applied <span class="k">function</span>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;          add<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>                ^
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
 <p>It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.</p>
 
-<h2>References</h2>
+<h2>More Information</h2>
 
 <ul>
 <li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
