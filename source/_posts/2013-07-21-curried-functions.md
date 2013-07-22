@@ -112,7 +112,7 @@ scala> add(1)(1)
 res3: Int = 2
 {% endcodeblock %}
 
-Working with the longhand version from above means that Scala knows how to partially apply the function and won't complain if you try and work with it as such. For example,
+and working with the longhand version;
 
 {% codeblock lang:sh %}
 scala> def add2(x: Int): (Int => Int) = {
@@ -126,15 +126,6 @@ scala> add2(1).apply(1)
 res4: Int = 2
 {% endcodeblock %}
 
-Works fine, whereas working with `add` in the same way causes Scala to complain.
-
-{% codeblock lang:sh %}
-scala> add(1).apply(1)
-<console>:9: error: missing arguments for method add;
-follow this method with `_' if you want to treat it as a partially applied function
-              add(1).apply(1)
-                    ^
-{% endcodeblock %}
 
 It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.
 
