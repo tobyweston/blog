@@ -11,3 +11,4 @@ footer: false
 
 ### Build Screen Saver
 [{% img ../images/screensaver_small.png %}](../images/screensaver_big.png)
+[{% img ../images/build-monitor-traffic-lights-small.jpg %}](../images/build-monitor-traffic-lights.jpg)

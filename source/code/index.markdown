@@ -11,10 +11,12 @@ Some of my current projects:
 * [simple-http](https://github.com/tobyweston/simple-http) - an improved API over the Apache HC HTTP library. [Read a little about it]({{ root_url }}/blog/2012/06/10/http-simple/).
 * [simple-excel](https://github.com/tobyweston/simple-excel) - an improved API over the Apache POI project. Generate and test spreadsheets. [Read a little about it]({{ root_url }}/blog/2012/09/14/diff-excel-with-java-and-hamcrest/).
 * [concordion-ant-task](http://badrobot.googlecode.com/svn/trunk/bad.robot/concordion-ant-task/manual/Overview.html) - an Ant task to collect Concordion specs in a single HTML overview
+* A [build monitor for TeamCity](http://github.com/tobyweston/radiate) that can be run as a Windows screen saver
 
 
 Some of my other projects and contributions:
 
+* [JMock](https://github.com/jmock-developers/) - Mocking
 * [Window Licker](http://code.google.com/p/windowlicker/) - GUI Testing framework; a patch to support SWT
 * [XCordion](http://code.google.com/p/xcordion/) - Acceptance testing framework, forked from Concordion
 * [Jedi](http://jedi.codehaus.org/) - Functional Library for Java, added set compliment filter [JEDI-21](http://jira.codehaus.org/browse/JEDI-21)
