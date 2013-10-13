@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-09-19T19:16:39+01:00</updated>
+  <updated>2013-10-13T13:00:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -63,6 +63,7 @@ git config branch.master.rebase true
 <li><a href="/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
 <li><a href="/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
 <li><a href="/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
 </ul>
 
 
@@ -200,6 +201,25 @@ The abbreviated</code>git status -sb` version</p>
 </span><span class='line'>&lt;p&gt; M LegoWars/BattleShip.h
 </span><span class='line'> M LegoWars/BattleShip.m
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2><a id="alias"></a>Useful Git aliases and config</h2>
+
+<p>Set the proxy, your user name and a couple of useful configurations. Feed straight in from the shell.</p>
+
+<p><code>sh
+git config --global http.proxy myproxy:8080
+git config --global user.email me@email.com
+git config --global user.name me
+git config --global color.ui true
+</code></p>
+
+<p>Some useful aliases.</p>
+
+<p><code>sh
+git config --global alias.last "log -1 HEAD"
+git config --global alias.st "status -sb"
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset abbrev-commit --date=relative"
+</code></p>
 
 <h2>Recommended Reading</h2>
 

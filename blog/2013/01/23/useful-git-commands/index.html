@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2013-09-19 19:16:39 +0100 -->
+    <!-- last update; 2013-10-13 13:00:01 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -160,6 +160,7 @@
 <li><a href="/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
 <li><a href="/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
 <li><a href="/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
 </ul>
 
 
@@ -285,6 +286,25 @@ for your current branch, you must specify a branch on the command line.
 </span><span class='line'><span class="c">## master...origin/master [ahead 1]</span>
 </span><span class='line'> M LegoWars/BattleShip.h
 </span><span class='line'> M LegoWars/BattleShip.m
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><a id="alias"></a>Useful Git aliases and config</h2>
+
+<p>Set the proxy, your user name and a couple of useful configurations. Feed straight in from the shell.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global http.proxy myproxy:8080
+</span><span class='line'>git config --global user.email me@email.com
+</span><span class='line'>git config --global user.name me
+</span><span class='line'>git config --global color.ui <span class="nb">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some useful aliases.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global alias.last <span class="s2">&quot;log -1 HEAD&quot;</span>
+</span><span class='line'>git config --global alias.st <span class="s2">&quot;status -sb&quot;</span>
+</span><span class='line'>git config --global alias.lg <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset abbrev-commit --date=relative&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
