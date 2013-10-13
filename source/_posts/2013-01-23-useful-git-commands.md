@@ -18,6 +18,7 @@ description: "Some git commands I find useful but keep forgetting like removing 
  - [Switch from HTTP to git/ssh]({{ root_url }}/blog/2013/01/23/useful-git-commands#switch_to_ssh)
  - [Set upstream branch]({{ root_url }}/blog/2013/01/23/useful-git-commands#set_upstream_branch)
  - [Abbreviated status]({{ root_url }}/blog/2013/01/23/useful-git-commands#status)
+ - [Useful Git aliases]({{ root_url }}/blog/2013/01/23/useful-git-commands#alias)
 
 
 <!-- more -->
@@ -139,6 +140,26 @@ $ git status -sb
  M LegoWars/BattleShip.h
  M LegoWars/BattleShip.m
 {% endcodeblock %}
+
+
+## <a id="alias"></a>Useful Git aliases and config
+
+Set the proxy, your user name and a couple of useful configurations. Feed straight in from the shell.
+
+``` sh
+git config --global http.proxy myproxy:8080
+git config --global user.email me@email.com
+git config --global user.name me
+git config --global color.ui true
+```
+
+Some useful aliases.
+
+``` sh
+git config --global alias.last "log -1 HEAD"
+git config --global alias.st "status -sb"
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset abbrev-commit --date=relative"
+```
 
 
 ## Recommended Reading
