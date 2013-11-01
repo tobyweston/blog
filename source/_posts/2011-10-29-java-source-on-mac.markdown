@@ -40,7 +40,7 @@ Reset things by;
   1. run `mvn -version` to check its back up.
   1. Have a cup of tea.
 
-This is most likely caused because you have an `M2_HOME` set, if you'd prefer to use Maven 3, remove the Maven too path setting with `export M2_HOME=`.
+This is most likely caused because you have an `M2_HOME` set, if you'd prefer to use Maven 3, remove the Maven 2 path setting with `export M2_HOME=`.
 
 
 ## Java Preferences.app
