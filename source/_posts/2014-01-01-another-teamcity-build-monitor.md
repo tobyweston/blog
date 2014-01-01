@@ -1,0 +1,25 @@
+---
+layout: post
+title: "Another TeamCity Build Monitor"
+date: 2014-01-01 09:57
+comments: true
+categories: java
+sidebar: false
+published: true
+keywords: "Teamcity, JetBrains, build monitor, build radiator, information radiator, continuous integration, red, green, screen saver, Windows, team piazza, team-piazza"
+description: "Take a look at my build monitor for TeamCity that runs corss-platform but as a screen saver on Windows"
+---
+
+My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven't been working on.
+
+{% youtube ZMQn-J435Lk %}
+
+[Radiate](http://github.com/tobyweston/radiate) takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that's all you get. It's up to you to investigate the cause.
+
+<!-- more -->
+
+Build monitors are supposed to be highly visual, you should be able get some important piece of information from across the other side of the office. The *only* important piece of information for Radiate, is whether the build is passing or failing. Anything else is superfluous. After all, to investigate a failure, we'd typically open up the TeamCity page.
+
+It's got a couple of other neat features; it gives aggregated progress when builds are running, changing it's status as soon as a failure is detected; it runs as a standalone executable jar, `.exe` or as a Windows screen saver (`.scr`); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).
+
+Have a look on [Github](http://github.com/tobyweston/radiate) and let me know what you think below.
