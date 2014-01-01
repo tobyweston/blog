@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Another TeamCity Build Monitor"
+title: "Yet Another TeamCity Build Monitor"
 date: 2014-01-01 09:57
 comments: true
 categories: java
 sidebar: false
 published: true
 keywords: "Teamcity, JetBrains, build monitor, build radiator, information radiator, continuous integration, red, green, screen saver, Windows, team piazza, team-piazza"
-description: "Take a look at my build monitor for TeamCity that runs corss-platform but as a screen saver on Windows"
+description: "Take a look at my build monitor for TeamCity that runs cross-platform but as a screen saver on Windows"
 ---
 
 My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven't been working on.
