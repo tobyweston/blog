@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: uncategorized - bad.robot</title>
+  <title>Another TeamCity Build Monitor - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Category: uncategorized">
-  
+  <meta name="description" content="Take a look at my build monitor for TeamCity that runs corss-platform but as a screen saver on Windows">
+  <meta name="keywords" content="Teamcity, JetBrains, build monitor, build radiator, information radiator, continuous integration, red, green, screen saver, Windows, team piazza, team-piazza">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.comblog/categories/uncategorized/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -78,7 +78,7 @@
 
 </head>
 
-<body   >
+<body   class="no-sidebar"  >
   <header role="banner"><hgroup>
     <!-- last update; 2014-01-01 11:27:51 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
@@ -111,104 +111,108 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: uncategorized</h1>
+    
+      
+        <h1 class="entry-title">Another TeamCity Build Monitor</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T09:57:00+00:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
 
-  
-  <h2>2009</h2>
-
-<article>
-  
-<h1><a href="/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/">Thawte claim I'm not to be trusted...</a></h1>
-<time datetime="2009-11-11T00:00:00+00:00" pubdate><span class='month'>Nov</span> <span class='day'>11</span> <span class='year'>2009</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/uncategorized/'>uncategorized</a></span>
-</footer>
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
 
 
-</article>
+<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
+
+<!-- more -->
 
 
+<p>Build monitors are supposed to be highly visual, you should be able get some important piece of information from across the other side of the office. The <em>only</em> important piece of information for Radiate, is whether the build is passing or failing. Anything else is superfluous. After all, to investigate a failure, we&#8217;d typically open up the TeamCity page.</p>
 
-  
-  <h2>2006</h2>
+<p>It&#8217;s got a couple of other neat features; it gives aggregated progress when builds are running, changing it&#8217;s status as soon as a failure is detected; it runs as a standalone executable jar, <code>.exe</code> or as a Windows screen saver (<code>.scr</code>); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).</p>
 
-<article>
-  
-<h1><a href="/blog/2006/03/14/new-blog-moved-to-new-blog-today-at/">New Blog</a></h1>
-<time datetime="2006-03-14T00:00:00+00:00" pubdate><span class='month'>Mar</span> <span class='day'>14</span> <span class='year'>2006</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/uncategorized/'>uncategorized</a></span>
-</footer>
-
-
-</article>
-
+<p>Have a look on <a href="http://github.com/tobyweston/radiate">Github</a> and let me know what you think below.</p>
 </div>
 
-  
-</article>
 
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span class="fn">Toby Weston</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-01T09:57:00+00:00" pubdate data-updated="true">Jan 1<span>st</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-    <h1>About Me</h1>
-
-    <p>
-        <img class="left" src="/images/profile_small.png"/>
-        I specialise in modern software development; object-oriented design,
-        <a href="http://www.linkedin.com/company/digitiva/products">training</a>, agile and lean best practice.
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/21/curried-functions/" title="Previous Post: Currying Functions in Java & Scala">&laquo; Currying Functions in Java & Scala</a>
+      
+      
     </p>
+  </footer>
+</article>
 
-    <p>
-        I work in London and love what I do. Feel free to get in touch via <a href="http://uk.linkedin.com/in/tobyweston">LinkedIn</a>.
-    </p>
-</section>
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/tobyweston">@tobyweston</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'tobyweston',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-  
-</aside>
+</div>
 
 
     </div>
@@ -226,7 +230,10 @@
       var disqus_shortname = 'badrobot';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/';
+        var disqus_url = 'http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2013-10-13T13:00:01+01:00</updated>
+  <updated>2014-01-01T11:27:51+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Another TeamCity Build Monitor]]></title>
+    <link href="http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/"/>
+    <updated>2014-01-01T09:57:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor</id>
+    <content type="html"><![CDATA[<p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven't been working on.</p>
+
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div></p>
+
+<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that's all you get. It's up to you to investigate the cause.</p>
+
+<!-- more -->
+
+
+<p>Build monitors are supposed to be highly visual, you should be able get some important piece of information from across the other side of the office. The <em>only</em> important piece of information for Radiate, is whether the build is passing or failing. Anything else is superfluous. After all, to investigate a failure, we'd typically open up the TeamCity page.</p>
+
+<p>It's got a couple of other neat features; it gives aggregated progress when builds are running, changing it's status as soon as a failure is detected; it runs as a standalone executable jar, <code>.exe</code> or as a Windows screen saver (<code>.scr</code>); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).</p>
+
+<p>Have a look on <a href="http://github.com/tobyweston/radiate">Github</a> and let me know what you think below.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Currying Functions in Java & Scala]]></title>
@@ -421,105 +443,6 @@
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
 [3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Diff Excel with Java and Hamcrest]]></title>
-    <link href="http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest/"/>
-    <updated>2012-09-14T13:21:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest</id>
-    <content type="html"><![CDATA[<p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don't offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find any differences.</p>
-
-<!-- more -->
-
-
-<h2>Building Spreadsheets</h2>
-
-<p><a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> takes a sheet as a template and allows you to apply changes programmatically to it. For example, you can start with a blank invoice sheet and insert items and totals from your Java code. It wraps Apache POI to make things easier to work with.</p>
-
-<p>However you create your sheet, it'd be nice to be able to unit test it. <a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> offers <code>Matcher</code>s to do just that. You can write unit style tests, making assertions against individual cells or rows or you can write coarser grained tests that compare every cell of one sheet against every cell of another.</p>
-
-<h2>Matchers</h2>
-
-<p>The matchers you're most likely to use can be found in the <code>bad.robot.excel.matchers.Matchers</code> class. They include <code>WorkbookMatcher</code> and <code>CellMatcher</code> but there are a bunch of finer grained matchers in the <code>bad.robot.excel.matchers</code> package.</p>
-
-<h2>Comparing Sheets</h2>
-
-<p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
-</span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>If you use the <code>MatcherAssert.assertThat</code> from Hamcrest rather than the vanilla JUnit version (<code>org.junit.Assert.assertThat</code>), you'll see useful information on a failure.</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: entire workbook to be equal
-     but: cell at "C14" contained &lt;"bananas"&gt; expected &lt;nothing&gt;,
-          cell at "C15" contained &lt;"£1,850,000"&gt; expected &lt;"£1,850,000.00"&gt;,
-          cell at "D16" contained &lt;nothing&gt; expected &lt;"Tue Sep 04 06:30:00"&gt;
-</code></pre>
-
-<p>Other failures might include differing number of sheets, differently named sheets, different number of rows or columns. They're all aggregated in the failure message so you don't need to fix one and run the test again. It'll try and report all errors up front.</p>
-
-<h2>Finer Grained Comparisons</h2>
-
-<p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
-</span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
-</span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we'd like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Where the <code>getCellForCoordinate</code> returns a POI <code>Cell</code> object and <code>equalTo</code> is statically imported from <code>bad.robot.excel.matchers.Matchers</code> (not regular Hamcrest <code>equalTo</code>);</p>
-
-<p>When it fails, you'll get something friendly like this;</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: is &lt;999.99D&gt;
-     but: cell at "E2" contained &lt;1999.99D&gt; expected &lt;999.99D&gt;
-</code></pre>
-
-<p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>. It doesn't yet match against styling (things like borders or background colours).</p>
-
-<p>The project is open source. As always, I'd love to hear how you get on using it. Check it out and the leave a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
-
-<h2>Recommended Reading</h2>
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
-</ul>
-
 ]]></content>
   </entry>
   
