@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-01-02T20:06:46+00:00</updated>
+  <updated>2014-01-20T20:04:31+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEA Retina Support JDK 1.7+]]></title>
+    <link href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/"/>
+    <updated>2014-01-20T19:33:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support</id>
+    <content type="html"><![CDATA[<p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
+
+<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
+<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
+
+<!-- more -->
+
+
+<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yet Another TeamCity Build Monitor]]></title>
@@ -1376,65 +1393,6 @@ X-Host: web4
 <p>Communication is key in what we do and it&#8217;s key in any pairing exercises. If you&#8217;re open, honest and communicative, you won&#8217;t go far wrong in a well conducted pairing exercise. Don&#8217;t forget too that conducting a pairing exercise is difficult and takes practice. So don&#8217;t be too disheartened if it doesn&#8217;t go well, but <a href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
 
 <p>Good luck!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[HTTP Encoding Schemes]]></title>
-    <link href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/"/>
-    <updated>2012-06-11T18:06:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes</id>
-    <content type="html"><![CDATA[<p>What&#8217;s the difference between URL Encoding and Form URL Encoding?</p>
-
-<!-- more -->
-
-
-<h2>URL Encoding</h2>
-
-<p>Sometimes refered to as <a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent Encoding</a>, this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like <code>#</code> have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by <code>%20</code>.</p>
-
-<p>In Java, you can create an encoded URL using</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which in this case produces</p>
-
-<pre><code>http:baddotrobot.com#/cheese%20sandwich
-</code></pre>
-
-<h2>Form URL Encoding</h2>
-
-<p>Refered to by the <code>application/x-www-form-urlencoded</code> mime-type. This scheme was based on an early version of URL Encoding but at some point diverged. For example, the space character gets replaced by the <code>+</code> rather than <code>%20</code>. It&#8217;s typically used for encoding <code>POST</code> message content by HTML forms.</p>
-
-<p>For example, a HTML form with <code>name</code> and <code>address</code> would send over the following.</p>
-
-<pre><code>POST http://baddotrobot.com/ HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-
-name=bad.robot&amp;address=the+land+of+make+believe
-</code></pre>
-
-<p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Base64 Encoding</h2>
-
-<p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which, for example, could be used to send the following HTTP message</p>
-
-<pre><code>GET /login HTTP/1.1
-Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
-</code></pre>
 ]]></content>
   </entry>
   

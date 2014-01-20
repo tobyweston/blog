@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Un/Marshalling - bad.robot</title>
+  <title>IntelliJ IDEA Retina Support JDK 1.7+ - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Almost all unmarshalling frameworks cause problems. By extension, all frameworks cause problems. There's generally idiosyncrasies or constraints that &hellip;">
-  <meta name="keywords" content="unmarshalling frameworks, castor, JAXB, json, xml">
+  <meta name="description" content="IntelliJ IDEA 13 retina support on JDK 7 and JDK 8 is still broken. Keep running against 1.6 to look good on your Macbooks">
+  <meta name="keywords" content="IntelliJ, IDEA, IntelliJ IDEA 13, Macbook, retina, JDK 7, JDK 8">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2010/05/01/unmarshalling/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 class="entry-title">Un/Marshalling</h1>
+        <h1 class="entry-title">IntelliJ IDEA Retina Support JDK 1.7+</h1>
       
     
     
@@ -145,21 +145,22 @@
   
 
 
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+<time datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true">Jan 20<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
-who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
+<div class="entry-content"><p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
 
-<p>I was using Castor to do the former some time ago. It sounded like a good idea, and I got going really quickly. However, I quickly didn&#8217;t like the objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the marshalling. Still fine, this was ok for a while but soon enough I descended into a kind of Castor mapping hell. I seriously spent days trying to tweak things and had to compromise the model in the end.</p>
+<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
+<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
 
-<p>After some reflection, I thought I&#8217;d try and dump Castor. I replaced the marshalling with merging to a Freemarker template and produced cleaner XML in under an hour. The unmarshalling, replaced with manually parsing the XML and inserting elements directly into objects. I couldn&#8217;t believe how much less pain I was feeling.</p>
+<!-- more -->
 
-<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less than working around any framework mismatches. If you&#8217;re lucky enough to find a marhsalling framework that can grow with you, fair play, but I&#8217;m heavily biased towards a more manual approach these days. Down with [insert framework here].</p>
+
+<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
 </div>
 
 
@@ -183,7 +184,7 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
   
 
 
-<time datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
+<time datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true">Jan 20<span>th</span>, 2014</time>
       
 
 <span class="categories">
@@ -204,10 +205,8 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2010/05/01/setter-vs-constructor-injection/" title="Previous Post: Setter vs Constructor Injection">&laquo; Setter vs Constructor Injection</a>
+        <a class="basic-alignment left" href="/blog/2014/01/01/another-teamcity-build-monitor/" title="Previous Post: Yet Another TeamCity Build Monitor">&laquo; Yet Another TeamCity Build Monitor</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2010/06/17/objectives/" title="next Post: Objectives">Objectives &raquo;</a>
       
     </p>
   </footer>
@@ -238,8 +237,8 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2010/05/01/unmarshalling/';
-        var disqus_url = 'http://baddotrobot.com/blog/2010/05/01/unmarshalling/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/';
+        var disqus_url = 'http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/';
         var disqus_script = 'embed.js';
       
     (function () {

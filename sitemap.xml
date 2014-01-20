@@ -307,12 +307,16 @@
         <lastmod>2014-01-01T12:17:54+00:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/</loc>
+        <lastmod>2014-01-20T20:00:09+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/404.html</loc>
         <lastmod>2013-02-02T12:37:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2014-01-01T12:17:54+00:00</lastmod>
+        <lastmod>2014-01-20T20:00:09+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
@@ -332,6 +336,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2014-01-01T12:17:54+00:00</lastmod>
+        <lastmod>2014-01-20T20:00:09+00:00</lastmod>
     </url>
 </urlset>
