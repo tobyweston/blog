@@ -12,7 +12,7 @@ description: "Calculate the theoretical optimal number of threads needed for bot
 
 Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?
 
-In this post, we look at how to work out a good thread pool size for your CPU and IO tasks..
+In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.
 
 <!-- more -->
 
@@ -41,7 +41,7 @@ And Goetz (2002) describes the optimal number of threads in terms of the followi
 
 {% img ../../../../../images/optimal-threads/goetz-1.gif %}
 
-Where we can think of `wait time / service` time as a measure of how contended the task is.
+Where we can think of `wait time / service time` as a measure of how contended the task is.
 
 ## Goetz and Subramaniam Agree
 
