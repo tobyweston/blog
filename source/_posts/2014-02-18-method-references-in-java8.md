@@ -10,34 +10,37 @@ keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method r
 description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
 ---
 
-Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The [Oracle docs](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) describe four types of method reference but do such a poor job of describing them **in their official documentation** that I felt compelled to describe them myself.
+Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The [Oracle docs](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.
 
 <!-- more -->
 
-[Oracle describe the four kinds of method reference](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) as follows
+[Oracle describe the four kinds of method reference](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) as follows.
 
 | Kind                                                                           | Example                                |
 |--------------------------------------------------------------------------------|----------------------------------------|
-| Reference to a static method                                                   | `ContainingClass::staticMethodName`    |
-| Reference to an instance method of a particular object                         | `ContainingObject::instanceMethodName` |
-| Reference to an instance method of an arbitrary object of a particular type    | `ContainingType::methodName`           |
-| Reference to a constructor                                                     | `ClassName::new`                       |
+| Reference to a static method                                                   | `ContainingClass::staticMethodName`
+| Reference to an instance method of a particular object                         | `ContainingObject::instanceMethodName`
+| Reference to an instance method of an arbitrary object of a particular type    | `ContainingType::methodName`
+| Reference to a constructor                                                     | `ClassName::new`
 
-Most are straight forward but it's the third one that muddies the waters. What an earth is an instance method of an arbitrary object of a particular type? Why is it important that the object is arbitrary? Aren't all objects _of a_ particular type?
+
+
+
+Static and constructor references are straight forward but it's their description of instance method references that muddies the waters. What on earth is an instance method of an arbitrary object of a particular type? Aren't all objects _of a_ particular type?  Why is it important that the object is _arbitrary_?
 
 
 ## What they should have written
 
 It's talking about four types of method reference; constructor references, static method references, instance method references and what it calls instance method references of a particular type. The last one is really just another kind of instance method reference.
 
-What they should have written is this
+What they should have written is this.
 
 | Kind                                                        | Syntax                           | Example                  |
 |-------------------------------------------------------------|----------------------------------|--------------------------|
-| Reference to a static method                                | `Class::staticMethodName`        | `String::valueOf`        |
-| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `x::toString`            |
-| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `Object::toString`       |
-| Reference to a constructor                                  | `ClassName::new`                 | `String::new`            |
+| Reference to a static method                                | `Class::staticMethodName`        | `String::valueOf`
+| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `x::toString`
+| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `Object::toString`
+| Reference to a constructor                                  | `ClassName::new`                 | `String::new`
 
 
 The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a formal definition as opposed to Oracle's unhelpful distinction. If you're interested in the difference between a closure and a lambda, check out my [previous article]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures).
@@ -139,4 +142,4 @@ public void lambdaExample() {
 
 ## Summary
 
-There difference between the two types of instance method reference is basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My grip though is with Oracle's documentation. It's the canonical reference material but is just plain confusing. It feels like interns are producing one of Java's most important artifacts.
+There difference between the two types of instance method reference is basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe though is with Oracle's documentation. It's _the_ canonical reference material but is just plain confusing. It feels like interns are producing one of Java's most important artifacts.
