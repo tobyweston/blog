@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-02-18T18:01:53+00:00</updated>
+  <updated>2014-02-18T18:03:38+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Method References in Java 8]]></title>
+    <link href="http://baddotrobot.com/blog/2014/02/18/method-references-in-java8/"/>
+    <updated>2014-02-18T21:33:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/02/18/method-references-in-java8</id>
+    <content type="html"><![CDATA[<p>Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle docs</a> describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.</p>
+
+<!-- more -->
+
+
+<p><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle describe the four kinds of method reference</a> as follows.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Kind                                                                           </th>
+<th> Example                                </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Reference to a static method                                                   </td>
+<td> <code>ContainingClass::staticMethodName</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of a particular object                         </td>
+<td> <code>ContainingObject::instanceMethodName</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of an arbitrary object of a particular type    </td>
+<td> <code>ContainingType::methodName</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to a constructor                                                     </td>
+<td> <code>ClassName::new</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Static and constructor references are straight forward but it&#8217;s their description of instance method references that muddies the waters. What on earth is an instance method of an arbitrary object of a particular type? Aren&#8217;t all objects <em>of a</em> particular type?  Why is it important that the object is <em>arbitrary</em>?</p>
+
+<h2>What they should have written</h2>
+
+<p>It&#8217;s talking about four types of method reference; constructor references, static method references, instance method references and what it calls instance method references of a particular type. The last one is really just another kind of instance method reference.</p>
+
+<p>What they should have written is this.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Kind                                                        </th>
+<th> Syntax                           </th>
+<th> Example                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Reference to a static method                                </td>
+<td> <code>Class::staticMethodName</code>        </td>
+<td> <code>String::valueOf</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of an object (closure)      </td>
+<td> <code>object::instanceMethodName</code>     </td>
+<td> <code>x::toString</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of an object (lambda)       </td>
+<td> <code>Class::instanceMethodName</code>      </td>
+<td> <code>Object::toString</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to a constructor                                  </td>
+<td> <code>ClassName::new</code>                 </td>
+<td> <code>String::new</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>The distinction between a method reference that closes over something (a closure) and one that doesn&#8217;t (a lambda) may be a bit academic but at least it&#8217;s a formal definition as opposed to Oracle&#8217;s unhelpful distinction. If you&#8217;re interested in the difference between a closure and a lambda, check out my <a href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
+
+<h2>The &#8220;closure&#8221; method reference</h2>
+
+<p>The example above is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="nl">x:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>where the signature of <code>function</code> looks like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>Supplier</code> interface must provide a string value (the <code>get</code> call) and the only way it can do that is if it&#8217;s been supplied to it on construction. It&#8217;s equivalent to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice here that the lambda has no arguments (it uses the &#8216;hamburger&#8217; symbol). This shows that the value of <code>x</code> isn&#8217;t available in the lambda&#8217;s local scope and so can only be available from outside it&#8217;s scope. It&#8217;s a closure because must close over <code>x</code>.</p>
+
+<p>The anonymous class equivalent really makes this obvious, it looks like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="k">new</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="c1">// &lt;- closes over &#39;x&#39;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All three of these are equivalent. Compare this to the lambda variation of an instance method reference where it doesn&#8217;t have it&#8217;s argument explicitly passed in from an outside scope.</p>
+
+<h2>The &#8220;lambda&#8221; method reference</h2>
+
+<p>This example is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>String</code> part looks like it&#8217;s referring to a class but it&#8217;s actually referencing an instance. It&#8217;s confusing, I know but to see things more clearly, we need to see the function that&#8217;s making use of the lambda. It looks like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, the string value is passed directly to the function, it would look like this as a fully qualified lambda.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you expand it fully to an anonymous interface, it looks like this. The <code>x</code> parameter is made available and not closed over. It&#8217;s a lambda rather than a closure.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="nd">@Override</span>
+</span><span class='line'>      <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// &lt;- takes the argument as a parameter, doesn&#39;t need to close over it</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Summary</h2>
+
+<p>There difference between the two types of instance method reference is basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe though is with Oracle&#8217;s documentation. It&#8217;s <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing one of Java&#8217;s most important artifacts.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[IntelliJ IDEA Retina Support JDK 1.7+]]></title>
@@ -1337,62 +1521,6 @@ X-Host: web4
 <h2>Summary</h2>
 
 <p>I&#8217;ve missed a lot out here. I&#8217;ve skipped over <em>projects</em>, <em>contexts</em> and a bunch of other stuff. I found it easier to absorb the basic principles like this though and in the next post, we&#8217;ll have a look at some examples where I&#8217;ve tried to apply just these basics to my own list of &#8220;stuff&#8221;.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
-    <link href="http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/"/>
-    <updated>2012-07-04T18:58:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect</id>
-    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/pairing.jpg"></p>
-
-<p>If you haven&#8217;t had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
-
-<p>This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.</p>
-
-<!-- more -->
-
-
-<h2>What To Expect</h2>
-
-<p>Typically, you&#8217;ll sit down with one or two developers, be introduced to a basic problem and asked to solve it. If it&#8217;s a good sample problem, you can expect to be asked to implement or fix small, incremental pieces of functionality. It&#8217;s unfortunate that we use the term &#8220;pair test&#8221;. I don&#8217;t see it as a &#8220;test&#8221; but as an exercise or discussion. There shouldn&#8217;t be a single right or wrong answer. The prospective employer should really be looking at <em>how you work</em> rather than <em>did she solve the problem?</em> A good <em>coding exercise</em> is simple and open ended.</p>
-
-<p>Expect to be put at ease. The interviewer should make every effort to relax you and communicate their expectations. If you find that your dropped in the deep end and bombarded with all kinds of devious scenarios, you have to question the organisation&#8217;s values.</p>
-
-<p>Expect a choice of IDE. If you&#8217;re not given a choice, don&#8217;t expect to be judged on your knowledge of the IDE.</p>
-
-<p>Expect to be coding for an hour to two. They inevitably take a while and it&#8217;s unrealistic to expect a productive pairing session in just thirty minutes.</p>
-
-<p>After the exercise, you may be asked &#8220;how did you find that?&#8221;. If not, I like to ask the interviewer &#8220;how was that? Was it the kind of thing you were looking for?&#8221;. It may lead to further conversations that give you the chance to talk about things in more depth, discuss alternatives and generally impress.</p>
-
-<h2>Be Yourself</h2>
-
-<p>There&#8217;s often an unspoken expectation that you&#8217;ll be demonstrating your mad TDD skills. I think deep down though, people are interested in seeing how you work, not necessarily that you work in a test driven way. I think its fair to say people do expect to see some tests, so make sure write some. My point is that you shouldn&#8217;t be penalised if you right them retrospectively rather than first. If you&#8217;re not comfortable doing TDD in your day job, don&#8217;t suddenly make out it&#8217;s your bread and butter. Try and work how you would on your own. Don&#8217;t fake it.</p>
-
-<p>Another motivation for the pairing exercise is to see if, as a prospective pair, you can get on. If you relax and let your personality come through, you&#8217;ll both have a better idea what it would be like pairing day in, day out.</p>
-
-<h2>Hang ups</h2>
-
-<p>Don&#8217;t get hung up on the IDE, the API or even the problem. The interviewer shouldn&#8217;t be judging you based on what shortcuts your know or what API you know off by heart. If they do, then you should question what&#8217;s important to them; an adaptive, bright, enthusiastic developer or a robot that knows emacs keyboard bindings?</p>
-
-<p>With regards to the problem; if its not obvious, ask. A well set pairing exercise should be simple enough to quickly understand what&#8217;s required and get you coding. Bogging you down with the complexities of the problem doesn&#8217;t help anyone. Really. Don&#8217;t be afraid to ask, it&#8217;s what we do in our day jobs right?</p>
-
-<h2>Nerves</h2>
-
-<p>The thing that always gets me is nerves. I put way too much pressure on myself with an involuntary, internal commentary saying &#8220;am I doing enough? is that what they want to see? do they want to see this fancy thing? or that fancy thing?&#8221;. Don&#8217;t be like me, give yourself a break. You&#8217;re a professional and good at what you do, you don&#8217;t need to show off.</p>
-
-<p>I guess this all leads to my final point&#8230;</p>
-
-<h2>Summary</h2>
-
-<p>Discuss the problem. Discuss what you&#8217;re thinking. Discuss what you plan to do. Discuss. Discuss. Discuss.</p>
-
-<p>If you get the chance, even mention some of the awesome things you&#8217;ve done. It&#8217;s a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats <em>their</em> boat. Remember that you&#8217;re interviewing them as much as the other way round.</p>
-
-<p>Communication is key in what we do and it&#8217;s key in any pairing exercises. If you&#8217;re open, honest and communicative, you won&#8217;t go far wrong in a well conducted pairing exercise. Don&#8217;t forget too that conducting a pairing exercise is difficult and takes practice. So don&#8217;t be too disheartened if it doesn&#8217;t go well, but <a href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
-
-<p>Good luck!</p>
 ]]></content>
   </entry>
   
