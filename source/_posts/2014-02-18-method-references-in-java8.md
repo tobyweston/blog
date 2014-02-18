@@ -5,7 +5,7 @@ date: 2014-02-18 21:33
 comments: true
 categories: java, java8
 sidebar: false
-published: false
+published: true
 keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method references in java, oracle docs"
 description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
 ---
