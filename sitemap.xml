@@ -272,7 +272,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/</loc>
-        <lastmod>2013-02-25T15:32:29+00:00</lastmod>
+        <lastmod>2014-01-29T13:55:48+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/01/10/stack-vs-deque/</loc>
@@ -292,7 +292,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/</loc>
-        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
+        <lastmod>2014-01-28T10:21:11+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/</loc>
@@ -316,7 +316,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2014-01-20T20:00:09+00:00</lastmod>
+        <lastmod>2014-01-29T13:55:48+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
@@ -336,6 +336,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2014-01-20T20:00:09+00:00</lastmod>
+        <lastmod>2014-01-29T13:55:48+00:00</lastmod>
     </url>
 </urlset>
