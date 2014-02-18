@@ -33,7 +33,7 @@ It's talking about four types of method reference; constructor references, stati
 What they should have written is this
 
 | Kind                                                        | Syntax                          | Example                 |
-|-------------------------------------------------------------|--------------------------------:|------------------------:|
+|-------------------------------------------------------------|:-------------------------------:|------------------------:|
 | Reference to a static method                                | Class::staticMethodName         | String::valueOf         |
 | Reference to an instance method of an object (closure)      | object::instanceMethodName      | x::toString             |
 | Reference to an instance method of an object (lambda)       | Class::instanceMethodName       | Object::toString        |
