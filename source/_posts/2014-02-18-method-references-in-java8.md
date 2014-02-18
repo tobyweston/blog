@@ -47,38 +47,38 @@ The distinction between a method reference that closes over something (a closure
 
 The example above is an instance method reference using a closure. It creates a lambda that will call the `toString` method on the instance `x`.
 
-{% codeblock lang:java %}
+``` java
 public void example() {
     String x = "";
     function(x::toString);
 }
-{% endcodeblock %}
+```
 
 
 where the signature of `function` looks like this
 
-{% codeblock lang:java %}
+``` java
 public static String function(Supplier<String> supplier) {
     return supplier.get();
 }
-{% endcodeblock %}
+```
 
 
 The `Supplier` interface must provide a string value (the `get` call) and the only way it can do that is if it's been supplied to it on construction. It's equivalent to
 
-{% codeblock lang:java %}
+``` java
 public void example() {
     String x = "";
     function(() -> x.toString());
 }
-{% endcodeblock %}
+```
 
 
 Notice here that the lambda has no arguments (it uses the 'hamburger' symbol). This shows that the value of `x` isn't available in the lambda's local scope and so can only be available from outside it's scope. It's a closure because must close over `x`.
 
 The anonymous class equivalent really makes this obvious, it looks like this.
 
-{% codeblock lang:java %}
+``` java
 public void example() {
     String x = "";
     function(new Supplier<String>() {
@@ -88,7 +88,7 @@ public void example() {
         }
     });
 }
-{% endcodeblock %}
+```
 
 
 All three of these are equivalent. Compare this to the lambda variation of an instance method reference where it doesn't have it's argument explicitly passed in from an outside scope.
@@ -98,34 +98,34 @@ All three of these are equivalent. Compare this to the lambda variation of an in
 
 This example is similar to the previous one, it calls the `toString` method of a string only this time, the string is supplied to the function that's making use of the lambda and not passed in from an outside scope.
 
-{% codeblock lang:java %}
+``` java
 public void lambdaExample() {
     function("value", String::toString);
 }
-{% endcodeblock %}
+```
 
 
 The `String` part looks like it's referring to a class but it's actually referencing an instance. It's confusing, I know but to see things more clearly, we need to see the function that's making use of the lambda. It looks like this.
 
-{% codeblock lang:java %}
+``` java
 public static String function(String value, Function<String, String> function) {
     return function.apply(value);
 }
-{% endcodeblock %}
+```
 
 
 So, the string value is passed directly to the function, it would look like this as a fully qualified lambda.
 
-{% codeblock lang:java %}
+``` java
 public void lambdaExample() {
     function("value", x -> x.toString());
 }
-{% endcodeblock %}
+```
 
 
 If you expand it fully to an anonymous interface, it looks like this. The `x` parameter is made available and not closed over. It's a lambda rather than a closure.
 
-{% codeblock lang:java %}
+``` java
 public void lambdaExample() {
     function("value", new Function<String, String>() {
       @Override
@@ -134,7 +134,7 @@ public void lambdaExample() {
       }
     });
 }
-{% endcodeblock %}
+```
 
 
 ## Summary
