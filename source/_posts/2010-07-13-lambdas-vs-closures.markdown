@@ -37,7 +37,7 @@ The anonymous class implementing `Condition` is evaluated by the method `waitOrT
 The recent shift to this functional style has lead to eager anticipation of JDK7 and the promise of closures. More accurately however, it's the inclusion of _lambdas_ that we're waiting for, not _closures_. Closures have in fact been available in Java since 1.1, so what's the difference?
 
 
-### Lambs to the Slaughter
+## Lambs to the Slaughter
 
 So, we want to be able to define anonymous functions on the fly, the result of the function is purely dependent on it's arguments and this is called a lambda. Those functions that depend on external values (not just it's arguments) are when closures come into it. The act of binding those external values to the anonymous function is referred to as _closure_. After closure, when all variables have been captured and bound to the function, the term is closed.
 
@@ -93,6 +93,9 @@ private static Condition isRunning() {
 
 Then no out of scope variables are required, the term doesn't need to be closed. The anonymous function that is left is effectively a lambda.
 
+## Summary
+
+A lambda will generally be more efficient that a closure as it [only needs to evaluated once](http://mail.openjdk.java.net/pipermail/lambda-dev/2012-November/006867.html). As a closure closes over something not in it's environment, it has to be evaluated every time it's called.
   
 What JDK7 will (finger's crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can't quite figure out what the example would look like in those terms. See the [straw man proposal](http://cr.openjdk.java.net/%7Emr/lambda/straw-man/) and see if you can figure it out!
 
