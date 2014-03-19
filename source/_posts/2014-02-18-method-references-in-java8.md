@@ -35,33 +35,33 @@ It's talking about four types of method reference; constructor references, stati
 
 What they should have written is this.
 
-| Kind                                                        | Syntax                           | Example                  |
-|-------------------------------------------------------------|----------------------------------|--------------------------|
-| Reference to a static method                                | `Class::staticMethodName`        | `String::valueOf`
-| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `x::toString`
-| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `Object::toString`
-| Reference to a constructor                                  | `ClassName::new`                 | `String::new`
+| Kind                                                                 | Syntax                           | Example                  |
+|----------------------------------------------------------------------|----------------------------------|--------------------------|
+| Reference to a static method                                         | `Class::staticMethodName`        | `String::valueOf`
+| Reference to an instance method of a specific object                 | `object::instanceMethodName`     | `x::toString`
+| Reference to an instance method of a arbitrary object supplied later | `Class::instanceMethodName`      | `String::toString`
+| Reference to a constructor                                           | `ClassName::new`                 | `String::new`
 
 or as lambdas
 
-| Kind                                                        | Syntax                           | As Lambda                       |
-|-------------------------------------------------------------|----------------------------------|---------------------------------|
-| Reference to a static method                                | `Class::staticMethodName`        | `(s) -> String.valueOf(s);`
-| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `() -> "hello".toString();`
-| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `(s) -> s.toString();`
-| Reference to a constructor                                  | `ClassName::new`                 | `() -> new String();`
+| Kind                                                                 | Syntax                           | As Lambda                  |
+|----------------------------------------------------------------------|----------------------------------|----------------------------|
+| Reference to a static method                                         | `Class::staticMethodName`        | `(s) -> String.valueOf(s)`
+| Reference to an instance method of a specific object                 | `object::instanceMethodName`     | `() -> "hello".toString()` **†**
+| Reference to an instance method of a arbitrary object supplied later | `Class::instanceMethodName`      | `(s) -> s.toString()`
+| Reference to a constructor                                           | `ClassName::new`                 | `() -> new String()`
 
+I found their description of the two confusing. I prefer to think of the first as an instance method of a _specific_ object known ahead of time and the second as an instance method of an arbitrary object that will be _supplied_ later. Interestingly, this means the first is a _closure_ and the second is a _lambda_. One is _bound_ and the other _unbound_.
 
-The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a formal definition as opposed to Oracle's unhelpful distinction. If you're interested in the difference between a closure and a lambda, check out my [previous article]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures).
-
+The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my [previous article]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures).
 
 ## The "closure" method reference
 
-The example above is an instance method reference using a closure. It creates a lambda that will call the `toString` method on the instance `x`.
+The example above (`x::toString`) is an instance method reference using a closure. It creates a lambda that will call the `toString` method on the instance `x`.
 
 ``` java
 public void example() {
-    String x = "";
+    String x = "hello";
     function(x::toString);
 }
 ```
@@ -80,7 +80,7 @@ The `Supplier` interface must provide a string value (the `get` call) and the on
 
 ``` java
 public void example() {
-    String x = "";
+    String x = "hello";
     function(() -> x.toString());
 }
 ```
@@ -108,7 +108,7 @@ All three of these are equivalent. Compare this to the lambda variation of an in
 
 ## The "lambda" method reference
 
-This example is similar to the previous one, it calls the `toString` method of a string only this time, the string is supplied to the function that's making use of the lambda and not passed in from an outside scope.
+The other example (`String::toString`) is similar to the previous one, it calls the `toString` method of a string only this time, the string is supplied to the function that's making use of the lambda and not passed in from an outside scope.
 
 ``` java
 public void lambdaExample() {
@@ -151,4 +151,16 @@ public void lambdaExample() {
 
 ## Summary
 
-There difference between the two types of instance method reference is basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe though is with Oracle's documentation. It's _the_ canonical reference material but is just plain confusing. It feels like interns are producing one of Java's most important artifacts.
+The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's _the_ canonical reference material but is just plain confusing. It feels like interns are producing this stuff.
+
+
+## Caveat
+
+**†** There's a caveat here; the example isn't a closure, so my comment about that being a distinguishing feature isn't quiet true. If, as in the later examples, it closes over some `x` (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term `x` so it's back to being a lambda. So doesn't _have_ to be a closure, it's just more than likely to be one. For example;
+
+``` java This time the "reference to an instance method of a arbitrary object supplied later" is a Lambda, not a closure
+public void example() {
+    // String x = "hello";
+    function(() -> "hello".toString());
+}
+```
