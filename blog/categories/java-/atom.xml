@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java, | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java-/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-02-18T18:03:38+00:00</updated>
+  <updated>2014-03-19T20:16:33+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -73,6 +73,7 @@
 <th> Kind                                                        </th>
 <th> Syntax                           </th>
 <th> Example                  </th>
+<th> As Lambda                       </th>
 </tr>
 </thead>
 <tbody>
@@ -80,25 +81,29 @@
 <td></td>
 <td> Reference to a static method                                </td>
 <td> <code>Class::staticMethodName</code>        </td>
-<td> <code>String::valueOf</code></td>
+<td> <code>String::valueOf</code>        </td>
+<td> <code>(s) -&gt; String.valueOf(s);</code></td>
 </tr>
 <tr>
 <td></td>
 <td> Reference to an instance method of an object (closure)      </td>
 <td> <code>object::instanceMethodName</code>     </td>
-<td> <code>x::toString</code></td>
+<td> <code>x::toString</code>            </td>
+<td> <code>() -&gt; "hello".toString();</code></td>
 </tr>
 <tr>
 <td></td>
 <td> Reference to an instance method of an object (lambda)       </td>
 <td> <code>Class::instanceMethodName</code>      </td>
-<td> <code>Object::toString</code></td>
+<td> <code>Object::toString</code>       </td>
+<td> <code>(s) -&gt; s.toString();</code></td>
 </tr>
 <tr>
 <td></td>
 <td> Reference to a constructor                                  </td>
 <td> <code>ClassName::new</code>                 </td>
-<td> <code>String::new</code></td>
+<td> <code>String::new</code>            </td>
+<td> <code>() -&gt; new String();</code></td>
 </tr>
 </tbody>
 </table>
