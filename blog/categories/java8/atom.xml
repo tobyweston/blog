@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-03-19T20:16:33+00:00</updated>
+  <updated>2014-03-19T21:18:10+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -70,55 +70,92 @@
 <thead>
 <tr>
 <th></th>
-<th> Kind                                                        </th>
+<th> Kind                                                                 </th>
 <th> Syntax                           </th>
 <th> Example                  </th>
-<th> As Lambda                       </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td></td>
-<td> Reference to a static method                                </td>
+<td> Reference to a static method                                         </td>
 <td> <code>Class::staticMethodName</code>        </td>
-<td> <code>String::valueOf</code>        </td>
-<td> <code>(s) -&gt; String.valueOf(s);</code></td>
+<td> <code>String::valueOf</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to an instance method of an object (closure)      </td>
+<td> Reference to an instance method of a specific object                 </td>
 <td> <code>object::instanceMethodName</code>     </td>
-<td> <code>x::toString</code>            </td>
-<td> <code>() -&gt; "hello".toString();</code></td>
+<td> <code>x::toString</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to an instance method of an object (lambda)       </td>
+<td> Reference to an instance method of a arbitrary object supplied later </td>
 <td> <code>Class::instanceMethodName</code>      </td>
-<td> <code>Object::toString</code>       </td>
-<td> <code>(s) -&gt; s.toString();</code></td>
+<td> <code>String::toString</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to a constructor                                  </td>
+<td> Reference to a constructor                                           </td>
 <td> <code>ClassName::new</code>                 </td>
-<td> <code>String::new</code>            </td>
-<td> <code>() -&gt; new String();</code></td>
+<td> <code>String::new</code></td>
 </tr>
 </tbody>
 </table>
 
 
-<p>The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a formal definition as opposed to Oracle's unhelpful distinction. If you're interested in the difference between a closure and a lambda, check out my <a href="/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
+<p>or as lambdas</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Kind                                                                 </th>
+<th> Syntax                           </th>
+<th> As Lambda                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Reference to a static method                                         </td>
+<td> <code>Class::staticMethodName</code>        </td>
+<td> <code>(s) -&gt; String.valueOf(s)</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of a specific object                 </td>
+<td> <code>object::instanceMethodName</code>     </td>
+<td> <code>() -&gt; "hello".toString()</code> <strong>†</strong></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of a arbitrary object supplied later </td>
+<td> <code>Class::instanceMethodName</code>      </td>
+<td> <code>(s) -&gt; s.toString()</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to a constructor                                           </td>
+<td> <code>ClassName::new</code>                 </td>
+<td> <code>() -&gt; new String()</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>I found their description of the two confusing. I prefer to think of the first as an instance method of a <em>specific</em> object known ahead of time and the second as an instance method of an arbitrary object that will be <em>supplied</em> later. Interestingly, this means the first is a <em>closure</em> and the second is a <em>lambda</em>. One is <em>bound</em> and the other <em>unbound</em>.</p>
+
+<p>The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my <a href="/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
 
 <h2>The "closure" method reference</h2>
 
-<p>The example above is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
+<p>The example above (<code>x::toString</code>) is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
 
 <p>``` java
 public void example() {</p>
 
-<pre><code>String x = "";
+<pre><code>String x = "hello";
 function(x::toString);
 </code></pre>
 
@@ -141,7 +178,7 @@ public static String function(Supplier<String> supplier) {</p>
 <p>``` java
 public void example() {</p>
 
-<pre><code>String x = "";
+<pre><code>String x = "hello";
 function(() -&gt; x.toString());
 </code></pre>
 
@@ -171,7 +208,7 @@ function(new Supplier&lt;String&gt;() {
 
 <h2>The "lambda" method reference</h2>
 
-<p>This example is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that's making use of the lambda and not passed in from an outside scope.</p>
+<p>The other example (<code>String::toString</code>) is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that's making use of the lambda and not passed in from an outside scope.</p>
 
 <p>``` java
 public void lambdaExample() {</p>
@@ -222,7 +259,21 @@ public void lambdaExample() {</p>
 
 <h2>Summary</h2>
 
-<p>There difference between the two types of instance method reference is basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe though is with Oracle's documentation. It's <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing one of Java's most important artifacts.</p>
+<p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing this stuff.</p>
+
+<h2>Caveat</h2>
+
+<p><strong>†</strong> There's a caveat here; the example isn't a closure, so my comment about that being a distinguishing feature isn't quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it's back to being a lambda. So doesn't <em>have</em> to be a closure, it's just more than likely to be one. For example;</p>
+
+<p>``` java This time the "reference to an instance method of a arbitrary object supplied later" is a Lambda, not a closure
+public void example() {</p>
+
+<pre><code>// String x = "hello";
+function(() -&gt; "hello".toString());
+</code></pre>
+
+<p>}
+```</p>
 ]]></content>
   </entry>
   

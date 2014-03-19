@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-03-19T20:16:33+00:00</updated>
+  <updated>2014-03-19T21:18:10+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -70,53 +70,90 @@
 <thead>
 <tr>
 <th></th>
-<th> Kind                                                        </th>
+<th> Kind                                                                 </th>
 <th> Syntax                           </th>
 <th> Example                  </th>
-<th> As Lambda                       </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td></td>
-<td> Reference to a static method                                </td>
+<td> Reference to a static method                                         </td>
 <td> <code>Class::staticMethodName</code>        </td>
-<td> <code>String::valueOf</code>        </td>
-<td> <code>(s) -&gt; String.valueOf(s);</code></td>
+<td> <code>String::valueOf</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to an instance method of an object (closure)      </td>
+<td> Reference to an instance method of a specific object                 </td>
 <td> <code>object::instanceMethodName</code>     </td>
-<td> <code>x::toString</code>            </td>
-<td> <code>() -&gt; "hello".toString();</code></td>
+<td> <code>x::toString</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to an instance method of an object (lambda)       </td>
+<td> Reference to an instance method of a arbitrary object supplied later </td>
 <td> <code>Class::instanceMethodName</code>      </td>
-<td> <code>Object::toString</code>       </td>
-<td> <code>(s) -&gt; s.toString();</code></td>
+<td> <code>String::toString</code></td>
 </tr>
 <tr>
 <td></td>
-<td> Reference to a constructor                                  </td>
+<td> Reference to a constructor                                           </td>
 <td> <code>ClassName::new</code>                 </td>
-<td> <code>String::new</code>            </td>
-<td> <code>() -&gt; new String();</code></td>
+<td> <code>String::new</code></td>
 </tr>
 </tbody>
 </table>
 
 
-<p>The distinction between a method reference that closes over something (a closure) and one that doesn&#8217;t (a lambda) may be a bit academic but at least it&#8217;s a formal definition as opposed to Oracle&#8217;s unhelpful distinction. If you&#8217;re interested in the difference between a closure and a lambda, check out my <a href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
+<p>or as lambdas</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Kind                                                                 </th>
+<th> Syntax                           </th>
+<th> As Lambda                  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Reference to a static method                                         </td>
+<td> <code>Class::staticMethodName</code>        </td>
+<td> <code>(s) -&gt; String.valueOf(s)</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of a specific object                 </td>
+<td> <code>object::instanceMethodName</code>     </td>
+<td> <code>() -&gt; "hello".toString()</code> <strong>†</strong></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to an instance method of a arbitrary object supplied later </td>
+<td> <code>Class::instanceMethodName</code>      </td>
+<td> <code>(s) -&gt; s.toString()</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Reference to a constructor                                           </td>
+<td> <code>ClassName::new</code>                 </td>
+<td> <code>() -&gt; new String()</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<p>I found their description of the two confusing. I prefer to think of the first as an instance method of a <em>specific</em> object known ahead of time and the second as an instance method of an arbitrary object that will be <em>supplied</em> later. Interestingly, this means the first is a <em>closure</em> and the second is a <em>lambda</em>. One is <em>bound</em> and the other <em>unbound</em>.</p>
+
+<p>The distinction between a method reference that closes over something (a closure) and one that doesn&#8217;t (a lambda) may be a bit academic but at least it&#8217;s a more formal definition than Oracle&#8217;s unhelpful description. If you&#8217;re interested in the difference between a closure and a lambda, check out my <a href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
 
 <h2>The &#8220;closure&#8221; method reference</h2>
 
-<p>The example above is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
+<p>The example above (<code>x::toString</code>) is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="nl">x:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -133,7 +170,7 @@
 <p>The <code>Supplier</code> interface must provide a string value (the <code>get</code> call) and the only way it can do that is if it&#8217;s been supplied to it on construction. It&#8217;s equivalent to</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -159,7 +196,7 @@
 
 <h2>The &#8220;lambda&#8221; method reference</h2>
 
-<p>This example is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
+<p>The other example (<code>String::toString</code>) is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
@@ -198,7 +235,18 @@
 
 <h2>Summary</h2>
 
-<p>There difference between the two types of instance method reference is basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe though is with Oracle&#8217;s documentation. It&#8217;s <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing one of Java&#8217;s most important artifacts.</p>
+<p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle&#8217;s documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It&#8217;s <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing this stuff.</p>
+
+<h2>Caveat</h2>
+
+<p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So doesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
+
+<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// String x = &quot;hello&quot;;</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;hello&quot;</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
