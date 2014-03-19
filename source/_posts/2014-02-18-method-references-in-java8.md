@@ -35,12 +35,12 @@ It's talking about four types of method reference; constructor references, stati
 
 What they should have written is this.
 
-| Kind                                                        | Syntax                           | Example                  |
-|-------------------------------------------------------------|----------------------------------|--------------------------|
-| Reference to a static method                                | `Class::staticMethodName`        | `String::valueOf`
-| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `x::toString`
-| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `Object::toString`
-| Reference to a constructor                                  | `ClassName::new`                 | `String::new`
+| Kind                                                        | Syntax                           | Example                  | As Lambda                       |
+|-------------------------------------------------------------|----------------------------------|--------------------------|---------------------------------|
+| Reference to a static method                                | `Class::staticMethodName`        | `String::valueOf`        | `(s) -> String.valueOf(s);`
+| Reference to an instance method of an object (closure)      | `object::instanceMethodName`     | `x::toString`            | `() -> "hello".toString();`
+| Reference to an instance method of an object (lambda)       | `Class::instanceMethodName`      | `Object::toString`       | `(s) -> s.toString();`
+| Reference to a constructor                                  | `ClassName::new`                 | `String::new`            | `() -> new String();`
 
 
 The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a formal definition as opposed to Oracle's unhelpful distinction. If you're interested in the difference between a closure and a lambda, check out my [previous article]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures).
