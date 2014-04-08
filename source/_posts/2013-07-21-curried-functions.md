@@ -45,15 +45,6 @@ public static Function<Integer, Function<Integer, Integer>> add() {
 }
 {% endcodeblock %}
 
-In Java 8, it's much less verbose using the new lambda syntax.
-
-{% codeblock lang:java %}
-public static Function<Integer, Function<Integer, Integer>> add() {
-    return x -> y -> x + y;
-}
-{% endcodeblock %}
-
-
 Calling the original method
 
 {% codeblock lang:java %}
@@ -66,6 +57,17 @@ and calling the curried version
 add();                          // gives back a instance of Function<[A, B]>
 add().apply(1);                 // gives back a instance of Function<[A, B]>
 add().apply(1).apply(1)         // gives 2
+{% endcodeblock %}
+
+
+## Java 8
+
+In Java 8, it's much less verbose using the new lambda syntax.
+
+{% codeblock lang:java %}
+public static Function<Integer, Function<Integer, Integer>> add() {
+    return x -> y -> x + y;
+}
 {% endcodeblock %}
 
 
