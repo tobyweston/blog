@@ -6,6 +6,7 @@ comments: true
 categories: java, java8
 sidebar: false
 published: true
+series: What's new in Java 8
 keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method references in java, oracle docs"
 description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
 ---
