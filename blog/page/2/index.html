@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a &hellip;">
+  <meta name="description" content="More as a reminder to myself than anything, here&#8217;s a bunch of Git commands I fund useful. Create a branch on a remote (pushing a branch to a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-03-19 21:18:10 +0000 -->
+    <!-- last update; 2014-04-08 22:36:08 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,102 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-23T19:55:00+00:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a id="top"></a>More as a reminder to myself than anything, here&#8217;s a bunch of Git commands I fund useful.</p>
+
+<ul>
+<li><a href="/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/23/useful-git-commands/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-10T12:12:00+00:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it&#8217;s supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It&#8217;s <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven&#8217;t made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/10/stack-vs-deque/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -474,130 +570,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/22/getting-things-done-ii/">Getting Things Done, Part II</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-22T12:38:00+01:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="../../../../../images/appigo_todo.png"><img class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
-
-<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
-
-<p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/07/22/getting-things-done-ii/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/20/getting-things-done-i/">Getting Things Done, Part I</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-20T15:50:00+01:00" pubdate data-updated="true">Jul 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
-
-<p>In this first post, I&#8217;ll talk a little about Allen&#8217;s ideas, summarising the first section of the book. In the <a href="/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it&#8217;s application and the changes I made to my personal approach to <em>getting things done</em>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/07/20/getting-things-done-i/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -613,6 +585,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
@@ -654,14 +634,6 @@
         <a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/09/15/daily-standups-dont-work/">Daily Standups Don&#8217;t Work</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -695,7 +667,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
+        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
       </li>
     
       <li class="post">

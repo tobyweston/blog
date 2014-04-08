@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-03-19 21:18:10 +0000 -->
+    <!-- last update; 2014-04-08 22:36:08 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -169,13 +169,13 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>into something like this (where <code>Function1&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
+<p>into something like this (where <code>Function&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="k">new</span> <span class="n">Function1</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>                <span class="nd">@Override</span>
 </span><span class='line'>                <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>                    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
@@ -195,9 +195,19 @@
 
 <p>and calling the curried version</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function1&lt;[A, B]&gt;</span>
-</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function1&lt;[A, B]&gt;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
 </span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Java 8</h2>
+
+<p>In Java 8, it&#8217;s much less verbose using the new lambda syntax.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -239,7 +249,7 @@
 </span><span class='line'>add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int
 </span><span class='line'>
 </span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
-</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;function1&gt;
+</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;Function&gt;
 </span><span class='line'>
 </span><span class='line'>scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
 </span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2
@@ -301,7 +311,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/java8/'>java8</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
   
 </span>
 

@@ -9,7 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="If Internet Explorer 8 performs a HTTP GET against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to &hellip;">
+  <meta name="description" content="To make an assertion that an exception was thrown with JUnit, it&#8217;s fairly common to use the try/fail/catch idiom or
+the expected element of the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +93,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-03-19 21:18:10 +0000 -->
+    <!-- last update; 2014-04-08 22:36:08 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +125,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Expecting Exceptions JUnit Rule</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-27T00:00:00+01:00" pubdate data-updated="true">Mar 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>To make an assertion that an exception was thrown with JUnit, it&#8217;s fairly common to use the try/fail/catch idiom or
+the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the former,
+there is an argument that using <code>expected</code> doesn&#8217;t support all the cases you may want to test. The example being
+to perform additional testing after the exception or testing against the actual exception message.</p>
+
+<p>JUnit 4.7 introduces the next progression, a <code>@Rule</code> that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/27/expecting-exception-with-junit-rule/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/03/18/tools-for-bad-dot-robots/">Tools for bad.robots</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T15:58:00+00:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
+a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
+Rather than re-implement the same utility code again and again, I&#8217;ve started to collect things under the bad.robot
+banner. So far, we have&#8230;</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/18/tools-for-bad-dot-robots/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -481,110 +576,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-13T00:00:00+01:00" pubdate data-updated="true">Apr 13<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project&#8217;s website</p>
-
-<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
-
-<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
-since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
-and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/03/04/jdk-7-previewed/">JDK7 Previewed</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-04T00:00:00+00:00" pubdate data-updated="true">Mar 4<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded (will <a href="http://openjdk.java.net/projects/lambda/">8 see lambdas</a>?) but still has one or two interesting language features. A few that caught my eye include&#8230;</p>
-
-<h3>Type Inference on Generic Object Creation</h3>
-
-<p>Which allows a little brevity to the garrulity of the language, at least against generic object instantiation where the type can be inferred. For example,</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>can be reduced to</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Size</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Shoe</span><span class="o">&gt;&gt;</span> <span class="n">stock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/03/04/jdk-7-previewed/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -600,6 +591,14 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
@@ -641,14 +640,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
         <a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/09/15/daily-standups-dont-work/">Daily Standups Don&#8217;t Work</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -682,7 +673,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
       </li>
     
       <li class="post">
-        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
+        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
       </li>
     
       <li class="post">

@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-03-19 21:18:10 +0000 -->
+    <!-- last update; 2014-04-08 22:36:08 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -178,7 +178,7 @@
 
 <p>The recent shift to this functional style has lead to eager anticipation of JDK7 and the promise of closures. More accurately however, it&#8217;s the inclusion of <em>lambdas</em> that we&#8217;re waiting for, not <em>closures</em>. Closures have in fact been available in Java since 1.1, so what&#8217;s the difference?</p>
 
-<h3>Lambs to the Slaughter</h3>
+<h2>Lambs to the Slaughter</h2>
 
 <p>So, we want to be able to define anonymous functions on the fly, the result of the function is purely dependent on it&#8217;s arguments and this is called a lambda. Those functions that depend on external values (not just it&#8217;s arguments) are when closures come into it. The act of binding those external values to the anonymous function is referred to as <em>closure</em>. After closure, when all variables have been captured and bound to the function, the term is closed.</p>
 
@@ -227,6 +227,10 @@
 
 
 <p>Then no out of scope variables are required, the term doesn&#8217;t need to be closed. The anonymous function that is left is effectively a lambda.</p>
+
+<h2>Summary</h2>
+
+<p>A lambda will generally be more efficient that a closure as it <a href="http://mail.openjdk.java.net/pipermail/lambda-dev/2012-November/006867.html">only needs to evaluated once</a>. As a closure closes over something not in it&#8217;s environment, it has to be evaluated every time it&#8217;s called.</p>
 
 <p>What JDK7 will (finger&#8217;s crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can&#8217;t quite figure out what the example would look like in those terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
 </div>

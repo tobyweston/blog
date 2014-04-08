@@ -142,7 +142,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures/</loc>
-        <lastmod>2013-07-10T20:28:16+01:00</lastmod>
+        <lastmod>2014-04-08T19:28:50+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2010/08/15/pairing-honestly/</loc>
@@ -300,7 +300,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/07/21/curried-functions/</loc>
-        <lastmod>2013-07-22T19:52:29+01:00</lastmod>
+        <lastmod>2014-04-08T19:28:50+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/</loc>
@@ -312,7 +312,15 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/02/18/method-references-in-java8/</loc>
-        <lastmod>2014-03-19T21:11:11+00:00</lastmod>
+        <lastmod>2014-04-08T19:32:12+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8/</loc>
+        <lastmod>2014-04-08T19:54:55+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://baddotrobot.com/blog/2014/04/08/classes-vs-functions/</loc>
+        <lastmod>2014-04-08T22:33:08+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -320,7 +328,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2014-03-19T21:11:11+00:00</lastmod>
+        <lastmod>2014-04-08T22:33:08+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
@@ -340,6 +348,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2014-03-19T21:11:11+00:00</lastmod>
+        <lastmod>2014-04-08T22:33:08+01:00</lastmod>
     </url>
 </urlset>

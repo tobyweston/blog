@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tempus-fugit | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/tempus-fugit/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-03-19T21:18:10+00:00</updated>
+  <updated>2014-04-08T22:36:08+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -130,7 +130,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>The recent shift to this functional style has lead to eager anticipation of JDK7 and the promise of closures. More accurately however, it's the inclusion of <em>lambdas</em> that we're waiting for, not <em>closures</em>. Closures have in fact been available in Java since 1.1, so what's the difference?</p>
 
-<h3>Lambs to the Slaughter</h3>
+<h2>Lambs to the Slaughter</h2>
 
 <p>So, we want to be able to define anonymous functions on the fly, the result of the function is purely dependent on it's arguments and this is called a lambda. Those functions that depend on external values (not just it's arguments) are when closures come into it. The act of binding those external values to the anonymous function is referred to as <em>closure</em>. After closure, when all variables have been captured and bound to the function, the term is closed.</p>
 
@@ -184,6 +184,10 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Then no out of scope variables are required, the term doesn't need to be closed. The anonymous function that is left is effectively a lambda.</p>
+
+<h2>Summary</h2>
+
+<p>A lambda will generally be more efficient that a closure as it <a href="http://mail.openjdk.java.net/pipermail/lambda-dev/2012-November/006867.html">only needs to evaluated once</a>. As a closure closes over something not in it's environment, it has to be evaluated every time it's called.</p>
 
 <p>What JDK7 will (finger's crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can't quite figure out what the example would look like in those terms. See the <a href="http://cr.openjdk.java.net/%7Emr/lambda/straw-man/">straw man proposal</a> and see if you can figure it out!</p>
 ]]></content>
