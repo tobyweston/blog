@@ -3,7 +3,7 @@ layout: post
 title: "Currying Functions in Java & Scala"
 date: 2013-07-21 06:58
 comments: true
-categories: java scala
+categories: java scala java8
 sidebar: false
 published: true
 keywords: "curried function, partial application, java, scala, functional programming"
@@ -27,14 +27,14 @@ public static int add(int a, int b) {
 }
 {% endcodeblock %}
 
-into something like this (where `Function1<A, B>` defines a single method `B apply(A a)`).
+into something like this (where `Function<A, B>` defines a single method `B apply(A a)`).
 
 {% codeblock lang:java %}
-public static Function1<Integer, Function1<Integer, Integer>> add() {
-    return new Function1<Integer, Function1<Integer, Integer>>() {
+public static Function<Integer, Function<Integer, Integer>> add() {
+    return new Function<Integer, Function<Integer, Integer>>() {
         @Override
-        public Function1<Integer, Integer> apply(final Integer x) {
-            return new Function1<Integer, Integer>() {
+        public Function<Integer, Integer> apply(final Integer x) {
+            return new Function<Integer, Integer>() {
                 @Override
                 public Integer apply(Integer y) {
                     return x + y;
@@ -42,6 +42,14 @@ public static Function1<Integer, Function1<Integer, Integer>> add() {
             };
         }
     };
+}
+{% endcodeblock %}
+
+In Java 8, it's much less verbose using the new lambda syntax.
+
+{% codeblock lang:java %}
+public static Function<Integer, Function<Integer, Integer>> add() {
+    return x -> y -> x + y;
 }
 {% endcodeblock %}
 
@@ -55,8 +63,8 @@ add(1, 1);                       // gives 2
 and calling the curried version
 
 {% codeblock lang:java %}
-add();                          // gives back a instance of Function1<[A, B]>
-add().apply(1);                 // gives back a instance of Function1<[A, B]>
+add();                          // gives back a instance of Function<[A, B]>
+add().apply(1);                 // gives back a instance of Function<[A, B]>
 add().apply(1).apply(1)         // gives 2
 {% endcodeblock %}
 
@@ -103,7 +111,7 @@ scala> def add(x: Int)(y: Int): Int = {
 add: (x: Int)(y: Int)Int
 
 scala> add(1) _
-res1: Int => Int = <function1>
+res1: Int => Int = <Function>
 
 scala> (add(1) _).apply(1)
 res2: Int = 2
