@@ -59,11 +59,19 @@ As it's a copy, it has to be declared final to ensure that it can not be changed
 A lambda on the other hand, doesn't need to copy it's environment or _capture any terms_. This means it can be treated as a genuine function and not an instance of a class. What's the difference? Plenty.
 
 
-## Functions vs. Classes
+### Functions vs. Classes
 
 For a start, functions; [genuine functions](http://en.wikipedia.org/wiki/Pure_function), don't need to be instantiated many times. I'm not even sure if instantiation is even the right word to use when talking about allocating memory and loading a chunk of machine code as a function. The point is, once it's available, it can be re-used, it's idempotent in nature as it retains no state. Static class methods are the closest thing Java has to functions.
 
 For Java, this means that a lambda need not be instantiated every time it's evaluated which is a big deal. Unlike instantiating an anonymous class, the memory impact should be minimal.
+
+In terms of some conceptual differences then;
+
+* Classes must be instantiated, whereas functions are not.
+* When classes are newed up, memory is allocated for the object.
+* Memory need only be allocated once for functions. They are stored in the "permanent" area of the heap.
+* Objects act on their own data, functions act on unrelated data.
+* Static class methods in Java are roughly equivalent to functions.
 
 
 ## Some Concrete Differences
@@ -108,20 +116,20 @@ public class Example {
 {% endcodeblock %}
 
 
-Shadowing becomes much more straight forward to reason about.
+Shadowing also becomes much more straight forward to reason about (when referencing shadowed variables).
 
 
-### Byte Code
+### Byte Code Differences
 
-`invokedynamic`
+The other thing to note is that the byte code an anonymous class implementation produces compared to the lambda byte-code. The former will use the `invokespecial` whereas a lambda uses `invokedynamic`. The difference is about when the caller is linked to a destination; lambdas are matched at _runtime_ (`invokedynamic`) rather than compile time (`invokespecial` and `invokevirtual`).
+
+This may not seem like a big deal but the main take-away is that these instructions can be optimised by the JVM. We can expect dynamic invocations (and so lambdas) to out perform their more traditional counterparts.
+
+The `invokedynamic` instruction was originally motivated by supporting more dynamic languages on the JVM. With it, you don't need to know the types ahead of time (statically typed) and you can relax these constraints and support dynamically typed languages (like JavaScript). However, it can be used to do so much more.
+
+It links into type inference and target typing with Java 8, supporting method references (method handles), removing the need to intermediary anonymous classes, avoiding bridge methods as well as optimisation opportunities. It's introduction in Java 7 was under the radar for the mainstream but it's probably the biggest proponent to supporting Java 8 features like lambdas. It's the mechanism by which Java achieves no additional class loading when using lambdas.
 
 
 ## Summary
 
-In terms of key differences then;
-
-* Classes must be instantiated, whereas functions are not.
-* When classes are newed up, memory is allocated for the object.
-* Memory need only be allocated once for functions. They are stored in the "permanent" area of the heap.
-* Objects act on their own data, functions act on unrelated data.
-* Static class methods in Java are roughly equivalent to functions.
+So there we have it. Functions in the academic sense are very different things from anonymous classes (which we often treat like functions in Java pre-8). I find it useful to keep the distinctions in my head as I feel that I need to be able to justify the use of Java 8 lambdas in my code with more than just arguing their concise syntax. Of course, there's lots of additional advantages in using lambdas (not least the retrofit of the JDK to heavily use them), but I want to be able to respond when people say "isn't that just syntactic sugar over anonymous classes?".
