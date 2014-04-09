@@ -52,16 +52,16 @@ class WaitFor {
 
 ## Some Theoretical Differences
 
-Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see [my distinction between lambdas and closures]({{ root_url }}/2010/07/13/lambdas-vs-closures). This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of `Condition`). In our example, the `server` variable.
+Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see [my distinction between lambdas and closures]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures). This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of `Condition`). In our example, the `server` variable.
 
-As it's a copy, it has to be declared final to ensure that it can not be changed between when it's captured and when it's used. These two points in time could be very different given that often closures are used to defer execution until some later point ([lazy evaluation](http://en.wikipedia.org/wiki/Lazy_evaluation) for example). Java 8 uses a neat trick whereby if it can reason that a variable is never updated, it might as well be final so it treats it as "effectively final" and you don't need to declare it as `final` explicitly.
+As it's a copy, it has to be declared final to ensure that it can not be changed between when it's captured and when it's used. These two points in time could be very different given that closures are often used to defer execution until some later point (see [lazy evaluation](http://en.wikipedia.org/wiki/Lazy_evaluation) for example). Java 8 uses a neat trick whereby if it can reason that a variable is never updated, it might as well be final so it treats it as "effectively final" and you don't need to declare it as `final` explicitly.
 
 A lambda on the other hand, doesn't need to copy it's environment or _capture any terms_. This means it can be treated as a genuine function and not an instance of a class. What's the difference? Plenty.
 
 
 ### Functions vs. Classes
 
-For a start, functions; [genuine functions](http://en.wikipedia.org/wiki/Pure_function), don't need to be instantiated many times. I'm not even sure if instantiation is even the right word to use when talking about allocating memory and loading a chunk of machine code as a function. The point is, once it's available, it can be re-used, it's idempotent in nature as it retains no state. Static class methods are the closest thing Java has to functions.
+For a start, functions; [genuine functions](http://en.wikipedia.org/wiki/Pure_function), don't need to be instantiated many times. I'm not sure if instantiation is even the right word to use when talking about allocating memory and loading a chunk of machine code as a function. The point is, once it's available, it can be re-used, it's idempotent in nature as it retains no state. Static class methods are the closest thing Java has to functions.
 
 For Java, this means that a lambda need not be instantiated every time it's evaluated which is a big deal. Unlike instantiating an anonymous class, the memory impact should be minimal.
 
@@ -80,7 +80,7 @@ In terms of some conceptual differences then;
 
 Another difference is around capture semantics for `this`. In an anonymous class, `this` refers to the instance of the anonymous class. For example, `Foo$InnerClass` and not `Foo`. That's why you have whacky syntax like `Foo.this.x` when you refer to the enclosing scope from the anonymous class.
 
-In a lambdas on the other hand, `this` refers to the enclosing scope (`Foo` directly in our example). In fact, lambdas are **entirely lexically scoped**, meaning they don't inherit any names from a super type or introduce a new level of scoping at all; you can directly access fields, methods and local variables from the enclosing scope.
+In lambdas on the other hand, `this` refers to the enclosing scope (`Foo` directly in our example). In fact, lambdas are **entirely lexically scoped**, meaning they don't inherit any names from a super type or introduce a new level of scoping at all; you can directly access fields, methods and local variables from the enclosing scope.
 
 For example, this class shows that the lambda can reference the `firstName` variable directly.
 
@@ -121,15 +121,15 @@ Shadowing also becomes much more straight forward to reason about (when referenc
 
 ### Byte Code Differences
 
-The other thing to note is that the byte code an anonymous class implementation produces compared to the lambda byte-code. The former will use the `invokespecial` whereas a lambda uses `invokedynamic`. The difference is about when the caller is linked to a destination; lambdas are matched at _runtime_ (`invokedynamic`) rather than compile time (`invokespecial` and `invokevirtual`).
+The other thing to note is the byte code an anonymous class implementation produces compared to the lambda byte-code. The former will use the `invokespecial` whereas a lambda uses `invokedynamic`. The difference is about when the caller is linked to a destination; lambdas are matched at _runtime_ (`invokedynamic`) rather than compile time (`invokespecial` and `invokevirtual`).
 
-This may not seem like a big deal but the main take-away is that these instructions can be optimised by the JVM. We can expect dynamic invocations (and so lambdas) to out perform their more traditional counterparts.
+This may not seem like a big deal but the main take-away is that these instructions can be optimised by the JVM. We can expect dynamic invocations (and so lambdas) to out-perform their more traditional counterparts.
 
 The `invokedynamic` instruction was originally motivated by supporting more dynamic languages on the JVM. With it, you don't need to know the types ahead of time (statically typed) and you can relax these constraints and support dynamically typed languages (like JavaScript). However, it can be used to do so much more.
 
-It links into type inference and target typing with Java 8, supporting method references (method handles), removing the need to intermediary anonymous classes, avoiding bridge methods as well as optimisation opportunities. It's introduction in Java 7 was under the radar for the mainstream but it's probably the biggest proponent to supporting Java 8 features like lambdas. It's the mechanism by which Java achieves no additional class loading when using lambdas.
+It links into type inference and target typing with Java 8, supporting method references (method handles), default methods, removing the need to create intermediary anonymous instances, avoid bridge methods as well as optimisation opportunities. It's introduction in Java 7 was under the radar for the mainstream but it's probably the biggest proponent to supporting Java 8 features like lambdas. It's the mechanism by which Java achieves no additional class loading when using lambdas.
 
 
 ## Summary
 
-So there we have it. Functions in the academic sense are very different things from anonymous classes (which we often treat like functions in Java pre-8). I find it useful to keep the distinctions in my head as I feel that I need to be able to justify the use of Java 8 lambdas in my code with more than just arguing their concise syntax. Of course, there's lots of additional advantages in using lambdas (not least the retrofit of the JDK to heavily use them), but I want to be able to respond when people say "isn't that just syntactic sugar over anonymous classes?".
+So there we have it. Functions in the academic sense are very different things from anonymous classes (which we often treat like functions in Java pre-8). I find it useful to keep the distinctions in my head as I feel that I need to be able to justify the use of Java 8 lambdas in my code with more than just arguing for their concise syntax. Of course, there's lots of additional advantages in using lambdas (not least the retrofit of the JDK to heavily use them), but I want to be able to respond when people say "isn't that just syntactic sugar over anonymous classes?".
