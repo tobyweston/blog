@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Java source on Mac - bad.robot</title>
+  <title>Udemy Java 8 Course - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Getting Java source on your Mac">
-  <meta name="keywords" content="mac, java source, org/codehaus/plexus/classworlds/launcher/Launcher, maven, m2_home, mvn">
+  <meta name="description" content="Get 10% off 'What's new in Java 8' online training at Udemy">
+  <meta name="keywords" content="java 8, java, udemy, online training, training for Java 8, discounted training, training, online training, 10% off, voucher, voucher code">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2011/10/29/java-source-on-mac/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2014/05/20/udemy-course/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 class="entry-title">Java source on Mac</h1>
+        <h1 class="entry-title">Udemy Java 8 Course</h1>
       
     
     
@@ -145,60 +145,35 @@
   
 
 
-<time datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2011</time>
+<time datetime="2014-05-20T19:12:00+01:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
+<div class="entry-content"><p>I&#8217;ve just published my course on Java 8 over at <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy.com</a>, for a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with coupon code BLOG10</a>!</p>
 
-<!-- more -->
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/BOgcl5anYyI "></iframe></div>
 
-
-<ol>
-<li>Go to the <a href="https://developer.apple.com/downloads">Apple Developer Connection downloads page</a>.</li>
-<li>For Lion and above, search for <strong>Java for Mac OS X (2006-2012) Developer Package</strong>. The developer bundle includes the source whereas the regular software update version does not.</li>
-<li>For older versions (pre-Lion), search for <strong>Java for Mac OS X 10.x Developer Package</strong> where 10.x matches your version of OS X.</li>
-<li>Download and install.</li>
-<li>Open a Terminal.app window</li>
-<li><code>cd $JAVA_HOME</code> (aka <code>/System/Library/Frameworks/JavaVM.framework/Home</code>)</li>
-<li>Setup a symlink to the source archive with <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_26-b03-383.jdk/Contents/Home/src.jar</code></li>
-<li>And for the JavaDoc, <code>sudo ln -s /Library/Java/JavaVirtualMachines/1.6.0_24-b07-334.jdk/Contents/Home/docs.jar</code></li>
-<li>Now point your IDE of choice to the new source folder symlink.</li>
-</ol>
-
-
-<h2>Maven</h2>
-
-<p>Any update to Java will set things up to point to Maven 3, so if you use Maven 2, it&#8217;ll break things with</p>
-
-<pre><code>java.lang.NoClassDefFoundError: org/codehaus/plexus/classworlds/launcher/Launcher
-</code></pre>
-
-<p>Reset things by;</p>
-
-<ol>
-<li><code>cd /usr/share</code></li>
-<li><code>sudo mv maven maven.new</code> (a symlink which should incorrectly be pointing to <code>java/maven-3.0.3)</code></li>
-<li><code>sudo ln -s /maven2/install/folder maven</code></li>
-<li>run <code>mvn -version</code> to check its back up.</li>
-<li>Have a cup of tea.</li>
-</ol>
-
-
-<p>This is most likely caused because you have an <code>M2_HOME</code> set, if you&#8217;d prefer to use Maven 3, remove the Maven 2 path setting with <code>export M2_HOME=</code>.</p>
-
-<h2>Java Preferences.app</h2>
-
-<p>Prior to OS X 10.7, you could run the Java Preferences app <code>/Applications/Utilities/Java Preferences.app</code> to show your newly installed Java version. For example, after the install step above, you could check that &#8220;Java SE x (System)&#8221; was in the list.</p>
-
-<p>However, Apple have recently <a href="http://reviews.cnet.com/8301-13727_7-57533880-263/java-preferences-missing-after-latest-os-x-java-update/">removed this app</a> as they move away from in house support of Java.</p>
 </div>
 
 
   
+<h2>More in the What's new in Java 8 Series</h2>
+
+<ul>
+    
+    <li class="post"><a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a></li>
+    
+    <li class="post"><a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a></li>
+    
+    <li class="post"><a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a></li>
+    
+    <li class="post"><a href="/blog/2014/05/20/udemy-course/">Udemy Java 8 Course</a></li>
+    
+</ul>
+
   <footer>
     <p class="meta">
       
@@ -218,12 +193,12 @@
   
 
 
-<time datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2011</time>
+<time datetime="2014-05-20T19:12:00+01:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/recipes/'>recipes</a>
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/java8/'>java8</a>
   
 </span>
 
@@ -239,14 +214,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/" title="Previous Post: Reflecting on Interviewing Mistakes">&laquo; Reflecting on Interviewing Mistakes</a>
+        <a class="basic-alignment left" href="/blog/2014/04/08/classes-vs-functions/" title="Previous Post: Classes vs. Functions">&laquo; Classes vs. Functions</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/01/29/transaction-management-without/" title="next Post: Transaction Management without the Frameworks">Transaction Management without the Frameworks &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -266,7 +245,10 @@
       var disqus_shortname = 'badrobot';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2014/05/20/udemy-course/';
+        var disqus_url = 'http://baddotrobot.com/blog/2014/05/20/udemy-course/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

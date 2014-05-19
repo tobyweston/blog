@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-04-09T17:31:45+01:00</updated>
+  <updated>2014-05-19T19:48:28+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Udemy Java 8 Course]]></title>
+    <link href="http://baddotrobot.com/blog/2014/05/20/udemy-course/"/>
+    <updated>2014-05-20T19:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/05/20/udemy-course</id>
+    <content type="html"><![CDATA[<p>I've just published my course on Java 8 over at <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy.com</a>, for a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with coupon code BLOG10</a>!</p>
+
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/BOgcl5anYyI "></iframe></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Classes vs. Functions]]></title>
@@ -538,6 +549,8 @@ public void lambdaExample() {</p>
 <h2>Summary</h2>
 
 <p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing this stuff.</p>
+
+<p>If you liked this post, you might like my course on <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy</a>. For a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with this coupon</a>!</p>
 
 <h2>Caveat</h2>
 
