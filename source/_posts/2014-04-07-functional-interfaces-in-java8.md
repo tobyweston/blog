@@ -21,7 +21,7 @@ Let's run through the basic syntax.
 
 Oracle have introduced a new annotation `@FunctionalInterface` to mark an interface as such. It's basically to communicate intent but also allows the compiler to do some additional checks.
 
-For example. This interface compiles,
+For example, this interface compiles,
 
 {% codeblock lang:java %}
 public interface FunctionalInterfaceExample {
@@ -53,7 +53,7 @@ This time it's saying "multiple, non-overriding abstract methods were found". Fu
 
 What about the case of an interfaces that extends another interfaces?
 
-Lets create a new functional interface called `A` and another called `B`. `B` extends `A`. `B` is still "functional". It inherits the parents `apply` method as you'd expect.
+Let's create a new functional interface called `A` and another called `B`. `B` extends `A`. `B` is still "functional". It inherits the parents `apply` method as you'd expect.
 
 {% codeblock lang:java %}
 @FunctionalInterface
