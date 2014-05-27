@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Essential Acceptance Testing
-comments: true
+comments: false
 sharing: true
 footer: false
 sidebar: false
@@ -26,7 +26,7 @@ description: "Read my book Essential Acceptance Testing about agile testing"
 
 <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/essential_acceptance_testing/bookpage 'Essential Acceptance Testing is available on Leanpub'%}</a>
 
-My book questions the conventional acceptance testing techniques used by many teams today. It’s a Lean publishing effort. I regularly publish new chapters and listen to my readers. It's only short, something like 15,000-20,000 words.
+Essential Acceptance Testing questions the conventional acceptance testing techniques used by many teams today. It’s a Lean publishing effort. I regularly publish new chapters and listen to my readers. It's only short, something like 15,000-20,000 words.
 
 > Have traditional agile testing techniques become testing dogma? Have we adopted a cargo cult of testing? Do these techniques really help build great products? Do they help us get from concept to cash or are they holding us back?
 
