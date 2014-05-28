@@ -48,7 +48,7 @@ The beta reading period is now closed but you can still bag a copy over at <a hr
 
 This is the companion eBook to my Udemy course of the same name. If you buy the course, it's free, otherwise get [10% off the course with this link](https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10). The book is about 110 pages and 20,000 words and the course has about 2 hours of content.
 
-> Learn about the new features in Java 8 with with over 2 hours of content. Part 1 focuses on lambdas and the changes needed to Java to support them.
+> Learn about the new features in Java 8 with with over 2 hours of content. Part 1 focuses on lambdas and the changes needed in Java to support them.
 
 <form action="https://leanpub.com/purchases" method="post">
 <input type="hidden" name="book_id" value="15121" />
