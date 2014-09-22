@@ -6,7 +6,7 @@ comments: true
 categories: java java8 exception-handling scala
 sidebar: false
 series: Exception Handling
-published: false
+published: true
 keywords: "java 8, java, monads, either, scala, try, scalaz, option, monadically"
 description: "Functional languages often discourage the use of exceptions because they can subvert control execution flow; they introduce side-affects. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide system wide consistently.
 "
