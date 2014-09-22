@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve just published my course on Java 8 over at Udemy.com, for a limited time only, get 10% off with coupon code BLOG10! ">
+  <meta name="description" content="In some previous posts, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-05-28 18:55:01 +0100 -->
+    <!-- last update; 2014-09-22 20:31:07 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-21T05:12:00+01:00" pubdate data-updated="true">Sep 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In some <a href="http://baddotrobot.com/blog/categories/exceptions/">previous posts</a>, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn&#8217;t return what you wanted.</p>
+
+<p>Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">purity of function</a>. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it&#8217;s much easier to provide that system wide consistently I&#8217;ve been talking about.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/21/exceptions-as-monads/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -524,53 +569,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-24T13:57:00+01:00" pubdate data-updated="true">May 24<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There haven&#8217;t been many posts on the blog recently because I&#8217;ve been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It&#8217;s published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it&#8217;s driven by dogma rather than by a genuine testing need.</p>
-
-<p>Acceptance testing in it&#8217;s generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn&#8217;t have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
-
-<p>It also talks about when not to bother; how gaining software confidence isn&#8217;t always about testing. Fast feedback and writing software that&#8217;s cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/24/writing-my-book/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -584,6 +582,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/20/udemy-course/">Udemy Java 8 Course</a>
@@ -629,10 +631,6 @@
         <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -666,7 +664,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
+        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
       </li>
     
       <li class="post">

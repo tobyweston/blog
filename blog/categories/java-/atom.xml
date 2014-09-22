@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java, | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java-/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-05-28T18:55:01+01:00</updated>
+  <updated>2014-09-22T20:31:07+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -29,7 +29,7 @@
 
 <p>Oracle have introduced a new annotation <code>@FunctionalInterface</code> to mark an interface as such. It's basically to communicate intent but also allows the compiler to do some additional checks.</p>
 
-<p>For example. This interface compiles,</p>
+<p>For example, this interface compiles,</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
@@ -60,7 +60,7 @@
 
 <p>What about the case of an interfaces that extends another interfaces?</p>
 
-<p>Lets create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still "functional". It inherits the parents <code>apply</code> method as you'd expect.</p>
+<p>Let's create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still "functional". It inherits the parents <code>apply</code> method as you'd expect.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>

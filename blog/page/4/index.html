@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="It&#8217;s not ok to handle exceptions in an ad-hoc way. Exception handling should be a system wide concern. That means catching an exception, &hellip;">
+  <meta name="description" content="In the previous post, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-05-28 18:55:01 +0100 -->
+    <!-- last update; 2014-09-22 20:31:07 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-29T00:00:00+01:00" pubdate data-updated="true">Mar 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+
+<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/29/building-better-exceptions/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -532,51 +577,6 @@ banner. So far, we have&#8230;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-22T00:00:00+01:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of the post was that if you&#8217;re going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what&#8217;s important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
-
-<p>Mocking Log4J however can be a real pain. I&#8217;ve managed it in the past using Apache&#8217;s logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/06/22/loggin-is-still-evil-but/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -592,6 +592,10 @@ banner. So far, we have&#8230;</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/20/udemy-course/">Udemy Java 8 Course</a>
@@ -637,10 +641,6 @@ banner. So far, we have&#8230;</p>
         <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -674,7 +674,7 @@ banner. So far, we have&#8230;</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
+        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
       </li>
     
       <li class="post">

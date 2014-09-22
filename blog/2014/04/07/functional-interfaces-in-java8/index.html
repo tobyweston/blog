@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-05-28 18:55:01 +0100 -->
+    <!-- last update; 2014-09-22 20:31:07 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,7 +163,7 @@
 
 <p>Oracle have introduced a new annotation <code>@FunctionalInterface</code> to mark an interface as such. It&#8217;s basically to communicate intent but also allows the compiler to do some additional checks.</p>
 
-<p>For example. This interface compiles,</p>
+<p>For example, this interface compiles,</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
@@ -194,7 +194,7 @@
 
 <p>What about the case of an interfaces that extends another interfaces?</p>
 
-<p>Lets create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still &#8220;functional&#8221;. It inherits the parents <code>apply</code> method as you&#8217;d expect.</p>
+<p>Let&#8217;s create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still &#8220;functional&#8221;. It inherits the parents <code>apply</code> method as you&#8217;d expect.</p>
 
 <figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>

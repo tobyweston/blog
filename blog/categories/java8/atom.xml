@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-05-28T18:55:01+01:00</updated>
+  <updated>2014-09-22T20:31:07+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Dealing with Exceptions as Monads]]></title>
+    <link href="http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads/"/>
+    <updated>2014-09-21T05:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads</id>
+    <content type="html"><![CDATA[<p>In some <a href="http://baddotrobot.com/blog/categories/exceptions/">previous posts</a>, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.</p>
+
+<p>Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">purity of function</a>. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide that system wide consistently I've been talking about.</p>
+
+<!-- more -->
+
+
+<h2>Object-Oriented</h2>
+
+<p><strong><em>The norm for object oriented code is to use exceptions to control execution flow.</em></strong> When you have a method that can return <code>true</code> or <code>false</code> <em>and</em> throw an exception, it might as well be returning three things. It forces clients to have to reason about logic that has nothing to do with the function of the method. It's complicated and often makes it hard to treat exceptions consistently across the entire application.</p>
+
+<h2>Functional</h2>
+
+<p><strong><em>So what can we learn from functional programing languages?</em></strong> Exceptions are a fact of life, unexpected things can happen with your code and you still need to deal with them. The subtlety here is that functional languages emphasize the <em>unexpected</em> part with exceptions. They try and discourage you from using exceptions for dealing with known branches of logic and instead use them like Java uses <code>Error</code>s (ie as non-recoverable). This means thinking of exceptions of <em>exceptional behaviour</em> and not Java's notion of checked <code>Exceptions</code>.</p>
+
+<p><strong><em>So how do languages like Scala discourage you using them like Java?</em></strong> They usually offer alternative mechanisms. Scala for example has the <a href="http://www.scala-lang.org/api/2.11.1/#scala.util.Either"><code>Either</code></a> and <a href="http://www.scala-lang.org/api/2.11.1/#scala.util.Try"><code>Try</code></a> classes. These classes allow you to express using the type system, that a method was successful or unsuccessful, independently from the return value. As an additional bonus, because they are <a href="http://debasishg.blogspot.co.uk/2008/03/monads-another-way-to-abstract.html">monadic</a>, you can deal with exceptional and expected behaviour consistently in code. That means you can use the same structures to process the positive and the negative case without resorting to <code>catch</code> blocks.</p>
+
+<h2>Either in Java</h2>
+
+<p>For example, let's say we have a method <code>uploadExpenses</code> that uploads this months expenses to my online accountant's web service. It uploads a single expense at a time, so it could fail because of some network problem or if the web service rejects an individual <code>Expense</code>. Once done, I'd like to produce a report (just using <code>System.out</code> in our example).</p>
+
+<h3>Traditional Exception Throwing</h3>
+
+<p>In a traditional exception throwing version below, the <code>uploadExpenses</code> call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">appropriate system boundary</a> but dealing with exceptions consistently for the entire system is a real challenge.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
+</span><span class='line'><span class="n">Expenses</span> <span class="n">uploaded</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">()));</span>    <span class="c1">// &amp;lt;- can throw exceptions</span>
+</span><span class='line'><span class="n">uploaded</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">e</span><span class="o">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">));</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">HttpProblem</span> <span class="n">e</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// what to do?</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DuplicateExpenseFound</span> <span class="n">e</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// what to do?</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Using Eithers</h3>
+
+<p>On the other hand, if we use an <code>Either</code> we can make the <code>uploadExpenses</code> call return <em>either</em> a successfully upload <code>Expense</code> or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
+</span><span class='line'><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Either</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;,</span> <span class="n">Expense</span><span class="o">&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">());&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;&gt;</span> <span class="n">failures</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">left</span><span class="o">());</span>
+</span><span class='line'><span class="n">failures</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">failure</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">failure</span><span class="o">));&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">successes</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">right</span><span class="o">());</span>
+</span><span class='line'><span class="n">successes</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">success</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">success</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently. For a naive implementation, have a look at my <a href="https://gist.github.com/tobyweston/caefc3b5ec36348387e5">gist</a> and for fuller implementations, see <a href="https://github.com/scala/scala/blob/2.11.x/src/library/scala/util/Either.scala">Scala's version</a> or the <a href="https://code.google.com/p/totallylazy/source/browse/src/com/googlecode/totallylazy/Either.java">TotallyLazy</a> and <a href="https://functionaljava.ci.cloudbees.com/job/master/javadoc/fj/data/Either.html">Functional Java</a> versions in Java.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Udemy Java 8 Course]]></title>
@@ -176,7 +244,7 @@
 
 <p>Oracle have introduced a new annotation <code>@FunctionalInterface</code> to mark an interface as such. It's basically to communicate intent but also allows the compiler to do some additional checks.</p>
 
-<p>For example. This interface compiles,</p>
+<p>For example, this interface compiles,</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
@@ -207,7 +275,7 @@
 
 <p>What about the case of an interfaces that extends another interfaces?</p>
 
-<p>Lets create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still "functional". It inherits the parents <code>apply</code> method as you'd expect.</p>
+<p>Let's create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still "functional". It inherits the parents <code>apply</code> method as you'd expect.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
@@ -565,153 +633,6 @@ function(() -&gt; "hello".toString());
 
 <p>}
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Currying Functions in Java & Scala]]></title>
-    <link href="http://baddotrobot.com/blog/2013/07/21/curried-functions/"/>
-    <updated>2013-07-21T06:58:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2013/07/21/curried-functions</id>
-    <content type="html"><![CDATA[<p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
-
-<p>You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action.</p>
-
-<!-- more -->
-
-
-<h2>Java</h2>
-
-<p>For example, in Java, you can convert</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>into something like this (where <code>Function&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="nd">@Override</span>
-</span><span class='line'>            <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">};</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">};</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Calling the original method</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>and calling the curried version</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&amp;lt;[A, B]&gt;</span>
-</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function&amp;lt;[A, B]&gt;</span>
-</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h2>Java 8</h2>
-
-<p>In Java 8, it's much less verbose using the new lambda syntax.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">x</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">y</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h2>Scala</h2>
-
-<p>In Scala, the regular uncurried function would look like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>As Scala supports curried functions, you can turn this into it's curried version simply by separating out the arguments.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// shorthand</span>
-</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Which is shorthand for writing it out like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// longhand</span>
-</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Using the REPL to show how they're called;</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt; |   x + y
-</span><span class='line'> | <span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
-</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;Function&gt;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;scala&gt; add<span class="o">(</span>1<span class="o">)(</span>1<span class="o">)</span>
-</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>and working with the longhand version;</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt; |   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
-</span><span class='line'> |     x + y
-</span><span class='line'> |   <span class="o">}</span>
-</span><span class='line'> | <span class="o">}</span>
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;add2: <span class="o">(</span>x: Int<span class="o">)</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;scala&gt; add2<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.</p>
-
-<h2>More Information</h2>
-
-<ul>
-<li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
-<li><a href="http://www.codecommit.com/blog/scala/function-currying-in-scala">Function Currying in Scala</a></li>
-<li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

@@ -9,8 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
-Java Tech Journal &hellip;">
+  <meta name="description" content="In a previous post, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -93,7 +92,7 @@ Java Tech Journal &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-05-28 18:55:01 +0100 -->
+    <!-- last update; 2014-09-22 20:31:07 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -125,6 +124,51 @@ Java Tech Journal &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-22T00:00:00+01:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of the post was that if you&#8217;re going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what&#8217;s important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
+
+<p>Mocking Log4J however can be a real pain. I&#8217;ve managed it in the past using Apache&#8217;s logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/22/loggin-is-still-evil-but/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -567,57 +611,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/06/17/objectives/">Objectives</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-17T00:00:00+01:00" pubdate data-updated="true">Jun 17<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It&#8217;s objective setting time for the guys at work. Aligning what&#8217;s really good for you with what&#8217;s good for the company shouldn&#8217;t be difficult, right? Your generally heading in the same direction and have similar interests at heart. Why then do we end up with generic meaningless objectives like &#8220;attend a XXX course&#8221;? I think you can get the most out of the objective setting exercise by thinking about what you want <em>personally</em> out of your career, don&#8217;t settle for the bland, phrase your objectives so there is real value in them. So, if the company think of them in terms of</p>
-
-<blockquote><p>S.M.A.R.T</p></blockquote>
-
-<p>I like the think of them as</p>
-
-<blockquote><p>S.M.A.R.T.Y</p></blockquote>
-
-<p>Where the Y is all about <strong>YOU</strong>; make it personal.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/06/17/objectives/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -633,6 +626,10 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/05/20/udemy-course/">Udemy Java 8 Course</a>
@@ -678,10 +675,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
         <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -715,7 +708,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
       </li>
     
       <li class="post">
-        <a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a>
+        <a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a>
       </li>
     
       <li class="post">
