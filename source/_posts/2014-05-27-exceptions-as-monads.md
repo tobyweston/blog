@@ -55,6 +55,6 @@ List<Either<Pair<Expense, Throwable>, Expense>> results = uploadExpenses(expense
 Stream<Pair<Expense, Throwable>> failures = results.stream().flatMap(either -> either.left());
 failures.forEach(failure -> System.out.println(failure));
 
-Stream<A> successes = results.stream().flatMap(either -> either.right());
+Stream<Expense> successes = results.stream().flatMap(either -> either.right());
 successes.forEach(success -> System.out.println(success));
 {% endcodeblock %}
