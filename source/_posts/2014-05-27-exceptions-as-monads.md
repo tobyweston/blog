@@ -33,30 +33,27 @@ For example, let's say we have a method `uploadExpenses` that uploads this month
 
 In a traditional exception throwing version below, the `uploadExpenses` call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exception. If other code depends on this, it may make sense to propagate the exception to an [appropriate system boundary](http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/) but dealing with exceptions consistently for the entire system is a real challenge. 
 
-{% codeblock lang:java %}
-try {
-    List<Expense> expenses = ...
-    Expenses uploaded = uploadExpenses(expenses).collect(toList()));    // <- can throw exceptions
-    uploaded.forEach((e) -> System.out.println(e));
-} catch (HttpProblem e) {
-    // what to do?
-} catch (DuplicateExpenseFound e) {
-    // what to do?  
-}
-{% endcodeblock %}
+    try {
+        List<Expense> expenses = ...
+        Expenses uploaded = uploadExpenses(expenses).collect(toList()));    // <- can throw exceptions
+        uploaded.forEach((e) -> System.out.println(e));
+    } catch (HttpProblem e) {
+        // what to do?
+    } catch (DuplicateExpenseFound e) {
+        // what to do?  
+    }
 
 
 On the other hand, if we use an `Either` we can make the `uploadExpenses` call return _either_ a successfully upload `Expense` or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.
 
-{% codeblock lang:java %}
-List<Expense> expenses = ...
-List<Either<Pair<Expense, Throwable>, Expense>> results = uploadExpenses(expenses).collect(toList());
 
-Stream<Pair<Expense, Throwable>> failures = results.stream().flatMap(either -> either.left());
-failures.forEach(failure -> System.out.println(failure));
-
-Stream<Expense> successes = results.stream().flatMap(either -> either.right());
-successes.forEach(success -> System.out.println(success));
-{% endcodeblock %}
+    List<Expense> expenses = ...
+    List<Either<Pair<Expense, Throwable>, Expense>> results = uploadExpenses(expenses).collect(toList());
+    
+    Stream<Pair<Expense, Throwable>> failures = results.stream().flatMap(either -> either.left());
+    failures.forEach(failure -> System.out.println(failure));
+    
+    Stream<Expense> successes = results.stream().flatMap(either -> either.right());
+    successes.forEach(success -> System.out.println(success));
 
 In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently.
