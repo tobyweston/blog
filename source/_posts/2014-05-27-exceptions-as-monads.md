@@ -58,3 +58,5 @@ failures.forEach(failure -> System.out.println(failure));
 Stream<Expense> successes = results.stream().flatMap(either -> either.right());
 successes.forEach(success -> System.out.println(success));
 {% endcodeblock %}
+
+In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently.
