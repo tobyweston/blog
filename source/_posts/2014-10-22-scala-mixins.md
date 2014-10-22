@@ -10,13 +10,15 @@ keywords: "scala, trait, mixin, ruby"
 description: "Avoid the inheritance vs. composition argument by using mixin traits in the right way. Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle, so when is a trait with behaviour a genuine mixin? Find out in this post."
 ---
 
-Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science)) **and** to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here as one uses inheritance and the other is more about code re-use. So when a Scala class extends a trait with behaviour, does it go against the generally accepted view that using inheritance as a mechanism for [code re-use is bad idea](http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/). Scala seems to want to encourage me to break the [Inheritance vs. Composition](http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits) principle.
+Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science)) **and** to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for [code re-use is bad idea](http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/). 
+
+Scala seems to want to encourage me to break the [Inheritance vs. Composition](http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits) principle. There must be a right way and a wrong way.
 
 <!-- more -->
 
 ## Mixins the Wrong Way
 
-Odersky calls traits with behaviour "mixin traits" but I feel like to be a genuine mixin trait, it should be _used_ to mixin behaviour and not as something to extend. Test fixture code is a good example.
+Odersky calls traits with behaviour "mixin traits". I feel like to be a genuine mixin trait, it should be _used_ to mixin behaviour and not as something to extend. Test fixture code is a good example.
 
 Let's say that you have a repository style class who's API talks about business operations, a `Customers` class for example. You might have an Oracle backed version and you don't want anything going in behind your back and messing with the data; everything in production code should go through your API.
 
