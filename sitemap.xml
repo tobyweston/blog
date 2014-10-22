@@ -328,7 +328,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads/</loc>
-        <lastmod>2014-09-22T20:23:49+01:00</lastmod>
+        <lastmod>2014-10-22T19:21:29+01:00</lastmod>
+    </url>
+    <url>
+        <loc>http://baddotrobot.com/blog/2014/09/22/scala-mixins/</loc>
+        <lastmod>2014-10-22T19:58:02+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -336,7 +340,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2014-09-22T20:23:49+01:00</lastmod>
+        <lastmod>2014-10-22T19:58:02+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
@@ -356,6 +360,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2014-09-22T20:23:49+01:00</lastmod>
+        <lastmod>2014-10-22T19:58:02+01:00</lastmod>
     </url>
 </urlset>

@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to maven central repository. oh, I should mention&#8230; tempus-fugit represents two things to me &hellip;">
+  <meta name="description" content="I had an interesting time getting a couple of tests running for tempus-fugit recently. It threw up a couple of interesting aspects about using &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-09-22 20:31:07 +0100 -->
+    <!-- last update; 2014-10-22 19:59:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true">Dec 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -570,57 +631,6 @@ balanced view.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/02/23/infering-type-in-micro-dsl/">Inferring the Types in a Micro DSL</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-02-23T00:00:00+00:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a recent <a href="/blog/2009/02/16/more-on-micro-dsls/">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
-
-<p>Just to recap then, to find something in a list, the original client code (using a static import) looks like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/02/23/infering-type-in-micro-dsl/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -636,6 +646,10 @@ balanced view.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
@@ -679,10 +693,6 @@ balanced view.</p>
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
   </ul>

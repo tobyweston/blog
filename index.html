@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In some previous posts, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing &hellip;">
+  <meta name="description" content="Scala traits are interesting because they can be used for inclusion polymorphism and to mixin behaviour. I&#8217;ve found tension here though, as the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-09-22 20:31:07 +0100 -->
+    <!-- last update; 2014-10-22 19:59:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-22T06:09:00+01:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Scala traits are interesting because they can be used for <a href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science">inclusion polymorphism</a> <em>and</em> to <a href="http://en.wikipedia.org/wiki/Mixin">mixin</a> behaviour. I&#8217;ve found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use <a href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">is a bad idea</a>.</p>
+
+<p>It can be tricky not break the <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits">inheritance vs. composition</a> principle when using traits with behaviour. Is it clear to you when you might be?</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/22/scala-mixins/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -524,51 +569,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
-
-<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/01/optimum-number-of-threads/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -582,6 +582,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
@@ -625,10 +629,6 @@
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
   </ul>

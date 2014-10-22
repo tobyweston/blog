@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In the previous post, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your &hellip;">
+  <meta name="description" content="We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-09-22 20:31:07 +0100 -->
+    <!-- last update; 2014-10-22 19:59:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
+
+<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
+
+<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -532,51 +579,6 @@ banner. So far, we have&#8230;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true">Aug 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
-
-<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/29/catching-multiple-exceptions-and/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -592,6 +594,10 @@ banner. So far, we have&#8230;</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
@@ -635,10 +641,6 @@ banner. So far, we have&#8230;</p>
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
   </ul>

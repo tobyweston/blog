@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Although OAuth is intended for web, mobile and desktop applications, I&#8217;ve been finding the protocol clunky when accessing a web application &hellip;">
+  <meta name="description" content="In the previous post, we walked through requesting &#8220;authorisation&#8221; from FreeAgent using OAuth. In this next post, we&#8217;ll look at the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-09-22 20:31:07 +0100 -->
+    <!-- last update; 2014-10-22 19:59:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-12T11:13:00+01:00" pubdate data-updated="true">Aug 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting &#8220;authorisation&#8221; from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we&#8217;ll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/12/oauth-and-http-part-ii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -559,53 +602,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true">Mar 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
-
-<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
-
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -621,6 +617,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
@@ -664,10 +664,6 @@
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
   </ul>

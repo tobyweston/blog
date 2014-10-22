@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I was recently talking about what I call micro DSLs and I thought I&#8217;d follow up with another example. So, another example of a micro DSL I &hellip;">
+  <meta name="description" content="In a recent post, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-09-22 20:31:07 +0100 -->
+    <!-- last update; 2014-10-22 19:59:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/02/23/infering-type-in-micro-dsl/">Inferring the Types in a Micro DSL</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-23T00:00:00+00:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In a recent <a href="/blog/2009/02/16/more-on-micro-dsls/">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
+
+<p>Just to recap then, to find something in a list, the original client code (using a static import) looks like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/02/23/infering-type-in-micro-dsl/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -817,70 +868,6 @@ Stack trace:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/17/junit-and-threaded-tests-i-recently/">JUnit and Threaded Tests</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-12-17T00:00:00+00:00" pubdate data-updated="true">Dec 17<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">exaple</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isDaemon</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">NON_DAEMON</span><span class="o">));</span>
-</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method finishes it somehow messes with the threads&#8230;</p>
-
-<p>Looking into things, it seems in my case that naughty Eclipse is muddying the water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java process. Even if we changed the daemon status of the thread, you&#8217;d get the same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
-
-<p>So, in some situations it is possible to kill a thread in a JUnit test bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ actually seems to have the same behaviour but I can&#8217;t review to source to confirm.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -896,6 +883,10 @@ Stack trace:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
@@ -939,10 +930,6 @@ Stack trace:
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
       </li>
     
   </ul>

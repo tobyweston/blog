@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-09-22T20:31:07+01:00</updated>
+  <updated>2014-10-22T19:59:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,131 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scala Mixins: The Right Way]]></title>
+    <link href="http://baddotrobot.com/blog/2014/09/22/scala-mixins/"/>
+    <updated>2014-09-22T06:09:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/09/22/scala-mixins</id>
+    <content type="html"><![CDATA[<p>Scala traits are interesting because they can be used for <a href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science">inclusion polymorphism</a> <em>and</em> to <a href="http://en.wikipedia.org/wiki/Mixin">mixin</a> behaviour. I&#8217;ve found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use <a href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">is a bad idea</a>.</p>
+
+<p>It can be tricky not break the <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits">inheritance vs. composition</a> principle when using traits with behaviour. Is it clear to you when you might be?</p>
+
+<!-- more -->
+
+
+<h2>Mixins the Wrong Way</h2>
+
+<p><a href="https://www.amazon.co.uk/Programming-Scala-Martin-Odersky/dp/0981531644/ref=as_sl_pc_ss_til?tag=baddotrobotco-21&amp;linkCode=w01&amp;linkId=DNXSQPP4AVLACD7U&amp;creativeASIN=0981531644">Odersky</a> calls traits with behaviour &#8220;mixin traits&#8221;. To be a genuine mixin trait, it should be used to mixin behaviour and not just something you inherit from. But what&#8217;s the difference? Let&#8217;s look at an example.</p>
+
+<p>Let&#8217;s say that you have a <a href="http://martinfowler.com/eaaCatalog/repository.html">repository</a> style class who&#8217;s API talks about business operations, a <code>Customers</code> class for example. You might have an database backed version and you don&#8217;t want anything going behind your back and messing with the data; everything in production code should go through your business API.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">customer</span><span class="k">:</span> <span class="kt">Customer</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">getCustomer</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">CustomerId</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">getBasketValue</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">ship</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let&#8217;s say that you want a test fixture to allow you to quickly setup test data in your <code>Customers</code> without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &lt;- bad name, this is really a &quot;fixture&quot;</span>
+</span><span class='line'>    <span class="k">abstract</span> <span class="k">val</span> <span class="n">customers</span><span class="k">:</span> <span class="kt">Customers</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>        <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomDiscountedCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithEmptyBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">())</span>
+</span><span class='line'>        <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomExpiredCustomer</span><span class="o">())</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This says that extending classes must provide a value for <code>customers</code>. It implements some coarse grained test setup against <code>customers</code>. So when writing a test, it&#8217;s easy to just extend the trait and slot in an implementation of <code>customers</code>. For example an <code>InMemoryCustomers</code> or an Oracle implementation that by-passes any constraint checking the proper API might enforce.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">override</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">application</span> <span class="k">=</span> <span class="nc">ApplicationBuilder</span><span class="o">.</span><span class="k">with</span><span class="o">(</span><span class="n">customers</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">test</span><span class="o">(</span><span class="s">&quot;ensure basket totals are correct when discounts are applied&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>
+</span><span class='line'>        <span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>
+</span><span class='line'>        <span class="n">result</span> <span class="n">should</span> <span class="n">be</span><span class="o">(</span><span class="n">asExpected</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But we&#8217;re saying here that an <code>OracleCustomerTest</code> <em>is a</em> <code>BackdoorCustomers</code>. That doesn&#8217;t even make sense. There&#8217;s no strong notion of a <code>BackdoorCustomers</code>; it&#8217;s not a meaningful <em>noun</em>. Best case scenario, you&#8217;re upfront about the fact that it&#8217;s a fixture and rename <code>BackdoorCustomers</code> to <code>CustomersTestFixture</code> but even then, the <em>test</em> is not a <em>fixture</em>, the two are independent. <strong>One is test apparatus that supports the test, the other is the test or experiment itself</strong>.</p>
+
+<p>It&#8217;s tempting to use traits like this under the pretense of &#8220;mixing in&#8221; behaviour but you&#8217;re really inheriting behaviour from something (that in our case) isn&#8217;t related. You&#8217;re precluding any type of substitution or inclusion polymorphism. Now arguably, substitution isn&#8217;t of great value in test code like this but it&#8217;s still a laudable goal.</p>
+
+<h2>Proper Mixins</h2>
+
+<p>Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle. So just when is a trait with behaviour a genuine mixin? The trick is in <em>how</em> we mix it in. Before, we made the <em>types</em> inherit the trait but we could have mixed the trait into a specific <em>instance</em>.</p>
+
+<p>For example, we can rework our trait to be a self type.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this:</span> <span class="kt">Customers</span> <span class="o">=&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>        <span class="n">add</span><span class="o">(</span><span class="nc">RandomDiscountedCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithEmptyBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">())</span>
+</span><span class='line'>        <span class="n">add</span><span class="o">(</span><span class="nc">RandomExpiredCustomer</span><span class="o">())</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It now enforces implementers to also be a sub-type of <code>Customers</code>. This, in turn, forces us to rewrite the test</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">private</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">private</span> <span class="k">val</span> <span class="n">application</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ApplicationBuilder</span><span class="o">.</span><span class="k">with</span><span class="o">(</span><span class="n">customers</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">test</span><span class="o">(</span><span class="s">&quot;ensure basket totals are correct when discounts are applied&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it&#8217;s much cleaner. We use composition to give the test a <code>customers</code> instance but this time, we treat it as two things. The actual type of the thing is;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So all the backdoor methods work along with the API methods but now we can clearer about which is which. For example,</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &lt;- a backdoor &quot;fixture&quot; method</span>
+</span><span class='line'><span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>    <span class="c1">// &lt;- more likely to be the method under test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p>Scala is both an object-oriented language and a functional language. So unless your team is entirely behind doing things functionally, you&#8217;re still going to come across object-oriented thinking and principles. Traits that have behaviour make it awkward because functionally-thinking, you could argue that nouns aren&#8217;t important and behaviour in traits is just behaviour. So why not extend that behaviour by whatever means (including inheritance)?</p>
+
+<p>Because Scala <em>has objects</em> you can&#8217;t really just ignore object-oriented semantics and thinking. Not unless, like I say, the entire team buy into functional only code. If that were the case, then reusable behaviour should really be represented as functions on <a href="http://tutorials.jenkov.com/scala/singleton-and-companion-objects.html">Scala singleton objects</a> and not traits. You&#8217;d be forced to use composition anyway.</p>
+
+<p>By that logic, it feels like extending traits for re-use in a functional programming context is just lazy. Mixing behaviour &#8220;the right way&#8221; seems much less contentious.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dealing with Exceptions as Monads]]></title>
@@ -1570,109 +1695,6 @@ grant_type=refresh_token&amp;refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part II)]]></title>
-    <link href="http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii/"/>
-    <updated>2012-08-12T11:13:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii</id>
-    <content type="html"><![CDATA[<p>In the <a href="http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting &#8220;authorisation&#8221; from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we&#8217;ll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
-
-<!-- more -->
-
-
-<h2>After Authorisation</h2>
-
-<p>Once you&#8217;ve got the <em>authorisation code</em> but before actually being able to access target resources, you need to exchange the code for an <em>access token</em>. If you don&#8217;t know what I&#8217;m talking about in terms of authorisation, refer back to the <a href="http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i">previous post</a>.</p>
-
-<p>To request the access token, you make a HTTP <code>POST</code> to the <em>token endpoint</em>. The request should give you back a <em>temporary</em> token which is required in <em>every subsequent</em> request to the target resources.</p>
-
-<h2>Access Token Request</h2>
-
-<p>The HTTP <code>POST</code> for FreeAgent requires <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">basic auth</a> using <em>client id</em> and <em>client secret</em> as the username and password. That means supplying a <code>Authorization</code> header with base 64 encoded username and password, separated by a colon. So,</p>
-
-<pre><code>client_id:client_secret
-</code></pre>
-
-<p>Should be encoded and sent over in the header. It&#8217;ll look something like this.</p>
-
-<pre><code>Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-</code></pre>
-
-<p>The <code>POST</code> body should include the following <a href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes">x-www-form-urlencoded</a> parameters.</p>
-
-<ul>
-<li><code>grant_type=authorization_code</code></li>
-<li><code>code=</code>the authorisation code (see <a href="http://baddotrobot.com/blog/2012/08/11/oauth-and-http-part-i">previous post</a>)</li>
-<li><code>redirect_uri=</code>your redirect URI</li>
-</ul>
-
-
-<p>FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a <code>GET</code> request.</p>
-
-<p>The request should also include an <code>Accept</code> header of <code>application/xml</code> or <code>application/json</code>.</p>
-
-<h2>The Request</h2>
-
-<p>So, an example request would look like this.</p>
-
-<pre><code>POST /v2/token_endpoint HTTP/1.1
-Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-Accept: application/json
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Java/1.6.0_33
-Host: api.freeagent.com
-Connection: close
-Content-Length: 127
-
-grant_type=authorization_code&amp;code=12P3AsFZXwXjd7SLOE1dsaX8oCgix&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth
-</code></pre>
-
-<h2>The Response</h2>
-
-<p>Which should give back a response similar to below</p>
-
-<pre><code>HTTP/1.1 200 OK
-Server: nginx/1.0.14
-Date: Sat, 11 Aug 2012 17:35:19 GMT
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Connection: close
-Status: 200 OK
-Cache-Control: no-store
-Pragma: no-cache
-ETag: "6eabf5cd4b391a5d7e6e0ded90e73d7b"
-X-UA-Compatible: IE=Edge,chrome=1
-X-Runtime: 0.283021
-X-Rev: 9301db5
-X-Host: web4
-
-{
-   "access_token":"1GwfYDOaz_rG352X-gf88aBUasP5QrG9FSasfiD13",
-   "token_type":"bearer",
-   "expires_in":604800,
-   "refresh_token":"2sdf35SFdisaa1g-x1-MaBsdHsdO7ssgZfsSRhUVsjU"
-}
-</code></pre>
-
-<h2>Using the Access Token</h2>
-
-<p>To make fully authenticated calls to the target system, every request is made using the <em>access token</em>. Therefore, it must be extracted from the response above and stashed in your application. All that&#8217;s left to do is pass this through on every request to a protected resource.</p>
-
-<p>In FreeAgent&#8217;s case, the token should be supplied in the <code>Authorization</code> header.</p>
-
-<pre><code>Authorization: Bearer 1GwfYDOaz_rG35SSgf8y8aBUasP5QrG9FSasfiD13
-</code></pre>
-
-<h2>Refreshing the Access Token</h2>
-
-<p>The access token will eventually expire (FreeAgent have set it to expire in seven days but this may change). To refresh the FreeAgent token, you send a similar <code>POST</code> request to the access token request with a few minor differences. See the <a href="https://dev.freeagent.com/docs/oauth#refreshing-the-access-token">FreeAgent documentation</a> for details.</p>
-
-<h2>Next Up</h2>
-
-<p>That&#8217;s about it for now. Hopefully its been useful. If there&#8217;s interest, I may continue the series and post an extended example using raw HTTP to interact with FreeAgent (not using an OAuth library). Let me know.</p>
 ]]></content>
   </entry>
   

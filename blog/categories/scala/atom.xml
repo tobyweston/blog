@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-09-22T20:31:07+01:00</updated>
+  <updated>2014-10-22T19:59:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,137 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scala Mixins: The Right Way]]></title>
+    <link href="http://baddotrobot.com/blog/2014/09/22/scala-mixins/"/>
+    <updated>2014-09-22T06:09:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/09/22/scala-mixins</id>
+    <content type="html"><![CDATA[<p>Scala traits are interesting because they can be used for <a href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science">inclusion polymorphism</a> <em>and</em> to <a href="http://en.wikipedia.org/wiki/Mixin">mixin</a> behaviour. I've found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use <a href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">is a bad idea</a>.</p>
+
+<p>It can be tricky not break the <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits">inheritance vs. composition</a> principle when using traits with behaviour. Is it clear to you when you might be?</p>
+
+<!-- more -->
+
+
+<h2>Mixins the Wrong Way</h2>
+
+<p><a href="https://www.amazon.co.uk/Programming-Scala-Martin-Odersky/dp/0981531644/ref=as_sl_pc_ss_til?tag=baddotrobotco-21&amp;linkCode=w01&amp;linkId=DNXSQPP4AVLACD7U&amp;creativeASIN=0981531644">Odersky</a> calls traits with behaviour "mixin traits". To be a genuine mixin trait, it should be used to mixin behaviour and not just something you inherit from. But what's the difference? Let's look at an example.</p>
+
+<p>Let's say that you have a <a href="http://martinfowler.com/eaaCatalog/repository.html">repository</a> style class who's API talks about business operations, a <code>Customers</code> class for example. You might have an database backed version and you don't want anything going behind your back and messing with the data; everything in production code should go through your business API.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">customer</span><span class="k">:</span> <span class="kt">Customer</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="k">def</span> <span class="n">getCustomer</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">CustomerId</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="k">def</span> <span class="n">getBasketValue</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="k">def</span> <span class="n">ship</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now let's say that you want a test fixture to allow you to quickly setup test data in your <code>Customers</code> without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &amp;lt;- bad name, this is really a &quot;fixture&quot;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">abstract</span> <span class="k">val</span> <span class="n">customers</span><span class="k">:</span> <span class="kt">Customers</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>    <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomDiscountedCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="n">addSomeCustomersWithEmptyBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">())</span>
+</span><span class='line'>    <span class="n">customers</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="nc">RandomExpiredCustomer</span><span class="o">())</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This says that extending classes must provide a value for <code>customers</code>. It implements some coarse grained test setup against <code>customers</code>. So when writing a test, it's easy to just extend the trait and slot in an implementation of <code>customers</code>. For example an <code>InMemoryCustomers</code> or an Oracle implementation that by-passes any constraint checking the proper API might enforce.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">override</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">application</span> <span class="k">=</span> <span class="nc">ApplicationBuilder</span><span class="o">.</span><span class="k">with</span><span class="o">(</span><span class="n">customers</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">test</span><span class="o">(</span><span class="s">&quot;ensure basket totals are correct when discounts are applied&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>
+</span><span class='line'>    <span class="n">result</span> <span class="n">should</span> <span class="n">be</span><span class="o">(</span><span class="n">asExpected</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>But we're saying here that an <code>OracleCustomerTest</code> <em>is a</em> <code>BackdoorCustomers</code>. That doesn't even make sense. There's no strong notion of a <code>BackdoorCustomers</code>; it's not a meaningful <em>noun</em>. Best case scenario, you're upfront about the fact that it's a fixture and rename <code>BackdoorCustomers</code> to <code>CustomersTestFixture</code> but even then, the <em>test</em> is not a <em>fixture</em>, the two are independent. <strong>One is test apparatus that supports the test, the other is the test or experiment itself</strong>.</p>
+
+<p>It's tempting to use traits like this under the pretense of "mixing in" behaviour but you're really inheriting behaviour from something (that in our case) isn't related. You're precluding any type of substitution or inclusion polymorphism. Now arguably, substitution isn't of great value in test code like this but it's still a laudable goal.</p>
+
+<h2>Proper Mixins</h2>
+
+<p>Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle. So just when is a trait with behaviour a genuine mixin? The trick is in <em>how</em> we mix it in. Before, we made the <em>types</em> inherit the trait but we could have mixed the trait into a specific <em>instance</em>.</p>
+
+<p>For example, we can rework our trait to be a self type.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">this:</span> <span class="kt">Customers</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'>    <span class="n">add</span><span class="o">(</span><span class="nc">RandomDiscountedCustomer</span><span class="o">().</span><span class="k">with</span><span class="o">(</span><span class="nc">RandomFullBasket</span><span class="o">()))</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="k">def</span> <span class="n">addSomeCustomersWithEmptyBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">add</span><span class="o">(</span><span class="nc">RandomCustomer</span><span class="o">())</span>
+</span><span class='line'>    <span class="n">add</span><span class="o">(</span><span class="nc">RandomExpiredCustomer</span><span class="o">())</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It now enforces implementers to also be a sub-type of <code>Customers</code>. This, in turn, forces us to rewrite the test</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">private</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">private</span> <span class="k">val</span> <span class="n">application</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ApplicationBuilder</span><span class="o">.</span><span class="k">with</span><span class="o">(</span><span class="n">customers</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">test</span><span class="o">(</span><span class="s">&quot;ensure basket totals are correct when discounts are applied&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it's much cleaner. We use composition to give the test a <code>customers</code> instance but this time, we treat it as two things. The actual type of the thing is;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>So all the backdoor methods work along with the API methods but now we can clearer about which is which. For example,</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &amp;lt;- a backdoor &quot;fixture&quot; method</span>
+</span><span class='line'><span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>    <span class="c1">// &amp;lt;- more likely to be the method under test</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Conclusion</h2>
+
+<p>Scala is both an object-oriented language and a functional language. So unless your team is entirely behind doing things functionally, you're still going to come across object-oriented thinking and principles. Traits that have behaviour make it awkward because functionally-thinking, you could argue that nouns aren't important and behaviour in traits is just behaviour. So why not extend that behaviour by whatever means (including inheritance)?</p>
+
+<p>Because Scala <em>has objects</em> you can't really just ignore object-oriented semantics and thinking. Not unless, like I say, the entire team buy into functional only code. If that were the case, then reusable behaviour should really be represented as functions on <a href="http://tutorials.jenkov.com/scala/singleton-and-companion-objects.html">Scala singleton objects</a> and not traits. You'd be forced to use composition anyway.</p>
+
+<p>By that logic, it feels like extending traits for re-use in a functional programming context is just lazy. Mixing behaviour "the right way" seems much less contentious.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dealing with Exceptions as Monads]]></title>
