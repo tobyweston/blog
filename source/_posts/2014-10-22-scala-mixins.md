@@ -69,9 +69,9 @@ It's tempting to use traits like this under the pretense of "mixing in" behaviou
 
 ## Proper Mixins
     
-Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle, so when is a trait with behaviour a genuine mixin? The trick is in _how_ we mix it in. Before, we made the **types** inherit the trait but we could have mixed it in for an **instance**.
+Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle, so when is a trait with behaviour a genuine mixin? The trick is in _how_ we mix it in. Before, we made the **types** inherit the trait but we could have mixed it in for a specific **instance**.
 
-For example we can rework our trait to be a self type. 
+For example, we can rework our trait to be a self type. 
 
     trait BackdoorCustomers {
         this: Customers =>
@@ -86,7 +86,7 @@ For example we can rework our trait to be a self type.
         }
     }
     
-It now enforces sub-type to **also be a `Customers`**. This in turn forces us to rewrite the test
+It now enforces implementers to also be a sub-type of `Customers`. This in turn forces us to rewrite the test
 
     class OracleCustomerTest {        
         
@@ -100,7 +100,7 @@ It now enforces sub-type to **also be a `Customers`**. This in turn forces us to
     }
     
 
-So now our test is no inheriting an orthogonal type so from an object-oriented perspective, it's cleaner. We use composition to give the test (and application under test) the `customers` instance but this time, we treat it as two things. The actual type of the thing is
+So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it's much cleaner. We use composition to give the test (and application under test) the `customers` instance but this time, we treat it as two things. The actual type of the thing is
   
     InMemoryCustomers with BackdoorCustomers
     
