@@ -12,15 +12,15 @@ description: "Avoid the inheritance vs. composition argument by using mixin trai
 
 Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science)) **and** to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for [code re-use is bad idea](http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/). 
 
-Scala seems to want to encourage me to break the [Inheritance vs. Composition](http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits) principle. There must be a right way and a wrong way.
+It can be tricky not break the [Inheritance vs. Composition](http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits) principle when using traits with behaviour.
 
 <!-- more -->
 
 ## Mixins the Wrong Way
 
-Odersky calls traits with behaviour "mixin traits". I feel like to be a genuine mixin trait, it should be _used_ to mixin behaviour and not as something to extend. Test fixture code is a good example.
+Odersky calls traits with behaviour "mixin traits". To be a genuine mixin trait, it should be used to mixin behaviour and not just something you inherit. But what's the difference? Let's look at an example using a test fixture trait.
 
-Let's say that you have a repository style class who's API talks about business operations, a `Customers` class for example. You might have an Oracle backed version and you don't want anything going in behind your back and messing with the data; everything in production code should go through your API.
+Let's say that you have a [repository](http://martinfowler.com/eaaCatalog/repository.html) style class who's API talks about business operations, a `Customers` class for example. You might have an database backed version and you don't want anything going behind your back and messing with the data; everything in production code should go through your business API.
 
     class OracleCustomers {
         def add(customer: Customer) = { ... }
@@ -32,8 +32,8 @@ Let's say that you have a repository style class who's API talks about business 
 Now let's say that you want a test fixture to allow you to quickly setup test data in your `Customers` without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;
 
 
-    trait BackdoorCustomers {
-        val customers: Customers
+    trait BackdoorCustomers {       // <- this is really a "fixture"
+        abstract val customers: Customers
     
         def addSomeCustomersWithFullBaskets() = {
             customers.add(RandomCustomer().with(RandomFullBasket()))
@@ -45,7 +45,7 @@ Now let's say that you want a test fixture to allow you to quickly setup test da
         }
     }
 
-This says that extending classes must provide a value for `customers` but it implements some coarse grained test setup. So when writing a test, it's easy to just extend the trait and slot in an implementation of `customers`. For example an `InMemoryCustomers` or an Oracle implementation that by-passes any constraint checking the proper API might enforce. 
+This says that extending classes must provide a value for `customers`. It implements some coarse grained test setup against this. So when writing a test, it's easy to just extend the trait and slot in an implementation of `customers`. For example an `InMemoryCustomers` or an Oracle implementation that by-passes any constraint checking the proper API might enforce. 
  
  
     class OracleCustomerTest extends BackdoorCustomers {        
@@ -62,7 +62,7 @@ This says that extending classes must provide a value for `customers` but it imp
     }
     
     
-But we're saying here that an `OracleCustomerTest` **is a** `BackdoorCustomers`. That doesn't even make sense. There's no strong notion of a `BackdoorCustomers` noun. Best case scenario, you're upfront about the fact that it's a fixture and rename `BackdoorCustomers` to `CustomersTestFixture` but even then, the *test* is not a *fixture*, the two are independent. One is test apparatus that supports the test, the other is the test or experiment itself.
+But we're saying here that an `OracleCustomerTest` **is a** `BackdoorCustomers`. That doesn't even make sense. There's no strong notion of a `BackdoorCustomers` in terms of a noun. What is one? Best case scenario, you're upfront about the fact that it's a fixture and rename `BackdoorCustomers` to `CustomersTestFixture` but even then, the *test* is not a *fixture*, the two are independent. One is test apparatus that supports the test, the other is the test or experiment itself.
  
 It's tempting to use traits like this under the pretense of "mixing in" behaviour but you're really inheriting behaviour from something (that in our case) isn't related. You're precluding any type of substitution or inclusion polymorphism. Now arguably, substitution isn't of great value in test code like this but it's still a laudable goal.
 
