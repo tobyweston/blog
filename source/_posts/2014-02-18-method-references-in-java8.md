@@ -152,7 +152,7 @@ public void lambdaExample() {
 
 ## Summary
 
-The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's _the_ canonical reference material but is just plain confusing. It feels like interns are producing this stuff.
+The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's _the_ canonical reference material but it's just plain confusing. It feels like interns are producing this stuff.
 
 If you liked this post, you might like my course on [Udemy](https://www.udemy.com/whats-new-in-java-8/). For a limited time only, get [10% off with this coupon](https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10)!
 
