@@ -14,7 +14,8 @@ If you've just started to learn Scala and are wondering what to expect, it's fai
 
 Taken from my forthcoming [Pluralsight](www.pluralsight.com) course, the chart below shows experience (or time) along the `x` axis and some measure of "learning" on the `y`. 
 
-![](images/learning-curve.png)
+{% img ../../../../../images/learning_curve.png %}
+
 
 <!-- more -->
 
@@ -43,7 +44,8 @@ Aiming for something like a Haskell application. So, all the concrete functional
 
 ## As a Continuum
 
-![](images/continuum.png)
+{% img ../../../../../images/continuum.png %}
+
 
 You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right. Haskell for example forces you down a functional design. As Scala is an OO/FP hybrid, it can only give you the tools, it can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state. Haskell will physically stop you.
 
