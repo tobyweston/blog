@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>IntelliJ IDEA Retina Support JDK 1.7+ - bad.robot</title>
+  <title>Scala Learning Curve - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="IntelliJ IDEA 13 retina support on JDK 7 and JDK 8 is still broken. Keep running against 1.6 to look good on your Macbooks">
-  <meta name="keywords" content="IntelliJ, IDEA, IntelliJ IDEA 13, Macbook, retina, JDK 7, JDK 8">
+  <meta name="description" content="Scala's learning curve; expect a quick ramp up in skill but a shallower increase (slow down) as you adopt more sophisticated and advanced functional &hellip;">
+  <meta name="keywords" content="scala, scala learning curve, training, pluralsight">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 class="entry-title">IntelliJ IDEA Retina Support JDK 1.7+</h1>
+        <h1 class="entry-title">Scala Learning Curve</h1>
       
     
     
@@ -145,22 +145,59 @@
   
 
 
-<time datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true">Jan 20<span>th</span>, 2014</time>
+<time datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
+<div class="entry-content"><p>If you&#8217;ve just started to learn Scala and are wondering what to expect, it&#8217;s fairly typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
 
-<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
-<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
+<p><img class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
+
+<p>Taken from my forthcoming <a href="http://www.pluralsight.com">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of &#8220;learning&#8221; on the <code>y</code>.</p>
 
 <!-- more -->
 
 
-<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
+<h2>Milestone 1</h2>
+
+<p>When you first start, you can expect getting up to speed with the language to be a fairly steep incline. That&#8217;s not to say that it&#8217;s difficult to get to the first plateau, so by &#8220;steep&#8221;, I really mean &#8220;short&#8221;; you can expect a relatively quick increment in learning.</p>
+
+<p>You&#8217;ll probably sit here for a bit applying what you&#8217;ve learnt. I see this as the first milestone; to be able to build object-oriented or imperative applications using language specific constructs and features but without necessarily adopting functional programming. Just like learning any other language in the Java / C family.</p>
+
+<h2>Milestone 2</h2>
+
+<p>I see the next milestone as adopting functional programming techniques.</p>
+
+<p>This is much more challenging and likely to be a shallower curve. Typically this will involve using traditional architecture design but implementing functional programming techniques in the small. You can think of this approach as <a href="http://www.johndcook.com/blog/2009/03/23/functional-in-the-small-oo-in-the-large/">&#8220;functional in the small, OO in the large&#8221;</a>. Starting to embrace a new functional way of thinking and unlearning some of the traditional techniques can be hard, hence the shallower incline.</p>
+
+<p>Concrete examples here are more than just language syntax, so things like <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">higher order and pure functions</a>, <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)">referential transparency</a>, immutability and side-affect free, more declarative coding; all the things that are typically offered by <a href="http://en.wikipedia.org/wiki/Pure_function">pure</a> functional languages. <strong>The key thing here is that they&#8217;re applied in small, isolated areas.</strong></p>
+
+<h2>Milestone 3</h2>
+
+<p>The next challenge is working towards a more cohesive functional design; this really means adopting a functional style at a system level; architecting the entire application as functions and abandoning the object-oriented style completely. So, aiming for something like a Haskell application.</p>
+
+<p>All the concrete functional programming mechanisms above apply but this time, throughout the system; not to isolated areas but lifted to application-wide concerns. Picking up advanced libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> seems to go hand-in-hand with this point of the curve.</p>
+
+<h2>As a Continuum</h2>
+
+<p>You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right.</p>
+
+<p><img class="center" src="../../../../../images/continuum.png" width="591" height="368"></p>
+
+<p>You can think of the far right as Haskell on the JVM. Haskell forces you down a functional design but as Scala is an Object-Oriented / Functional hybrid, it can only give you the tools. It can&#8217;t enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.</p>
+
+<p>So as you start out on the continuum using Java and move to the right, libraries like <a href="http://www.functionaljava.org/">Functional Java</a>, <a href="https://code.google.com/p/totallylazy/">Totally Lazy</a> and even <a href="https://leanpub.com/whatsnewjava8">Java 8 features</a> help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a <strong>language feature</strong> rather than a <strong>library feature</strong>. The syntactical sugar of for-comprehensions are a good example.</p>
+
+<h2>Final Thoughts</h2>
+
+<p>As you carry on, using libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn&#8217;t the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing for your team.</p>
+
+<p>Make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
+
+<p>I&#8217;m working on a course with <a href="http://www.pluralsight.com">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, look out for announcements here or on <a href="https://twitter.com/jamanifin">twitter</a>.</p>
 </div>
 
 
@@ -184,12 +221,12 @@
   
 
 
-<time datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true">Jan 20<span>th</span>, 2014</time>
+<time datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/scala/'>scala</a>
   
 </span>
 
@@ -205,10 +242,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/01/01/another-teamcity-build-monitor/" title="Previous Post: Yet Another TeamCity Build Monitor">&laquo; Yet Another TeamCity Build Monitor</a>
+        <a class="basic-alignment left" href="/blog/2014/09/22/scala-mixins/" title="Previous Post: Scala Mixins: The Right Way">&laquo; Scala Mixins: The Right Way</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/02/18/method-references-in-java8/" title="next Post: Method References in Java 8">Method References in Java 8 &raquo;</a>
       
     </p>
   </footer>
@@ -239,8 +274,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/';
-        var disqus_url = 'http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/';
+        var disqus_url = 'http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In a recent post, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines &hellip;">
+  <meta name="description" content="Dave Denton were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-10-22 19:59:44 +0100 -->
+    <!-- last update; 2014-11-24 20:10:33 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/02/26/less-is-more/">Less is More</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-26T00:00:00+00:00" pubdate data-updated="true">Feb 26<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Dave Denton</a> were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
+
+<blockquote><p>After running a few tests I confirmed that the lower the max heap size is, the more threads I could create. I can easily get a OutOfMemoryError when allocating memory for threads way before any real heap space is used.</p></blockquote>
+
+<p>The helpful message you&#8217;ll get is.</p>
+
+<pre><code>java.lang.OutOfMemoryError: unable to create new native thread
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/02/26/less-is-more/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -821,53 +871,6 @@ Stack trace:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/24/interfaces-vs-class-imposterisers/">Interfaces vs Class impostorisers</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-12-24T00:00:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class imposterisers.</p>
-
-<p>I&#8217;ve been doing a lot with SWT lately and generally want to unit test the UI elements. One way I&#8217;ve managed to do this is to mock parts of the GUI framework using impostorisers. Unless I want the full UI brought up, there just isn&#8217;t another way. The UI API doesn&#8217;t offer me any convenient interfaces and I can&#8217;t even create sub-classed mocks myself as SWT prevents you from sub-classing with run time checks.</p>
-
-<p>I understand that by slowly teasing out behaviour during the mocking / TDD process you can clearly express the collaborations a class may have but I feel that you can still be clear about class behaviour when using an impostor. It&#8217;s just code right? I&#8217;m not sure I care that collaborations are documented as interfaces or not, my tests express the relationships and I&#8217;ve gone through the same thought process to understand clearly how the classes under test interact. So why is an impostor the bad guy?</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2008/12/24/interfaces-vs-class-imposterisers/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -883,6 +886,10 @@ Stack trace:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/scala-learning-curve/">Scala Learning Curve</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
@@ -930,6 +937,14 @@ Stack trace:
     
       <li class="post">
         <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
       </li>
     
   </ul>

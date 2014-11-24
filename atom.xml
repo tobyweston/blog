@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-10-22T19:59:44+01:00</updated>
+  <updated>2014-11-24T20:10:33+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scala Learning Curve]]></title>
+    <link href="http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/"/>
+    <updated>2014-11-25T07:09:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/11/25/scala-learning-curve</id>
+    <content type="html"><![CDATA[<p>If you&#8217;ve just started to learn Scala and are wondering what to expect, it&#8217;s fairly typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
+
+<p><img class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
+
+<p>Taken from my forthcoming <a href="http://www.pluralsight.com">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of &#8220;learning&#8221; on the <code>y</code>.</p>
+
+<!-- more -->
+
+
+<h2>Milestone 1</h2>
+
+<p>When you first start, you can expect getting up to speed with the language to be a fairly steep incline. That&#8217;s not to say that it&#8217;s difficult to get to the first plateau, so by &#8220;steep&#8221;, I really mean &#8220;short&#8221;; you can expect a relatively quick increment in learning.</p>
+
+<p>You&#8217;ll probably sit here for a bit applying what you&#8217;ve learnt. I see this as the first milestone; to be able to build object-oriented or imperative applications using language specific constructs and features but without necessarily adopting functional programming. Just like learning any other language in the Java / C family.</p>
+
+<h2>Milestone 2</h2>
+
+<p>I see the next milestone as adopting functional programming techniques.</p>
+
+<p>This is much more challenging and likely to be a shallower curve. Typically this will involve using traditional architecture design but implementing functional programming techniques in the small. You can think of this approach as <a href="http://www.johndcook.com/blog/2009/03/23/functional-in-the-small-oo-in-the-large/">&#8220;functional in the small, OO in the large&#8221;</a>. Starting to embrace a new functional way of thinking and unlearning some of the traditional techniques can be hard, hence the shallower incline.</p>
+
+<p>Concrete examples here are more than just language syntax, so things like <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">higher order and pure functions</a>, <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)">referential transparency</a>, immutability and side-affect free, more declarative coding; all the things that are typically offered by <a href="http://en.wikipedia.org/wiki/Pure_function">pure</a> functional languages. <strong>The key thing here is that they&#8217;re applied in small, isolated areas.</strong></p>
+
+<h2>Milestone 3</h2>
+
+<p>The next challenge is working towards a more cohesive functional design; this really means adopting a functional style at a system level; architecting the entire application as functions and abandoning the object-oriented style completely. So, aiming for something like a Haskell application.</p>
+
+<p>All the concrete functional programming mechanisms above apply but this time, throughout the system; not to isolated areas but lifted to application-wide concerns. Picking up advanced libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> seems to go hand-in-hand with this point of the curve.</p>
+
+<h2>As a Continuum</h2>
+
+<p>You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right.</p>
+
+<p><img class="center" src="../../../../../images/continuum.png" width="591" height="368"></p>
+
+<p>You can think of the far right as Haskell on the JVM. Haskell forces you down a functional design but as Scala is an Object-Oriented / Functional hybrid, it can only give you the tools. It can&#8217;t enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.</p>
+
+<p>So as you start out on the continuum using Java and move to the right, libraries like <a href="http://www.functionaljava.org/">Functional Java</a>, <a href="https://code.google.com/p/totallylazy/">Totally Lazy</a> and even <a href="https://leanpub.com/whatsnewjava8">Java 8 features</a> help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a <strong>language feature</strong> rather than a <strong>library feature</strong>. The syntactical sugar of for-comprehensions are a good example.</p>
+
+<h2>Final Thoughts</h2>
+
+<p>As you carry on, using libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn&#8217;t the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing for your team.</p>
+
+<p>Make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
+
+<p>I&#8217;m working on a course with <a href="http://www.pluralsight.com">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, look out for announcements here or on <a href="https://twitter.com/jamanifin">twitter</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scala Mixins: The Right Way]]></title>
@@ -680,7 +734,7 @@
 
 <h2>Summary</h2>
 
-<p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle&#8217;s documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It&#8217;s <em>the</em> canonical reference material but is just plain confusing. It feels like interns are producing this stuff.</p>
+<p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle&#8217;s documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It&#8217;s <em>the</em> canonical reference material but it&#8217;s just plain confusing. It feels like interns are producing this stuff.</p>
 
 <p>If you liked this post, you might like my course on <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy</a>. For a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with this coupon</a>!</p>
 
@@ -1603,98 +1657,6 @@ Expected: is &lt;999.99D&gt;
 <p>I didn&#8217;t realise how much this bothered me until I found the workaround in the form of the awesome <a href="http://playitnextapp.com/">Play it Next</a> app. Now I can queue up the next track and get all deejay without breaks in my music. It&#8217;s like iTunes Up Next feature only for your iPod. I like it so much, I just had to mention it here.</p>
 
 <p>Find it on the <a href="http://itunes.apple.com/us/app/play-it-next/id549859020?ls=1&amp;mt=8">app store</a>. I definitely recommend it but don&#8217;t take my word for it, check out the <a href="http://www.appcraver.com/play-it-next/">AppCraver review</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeAgent, OAuth &amp; HTTP (Part III)]]></title>
-    <link href="http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii/"/>
-    <updated>2012-08-13T19:13:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/08/13/oauth-and-http-part-iii</id>
-    <content type="html"><![CDATA[<p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple of caveats remain when working with it from a rich client.</p>
-
-<!-- more -->
-
-
-<h2>The Workflow</h2>
-
-<p>To summarise the workflow;</p>
-
-<ol>
-<li>Ask your user to authorise your application (on the target application&#8217;s servers).</li>
-<li>You&#8217;ll be given an <em>authorisation token</em> from the above. Stash it.</li>
-<li>Exchange your <em>authorisation token</em> for an <em>access token</em>. Stash this too (along with the <em>refresh token</em>).</li>
-<li>Make requests passing along the <em>access token</em> to prove you&#8217;re you.</li>
-</ol>
-
-
-<h2>The Authorisation Request</h2>
-
-<p>It&#8217;s not always clear, but step 1. above is a one time operation. You don&#8217;t make this request every time your programmatically want to access the target application. It also implies that the <code>GET</code> request is made from the browser. There are &#8220;out of band&#8221; options but in-browser is the simplest.</p>
-
-<h2>The Access Token Request</h2>
-
-<p>Again, it&#8217;s not always clear but the <em>access token</em> request only needs to be made once. In fact, if you&#8217;ve successfully retrieved an <em>access token</em> and then request a new one, FreeAgent will error with a basic authentication failure.</p>
-
-<pre><code>HTTP/1.1 401 Unauthorized
-Server: nginx/1.0.14
-Date: Mon, 13 Aug 2012 18:13:44 GMT
-Content-Type: text/html; charset=utf-8
-Status: 401 Unauthorized
-WWW-Authenticate: Basic realm="Application"
-X-UA-Compatible: IE=Edge,chrome=1
-X-Runtime: 0.099212
-X-Rev: 9301db5
-X-Host: web3
-
-HTTP Basic: Access denied.
-</code></pre>
-
-<p>I think it&#8217;s trying to say that your application isn&#8217;t allowed to request a new access token whilst one is already valid.</p>
-
-<h2>Refreshing the Access Token</h2>
-
-<p>In a successful exchange of <em>authorisation code</em> for <em>access token</em>, you should see a response like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;refresh_token&quot;</span><span class="o">:</span><span class="s2">&quot;1Gzv0XG5Qx2T3JOkFlKWyj&quot;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In OAuth, The <code>expires_in</code> value should be the time in seconds that the <em>access token</em> is valid.</p>
-
-<blockquote><p>RECOMMENDED. The lifetime in seconds of the access token. For example, the value &#8220;3600&#8221; denotes that the access token will expire in one hour from the time the response was generated. If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.</p><footer><strong>OAuth 2.0 Specification</strong> <cite><a href='https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2'>tools.ietf.org/html/&hellip;</a></cite></footer></blockquote>
-
-
-<p>FreeAgent return <code>604800</code> which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I convert the number into a concrete date when I get the response. That way, I can see later if I actually need to refresh the token. However, it seems that you can refresh your token at any point.</p>
-
-<p>The process is similar to the <a href="http://baddotrobot.com/blog/2012/08/12/oauth-and-http-part-ii">requesting the original <em>access token</em></a>. Make a Basic auth HTTP POST but with a slightly smaller body.</p>
-
-<pre><code>POST /v2/token_endpoint HTTP/1.1
-Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-Accept: application/json
-Content-Type: application/x-www-form-urlencoded
-User-Agent: Java/1.6.0_33
-Host: api.freeagent.com
-Connection: close
-Content-Length: 127
-
-grant_type=refresh_token&amp;refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
-</code></pre>
-
-<p>which will return something like</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="s2">&quot;access_token&quot;</span><span class="o">:</span><span class="s2">&quot;2YotasFasFzCXcCsMWp1&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;token_type&quot;</span><span class="o">:</span><span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span><span class="mi">604800</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
