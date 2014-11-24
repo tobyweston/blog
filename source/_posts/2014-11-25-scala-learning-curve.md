@@ -5,16 +5,16 @@ date: 2014-11-25 07:09
 comments: true
 categories: scala
 sidebar: false
-published: false
+published: true
 keywords: "scala, scala learning curve, training, pluralsight"
-description: "Scala's learning curve; expect a quick ramp up but a shallower increase (slow down) as you adopt more sophisticated and advanced functional features."
+description: "Scala's learning curve; expect a quick ramp up in skill but a shallower increase (slow down) as you adopt more sophisticated and advanced functional features. Read more."
 ---
 
 If you've just started to learn Scala and are wondering what to expect, it's fairly typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.
 
 {% img center ../../../../../images/learning_curve.png 752 389 %}
 
-Taken from my forthcoming [Pluralsight](www.pluralsight.com) course, the chart shows experience (or time) along the `x` axis and some measure of "learning" on the `y`.
+Taken from my forthcoming [Pluralsight](http://www.pluralsight.com) course, the chart shows experience (or time) along the `x` axis and some measure of "learning" on the `y`.
 
 
 <!-- more -->
@@ -39,7 +39,7 @@ Concrete examples here are more than just language syntax, so things like [highe
 
 The next challenge is working towards a more cohesive functional design; this really means adopting a functional style at a system level; architecting the entire application as functions and abandoning the object-oriented style completely. So, aiming for something like a Haskell application.
 
-All the concrete functional programming mechanisms above apply, but throughout the system. Not to isolated areas but lifted to application-wide concerns. Picking up advanced libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) seems to go hand-in-hand at this point in the curve.
+All the concrete functional programming mechanisms above apply but this time, throughout the system; not to isolated areas but lifted to application-wide concerns. Picking up advanced libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) seems to go hand-in-hand with this point of the curve.
 
 
 ## As a Continuum
@@ -50,10 +50,14 @@ You can also think of adoption as more of a continuum with traditional imperativ
 
 You can think of the far right as Haskell on the JVM. Haskell forces you down a functional design but as Scala is an Object-Oriented / Functional hybrid, it can only give you the tools. It can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.
 
-So as you start out on the continuum using Java and move to the right, libraries like [Functional Java](http://www.functionaljava.org/), [Totally Lazy](https://code.google.com/p/totallylazy/) and even [Java 8 features](https://leanpub.com/whatsnewjava8) help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a **language feature rather than a library feature**. The syntactical sugar of for-comprehensions are a good example.
+So as you start out on the continuum using Java and move to the right, libraries like [Functional Java](http://www.functionaljava.org/), [Totally Lazy](https://code.google.com/p/totallylazy/) and even [Java 8 features](https://leanpub.com/whatsnewjava8) help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a **language feature** rather than a **library feature**. The syntactical sugar of for-comprehensions are a good example.
 
-## Wrap Up
+## Final Thoughts
 
-As you carry on, using libraries like Scalaz makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn't the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing to do for your team.
+As you carry on, using libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn't the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing for your team.
 
-I'm working on a course with [Pluralsight](http://www.pluralsight.com) to help Java teams make the transition to Scala. If you're interested and liked this post, look out for announcements here and on [twitter](https://twitter.com/jamanifin).
+Make a deliberate decision about where you want to be on the continuum, be clear about _why_ and use my learning curve as a way to gauge your progress.
+
+
+I'm working on a course with [Pluralsight](http://www.pluralsight.com) to help Java teams make the transition to Scala. If you're interested and liked this post, look out for announcements here or on [twitter](https://twitter.com/jamanifin).
+
