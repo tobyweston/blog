@@ -10,7 +10,7 @@
       {% if page.external-url %}
         <h1 class="entry-title external"><a href="{{ page.external-url }}">{% if site.titlecase %}{{ page.title | titlecase }} <span>&rArr;</span>{% else %}{{ page.title }}{% endif %}</a></h1>
         {% else %}
-        <h1 class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
+        <h1 itemprop="name" class="entry-title">{% if site.titlecase %}{{ page.title | titlecase }}{% else %}{{ page.title }}{% endif %}</h1>
       {% endif %}
     {% endif %}
     {% unless page.meta == false %}

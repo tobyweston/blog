@@ -2,6 +2,7 @@
 layout: post
 title: "Scala Learning Curve"
 date: 2014-11-25 07:09
+updated: 2014-11-25 19:24
 comments: true
 categories: scala
 sidebar: false
