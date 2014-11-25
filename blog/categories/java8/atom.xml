@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-25T19:06:03+00:00</updated>
+  <updated>2014-11-25T19:23:25+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -366,7 +366,7 @@
 
 <h2>Summary</h2>
 
-<p>An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the <a href="/2014/04/08/classes-vs-functions">Classes vs. Functions</a> post for more details.</p>
+<p>An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the <a href="/blog/2014/04/08/classes-vs-functions">Classes vs. Functions</a> post for more details.</p>
 ]]></content>
   </entry>
   
