@@ -2,6 +2,7 @@
 layout: post
 title: "Classes vs. Functions"
 date: 2014-04-08 19:40
+updated: 2014-11-25 19:28
 comments: true
 categories: java java8
 sidebar: false
