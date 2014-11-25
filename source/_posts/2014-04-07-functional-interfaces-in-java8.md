@@ -125,4 +125,4 @@ In both cases, you can override methods from `Object` without causing problems. 
 
 ## Summary
 
-An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the [Classes vs. Functions]({{ root_url }}/2014/04/08/classes-vs-functions) post for more details.
+An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the [Classes vs. Functions]({{ root_url }}/blog/2014/04/08/classes-vs-functions) post for more details.
