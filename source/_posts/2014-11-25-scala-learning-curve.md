@@ -11,7 +11,7 @@ keywords: "scala, scala learning curve, training, pluralsight"
 description: "Scala's learning curve; expect a quick ramp up in skill but a shallower increase (slow down) as you adopt more sophisticated and advanced functional features. Read more."
 ---
 
-If you've just started to learn Scala and are wondering what to expect, it's fairly typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.
+If you've just started to learn Scala and are wondering what to expect, it's typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.
 
 {% img center ../../../../../images/learning_curve.png 752 389 %}
 
@@ -49,7 +49,7 @@ You can also think of adoption as more of a continuum with traditional imperativ
 
 {% img center ../../../../../images/continuum.png 591 368 %}
 
-You can think of the far right as Haskell on the JVM. Haskell forces you down a functional design but as Scala is an Object-Oriented / Functional hybrid, it can only give you the tools. It can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.
+You can think of the far right as Haskell on the JVM. Haskell is a pure functional language so you don't have any choice but to design your app in a functional way. Scala is an object-oriented / functional hybrid, it can only give you the tools. It can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.
 
 So as you start out on the continuum using Java and move to the right, libraries like [Functional Java](http://www.functionaljava.org/), [Totally Lazy](https://code.google.com/p/totallylazy/) and even [Java 8 features](https://leanpub.com/whatsnewjava8) help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a **language feature** rather than a **library feature**. The syntactical sugar of for-comprehensions are a good example.
 
