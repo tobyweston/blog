@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-11-24 20:10:33 +0000 -->
+    <!-- last update; 2014-11-25 19:06:03 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -123,12 +123,12 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
   
   <header>
     
       
-        <h1 class="entry-title">Scala Learning Curve</h1>
+        <h1 itemprop="name" class="entry-title">Scala Learning Curve</h1>
       
     
     
@@ -145,16 +145,18 @@
   
 
 
-<time datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
+
+  
+<time itemprop="datePublished" content="2014-11-25 07:09:00 +0000" datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>If you&#8217;ve just started to learn Scala and are wondering what to expect, it&#8217;s fairly typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
+<div class="entry-content"><p>If you&#8217;ve just started to learn Scala and are wondering what to expect, it&#8217;s typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
 
-<p><img class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
+<p><img itemprop="image" class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
 
 <p>Taken from my forthcoming <a href="http://www.pluralsight.com">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of &#8220;learning&#8221; on the <code>y</code>.</p>
 
@@ -185,9 +187,9 @@
 
 <p>You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right.</p>
 
-<p><img class="center" src="../../../../../images/continuum.png" width="591" height="368"></p>
+<p><img itemprop="image" class="center" src="../../../../../images/continuum.png" width="591" height="368"></p>
 
-<p>You can think of the far right as Haskell on the JVM. Haskell forces you down a functional design but as Scala is an Object-Oriented / Functional hybrid, it can only give you the tools. It can&#8217;t enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.</p>
+<p>You can think of the far right as Haskell on the JVM. Haskell is a pure functional language so you don&#8217;t have any choice but to design your app in a functional way. Scala is an object-oriented / functional hybrid, it can only give you the tools. It can&#8217;t enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.</p>
 
 <p>So as you start out on the continuum using Java and move to the right, libraries like <a href="http://www.functionaljava.org/">Functional Java</a>, <a href="https://code.google.com/p/totallylazy/">Totally Lazy</a> and even <a href="https://leanpub.com/whatsnewjava8">Java 8 features</a> help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a <strong>language feature</strong> rather than a <strong>library feature</strong>. The syntactical sugar of for-comprehensions are a good example.</p>
 
@@ -207,7 +209,7 @@
       
   
 
-<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span class="fn">Toby Weston</span></span>
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
 
       
 
@@ -221,7 +223,9 @@
   
 
 
-<time datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
+
+  
+<time datetime="2014-11-25T19:24:00+00:00" class="updated">Updated Nov 25<span>th</span>, 2014</time>
       
 
 <span class="categories">

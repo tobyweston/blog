@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2014-11-24 20:10:33 +0000 -->
+    <!-- last update; 2014-11-25 19:06:03 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -123,12 +123,12 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
   
   <header>
     
       
-        <h1 class="entry-title">Calculate the Optimum Number of Threads</h1>
+        <h1 itemprop="name" class="entry-title">Calculate the Optimum Number of Threads</h1>
       
     
     
@@ -145,7 +145,7 @@
   
 
 
-<time datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
+<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
         
       </p>
     
@@ -177,14 +177,14 @@
 <pre><code>threads = number of cores /  (1 – blocking coefficient)
 </code></pre>
 
-<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
 
 <pre><code>threads = number of cores * (1 + wait time / service time)
 </code></pre>
 
-<p><img src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
 
 <p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
 
@@ -192,15 +192,15 @@
 
 <p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
 
 <p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
 
-<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>&#8217;s project site.</p>
 
@@ -221,7 +221,7 @@
       
   
 
-<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span class="fn">Toby Weston</span></span>
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
 
       
 
@@ -235,7 +235,7 @@
   
 
 
-<time datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
+<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time>
       
 
 <span class="categories">

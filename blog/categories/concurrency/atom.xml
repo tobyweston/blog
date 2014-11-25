@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-24T20:10:33+00:00</updated>
+  <updated>2014-11-25T19:06:03+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -43,14 +43,14 @@
 <pre><code>threads = number of cores /  (1 – blocking coefficient)
 </code></pre>
 
-<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
 
 <pre><code>threads = number of cores * (1 + wait time / service time)
 </code></pre>
 
-<p><img src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
 
 <p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
 
@@ -58,15 +58,15 @@
 
 <p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
 
 <p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
 
-<p><img src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
 
-<p><img src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>'s project site.</p>
 

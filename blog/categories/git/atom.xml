@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-24T20:10:33+00:00</updated>
+  <updated>2014-11-25T19:06:03+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -239,8 +239,8 @@ git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(ye
 </div>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
-<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
 
 <ul>
 <li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-24T20:10:33+00:00</updated>
+  <updated>2014-11-25T19:06:03+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -256,9 +256,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 </div>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <h2>Recommended Reading</h2>
 

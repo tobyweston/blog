@@ -4,7 +4,7 @@
   <title><![CDATA[Category: objective-c | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/objective-c/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-24T20:10:33+00:00</updated>
+  <updated>2014-11-25T19:06:03+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/"/>
     <updated>2012-10-06T12:12:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation</id>
-    <content type="html"><![CDATA[<p><img class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
+    <content type="html"><![CDATA[<p><img itemprop="image" class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
 
 <p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we'll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we're on the topic, we'll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
 
