@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-11-25T19:44:01+00:00</updated>
+  <updated>2014-11-27T19:04:44+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -59,9 +59,9 @@
 
 <h2>Final Thoughts</h2>
 
-<p>As you carry on, using libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn't the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing for your team.</p>
+<p>Libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> make it easier to a develop a purely functional style. It's worth noting that reaching the far right of the continuum (or top right quadrant of the learning curve) doesn't have to be the goal. There are plenty of teams operating effectively across the continuum.</p>
 
-<p>Make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
+<p>When you're adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
 
 <p>I'm working on a course with <a href="http://www.pluralsight.com">Pluralsight</a> to help Java teams make the transition to Scala. If you're interested and liked this post, look out for announcements here or on <a href="https://twitter.com/jamanifin">twitter</a>.</p>
 ]]></content>
