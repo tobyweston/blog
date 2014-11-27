@@ -2,7 +2,7 @@
 layout: post
 title: "Scala Learning Curve"
 date: 2014-11-25 07:09
-updated: 2014-11-25 19:24
+updated: 2014-11-27 19:24
 comments: true
 categories: scala
 sidebar: false
@@ -55,9 +55,9 @@ So as you start out on the continuum using Java and move to the right, libraries
 
 ## Final Thoughts
 
-As you carry on, using libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) makes it easier to a progress towards pure FP but remember that reaching the far right or top right quadrant of the learning curve isn't the goal in and of itself. Reaching a purely functional milestone is going to be difficult. It may not even be the right thing for your team.
+Libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) make it easier to a develop a purely functional style. It's worth noting that reaching the far right of the continuum (or top right quadrant of the learning curve) doesn't have to be the goal. There are plenty of teams operating effectively across the continuum.
 
-Make a deliberate decision about where you want to be on the continuum, be clear about _why_ and use my learning curve as a way to gauge your progress.
+When you're adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about _why_ and use my learning curve as a way to gauge your progress.
 
 
 I'm working on a course with [Pluralsight](http://www.pluralsight.com) to help Java teams make the transition to Scala. If you're interested and liked this post, look out for announcements here or on [twitter](https://twitter.com/jamanifin).
