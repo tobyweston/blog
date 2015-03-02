@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-03-02T19:43:39+00:00</updated>
+  <updated>2015-03-02T21:38:27+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -63,7 +63,7 @@
 
 <p>When you&#8217;re adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
 
-<p>I&#8217;m working on a course with <a href="http://www.pluralsight.com">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, look out for announcements here or on <a href="https://twitter.com/jamanifin">twitter</a>.</p>
+<p>I&#8217;ve developed a course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a>.</p>
 ]]></content>
   </entry>
   
