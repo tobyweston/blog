@@ -15,7 +15,7 @@ If you've just started to learn Scala and are wondering what to expect, it's typ
 
 {% img center ../../../../../images/learning_curve.png 752 389 %}
 
-Taken from my forthcoming [Pluralsight](http://www.pluralsight.com) course, the chart shows experience (or time) along the `x` axis and some measure of "learning" on the `y`.
+Taken from my [Pluralsight](http://bit.ly/1DsYl9f) course, the chart shows experience (or time) along the `x` axis and some measure of "learning" on the `y`.
 
 
 <!-- more -->
