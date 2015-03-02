@@ -59,6 +59,5 @@ Libraries like [Scalaz](http://eed3si9n.com/learning-scalaz/index.html) make it 
 
 When you're adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about _why_ and use my learning curve as a way to gauge your progress.
 
-
-I'm working on a course with [Pluralsight](http://www.pluralsight.com) to help Java teams make the transition to Scala. If you're interested and liked this post, look out for announcements here or on [twitter](https://twitter.com/jamanifin).
+I've developed a course exclusively for [Pluralsight](http://bit.ly/1DsYl9f) to help Java teams make the transition to Scala. If you're interested and liked this post, [check it out](http://bit.ly/1DsYl9f).
 
