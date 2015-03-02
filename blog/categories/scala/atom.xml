@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2014-12-22T19:38:46+00:00</updated>
+  <updated>2015-03-02T19:43:39+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -22,7 +22,7 @@
 
 <p><img itemprop="image" class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
 
-<p>Taken from my forthcoming <a href="http://www.pluralsight.com">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of "learning" on the <code>y</code>.</p>
+<p>Taken from my <a href="http://bit.ly/1DsYl9f">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of "learning" on the <code>y</code>.</p>
 
 <!-- more -->
 
