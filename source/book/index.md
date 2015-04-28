@@ -46,7 +46,7 @@ It's around 230 pages (39,000 words).
 
 <header><h1 class="entry-title">Essential Acceptance Testing</h1></header>
 
-<a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/essential_acceptance_testing/bookpage 'Essential Acceptance Testing is available on Leanpub'%}</a>
+<a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/essential_acceptance_testing/bookpage Essential Acceptance Testing is available on Leanpub%}</a>
 
 Essential Acceptance Testing questions the conventional acceptance testing techniques used by many teams today. <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Download the free sample chapters</a> or [read it online](https://leanpub.com/essential_acceptance_testing/read) at Leanpub.
 
@@ -67,7 +67,7 @@ It's around 65 pages (15,000 words).
 
 <header><h1 class="entry-title">What's new in Java 8</h1></header>
 
-<a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage 'What's new in Java 8 is available on Leanpub'%}</a>
+<a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage What's new in Java 8 is available on Leanpub%}</a>
 
 This is the companion book to my Udemy course of the same name. If you buy the course, it's free, otherwise get [10% off the course with this link](https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10).
 
