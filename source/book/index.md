@@ -7,7 +7,7 @@ footer: false
 sidebar: false
 published: true
 keywords: "acceptance testing, agile, lean, leanpub, scala, scala for java developers, java 8, what's new in Java 8"
-description: "My books on Learning Scala for Java Developers, Essential Acceptance Testing and What's new in Java 8"
+description: "My books on Learning Scala for Java Developers, Essential Acceptance Testing and What's New in Java 8"
 ---
 <div>
     <script type="text/javascript">
@@ -24,7 +24,7 @@ description: "My books on Learning Scala for Java Developers, Essential Acceptan
     </script>
 </div>
 
-<a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon'); return false;">{% img right http://titlepages.leanpub.com/s4j/bookpage Learn Scala for Java Developers is available on Amazon%}</a>
+<a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://titlepages.leanpub.com/s4j/bookpage Learn Scala for Java Developers is available on Amazon%}</a>
 
 This book is for Java developers looking to transition to programming Scala. It helps translate what you already know in Java to Scala and kick starts your functional programming journey.
 
@@ -65,9 +65,9 @@ It's around 65 pages (15,000 words).
 
 
 
-<header><h1 class="entry-title">What's new in Java 8</h1></header>
+<header><h1 class="entry-title">What's New in Java 8</h1></header>
 
-<a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage What's new in Java 8 is available on Leanpub%}</a>
+<a href="https://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage What's New in Java 8 is available on Leanpub%}</a>
 
 This is the companion book to my Udemy course of the same name. If you buy the course, it's free, otherwise get [10% off the course with this link](https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10).
 
