@@ -3,7 +3,7 @@ layout: post
 title: "JMock to Scalamock Cheat Sheet"
 date: 2015-05-09 12:41
 comments: true
-categories: scala
+categories: scala java mocking testing
 sidebar: false
 published: false
 keywords: "JMock, Scala, Scalamock, Specs2"
