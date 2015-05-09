@@ -6,8 +6,8 @@ comments: true
 categories: scala
 sidebar: false
 published: false
-keywords: "JMock, Scala, Scalamock"
-description: ""
+keywords: "JMock, Scala, Scalamock, Specs2"
+description: "JMock to Scalamock Cheat Sheet"
 ---
 
 <!-- more -->
@@ -30,6 +30,24 @@ private final ScheduledFuture future = context.mock(ScheduledFuture.class);
 }
 {% endcodeblock %}
 
+## Returns
+
+{% codeblock lang:java Return a value: Java / JMock %}
+context.checking(new Expectations() {{ braces }}
+    oneOf(executor).shutdownNow(); will(returnValue(asList(waiting)));
+    oneOf(waiting).cancel(true);
+}});
+{% endcodeblock %}
+
+{% codeblock lang:scala Return a value: Scala / Scalamock %}
+(executor.shutdownNow _).expects().returning(asList(waiting)).once
+(waiting.cancel _).expects(true).once
+{% endcodeblock %}
+
+**Notes:**  
+ * `expects()` is required for zero argument method call expectations.
+
+
 ## Allowing
 
 {% codeblock lang:java Allowing: JMock / Java %}
@@ -40,6 +58,9 @@ context.checking(new Expectations() {{ braces }}
 {% endcodeblock %}
 
 {% codeblock lang:scala Allowing: Scala / Scalamck %}
-(executor.scheduleWithFixedDelay _).expects(*, *, * , *).returning(future).anyNumberOfTimes
+(executor.scheduleWithFixedDelay _).expects(*, *, * , *).returning(future)
 (future.cancel _).expects(true).once
 {% endcodeblock %}
+
+**Notes:**  
+ * You could also add `.anyNumberOfTimes` after the `returning` call but it's unnecessary. 
