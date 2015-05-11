@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-04-28T20:38:30+01:00</updated>
+  <updated>2015-05-11T21:13:25+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,161 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[JMock to Scalamock Cheat Sheet]]></title>
+    <link href="http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet/"/>
+    <updated>2015-05-09T12:41:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet</id>
+    <content type="html"><![CDATA[<p>An abbreviated set of JMock examples with their Scalamock equivalents.</p>
+
+<!-- more -->
+
+
+<h2>Mock Objects &amp; the "Context"</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledExecutorService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledFuture</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Scala / Scalamock &amp; Specs2 </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">executor</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledExecutorService</span><span class="o">]&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">future</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledFuture</span><span class="o">[</span><span class="kt">Any</span><span class="o">]]</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Returns</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
+</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">waiting</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>expects()</code> is required for zero argument method call expectations.</li>
+<li>You can leave off <code>once</code>; it will default to the same behaviour</li>
+</ul>
+
+
+<h2>Allowing / Ignoring</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
+</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(&lt;</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>You could also add <code>.anyNumberOfTimes</code> after the <code>returning</code> call but it's unnecessary.</li>
+<li>There's no way to distinguish the <em>intention</em> of allowing and ignoring interactions in Scalamock.</li>
+</ul>
+
+
+<h2>Default Values</h2>
+
+<p>JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a <code>returnValue</code>. In the example below, we don't care if it returns anything so if the code under test relies on a value, but the test does not, we don't have to express anything in the test.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>If the underlying code were to check, say, that the result of <code>factory.create()</code> was not an empty list with <code>if (result.isEmpty())</code>, JMock would return something sensible and we'd avoid a <code>NullPointerException</code>. You might argue that this side affect should be captured in a test but leaving it off makes the intention of expectation clearer; we only care that <code>create</code> is called, not what it returns.</p>
+
+<p>Scalamock will return <code>null</code> by default. So the above example would give a <code>NullPointerException</code> and you're required to do something like this. Notice we're using a <code>stub</code> and not a <code>mock</code> here.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">once</span><span class="o">.</span><span class="n">returning</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="n">result</span><span class="o">))&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Any / Wildcards</h2>
+
+<p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>AnotherException</code> is a subtype of <code>SomeException</code> but <code>any</code> will match on literally anything. Using subtypes like this in JMock is a bit of a smell as a test won't fail if a different subtype is thrown at runtime. It may be useful to express intent.</li>
+<li><a href="http://stackoverflow.com/questions/30162263/scalamock-wildcard-argument-match-on-subtype">You can't replicate the subtype line</a> in Scalamock; (<code>(factory.notifyObservers(_: AnotherException))</code> doesn't compile.</li>
+</ul>
+
+
+<h2>Throwing Exceptions</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
+</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">throws</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">Exception</span><span class="o">)).</span><span class="n">expects</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<strong>Notes:</strong></p>
+
+<ul>
+<li>In Scalamock, <code>throws</code> and <code>throwing</code> are interchangeable.</li>
+<li>Again, <code>once</code> is optional.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scala Learning Curve]]></title>
@@ -410,49 +565,6 @@
 <li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala as a Functional OO Hybrid]]></title>
-    <link href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/"/>
-    <updated>2012-04-03T19:33:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid</id>
-    <content type="html"><![CDATA[<p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It's important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you're clear about the style you're applying, you can get the most from the approach. Functional programming isn't a panacea and to build effective systems, you'll need to blend the approaches.</p>
-
-<!-- more -->
-
-
-<h2>Object-Oriented</h2>
-
-<p>Scala is a pure object-oriented language. There's no subverting it, there are no non-objects (such as Java's primitives like <code>int</code>) or static fields or methods which aren't members of an object (although there is the related idea of <em>companion object</em>). Every <em>value</em> is an object including numeric types and <em>functions</em>. We have classes and traits and flexible mixin-based composition.</p>
-
-<h2>Functional</h2>
-
-<p>Scala is also a functional language; it allows you define both <em>pure functions</em> and <em>higher order functions</em>. It doesn't enforce this though which makes it even more important to understand if you're actually working with these ideas. Porting a Java application verbatim doesn't necessarily mean you're building with purely functional blocks.</p>
-
-<p>Lets review these two ideas.</p>
-
-<h3>Functions are First Class</h3>
-
-<p>Programming with higher order functions means that you can pass functions as arguments to other functions, create and return them or just store them. This allows us to build richer behaviour with function composition just like object composition in the object-oriented world. In practice, function composition tends to be finer grained but still allows us to test the <em>composites rather than the composition</em>. It's easier to test correctness of small functions like this especially when they are <em>pure functions</em>.</p>
-
-<h3>Pure Functions</h3>
-
-<p>Another aspect of a functional language is that functions should not cause any side affects. They should operate by <em>transformation</em> rather than <em>mutation</em>. That is to say a pure function should take arguments and return results but not modify the environment in which they operate. This <a href="http://en.wikipedia.org/wiki/Pure_function"><em>purity of function</em></a> is what enables <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)"><em>referential transparency</em></a>.</p>
-
-<p>Although Odersky et al [1] describe referential transparency as literally being able to substitute a method call with its result without changing the semantics of a program, Subramaniam further relates the idea to facilitating concurrent programming [2].</p>
-
-<h2>Final Thoughts</h2>
-
-<p>I think its important to bear these definitions in mind when working with Scala, if for no other reason than to be aware of the idioms available to each style and how best to leverage them.</p>
-
-<p>A functional style can give great results for certain classes of problems but lets not forget that object-oriented solutions give huge advantages for other types of problems. It's easy to get caught up in the hype and think we've left object-oriented design behind when hybrid languages blur the lines, but if we're clear about what approach to use and when, we can blend approaches as appropriate. Just don't expect it to be easy!</p>
-
-<h2>References</h2>
-
-<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12. <br/>
-[2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
 ]]></content>
   </entry>
   
