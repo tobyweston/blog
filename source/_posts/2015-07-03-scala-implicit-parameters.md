@@ -5,10 +5,10 @@ date: 2015-07-03 18:42
 comments: true
 categories: scala
 sidebar: false
-published: false
+published: true
 series: Scala Implicits
-keywords: ""
-description: ""
+keywords: "scala, implicit, implicit parameter, implicit values"
+description: "This post talks about Scala implicit parameters (aka implicit values). In the series, I introduce the "implicit" categories and show real examples."
 ---
 
 Scala "implicits" allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and `Int` to a `String` and rather than call that function _explicitly_, you can ask the compiler to do it for you, _implicitly_.  
