@@ -11,7 +11,7 @@ keywords: ""
 description: ""
 ---
 
-As the name suggests, "implicits" allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and `Int` to a `String` and rather than call that function _explicitly_, you can ask the compiler to do it for you, _implicitly_.  
+Scala "implicits" allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and `Int` to a `String` and rather than call that function _explicitly_, you can ask the compiler to do it for you, _implicitly_.  
 
 In the next few posts, we'll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.
 
@@ -84,5 +84,34 @@ def example3(x: Int, implicit y: Int)               // wont compile
 def example4(x: Int)(implicit y: Int)               // only y is implicit
 def example5(implicit x: Int)(y: Int)               // wont compile
 def example6(implicit x: Int)(implicit y: Int)      // wont compile
-
 {% endcodeblock %}
+
+
+## Example
+
+As an example, the test below uses [Web Driver](http://www.seleniumhq.org/projects/webdriver/) (and specifically an instance of the `WebDriver` class) to check that a button is visible on screen. The `beVisible` method creates a `Matcher` that will check this for us but rather than pass in the instance explicitly, it uses an implicit `var` to do so.
+
+{% codeblock lang:scala %}
+class ExampleWebDriverTest extends mutable.Specification {
+
+  implicit var driver: WebDriver = Browser.create.driver
+  
+  "The checkout button is visible" >> {
+    val button = By.id("checkout")
+    // ...
+    button must beVisible           // reads better than 'must beVisible(driver)'   
+  }
+  
+  def beVisible(implicit driver: WebDriver): Matcher[By] = new Matcher[By] {
+    def apply[S <: By](t: Expectable[S]) = result(
+      t.value.isDisplayed,
+      s"${t.value.toString} is visible",
+      s"${t.value.toString} is not visible",
+      t)
+  }
+}
+{% endcodeblock %}
+
+## Roundup
+
+Implicit parameters are useful for removing boiler plate parameter passing and can make your code more readable. The really useful stuff though comes when we combine implicit parameters with the other types of "implicits". Read more in the series to build up a picture.
