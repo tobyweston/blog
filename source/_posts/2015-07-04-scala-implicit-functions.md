@@ -11,18 +11,9 @@ keywords: ""
 description: ""
 ---
 
-Implicits in Scala are either really awesome or really nasty. 
-
-In this series, we'll take a look at the different types of implicit and when they can be useful.
-
-There are three categories of "implicits";
-
-1. Implicit parameters (`var`s)
-1. Implicit functions (`def`s)
-1. Implicit classes
+In the previous post, we looked at implicit parameters; parameters that will be automatically passed values that have been marked as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.
 
 <!-- more -->
-
 
 ## Implicit Functions
 
