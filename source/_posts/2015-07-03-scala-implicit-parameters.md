@@ -114,4 +114,8 @@ class ExampleWebDriverTest extends mutable.Specification {
 
 ## Roundup
 
-Implicit parameters are useful for removing boiler plate parameter passing and can make your code more readable. The really useful stuff though comes when we combine implicit parameters with the other types of "implicits". Read more in the series to build up a picture.
+Implicit parameters are useful for removing boiler plate parameter passing and can make your code more readable. 
+
+The Scala library often use them to define default implementations that are "just available". When you come to need a custom implementation, you can pass one in explicitly or use your own implicit value. A good example here is the `sorted` method on [`SeqLike`](http://www.scala-lang.org/api/2.11.7/#scala.collection.SeqLike) class. 
+
+The really useful stuff though comes when we combine implicit parameters with the other types of "implicits". Read more in the series to build up a picture.
