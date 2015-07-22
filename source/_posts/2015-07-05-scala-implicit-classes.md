@@ -26,3 +26,9 @@ There are three categories of "implicits";
 ## Implicit Classes
 
 A new language construct is proposed to simplify the creation of classes which provide extension methods to another type.
+
+## Syntax
+
+## Example
+
+## Roundup

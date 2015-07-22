@@ -5,10 +5,10 @@ date: 2015-07-04 18:42
 comments: true
 categories: scala
 sidebar: false
-published: false
+published: true
 series: Scala Implicits
-keywords: ""
-description: ""
+keywords: "scala, implicit, implicit function, implicit conversion, SAM, implicits"
+description: "Implicit functions, their usages and examples. Learn how implicit functions help make your APIs more succinct, reduce your code and convert types."
 ---
 
 In the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we looked at implicit parameters; parameters that will be automatically passed values annotated as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.
