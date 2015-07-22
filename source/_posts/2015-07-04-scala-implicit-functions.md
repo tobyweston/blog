@@ -17,9 +17,9 @@ In the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/
 
 ## Implicit Functions
 
-Implicit functions will be called automatically if the compiler thinks it's a good idea to do so. What that really means is that if your code doesn't compile but would if a call was made to an implicit function, Scala will call that function to make it compile. They're typically used to create _implicit conversion functions_; single argument functions to automatically convert from one type to another.
+Implicit functions will be called automatically if the compiler thinks it's a good idea to do so. What that means is that if your code doesn't compile but would, if a call was made to an implicit function, Scala will call that function to make it compile. They're typically used to create _implicit conversion functions_; single argument functions to automatically convert from one type to another.
 
-For example, the following function allows you to convert a Scala function into a instance of the Java 8 `Consumer` [single argument method]({{ root_url }}/blog/2014/04/07/functional-interfaces-in-java8/). 
+For example, the following function allows you to convert a Scala function into a instance of the Java 8 `Consumer` [single argument method]({{ root_url }}/blog/2014/04/07/functional-interfaces-in-java8/) but still use Scala's concise syntax. 
 
 {% codeblock lang:scala %}
 implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
@@ -27,12 +27,12 @@ implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]()
 }
 {% endcodeblock %}
 
-We can use it to avoid having to write clunky anonymous class instantiation in Scala when interfacing with Java to mimic Java's lambda syntax. So rather than having to use the longhand version like this. 
+You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java's lambda syntax. So rather than having to use the longhand version like this. 
 
 {% codeblock lang:scala %}
 def exampleUsingJavaForEach() {
   javaCollection.forEach(new Consumer[Element]() {
-    override def accept(element: Element): Unit = ???
+    override def accept(element: Element): Unit = observer.update
   })
 }
 {% endcodeblock %}
@@ -41,7 +41,7 @@ You can write this, where we just pass a Scala function to Java's `forEach` meth
  
 {% codeblock lang:scala %}
 def exampleUsingImplicitConversion() {
-  javaCollection.forEach((element: Element) => ???)
+  javaCollection.forEach((element: Element) => observer.update)
 }
 {% endcodeblock %}
 
@@ -49,7 +49,7 @@ The argument to `forEach` is actually a function of type `Element => Unit`. Scal
 
 {% codeblock lang:scala %}
 def exampleUsingImplicitConversion() {
-  val function: ObserverS => Unit = (observer) => observer.update(this, status)
+  val function: ObserverS => Unit = (observer) => observer.update
   javaCollection.forEach(function)
 }
 {% endcodeblock %}
@@ -85,7 +85,7 @@ implicit def waitForElement(locator: By): WebElement = {
 {% endcodeblock %}
 
 
-It's also an implicit function designed to convert a `By` locator into a `WebElement`. It means we can write something like the following. Now `button` isn't a `WebElement` anymore but a `By`.
+It's also an implicit function designed to convert a `By` locator into a `WebElement`. It means we can write something like the following where `button` is no longer a `WebElement`, but a `By`.
 
 {% codeblock lang:scala %}
   val button = By.id("save-button")
@@ -96,7 +96,7 @@ Without the implicit `waitForElement` function, the code wouldn't compile; `By` 
 
 ## Single Arguments Only Please
 
-Now there's one little bit I've brushed over here; how the `WebDriver` `driver` instance is available. The example above just assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in currying support). By combining implicit parameters the we saw in the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
+Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support]({{ root_url}}/blog/2013/07/21/curried-functions/)). By combining implicit parameters the we saw in the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
   
 {% codeblock lang:scala %}
 implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement = {
@@ -105,12 +105,12 @@ implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement 
 }
 {% endcodeblock %}
 
-So the full example would look like this.
+So the full example would look like this; making `driver` an implicit `val` means we can avoid a call to `button.click()(driver)`.
 
 {% codeblock lang:scala %}
 class ExampleWebDriverTest extends mutable.Specification {
 
-  implicit var driver: WebDriver = Browser.create.driver
+  implicit val driver: WebDriver = Browser.create.driver
 
   "The 'save' button writes to the database" >> {
     val button = By.id("save")
@@ -125,4 +125,6 @@ class ExampleWebDriverTest extends mutable.Specification {
 
 ## Roundup
 
-You can see from the examples above that implicit functions (and often combining them with implicit values) can make for succinct and more readable APIs.
+You can see from the examples above that implicit functions (and often combining them with implicit values) can make for succinct and more readable APIs. Next we'll look at implicit classes.
+
+If you're interested in more Java bridge implicits like `toConsumer`, check out this [gist](https://gist.github.com/tobyweston/0fbb8eb114db48596e6b).

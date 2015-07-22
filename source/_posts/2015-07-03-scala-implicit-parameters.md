@@ -89,12 +89,12 @@ def example6(implicit x: Int)(implicit y: Int)      // wont compile
 
 ## Example
 
-As an example, the test below uses [Web Driver](http://www.seleniumhq.org/projects/webdriver/) (and specifically an instance of the `WebDriver` class) to check that a button is visible on screen. The `beVisible` method creates a `Matcher` that will check this for us but rather than pass in the instance explicitly, it uses an implicit `var` to do so.
+As an example, the test below uses [Web Driver](http://www.seleniumhq.org/projects/webdriver/) (and specifically an instance of the `WebDriver` class) to check that a button is visible on screen. The `beVisible` method creates a `Matcher` that will check this for us but rather than pass in the `driver` instance explicitly, it uses an implicit `val` to do so.
 
 {% codeblock lang:scala %}
 class ExampleWebDriverTest extends mutable.Specification {
 
-  implicit var driver: WebDriver = Browser.create.driver
+  implicit val driver: WebDriver = Browser.create.driver
   
   "The checkout button is visible" >> {
     val button = By.id("checkout")
