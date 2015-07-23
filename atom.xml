@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-05-11T21:13:25+01:00</updated>
+  <updated>2015-07-23T21:18:22+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,248 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Implicit Functions in Scala]]></title>
+    <link href="http://baddotrobot.com/blog/2015/07/14/scala-implicit-functions/"/>
+    <updated>2015-07-14T18:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/07/14/scala-implicit-functions</id>
+    <content type="html"><![CDATA[<p>In the <a href="http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters/">previous post</a>, we looked at implicit parameters; parameters that will be automatically passed values annotated as <code>implicit</code>. In this post, we&#8217;ll take a look at implicit functions and how they can be useful to convert things of one type to things of another.</p>
+
+<!-- more -->
+
+
+<h2>Implicit Functions</h2>
+
+<p>Implicit functions will be called automatically if the compiler thinks it&#8217;s a good idea to do so. What that means is that if your code doesn&#8217;t compile but would, if a call was made to an implicit function, Scala will call that function to make it compile. They&#8217;re typically used to create <em>implicit conversion functions</em>; single argument functions to automatically convert from one type to another.</p>
+
+<p>For example, the following function allows you to convert a Scala function into a instance of the Java 8 <code>Consumer</code> <a href="http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8/">single argument method</a> but still use Scala&#8217;s concise syntax.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">toConsumer</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">function</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">arg</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">apply</span><span class="o">(</span><span class="n">arg</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java&#8217;s lambda syntax. So rather than having to use the longhand version like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">Element</span><span class="o">]()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
+</span><span class='line'>  <span class="o">})</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can write this, where we just pass a Scala function to Java&#8217;s <code>forEach</code> method.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">((</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The argument to <code>forEach</code> is actually a function of type <code>Element =&gt; Unit</code>. Scala recognises that the <code>toConsumer</code> method could convert this into a <code>Consumer[Element]</code> and does so implicitly.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
+</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">function</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which is basically short-hand for this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">status</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">toConsumer</span><span class="o">(</span><span class="n">function</span><span class="o">))</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Another Example</h2>
+
+<p>If we have a button on we web page that we&#8217;d like to find using <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a>, we&#8217;d normally write something like the following, using a &#8220;locator&#8221; to locate it by <code>id</code> attribute.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It doesn&#8217;t take into account that the element might not be there when we call it (for example, when our UI uses ajax and adds the button asynchronously) and it&#8217;s also a bit verbose. We can use an implicit function to address both of these issues.</p>
+
+<p>The fragment below uses the <a href="https://selenium.googlecode.com/git/docs/api/java/index.html?org/openqa/selenium/support/ui/WebDriverWait.html"><code>WebDriverWait</code></a> class to wait for a UI element to appear on the screen (using <code>findElement</code> to check and retrying if necessary) and so smooths out the asynchronous issues.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s also an implicit function designed to convert a <code>By</code> locator into a <code>WebElement</code>. It means we can write something like the following where <code>button</code> is no longer a <code>WebElement</code>, but a <code>By</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Without the implicit <code>waitForElement</code> function, the code wouldn&#8217;t compile; <code>By</code> doesn&#8217;t have a <code>click</code> method on it. With the implicit function in scope however, the compiler works out that calling it (and passing in <code>create</code> as the argument), would return something that <em>does</em> have the <code>click</code> method and would compile.</p>
+
+<h2>Single Arguments Only Please</h2>
+
+<p>Now there&#8217;s one little bit I&#8217;ve brushed over here; namely how the <code>WebDriver</code> <code>driver</code> instance is made available. The example above assumes it&#8217;s available but it&#8217;d be nicer to pass it into the function along with <code>locator</code>. However, there&#8217;s a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala&#8217;s built in <a href="http://baddotrobot.com/blog/2013/07/21/curried-functions/">currying support</a>). By combining implicit parameters the we saw in the <a href="http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters/">previous post</a>, we can maintain the elegant API.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So the full example would look like this; making <code>driver</code> an implicit <code>val</code> means we can avoid a call to <code>button.click()(driver)</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="s">&quot;The &#39;save&#39; button writes to the database&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// scala calls the implicit def to convert the button into a WebElement</span>
+</span><span class='line'>    <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Roundup</h2>
+
+<p>You can see from the examples above that implicit functions (and often combining them with implicit values) can make for succinct and more readable APIs. Next we&#8217;ll look at implicit classes.</p>
+
+<p>If you&#8217;re interested in more Java bridge implicits like <code>toConsumer</code>, check out this <a href="https://gist.github.com/tobyweston/0fbb8eb114db48596e6b">gist</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Implicit Parameters in Scala]]></title>
+    <link href="http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters/"/>
+    <updated>2015-07-03T18:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters</id>
+    <content type="html"><![CDATA[<p>Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and <code>Int</code> to a <code>String</code> and rather than call that function <em>explicitly</em>, you can ask the compiler to do it for you, <em>implicitly</em>.</p>
+
+<p>In the next few posts, we&#8217;ll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.</p>
+
+<!-- more -->
+
+
+<p>There are three categories of &#8220;implicits&#8221;;</p>
+
+<ol>
+<li><strong><a href="http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters/">Implicit parameters</a></strong> (aka implicit values) will be automatically passed values that have been marked as <code>implicit</code></li>
+<li><strong><a href="http://baddotrobot.com/blog/2015/07/14/scala-implicit-functions/">Implicit functions</a></strong> are <code>def</code>s that will be called automatically if the code wouldn&#8217;t otherwise compile</li>
+<li><strong>Implicit classes</strong> extend behaviour of existing classes you don&#8217;t otherwise control (akin to <a href="https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html">categories</a> in Objective-C)</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>Implicit Parameters</h2>
+
+<p>At it&#8217;s simplest, an implicit parameter is just a function parameter annotated with the <code>implicit</code> keyword. It means that if no value is supplied when called, the compiler will look for an implicit value and pass it in for you.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="k">implicit</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">by</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You tell the compiler what it can pass in implicitly but annotating values with <code>implicit</code></p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">multiplier</span> <span class="k">=</span> <span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and call the function like this</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">multiply</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The compiler knows to convert this into a call to <code>multiply(multiplier)</code>. If you forget to define an implicit <code>var</code>, you&#8217;ll get an error like the following.</p>
+
+<pre><code>error: could not find implicit value for parameter by: Int
+       multiply
+       ^
+</code></pre>
+
+<h2>Implicit <code>val</code>, <code>var</code> or <code>def</code></h2>
+
+<p>You can ask the compiler to call your function with an implicit <code>val</code> (like we&#8217;ve just seen), a <code>var</code> or even another <code>def</code>. So, we could have written a function that returns an <code>Int</code> and Scala would attempt to use that instead.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">monday</span><span class="o">)</span> <span class="mi">4</span> <span class="k">else</span> <span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The compiler would try to resolve this as <code>multiply(f())</code>.</p>
+
+<p>However, you can&#8217;t have more than one in scope. So if we have both the <code>multipler</code> value and <code>f</code> function defined as implicit and call <code>multiply</code>, we&#8217;d get the following error.</p>
+
+<pre><code>error: ambiguous implicit values:
+ both value multiplier of type =&gt; Int
+ and method f of type =&gt; Int
+ match expected type Int
+       multiply
+       ^
+</code></pre>
+
+<h2>Syntax</h2>
+
+<p>You can only use <code>implicit</code> once in a parameter list and all parameters following it will be implicit. For example;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">example1</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>                       <span class="c1">// x is implicit</span>
+</span><span class='line'><span class="k">def</span> <span class="n">example2</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// x and y are implicit</span>
+</span><span class='line'><span class="k">def</span> <span class="n">example3</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// wont compile </span>
+</span><span class='line'><span class="k">def</span> <span class="n">example4</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// only y is implicit</span>
+</span><span class='line'><span class="k">def</span> <span class="n">example5</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// wont compile</span>
+</span><span class='line'><span class="k">def</span> <span class="n">example6</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>      <span class="c1">// wont compile</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Example</h2>
+
+<p>As an example, the test below uses <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a> (and specifically an instance of the <code>WebDriver</code> class) to check that a button is visible on screen. The <code>beVisible</code> method creates a <code>Matcher</code> that will check this for us but rather than pass in the <code>driver</code> instance explicitly, it uses an implicit <code>val</code> to do so.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="s">&quot;The checkout button is visible&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;checkout&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>    <span class="n">button</span> <span class="n">must</span> <span class="n">beVisible</span>           <span class="c1">// reads better than &#39;must beVisible(driver)&#39;   </span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="n">beVisible</span><span class="o">(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span><span class="o">)</span><span class="k">:</span> <span class="kt">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">S</span> <span class="k">&lt;:</span> <span class="kt">By</span><span class="o">](</span><span class="n">t</span><span class="k">:</span> <span class="kt">Expectable</span><span class="o">[</span><span class="kt">S</span><span class="o">])</span> <span class="k">=</span> <span class="n">result</span><span class="o">(</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">isDisplayed</span><span class="o">,</span>
+</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is not visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Roundup</h2>
+
+<p>Implicit parameters are useful for removing boiler plate parameter passing and can make your code more readable. So if you find yourself passing the same value several times in quick succession, they can help hide the duplication.</p>
+
+<p>The Scala library often use them to define default implementations that are &#8220;just available&#8221;. When you come to need a custom implementation, you can pass one in explicitly or use your own implicit value. A good example here is the <code>sorted</code> method on <a href="http://www.scala-lang.org/api/2.11.7/#scala.collection.SeqLike"><code>SeqLike</code></a> class.</p>
+
+<p>The really useful stuff though comes when we combine implicit parameters with the other types of &#8220;implicits&#8221;. Read more in the series to build up a picture.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[JMock to Scalamock Cheat Sheet]]></title>
@@ -1669,154 +1911,6 @@ for your current branch, you must specify a branch on the command line.
 [2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
 [3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
 [4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Daily Standups Don't Work]]></title>
-    <link href="http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work/"/>
-    <updated>2012-09-15T06:12:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work</id>
-    <content type="html"><![CDATA[<p>At some point, standups have stopped working for me. They&#8217;ve certainly moved away from the original intention to improve collaboration and communication. I&#8217;m not sure I can put my finger on why, but I&#8217;m just not getting much out of them any more. It&#8217;s led me to think that standups per se just don&#8217;t work. At least in most of the environments I&#8217;ve encountered. So I&#8217;ve been thinking about what could work in their place and I think its just to <em>talk</em> more.</p>
-
-<!-- more -->
-
-
-<h2>Typical Problems</h2>
-
-<p>Some typical problems I see again and again include standups taking too long; standups becoming a tool to chase progress or apply pressure and attendees glazing over when it&#8217;s not their turn to speak. <a href="http://jchyip.blogspot.co.uk/">Jason Yip</a> talks about some other <a href="http://martinfowler.com/articles/itsNotJustStandingUp.html#HowDoWeKnowWhenAStand-upIsGoingPoorly">common problems</a>. The biggest problem that I see though, is that standups have become more about the &#8220;status update&#8221; than communication and collaboration.</p>
-
-<h2>It&#8217;s Not A Status Update</h2>
-
-<p>If your standup is more about the status update than anything else, the rot may have already set in. It&#8217;s a shame  the first sentence of the <a href="https://en.wikipedia.org/wiki/Stand-up_meeting">wikipedia page</a> defines a standup as being a &#8220;status update&#8221;. In fact, nearly every page on the subject talks about it in terms of a &#8220;status update&#8221;. Nonsense.</p>
-
-<p>In my view, it should be about communication and collaboration. The trouble with &#8220;status update&#8221; as a phrase, is that it has dark undertones. It has <em>reporting</em> connotations and can promote a command and control relationship. It&#8217;s pretty common for team leads, project managers or other stakeholders to coerce the standup into a tool for reporting. <strong>That&#8217;s what the board is for.</strong></p>
-
-<p>When it becomes a tool to apply pressure or push a project management agenda, things can get pretty negative. Good team leads, managers and stakeholders will use the board for status updates and go round the team individually as they need to. It&#8217;s all too easy to condense this into an intense experience at standup but it won&#8217;t tell them the whole story. Those in project management roles have to work hard to preserve the spirit of the standup and get management information in other ways.</p>
-
-<h2>Communication &amp; Collaboration</h2>
-
-<p>If the spirit of the standup is really about communication and collaboration, why don&#8217;t we apply the same principles we apply with Extreme Programming, namely, to apply it all the time? <strong>I&#8217;d prefer standups to be more organic.</strong> Why not jump up and start a conversation when you feel like it? Grab anyone who looks up. Why prescribe a meeting first thing, when you may not have anything to talk about? When you&#8217;re working in the same physical proximity, it&#8217;s natural to overhear and contribute to the conversations around you. Standup, get involved.</p>
-
-<p>The standard <a href="http://www.extremeprogramming.org/rules/standupmeeting.html">three report items</a> feel a bit arbitrary and anyway, they&#8217;re really intended as a guide, not a mantra. I&#8217;d go further than that and suggest that even the idea of <em>reporting</em> at standup is the thin end of the wedge. The three questions promote the idea of <em>reporting</em> when we should be promoting the idea of <em>collaboration</em>.</p>
-
-<p>In the same way, wouldn&#8217;t it be nice if you pair with whomever, whenever the time is right? Rather than move board avatars around in the morning at standup to organising pairs, wouldn&#8217;t it be nice to seek a collaborator as you need to and change them often? A bit like socks.</p>
-
-<h2>The Good Bits</h2>
-
-<p>Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don&#8217;t mean to suggest it plainly never works. I just want to emphasise how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I&#8217;m talking here about <em>natural</em> conversation and social cohesion.</p>
-
-<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask &#8220;what is my immediate next action?&#8221;. It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
-
-<h2>That&#8217;s All Folks</h2>
-
-<p>It&#8217;s down to individuals in the team to engage. Forcing a standup meeting isn&#8217;t going to do that. Individuals should be nosey, keeping an eye on the board and the backlog. They don&#8217;t need to stand in front of the board and watch cards go up or move to the right in a daily standup to do that. They don&#8217;t need to listen to a synopsis of yesterday&#8217;s work if they were listening to it unfold yesterday. Management need another forum if they&#8217;re hijacking your standup and as an engaged individual, it&#8217;s up to you to champion that change.</p>
-
-<p>Like a lot of the agile practices, its easy to fall into the habit of the daily standup without stopping to consider why we&#8217;re doing so. If you really don&#8217;t think you&#8217;re getting much out of it, stop and question things. Following agile practices mechanically isn&#8217;t the goal in itself; it&#8217;s about more than that.</p>
-
-<p>If you fancy shaking things up, <a href="http://www.planningforfailure.com/">Todd Charron</a>&#8217;s created an interactive course with practical ideas to improve your standup. <a href="http://www.udemy.com/improv-your-agile-scrum-stand-up?couponCode=pffcommented">Check it out</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Diff Excel with Java and Hamcrest]]></title>
-    <link href="http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest/"/>
-    <updated>2012-09-14T13:21:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/09/14/diff-excel-with-java-and-hamcrest</id>
-    <content type="html"><![CDATA[<p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don&#8217;t offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find any differences.</p>
-
-<!-- more -->
-
-
-<h2>Building Spreadsheets</h2>
-
-<p><a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> takes a sheet as a template and allows you to apply changes programmatically to it. For example, you can start with a blank invoice sheet and insert items and totals from your Java code. It wraps Apache POI to make things easier to work with.</p>
-
-<p>However you create your sheet, it&#8217;d be nice to be able to unit test it. <a href="http://github.com/tobyweston/simple-excel">Simple-excel</a> offers <code>Matcher</code>s to do just that. You can write unit style tests, making assertions against individual cells or rows or you can write coarser grained tests that compare every cell of one sheet against every cell of another.</p>
-
-<h2>Matchers</h2>
-
-<p>The matchers you&#8217;re most likely to use can be found in the <code>bad.robot.excel.matchers.Matchers</code> class. They include <code>WorkbookMatcher</code> and <code>CellMatcher</code> but there are a bunch of finer grained matchers in the <code>bad.robot.excel.matchers</code> package.</p>
-
-<h2>Comparing Sheets</h2>
-
-<p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
-</span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you use the <code>MatcherAssert.assertThat</code> from Hamcrest rather than the vanilla JUnit version (<code>org.junit.Assert.assertThat</code>), you&#8217;ll see useful information on a failure.</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: entire workbook to be equal
-     but: cell at "C14" contained &lt;"bananas"&gt; expected &lt;nothing&gt;,
-          cell at "C15" contained &lt;"£1,850,000"&gt; expected &lt;"£1,850,000.00"&gt;,
-          cell at "D16" contained &lt;nothing&gt; expected &lt;"Tue Sep 04 06:30:00"&gt;
-</code></pre>
-
-<p>Other failures might include differing number of sheets, differently named sheets, different number of rows or columns. They&#8217;re all aggregated in the failure message so you don&#8217;t need to fix one and run the test again. It&#8217;ll try and report all errors up front.</p>
-
-<h2>Finer Grained Comparisons</h2>
-
-<p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We&#8217;d like to append this line item as a row on an invoice. It might look something like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
-</span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
-</span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we&#8217;d like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Where the <code>getCellForCoordinate</code> returns a POI <code>Cell</code> object and <code>equalTo</code> is statically imported from <code>bad.robot.excel.matchers.Matchers</code> (not regular Hamcrest <code>equalTo</code>);</p>
-
-<p>When it fails, you&#8217;ll get something friendly like this;</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: is &lt;999.99D&gt;
-     but: cell at "E2" contained &lt;1999.99D&gt; expected &lt;999.99D&gt;
-</code></pre>
-
-<p>It matches on type and content of the cell. So the string cell <code>"999.99"</code> is different than the numeric cell <code>999.99</code>. It doesn&#8217;t yet match against styling (things like borders or background colours).</p>
-
-<p>The project is open source. As always, I&#8217;d love to hear how you get on using it. Check it out and the leave a comment if you like it. Issues are tracked on the <a href="http://github.com/tobyweston/simple-excel/issues">project site</a>.</p>
-
-<h2>Recommended Reading</h2>
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?_encoding=UTF8&ASIN=0321503627&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
-<li><a href="http://www.amazon.co.uk/gp/product/839348930X/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=839348930X&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Practical Unit Testing with TestNG and Mockito</a>, Tomek Kaczanowski</li>
-<li><a href="http://www.amazon.co.uk/gp/product/0321784154/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321784154&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">ATDD by Example: A Practical Guide to Acceptance Test-driven Development</a>, Markus Gärtner</li>
-</ul>
-
 ]]></content>
   </entry>
   
