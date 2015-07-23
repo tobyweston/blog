@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Type Classes in Scala"
-date: 2015-07-06 18:42
+date: 2015-08-16 18:42
 comments: true
 categories: scala
 sidebar: false

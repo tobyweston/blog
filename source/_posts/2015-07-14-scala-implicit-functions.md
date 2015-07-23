@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Implicit Functions in Scala"
-date: 2015-07-04 18:42
+date: 2015-07-14 18:42
 comments: true
 categories: scala
 sidebar: false

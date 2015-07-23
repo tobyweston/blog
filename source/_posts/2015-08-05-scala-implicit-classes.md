@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Implicit Classes in Scala"
-date: 2015-07-05 18:42
+date: 2015-08-05 18:42
 comments: true
 categories: scala
 sidebar: false
