@@ -10,7 +10,7 @@ keywords: ""
 description: ""
 ---
 
-Either when looking for work or looking to recruit, I've been partaking in pair tests in one form or another since around 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
+Either when looking for work or looking to recruit, I've been doing pair tests in one form or another since 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
 
 It's flawed approach to critical thinking as there is no clear critque or way of objectively assessing them.
 
