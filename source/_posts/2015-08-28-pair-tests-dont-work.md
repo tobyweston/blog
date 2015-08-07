@@ -10,17 +10,17 @@ keywords: ""
 description: ""
 ---
 
-Either when looking for work or looking to recruit, I've been partaking in pair tests since around 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
+Either when looking for work or looking to recruit, I've been partaking in pair tests in one form or another since around 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
 
-Can you even remeber why you're doing pair tests for recruitment? Is it to see how they "pair"? How they "problem solve"? How they'd be to work with?
+It's flawed approach to critical thinking as there is no clear critque or way of objectively assessing them.
 
-The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone pairs, pair with them. Don't pretend to pair with them.
-
-
+Can you even remeber why you're doing pair tests for recruitment? Is it to see how they "pair"? How they "problem solve"? How they'd be to work with? The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone works, work with them. Don't _pretend_ to work with them.
 
 <!-- more -->
 
 ## Full of Contradictions
+
+Objective vs. Subjective
 
 
 ## From the Interviewer Perspective
@@ -63,3 +63,5 @@ There is often no clear yes or no result to a pair test. Best case scenario: som
 ## Summary
 
 Pair testing suffers hugely from cognitive bias(?)
+
+It is really hard to be objective in assessing candidates. Partly by definition as assessment is inheriently subjective. Pair testing comes with huge cognative bias for both parties (framing effect, anchoring)
