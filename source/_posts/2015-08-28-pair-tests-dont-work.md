@@ -41,9 +41,16 @@ It just comes with the territory. You're at interview. There is a very clear and
 
 > During my last round of recruitment using pair testing, I made a huge effort to put candidates at ease. We asked candidates to bring code with them to extend and made it clear there is no right or wrong answer. Yet, without exception, all of them showed signs of stress, paniced and basically got them selves into a pickle. 
 
+
 ## Not Everyone Solves Problems the Same Way
 
 When you ask a candidate to solve a problem, however trivial you might think it is, you're basically asking for them to come up with a solution in thrirty seconds. That's not how I work in my day job.
+
+I'll chew over a problem, try one or two things, roll back, have another go. I think about what I'm trying to do and that might take me a mintue. I don't hack the first thing that comes into my head. As an example, I did a pair test at ITV recently. They asked to solve the [Shopping Basket Problem](). I floundered when I was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really please with, including an elegant way to mixin offer types to items;
+
+    case object Banana extends Fruit(51) with ThreeForTwo
+    case object Apple extends Fruit(12) with TwoForOne
+    case object Pineapple extends Fruit(95)
 
 
 ### An Example
