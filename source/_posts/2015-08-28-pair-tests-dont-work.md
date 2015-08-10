@@ -12,9 +12,7 @@ description: ""
 
 Either when looking for work or looking to recruit, I've been doing pair tests in one form or another since 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
 
-It's flawed approach to critical thinking as there is no clear critque or way of objectively assessing them.
-
-Can you even remeber why you're doing pair tests for recruitment? Is it to see how they "pair"? How they "problem solve"? How they'd be to work with? The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone works, work with them. Don't _pretend_ to work with them.
+Why do we even use "pair tests" for recruitment? Is it to see how candidates _pair_? How they _problem solve_? How they'd be to work with? The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone works, work with them. Don't _pretend_ to work with them.
 
 <!-- more -->
 
@@ -30,7 +28,7 @@ If the goal is to see how candidates pair, a pair _test_ in an _interview_ conte
 
 ## From the Candidates Perspective
 
-The candidate has a right to understand how it might be working at your company and a pair test gives them very little information. As a candidate I'm terribly nervous, I'm full of doubt and questions about what the interviwers want to see. Should I test drive? 
+The candidate has a right to understand how it might be working at your company and a pair test gives them very little information. As a candidate I'm terribly nervous, I'm full of doubt and questions about what the interviwers really want to see. 
 
 Candidates are often hyper-sesitive to the interviewrs comments so when an interviewer asks what she considers an inocous question about the exercise, it's all to easy for the candidate to basically freak out. For example;
 
@@ -72,3 +70,5 @@ There is often no clear yes or no result to a pair test. Best case scenario: som
 Pair testing suffers hugely from cognitive bias(?)
 
 It is really hard to be objective in assessing candidates. Partly by definition as assessment is inheriently subjective. Pair testing comes with huge cognative bias for both parties (framing effect, anchoring)
+
+Pair testing is a flawed approach to critical thinking as there is no clear critque or way of objectively assessing them.
