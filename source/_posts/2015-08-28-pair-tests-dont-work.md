@@ -35,9 +35,10 @@ Candidates are often hyper-sesitive to the interviewrs comments so when an inter
     Interviewer:            "So why have you used a `val` there and not a `def`."
     Candidates inner voice: "Becuase that's how I like to do it... hang on, I can't say that. They know something I don't know. What is it? WHAT IS IT? Oh, my word, they think I'm an idiot. I *am* an idoit."  
 
-It just comes with the territory. You're at interview. There is a very clear and very deep seated notion of hiarchy, employer/employee at play. Candiates are often expected to want to take a job, even when they know very little about it. Remember, any interview should be a two way process. Am *I* right for the role and is the *role* right for me. It should be a partnership. 
+It just comes with the territory. You're at interview. There is a very clear and very deep seated notion of "know your place"  at play. Candiates are often expected to want to take a job, even when they know very little about it. Remember, any interview should be a two way process. Am *I* right for the role and is the *role* right for me. It should be a partnership. 
 
 > During my last round of recruitment using pair testing, I made a huge effort to put candidates at ease. We asked candidates to bring code with them to extend and made it clear there is no right or wrong answer. Yet, without exception, all of them showed signs of stress, paniced and basically got them selves into a pickle. 
+
 
 
 ## Not Everyone Solves Problems the Same Way
