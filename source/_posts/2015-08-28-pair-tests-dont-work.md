@@ -35,7 +35,7 @@ Candidates are often hyper-sesitive to the interviewrs comments so when an inter
     Interviewer:            "So why have you used a `val` there and not a `def`."
     Candidates inner voice: "Becuase that's how I like to do it... hang on, I can't say that. They know something I don't know. What is it? WHAT IS IT? Oh, my word, they think I'm an idiot. I *am* an idoit."  
 
-It just comes with the territory. You're at interview. There is a very clear and very deep seated notion of "know your place"  at play. Candiates are often expected to want to take a job, even when they know very little about it. Remember, any interview should be a two way process. Am *I* right for the role and is the *role* right for me. It should be a partnership. 
+It just comes with the territory. You're at interview. There is a very clear and very deep seated notion of employer / employee deference at play. Candiates are often expected to want to take a job, even when they know very little about it. Remember, any interview should be a two way process. Am *I* right for the role and is the *role* right for me. It should be a partnership. 
 
 > During my last round of recruitment using pair testing, I made a huge effort to put candidates at ease. We asked candidates to bring code with them to extend and made it clear there is no right or wrong answer. Yet, without exception, all of them showed signs of stress, paniced and basically got them selves into a pickle. 
 
@@ -45,25 +45,24 @@ It just comes with the territory. You're at interview. There is a very clear and
 
 When you ask a candidate to solve a problem, however trivial you might think it is, you're basically asking for them to come up with a solution in thrirty seconds. That's not how I work in my day job.
 
-I'll chew over a problem, try one or two things, roll back, have another go. I think about what I'm trying to do and that might take me a mintue. I don't hack the first thing that comes into my head. As an example, I did a pair test at ITV recently. They asked to solve the [Shopping Basket Problem](). I floundered when I was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really please with, including an elegant way to mixin offer types to items;
+I'll chew over a problem, try one or two things, roll back, have another go. I think about what I'm trying to do and that might take me a mintue. I don't hack the first thing that comes into my head. As an example, I did a pair test at ITV recently. They asked me to solve the [Shopping Basket Problem](). I floundered when I put was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really pleased with, including an elegant way to mixin offers to shoppinh items;
 
     case object Banana extends Fruit(51) with ThreeForTwo
     case object Apple extends Fruit(12) with TwoForOne
     case object Pineapple extends Fruit(95)
 
 
-### An Example
-
-
 ## Not Objective
 
-There is often no clear yes or no result to a pair test. Best case scenario: someone flys through the exercise and gets everything "right". Are they an easy hire? Is there more to them? Because of the stressful nature, you can't be sure you're getting the best out of a candidate but people often don't take that into account and assume the simulation for realistic in all meaningful dimensions.
+There is often no clear yes or no result to a pair test. Because of the stressful nature, you can't be sure you're getting the best out of candidates. People often don't take this into account and assume the simulation was realistic. Best case scenario: someone flys through the exercise and gets everything "right". Are they an easy hire? Is there more to them? 
 
-> In my recent round of recruitment, we offered four roles and each of them bsaically messed up the pair test. Each of them paniced or went off in a weird direction in a moment of panic. There's no coming back for the candidate when that happens. I'm hugely proud that we understood things enough to factor in other aspects and still offer on what otherwise would have been seen as a "fail".
+> In my recent round of recruitment, we offered four roles and each of them bsaically messed up the pair test. Each of them paniced or went off in a weird direction in a moment of stress. There's no coming back for the candidate when that happens. I'm hugely proud that we understood things enough to factor in other aspects and still offer on what otherwise would have been seen as a "fail".
 
 
 
 ## A Better Way
+
+
 
 
 ## Summary
