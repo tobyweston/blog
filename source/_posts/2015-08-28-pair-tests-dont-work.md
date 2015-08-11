@@ -45,7 +45,7 @@ It just comes with the territory. You're at interview. There is a very clear and
 
 When you ask a candidate to solve a problem, however trivial you might think it is, you're basically asking for them to come up with a solution in thrirty seconds. That's not how I work in my day job.
 
-I'll chew over a problem, try one or two things, roll back, have another go. I think about what I'm trying to do and that might take me a mintue. I don't hack the first thing that comes into my head. As an example, I did a pair test at ITV recently. They asked me to solve the [Shopping Basket Problem](). I floundered when I put was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really pleased with, including an elegant way to mixin offers to shoppinh items;
+I'll chew over a problem, try one or two things, roll back, have another go. I think about what I'm trying to do and that might take me a mintue. I don't hack the first thing that comes into my head. As an example, I did a pair test at ITV recently. They asked me to solve the [Shopping Basket Problem](). I floundered when I put was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really pleased with, including an elegant way to [mixin]() offers to shopping items;
 
     case object Banana extends Fruit(51) with ThreeForTwo
     case object Apple extends Fruit(12) with TwoForOne
@@ -62,7 +62,9 @@ There is often no clear yes or no result to a pair test. Because of the stressfu
 
 ## A Better Way
 
+Rather than simulate a working environment, nurture a real working environment. It's not always practicle to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day. Batch your candidates into cohorts and ask them to pair with _each other_ whilst you observe. Solve a sensible but fun problem (see my examples for some ideas) over the course of an entire day and get them to explain their choices and experiences.
 
+Rotate the pairs and get everyone on your dev team involved. Get them to walk around the room and observe and because you've got a full day, you can mix in more traditional one-to-one interviews towarrds the end of the day. Oh, and don't forget to provide lunch.
 
 
 ## Summary
