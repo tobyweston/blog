@@ -62,15 +62,21 @@ There is often no clear yes or no result to a pair test. Because of the stressfu
 
 ## A Better Way
 
-Rather than simulate a working environment, nurture a real working environment. It's not always practicle to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day. Batch your candidates into cohorts and ask them to pair with _each other_ whilst you observe. Solve a sensible but fun problem (see my examples for some ideas) over the course of an entire day and get them to explain their choices and experiences.
+Rather than simulate a working environment, nurture a real working environment. It's not always practicle to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day or hackathon.
 
-Rotate the pairs and get everyone on your dev team involved. Get them to walk around the room and observe and because you've got a full day, you can mix in more traditional one-to-one interviews towarrds the end of the day. Oh, and don't forget to provide lunch.
+###  Assessment Days 
+
+Batch your candidates into cohorts and ask them to pair with _each other_ whilst you observe. Solve a sensible but fun problem (see my examples for some ideas) over the course of an entire day and get them to explain their choices and experiences.
+
+Rotate the pairs and get everyone on your dev team involved. Get them to walk around the room to observe candidates. As you have the time, you can mix in more traditional one-to-one interviews towarrds the end of the day. Oh, and don't forget to provide lunch.
 
 
 ## Summary
 
 Pair testing suffers hugely from cognitive bias(?)
 
-It is really hard to be objective in assessing candidates. Partly by definition as assessment is inheriently subjective. Pair testing comes with huge cognative bias for both parties (framing effect, anchoring)
+It is really hard to be objective in assessing candidates using pair testing. Partly because this kind of assessment is inheriently subjective. Pair testing doesn't lend itself to critical thinking as there is no clear critque. Trying to identify objective criteria for code is a waste of your time; "quality" is not quantitive.
+
+Pair testing comes with huge cognative bias for both parties (framing effect, anchoring)
 
 Pair testing is a flawed approach to critical thinking as there is no clear critque or way of objectively assessing them.
