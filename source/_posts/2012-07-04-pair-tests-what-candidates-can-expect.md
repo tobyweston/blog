@@ -32,7 +32,7 @@ After the exercise, you may be asked "how did you find that?". If not, I like to
 
 ## Be Yourself
 
-There's often an unspoken expectation that you'll be demonstrating your mad TDD skills. I think deep down though, people are interested in seeing how you work, not necessarily that you work in a test driven way. I think its fair to say people do expect to see some tests, so make sure write some. My point is that you shouldn't be penalised if you right them retrospectively rather than first. If you're not comfortable doing TDD in your day job, don't suddenly make out it's your bread and butter. Try and work how you would on your own. Don't fake it.
+There's often an unspoken expectation that you'll be demonstrating your mad TDD skills. I think deep down though, people are interested in seeing how you work, not necessarily that you work in a test driven way. I think it's fair to say people do expect to see some tests, so make sure you write _some_. My point is that you shouldn't be penalised if you right them retrospectively rather than first. If you're not comfortable doing TDD in your day job, don't suddenly make out it's your bread and butter. Try and work how you would on your own. Don't fake it.
 
 Another motivation for the pairing exercise is to see if, as a prospective pair, you can get on. If you relax and let your personality come through, you'll both have a better idea what it would be like pairing day in, day out.
 
