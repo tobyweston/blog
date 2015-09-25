@@ -6,8 +6,8 @@ comments: true
 categories: 
 sidebar: false
 published: false
-keywords: ""
-description: ""
+keywords: "agile, pair test, interview, best interview answers, how to beat the interview, technical interviews"
+description: "Pair tests are outdated. Don't cling to biased and loaded interview techniques when looking to hire developers, embrace fairer and more balanced techniques."
 ---
 
 Either when looking for work or looking to recruit, I've been doing pair tests in one form or another since 2008. I've only recently come to conclusion that they just don't work. At least not reliably. 
