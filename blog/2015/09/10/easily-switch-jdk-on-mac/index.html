@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Atomiticy of the Thread class - bad.robot</title>
+  <title>Easily Switch JDK on Mac - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Java's Thread seems not to maintain it's state (RUNNABLE, WAITING etc) atomically with it's interrupt status flag">
-  <meta name="keywords" content="thread, interrupt status flag, interrupt, state, RUNNABLE, WAITING, TIMED_WAITING, TERMINATED">
+  <meta name="description" content="Quickly switch between Java versions on the Mac">
+  <meta name="keywords" content="git, jdk, jdk versions, java 8, java 9, java 7, mac, mac osx">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2009/12/10/atomiticy-of-thread-class/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 itemprop="name" class="entry-title">Atomiticy of the Thread class</h1>
+        <h1 itemprop="name" class="entry-title">Easily Switch JDK on Mac</h1>
       
     
     
@@ -145,71 +145,52 @@
   
 
 
-<time itemprop="datePublished" content="2009-12-10 00:00:00 +0000" datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 10<span>th</span>, 2009</time>
+<time itemprop="datePublished" content="2015-09-10 19:47:00 +0100" datetime="2015-09-10T19:47:00+01:00" pubdate data-updated="true" class="updated">Sep 10<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+<div class="entry-content"><p>I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the <code>JAVA_HOME</code> environment variable was always a pain. Then I discovered the handy <code>java_home</code> command.</p>
 
-<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
+<pre><code>/usr/libexec/java_home -V
+</code></pre>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
-</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
-</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
-
-<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
+<p>It shows the Java versions are available and where there are. For example, on my machine, the output looks like this.</p>
 
 <!-- more -->
 
 
-<p>I setup another thread to just poll the sleeping thread for its status and it showed the following.</p>
-
-<pre><code>thread.isInterrupted() = false, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() = TIMED_WAITING  
-thread.isInterrupted() = true, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() TERMINATED  
+<pre><code>Matching Java Virtual Machines (4):
+    1.8.0, x86_64:  "Java SE 8" /Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
+    1.7.0_25, x86_64:   "Java SE 7" /Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
+    1.6.0_65-b14-466.1, x86_64: "Java SE 6" /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+    1.6.0_65-b14-466.1, i386:   "Java SE 6" /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
 </code></pre>
 
-<p>So my thread was interrupted! It seems to say that when a thread terminates, it will reset the interrupt status flag. Looking at the source, it looks like Java maintains the flag at the native level and not as a member of the <code>Thread</code> class.</p>
+<p>If you use the alternative option <code>-v &lt;version&gt;</code>, you get the path to a specific version.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">interrupt0</span><span class="o">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Looking at another run, I got the following</p>
-
-<pre><code>thread.isInterrupted() = false, thread.getState() = RUNNABLE
-thread.isInterrupted() = false, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() = RUNNABLE  
-thread.isInterrupted() = false, thread.getState() = TIMED_WAITING  
-thread.isInterrupted() = true, thread.getState() = TIMED_WAITING  
-thread.isInterrupted() = false, thread.getState() = TERMINATED  
+<pre><code>/usr/libexec/java_home -v 1.8
 </code></pre>
 
-<p>This is even more interesting as it would suggest that an interrupt doesn&#8217;t update the thread&#8217;s state and the interrupt flag atomically.</p>
+<p>It shows my 1.8 version lives at <code>/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home</code>.</p>
 
-<blockquote><p>It would seem thread termination will reset the interrupt status flag and
-that an interrupt doesn&#8217;t update the interrupt status flag and state
-atomically.</p></blockquote>
+<h2>Switch it!</h2>
 
-<p>As an couple of caveats to the type of test above where I want to check the interrupt status flag, its a good idea to avoid side affects by using the terribly named method <code>Thread.interrupted</code> rather than <code>isInterrupted</code>. I also had to use a stubbed thread to reliably tell if the interrupt was called.</p>
+<p>To switch between versions, I can just run the following.</p>
 
-<p>See the code <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/test/java/com/google/code/tempusfugit/concurrency/ThreadUtilsTest.java">here</a>.</p>
+<pre><code>export JAVA_HOME=`/usr/libexec/java_home -v 1.8` 
+</code></pre>
+
+<p>You could also add an alias to switch to a specific version;</p>
+
+<pre><code>alias setjava8='export JAVA_HOME=`/usr/libexec/java_home -v 1.8`'
+</code></pre>
+
+<p>If you want to do something more sophisticated, you could try something like <a href="http://raibledesigns.com/rd/entry/installing_openjdk_7_on_os#comment-1311684547000">this</a> or <a href="http://nemecec.blogspot.co.uk/2012/04/os-x-switching-java-versions-easily.html">this</a>.</p>
+
+<p><strong>Caveat:</strong> I don&#8217;t have Java on my path, if you do, switching versions using the environment variable may not work.</p>
 </div>
 
 
@@ -233,14 +214,8 @@ atomically.</p></blockquote>
   
 
 
-<time itemprop="datePublished" content="2009-12-10 00:00:00 +0000" datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 10<span>th</span>, 2009</time>
+<time itemprop="datePublished" content="2015-09-10 19:47:00 +0100" datetime="2015-09-10T19:47:00+01:00" pubdate data-updated="true" class="updated">Sep 10<span>th</span>, 2015</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/tempus-fugit/'>tempus-fugit</a>
-  
-</span>
 
 
     </p>
@@ -254,10 +229,8 @@ atomically.</p></blockquote>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/11/11/time-flies/" title="Previous Post: Time Flies 1.0">&laquo; Time Flies 1.0</a>
+        <a class="basic-alignment left" href="/blog/2015/07/14/scala-implicit-functions/" title="Previous Post: Implicit Functions in Scala">&laquo; Implicit Functions in Scala</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2009/12/24/deadlock/" title="next Post: Deadlock detection in Java">Deadlock detection in Java &raquo;</a>
       
     </p>
   </footer>
@@ -288,8 +261,8 @@ atomically.</p></blockquote>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2009/12/10/atomiticy-of-thread-class/';
-        var disqus_url = 'http://baddotrobot.com/blog/2009/12/10/atomiticy-of-thread-class/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac/';
+        var disqus_url = 'http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-07-23T21:18:22+01:00</updated>
+  <updated>2015-10-27T21:53:20+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -456,7 +456,7 @@
 
 <p>When you're adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
 
-<p>I've developed a course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you're interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a>.</p>
+<p>I've developed a video course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you're interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a> or read my book <a href="http://amzn.to/1M0w9jZ">Learn Scala for Java Developers</a>.</p>
 ]]></content>
   </entry>
   
@@ -588,6 +588,18 @@
 <p>Because Scala <em>has objects</em> you can't really just ignore object-oriented semantics and thinking. Not unless, like I say, the entire team buy into functional only code. If that were the case, then reusable behaviour should really be represented as functions on <a href="http://tutorials.jenkov.com/scala/singleton-and-companion-objects.html">Scala singleton objects</a> and not traits. You'd be forced to use composition anyway.</p>
 
 <p>By that logic, it feels like extending traits for re-use in a functional programming context is just lazy. Mixing behaviour "the right way" seems much less contentious.</p>
+
+<h2>Recommended Reading</h2>
+
+<ul>
+<li><a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What's New in Java 8</a>, Toby Weston</li>
+<li><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
+</ul>
+
+
+<p>&nbsp;
+&nbsp;
+&nbsp;</p>
 ]]></content>
   </entry>
   

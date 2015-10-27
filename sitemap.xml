@@ -232,7 +232,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/</loc>
-        <lastmod>2014-11-25T19:02:09+00:00</lastmod>
+        <lastmod>2015-08-11T19:55:51+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/</loc>
@@ -280,7 +280,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/01/23/useful-git-commands/</loc>
-        <lastmod>2014-11-25T19:02:09+00:00</lastmod>
+        <lastmod>2015-08-04T09:59:00+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2013/05/24/mac-tips/</loc>
@@ -312,7 +312,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/02/18/method-references-in-java8/</loc>
-        <lastmod>2015-04-28T20:28:35+01:00</lastmod>
+        <lastmod>2015-10-27T19:43:38+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8/</loc>
@@ -332,11 +332,11 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/09/22/scala-mixins/</loc>
-        <lastmod>2014-11-25T19:02:09+00:00</lastmod>
+        <lastmod>2015-10-27T19:43:38+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/</loc>
-        <lastmod>2015-03-02T19:49:56+00:00</lastmod>
+        <lastmod>2015-10-27T19:38:25+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet/</loc>
@@ -351,16 +351,20 @@
         <lastmod>2015-07-23T20:37:08+01:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac/</loc>
+        <lastmod>2015-09-25T13:30:35+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/404.html</loc>
         <lastmod>2013-02-02T12:37:29+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2015-07-23T20:37:08+01:00</lastmod>
+        <lastmod>2015-10-27T19:43:38+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>
-        <lastmod>2015-04-28T20:32:11+01:00</lastmod>
+        <lastmod>2015-10-27T19:43:38+00:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/code/builds.html</loc>
@@ -376,6 +380,6 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2015-07-23T20:37:08+01:00</lastmod>
+        <lastmod>2015-10-27T19:43:38+00:00</lastmod>
     </url>
 </urlset>

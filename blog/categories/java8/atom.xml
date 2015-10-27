@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-07-23T21:18:22+01:00</updated>
+  <updated>2015-10-27T21:53:20+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -634,14 +634,14 @@ function(() -&gt; "hello".toString());
 <p>}
 ```</p>
 
-<p><a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?<em>encoding=UTF8&amp;ASIN=1508734178&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
+<p><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?<em>encoding=UTF8&amp;ASIN=1508734178&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
 <a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;"><img itemprop="image" class="right" src="http://titlepages.leanpub.com/whatsnewjava8/bookpage" width="140" height="180" title="Learn Scala for Java Developers" ></a></p>
 
 <h2>Recommended Reading</h2>
 
 <ul>
 <li><a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What's New in Java 8</a>, Toby Weston</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
+<li><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
 </ul>
 
 

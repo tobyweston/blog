@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In the previous post, we looked at implicit parameters; parameters that will be automatically passed values annotated as implicit. In this post, we&# &hellip;">
+  <meta name="description" content="I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2015-07-23 21:18:22 +0100 -->
+    <!-- last update; 2015-10-27 21:53:20 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-09-10 19:47:00 +0100" datetime="2015-09-10T19:47:00+01:00" pubdate data-updated="true" class="updated">Sep 10<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the <code>JAVA_HOME</code> environment variable was always a pain. Then I discovered the handy <code>java_home</code> command.</p>
+
+<pre><code>/usr/libexec/java_home -V
+</code></pre>
+
+<p>It shows the Java versions are available and where there are. For example, on my machine, the output looks like this.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -526,49 +574,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-02-18 21:33:00 +0000" datetime="2014-02-18T21:33:00+00:00" pubdate data-updated="true" class="updated">Feb 18<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle docs</a> describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/02/18/method-references-in-java8/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -582,6 +587,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/07/14/scala-implicit-functions/">Implicit Functions in Scala</a>
@@ -649,10 +658,6 @@
     
       <li class="post">
         <a href="/blog/2013/05/24/mac-tips/">Mac Tips</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/23/useful-git-commands/">Useful Git Commands</a>
       </li>
     
   </ul>

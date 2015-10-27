@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-07-23T21:18:22+01:00</updated>
+  <updated>2015-10-27T21:53:20+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Easily Switch JDK on Mac]]></title>
+    <link href="http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac/"/>
+    <updated>2015-09-10T19:47:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/09/10/easily-switch-jdk-on-mac</id>
+    <content type="html"><![CDATA[<p>I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the <code>JAVA_HOME</code> environment variable was always a pain. Then I discovered the handy <code>java_home</code> command.</p>
+
+<pre><code>/usr/libexec/java_home -V
+</code></pre>
+
+<p>It shows the Java versions are available and where there are. For example, on my machine, the output looks like this.</p>
+
+<!-- more -->
+
+
+<pre><code>Matching Java Virtual Machines (4):
+    1.8.0, x86_64:  "Java SE 8" /Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home
+    1.7.0_25, x86_64:   "Java SE 7" /Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
+    1.6.0_65-b14-466.1, x86_64: "Java SE 6" /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+    1.6.0_65-b14-466.1, i386:   "Java SE 6" /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+</code></pre>
+
+<p>If you use the alternative option <code>-v &lt;version&gt;</code>, you get the path to a specific version.</p>
+
+<pre><code>/usr/libexec/java_home -v 1.8
+</code></pre>
+
+<p>It shows my 1.8 version lives at <code>/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home</code>.</p>
+
+<h2>Switch it!</h2>
+
+<p>To switch between versions, I can just run the following.</p>
+
+<pre><code>export JAVA_HOME=`/usr/libexec/java_home -v 1.8` 
+</code></pre>
+
+<p>You could also add an alias to switch to a specific version;</p>
+
+<pre><code>alias setjava8='export JAVA_HOME=`/usr/libexec/java_home -v 1.8`'
+</code></pre>
+
+<p>If you want to do something more sophisticated, you could try something like <a href="http://raibledesigns.com/rd/entry/installing_openjdk_7_on_os#comment-1311684547000">this</a> or <a href="http://nemecec.blogspot.co.uk/2012/04/os-x-switching-java-versions-easily.html">this</a>.</p>
+
+<p><strong>Caveat:</strong> I don&#8217;t have Java on my path, if you do, switching versions using the environment variable may not work.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Implicit Functions in Scala]]></title>
@@ -465,7 +512,7 @@
 
 <p>When you&#8217;re adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
 
-<p>I&#8217;ve developed a course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a>.</p>
+<p>I&#8217;ve developed a video course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you&#8217;re interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a> or read my book <a href="http://amzn.to/1M0w9jZ">Learn Scala for Java Developers</a>.</p>
 ]]></content>
   </entry>
   
@@ -591,6 +638,18 @@
 <p>Because Scala <em>has objects</em> you can&#8217;t really just ignore object-oriented semantics and thinking. Not unless, like I say, the entire team buy into functional only code. If that were the case, then reusable behaviour should really be represented as functions on <a href="http://tutorials.jenkov.com/scala/singleton-and-companion-objects.html">Scala singleton objects</a> and not traits. You&#8217;d be forced to use composition anyway.</p>
 
 <p>By that logic, it feels like extending traits for re-use in a functional programming context is just lazy. Mixing behaviour &#8220;the right way&#8221; seems much less contentious.</p>
+
+<h2>Recommended Reading</h2>
+
+<ul>
+<li><a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What&#8217;s New in Java 8</a>, Toby Weston</li>
+<li><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
+</ul>
+
+
+<p>&nbsp;
+&nbsp;
+&nbsp;</p>
 ]]></content>
   </entry>
   
@@ -1151,14 +1210,14 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1508734178&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
+<p><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1508734178&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
 <a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;"><img itemprop="image" class="right" src="http://titlepages.leanpub.com/whatsnewjava8/bookpage" width="140" height="180" title="Learn Scala for Java Developers" ></a></p>
 
 <h2>Recommended Reading</h2>
 
 <ul>
 <li><a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What&#8217;s New in Java 8</a>, Toby Weston</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
+<li><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
 </ul>
 
 
@@ -1674,7 +1733,7 @@ for your current branch, you must specify a branch on the command line.
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global alias.last <span class="s2">&quot;log -1 HEAD&quot;</span>
 </span><span class='line'>git config --global alias.st <span class="s2">&quot;status -sb&quot;</span>
-</span><span class='line'>git config --global alias.lg <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset abbrev-commit --date=relative&quot;</span>
+</span><span class='line'>git config --global alias.lg <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1804,113 +1863,6 @@ for your current branch, you must specify a branch on the command line.
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Sending Messages vs Method Invocation]]></title>
-    <link href="http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation/"/>
-    <updated>2012-10-06T12:12:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/10/06/sending-messages-vs-method-invocation</id>
-    <content type="html"><![CDATA[<p><img itemprop="image" class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
-
-<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we&#8217;re on the topic, we&#8217;ll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
-
-<!-- more -->
-
-
-<h2>Sending Messages</h2>
-
-<p>The terminology of sending a message to an object is partly historical. Languages like Smalltalk adopted it as a metaphor when working with objects. To understand why the metaphor is useful, we have to look at things before the advent of object oriented languages. In these days, procedural programming relied on subroutines (functions and procedures) to modify state. With no concept of &#8220;objects&#8221;, state is simply associated with data structures. So applying a function to those structures would produce new state and applying a procedure would modify state.</p>
-
-<p>With the arrival of &#8220;objects&#8221; to encapsulate state <em>and</em> behaviour, the messaging metaphor invites us to think about objects performing their own operations. Objects communicate by sending each other <em>messages</em>. Instead of calling a function directly in procedural programming, you send a message to an object requesting it to perform one of it&#8217;s own subroutines. This allows us to think about <em>methods</em> in more abstract terms. Rather than think about data structures and the functions (and procedures) that affect them, we can focus on <em>behaviours</em> [2].</p>
-
-<blockquote><p>So sending messages helps us think in object-oriented terms rather than procedural or functional terms; we think in terms of behaviours rather than data structures. However, there is also a more concrete, technical difference.</p></blockquote>
-
-<p>Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it&#8217;s just done behind the scenes at runtime. By calling a method, for example, <code>person.eat(apple)</code>, the reference to <code>person</code> allows the JVM to associate the object with the procedure <code>eat</code>. It&#8217;s a process called <a href="http://en.wikipedia.org/wiki/Dynamic_dispatch">dynamic dispatch</a>.</p>
-
-<p>It&#8217;s very similar in concept to the distinction between functions and methods.</p>
-
-<h2>Functions vs Methods</h2>
-
-<p>Functions and procedures are <a href="http://en.wikipedia.org/wiki/Subroutine">subroutines</a> disassociated from the data they act upon. Methods on the other hand are subroutines associated with objects. Functions are class level subroutines whereas methods are object level subroutines. For example, a <em>method</em> in Objective-C, is compiled down to a C <em>function</em> with additional parameters, one of which is the receiver object (<code>id</code>). It associates the function with this object.</p>
-
-<p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
-
-<figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// nom nom nom</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The equivalent C function, would look like this. It isn&#8217;t associated with an instance of a class and would be globally available to all modules. It doesn&#8217;t make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
-
-<figure class='code'><figcaption><span>C Function  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// nom nom nom</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
-
-<figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// nom nom nom</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Object References</h2>
-
-<p>So where does object references come in?</p>
-
-<p>Java uses <em>object references</em> not <em>pointers</em>. Pointers are variables who&#8217;s <em>value</em> is an address in memory. With pointer arithmetic, you can manually manipulate this value to zip around memory locations. Java prevents you from directly accessing memory locations directly like this. Because a pointer is really just a memory location, it can point to anything, a integer, a float, a <code>struct</code> or even to a function [3]. Java&#8217;s object references point to objects only.</p>
-
-<p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says &#8220;in Java, a message call looks like a call to a function pointer in a C structure&#8221;, he&#8217;s referring to a C structure that contains a pointer to a function being dereferenced and how Java&#8217;s method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
-</span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and dereferencing it would look similar to Java</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the context of his article, Chisnall is highlighting that Objective-C makes it&#8217;s syntax as distinct as possible when talking about message sending. It&#8217;s a useful idea as it makes the terminology of sending messages explicit and baked into the way you work with the language. With Java, you have to work harder to conceptually take up the metaphor. Java&#8217;s terminology is around calling a method so it brushes over some of these subtleties.</p>
-
-<h2>Roundup</h2>
-
-<p>For me, the challenge of working with object-oriented designs is keeping my object-oriented head on. It&#8217;s easy to slip into a procedural or functional way of coding but when the domain fits, I find that object-oriented solutions just <em>click</em>. To that end, I jump on any tool that helps remind me to think in terms of objects and their intercommunication, behaviours not accessors (tell don&#8217;t ask). I find the message sending metaphor useful in doing just that.</p>
-
-<h2>References</h2>
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p>[1] Objective-C for Java Programmers, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1568732">Part 1</a>, <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Part 2</a>, David Chisnall <br/>
-[2] <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html">Object-Oriented Programming with Objective-C</a>, Apple.    <br/>
-[3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
-[4] <a href="http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html">Object-C Messages</a>, Mike Ash</p>
 ]]></content>
   </entry>
   

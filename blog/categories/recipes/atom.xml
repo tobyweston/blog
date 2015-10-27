@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-07-23T21:18:22+01:00</updated>
+  <updated>2015-10-27T21:53:20+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -284,7 +284,7 @@ git config --global color.ui true
 <p><code>sh
 git config --global alias.last "log -1 HEAD"
 git config --global alias.st "status -sb"
-git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset abbrev-commit --date=relative"
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit --date=relative"
 </code></p>
 
 <h2>Recommended Reading</h2>
