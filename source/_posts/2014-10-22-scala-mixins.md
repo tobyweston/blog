@@ -137,3 +137,13 @@ Scala is both an object-oriented language and a functional language. So unless y
 Because Scala _has objects_ you can't really just ignore object-oriented semantics and thinking. Not unless, like I say, the entire team buy into functional only code. If that were the case, then reusable behaviour should really be represented as functions on [Scala singleton objects](http://tutorials.jenkov.com/scala/singleton-and-companion-objects.html) and not traits. You'd be forced to use composition anyway.
 
 By that logic, it feels like extending traits for re-use in a functional programming context is just lazy. Mixing behaviour "the right way" seems much less contentious.
+
+
+## Recommended Reading
+
+ * <a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What's New in Java 8</a>, Toby Weston
+ * <a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston
+
+&nbsp;
+&nbsp;
+&nbsp;
