@@ -24,7 +24,7 @@ description: "My books on Learning Scala for Java Developers, Essential Acceptan
     </script>
 </div>
 
-<a href="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://titlepages.leanpub.com/s4j/bookpage Learn Scala for Java Developers is available on Amazon%}</a>
+<a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://titlepages.leanpub.com/s4j/bookpage Learn Scala for Java Developers is available on Amazon%}</a>
 
 This book is for Java developers looking to transition to programming Scala. It helps translate what you already know in Java to Scala and kick starts your functional programming journey.
 
@@ -36,7 +36,7 @@ It's around 230 pages (39,000 words).
 <p>&nbsp;</p>
 
 
-<form action="http://www.amazon.co.uk/gp/product/1508734178/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1508734178&linkCode=as2&tag=baddotrobotco-21&linkId=7SNCWHETEMWIFJW4" method="get">
+<form action="http://amzn.to/1M0w9jZ" method="get">
 <input type="submit" value="Buy on Amazon" class="btn btn-large btn-success" />
 </form>
 
