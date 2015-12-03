@@ -54,7 +54,7 @@ As an example, I did a pair test with a TV broadcasting company recently. They a
 
 There is often no clear yes or no result to a pair test. Because of the stressful nature, you can't be sure you're getting the best out of candidates. People often don't take this into account and assume the simulation was realistic. Best case scenario: someone flies through the exercise and gets everything "right". Are they an easy hire? Is there more to them? 
 
-> In my recent round of recruitment, we offered four roles and each of them basically messed up the pair test. Each of them panicked or went off in a weird direction in a moment of stress. There's no coming back for the candidate when that happens. I'm hugely proud that we understood things well enough to factor in other aspects and still offer after what might have been seen as a "fail".
+> In my recent round of recruitment, we offered four roles and each of them basically messed up the pair test. Each of them panicked or went off in a weird direction in a moment of stress. There's no coming back for the candidate when that happens. I'm hugely proud that we understood things well enough to still make offers, after what might have been seen as a "fail".
 
 
 
@@ -62,7 +62,7 @@ There is often no clear yes or no result to a pair test. Because of the stressfu
 
 Rather than simulate a working environment, create a real working environment. It's not always practical to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day or hackathon. 
 
-###  Assessment Days 
+##  Assessment Days 
 
 Batch your candidates into cohorts and ask them to pair with _each other_ whilst you observe. Solve a sensible but fun problem over the course of an entire day and get them to explain their choices and experiences.
 
