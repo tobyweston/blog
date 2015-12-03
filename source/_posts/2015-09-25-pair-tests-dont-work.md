@@ -5,7 +5,7 @@ date: 2015-09-25 16:57
 comments: true
 categories: 
 sidebar: false
-published: false
+published: true
 keywords: "agile, pair test, interview, best interview answers, how to beat the interview, technical interviews"
 description: "Pair tests are outdated. Don't cling to biased and loaded interview techniques when looking to hire developers, embrace fairer and more balanced techniques."
 ---
@@ -60,7 +60,7 @@ There is often no clear yes or no result to a pair test. Because of the stressfu
 
 ## A Better Way
 
-Rather than simulate a working environment, nurture a real working environment. It's not always practical to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day or hackathon.
+Rather than simulate a working environment, create a real working environment. It's not always practical to ask a candidate to work with you for a week on your projects but you can invite candidates to an assessment day or hackathon. 
 
 ###  Assessment Days 
 
@@ -71,10 +71,6 @@ Rotate the pairs and get everyone on your dev team involved. Get them to walk ar
 
 ## Summary
 
-Pair testing suffers hugely from cognitive bias(?)
-
 It is really hard to be objective in assessing candidates using pair testing. Partly because this kind of assessment is inherently subjective. Pair testing doesn't lend itself to critical thinking as there is no clear critique. Trying to identify objective criteria for code is a waste of your time; "quality" is not quantitative.
 
-Pair testing comes with huge cognitive bias for both parties (framing effect, anchoring)
-
-Pair testing is a flawed approach to critical thinking as there is no clear critique or way of objectively assessing them.
+Candidates and interviewers come to pair testing with expectations and bias, knowingly or otherwise (search for framing, anchoring and cognitive bias). It means the thing isn't fair from the start. You might get lucky and it'll work out but from my experience, you'll get more false negatives than positive outcomes.
