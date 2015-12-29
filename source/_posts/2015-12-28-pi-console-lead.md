@@ -44,4 +44,58 @@ Useful Screen commands.
 | Kill a session    | `Ctrl + A, Ctrl + \`
 
 
+## Initial Setup
+
+You might want to setup you're wireless from within `screen`. Connecting to a non-hidden network is straight forward. Setting things up for a hidden network is [a little more involved](http://www.dafinga.net/2013/01/how-to-setup-raspberry-pi-with-hidden.html).
+
+
+
+
+
+    pi@temperature-machine:~$ cat /etc/network/interfaces
+    # interfaces(5) file used by ifup(8) and ifdown(8)
+
+    # Please note that this file is written to be used with dhcpcd For
+    # static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+    # Include files from /etc/network/interfaces.d:
+    source-directory /etc/network/interfaces.d
+
+    auto lo
+
+    iface lo inet loopback
+    iface eth0 inet dhcp
+
+    allow-hotplug wlan0
+    iface wlan0 inet dhcp
+       wpa-ssid "Toby's Guest Network"
+       wpa-psk "kermitthefrog"
+
+    # iface wlan0 inet manual
+    #    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+    # allow-hotplug wlan1 iface wlan1 inet manual
+    #    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+    pi@temperature-machine:~$
+
+
+network={
+        ssid="zooniverse"
+        #psk="As&8sDMhWBsd"
+        psk=72084d242ce3ce95ce206fe1d3c3ae99a6265d86ac730e8e86862b2776506654
+}
+
+
+## Misc Setup
+
+sudo apt-get install netatalk
+
+sudo apt-get install avahi-daemon
+sudo /etc/init.d/avahi-daemon restart
+
+
+## SBT on the Pi Zero
+
+    sbt -J-Xmx512m -J-Xms256m
+
 [Headless setup mounting an SD card](http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/)
