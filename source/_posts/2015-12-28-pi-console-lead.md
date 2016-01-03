@@ -94,6 +94,8 @@ sudo apt-get install avahi-daemon
 sudo /etc/init.d/avahi-daemon restart
 
 
+Power save mode for the Edimac wireless adaptor https://www.raspberrypi.org/forums/viewtopic.php?t=61665.
+
 ## SBT on the Pi Zero
 
     sbt -J-Xmx512m -J-Xms256m
