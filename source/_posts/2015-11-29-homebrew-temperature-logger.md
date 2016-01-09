@@ -52,3 +52,10 @@ Then run from the project folder with
 
 
 The data will be stored in `~/.temperature` and you can access the web page via your internal network with something like `http://10.0.1.55:11900`.
+
+
+## Extras
+
+Switching the Pi Zero LED off. https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=127336 and [Stack Overflow](http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559)
+
+Switching the Edimax EW-7811 LED off. [Stack Overflow](http://raspberrypi.stackexchange.com/questions/40560/disable-led-for-edimax-ew-7811?noredirect=1#comment57486_40560)
