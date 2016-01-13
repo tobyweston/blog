@@ -12,7 +12,7 @@ description: "A home brew temperature logger using the Raspberry Pi zero for $10
 
 Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your house for around $10/£10. Track days or weeks of temperature data and display some pretty graphs via the web.
 
-{% img ../../../../../images/temperature-machine-1.png 'The "temperature machine" in action' %}
+{% img ../../../../../images/temperature-machine.png 'The "temperature machine" in action' %}
 
 <!-- more -->
 
