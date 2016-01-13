@@ -3,9 +3,9 @@ layout: post
 title: "Disable Edimax Wifi Dongle's LED"
 date: 2016-01-06 19:39
 comments: true
-categories: 
+categories: Pi
 sidebar: false
-published: false
+published: true
 keywords: "8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi"
 description: "Instructions how to recompile the Rasperry Pi kernel and disable the Edimax EW-7811UN LED"
 ---
