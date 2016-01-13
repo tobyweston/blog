@@ -217,11 +217,3 @@ Setup some config in the `modprobe.d` folder.
     options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 
 
-
-## References
-
-* Based on this [forum post](https://www.raspberrypi.org/forums/viewtopic.php?t=11162).
-* [Good post](http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-raspberry-pi-2)
-* [Compiling-a-kernel-module-for-the-raspberry-pi](http://lostindetails.com/blog/post/Compiling-a-kernel-module-for-the-raspberry-pi-2)
-
-
