@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2015-12-03T20:34:04+00:00</updated>
+  <updated>2016-01-13T19:52:06+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,223 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Disable Edimax Wifi Dongle's LED]]></title>
+    <link href="http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/"/>
+    <updated>2016-01-06T19:39:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax</id>
+    <content type="html"><![CDATA[<p>Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.</p>
+
+<!-- more -->
+
+
+<p>The only way I found to disable the LED is by modifying the <a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules">kernel module</a>. Compiling that meant recompiling the associated kernel to get all the dependencies lined up.</p>
+
+<h2>Gather Information</h2>
+
+<p>You&#8217;ll need to know the specific kernel version. Run the following.</p>
+
+<pre><code>$ uname -a
+</code></pre>
+
+<p>It&#8217;ll show something like this</p>
+
+<pre><code>Linux raspberrypi 4.1.13+ #826 PREEMPT Fri Nov 13 20:13:22 GMT 2015 armv6l GNU/Linux
+</code></pre>
+
+<p>The Edimax uses the <code>8192cu</code> module. You can check it&#8217;s loaded with <code>lsmod</code>. You&#8217;ll see something like this.</p>
+
+<pre><code>$ lsmod
+Module                  Size  Used by
+cfg80211              499834  0
+rfkill                 22491  2 cfg80211
+8192cu                569532  0
+...
+</code></pre>
+
+<p>For interest, you can get more information running <code>modinfo 8192cu</code>.</p>
+
+<pre><code>filename:       /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/8192cu.ko
+version:        v4.0.2_9000.20130911
+author:         Realtek Semiconductor Corp.
+description:    Realtek Wireless Lan Driver
+license:        GPL
+srcversion:     133EACDEB0C6BEBC3ECA8D0
+vermagic:       4.1.13+ preempt mod_unload modversions ARMv6
+...
+</code></pre>
+
+<h2>Get the Source</h2>
+
+<p>You need both the <strong>module</strong> and <strong>kernel</strong> source.</p>
+
+<p>The latest driver version (<code>v4.0.2_9000</code>) on the <a href="http://218.210.127.131/downloads/downloadsView.aspx?Langid=1&amp;PNid=21&amp;PFid=48&amp;Level=5&amp;Conn=4&amp;DownTypeID=3&amp;GetDown=false&amp;Downloads=true#2772">Realtek site</a> isn&#8217;t actually the latest version. At least, it&#8217;s been modified for the Pi. The good news is that the modified version is bundled with the Pi kernel source at <a href="https://github.com/raspberrypi/linux.git">https://github.com/raspberrypi/linux.git</a>. On the Pi, run the following (matching your running kernel version with the <code>--branch</code> option).</p>
+
+<pre><code>$ git clone --branch=rpi-4.1.y --depth=50 https://github.com/raspberrypi/linux.git
+$ ln -s linux linux-$(uname -r)
+</code></pre>
+
+<p>The <code>git clone</code> command will download the full source (including headers and all built-in drivers) into a new folder called <code>linux</code>. The symbolic link is just a handy reminder of what you&#8217;ve cloned.</p>
+
+<p>The latest source may not match your running kernel version (<code>uname -r</code>). You can check in the <code>Makefile</code>;</p>
+
+<pre><code>VERSION = 4
+PATCHLEVEL = 1
+SUBLEVEL = 15
+...
+</code></pre>
+
+<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages.</p>
+
+<p>The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That&#8217;s why I used <code>--depth=50</code> in the hope of catching the revision I&#8217;m interested in.</p>
+
+<pre><code>$ cd linux
+$ git checkout 1f2ce4a2     # the SHA of your specific version, this is 4.1.13
+</code></pre>
+
+<h2>Manually Install the Headers</h2>
+
+<p>Compiling anything in Linux usually requires you have the kernel header files available. The usual way to get these is to run <code>apt-get install linux-headers-$(uname -r)</code> but the maintainers for the Raspberry Pi linux distribution don’t make them available like this. Instead, we have to rely on the full kernel source you&#8217;ve just downloaded.</p>
+
+<p>Create a symbolic link to fill in for the missing <code>build</code> folder in <code>/lib/modules</code> before you try and compile the driver:</p>
+
+<pre><code>$ cd ..
+$ ln -s linux /lib/modules/$(uname -r)/build
+</code></pre>
+
+<p>This creates the missing folder but points at the newly downloaded source. It&#8217;s what fixes the infamous error;</p>
+
+<pre><code>make[1]: *** /lib/modules/4.1.13+/build: No such file or directory
+</code></pre>
+
+<h2>Setup your Config</h2>
+
+<p>Before we build the kernel, we need to create a <code>.config</code> file containing the current kernel configuration. The current config should be in the <code>/proc/config.gz</code> file on the Pi. If the file doesn&#8217;t exist, run <code>sudo modprobe configs</code> and check again.</p>
+
+<pre><code>$ cd linux
+$ zcat /proc/config.gz &gt; .config
+</code></pre>
+
+<h2>Compile the Kernel</h2>
+
+<p>This isn&#8217;t as scary as it sounds. We need to compile the kernel source. We&#8217;re not going to install it, but we do want to create various dependencies that are needed to compile the driver. For example, compiling the driver would fail with missing files like   <code>include/generated/autoconf.h</code> or <code>include/config/auto.conf</code>. Compiling the entire kernel is probably a bit overkill but I&#8217;ve found it easier than chasing down individual errors.</p>
+
+<p>Before compiling the kernel, get some extra dependencies</p>
+
+<pre><code>$ sudo apt-get install build-essential
+$ sudo apt-get install libncurses5-dev      # required for menuconfig
+$ sudo apt-get install bc                   # required for timeconst.h
+</code></pre>
+
+<p>You can have a go at running just <code>make</code> from the <code>linux</code> folder at this point but various options need to be set and it&#8217;s probably easier to use <code>menuconfig</code>. Make sure you created the <code>.config</code> from earlier then run the following.</p>
+
+<pre><code>$ cd linux
+$ make menuconfig
+</code></pre>
+
+<p>Scan the options but as they&#8217;re based on your current settings (via <code>.config</code>), you should just be able to quit (<code>ESC</code>, <code>ESC</code>) and something like the following will be output.</p>
+
+<pre><code>  HOSTCC  scripts/kconfig/mconf.o
+  HOSTCC  scripts/kconfig/zconf.tab.o
+  HOSTCC  scripts/kconfig/lxdialog/checklist.o
+  HOSTCC  scripts/kconfig/lxdialog/util.o
+  HOSTCC  scripts/kconfig/lxdialog/inputbox.o
+  HOSTCC  scripts/kconfig/lxdialog/textbox.o
+  HOSTCC  scripts/kconfig/lxdialog/yesno.o
+  HOSTCC  scripts/kconfig/lxdialog/menubox.o
+  HOSTLD  scripts/kconfig/mconf
+scripts/kconfig/mconf  Kconfig
+configuration written to .config
+
+*** End of the configuration.
+*** Execute 'make' to start the build or try 'make help'.
+</code></pre>
+
+<p>The last remaining config files will have now been created, so you can do the actual build with;</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<p>This takes a while; on my Pi Zero, over 12 hours. There&#8217;s always the option to <a href="https://www.raspberrypi.org/documentation/linux/kernel/building.md">cross compile</a> if you&#8217;re in a hurry.</p>
+
+<p>For extra background, I found an interesting guide on Stack Exchange about <a href="http://unix.stackexchange.com/questions/115620/configuring-compiling-and-installing-a-custom-linux-kernel/115621#115621.">Configuring, Compiling and Installing Kernels</a> (although we&#8217;re not going as far as installing the built kernel here).</p>
+
+<h2>Modify the Driver</h2>
+
+<p>This is the step that actually disables the LED on the dongle.</p>
+
+<p>Locate the <code>autoconf.h</code> file in the drivers folder (<code>linux/drivers/net/wireless/rtl8192cu/include</code>) and comment out the <code>CONFIG_LED</code> macro definition. It should look like this when you&#8217;re done.</p>
+
+<pre><code>// #define CONFIG_LED           // &lt;-- comment this line out to disable LED
+#ifdef CONFIG_LED
+    #define CONFIG_SW_LED
+    #ifdef CONFIG_SW_LED
+        //#define CONFIG_LED_HANDLED_BY_CMD_THREAD
+    #endif
+#endif // CONFIG_LED
+</code></pre>
+
+<h2>Compile the Driver</h2>
+
+<p>The dependencies should all be available now, so you&#8217;re ready to compile the driver. Compile from the location of driver source (probably <code>linux/drivers/net/wireless/rtl8192cu</code>).</p>
+
+<pre><code>$ cd linux/drivers/net/wireless/rtl8192cu
+$ make ARCH=arm
+</code></pre>
+
+<h2>Test &amp; Install the Driver</h2>
+
+<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmode 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi.</p>
+
+<p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as non of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
+
+<p>To keep the change, I renamed the patched module to <code>8192cu-led.ko</code> and copied it into the Pi&#8217;s main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
+
+<pre><code>$ mv 8192cu.ko 8192cu-led.ko
+$ sudo cp 8192cu-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ cd /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ sudo mv 8192cu.ko 8192cu-original.ko
+$ sudo ln -s 8192cu-led.ko 8192cu.ko
+</code></pre>
+
+<p>You should see something like this.</p>
+
+<pre><code>$ ll
+total 1332
+lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -&gt; 8192cu-led.ko
+-rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-led.ko
+-rw-r--r-- 1 root root 686160 Nov 18 16:01 8192cu-original.ko
+</code></pre>
+
+<p>You can enable the original driver by reassigning the symbolic link.</p>
+
+<h2>Common Problems</h2>
+
+<h3>No <code>armv6l</code> folder</h3>
+
+<pre><code>$ cd linux/arch
+$ sudo ln -s arm armv6l
+</code></pre>
+
+<p>or always run the following when compiling</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<h3>Edimax Sleeps and Drops the Network</h3>
+
+<p>Setup some config in the <code>modprobe.d</code> folder.</p>
+
+<pre><code>$ cd /etc/modprobe.d/
+$ ll
+total 16
+-rw-r--r-- 1 root root  73 Jan  1 19:45 8192cu.conf
+$ cat 8192cu.conf
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pair Testing Doesn't Work]]></title>
@@ -1640,197 +1857,6 @@ case object Pineapple extends Fruit(95)
 <p>Hitting Command (<img src="http://baddotrobot.com/images/ks_command.gif" alt="Command" />) + T in the Calculator app shows the paper tape so you can see you past calculations!</p>
 
 <p><img itemprop="image" class="right" src="../../../../../images/calculator-paper-tape.png" width="205" height="258" title="'Calculator's Paper Tape'" ></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Git Commands]]></title>
-    <link href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands/"/>
-    <updated>2013-01-23T19:55:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2013/01/23/useful-git-commands</id>
-    <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here&#8217;s a bunch of Git commands I fund useful.</p>
-
-<ul>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
-<li><a href="http://baddotrobot.com/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
-</ul>
-
-
-<!-- more -->
-
-
-<h2><a id="create_remote_branch"></a>Create a branch on a remote (pushing a branch to a remote)</h2>
-
-<p>Having created a new feature branch locally, you can push to a remote, creating a new branch destination using.</p>
-
-<pre><code>git push -u origin feature_branch
-</code></pre>
-
-<p>The <code>-u</code> sets upstream tracking and is optional.</p>
-
-<p><a href="#top">« Back to the list</a></p>
-
-<h2><a id="delete_remote_branch"></a>Delete a remote branch</h2>
-
-<p>Having pushed your feature branch,</p>
-
-<pre><code>git push origin feature_branch
-</code></pre>
-
-<p>delete locally,</p>
-
-<pre><code>git branch -d feature_branch
-</code></pre>
-
-<p>then delete remotely,</p>
-
-<pre><code>git push origin --delete feature_branch
-</code></pre>
-
-<p>which is short hand for <code>git push origin :feature_branch</code>. The colon looks out of place but its really just the everyday syntax of <code>git push &lt;remote&gt; &lt;local branch&gt;:&lt;remote branch&gt;</code> with a empty string representing the local branch. Effectively, it&#8217;s saying, take no branch from my local branch and push it to the remote branch.</p>
-
-<p>More on remote branches from <a href="http://gitready.com/beginner/2009/02/02/push-and-delete-branches.html">git ready</a></p>
-
-<p><a href="#top">« Back to the list</a></p>
-
-<h2><a id="switch_to_ssh"></a>Switch from HTTPS to git/ssh</h2>
-
-<p>If you&#8217;re using HTTPS as your fetch url (check your <code>.git/config</code> file), you&#8217;ll likely be asked for your username and password on each push. Switch to git/ssh with the following (assuming you&#8217;ve <a href="https://help.github.com/articles/generating-ssh-keys">setup ssh</a>).</p>
-
-<pre><code>git remote rm origin
-git remote add origin git@github.com:tobyweston/playground
-</code></pre>
-
-<p>This will alter your <code>.git/config</code> file from</p>
-
-<pre><code>[remote "origin"]
-    url = https://github.com/tobyweston/playground.git
-    fetch = +refs/heads/*:refs/remotes/origin/*
-</code></pre>
-
-<p>to</p>
-
-<pre><code>[remote "origin"]
-    url = git@github.com:tobyweston/playground.git
-    fetch = +refs/heads/*:refs/remotes/origin/*
-</code></pre>
-
-<p>but won&#8217;t associate the remote branch with a local one. You&#8217;ll need to <a href="#set_upstream_branch">set an upstream branch</a> for that.</p>
-
-<p><a href="#top">« Back to the list</a></p>
-
-<h2><a id="set_upstream_branch"></a>Set upstream branch</h2>
-
-<p>Trying a <code>git pull</code> after <a href="#switch_to_ssh">switching from HTTPS to git/ssh above</a> will give you an error.</p>
-
-<pre><code>You asked to pull from the remote 'origin', but did not specify
-a branch. Because this is not the default configured remote
-for your current branch, you must specify a branch on the command line.
-</code></pre>
-
-<p>Set the upstream branch with</p>
-
-<pre><code>git branch --set-upstream master origin/master
-</code></pre>
-
-<p>which should report back,</p>
-
-<pre><code>Branch master set up to track remote branch master from origin.
-</code></pre>
-
-<p>and change your <code>.git/config</code> file from</p>
-
-<pre><code>[remote "origin"]
-</code></pre>
-
-<p>to</p>
-
-<pre><code>[branch "master"]
-    remote = origin
-    merge = refs/heads/master
-</code></pre>
-
-<p>Do the same for any other remote branches.</p>
-
-<p><a href="#top">« Back to the list</a></p>
-
-<h2><a id="status"></a>Abbreviated status</h2>
-
-<p>The standard <code>git status</code> output</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status
-</span><span class='line'><span class="c"># On branch master</span>
-</span><span class='line'><span class="c"># Your branch is ahead of &#39;origin/master&#39; by 1 commit.</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># Changes not staged for commit:</span>
-</span><span class='line'><span class="c">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
-</span><span class='line'><span class="c">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.h</span>
-</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.m</span>
-</span><span class='line'><span class="c">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The abbreviated <code>git status -sb</code> version</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb
-</span><span class='line'><span class="c">## master...origin/master [ahead 1]</span>
-</span><span class='line'> M LegoWars/BattleShip.h
-</span><span class='line'> M LegoWars/BattleShip.m
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2><a id="alias"></a>Useful Git aliases and config</h2>
-
-<p>Set the proxy, your user name and a couple of useful configurations. Feed straight in from the shell.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global http.proxy myproxy:8080
-</span><span class='line'>git config --global user.email me@email.com
-</span><span class='line'>git config --global user.name me
-</span><span class='line'>git config --global color.ui <span class="nb">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Some useful aliases.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global alias.last <span class="s2">&quot;log -1 HEAD&quot;</span>
-</span><span class='line'>git config --global alias.st <span class="s2">&quot;status -sb&quot;</span>
-</span><span class='line'>git config --global alias.lg <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Recommended Reading</h2>
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL._SL160_.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
-<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL._SL160_.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Version Control Using Git: 1 (Pragmatic Starter Kit)</a>, Travis Swicegood</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1430218339/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1430218339&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pro Git (Expert&#8217;s Voice in Software Development)</a>, Scott Chacon</li>
-</ul>
-
 ]]></content>
   </entry>
   

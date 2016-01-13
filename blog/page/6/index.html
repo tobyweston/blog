@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it&#8217;s not what was once heralded (will 8 see lambdas &hellip;">
+  <meta name="description" content="Yesterday, I released the 1.1 version of my micro-library tempus-fugit. From the project&#8217;s website The tempus-fugit library is a small &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2015-12-03 20:34:04 +0000 -->
+    <!-- last update; 2016-01-13 19:52:06 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-04-13 00:00:00 +0100" datetime="2011-04-13T00:00:00+01:00" pubdate data-updated="true" class="updated">Apr 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project&#8217;s website</p>
+
+<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
+
+<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
+repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
+since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
+and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -574,52 +619,6 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/05/01/setter-vs-constructor-injection/">Setter vs Constructor Injection</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2010-05-01 00:00:00 +0100" datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true" class="updated">May 1<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
-
-<p>You can say that constructor injection forces an object to have its <strong>dependencies set explicitly</strong> and setter injection is <strong>open to forgetfulness or misuse</strong> but how powerful an argument is that really? Surely the tests would catch it if you miss a set call? Constructor injection does say upfront &#8220;this is what I need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its explicit and you don&#8217;t need to know about the internals that setters expose. That&#8217;s useful. But on the small, how complex do the combination of set calls get?</p>
-
-<p>If you use your IDE effectively, <strong>constructor injection will have better rafactoring support</strong>. There&#8217;s no way an IDE will interpret adding a field to mean calling setter for it. However, if add a constructor parameter, the IDE can push a default value out to all usages.</p>
-
-<p>I don&#8217;t think that a <strong>large number of constructor arguments</strong> justifies defecting to the setter camp as the real smell here is often that the class is doing too much and/or has too many dependencies. It&#8217;s often cited that the reason there are lots of setters is because of particular <strong>dependency injection framework leads you</strong> in that direction but why compromise (I should probably say, <em>comply</em>) because you&#8217;re <em>told</em> to? What if that compromises other design goals?</p>
-
-<p>How about the way the system would <strong>grow using constructors vs setters</strong>? I think this is where the real argument lies. You can move forward perfectly happily with either approach, content with the fact that dependencies are isolated. Testing becomes simpler, more focused on the objects under test and the earth continues to orbit the sun. Its only much later when the system is all but grown up that you can look back and reflect. Have setters contributed to creating a system that is assembled in a complex, disheveled way? Are you leaning on external (ahem, xml) configuration to manage this? Alternatively, has a constructor centric approach left you with a system with a more concise assembly strategy? Which has more noise? You tell me&#8230;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -635,6 +634,10 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/09/25/pair-tests-dont-work/">Pair Testing Doesn&#8217;t Work</a>
@@ -702,10 +705,6 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
     
       <li class="post">
         <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>
@@ -806,7 +805,7 @@ who wants to have to use the Java objects that they make you use? It&#8217;s not
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2015 - Toby Weston -
+  Copyright &copy; 2006-2016 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>
