@@ -79,12 +79,6 @@ You might want to setup you're wireless from within `screen`. Connecting to a no
     pi@temperature-machine:~$
 
 
-network={
-        ssid="zooniverse"
-        #psk="As&8sDMhWBsd"
-        psk=72084d242ce3ce95ce206fe1d3c3ae99a6265d86ac730e8e86862b2776506654
-}
-
 
 ## Misc Setup
 
