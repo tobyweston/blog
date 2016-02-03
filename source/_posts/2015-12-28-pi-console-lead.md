@@ -68,14 +68,9 @@ You might want to setup you're wireless from within `screen`. Connecting to a no
 
     allow-hotplug wlan0
     iface wlan0 inet dhcp
-       wpa-ssid "Toby's Guest Network"
-       wpa-psk "kermitthefrog"
+       wpa-ssid "Guest Network"
+       wpa-psk "bullfrog"
 
-    # iface wlan0 inet manual
-    #    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-
-    # allow-hotplug wlan1 iface wlan1 inet manual
-    #    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
     pi@temperature-machine:~$
 
 
