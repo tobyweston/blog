@@ -22,6 +22,35 @@ Wifi setup
 ### rpi-config
 
 * Extend the file system
+* Disable GUI via boot options, set to `B1 Console`
+* Change hostname via Advanced options
+
+
+### Setup Wifi
+
+Modify the `/etc/network/interface` file to access a network (with hidden SSID).
+
+    source-directory /etc/network/interfaces.d
+
+    auto lo
+
+    iface lo inet loopback
+    iface eth0 inet dhcp
+
+    auto wlan0
+    allow-hotplug wlan0
+    iface wlan0 inet dhcp
+       wpa-scan-ssid 1
+       wpa-ap-scan 1
+       wpa-key-mgmt WPA-PSK
+       wpa-proto RSN WPA
+       wpa-pairwise CCMP TKIP
+       wpa-group CCMP TKIP
+       wpa-ssid "network-name"
+       wpa-psk 72084.....654
+
+    iface default inet dhcp
+
 
 ### Update the System
 
@@ -32,17 +61,7 @@ Wifi setup
 
 ### Standard Software
 
-    $ apt-get install build-essential git avahi-daemon libavahi-client-dev
-
-
-### Disable GUI
-
-Do via `raspi-config` boot options, set to `B1 Console`
-
-
-### Change hostname
-
-
+    $ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
 
 
 ### Bash Setup

@@ -116,6 +116,8 @@ after adding to `/etc/modprob.d/raspi-blacklist.conf`;
 
 then
 
+(dont do this)
+
     blacklist snd_soc_bcm2708_i2s
 
 
@@ -141,3 +143,10 @@ then
     i2c_dev                 6406  0
     fuse                   85816  1
     ipv6                  354610  26
+
+
+    pi@radio:~ $ aplay -l
+    **** List of PLAYBACK Hardware Devices ****
+    card 0: IQaudIODAC [IQaudIODAC], device 0: IQaudIO DAC HiFi pcm512x-hifi-0 []
+      Subdevices: 1/1
+      Subdevice #0: subdevice #0

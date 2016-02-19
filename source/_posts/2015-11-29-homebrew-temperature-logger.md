@@ -40,10 +40,29 @@ Using a Raspberry Pi Zero, some cheap components and some custom software, you c
 
 ## The Hardware
 
+
+
+
+
+
 ## The Software
 
-The [`temperature-machine`](https://bitbucket.org/toby_weston/temperature-machine) software records temperature measurements storing it in a round robin database. It generates charts from this and serves up the data via a HTTP server. It's written in Scala and once you've setup SBT, cloned the Git repository onto your Pi Zero, build the binary with
+### Setup the Pi
 
+Make sure you have the following line in your `/boot/config.txt`. It will load the GPIO driver and any attached temperature sensor should be automatically detected.
+
+    dtoverlay=w1-gpio`
+
+
+
+
+### Setup the Data Logging Software
+
+The [`temperature-machine`](https://bitbucket.org/toby_weston/temperature-machine) software records temperature measurements storing it in a round robin database. It generates charts from this and serves up the data via a HTTP server. It's written in Scala and once you've setup SBT (see these [instructions](http://www.scala-sbt.org/0.13/docs/Manual-Installation.html)), clone the Git repository onto your Pi and build the binary.
+
+    $ mkdir ~/code
+    $ git clone https://toby_weston@bitbucket.org/toby_weston/temperature-machine.git ~/code/temperature-machine
+    $ cd ~/code/temperature-machine
     $ sbt -J-Xmx512m -J-Xms512m assembly
 
 Then run from the project folder with
@@ -52,6 +71,16 @@ Then run from the project folder with
 
 
 The data will be stored in `~/.temperature` and you can access the web page via your internal network with something like `http://10.0.1.55:11900`.
+
+
+### Start Logger Automatically
+
+There are different ways to start software automatically after a reboot, but for the `temperature-machine`, add the following to `/etc/rc.local`
+
+    su pi -c 'cd /home/pi/code/temperature-machine && ./start.sh &'
+
+
+It will run the start script that comes with the looger (`start.sh`) as the user `pi`. It assumes you've cloned the code in the previous step to `/home/pi/code/temperature-machine`. After rebooting, you should see a log file and `pid` file in the same location.
 
 
 ## Extras
