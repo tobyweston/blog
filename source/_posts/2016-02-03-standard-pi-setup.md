@@ -79,6 +79,12 @@ Add the following to `~/.bashrc`
     alias du='du -kh'    # Makes a more readable output.
     alias df='df -kTh'
 
+
 ### Vi setup
 
     $ echo 'set nocompatible' > ~/.vimrc
+
+
+### Timezone
+
+    sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime

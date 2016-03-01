@@ -58,12 +58,29 @@ Make sure you have the following line in your `/boot/config.txt`. It will load t
 
 ### Setup the Data Logging Software
 
-The [`temperature-machine`](https://bitbucket.org/toby_weston/temperature-machine) software records temperature measurements storing it in a round robin database. It generates charts from this and serves up the data via a HTTP server. It's written in Scala and once you've setup SBT (see these [instructions](http://www.scala-sbt.org/0.13/docs/Manual-Installation.html)), clone the Git repository onto your Pi and build the binary.
+The [`temperature-machine`](https://bitbucket.org/toby_weston/temperature-machine) software records temperature measurements storing it in a round robin database. It generates charts from this and serves up the data via a HTTP server. It's written in Scala and you'll need the `sbt` to build it. To setup `sbt` follow these steps.
+
+    $ cd /usr/local/bin
+    $ wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+
+Create a file `/usr/local/bin/sbt` and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero).
+
+    #!/bin/bash
+    SBT_OPTS="-Xms512M -Xmx512M -Xss1M -XX:+CMSClassUnloadingEnabled"
+    java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+
+Then make it executable.
+
+    chmod u+x ~/bin/sbt
+
+
+Once you've setup SBT, clone the data logger's Git repository and build the binary.
+
 
     $ mkdir ~/code
     $ git clone https://toby_weston@bitbucket.org/toby_weston/temperature-machine.git ~/code/temperature-machine
     $ cd ~/code/temperature-machine
-    $ sbt -J-Xmx512m -J-Xms512m assembly
+    $ sbt assembly
 
 Then run from the project folder with
 
