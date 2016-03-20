@@ -168,7 +168,7 @@ The dependencies should all be available now, so you're ready to compile the dri
 
 ## Test & Install the Driver
 
-Once it's compiled, remove the old driver with `sudo rmmode 8192cu` and from the driver folder, manually startup the newly compiled one; `sudo insmod 8192cu.ko`. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi.
+Once it's compiled, remove the old driver with `sudo rmmod 8192cu` and from the driver folder, manually startup the newly compiled one; `sudo insmod 8192cu.ko`. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi.
 
 Running `modinfo 8192cu` doesn't help verify the new driver as non of the meta-data has changed but you can check the datestamp of the `.ko` and you should see that there's no LED flashing.
 
