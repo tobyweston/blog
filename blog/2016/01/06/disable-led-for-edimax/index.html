@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-01-13 19:52:06 +0000 -->
+    <!-- last update; 2016-03-23 20:54:47 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -213,7 +213,7 @@ SUBLEVEL = 15
 ...
 </code></pre>
 
-<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages.</p>
+<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages. You could also try something <code>git log --oneline | grep "Linux 4.1.18"</code> to save manually scanning the logs.</p>
 
 <p>The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That&#8217;s why I used <code>--depth=50</code> in the hope of catching the revision I&#8217;m interested in.</p>
 
@@ -313,7 +313,7 @@ $ make ARCH=arm
 
 <h2>Test &amp; Install the Driver</h2>
 
-<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmode 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi.</p>
+<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmod 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi.</p>
 
 <p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as non of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
 
@@ -389,7 +389,7 @@ options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/pi/'>Pi</a>
+    <a class='category' href='/blog/categories/pi/'>pi</a>
   
 </span>
 
@@ -407,6 +407,8 @@ options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
       
         <a class="basic-alignment left" href="/blog/2015/09/25/pair-tests-dont-work/" title="Previous Post: Pair Testing Doesn't Work">&laquo; Pair Testing Doesn't Work</a>
       
+      
+        <a class="basic-alignment right" href="/blog/2016/03/23/homebrew-temperature-logger/" title="next Post: Home Brew Temperature Logger">Home Brew Temperature Logger &raquo;</a>
       
     </p>
   </footer>
