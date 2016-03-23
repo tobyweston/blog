@@ -26,17 +26,12 @@ Using a Raspberry Pi Zero, some cheap components and some custom software, you c
 | [DS18B20 1-Wire temperature sensor](http://www.amazon.co.uk/gp/product/B00HCB8GLU/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B00HCB8GLU&linkCode=as2&tag=baddotrobotco-21)    | £ 2.49
 | 1 x 4.7k Ω resistor | £ 0.10
 | [Some jumper wires](http://www.amazon.co.uk/gp/product/B00ATMHU52/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B00ATMHU52&linkCode=as2&tag=baddotrobotco-21) or otherwise recycled wires with connectors |    £ 0.97
-| Data logging software | <span style="color:green;">FREE</span>
+| Data logging software | <span style="color:green;">[FREE](https://github.com/tobyweston/temperature-machine)</span>
 | | &nbsp;
 | **Total** | **£ 12.45**
 
 
-### Optional Extras
-
-* USB Wifi adapter (about £ 6)
-* Some heat shrink
-* A case, I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/) at £ 3.80
-* A USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://www.amazon.co.uk/gp/product/B00KM6X7FC/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B00KM6X7FC&linkCode=as2&tag=baddotrobotco-21) or the [Adafruit console cable](https://www.adafruit.com/product/954).
+**Optional extras** You might also want to consider a [USB Wifi adapter](http://www.amazon.co.uk/gp/product/B003MTTJOY/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B003MTTJOY&linkCode=as2&tag=baddotrobotco-21) (about £ 6), a case ()I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://www.amazon.co.uk/gp/product/B00KM6X7FC/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B00KM6X7FC&linkCode=as2&tag=baddotrobotco-21) or the [Adafruit console cable](https://www.adafruit.com/product/954).
 
 
 ## Setup the Hardware
@@ -96,7 +91,7 @@ Once you've setup SBT, clone the data logger's Git repository and build the bina
     $ cd ~/code/temperature-machine
     $ sbt assembly
 
-Then run from the project folder with
+Then run from the project folder with the following.
 
     $ ./start.sh
 
@@ -104,31 +99,52 @@ Then run from the project folder with
 The data will be stored in `~/.temperature` and you can access the web page via your internal network with something like `http://10.0.1.55:11900`. Get you're IP address on the Pi with `hostname -I`.
 
 
-### One Node or Two?
+## Add Multiple Machines
 
-By default, running `start.sh` will start up the app in "server" mode. It will expect ...
+Running `start.sh` will start up the app in "server" single-machine mode. It will start logging data and serve the web page but not expect any more machines to be sending it data. To support multiple machines, you need to do a little more configuration.
+
+Due to the way round robin databases work, you need to say upfront how many machines you want to connect. It will support up to five sensors per machine. So the first thing is to start up the server specifying the `hostname` of each machine. To do this, you can use the `start-server.sh` script instead of `server.sh`.
+
+    ./start-server.sh bedroom garage
 
 
-### Multiple Sensors
+In this example, I changed the hostname of each machine to the room they're situated in. It will start up in the server and log data sent from machines named `bedroom` and `garage`. Make sure the hostname of the machine you run this from is included in the list.
 
-The 1-wire protocol allows you to chain multiple sensors, so each Pi can have any number of sensors attached. The temperature-machine software automatically support up to five sensors. I found soldering a bunch of sensors together a bit tricky so I put together a simple PCB to allow me to chain them without soldering.
+The next job is to run the client version on each machine, so if `garage` is my server, I'd run the following on the `bedroom` machine. Ensure this machine's hostname matches what you setup on the server (i.e. `bedroom`).
+
+    ./start-client.sh
+
+
+The server broadcasts it's IP address, so any clients should automatically detect where the server is and start sending data to it.
+
+
+## Add Multiple Sensors
+
+The 1-wire protocol allows you to chain multiple sensors, so each Pi can have any number of sensors attached. The software automatically supports up to five sensors. Connect them to your Pi and restart and they'll be automatically detected and included in the charts.
+
+
+I found soldering a bunch of sensors together a bit tricky so I put together a simple PCB to allow me to chain them without soldering.
 
 [{% img ../../../../../images/temperature-machine-add-on-1.png 266 200 'Multiple sensor add-on board' %}](../../../../../images/temperature-machine-add-on-1.png) [{% img ../../../../../images/temperature-machine-add-on-2.png 200 266 'With headers and resistor soldered' %}](../../../../../images/temperature-machine-add-on-2.png)
 
 
 
-### Start Logger Automatically
+## Start Logging Automatically
 
-There are different ways to start software automatically after a reboot, but for the `temperature-machine`, add the following to `/etc/rc.local`
+There are different ways to start software automatically after a reboot. I chose to add the following to `/etc/rc.local` on the server.
 
-    su pi -c 'cd /home/pi/code/temperature-machine && ./start.sh &'
+    su pi -c 'cd /home/pi/code/temperature-machine && ./start-server.sh garage bedroom &'
+
+and the following to the client.
+
+    su pi -c 'cd /home/pi/code/temperature-machine && ./start-client.sh &'
 
 
-It will run the start script that comes with the looger (`start.sh`) as the user `pi`. It assumes you've cloned the code in the previous step to `/home/pi/code/temperature-machine`. After rebooting, you should see a log file and `pid` file in the same location.
+It will run the startup scripts as the user `pi` and assumes you've cloned the code as above (to `/home/pi/code/temperature-machine`). After rebooting, you should see a log file and `pid` file in the same location.
+
+To stop, just run the `stop.sh` script.
 
 
-## Extras
+## Do Not Disturb
 
-Switching the Pi Zero LED off. https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=127336 and [Stack Overflow](http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559)
-
-Switching the Edimax EW-7811 LED off. [Stack Overflow](http://raspberrypi.stackexchange.com/questions/40560/disable-led-for-edimax-ew-7811?noredirect=1#comment57486_40560)
+If you're monitoring temperatures in a bedroom, you might not want to be disturbed by the LEDs. To switch the Pi Zero LED off, see the [Raspberry Pi Forum](https://www.raspberrypi.org/forums/viewtopic.php?f=29&t=127336) and [Stack Overflow](http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559) and to switch an Edimax EW-7811 LED off, see my [previous post]({{ root_url }}/blog/2016/01/06/disable-led-for-edimax/).
