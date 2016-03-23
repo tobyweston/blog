@@ -3,7 +3,7 @@ layout: post
 title: "Disable Edimax Wifi Dongle's LED"
 date: 2016-01-06 19:39
 comments: true
-categories: Pi
+categories: pi
 sidebar: false
 published: true
 keywords: "8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi"
@@ -67,7 +67,7 @@ The latest source may not match your running kernel version (`uname -r`). You ca
     SUBLEVEL = 15
     ...
 
-This is version `4.1.15` whereas my version was `4.1.13`. Major versions are stored as branches in the repository (hence the `--branch=rpi-4.1.y` option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, [4.1.13](https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21) and [4.1.12](https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7) were documented by [Greg Kroah-Hartman](https://github.com/gregkh) in the commit messages.
+This is version `4.1.15` whereas my version was `4.1.13`. Major versions are stored as branches in the repository (hence the `--branch=rpi-4.1.y` option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, [4.1.13](https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21) and [4.1.12](https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7) were documented by [Greg Kroah-Hartman](https://github.com/gregkh) in the commit messages. You could also try something `git log --oneline | grep "Linux 4.1.18"` to save manually scanning the logs.
 
 The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That's why I used `--depth=50` in the hope of catching the revision I'm interested in.
 
