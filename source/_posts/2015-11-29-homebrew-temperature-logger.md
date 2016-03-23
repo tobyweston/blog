@@ -70,7 +70,7 @@ Once you can see the `w1_slave` file, you're ready to install the data logging s
 
 ## Setup the Data Logging Software
 
-There are lots of options to record the temperature data but for something a bit different, the [temperature-machine](https://bitbucket.org/toby_weston/temperature-machine) software connects multiple Pi's together, showing the data from each of them. It can read temperatures from multiple sensors on multiple Pis, sending the data to a nominated "server" Pi. The server stores it all in a round robin database, generates the charts and serves it all up via a web server.
+There are lots of options to record the temperature data but for something a bit different, the [temperature-machine](https://github.com/tobyweston/temperature-machine) software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" Pi and the server stores it all in a round robin database and serves up the charts via a web page.
 
 It's written in Scala and you'll need the `sbt` tool to build it. To setup `sbt` follow these steps.
 
@@ -92,7 +92,7 @@ Once you've setup SBT, clone the data logger's Git repository and build the bina
 
 
     $ mkdir ~/code
-    $ git clone https://toby_weston@bitbucket.org/toby_weston/temperature-machine.git ~/code/temperature-machine
+    $ git clone https://github.com/tobyweston/temperature-machine.git ~/code/temperature-machine
     $ cd ~/code/temperature-machine
     $ sbt assembly
 
