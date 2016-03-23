@@ -1,13 +1,13 @@
 ---
 layout: post
 title: "Home Brew Temperature Logger"
-date: 2015-11-29 16:39
+date: 2016-03-23 21:39
 comments: true
-categories: 
+categories: pi
 sidebar: false
-published: false
-keywords: "raspberry pi, pi, pi zero, ds20b18, ds18b20, hobo, data logger, temperature, arduino"
-description: "A home brew temperature logger using the Raspberry Pi zero for $10"
+published: true
+keywords: "raspberry pi, pi, pi zero, ds20b18, ds18b20, hobo, data logger, temperature, arduino, scala"
+description: "A home brew temperature logger using the Raspberry Pi zero for around $10"
 ---
 
 Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for around £10. Track days, weeks and months worth of temperature data and display some pretty graphs via the web.
@@ -123,9 +123,9 @@ The server broadcasts it's IP address, so any clients should automatically detec
 The 1-wire protocol allows you to chain multiple sensors, so each Pi can have any number of sensors attached. The software automatically supports up to five sensors. Connect them to your Pi and restart and they'll be automatically detected and included in the charts.
 
 
-I found soldering a bunch of sensors together a bit tricky so I put together a simple PCB to allow me to chain them without soldering.
+I found soldering a bunch of sensor wires together along with the resistor a bit tricky so I put together a simple PCB to allow me to chain them without soldering.
 
-[{% img ../../../../../images/temperature-machine-add-on-1.png 266 200 'Multiple sensor add-on board' %}](../../../../../images/temperature-machine-add-on-1.png) [{% img ../../../../../images/temperature-machine-add-on-2.png 200 266 'With headers and resistor soldered' %}](../../../../../images/temperature-machine-add-on-2.png)
+[{% img ../../../../../images/temperature-machine-add-on-1.png 266 200 'Save soldering with a multiple sensor add-on board' %}](../../../../../images/temperature-machine-add-on-1.png) [{% img ../../../../../images/temperature-machine-add-on-2.png 266 200 'With headers and resistor soldered' %}](../../../../../images/temperature-machine-add-on-2.png)
 
 
 
