@@ -31,7 +31,7 @@ Using a Raspberry Pi Zero, some cheap components and some custom software, you c
 | **Total** | **£ 12.45**
 
 
-**Optional extras** You might also want to consider a [USB Wifi adapter](http://amzn.to/1RhmTKQ) (about £ 6), a case ()I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://amzn.to/1ZtRWoA) or the [Adafruit console cable](https://www.adafruit.com/product/954).
+**Optional extras** You might also want to consider a [USB Wifi adapter](http://amzn.to/1RhmTKQ) (about £ 6), a case (I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://amzn.to/1ZtRWoA) or the [Adafruit console cable](https://www.adafruit.com/product/954).
 
 
 ## Setup the Hardware
@@ -70,17 +70,19 @@ There are lots of options to record the temperature data but for something a bit
 It's written in Scala and you'll need the `sbt` tool to build it. To setup `sbt` follow these steps.
 
     $ cd /usr/local/bin
-    $ wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+    $ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+    $ sudo chown pi sbt-launch.jar
+    $ sudo chgrp pi sbt-launch.jar
 
-Create a file `/usr/local/bin/sbt` and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero).
+Create a file `/usr/local/bin/sbt` and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.
 
     #!/bin/bash
-    SBT_OPTS="-Xms512M -Xmx512M -Xss1M -XX:+CMSClassUnloadingEnabled"
+    SBT_OPTS="-Xms512M -Xmx512M"
     java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 
 Then make it executable.
 
-    chmod u+x ~/bin/sbt
+    chmod u+x /usr/local/bin/sbt
 
 
 Once you've setup SBT, clone the data logger's Git repository and build the binary.
@@ -108,7 +110,7 @@ Due to the way round robin databases work, you need to say upfront how many mach
     ./start-server.sh bedroom garage
 
 
-In this example, I changed the hostname of each machine to the room they're situated in. It will start up in the server and log data sent from machines named `bedroom` and `garage`. Make sure the hostname of the machine you run this from is included in the list.
+In this example, I changed the hostname of each machine to the room they're situated in. If you already have data in `~/.temperature`, you'll have to manually delete the contents first (`rm ~/.temperature/*`). It will start up in the server and log data sent from machines named `bedroom` and `garage`. Make sure the hostname of the machine you run this from is included in the list.
 
 The next job is to run the client version on each machine, so if `garage` is my server, I'd run the following on the `bedroom` machine. Ensure this machine's hostname matches what you setup on the server (i.e. `bedroom`).
 
