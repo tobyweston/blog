@@ -14,21 +14,16 @@ Common things to do when you first setup a Pi.
 
 <!-- more -->
 
-## Shopping List
+## raspi-config
 
-Wifi setup
-
-
-### rpi-config
-
-* Extend the file system
-* Disable GUI via boot options, set to `B1 Console`
+* Expand the file system
+* Disable GUI via boot options, set to `Boot Options` then `B1 Console`
 * Change hostname via Advanced options
 
 
-### Setup Wifi
+## Setup Wifi
 
-Modify the `/etc/network/interface` file to access a network (with hidden SSID).
+Modify the `/etc/network/interfaces` file to access a network (with hidden SSID).
 
     source-directory /etc/network/interfaces.d
 
@@ -52,19 +47,19 @@ Modify the `/etc/network/interface` file to access a network (with hidden SSID).
     iface default inet dhcp
 
 
-### Update the System
+## Update the System
 
     $ sudo apt-get update
     $ sudo apt-get upgrade
     $ sudo apt-get rpi-update
 
 
-### Standard Software
+## Standard Software
 
     $ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
 
 
-### Bash Setup
+## Bash Setup
 
 Add the following to `~/.bashrc`
 
@@ -80,11 +75,16 @@ Add the following to `~/.bashrc`
     alias df='df -kTh'
 
 
-### Vi setup
+## Share Disk with Mac OSX
+
+    sudo apt-get install netatalk
+
+
+## Vi setup
 
     $ echo 'set nocompatible' > ~/.vimrc
 
 
-### Timezone
+## Timezone
 
     sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
