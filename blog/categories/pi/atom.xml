@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-25T17:28:27+00:00</updated>
+  <updated>2016-03-27T08:22:31+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -85,7 +85,7 @@
 </table>
 
 
-<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case ()I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
+<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case (I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
 
 <h2>Setup the Hardware</h2>
 
@@ -145,19 +145,21 @@
 <p>It's written in Scala and you'll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
 
 <pre><code>$ cd /usr/local/bin
-$ wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+$ sudo chown pi sbt-launch.jar
+$ sudo chgrp pi sbt-launch.jar
 </code></pre>
 
-<p>Create a file <code>/usr/local/bin/sbt</code> and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero).</p>
+<p>Create a file <code>/usr/local/bin/sbt</code> and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
 
 <pre><code>#!/bin/bash
-SBT_OPTS="-Xms512M -Xmx512M -Xss1M -XX:+CMSClassUnloadingEnabled"
+SBT_OPTS="-Xms512M -Xmx512M"
 java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 </code></pre>
 
 <p>Then make it executable.</p>
 
-<pre><code>chmod u+x ~/bin/sbt
+<pre><code>chmod u+x /usr/local/bin/sbt
 </code></pre>
 
 <p>Once you've setup SBT, clone the data logger's Git repository and build the binary.</p>
@@ -184,7 +186,7 @@ $ sbt assembly
 <pre><code>./start-server.sh bedroom garage
 </code></pre>
 
-<p>In this example, I changed the hostname of each machine to the room they're situated in. It will start up in the server and log data sent from machines named <code>bedroom</code> and <code>garage</code>. Make sure the hostname of the machine you run this from is included in the list.</p>
+<p>In this example, I changed the hostname of each machine to the room they're situated in. If you already have data in <code>~/.temperature</code>, you'll have to manually delete the contents first (<code>rm ~/.temperature/*</code>). It will start up in the server and log data sent from machines named <code>bedroom</code> and <code>garage</code>. Make sure the hostname of the machine you run this from is included in the list.</p>
 
 <p>The next job is to run the client version on each machine, so if <code>garage</code> is my server, I'd run the following on the <code>bedroom</code> machine. Ensure this machine's hostname matches what you setup on the server (i.e. <code>bedroom</code>).</p>
 
