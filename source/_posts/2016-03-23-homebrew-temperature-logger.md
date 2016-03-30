@@ -127,7 +127,7 @@ The 1-wire protocol allows you to chain multiple sensors, so each Pi can have an
 
 I found soldering a bunch of sensor wires together along with the resistor a bit tricky so I put together a simple PCB to allow me to chain them without soldering.
 
-[{% img ../../../../../images/temperature-machine-add-on-1.png 266 200 'Save soldering with a multiple sensor add-on board' %}](../../../../../images/temperature-machine-add-on-1.png) [{% img ../../../../../images/temperature-machine-add-on-2.png 266 200 'With headers and resistor soldered' %}](../../../../../images/temperature-machine-add-on-2.png)
+[{% img ../../../../../images/temperature-machine-add-on-1.png 266 200 'Save soldering with a multiple sensor add-on board' %}](../../../../../images/temperature-machine-add-on-1.png) [{% img ../../../../../images/temperature-machine-add-on-2.png 266 200 'With headers and resistor soldered' %}](../../../../../images/temperature-machine-add-on-2.png) [{% img ../../../../../images/temperature-machine-add-on-3.png 266 200 'Three sensors connected' %}](../../../../../images/temperature-machine-add-on-3.png)
 
 
 
