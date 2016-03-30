@@ -4,7 +4,7 @@
   <title><![CDATA[Category: REST | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-30T18:28:43+01:00</updated>
+  <updated>2016-03-30T18:29:46+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -29,9 +29,8 @@
 
 <p>In Java, you can create an encoded URL using</p>
 
-<p>{% codeblock lang:java %}
-new java.net.URI("http", "baddotrobot.com", "/cheese sandwich").toURL();
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>which in this case produces</p>
 
@@ -52,17 +51,15 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
 
-<p>{% codeblock lang:java %}
-java.net.URLEncoder.encode(value, "UTF-8");
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2>Base64 Encoding</h2>
 
 <p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you'd do something like the following.</p>
 
-<p>{% codeblock lang:java %}
-new header("Authorization", "Basic " + new sun.misc.Base64Encoder().encode("username:password".getBytes()));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Which, for example, could be used to send the following HTTP message</p>
 
@@ -79,9 +76,8 @@ Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
     <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
     <content type="html"><![CDATA[<p>Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.</p>
 
-<p>{% codeblock lang:java %}
-HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <!-- more -->
 
@@ -90,19 +86,19 @@ HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
 
 <p>The library, <a href="https://github.com/tobyweston/simple-http">simple-http</a>, provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
 
-<p>{% codeblock lang:java %}
-HttpResponse response = anApacheClient()</p>
-
-<pre><code>.with(httpTimeout(seconds(30)))
-.with(proxy(new URL("http://proxy.com:8999")))
-.get(new URL("http://baddotrobot.com"),
-    headers(
-        header("Accept", "text/html")
-    )
-);
-</code></pre>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;.</span><span class="na">with</span><span class="o">(</span><span class="n">httpTimeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">30</span><span class="o">)))</span>
+</span><span class='line'><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">proxy</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://proxy.com:8999&quot;</span><span class="o">)))</span>
+</span><span class='line'><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">),</span>
+</span><span class='line'>    <span class="n">headers</span><span class="o">(</span>
+</span><span class='line'>        <span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;text/html&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">)</span>
+</span><span class='line'><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>It's supposed to be so simple, it's self explanatory. If it's not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient()</code>.</p>
 
@@ -114,15 +110,13 @@ HttpResponse response = anApacheClient()</p>
 
 <p>Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that's fine but as it comes sensible defaults, for the most part all you'll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.</p>
 
-<p>{% codeblock lang:java %}
-HttpClient http = anApacheClient().withTrustingSsl();
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Regular SSL authentication is straight forward too, just add a username and password to your client.</p>
 
-<p>{% codeblock lang:java %}
-HttpClient http = anApacheClient().with("bobby brown", "secret");
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2>Helping you Test</h2>
 
@@ -130,9 +124,8 @@ HttpClient http = anApacheClient().with("bobby brown", "secret");
 
 <p>Using Apache directly, you might write something like this.</p>
 
-<p>{% codeblock lang:java %}
-assertThat(apacheResponse.getStatusLine().getStatusCode(), is(200));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>which, when it fails presents you with the following.</p>
 
@@ -143,9 +136,8 @@ Expected: is &lt;200&gt;
 
 <p>With <a href="https://github.com/tobyweston/simple-http">simple-http</a>, you write.</p>
 
-<p>{% codeblock lang:java %}
-assertThat(response, has(status(200)));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>which is much more helpful when it fails, showing the response's status code, message, content and headers.</p>
 
@@ -156,74 +148,69 @@ Expected: a HttpMessage with status code &lt;200&gt;
 
 <p>Of course, you can enrich the assertions, for example.</p>
 
-<p>{% codeblock lang:java %}
-assertThat(response, allOf(has(status(200)), has(headerWithValue("Content-Type", containsString("json")))));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>or assert against the message body, for example.</p>
 
-<p>{% codeblock lang:java %}
-assertThat(response, has(content(not(containsString("\"error\"")))));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
 
-<p>{% assign braces = '{{' %}
-{% codeblock lang:java %}
-@Test
-public void anExample() throws MalformedURLException {</p>
-
-<pre><code>final HttpClient http = context.mock(HttpClient.class);
-context.checking(new Expectations() {{ braces }}
-    oneOf(http).get(with(new URL("http://acme.com/stock")), with(headers(header("Accept", "application/json")))); will(returnValue(...));
-    ...
-}});
-new StockRoom(http).inventoryCount();
-context.assertIsSatisfied();
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}});</span>
+</span><span class='line'><span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Or here where we expect a HTTP <code>POST</code> to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like <code>stock=%7Bsome%3A+json+message%7D</code>. Notice how <a href="http://robotooling.com/maven/">bad.robot.repo</a> avoids this complexity.</p>
 
-<p>{% codeblock lang:java %}
-public void anotherExample() throws Exception {</p>
-
-<pre><code>checking(new Expectations() {{ braces }}
-    oneOf(http).post(with(new URL("http://acme.com/stock")), with(post(content(params("stock", "{some: json message}").asString()))));
-}});
-new StockRoom(http).addStock(...);
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">post</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">params</span><span class="o">(</span><span class="s">&quot;stock&quot;</span><span class="o">,</span> <span class="s">&quot;{some: json message}&quot;</span><span class="o">).</span><span class="na">asString</span><span class="o">()))));</span>
+</span><span class='line'><span class="o">}});</span>
+</span><span class='line'><span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">addStock</span><span class="o">(...);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2>Download</h2>
 
 <p>You can download from the <a href="http://robotooling.com/maven/">bad.robot.repo</a> Maven repository or get the source from <a href="https://github.com/tobyweston/simple-http">Github</a>.</p>
 
-<p>{% codeblock lang:xml %}
-<repositories></p>
-
-<pre><code>&lt;repository&gt;
-    &lt;id&gt;bad.robot&lt;/id&gt;
-    &lt;name&gt;bad.robot repository for robotooling&lt;/name&gt;
-    &lt;url&gt;http://www.robotooling.com/maven/&lt;/url&gt;
-&lt;/repository&gt;
-</code></pre>
-
-<p></repositories></p>
-
-<p><dependency></p>
-
-<pre><code>&lt;groupId&gt;bad.robot&lt;/groupId&gt;
-&lt;artifactId&gt;simple-http&lt;/artifactId&gt;
-&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-</code></pre>
-
-<p></dependency>
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;repositories&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>repository<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>id<span class="ni">&amp;gt;</span>bad.robot<span class="ni">&amp;lt;</span>/id<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>name<span class="ni">&amp;gt;</span>bad.robot repository for robotooling<span class="ni">&amp;lt;</span>/name<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>url<span class="ni">&amp;gt;</span>http://www.robotooling.com/maven/<span class="ni">&amp;lt;</span>/url<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/repository<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/repositories&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;dependency&gt;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>bad.robot<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>simple-http<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.0-SNAPSHOT<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/dependency&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Enjoy and <a href="https://twitter.com/#!/jamanifin">let me know</a> how you get on.</p>
 ]]></content>
@@ -241,9 +228,7 @@ new StockRoom(http).addStock(...);
 
 <p>The problem is in IE8's default set of <code>Accept</code> header values. For some reason, it'll ask for a very specific set of Microsoft types in the request;</p>
 
-<p>{% codeblock %}
-Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, <em>/</em>
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, &lt;em>/&lt;/em></span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>When the server responds with a <code>Content-Type</code> of anything other than what's in the accept list,
 IE will prompt the user to save the resource instead of attempting to display it. That's fair enough as I imagine its
@@ -251,9 +236,7 @@ saying "I didn't say I could accept this so therefore, I don't know how to displ
 
 <p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
 
-<p>{% codeblock %}
-Content-Type: application/json
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>will prompt IE8 to save the file rather than display 'in-browser'.</p>
 
@@ -262,61 +245,59 @@ Content-Type: application/json
 <p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
 by sending back plain text but still return JSON for all other cases.</p>
 
-<p>{% codeblock lang:java %}
-@Path("/customers")
-public class Customers {</p>
-
-<pre><code>@GET
-@Produces("application/json")
-public String getAllCustomers() {
-    return allCustomersAsJson();
-}
-
-@GET
-@Produces("application/x-ms-application")
-public TextPlainOkResponse getAllCustomersForInternetExplorer() {
-    return new TextPlainOkResponse(getAllCustomersAsJson());
-}
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@GET</span>
+</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getAllCustomers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">allCustomersAsJson</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@GET</span>
+</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/x-ms-application&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">TextPlainOkResponse</span> <span class="nf">getAllCustomersForInternetExplorer</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">getAllCustomersAsJson</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>The class above will return a list of all Customers as JSON. The <code>getAllCustomers</code> method will be dispatched to via
 Jersey and send back the <code>String</code> with a <code>Content-Type</code> of <code>application/json</code> for all cases <em>unless</em>
 the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
 constructed, we'll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
 
-<p>{% assign braces = '{{' %}
-{% codeblock lang:java %}
-public class TextPlainOkResponse extends Response {</p>
-
-<pre><code>private final String json;
-
-public TextPlainOkResponse(String json) {
-    this.json = json;
-}
-
-@Override
-public Object getEntity() {
-    return json;
-}
-
-@Override
-public int getStatus() {
-    return 200;
-}
-
-@Override
-public MultivaluedMap&lt;String, Object&gt; getMetadata() {
-    return new MetadataMap&lt;String, Object&gt;() {{ braces }}
-        put("Content-Type", Arrays.&lt;Object&gt;asList("text/plain"));
-    }};
-}
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">json</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">getEntity</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStatus</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">200</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">MultivaluedMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">getMetadata</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">MetadataMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{{</span>
+</span><span class='line'>        <span class="n">put</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span><span class="n">asList</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}};</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>So for all clients asking for <code>application/x-ms-application</code>, they'll actually get <code>text/plain</code>. In the case of
 Internet Explorer 8, it will display the JSON 'in-browser'. It won't apply any formatting though, so you may want to

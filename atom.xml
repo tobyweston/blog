@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-30T18:25:11+01:00</updated>
+  <updated>2016-03-30T18:29:46+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -201,7 +201,7 @@ $ sbt assembly
 
 <p>I found soldering a bunch of sensor wires together along with the resistor a bit tricky so I put together a simple PCB to allow me to chain them without soldering.</p>
 
-<p><a href="../../../../../images/temperature-machine-add-on-1.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-1.png" width="266" height="200" title="'Save soldering with a multiple sensor add-on board'" ></a> <a href="../../../../../images/temperature-machine-add-on-2.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-2.png" width="266" height="200" title="'With headers and resistor soldered'" ></a> <a href="../../../../../images/temperature-machine-add-on-3.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-3.png" width="266" height="200" title="'Three sensors connected'" ></a> <a href="../../../../../images/temperature-machine-add-on-4.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-4.png" width="266" height="200" title="'Three sensors connected'" ></a> <a href="../../../../../images/temperature-machine-add-on-5.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-5.png" width="266" height="200" title="'Three sensors connected'" ></a></p>
+<p><a href="../../../../../images/temperature-machine-add-on-1.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-1.png" width="266" height="200" title="'Save soldering with a multiple sensor add-on board'" ></a> <a href="../../../../../images/temperature-machine-add-on-2.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-2.png" width="266" height="200" title="'With headers and resistor soldered'" ></a> <a href="../../../../../images/temperature-machine-add-on-3.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-3.png" width="266" height="200" title="'Three sensors connected'" ></a></p>
 
 <h2>Start Logging Automatically</h2>
 
@@ -222,312 +222,6 @@ $ sbt assembly
 <h2>Do Not Disturb</h2>
 
 <p>If you&#8217;re monitoring temperatures in a bedroom, you might not want to be disturbed by the LEDs. To switch the Pi Zero LED off, see the <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=29&amp;t=127336">Raspberry Pi Forum</a> and <a href="http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559">Stack Overflow</a> and to switch an Edimax EW-7811 LED off, see my <a href="http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/">previous post</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Standard Pi Setup]]></title>
-    <link href="http://baddotrobot.com/blog/2016/02/03/standard-pi-setup/"/>
-    <updated>2016-02-03T19:01:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2016/02/03/standard-pi-setup</id>
-    <content type="html"><![CDATA[<p>Common things to do when you first setup a Pi.</p>
-
-<!-- more -->
-
-
-<h2>raspi-config</h2>
-
-<ul>
-<li>Expand the file system</li>
-<li>Disable GUI via boot options, set to <code>Boot Options</code> then <code>B1 Console</code></li>
-<li>Change hostname via Advanced options</li>
-</ul>
-
-
-<h2>Setup Wifi</h2>
-
-<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
-
-<pre><code>source-directory /etc/network/interfaces.d
-
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-   wpa-scan-ssid 1
-   wpa-ap-scan 1
-   wpa-key-mgmt WPA-PSK
-   wpa-proto RSN WPA
-   wpa-pairwise CCMP TKIP
-   wpa-group CCMP TKIP
-   wpa-ssid "network-name"
-   wpa-psk 72084.....654
-
-iface default inet dhcp
-</code></pre>
-
-<h2>Update the System</h2>
-
-<pre><code>$ sudo apt-get update
-$ sudo apt-get upgrade
-$ sudo apt-get rpi-update
-</code></pre>
-
-<h2>Standard Software</h2>
-
-<pre><code>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
-</code></pre>
-
-<h2>Bash Setup</h2>
-
-<p>Add the following to <code>~/.bashrc</code></p>
-
-<pre><code># some more ls aliases
-alias ll='ls -lv --group-directories-first'
-alias la='ls -A'
-#alias l='ls -CF'
-
-# Toby's ones
-alias path='echo -e ${PATH//:/\\n}'
-alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-alias du='du -kh'    # Makes a more readable output.
-alias df='df -kTh'
-</code></pre>
-
-<h2>Share Disk with Mac OSX</h2>
-
-<pre><code>sudo apt-get install netatalk
-</code></pre>
-
-<h2>Vi setup</h2>
-
-<pre><code>$ echo 'set nocompatible' &gt; ~/.vimrc
-</code></pre>
-
-<h2>Timezone</h2>
-
-<pre><code>sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vintage AirPlay Speakers]]></title>
-    <link href="http://baddotrobot.com/blog/2016/01/20/vintage-airplay-speakers/"/>
-    <updated>2016-01-20T19:01:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2016/01/20/vintage-airplay-speakers</id>
-    <content type="html"><![CDATA[<!-- more -->
-
-
-<h2>Shopping List</h2>
-
-<table>
-<thead>
-<tr>
-<th></th>
-<th> Item </th>
-<th> Supplier </th>
-<th> Price </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td> Roberts R66 Radio     </td>
-<td> eBay   </td>
-<td> £ 20</td>
-</tr>
-<tr>
-<td></td>
-<td> IQaudIO <a href="http://www.iqaudio.co.uk/home/9-pi-digiamp-0712411999650.html">Pi-DigiAMP+</a>      </td>
-<td> £ 59.50 (inc. delivery) </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> 19W Power Supply </td>
-<td> <a href="http://uk.rs-online.com/web/p/desktop-power-supply/7316074/">RS Online</a> <a href="http://docs-europe.electrocomponents.com/webdocs/0f8a/0900766b80f8a1bb.pdf">Data sheet</a> or <a href="http://uk.farnell.com/xp-power/vef65us19/power-supply-65w-19v-3-42a/dp/2365126">Farnell</a> <a href="http://www.farnell.com/datasheets/1766195.pdf">Data sheet</a></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Techtonic <a href="http://www.tectonicelements.com/bmr-speakers/">Balanced Mode Radiator 20W Speaker Drivers</a> x2 </td>
-<td> <a href="http://uk.rs-online.com/web/p/speaker-drivers/8765241/">RS Online</a> </td>
-<td> £ 35.72</td>
-</tr>
-<tr>
-<td></td>
-<td> Rasperry Pi Zero </td>
-<td> PiHut </td>
-<td> £ 4</td>
-</tr>
-<tr>
-<td></td>
-<td> 2.5 x 5.5mm <a href="http://www.maplin.co.uk/p/25-x-55mm-single-hole-fixing-dc-socket-jk10l">female DC socket</a> and <a href="http://www.maplin.co.uk/p/maplin-25-x-55mm-dc-power-plug-hh62s">male plug</a> </td>
-<td> Maplin </td>
-<td> £ 4.28</td>
-</tr>
-<tr>
-<td></td>
-<td> 2 Core wire for DC power </td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td> &nbsp;</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> <strong>Total</strong> </td>
-<td> <strong>£ 123.50</strong></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>Software</h2>
-
-<p>Building <a href="https://github.com/mikebrady/shairport-sync">Shareport Sync</a></p>
-
-<pre><code>$ apt-get install build-essential git
-$ apt-get install autoconf automake libtool libdaemon-dev libasound2-dev libpopt-dev libconfig-dev
-$ apt-get install avahi-daemon libavahi-client-dev
-$ apt-get install libssl-dev
-$ apt-get install libsoxr-dev
-
-$ git clone https://github.com/mikebrady/shairport-sync.git
-
-$ autoreconf -i -f
-</code></pre>
-
-<p>Disable the standard sound card. Supposed to be able to comment it out in <code>/etc/modules</code> but mine was empty.`</p>
-
-<pre><code>pi@radio:/etc $ sudo nano /etc/modprobe.d/raspi-blacklist.conf
-pi@radio:/etc $ lsmod
-Module                  Size  Used by
-cfg80211              477515  0
-rfkill                 21439  2 cfg80211
-8192cu                567860  0
-snd_bcm2835            22317  0
-bcm2835_gpiomem         3703  0
-bcm2835_rng             2215  0
-snd_pcm                92397  1 snd_bcm2835
-snd_timer              21932  1 snd_pcm
-snd                    66988  3 snd_bcm2835,snd_timer,snd_pcm
-uio_pdrv_genirq         3550  0
-uio                    10002  1 uio_pdrv_genirq
-i2c_dev                 6406  0
-fuse                   85816  1
-ipv6                  354610  26
-
-pi@radio:/etc $ aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: ALSA [bcm2835 ALSA], device 0: bcm2835 ALSA [bcm2835 ALSA]
-  Subdevices: 8/8
-  Subdevice #0: subdevice #0
-  Subdevice #1: subdevice #1
-  Subdevice #2: subdevice #2
-  Subdevice #3: subdevice #3
-  Subdevice #4: subdevice #4
-  Subdevice #5: subdevice #5
-  Subdevice #6: subdevice #6
-  Subdevice #7: subdevice #7
-card 0: ALSA [bcm2835 ALSA], device 1: bcm2835 ALSA [bcm2835 IEC958/HDMI]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-</code></pre>
-
-<p>after adding to <code>/etc/modprob.d/raspi-blacklist.conf</code>;</p>
-
-<pre><code>blacklist snd_bcm2835
-
-pi@radio:~ $ lsmod
-Module                  Size  Used by
-cfg80211              477515  0
-rfkill                 21439  2 cfg80211
-snd_soc_pcm512x_i2c     2570  0
-snd_soc_pcm512x        18073  1 snd_soc_pcm512x_i2c
-regmap_i2c              3346  1 snd_soc_pcm512x_i2c
-8192cu                567860  0
-snd_soc_bcm2708_i2s     7566  0
-regmap_mmio             3556  1 snd_soc_bcm2708_i2s
-snd_soc_iqaudio_dac     3003  0
-snd_soc_core          167798  3 snd_soc_pcm512x,snd_soc_iqaudio_dac,snd_soc_bcm2708_i2s
-snd_compress            8813  1 snd_soc_core
-snd_pcm_dmaengine       5778  1 snd_soc_core
-snd_pcm                92397  4 snd_soc_pcm512x,snd_soc_core,snd_soc_iqaudio_dac,snd_pcm_dmaengine
-snd_timer              21932  1 snd_pcm
-snd                    66988  4 snd_soc_core,snd_timer,snd_pcm,snd_compress
-i2c_bcm2708             6068  0
-bcm2835_gpiomem         3703  0
-bcm2835_rng             2215  0
-uio_pdrv_genirq         3550  0
-uio                    10002  1 uio_pdrv_genirq
-i2c_dev                 6406  0
-fuse                   85816  1
-ipv6                  354610  26
-
-pi@radio:~ $ aplay -l
-aplay: device_list:268: no soundcards found...
-</code></pre>
-
-<p>then</p>
-
-<p>(dont do this)</p>
-
-<pre><code>blacklist snd_soc_bcm2708_i2s
-
-
-Module                  Size  Used by
-cfg80211              477515  0
-rfkill                 21439  2 cfg80211
-snd_soc_pcm512x_i2c     2570  0
-snd_soc_pcm512x        18073  1 snd_soc_pcm512x_i2c
-regmap_i2c              3346  1 snd_soc_pcm512x_i2c
-8192cu                567860  0
-snd_soc_iqaudio_dac     3003  0
-snd_soc_core          167798  2 snd_soc_pcm512x,snd_soc_iqaudio_dac
-snd_compress            8813  1 snd_soc_core
-snd_pcm_dmaengine       5778  1 snd_soc_core
-snd_pcm                92397  4 snd_soc_pcm512x,snd_soc_core,snd_soc_iqaudio_dac,snd_pcm_dmaengine
-snd_timer              21932  1 snd_pcm
-snd                    66988  4 snd_soc_core,snd_timer,snd_pcm,snd_compress
-i2c_bcm2708             6068  0
-bcm2835_gpiomem         3703  0
-bcm2835_rng             2215  0
-uio_pdrv_genirq         3550  0
-uio                    10002  1 uio_pdrv_genirq
-i2c_dev                 6406  0
-fuse                   85816  1
-ipv6                  354610  26
-
-
-pi@radio:~ $ aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: IQaudIODAC [IQaudIODAC], device 0: IQaudIO DAC HiFi pcm512x-hifi-0 []
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-</code></pre>
 ]]></content>
   </entry>
   
@@ -749,89 +443,6 @@ options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Pi Console Lead]]></title>
-    <link href="http://baddotrobot.com/blog/2015/12/28/pi-console-lead/"/>
-    <updated>2015-12-28T19:52:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2015/12/28/pi-console-lead</id>
-    <content type="html"><![CDATA[<p>The Adafruit Console Lead uses the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">PL2303TA</a> (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it&#8217;s handy to use the <code>screen</code> application to effectively open a terminal to your Pi.</p>
-
-<!-- more -->
-
-
-<p>Most of the guides on the internet point you to older versions of the drivers, but to get things working on the Mac with El Capitan, I&#8217;ve found <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">v1.6 of the Prolific driver</a> is the only working option.</p>
-
-<p>It&#8217;s not hard to build you&#8217;re own cable from the basic components or you could try <a href="http://www.ebay.co.uk/sch/i.html?_from=R40&amp;_trksid=p2050601.m570.l1313.TR0.TRC0.H0.XPL2303TA.TRS0&amp;_nkw=PL2303TA&amp;_sacat=0">eBay for parts for under £2/$2</a> but I can&#8217;t say if they use genuine Prolific chips or counterfeit.</p>
-
-<h2>Create a Screen</h2>
-
-<pre><code>$ ls -la /dev/tty.usb*
-crw-rw-rw-  1 root  wheel   17,   4 28 Dec 19:49 /dev/tty.usbserial
-</code></pre>
-
-<p>Startup screen and point it to your Pi (<code>115200</code> is the baud rate to communicate with).</p>
-
-<pre><code>screen /dev/tty.usbserial 115200
-</code></pre>
-
-<p>You might need to hit the <code>enter</code> key to wake things up, but you should see a regular Linux login prompt.</p>
-
-<p>By default, the console width is 30 characters and wraps on a single line. It&#8217;s pretty annoying when you paste a long command, so you can increase it for you session with the following</p>
-
-<pre><code>stty cols 130
-</code></pre>
-
-<p>When you fire up the <code>screen</code> window manager, you can use Ctrl + A (<img src="http://baddotrobot.com/images/ks_control.gif" alt="Option" /> + <code>A</code>) to enter &#8220;command mode&#8221;, hitting a subsequent key will execute a command. For example, Ctrl + A follwed by a <code>?</code> will show you some helpful commands.</p>
-
-<p>Useful Screen commands.</p>
-
-<p>| Command(s)        | Description
-| Kill a session    | <code>Ctrl + A, Ctrl + \</code></p>
-
-<h2>Initial Setup</h2>
-
-<p>You might want to setup you&#8217;re wireless from within <code>screen</code>. Connecting to a non-hidden network is straight forward. Setting things up for a hidden network is <a href="http://www.dafinga.net/2013/01/how-to-setup-raspberry-pi-with-hidden.html">a little more involved</a>.</p>
-
-<pre><code>pi@temperature-machine:~$ cat /etc/network/interfaces
-# interfaces(5) file used by ifup(8) and ifdown(8)
-
-# Please note that this file is written to be used with dhcpcd For
-# static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
-
-# Include files from /etc/network/interfaces.d:
-source-directory /etc/network/interfaces.d
-
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-   wpa-ssid "Guest Network"
-   wpa-psk "bullfrog"
-
-pi@temperature-machine:~$
-</code></pre>
-
-<h2>Misc Setup</h2>
-
-<p>sudo apt-get install netatalk</p>
-
-<p>sudo apt-get install avahi-daemon
-sudo /etc/init.d/avahi-daemon restart</p>
-
-<p>Power save mode for the Edimac wireless adaptor https://www.raspberrypi.org/forums/viewtopic.php?t=61665.</p>
-
-<h2>SBT on the Pi Zero</h2>
-
-<pre><code>sbt -J-Xmx512m -J-Xms256m
-</code></pre>
-
-<p><a href="http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/">Headless setup mounting an SD card</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Pair Testing Doesn't Work]]></title>
     <link href="http://baddotrobot.com/blog/2015/09/25/pair-tests-dont-work/"/>
     <updated>2015-09-25T16:57:00+01:00</updated>
@@ -942,55 +553,6 @@ case object Pineapple extends Fruit(95)
 <p>If you want to do something more sophisticated, you could try something like <a href="http://raibledesigns.com/rd/entry/installing_openjdk_7_on_os#comment-1311684547000">this</a> or <a href="http://nemecec.blogspot.co.uk/2012/04/os-x-switching-java-versions-easily.html">this</a>.</p>
 
 <p><strong>Caveat:</strong> I don&#8217;t have Java on my path, if you do, switching versions using the environment variable may not work.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Type Classes in Scala]]></title>
-    <link href="http://baddotrobot.com/blog/2015/08/16/type-classes/"/>
-    <updated>2015-08-16T18:42:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2015/08/16/type-classes</id>
-    <content type="html"><![CDATA[<p>In the previous post on implicits, we talked about &#8230;</p>
-
-<!-- more -->
-
-
-<h2>Type Classes</h2>
-
-<p>A new language construct is proposed to simplify the creation of classes which provide extension methods to another type.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Implicit Classes in Scala]]></title>
-    <link href="http://baddotrobot.com/blog/2015/08/05/scala-implicit-classes/"/>
-    <updated>2015-08-05T18:42:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2015/08/05/scala-implicit-classes</id>
-    <content type="html"><![CDATA[<p>Implicits in Scala are either really awesome or really nasty.</p>
-
-<p>In this series, we&#8217;ll take a look at the different types of implicit and when they can be useful.</p>
-
-<p>There are three categories of &#8220;implicits&#8221;;</p>
-
-<ol>
-<li>Implicit parameters (<code>var</code>s)</li>
-<li>Implicit functions (<code>def</code>s)</li>
-<li>Implicit classes</li>
-</ol>
-
-
-<!-- more -->
-
-
-<h2>Implicit Classes</h2>
-
-<p>A new language construct is proposed to simplify the creation of classes which provide extension methods to another type.</p>
-
-<h2>Syntax</h2>
-
-<h2>Example</h2>
-
-<h2>Roundup</h2>
 ]]></content>
   </entry>
   
@@ -1588,28 +1150,6 @@ case object Pineapple extends Fruit(95)
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Universal Qualifier in Scala]]></title>
-    <link href="http://baddotrobot.com/blog/2014/09/21/universal-qualifier/"/>
-    <updated>2014-09-21T05:12:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2014/09/21/universal-qualifier</id>
-    <content type="html"><![CDATA[<p>or should this post be called exesential qualifier?</p>
-
-<p>http://www.drmaciver.com/2008/03/existential-types-in-scala/</p>
-
-<ul>
-<li>∃ = Existential qualifier <code>&lt;? extends T&gt;</code> <em>and</em> <code>&lt;? super T&gt;</code> in Java, <code>T[_]</code> in Scala</li>
-<li>∀ = Universal qualifier, just regular generic</li>
-</ul>
-
-
-<!-- more -->
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Dealing with Exceptions as Monads]]></title>
     <link href="http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads/"/>
     <updated>2014-09-21T05:12:00+01:00</updated>
@@ -2180,6 +1720,305 @@ case object Pineapple extends Fruit(95)
 <p>&nbsp;
 &nbsp;
 &nbsp;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEA Retina Support JDK 1.7+]]></title>
+    <link href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/"/>
+    <updated>2014-01-20T19:33:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support</id>
+    <content type="html"><![CDATA[<p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
+
+<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
+<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
+
+<!-- more -->
+
+
+<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Yet Another TeamCity Build Monitor]]></title>
+    <link href="http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/"/>
+    <updated>2014-01-01T09:57:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor</id>
+    <content type="html"><![CDATA[<p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
+
+
+<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
+
+<!-- more -->
+
+
+<p>Build monitors are supposed to be highly visual, you should be able get some important piece of information from across the other side of the office. The <em>only</em> important piece of information for Radiate, is whether the build is passing or failing. Anything else is superfluous. After all, to investigate a failure, we&#8217;d typically open up the TeamCity page.</p>
+
+<p>It&#8217;s got a couple of other neat features; it gives aggregated progress when builds are running, changing it&#8217;s status as soon as a failure is detected; it runs as a standalone executable jar, <code>.exe</code> or as a Windows screen saver (<code>.scr</code>); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).</p>
+
+<p>Have a look on <a href="http://github.com/tobyweston/radiate">Github</a> and let me know what you think below.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Currying Functions in Java & Scala]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/21/curried-functions/"/>
+    <updated>2013-07-21T06:58:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/21/curried-functions</id>
+    <content type="html"><![CDATA[<p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
+
+<p>You can turn any function with multiple arguments into it&#8217;s curried equivalent. Let&#8217;s have a look at this in action.</p>
+
+<!-- more -->
+
+
+<h2>Java</h2>
+
+<p>For example, in Java, you can convert</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>into something like this (where <code>Function&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>                <span class="nd">@Override</span>
+</span><span class='line'>                <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">};</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">};</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Calling the original method</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and calling the curried version</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Java 8</h2>
+
+<p>In Java 8, it&#8217;s much less verbose using the new lambda syntax.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Scala</h2>
+
+<p>In Scala, the regular uncurried function would look like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As Scala supports curried functions, you can turn this into it&#8217;s curried version simply by separating out the arguments.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// shorthand</span>
+</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Which is shorthand for writing it out like this.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// longhand</span>
+</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the REPL to show how they&#8217;re called;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>     |   x + y
+</span><span class='line'>     | <span class="o">}</span>
+</span><span class='line'>add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int
+</span><span class='line'>
+</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
+</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;Function&gt;
+</span><span class='line'>
+</span><span class='line'>scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2
+</span><span class='line'>
+</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)(</span>1<span class="o">)</span>
+</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and working with the longhand version;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>     |   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&gt; <span class="o">{</span>
+</span><span class='line'>     |     x + y
+</span><span class='line'>     |   <span class="o">}</span>
+</span><span class='line'>     | <span class="o">}</span>
+</span><span class='line'>add2: <span class="o">(</span>x: Int<span class="o">)</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int
+</span><span class='line'>
+</span><span class='line'>scala&gt; add2<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
+</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It turns out that it&#8217;s this partial application of functions that&#8217;s really interesting. Currying in Scala allows us to defer execution and reuse functions. We&#8217;ll have a look at that in the next article.</p>
+
+<h2>More Information</h2>
+
+<ul>
+<li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
+<li><a href="http://www.codecommit.com/blog/scala/function-currying-in-scala">Function Currying in Scala</a></li>
+<li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically rebase on git pull]]></title>
+    <link href="http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/"/>
+    <updated>2013-07-09T17:29:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull</id>
+    <content type="html"><![CDATA[<p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
+
+<!-- more -->
+
+
+<p>To configure your repository to always rebase when pulling;</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>git config branch.master.rebase true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which turns the relevant section of your &#8216;.git/config&#8217; from</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
+</span><span class='line'>  remote = origin
+</span><span class='line'>  merge = refs/heads/master</span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
+</span><span class='line'>  remote = origin
+</span><span class='line'>  merge = refs/heads/master
+</span><span class='line'>  rebase = true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a <code>git fetch</code> followed by a <code>git merge</code> or in one command, <code>git pull --no-rebase</code>), a rebase (<code>git fetch</code>, <code>git rebase</code> or <code>git pull --rebase</code>) or rely on the setting above in your config.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Calculate the Optimum Number of Threads]]></title>
+    <link href="http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/"/>
+    <updated>2013-06-01T20:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads</id>
+    <content type="html"><![CDATA[<p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
+
+<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
+
+<!-- more -->
+
+
+<h2>CPU Bound Tasks</h2>
+
+<p>For CPU bound tasks, Goetz (2002, 2006) recommends</p>
+
+<pre><code>threads = number of CPUs + 1
+</code></pre>
+
+<p>Which is intuitive as if a CPU is being kept busy, we can&#8217;t do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don&#8217;t agree and suggest just the number of CPUs is optimal.</p>
+
+<h2>IO Bound Tasks</h2>
+
+<p>Working out the optimal number for IO bound tasks is less obvious. During an IO bound task, a CPU will be left idle (waiting or blocking). This idle time can be better used in initiating another IO bound request.</p>
+
+<p>Subramaniam (2011, p.31) describes the optimal number of threads in terms of the following formula.</p>
+
+<pre><code>threads = number of cores /  (1 – blocking coefficient)
+</code></pre>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
+
+<pre><code>threads = number of cores * (1 + wait time / service time)
+</code></pre>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+
+<p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
+
+<h2>Goetz and Subramaniam Agree</h2>
+
+<p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+
+<p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>&#8217;s project site.</p>
+
+<h2>References</h2>
+
+<ul>
+<li>Goetz, B. 2002. <a href="http://www.ibm.com/developerworks/java/library/j-jtp0730/index.html">Java theory and practice: Thread pools and work queues</a>. IBM DeveloperWorks.</li>
+<li>Goetz, B. Peierls, T. Bloch, J. Bowbeer, J. Holmes, D. and Lea, D. 2006. <a href="http://amzn.to/NrXQPZ">Java Concurrency in Practice</a>. 1st Edition. Addison Wesley.</li>
+<li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Writing my Book]]></title>
+    <link href="http://baddotrobot.com/blog/2013/05/24/writing-my-book/"/>
+    <updated>2013-05-24T13:57:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/05/24/writing-my-book</id>
+    <content type="html"><![CDATA[<p>There haven&#8217;t been many posts on the blog recently because I&#8217;ve been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It&#8217;s published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it&#8217;s driven by dogma rather than by a genuine testing need.</p>
+
+<p>Acceptance testing in it&#8217;s generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn&#8217;t have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
+
+<p>It also talks about when not to bother; how gaining software confidence isn&#8217;t always about testing. Fast feedback and writing software that&#8217;s cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
+
+<!-- more -->
+
+
+<p>Keep an eye on my <a href="http://baddotrobot.com/book">blog&#8217;s book page</a> for the latest news and head over to <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to purchase a copy or <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">download a free sample</a>.</p>
 ]]></content>
   </entry>
   

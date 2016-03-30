@@ -9,9 +9,8 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Just a quick post to introduce the robotooling project;
-a collection of useful Java tools available for download via the bad.robot.repo.
-Rather than &hellip;">
+  <meta name="description" content="This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
+who wants to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,7 +93,7 @@ Rather than &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-03-30 18:25:11 +0100 -->
+    <!-- last update; 2016-03-30 18:29:46 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -133,7 +132,7 @@ Rather than &hellip;">
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/18/tools-for-bad-dot-robots/">Tools for bad.robots</a></h1>
+        <h1 class="entry-title"><a href="/blog/2010/05/01/unmarshalling/">Un/Marshalling</a></h1>
       
     
     
@@ -150,23 +149,212 @@ Rather than &hellip;">
   
 
 
-<time itemprop="datePublished" content="2012-03-18 15:58:00 +0000" datetime="2012-03-18T15:58:00+00:00" pubdate data-updated="true" class="updated">Mar 18<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2010-05-01 00:00:00 +0100" datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true" class="updated">May 1<span>st</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Just a quick post to introduce the <a href="http://robotooling.com">robotooling</a> project;
-a collection of useful Java tools available for download via the <a href="http://robotooling.com/maven">bad.robot.repo</a>.
-Rather than re-implement the same utility code again and again, I&#8217;ve started to collect things under the bad.robot
-banner. So far, we have&#8230;</p>
+  <div class="entry-content"><p>This post should probably be titled &#8220;Why I don&#8217;t like Unmarhsalling frameworks&#8221;. They just hack me off. I mean really,
+who wants to have to use the Java objects that they make you use? It&#8217;s not that they don&#8217;t represent as objects the data that the frameworks unmarshall, they do. It&#8217;s more that the underlying data may or may not match your systems view of the domain. I don&#8217;t want to have to run some process to generate <code>Foo.java</code> only to convert it to <code>MyFoo.java</code>, I&#8217;d rather go straight to <code>MyFoo</code>.</p>
+
+<p>I was using Castor to do the former some time ago. It sounded like a good idea, and I got going really quickly. However, I quickly didn&#8217;t like the objects its produced so had to modify the <code>mapping.xml</code> to &#8220;tailor&#8221; the marshalling. Still fine, this was ok for a while but soon enough I descended into a kind of Castor mapping hell. I seriously spent days trying to tweak things and had to compromise the model in the end.</p>
+
+<p>After some reflection, I thought I&#8217;d try and dump Castor. I replaced the marshalling with merging to a Freemarker template and produced cleaner XML in under an hour. The unmarshalling, replaced with manually parsing the XML and inserting elements directly into objects. I couldn&#8217;t believe how much less pain I was feeling.</p>
+
+<p>For me, the overhead of maintaining these more &#8220;manual&#8221; approaches is far less than working around any framework mismatches. If you&#8217;re lucky enough to find a marhsalling framework that can grow with you, fair play, but I&#8217;m heavily biased towards a more manual approach these days. Down with [insert framework here].</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/05/01/setter-vs-constructor-injection/">Setter vs Constructor Injection</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2010-05-01 00:00:00 +0100" datetime="2010-05-01T00:00:00+01:00" pubdate data-updated="true" class="updated">May 1<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So what is the argument for / against? It can be a tough one to describe as I recently discovered.</p>
+
+<p>You can say that constructor injection forces an object to have its <strong>dependencies set explicitly</strong> and setter injection is <strong>open to forgetfulness or misuse</strong> but how powerful an argument is that really? Surely the tests would catch it if you miss a set call? Constructor injection does say upfront &#8220;this is what I need&#8221;, so there&#8217;s no &#8220;first call this, then this and don&#8217;t forget this&#8221; - its explicit and you don&#8217;t need to know about the internals that setters expose. That&#8217;s useful. But on the small, how complex do the combination of set calls get?</p>
+
+<p>If you use your IDE effectively, <strong>constructor injection will have better rafactoring support</strong>. There&#8217;s no way an IDE will interpret adding a field to mean calling setter for it. However, if add a constructor parameter, the IDE can push a default value out to all usages.</p>
+
+<p>I don&#8217;t think that a <strong>large number of constructor arguments</strong> justifies defecting to the setter camp as the real smell here is often that the class is doing too much and/or has too many dependencies. It&#8217;s often cited that the reason there are lots of setters is because of particular <strong>dependency injection framework leads you</strong> in that direction but why compromise (I should probably say, <em>comply</em>) because you&#8217;re <em>told</em> to? What if that compromises other design goals?</p>
+
+<p>How about the way the system would <strong>grow using constructors vs setters</strong>? I think this is where the real argument lies. You can move forward perfectly happily with either approach, content with the fact that dependencies are isolated. Testing becomes simpler, more focused on the objects under test and the earth continues to orbit the sun. Its only much later when the system is all but grown up that you can look back and reflect. Have setters contributed to creating a system that is assembled in a complex, disheveled way? Are you leaning on external (ahem, xml) configuration to manage this? Alternatively, has a constructor centric approach left you with a system with a more concise assembly strategy? Which has more noise? You tell me&#8230;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/04/25/wrapping-exceptions-is-dull/">Wrapping Exceptions is Dull</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2010-04-25 00:00:00 +0100" datetime="2010-04-25T00:00:00+01:00" pubdate data-updated="true" class="updated">Apr 25<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m totally bored of wrapping exceptions in Java,</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BoredomException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something else</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s verbose, ugly and has nothing to do with what you&#8217;re really trying to convey. It&#8217;s just noise. For example, when using the <em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">O</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CalendarException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>  <span class="c1">// the call to the google service</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">BAD_URL_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">IO_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AuthenticationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">AUTHENTICATION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ServiceException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">SERVICE_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If I didn&#8217;t delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There&#8217;s no class hierarchy in Google&#8217;s API here.</p>
+
+<p>As I&#8217;ve done this a few times, I decided to add it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to rethrow any caught exception as some other (including the underlying exception as the <code>cause</code>).</p>
+
+<p>So, in a similar way to the above, the client can ignore any declared
+exceptions and just rethrow them in-line. For example,</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="k">new</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServiceException</span> <span class="o">{</span>
+</span><span class='line'>         <span class="c1">// nasty code throwing a bunch of exceptions</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">},</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>when this is in-lined further, it hopefully becomes more succinct.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="n">serviceCall</span><span class="o">(),</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary <code>with</code> by taking a <code>WithException</code> as the second parameter.</p>
+
+<p>It&#8217;s in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>, let me know if you find it useful.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/03/19/nibbles-cat/">Nibbles the Cat & Concurrency</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2010-03-19 00:00:00 +0000" datetime="2010-03-19T00:00:00+00:00" pubdate data-updated="true" class="updated">Mar 19<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems. In the end, I created a <code>DeadlockDetector</code> class.</p>
+
+<p>I&#8217;m talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/03/18/tools-for-bad-dot-robots/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2010/03/19/nibbles-cat/">Read on &rarr;</a>
     </footer>
   
 
@@ -179,7 +367,7 @@ banner. So far, we have&#8230;</p>
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/02/21/jersey-and-ie8/">Force IE8 to Display JSON with Jersey</a></h1>
+        <h1 class="entry-title"><a href="/blog/2010/01/04/type-safe-annotation/">Type Safe Annotation</a></h1>
       
     
     
@@ -196,20 +384,46 @@ banner. So far, we have&#8230;</p>
   
 
 
-<time itemprop="datePublished" content="2012-02-21 06:27:00 +0000" datetime="2012-02-21T06:27:00+00:00" pubdate data-updated="true" class="updated">Feb 21<span>st</span>, 2012</time>
+<time itemprop="datePublished" content="2010-01-04 00:00:00 +0000" datetime="2010-01-04T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 4<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn&#8217;t expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON &#8216;in-browser&#8217; like in Firefox and Chrome. If you&#8217;re using <a href="http://jersey.java.net/">Jersey</a>, Oracle&#8217;s JAX-RS reference implementation, here&#8217;s how to make IE8 play nice.</p>
+  <div class="entry-content"><div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/02/21/jersey-and-ie8/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2010/01/04/type-safe-annotation/">Read on &rarr;</a>
     </footer>
   
 
@@ -222,7 +436,7 @@ banner. So far, we have&#8230;</p>
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/02/13/hexagonal-acceptance-testing/">Hexagonal Acceptance Testing</a></h1>
+        <h1 class="entry-title"><a href="/blog/2009/12/29/running-junit-tests-in-parallel/">Running JUnit tests in parallel</a></h1>
       
     
     
@@ -239,24 +453,20 @@ banner. So far, we have&#8230;</p>
   
 
 
-<time itemprop="datePublished" content="2012-02-13 21:24:00 +0000" datetime="2012-02-13T21:24:00+00:00" pubdate data-updated="true" class="updated">Feb 13<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2009-12-29 00:00:00 +0000" datetime="2009-12-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 29<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>There&#8217;s no reason a unit test can&#8217;t also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
-
-<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we&#8217;re usually horrified by the previous paragraph and ask the question <em>&#8220;shouldn&#8217;t we start up the entire stack in an acceptance test?&#8221;</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
-
-<p>Taking inspiration from Cockburn&#8217;s <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/02/13/hexagonal-acceptance-testing/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2009/12/29/running-junit-tests-in-parallel/">Read on &rarr;</a>
     </footer>
   
 
@@ -269,7 +479,7 @@ banner. So far, we have&#8230;</p>
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a></h1>
+        <h1 class="entry-title"><a href="/blog/2009/12/24/flickering-tests/">Flickering Tests and a JUnit Rule</a></h1>
       
     
     
@@ -286,22 +496,120 @@ banner. So far, we have&#8230;</p>
   
 
 
-<time itemprop="datePublished" content="2012-01-29 00:00:00 +0000" datetime="2012-01-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 29<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it&#8217;s often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
+  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
 
-<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
+<p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="nd">@Intermittent</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s interesting here is the way in which the <code>Rule</code> and <code>Runner</code> interact with
+JUnit. Newer versions of JUnit have introduced the idea of <code>Rule</code>s and
+<code>Statement</code>s. Using a <code>Rule</code> allows access to the underlying <code>Statement</code> which in
+our case is the action to run the test method. So we&#8217;re able to run the
+underlying statement again and again. Nice.</p>
+
+<p>The <code>Runner</code> however can hook into JUnit&#8217;s framework in a different way. It can
+access more than one statement and so can position itself slightly differently.
+What this means for us is that when using the <code>Rule</code> above, any <code>@Before</code> or <code>@After</code>
+methods will only be run once but the test method will run multiple times.
+Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
+once for each test repetition.</p>
+
+<p>The code is available as part of the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> library, feel free to look around.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/24/deadlock/">Deadlock detection in Java</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/01/29/transaction-management-without/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2009/12/24/deadlock/">Read on &rarr;</a>
     </footer>
   
 
@@ -314,7 +622,7 @@ banner. So far, we have&#8230;</p>
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/10/29/java-source-on-mac/">Java source on Mac</a></h1>
+        <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
       
     
     
@@ -331,20 +639,38 @@ banner. So far, we have&#8230;</p>
   
 
 
-<time itemprop="datePublished" content="2011-10-29 00:00:00 +0100" datetime="2011-10-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Oct 29<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2009-12-10 00:00:00 +0000" datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 10<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Mostly as a reminder to myself, getting the Java source on your Mac involves the following.</p>
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2011/10/29/java-source-on-mac/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
     </footer>
   
 
@@ -357,7 +683,7 @@ banner. So far, we have&#8230;</p>
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a></h1>
+        <h1 class="entry-title"><a href="/blog/2009/11/11/time-flies/">Time Flies 1.0</a></h1>
       
     
     
@@ -374,199 +700,31 @@ banner. So far, we have&#8230;</p>
   
 
 
-<time itemprop="datePublished" content="2011-08-29 00:00:00 +0100" datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2009-11-11 00:00:00 +0000" datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true" class="updated">Nov 11<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Recruiting for the next guy on your team is hard. At first glance it doesn&#8217;t seem to be, we&#8217;ve developed techniques like pair tests but as I start to look at it more closely, I&#8217;ve started to notice that even the more progressive techniques don&#8217;t preclude us from making the same mistakes as the traditional interview.</p>
+  <div class="entry-content"><p>I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to <a href="http://search.maven.org/">maven central repository</a>.</p>
 
-<p>Let&#8217;s take an example from two teams.</p>
+<p>oh, I should mention&#8230; tempus-fugit represents two things to me</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Read on &rarr;</a>
-    </footer>
-  
+<ol>
+<li>A focal point to a lot of head scratching around the theme of testing concurrency and time sensitive code.</li>
+<li>An attempt to consolidate this thinking into a single place that can be easily reused.</li>
+</ol>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
-      
-    
-    
-      <p class="meta">
-        
+<p>What it actually is, is</p>
 
+<ol>
+<li>a dozen or so classes that capture key abstractions we&#8217;ve found are frequently shared across domains.</li>
+<li>an even smaller number of wrapper or helper classes that we&#8217;ve found can help using concurrency in Java that little bit nicer.</li>
+<li>all with an underlying theme of testing and improving testability.</li>
+</ol>
 
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2011-08-29 00:00:00 +0100" datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
-
-<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/29/catching-multiple-exceptions-and/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/06/22/loggin-is-still-evil-but/">Logging is still evil but&#8230;</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2011-06-22 00:00:00 +0100" datetime="2011-06-22T00:00:00+01:00" pubdate data-updated="true" class="updated">Jun 22<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of the post was that if you&#8217;re going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what&#8217;s important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
-
-<p>Mocking Log4J however can be a real pain. I&#8217;ve managed it in the past using Apache&#8217;s logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/06/22/loggin-is-still-evil-but/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/06/10/artcile-in-javatech-journal/">JDK7 Article in JavaTech Journal</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2011-06-10 00:00:00 +0100" datetime="2011-06-10T00:00:00+01:00" pubdate data-updated="true" class="updated">Jun 10<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://baddotrobot.com/resources/JTJ-2011-05.pdf"><img itemprop="image" class="right" src="http://baddotrobot.com/images/JTJ-2011-05.png"></a></p>
-
-<p>My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
-<a href="http://jaxenter.com/java-tech-journal/">Java Tech Journal</a>. <strong>Click on the image to download the PDF</strong> or read the article <a href="http://jaxenter.com/new-and-noteworthy-in-jdk7-36843.html">online</a>.</p>
-
-<p>I&#8217;d love to get some feedback, so please feel free to comment here.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2011/04/13/tempus-fugit-1.1-released/">tempus-fugit 1.1 released</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2011-04-13 00:00:00 +0100" datetime="2011-04-13T00:00:00+01:00" pubdate data-updated="true" class="updated">Apr 13<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yesterday, I released the 1.1 version of my micro-library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. From the project&#8217;s website</p>
-
-<blockquote><p>The tempus-fugit library is a small collection of classes and interfaces capturing common abstractions useful when writing concurrent and time sensitive code.</p></blockquote>
-
-<p>It&#8217;s now available from the <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">Maven Central</a>
-repository having had a bad experience with <a href="http://repo2.maven.org/maven2/com/google/code/tempus-fugit/tempus-fugit/">java.net</a>
-since their migration (and no longer being able to publish, see this <a href="http://java.net/projects/maven-repository/lists/users/archive/2011-03/message/0">post</a>
-and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/0">another</a> if you&#8217;re interested).</p>
 </div>
   
   
@@ -595,19 +753,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
       </li>
     
       <li class="post">
-        <a href="/blog/2016/02/03/standard-pi-setup/">Standard Pi Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/01/20/vintage-airplay-speakers/">Vintage AirPlay Speakers</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -616,14 +762,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     
       <li class="post">
         <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/16/type-classes/">Type Classes in Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/05/scala-implicit-classes/">Implicit Classes in Scala</a>
       </li>
     
       <li class="post">
@@ -647,10 +785,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
       </li>
     
       <li class="post">
-        <a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
       </li>
     
@@ -668,6 +802,30 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>

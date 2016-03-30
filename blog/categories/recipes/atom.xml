@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-30T18:28:43+01:00</updated>
+  <updated>2016-03-30T18:29:46+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -74,10 +74,10 @@ git config branch.master.rebase true
     <updated>2013-05-24T10:28:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2013/05/24/mac-tips</id>
     <content type="html"><![CDATA[<ul>
-<li><a href="{{%20root_url%20}}/blog/2013/05/24/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/05/24/mac-tips#show_hidden_open">Show hidden files and folders from an application's Open dialog</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/05/24/mac-tips#duplicates">Remove Duplicate Entries in 'Open With' Menu</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/05/24/mac-tips#calculator">Show your workings with Calculator</a></li>
+<li><a href="/blog/2013/05/24/mac-tips#show_hidden_finder">Show hidden files and folders in Finder</a></li>
+<li><a href="/blog/2013/05/24/mac-tips#show_hidden_open">Show hidden files and folders from an application's Open dialog</a></li>
+<li><a href="/blog/2013/05/24/mac-tips#duplicates">Remove Duplicate Entries in 'Open With' Menu</a></li>
+<li><a href="/blog/2013/05/24/mac-tips#calculator">Show your workings with Calculator</a></li>
 </ul>
 
 
@@ -86,13 +86,12 @@ git config branch.master.rebase true
 
 <h2><a id="show_hidden_finder"></a>Show hidden files and folders in Finder</h2>
 
-<p>{% img right ../../../../../images/relaunch_finder.png 220 290 'Relaunch Finder' %}</p>
+<p><img itemprop="image" class="right" src="../../../../../images/relaunch_finder.png" width="220" height="290" title="'Relaunch Finder'" ></p>
 
 <p>From a terminal window</p>
 
-<p>{% codeblock lang:sh %}
-$ defaults write com.apple.Finder AppleShowAllFiles YES
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>defaults write com.apple.Finder AppleShowAllFiles YES
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Option" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
 
@@ -104,17 +103,16 @@ $ defaults write com.apple.Finder AppleShowAllFiles YES
 
 <p>Remove duplicate entries from the terminal window.</p>
 
-<p>{% img ../../../../../images/duplicate_open_with_banner.png 'Relaunch Finder' %}</p>
+<p><img itemprop="image" src="../../../../../images/duplicate_open_with_banner.png" title="'Relaunch Finder'" ></p>
 
-<p>{% codeblock lang:sh %}
-$ /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2><a id="calculator"></a>Show your Workings with Calculator</h2>
 
 <p>Hitting Command (<img src="/images/ks_command.gif" alt="Command" />) + T in the Calculator app shows the paper tape so you can see you past calculations!</p>
 
-<p>{% img right ../../../../../images/calculator-paper-tape.png 205 258 'Calculator's Paper Tape' %}</p>
+<p><img itemprop="image" class="right" src="../../../../../images/calculator-paper-tape.png" width="205" height="258" title="'Calculator's Paper Tape'" ></p>
 ]]></content>
   </entry>
   
@@ -126,12 +124,12 @@ $ /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Launch
     <content type="html"><![CDATA[<p><a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.</p>
 
 <ul>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
-<li><a href="{{%20root_url%20}}/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#create_remote_branch">Create a branch on a remote (pushing a branch to a remote)</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#delete_remote_branch">Delete a remote branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#switch_to_ssh">Switch from HTTP to git/ssh</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#set_upstream_branch">Set upstream branch</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#status">Abbreviated status</a></li>
+<li><a href="/blog/2013/01/23/useful-git-commands#alias">Useful Git aliases</a></li>
 </ul>
 
 
@@ -262,14 +260,13 @@ $ git status</p>
 <code>``
 The abbreviated</code>git status -sb` version</p>
 
-<p>{% codeblock lang:sh %}
-$ git status -sb</p>
-
-<h2>master...origin/master [ahead 1]</h2>
-
-<p> M LegoWars/BattleShip.h
- M LegoWars/BattleShip.m
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead 1<span class="o">]</span>&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt; M LegoWars/BattleShip.h
+</span><span class='line'> M LegoWars/BattleShip.m
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2><a id="alias"></a>Useful Git aliases and config</h2>
 
@@ -308,8 +305,8 @@ git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(ye
 </div>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg 'Pragmatic Guide to Git (Pragmatic Programmers)' %}</a>
-<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg 'Pragmatic Version Control Using Git' %}</a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41iwlU4g9yL.<em>SL160</em>.jpg" title="'Pragmatic Guide to Git (Pragmatic Programmers)'" ></a>
+<a href="http://www.amazon.co.uk/gp/product/1934356158/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356158&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/519CeNsejdL.<em>SL160</em>.jpg" title="'Pragmatic Version Control Using Git'" ></a></p>
 
 <ul>
 <li><a href="http://www.amazon.co.uk/gp/product/1934356727/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356727&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Guide to Git (Pragmatic Programmers)</a>, Travis Swicegood</li>
@@ -344,11 +341,10 @@ git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(ye
 
 <p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
 
-<p>{% codeblock lang:java %}
-Workbook actual = new HSSFWorkbook(...);
-Workbook expected = new HSSFWorkbook(...);
-assertThat(actual, sameWorkbook(expected));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+</span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>If you use the <code>MatcherAssert.assertThat</code> from Hamcrest rather than the vanilla JUnit version (<code>org.junit.Assert.assertThat</code>), you'll see useful information on a failure.</p>
 
@@ -365,20 +361,18 @@ Expected: entire workbook to be equal
 
 <p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.</p>
 
-<p>{% codeblock lang:java %}
-InputStream template = this.getClass().getResourceAsStream("invoiceTemplate.xls");
-Workbook invoice = new HSSFWorkbook(template);
-InvoiceItem item = new InvoiceItem();
-item.appendTo(invoice);
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
+</span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
+</span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we'd like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
 
-<p>{% codeblock lang:java %}
-assertThat(getCellForCoordinate(coordinate(E, 1), invoice), is(equalTo(stringCell("Mac Book Pro"))));
-assertThat(getCellForCoordinate(coordinate(E, 2), invoice), is(equalTo(numberCell(999.99D))));
-assertThat(getCellForCoordinate(coordinate(E, 3), invoice), is(equalTo(blankCell()));
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Where the <code>getCellForCoordinate</code> returns a POI <code>Cell</code> object and <code>equalTo</code> is statically imported from <code>bad.robot.excel.matchers.Matchers</code> (not regular Hamcrest <code>equalTo</code>);</p>
 
@@ -411,7 +405,7 @@ Expected: is &lt;999.99D&gt;
 </div>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21 'Growing Object Oriented Software' %}</a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
 
 <ul>
 <li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>

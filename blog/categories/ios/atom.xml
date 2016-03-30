@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-30T18:28:43+01:00</updated>
+  <updated>2016-03-30T18:29:46+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -18,7 +18,7 @@
     <link href="http://baddotrobot.com/blog/2012/08/28/play-it-next/"/>
     <updated>2012-08-28T19:29:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/08/28/play-it-next</id>
-    <content type="html"><![CDATA[<p><a href="../../../../../images/play_it_next.png">{% img right ../../../../../images/play_it_next.png 224 336 'Play it Next'%}</a></p>
+    <content type="html"><![CDATA[<p><a href="../../../../../images/play_it_next.png"><img itemprop="image" class="right" src="../../../../../images/play_it_next.png" width="224" height="336" title="'Play it Next'" ></a></p>
 
 <p>I'm often listening to something on my iPhone whilst thinking about what track to play next. It's a shame the iPod app doesn't let me queue up the next track without interrupting the one that's playing.</p>
 
@@ -49,9 +49,9 @@
 </div>
 
 
-<p><a href="../../../../../images/appigo_todo.png">{% img right ../../../../../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}</a></p>
+<p><a href="../../../../../images/appigo_todo.png"><img itemprop="image" class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
 
-<p>In the <a href="{{%20root_url%20}}/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 

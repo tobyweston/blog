@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-30T18:28:43+01:00</updated>
+  <updated>2016-03-30T18:29:46+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -43,14 +43,14 @@
 <pre><code>threads = number of cores /  (1 – blocking coefficient)
 </code></pre>
 
-<p>{% img ../../../../../images/optimal-threads/subramaniam.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
 
 <pre><code>threads = number of cores * (1 + wait time / service time)
 </code></pre>
 
-<p>{% img ../../../../../images/optimal-threads/goetz-1.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
 
 <p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
 
@@ -58,15 +58,15 @@
 
 <p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
 
-<p>{% img ../../../../../images/optimal-threads/goetz-2.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
 
 <p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
 
-<p>{% img ../../../../../images/optimal-threads/goetz-3.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
 
-<p>{% img ../../../../../images/optimal-threads/goetz-4.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
 
-<p>{% img ../../../../../images/optimal-threads/subramaniam.gif %}</p>
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
 
 <p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>'s project site.</p>
 
@@ -106,15 +106,14 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>I'm talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
-<p>{% codeblock lang:java %}
-public void potentialDeadlock() {</p>
-
-<pre><code> new Kidnapper().start();
- new Negotiator().start();
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'> <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
 
@@ -123,33 +122,32 @@ public void potentialDeadlock() {</p>
 
 <p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  <code>Kidnapper</code> is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  <code>Kidnapper</code> is grabbing it. Meanwhile, the <code>Negotiator</code> is synchronising on the cash, holding onto it (or again, more specifically, it's monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.</p>
 
-<p>{% codeblock lang:java %}
-public class Kidnapper extends Thread {
-   public void run() {</p>
-
-<pre><code>  synchronized (nibbles) {
-     synchronized (cash) {
-        take(cash);
-     }
-  }
-</code></pre>
-
-<p>   }
-}</p>
-
-<p>public class Negotiator extends Thread {
-   public void run() {</p>
-
-<pre><code>  synchronized (cash) {
-     synchronized (nibbles) {
-        take(nibbles);
-     }
-  }
-</code></pre>
-
-<p>   }
-}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">take</span><span class="o">(</span><span class="n">cash</span><span class="o">);</span>
+</span><span class='line'>     <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="o">}</span>
+</span><span class='line'><span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Negotiator</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">take</span><span class="o">(</span><span class="n">nibbles</span><span class="o">);</span>
+</span><span class='line'>     <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>The deadlock detector displays this woeful situation as follows.</p>
 
@@ -194,50 +192,47 @@ public class Kidnapper extends Thread {
 
 <p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
-<p>{% codeblock lang:java %}
-public @interface GuardedBy {
-   Type value();</p>
-
-<p>   public enum Type { FIELD, CLASS; }
-}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <!-- more -->
 
 
 <p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
-<p>{% codeblock lang:java %}
-public @interface GuardedBy {
-   Type value();</p>
-
-<p>   public enum Type {</p>
-
-<pre><code>  CLASS, FIELD;
-
-  public static Type FIELD(String field) {
-     return FIELD;
-  }
-
-  public static Type CLASS(String type) {
-     return CLASS;
-  }
-</code></pre>
-
-<p>   }
-}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">FIELD</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">CLASS</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">return</span> <span class="n">CLASS</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Here's where the trouble began.</p>
 
 <p>Using the static constructor method is fine when I want to create an instance of a type but not when I want to annotate some method. For example,</p>
 
-<p>{% codeblock lang:java %}
-@GuardedBy(GuardedBy.Type.CLASS("more info")) // javac cries
-public void foo() {
-   GuardedBy.Type type = GuardedBy.Type.CLASS("more info"); // fine
-}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">);</span> <span class="c1">// fine</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>The compiler very quickly complains that the attribute value must be constant. Specifically,</p>
 
@@ -246,14 +241,13 @@ public void foo() {
 
 <p>To get round things, you can just create several attributes for the annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a description, I was forced to have one attribute of type and another to capture the additional information.</p>
 
-<p>{% codeblock lang:java %}
-public @interface GuardedBy {
-   Type value();
-   String details() default "";</p>
-
-<p>   public enum Type { CLASS, FIELD; }
-}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">String</span> <span class="nf">details</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Shame on you Java! I'd love to know more about why things are like this, so if you can help, please post a comment.</p>
 ]]></content>
@@ -264,7 +258,7 @@ public @interface GuardedBy {
     <link href="http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel/"/>
     <updated>2009-12-29T00:00:00+00:00</updated>
     <id>http://baddotrobot.com/blog/2009/12/29/running-junit-tests-in-parallel</id>
-    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="{{%20root_url%20}}/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.</p>
+    <content type="html"><![CDATA[<p>I've been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.</p>
 
 <!-- more -->
 
@@ -273,34 +267,33 @@ public @interface GuardedBy {
 
 <p>After experimenting with much less straight forward integrations, overriding the scheduler gave the following.</p>
 
-<p>{% codeblock lang:java %}
-public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {</p>
-
-<pre><code>public ConcurrentTestRunner(Class type) throws Exception {
-    super(type);
-    setScheduler(new ConcurrentScheduler());
-}
-
-private static class ConcurrentScheduler implements RunnerScheduler {
-
-    private ExecutorService executor;
-
-    public ConcurrentScheduler() {
-        executor = newCachedThreadPool(new ThreadFactory() { ... });
-    }
-
-    public void schedule(Runnable childStatement) {
-        executor.submit(childStatement);
-    }
-
-    public void finished() {
-        shutdown(executor).waitingForCompletion(seconds(10));
-    }
-}
-</code></pre>
-
-<p>}
-{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">setScheduler</span><span class="o">(</span><span class="k">new</span> <span class="n">ConcurrentScheduler</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ConcurrentScheduler</span> <span class="kd">implements</span> <span class="n">RunnerScheduler</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">executor</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">ConcurrentScheduler</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">executor</span> <span class="o">=</span> <span class="n">newCachedThreadPool</span><span class="o">(</span><span class="k">new</span> <span class="n">ThreadFactory</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">});</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">schedule</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">childStatement</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">executor</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">childStatement</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">finished</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">shutdown</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">waitingForCompletion</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>This results in all the test methods within a given class running in parallel. I'm excited about speeding up the execution time of my tests, next step would be run all tests across classes in parallel.</p>
 

@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the &hellip;">
+  <meta name="description" content="I&#8217;ve just published my course on Java 8 over at Udemy.com, for a limited time only, get 10% off with coupon code BLOG10! ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-03-30 18:25:11 +0100 -->
+    <!-- last update; 2016-03-30 18:29:46 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,284 +124,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2015/07/03/scala-implicit-parameters/">Implicit Parameters in Scala</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2015-07-03 18:42:00 +0100" datetime="2015-07-03T18:42:00+01:00" pubdate data-updated="true" class="updated">Jul 3<span>rd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and <code>Int</code> to a <code>String</code> and rather than call that function <em>explicitly</em>, you can ask the compiler to do it for you, <em>implicitly</em>.</p>
-
-<p>In the next few posts, we&#8217;ll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/07/03/scala-implicit-parameters/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2015/05/09/jmock-to-scalamock-cheatsheet/">JMock to Scalamock Cheat Sheet</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2015-05-09 12:41:00 +0100" datetime="2015-05-09T12:41:00+01:00" pubdate data-updated="true" class="updated">May 9<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>An abbreviated set of JMock examples with their Scalamock equivalents.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/05/09/jmock-to-scalamock-cheatsheet/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/11/25/scala-learning-curve/">Scala Learning Curve</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-<time itemprop="datePublished" content="2014-11-25 07:09:00 +0000" datetime="2014-11-25T07:09:00+00:00" pubdate data-updated="true">Nov 25<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you&#8217;ve just started to learn Scala and are wondering what to expect, it&#8217;s typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
-
-<p><img itemprop="image" class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
-
-<p>Taken from my <a href="http://bit.ly/1DsYl9f">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of &#8220;learning&#8221; on the <code>y</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/25/scala-learning-curve/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-09-22 06:09:00 +0100" datetime="2014-09-22T06:09:00+01:00" pubdate data-updated="true" class="updated">Sep 22<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Scala traits are interesting because they can be used for <a href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science">inclusion polymorphism</a> <em>and</em> to <a href="http://en.wikipedia.org/wiki/Mixin">mixin</a> behaviour. I&#8217;ve found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use <a href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">is a bad idea</a>.</p>
-
-<p>It can be tricky not break the <a href="http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits">inheritance vs. composition</a> principle when using traits with behaviour. Is it clear to you when you might be?</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/22/scala-mixins/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-09-21 05:12:00 +0100" datetime="2014-09-21T05:12:00+01:00" pubdate data-updated="true" class="updated">Sep 21<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>or should this post be called exesential qualifier?</p>
-
-<p>http://www.drmaciver.com/2008/03/existential-types-in-scala/</p>
-
-<ul>
-<li>∃ = Existential qualifier <code>&lt;? extends T&gt;</code> <em>and</em> <code>&lt;? super T&gt;</code> in Java, <code>T[_]</code> in Scala</li>
-<li>∀ = Universal qualifier, just regular generic</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/21/universal-qualifier/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-09-21 05:12:00 +0100" datetime="2014-09-21T05:12:00+01:00" pubdate data-updated="true" class="updated">Sep 21<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In some <a href="http://baddotrobot.com/blog/categories/exceptions/">previous posts</a>, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn&#8217;t return what you wanted.</p>
-
-<p>Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">purity of function</a>. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it&#8217;s much easier to provide that system wide consistently I&#8217;ve been talking about.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/21/exceptions-as-monads/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -577,6 +299,280 @@
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2014-01-20 19:33:00 +0000" datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true" class="updated">Jan 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
+
+<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
+<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/20/intellij-idea-retina-support/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2014-01-01 09:57:00 +0000" datetime="2014-01-01T09:57:00+00:00" pubdate data-updated="true" class="updated">Jan 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
+
+
+<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/01/another-teamcity-build-monitor/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-07-21 06:58:00 +0100" datetime="2013-07-21T06:58:00+01:00" pubdate data-updated="true" class="updated">Jul 21<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
+
+<p>You can turn any function with multiple arguments into it&#8217;s curried equivalent. Let&#8217;s have a look at this in action.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/21/curried-functions/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-07-09 17:29:00 +0100" datetime="2013-07-09T17:29:00+01:00" pubdate data-updated="true" class="updated">Jul 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true" class="updated">Jun 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
+
+<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/06/01/optimum-number-of-threads/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-05-24 13:57:00 +0100" datetime="2013-05-24T13:57:00+01:00" pubdate data-updated="true" class="updated">May 24<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>There haven&#8217;t been many posts on the blog recently because I&#8217;ve been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It&#8217;s published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it&#8217;s driven by dogma rather than by a genuine testing need.</p>
+
+<p>Acceptance testing in it&#8217;s generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn&#8217;t have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
+
+<p>It also talks about when not to bother; how gaining software confidence isn&#8217;t always about testing. Fast feedback and writing software that&#8217;s cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/05/24/writing-my-book/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -598,19 +594,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2016/02/03/standard-pi-setup/">Standard Pi Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/01/20/vintage-airplay-speakers/">Vintage AirPlay Speakers</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -619,14 +603,6 @@
     
       <li class="post">
         <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/16/type-classes/">Type Classes in Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/05/scala-implicit-classes/">Implicit Classes in Scala</a>
       </li>
     
       <li class="post">
@@ -650,10 +626,6 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
       </li>
     
@@ -671,6 +643,30 @@
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>

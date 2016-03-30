@@ -9,7 +9,9 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Despite IntelliJ&#8217;s improvements to retina support, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself &hellip;">
+  <meta name="description" content="Show hidden files and folders in Finder
+Show hidden files and folders from an application&#8217;s Open dialog
+Remove Duplicate Entries in &#8216; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +94,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-03-30 18:25:11 +0100 -->
+    <!-- last update; 2016-03-30 18:29:46 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,385 +126,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-01-20 19:33:00 +0000" datetime="2014-01-20T19:33:00+00:00" pubdate data-updated="true" class="updated">Jan 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
-
-<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
-<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/01/20/intellij-idea-retina-support/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/01/20/install-jdk-8-on-mac-osx/">Install JDK 8 on Mac OSX</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-01-20 19:04:00 +0000" datetime="2014-01-20T19:04:00+00:00" pubdate data-updated="true" class="updated">Jan 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It&#8217;s always cnfusing where Java ends up.</p>
-
-<p>After downloading,</p>
-
-<p>/Library/Java</p>
-
-<p>There&#8217;s also,</p>
-
-<p>/usr/bin/java -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java</p>
-
-<p>which basically contains,</p>
-
-<p>A
-Current -> A</p>
-
-<p>I&#8217;ve setup the path using ~/.bash_profile</p>
-
-<p>to point to /Library/Java/Home</p>
-
-<p>so suspect the <code>A</code> folder isn&#8217;t needed. Wrong! They&#8217;re actually the same thing;</p>
-
-<h2>Links</h2>
-
-<p><a href="http://stackoverflow.com/questions/15120745/need-help-understanding-oracles-java-on-mac">Stackoverflow</a>
-<a href="http://devnet.jetbrains.com/docs/DOC-197">Startup IntelliJ with different Java version</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-01-01 09:57:00 +0000" datetime="2014-01-01T09:57:00+00:00" pubdate data-updated="true" class="updated">Jan 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
-
-
-<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/01/01/another-teamcity-build-monitor/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-07-21 06:58:00 +0100" datetime="2013-07-21T06:58:00+01:00" pubdate data-updated="true" class="updated">Jul 21<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
-
-<p>You can turn any function with multiple arguments into it&#8217;s curried equivalent. Let&#8217;s have a look at this in action.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/21/curried-functions/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/07/16/tail-recursion-optimisation/">Tail Recursion Optimisation in Scala</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-07-16 06:47:00 +0100" datetime="2013-07-16T06:47:00+01:00" pubdate data-updated="true" class="updated">Jul 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Scala can optimise recursive calls where the last statement in a method is a recursive one. In this post we&#8217;ll have a look at what this means and why call tail optimisation is useful. Along the way, we&#8217;ll also discuss infinite tail recursion.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/16/tail-recursion-optimisation/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-07-09 17:29:00 +0100" datetime="2013-07-09T17:29:00+01:00" pubdate data-updated="true" class="updated">Jul 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true" class="updated">Jun 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
-
-<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/06/01/optimum-number-of-threads/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-05-24 13:57:00 +0100" datetime="2013-05-24T13:57:00+01:00" pubdate data-updated="true" class="updated">May 24<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There haven&#8217;t been many posts on the blog recently because I&#8217;ve been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It&#8217;s published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it&#8217;s driven by dogma rather than by a genuine testing need.</p>
-
-<p>Acceptance testing in it&#8217;s generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn&#8217;t have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
-
-<p>It also talks about when not to bother; how gaining software confidence isn&#8217;t always about testing. Fast feedback and writing software that&#8217;s cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/05/24/writing-my-book/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -606,6 +229,355 @@ Current -> A</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-01-10 12:12:00 +0000" datetime="2013-01-10T12:12:00+00:00" pubdate data-updated="true" class="updated">Jan 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it&#8217;s supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It&#8217;s <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven&#8217;t made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/10/stack-vs-deque/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-10-06 12:12:00 +0100" datetime="2012-10-06T12:12:00+01:00" pubdate data-updated="true" class="updated">Oct 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img itemprop="image" class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
+
+<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we&#8217;re on the topic, we&#8217;ll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/09/15/daily-standups-dont-work/">Daily Standups Don&#8217;t Work</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-09-15 06:12:00 +0100" datetime="2012-09-15T06:12:00+01:00" pubdate data-updated="true" class="updated">Sep 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>At some point, standups have stopped working for me. They&#8217;ve certainly moved away from the original intention to improve collaboration and communication. I&#8217;m not sure I can put my finger on why, but I&#8217;m just not getting much out of them any more. It&#8217;s led me to think that standups per se just don&#8217;t work. At least in most of the environments I&#8217;ve encountered. So I&#8217;ve been thinking about what could work in their place and I think its just to <em>talk</em> more.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/09/15/daily-standups-dont-work/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-09-14 13:21:00 +0100" datetime="2012-09-14T13:21:00+01:00" pubdate data-updated="true" class="updated">Sep 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don&#8217;t offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find any differences.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/28/play-it-next/">Play it Next App</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-28 19:29:00 +0100" datetime="2012-08-28T19:29:00+01:00" pubdate data-updated="true" class="updated">Aug 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="../../../../../images/play_it_next.png"><img itemprop="image" class="right" src="../../../../../images/play_it_next.png" width="224" height="336" title="'Play it Next'" ></a></p>
+
+<p>I&#8217;m often listening to something on my iPhone whilst thinking about what track to play next. It&#8217;s a shame the iPod app doesn&#8217;t let me queue up the next track without interrupting the one that&#8217;s playing.</p>
+
+<p>I didn&#8217;t realise how much this bothered me until I found the workaround in the form of the awesome <a href="http://playitnextapp.com/">Play it Next</a> app. Now I can queue up the next track and get all deejay without breaks in my music. It&#8217;s like iTunes Up Next feature only for your iPod. I like it so much, I just had to mention it here.</p>
+
+<p>Find it on the <a href="http://itunes.apple.com/us/app/play-it-next/id549859020?ls=1&amp;mt=8">app store</a>. I definitely recommend it but don&#8217;t take my word for it, check out the <a href="http://www.appcraver.com/play-it-next/">AppCraver review</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-13 19:13:00 +0100" datetime="2012-08-13T19:13:00+01:00" pubdate data-updated="true" class="updated">Aug 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple of caveats remain when working with it from a rich client.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/13/oauth-and-http-part-iii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-12 11:13:00 +0100" datetime="2012-08-12T11:13:00+01:00" pubdate data-updated="true" class="updated">Aug 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting &#8220;authorisation&#8221; from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we&#8217;ll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/12/oauth-and-http-part-ii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/11/oauth-and-http-part-i/">FreeAgent, OAuth &amp; HTTP (Part I)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-11 19:20:00 +0100" datetime="2012-08-11T19:20:00+01:00" pubdate data-updated="true" class="updated">Aug 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Although OAuth is intended for web, mobile and desktop applications, I&#8217;ve been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I&#8217;m trying to access FreeAgent&#8217;s API. Their <a href="https://dev.freeagent.com/docs/oauth">documentation is pretty thin</a> on background. The <a href="https://groups.google.com/forum/#!forum/freeagent_api">support</a> is fairly focused on web apps and I found it difficult getting a desktop client hooked up.</p>
+
+<p>As a result, I&#8217;m journaling my experiences and hopefully learning a thing or two about OAuth along the way.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/11/oauth-and-http-part-i/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -627,19 +599,7 @@ Current -> A</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/02/03/standard-pi-setup/">Standard Pi Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/01/20/vintage-airplay-speakers/">Vintage AirPlay Speakers</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -648,14 +608,6 @@ Current -> A</p>
     
       <li class="post">
         <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/16/type-classes/">Type Classes in Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/08/05/scala-implicit-classes/">Implicit Classes in Scala</a>
       </li>
     
       <li class="post">
@@ -679,10 +631,6 @@ Current -> A</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
       </li>
     
@@ -700,6 +648,30 @@ Current -> A</p>
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>
