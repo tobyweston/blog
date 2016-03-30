@@ -4,7 +4,7 @@
   <title><![CDATA[Category: coaching | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-27T08:22:31+01:00</updated>
+  <updated>2016-03-30T18:28:43+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -47,7 +47,7 @@
 
 <p>Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasise how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about <em>natural</em> conversation and social cohesion.</p>
 
-<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
+<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="{{%20root_url}}/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
 
 <h2>That's All Folks</h2>
 
@@ -80,9 +80,9 @@
 </div>
 
 
-<p><a href="../../../../../images/appigo_todo.png"><img itemprop="image" class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+<p><a href="../../../../../images/appigo_todo.png">{% img right ../../../../../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}</a></p>
 
-<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+<p>In the <a href="{{%20root_url%20}}/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
 
 <p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
 
@@ -146,7 +146,7 @@
 
 <p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I'd revisit David Allen's ideas with a little more rigour. I'd causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I'd look at them every now and then but I didn't exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I'd have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
 
-<p>In this first post, I'll talk a little about Allen's ideas, summarising the first section of the book. In the <a href="/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it's application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+<p>In this first post, I'll talk a little about Allen's ideas, summarising the first section of the book. In the <a href="{{%20root_url%20}}/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it's application and the changes I made to my personal approach to <em>getting things done</em>.</p>
 
 <!-- more -->
 
@@ -176,7 +176,7 @@
 
 <h2>The Workflow</h2>
 
-<p><a href="../../../../../images/gtd-basic.png"><img itemprop="image" class="left" src="../../../../../images/gtd-basic.png" width="350" height="467" title="'Abbreviated workflow'" ></a></p>
+<p><a href="../../../../../images/gtd-basic.png">{% img left ../../../../../images/gtd-basic.png 350 467 'Abbreviated workflow'%}</a></p>
 
 <p>So far, I've focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It's probably a good time to introduce a few other of Allen's ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen's workflow looks like the diagram opposite.</p>
 
@@ -197,7 +197,7 @@
     <link href="http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/"/>
     <updated>2012-07-04T18:58:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect</id>
-    <content type="html"><![CDATA[<p><img itemprop="image" class="right" src="../../../../../images/pairing.jpg"></p>
+    <content type="html"><![CDATA[<p>{% img right ../../../../../images/pairing.jpg %}</p>
 
 <p>If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
 
@@ -242,7 +242,7 @@
 
 <p>If you get the chance, even mention some of the awesome things you've done. It's a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats <em>their</em> boat. Remember that you're interviewing them as much as the other way round.</p>
 
-<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
+<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="{{%20root_url%20}}/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
 
 <p>Good luck!</p>
 ]]></content>
@@ -262,9 +262,9 @@
 
 <p>Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.</p>
 
-<p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
-Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?". The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
- </span></p>
+<p>{% pullquote %}
+Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation {" but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?" "}. The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
+ {% endpullquote %}</p>
 
 <p>Hopefully, its clear that Team A's selection process is heavily biased towards developers with good memories. It's probably unfairly prejudice against candidates that haven't had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I'd prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was "that's not really what we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously, I hadn't.</p>
 

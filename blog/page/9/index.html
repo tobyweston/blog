@@ -9,7 +9,9 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a Stack as an example. Example 1. public class &hellip;">
+  <meta name="description" content="I&#8217;m totally bored of wrapping exceptions in Java, try { // do something
+} catch (BoredomException e) { // do something else
+} It&#8217;s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +94,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-03-27 08:22:31 +0100 -->
+    <!-- last update; 2016-03-30 18:25:11 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -131,7 +133,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/01/24/inheritance-vs-composition/">Inheritance vs Composition</a></h1>
+        <h1 class="entry-title"><a href="/blog/2010/04/25/wrapping-exceptions-is-dull/">Wrapping Exceptions is Dull</a></h1>
       
     
     
@@ -148,45 +150,66 @@
   
 
 
-<time itemprop="datePublished" content="2009-01-24 00:00:00 +0000" datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 24<span>th</span>, 2009</time>
+<time itemprop="datePublished" content="2010-04-25 00:00:00 +0100" datetime="2010-04-25T00:00:00+01:00" pubdate data-updated="true" class="updated">Apr 25<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+  <div class="entry-content"><p>I&#8217;m totally bored of wrapping exceptions in Java,</p>
 
-<h3>Example 1.</h3>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BoredomException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// do something else</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
+
+<p>It&#8217;s verbose, ugly and has nothing to do with what you&#8217;re really trying to convey. It&#8217;s just noise. For example, when using the <em>dreadful</em> Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">O</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CalendarException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>  <span class="c1">// the call to the google service</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">BAD_URL_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">IO_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">AuthenticationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">AUTHENTICATION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ServiceException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CalendarException</span><span class="o">(</span><span class="n">SERVICE_EXCEPTION_MESSAGE</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Example 2.</h3>
+<p>If I didn&#8217;t delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There&#8217;s no class hierarchy in Google&#8217;s API here.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
+<p>As I&#8217;ve done this a few times, I decided to add it to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> as a <code>ExceptionWrapper</code> class. Using this class, you can wrap a <code>Callable</code> to rethrow any caught exception as some other (including the underlying exception as the <code>cause</code>).</p>
+
+<p>So, in a similar way to the above, the client can ignore any declared
+exceptions and just rethrow them in-line. For example,</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="k">new</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ServiceException</span> <span class="o">{</span>
+</span><span class='line'>         <span class="c1">// nasty code throwing a bunch of exceptions</span>
 </span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">},</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
+<p>when this is in-lined further, it hopefully becomes more succinct.</p>
 
-<p>So I was surprised when looking at the Java source to see that <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty and things <a href="/blog/2013/01/10/stack-vs-deque">aren&#8217;t any better in Java 7 and 8</a>.</p>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">wrapAnyException</span><span class="o">(</span><span class="n">serviceCall</span><span class="o">(),</span> <span class="n">with</span><span class="o">(</span><span class="n">CalendarException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will wrap any exception and rethrow as a new <code>CalendarException</code> to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary <code>with</code> by taking a <code>WithException</code> as the second parameter.</p>
+
+<p>It&#8217;s in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>, let me know if you find it useful.</p>
 </div>
   
   
@@ -200,7 +223,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/01/22/deprecated-annotation/">Deprecated Annotation</a></h1>
+        <h1 class="entry-title"><a href="/blog/2010/03/19/nibbles-cat/">Nibbles the Cat & Concurrency</a></h1>
       
     
     
@@ -217,485 +240,31 @@
   
 
 
-<time itemprop="datePublished" content="2009-01-22 00:00:00 +0000" datetime="2009-01-22T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 22<span>nd</span>, 2009</time>
+<time itemprop="datePublished" content="2010-03-19 00:00:00 +0000" datetime="2010-03-19T00:00:00+00:00" pubdate data-updated="true" class="updated">Mar 19<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Why didn&#8217;t Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of</p>
+  <div class="entry-content"><p>I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn&#8217;t obvious where they clashed. It got me thinking more about deadlocks and how many times we <em>actually </em>see them in real systems. In the end, I created a <code>DeadlockDetector</code> class.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
-</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Deprecated</span> <span class="o">{</span>
+<p>I&#8217;m talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>which kind of implies we should do the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Deprecated</span>
-</span><span class='line'><span class="cm">/** @deprecated use {@link Foo} instead */</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>why can&#8217;t we have</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
-</span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyDeprecated</span><span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which means we can use</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/01/06/be-more-expressive-with-builders/">Be more Expressive with Builders</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2009-01-06 00:00:00 +0000" datetime="2009-01-06T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 6<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel for it using the <code>CountDownLatch</code> class as an example.</p>
-
-<h2>CountDownLatch.await()</h2>
-
-<p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">startup</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">shutdown</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Using a Builder with Static Constructor</h2>
-
-<p>To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called <code>await()</code>, I was able to express the same thing with the following.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">startup</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">shutdown</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>with(...)</code> method is the thing that actually wraps the call to the <code>await()</code> method on the latch. I created a <code>Duration</code> class in the above case to capture the timeout constant.</p>
-
-<p>This can be a neat little pattern which when used sparingly can lead to little nuggets of really readable code. However, the helper class that employs the static factory can feel unnatural as the method names don&#8217;t really represent their function but <strong>rather their context within the DSL that the class defines</strong>.</p>
-
-<p>Using a private constructor and verifying the internal state is essential to ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I&#8217;d suggest its a good pattern to follow. The finished class is shown below in full.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CountDownLatchWithTimeout</span> <span class="nf">await</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">latch</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">with</span><span class="o">(</span><span class="n">Duration</span> <span class="n">timeout</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="n">timeout</span><span class="o">.</span><span class="na">inMillis</span><span class="o">(),</span> <span class="n">MILLISECONDS</span><span class="o">))</span>
-</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/31/what-makes-good-pair/">What Makes a Good Pair?</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2008-12-31 00:00:00 +0000" datetime="2008-12-31T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 31<span>st</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="../../../../../images/cookies_milk.png"><img itemprop="image" class="right" src="../../../../../images/cookies_milk.png"></a></p>
-
-<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code, conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive, communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work. When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">Be Explicit with the UI Thread</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2008-12-30 00:00:00 +0000" datetime="2008-12-30T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 30<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Following up from the post <a href="/blog/2008/12/29/swt-support-for-window-licker/">SWT Support in Window Licker</a>.</p>
-
-<p>The thing I found most interesting about looking at this was having to be more explicit about the UI thread. When developing SWT applications, we&#8217;re all aware that accessing almost anything graphical in SWT from any other thread than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more explicit about the &#8220;UI thread&#8221;.</p>
-
-<p>When I started to look at how I go about writing SWT applications, I noticed that</p>
-
-<ul>
-<li>I often run the application from a <code>main</code> method somewhere which runs on the <code>main</code> thread.</li>
-<li>I often discover invalid thread access problems at run time.</li>
-<li>I often plug the problem by wrapping the offender in a <code>Display.sync(...)</code> or <code>Display.async(...)</code> call.</li>
-<li>I often have very few long running processes that need to spawn a thread and update the UI.</li>
-</ul>
-
-
-<p>It wasn&#8217;t until I started looking at being able to run the application from the context of a JUnit test that I started to think in more detail about these.</p>
-
-<h2>Running the application from a main method</h2>
-
-<p>This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the <code>main</code> method, in variations of the code below.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">SwtCalculator</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">SwtCalculator</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">display</span> <span class="o">=</span> <span class="n">Display</span><span class="o">.</span><span class="na">detDefault</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">shell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shell</span><span class="o">(</span><span class="n">display</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">shell</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Calculator&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">// shell setup</span>
-</span><span class='line'>        <span class="n">startEventLoop</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startEVentLoop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">shell</span><span class="o">.</span><span class="na">isDisposed</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(!</span><span class="n">display</span><span class="o">.</span><span class="na">readAndDispatch</span><span class="o">())</span>
-</span><span class='line'>                <span class="n">display</span><span class="o">.</span><span class="na">sleep</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">display</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The default constructor would do or delegate the work to setup the various shells and widgets and finally start the event loop. When using JFace&#8217;s <code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling <code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the event loop to the <code>ApplicationWindow class</code>. If you call <code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event loop.</p>
-
-<p>However you do it, getting into that event loop blocks the client and <strong>it&#8217;s the thread that executes this event loop that is called the UI thread</strong>. It just so happens that most SWT applications will hit that loop from the main thread as you can see from the following partial thread dump.</p>
-
-<pre><code>Name: main
-State: RUNNABLE
-Total blocked: 0 Total waited: 0
-
-Stack trace:
-    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
-    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
-    com.objogate...SwtCalculator.startEventLoop(SwtCalculator.java:104)
-    com.objogate...SwtCalculator.main(SwtCalculator.java:113)
-</code></pre>
-
-<p>At this point, the SWT event loop is doing its thing, waiting for UI events (mouse clicks, keyboard input etc) and dispatching them to the appropriate listeners. So, we can define what we mean by the UI thread;</p>
-
-<blockquote><p>The UI thread or event dispatching thread is the thread that executes the standard SWT event loop.</p></blockquote>
-
-<h2>Running the tests and GUI in different threads</h2>
-
-<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in a test, the test would block until the event loop finished, the display would be disposed and any subsequent tests against the GUI elements would quickly discover that they no longer exist.</p>
-
-<p>It should be pretty clear then that in order to test GUI elements the event loop has to be started in a different thread than the tests run in. The gotcha is that the test thread will likely want to interact with this UI thread in order to push buttons and make assertions and that&#8217;s when we get into invalid thread access territory with SWT.</p>
-
-<p>The way I implemented this was to use a class extending <code>Thread</code> to represent the UI thread and to start the event loop in its <code>run()</code> method. The tests can interact with the UI thread by either searching for the display with <code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
-
-<p>A minor change to the application&#8217;s main method is required to optionally not call the event loop when calling main. For example;</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
-</span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The tests can then explicitly create a UI thread delegating shell setup to the <code>SwtCalculator</code> class before starting the event loop and allowing the test thread to continue.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">SwtCalculator</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">DONT_BLOCK_ON_OPEN</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>    <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculatorDriver</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">calculatorCanAddTwoNumbers</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="c1">// testing the calculator whilst the main thread is running and</span>
-</span><span class='line'>    <span class="c1">// the UI has been started in another thread (from @Before)</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@After</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopTheApplication</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run inside the UI thread. This uses the strategy pattern but an alternative design could just as easily sub-class the <code>UIThread</code> and use the template pattern in a similar way.</p>
-
-<p>The interrupt allows the event loop on the UI thread to be interrupted and stop gracefully.</p>
-
-<p>The following partial thread dump shows it in action. As you can see, an explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
-are the hints).</p>
-
-<pre><code>Name: SWT-Event-Dispatcher-Thread-1
-State: RUNNABLE
-Total blocked: 0 Total waited: 0
-
-Stack trace:
-    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
-    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
-    com.objogate.wl.swt.UIThread.startEventLoop(UIThread.java:90)
-    com.objogate.wl.swt.UIThread.run(UIThread.java:68)
-    - locked java.lang.Class@1d7fbfb
-</code></pre>
-
-<p>It was a good exercise exploring the UI thread and I encourage you to take a look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took above.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/29/swt-support-for-window-licker/">SWT Support for Window Licker</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2008-12-29 00:00:00 +0000" datetime="2008-12-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 29<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://code.google.com/p/windowlicker/">Window Licker</a> is a framework designed to help you define your own API for GUI testing. It provides a driver style API that your Swing or Ajax applications plug into before you go about writing GUI tests in a language natural to your application.</p>
-
-<p>We&#8217;ve been doing some driver based GUI testing for our web apps using <a href="http://htmlunit.sourceforge.net/">HtmlUnit</a> so I was naturally interested in Window Licker with regard to rich client based testing. I&#8217;ve been trying to test my SWT based apps at the unit level as much as possible, but it&#8217;s not always straight forward separating the behaviour of GUI classes from GUI elements. How do you test that all the validation behaviour is plumbed in correctly and fires at the right time in a text box? So, Window Licker seemed like a great candidate to getting some real user style testing. Great!</p>
-
-<p>The bad news is that Window Licker doesn&#8217;t yet support SWT. Boo! The good news is it gave me a great chance to have a go at implementing basic SWT support in Window Licker. Yey!</p>
-
-<p>Check out the <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">patch</a> I wrote, or the <a href="http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7">thread</a> where it&#8217;s discussed.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/29/swt-applications-on-mac-os-x/">SWT Applications on Mac OS X</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2008-12-29 00:00:00 +0000" datetime="2008-12-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 29<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
-
-<p>It seems that by default, Java will not start on the main thread. Cocoa/Carbon starts it all and as a consequence, the SWT UI thread might get associated with it and not your main application thread. Therefore, whenever the application tries to access it (even though it looks like it owns it in your code), it may not and invalid thread access hilarity will ensue.</p>
-
-<p>The flip side to this is that AWT/Swing apps and plugins might have problems.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/24/interfaces-vs-class-imposterisers/">Interfaces vs Class impostorisers</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2008-12-24 00:00:00 +0000" datetime="2008-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2008</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not sure I get the resistance when people want to use class imposterisers.</p>
-
-<p>I&#8217;ve been doing a lot with SWT lately and generally want to unit test the UI elements. One way I&#8217;ve managed to do this is to mock parts of the GUI framework using impostorisers. Unless I want the full UI brought up, there just isn&#8217;t another way. The UI API doesn&#8217;t offer me any convenient interfaces and I can&#8217;t even create sub-classed mocks myself as SWT prevents you from sub-classing with run time checks.</p>
-
-<p>I understand that by slowly teasing out behaviour during the mocking / TDD process you can clearly express the collaborations a class may have but I feel that you can still be clear about class behaviour when using an impostor. It&#8217;s just code right? I&#8217;m not sure I care that collaborations are documented as interfaces or not, my tests express the relationships and I&#8217;ve gone through the same thought process to understand clearly how the classes under test interact. So why is an impostor the bad guy?</p>
+<p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2008/12/24/interfaces-vs-class-imposterisers/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2010/03/19/nibbles-cat/">Read on &rarr;</a>
     </footer>
   
 
@@ -708,7 +277,7 @@ Stack trace:
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/17/junit-and-threaded-tests-i-recently/">JUnit and Threaded Tests</a></h1>
+        <h1 class="entry-title"><a href="/blog/2010/01/04/type-safe-annotation/">Type Safe Annotation</a></h1>
       
     
     
@@ -725,40 +294,182 @@ Stack trace:
   
 
 
-<time itemprop="datePublished" content="2008-12-17 00:00:00 +0000" datetime="2008-12-17T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 17<span>th</span>, 2008</time>
+<time itemprop="datePublished" content="2010-01-04 00:00:00 +0000" datetime="2010-01-04T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 4<span>th</span>, 2010</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;</p>
+  <div class="entry-content"><div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">exaple</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello&quot;</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;bye&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isDaemon</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="n">NON_DAEMON</span><span class="o">));</span>
-</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here, the string &#8220;bye&#8221; is never shown, it would seem that when the test method finishes it somehow messes with the threads&#8230;</p>
 
-<p>Looking into things, it seems in my case that naughty Eclipse is muddying the water! The <code>RemoteTestRunner</code> class which Eclipse uses to run the tests ends up calling <code>System.exit(0)</code> after it&#8217;s run all the tests to kill the parent Java process. Even if we changed the daemon status of the thread, you&#8217;d get the same behaviour, ie, no &#8220;bye&#8221; being shown.</p>
 
-<p>So, in some situations it is possible to kill a thread in a JUnit test bypassing the interrupt mechanism when running a test from Eclipse. IntelliJ actually seems to have the same behaviour but I can&#8217;t review to source to confirm.</p>
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/01/04/type-safe-annotation/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/29/running-junit-tests-in-parallel/">Running JUnit tests in parallel</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-29 00:00:00 +0000" datetime="2009-12-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve been playing with running tests in their own threads for a while now (in particular with reference to <a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">GUI testing</a>) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/29/running-junit-tests-in-parallel/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/24/flickering-tests/">Flickering Tests and a JUnit Rule</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
+
+<p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="nd">@Intermittent</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="nd">@Intermittent</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s interesting here is the way in which the <code>Rule</code> and <code>Runner</code> interact with
+JUnit. Newer versions of JUnit have introduced the idea of <code>Rule</code>s and
+<code>Statement</code>s. Using a <code>Rule</code> allows access to the underlying <code>Statement</code> which in
+our case is the action to run the test method. So we&#8217;re able to run the
+underlying statement again and again. Nice.</p>
+
+<p>The <code>Runner</code> however can hook into JUnit&#8217;s framework in a different way. It can
+access more than one statement and so can position itself slightly differently.
+What this means for us is that when using the <code>Rule</code> above, any <code>@Before</code> or <code>@After</code>
+methods will only be run once but the test method will run multiple times.
+Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
+once for each test repetition.</p>
+
+<p>The code is available as part of the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> library, feel free to look around.</p>
 </div>
   
   
@@ -772,7 +483,7 @@ Stack trace:
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2008/12/11/bit-disappointing-this-year/">XPDay 2008</a></h1>
+        <h1 class="entry-title"><a href="/blog/2009/12/24/deadlock/">Deadlock detection in Java</a></h1>
       
     
     
@@ -789,16 +500,234 @@ Stack trace:
   
 
 
-<time itemprop="datePublished" content="2008-12-11 00:00:00 +0000" datetime="2008-12-11T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 11<span>th</span>, 2008</time>
+<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Bit disappointing really. Things didn&#8217;t get started properly will around 12:00 on day 1. I got to attend two really interesting talks of ~30 minutes each but then got trapped in a couple of nightmarish &#8216;Open Spaces&#8217; which ended up being a rather self-indulgent discussions about nothing in particular.</p>
+  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/24/deadlock/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-10 00:00:00 +0000" datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/11/11/time-flies/">Time Flies 1.0</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-11-11 00:00:00 +0000" datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true" class="updated">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to <a href="http://search.maven.org/">maven central repository</a>.</p>
+
+<p>oh, I should mention&#8230; tempus-fugit represents two things to me</p>
+
+<ol>
+<li>A focal point to a lot of head scratching around the theme of testing concurrency and time sensitive code.</li>
+<li>An attempt to consolidate this thinking into a single place that can be easily reused.</li>
+</ol>
+
+
+<p>What it actually is, is</p>
+
+<ol>
+<li>a dozen or so classes that capture key abstractions we&#8217;ve found are frequently shared across domains.</li>
+<li>an even smaller number of wrapper or helper classes that we&#8217;ve found can help using concurrency in Java that little bit nicer.</li>
+<li>all with an underlying theme of testing and improving testability.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/11/11/thawte-claim-im-not-to-be-trusted/">Thawte claim I&#8217;m not to be trusted&#8230;</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-11-11 00:00:00 +0000" datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true" class="updated">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> &#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These were free services and it comes as bit of a blow as I&#8217;ve been using them to sign my JARs for WebStart deployment. As Thawte are a root authority, it meant no annoying prompts from WebStart claiming I was a would-be terrorist. Looks like I&#8217;m back to hiding in shadows.</p>
+
+<p>A couple of useful links below.</p>
+
+<ul>
+<li><a href="http://ciardhubh.de/node/4">http://ciardhubh.de/node/4</a></li>
+<li><a href="http://www.dallaway.com/acad/webstart/">http://www.dallaway.com/acad/webstart/</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/10/31/performance-monitoring-part-1/">Performance Monitoring Basics</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-10-31 00:00:00 +0000" datetime="2009-10-31T00:00:00+00:00" pubdate data-updated="true" class="updated">Oct 31<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Keeping an eye on the performance of your applications is something that it easy to neglect. We all know that we should be regularly recording key performance indicators and regularly leaning on the profiler to spot dangers early, but how often is the dust actually blown off?</p>
+
+<p>I&#8217;ve been doing a fair bit of performance monitoring work lately and thought it might be a good idea to capture a few thoughts.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/10/31/performance-monitoring-part-1/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -825,7 +754,19 @@ Stack trace:
       </li>
     
       <li class="post">
+        <a href="/blog/2016/02/03/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/01/20/vintage-airplay-speakers/">Vintage AirPlay Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -834,6 +775,14 @@ Stack trace:
     
       <li class="post">
         <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/16/type-classes/">Type Classes in Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/scala-implicit-classes/">Implicit Classes in Scala</a>
       </li>
     
       <li class="post">
@@ -857,6 +806,10 @@ Stack trace:
       </li>
     
       <li class="post">
+        <a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
       </li>
     
@@ -874,30 +827,6 @@ Stack trace:
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>

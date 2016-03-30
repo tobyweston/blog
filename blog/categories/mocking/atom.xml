@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mocking | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/mocking/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-27T08:22:31+01:00</updated>
+  <updated>2016-03-30T18:28:43+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -25,37 +25,37 @@
 
 <h2>Mock Objects &amp; the "Context"</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledExecutorService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledFuture</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Mocks and Mockery: Java / JMock %}
+private final Mockery context = new JUnit4Mockery();</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Scala / Scalamock &amp; Specs2 </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">executor</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledExecutorService</span><span class="o">]&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">future</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledFuture</span><span class="o">[</span><span class="kt">Any</span><span class="o">]]</span>
-</span><span class='line'>  <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>private final ScheduledExecutorService executor = context.mock(ScheduledExecutorService.class);
+private final ScheduledFuture future = context.mock(ScheduledFuture.class);
+{% endcodeblock %}</p>
+
+<p>{% codeblock lang:scala Mocks and Mockery: Scala / Scalamock &amp; Specs2 %}
+"A test with a mock context in scope" in new MockContext {
+  val executor = mock[ScheduledExecutorService]<br/>
+  val future = mock[ScheduledFuture[Any]]
+  // ...
+}
+{% endcodeblock %}</p>
 
 <h2>Returns</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Return a value: Java / JMock %}
+context.checking(new Expectations() {{ braces }}</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
-</span><span class='line'><span class="o">(</span><span class="n">waiting</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<pre><code>oneOf(executor).shutdownNow(); will(returnValue(asList(waiting)));
+oneOf(waiting).cancel(true);
+</code></pre>
+
+<p>}});
+{% endcodeblock %}</p>
+
+<p>{% codeblock lang:scala Return a value: Scala / Scalamock %}
+(executor.shutdownNow <em>).expects().returning(asList(waiting)).once
+(waiting.cancel </em>).expects(true).once
+{% endcodeblock %}</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -67,20 +67,20 @@
 
 <h2>Allowing / Ignoring</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Allowing: JMock / Java %}
+context.checking(new Expectations() {{ braces }}</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(&lt;</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
-</span><span class='line'><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<pre><code>allowing(executor).scheduleWithFixedDelay(with(any(Runnable.class)), with(any(Long.class)), with(any(Long.class)), with(any(TimeUnit.class))); will(returnValue(future));
+oneOf(future).cancel(true);
+</code></pre>
+
+<p>}});
+{% endcodeblock %}</p>
+
+<p>{% codeblock lang:scala Allowing: Scalamock / Scala %}
+(executor.scheduleWithFixedDelay <em>).expects(<em>, </em>, * , *).returning(future)
+(future.cancel </em>).expects(true).once
+{% endcodeblock %}</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -94,41 +94,40 @@
 
 <p>JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a <code>returnValue</code>. In the example below, we don't care if it returns anything so if the code under test relies on a value, but the test does not, we don't have to express anything in the test.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Default Values: JMock / Java %}
+oneOf(factory).create();
+{% endcodeblock %}</p>
 
 <p>If the underlying code were to check, say, that the result of <code>factory.create()</code> was not an empty list with <code>if (result.isEmpty())</code>, JMock would return something sensible and we'd avoid a <code>NullPointerException</code>. You might argue that this side affect should be captured in a test but leaving it off makes the intention of expectation clearer; we only care that <code>create</code> is called, not what it returns.</p>
 
 <p>Scalamock will return <code>null</code> by default. So the above example would give a <code>NullPointerException</code> and you're required to do something like this. Notice we're using a <code>stub</code> and not a <code>mock</code> here.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
-</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">once</span><span class="o">.</span><span class="n">returning</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="n">result</span><span class="o">))&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala Default Values: Scalamock / Scala %}
+val result = stub[Result]
+(factory.create _).expects().once.returning(List(result))</p>
+
+<p>{% endcodeblock %}</p>
 
 <h2>Any / Wildcards</h2>
 
 <p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Any: JMock / Java %}
+context.checking(new Expectations() {{ braces }}</p>
+
+<pre><code>ignoring(factory).notifyObservers(with(any(SomeException.class)));
+oneOf(factory).notifyObservers(with(any(AnotherException.class)));
+</code></pre>
+
+<p>}}
+{% endcodeblock %}</p>
 
 <p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
-</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">once</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala Any: Scalamock / Scala %}
+(factory.notifyObservers(<em>: SomeException)).expects(*).anyNumberOfTimes
+(factory.notifyObservers(</em>: SomeException)).expects(*).once
+{% endcodeblock %}</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -140,24 +139,23 @@
 
 <h2>Throwing Exceptions</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
-</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java Exception: JMock / Java %}
+final Exception exception = new RuntimeException();
+context.checking(new Expectations() {{ braces }}</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
-</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">throws</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
-</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">Exception</span><span class="o">)).</span><span class="n">expects</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
+<pre><code>oneOf(factory).create(); will(throwException(exception));
+oneOf(factory).notifyObservers(exception);
+</code></pre>
+
+<p>}});
+{% endcodeblock %}</p>
+
+<p>{% codeblock lang:scala Exception: Scalamock / Scala %}
+val exception = new Exception
+(factory.create <em>).expects().throws(exception).once
+(factory.notifyObservers(</em>: Exception)).expects(exception).once</p>
+
+<p>{% endcodeblock %}
 <strong>Notes:</strong></p>
 
 <ul>
@@ -184,7 +182,7 @@
     <link href="http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but/"/>
     <updated>2011-06-22T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2011/06/22/loggin-is-still-evil-but</id>
-    <content type="html"><![CDATA[<p>In a <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
+    <content type="html"><![CDATA[<p>In a <a href="{{%20root_url%20}}/blog/2010/10/18/logging-is-evil-but/">previous post</a>, I was going on about how evil logging is. How it's often confused as a requirement and often badly misused. The upshot of the post was that if you're going to log stuff, in our case using Log4J, lets be honest about it and test it. We should be able to say upfront what's important to log, in what situations and at what log level. Sounds like a straight forward case of test first.</p>
 
 <p>Mocking Log4J however can be a real pain. I've managed it in the past using Apache's logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.</p>
 
@@ -197,51 +195,54 @@
 
 <p>The updated class looks like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">,</span> <span class="n">ALL</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">,</span> <span class="n">Level</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">,</span> <span class="n">level</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">,</span> <span class="n">Level</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">setLevel</span><span class="o">(</span><span class="n">level</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class Log4J {</p>
+
+<pre><code>private final StringWriter writer = new StringWriter();
+private final Logger logger;
+private final String uuid = UUID.randomUUID().toString();
+
+public static Log4J appendTo(Logger logger) {
+    return new Log4J(logger, ALL);
+}
+
+public static Log4J appendTo(Logger logger, Level level) {
+    return new Log4J(logger, level);
+}
+
+private Log4J(Logger logger, Level level) {
+    this.logger = logger;
+    WriterAppender appender = new WriterAppender(new SimpleLayout(), writer);
+    appender.setName(uuid);
+    logger.addAppender(appender);
+    logger.setLevel(level);
+}
+
+public void clean() {
+    logger.removeAppender(uuid);
+}
+
+public void assertThat(Matcher&lt;String&gt; matcher) {
+    org.junit.Assert.assertThat(writer.toString(), matcher);
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Which means you can setup to expect a log level at say the ERROR level like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">LogLevel</span><span class="o">.</span><span class="na">ERROR</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+private final Log4J logger = Log4J.appendTo(Logger.getLogger(Post.class), LogLevel.ERROR);
+{% endcodeblock %}</p>
 
 <p>The make assertions like this (which would fail if the matcher fails or because its not logged at the expected level.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+logger.assertThat(containsString(EXCEPTION_MESSAGE));
+{% endcodeblock %}</p>
 
-<p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
+<p>I still think logging is evil and try <em>really</em> hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the <a href="{{%20root_url%20}}/blog/2010/10/18/logging-is-evil-but/">previous post</a> for more details and extended examples.</p>
 ]]></content>
   </entry>
   
@@ -252,18 +253,19 @@
     <id>http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
     <content type="html"><![CDATA[<p>Logging is a nightmare. I don't mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [<em>insert your current logging framework here</em>] is a recipe for disaster. We've all seen too much of</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">somethingRisky</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+Logger log = Logger.getLogger(ThisSucks.class);
+...
+try {</p>
+
+<pre><code>somethingRisky();
+</code></pre>
+
+<p>} catch (SomethingVeryBadException e) {
+   log.error(e);
+   throw e;
+}
+{% endcodeblock %}</p>
 
 <p>which is just one example where the exception handling policy for the system (it's a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn't logged elsewhere or that the exception is even handled correctly or the right people notified. It's not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.</p>
 
@@ -286,122 +288,126 @@
 
 <p>For example, I created a interface <code>Post</code>, to handle HTTP POST requests. Why should I add logging to implementations and open the door to ad-hoc, erratic logging? I shouldn't, but when my implementation <code>CustomerPost</code> requires logging of the request and response, I can decorate with a <code>LoggingPost</code></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">Post</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">delegate</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">Response</span> <span class="nf">post</span><span class="o">(</span><span class="n">Body</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>       <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
-</span><span class='line'>   <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>       <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
-</span><span class='line'>       <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'>   <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class LoggingPost implements Post {</p>
+
+<pre><code>private static final Logger LOG = Logger.getLogger(Post.class);
+
+public LoggingPost(Post delegate) {
+    this.delegate = delegate;
+}
+
+@Override
+public Response post(Body body) {
+   try {
+       return delegate.post(body);
+   } catch (IOException e) {
+       LOG.error(e.getMessage(), e);
+       throw e;
+   }
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>You might be concerned that the try/catch above looks very similar to the original negative example. The good thing about our decorated example above is that by being explicit about this classes responsibility, declaring the usage in the correct context, we can actually define the system wide policy for logging the <code>Post</code> calls in one place, without affecting the contract of the interface. We'd do this for example, on the system boundary, for example where the RESTful API is implemented.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Resource</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerServlet</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">doPost</span><span class="o">(</span><span class="n">Request</span> <span class="n">chuck</span><span class="o">,</span> <span class="n">Response</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>    <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomerPost</span><span class="o">(...));</span>
-</span><span class='line'>    <span class="n">customer</span><span class="o">.</span><span class="na">post</span><span class="o">(...)</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Resource
+public class CustomerServlet {</p>
+
+<pre><code>public void doPost(Request chuck, Response up) {
+    ...
+    customer = new LoggingPost(new CustomerPost(...));
+    customer.post(...)
+    ...
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <h2>Testing the Logger</h2>
 
 <p>In our <code>LoggingPost</code> above, we haven't even tried to inject a logger in to make the testing easier. Instead, mostly because I was being lazy, I used the helper class below. This is intended to represent Log4J in the context of a test and give access to the logger for assertion purposes.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class Log4J {</p>
+
+<pre><code>private final StringWriter writer = new StringWriter();
+private final Logger logger;
+private final String uuid = UUID.randomUUID().toString();
+
+public static Log4J appendTo(Logger logger) {
+    return new Log4J(logger);
+}
+
+private Log4J(Logger logger) {
+    this.logger = logger;
+    WriterAppender appender = new WriterAppender(new SimpleLayout(), writer);
+    appender.setName(uuid);
+    logger.addAppender(appender);
+}
+
+public void clean() {
+    logger.removeAppender(uuid);
+}
+
+public void assertThat(Matcher&lt;String&gt; matcher) {
+    org.junit.Assert.assertThat(writer.toString(), matcher);
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Using it in the test for <code>LoggingPost</code> is shown below</p>
 
-<p>
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPostTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Post</span> <span class="n">mock</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">EXCEPTION_MESSAGE</span> <span class="o">=</span> <span class="s">&quot;bar bar black sheep...&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDelegate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
-</span><span class='line'>        <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'>    <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldLogWhenExceptionIsThrown</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">postWill</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="k">new</span> <span class="n">IOException</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
-</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">allOf</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;ERROR&quot;</span><span class="o">),</span> <span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@After</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">cleanupLogger</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">clean</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kt">void</span> <span class="nf">postWill</span><span class="o">(</span><span class="kd">final</span> <span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">(){{</span>
-</span><span class='line'>        <span class="n">allowing</span><span class="o">(</span><span class="n">mock</span><span class="o">);</span> <span class="n">will</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% assign braces = '{{' %}
+{% codeblock lang:java %}
+@RunWith(JMock.class)
+public class LoggingPostTest {</p>
+
+<pre><code>private final Mockery context = new Mockery();
+private final Post mock = context.mock(Post.class);
+private final Log4J logger = Log4J.appendTo(Logger.getLogger(Post.class));
+
+private static final String EXCEPTION_MESSAGE = "bar bar black sheep...";
+
+@Test
+public void shouldDelegate() throws Exception {
+    context.checking(new Expectations() {{ braces }}
+        one(mock).post(...);
+    }});
+    new LoggingPost(mock).post(...);
+}
+
+@Test
+public void shouldLogWhenExceptionIsThrown() {
+    try {
+        postWill(throwException(new IOException(EXCEPTION_MESSAGE)));
+        new LoggingPost(mock).post(...);
+        fail();
+    } catch (IOException e) {
+        logger.assertThat(allOf(containsString("ERROR"), containsString(EXCEPTION_MESSAGE)));
+    }
+}
+
+@After
+public void cleanupLogger() {
+    logger.clean();
+}
+
+private void postWill(final Action action) {
+    context.checking(new Expectations(){{ braces }}
+        allowing(mock); will(action);
+    }});
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>It relies on Log4J's static instances to dynamically add a logger to the list of loggers and thereby appending any generated logs to something that the <code>Log4J</code> test helper can check against. I can't decide if I like this or not. It gives you an extra test that your class under test is using a logger with the name that you expect (<code>"Post.class"</code> in the example above), testing your logger configuration as a by-product.</p>
 

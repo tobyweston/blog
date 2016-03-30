@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-27T08:22:31+01:00</updated>
+  <updated>2016-03-30T18:28:43+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -47,7 +47,7 @@
 
 <p>Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasise how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about <em>natural</em> conversation and social cohesion.</p>
 
-<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
+<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="{{%20root_url}}/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
 
 <h2>That's All Folks</h2>
 
@@ -64,7 +64,7 @@
     <link href="http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/"/>
     <updated>2012-07-04T18:58:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect</id>
-    <content type="html"><![CDATA[<p><img itemprop="image" class="right" src="../../../../../images/pairing.jpg"></p>
+    <content type="html"><![CDATA[<p>{% img right ../../../../../images/pairing.jpg %}</p>
 
 <p>If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
 
@@ -109,7 +109,7 @@
 
 <p>If you get the chance, even mention some of the awesome things you've done. It's a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats <em>their</em> boat. Remember that you're interviewing them as much as the other way round.</p>
 
-<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
+<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="{{%20root_url%20}}/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
 
 <p>Good luck!</p>
 ]]></content>
@@ -135,7 +135,9 @@
 
 <p>To paraphrase something <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> recently said</p>
 
-<p><blockquote><p>"people are usually happy to test interactions with other systems 'by specification' but are less happy to do so when testing their internal systems"</p><footer><strong>@Jazzatola</strong> <cite><a href='https://twitter.com/#!/Jazzatola'>twitter.com/#!/Jazzatola/&hellip;</a></cite></footer></blockquote></p>
+<p>{% blockquote @Jazzatola https://twitter.com/#!/Jazzatola %}
+"people are usually happy to test interactions with other systems 'by specification' but are less happy to do so when testing their internal systems"
+{% endblockquote %}</p>
 
 <p>As he points out; we're happy to say "given the external system responds with <code>X</code>, when we send a message <code>Y</code> then our system behaves <code>Z</code>". We know the API and test against it as a <em>specification</em>, typically via <em>mocking</em> the behaviour of the external system and testing against the response. We're less happy to talk about our internal interactions as internal APIs in the same way.</p>
 
@@ -165,14 +167,7 @@
 
 <p>Have a go and see if it works for you...</p>
 
-<p><div class="wikipedia">
-  
-  <h2>Conway's law</h2>
-  <div>
-    <p><strong>Conway's law</strong> is an <a href="http://en.wikipedia.org/wiki/Adage" title="Adage">adage</a> named after <a href="http://en.wikipedia.org/wiki/Computer" title="Computer">computer</a> <a href="http://en.wikipedia.org/wiki/Programmer" title="Programmer">programmer</a> <a href="http://en.wikipedia.org/wiki/Melvin_Conway" title="Melvin Conway">Melvin Conway</a>, who introduced the idea in 1968. It states that "<i>organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations</i>". </p>
-  </div>
-  <a href="http://en.wikipedia.org/wiki/Conways_Law" target="_blank">Read more on Wikipedia</a>
-</div></p>
+<p>{% wikipedia Conways_Law %}</p>
 ]]></content>
   </entry>
   
@@ -190,9 +185,9 @@
 
 <p>Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.</p>
 
-<p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
-Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?". The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
- </span></p>
+<p>{% pullquote %}
+Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation {" but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?" "}. The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
+ {% endpullquote %}</p>
 
 <p>Hopefully, its clear that Team A's selection process is heavily biased towards developers with good memories. It's probably unfairly prejudice against candidates that haven't had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I'd prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was "that's not really what we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously, I hadn't.</p>
 
@@ -227,7 +222,7 @@ Team B's process favors mention of agile experience in the CV. Follow up questio
     <id>http://baddotrobot.com/blog/2010/08/15/pairing-honestly</id>
     <content type="html"><![CDATA[<p>Recently we had particularly good retrospective where the team were able to admit that each of us has had difference experiences pairing. We were honest in saying that despite having "done pairing" we'd all done different amounts of pairing and that, at times, we weren't even sure what we were supposed to get out of it.</p>
 
-<p>There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we're getting something out of it?</p>
+<p>There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a <a href="{{%20root_url%20}}/blog/2008/12/31/what-makes-good-pair/">previous post</a>) and how do we know that we're getting something out of it?</p>
 
 <!-- more -->
 

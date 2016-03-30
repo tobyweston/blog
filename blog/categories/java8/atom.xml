@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java8 | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java8/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-27T08:22:31+01:00</updated>
+  <updated>2016-03-30T18:28:43+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -43,39 +43,41 @@
 
 <p>In a traditional exception throwing version below, the <code>uploadExpenses</code> call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">appropriate system boundary</a> but dealing with exceptions consistently for the entire system is a real challenge.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
-</span><span class='line'><span class="n">Expenses</span> <span class="n">uploaded</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">()));</span>    <span class="c1">// &amp;lt;- can throw exceptions</span>
-</span><span class='line'><span class="n">uploaded</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">e</span><span class="o">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">));</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">HttpProblem</span> <span class="n">e</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// what to do?</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DuplicateExpenseFound</span> <span class="n">e</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// what to do?</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+try {</p>
+
+<pre><code>List&lt;Expense&gt; expenses = ...
+Expenses uploaded = uploadExpenses(expenses).collect(toList()));    // &lt;- can throw exceptions
+uploaded.forEach((e) -&gt; System.out.println(e));
+</code></pre>
+
+<p>} catch (HttpProblem e) {</p>
+
+<pre><code>// what to do?
+</code></pre>
+
+<p>} catch (DuplicateExpenseFound e) {</p>
+
+<pre><code>// what to do?
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <h3>Using Eithers</h3>
 
 <p>On the other hand, if we use an <code>Either</code> we can make the <code>uploadExpenses</code> call return <em>either</em> a successfully upload <code>Expense</code> or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
-</span><span class='line'><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Either</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;,</span> <span class="n">Expense</span><span class="o">&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">());&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;&gt;</span> <span class="n">failures</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">left</span><span class="o">());</span>
-</span><span class='line'><span class="n">failures</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">failure</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">failure</span><span class="o">));&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">successes</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">right</span><span class="o">());</span>
-</span><span class='line'><span class="n">successes</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">success</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">success</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+List<Expense> expenses = ...
+List&lt;Either&lt;Pair&lt;Expense, Throwable>, Expense>> results = uploadExpenses(expenses).collect(toList());</p>
+
+<p>Stream&lt;Pair&lt;Expense, Throwable>> failures = results.stream().flatMap(either -> either.left());
+failures.forEach(failure -> System.out.println(failure));</p>
+
+<p>Stream<Expense> successes = results.stream().flatMap(either -> either.right());
+successes.forEach(success -> System.out.println(success));
+{% endcodeblock %}</p>
 
 <p>In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently. For a naive implementation, have a look at my <a href="https://gist.github.com/tobyweston/caefc3b5ec36348387e5">gist</a> and for fuller implementations, see <a href="https://github.com/scala/scala/blob/2.11.x/src/library/scala/util/Either.scala">Scala's version</a> or the <a href="https://code.google.com/p/totallylazy/source/browse/src/com/googlecode/totallylazy/Either.java">TotallyLazy</a> and <a href="https://functionaljava.ci.cloudbees.com/job/master/javadoc/fj/data/Either.html">Functional Java</a> versions in Java.</p>
 ]]></content>
@@ -88,7 +90,7 @@
     <id>http://baddotrobot.com/blog/2014/05/20/udemy-course</id>
     <content type="html"><![CDATA[<p>I've just published my course on Java 8 over at <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy.com</a>, for a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with coupon code BLOG10</a>!</p>
 
-<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/BOgcl5anYyI "></iframe></div></p>
+<p>{% youtube BOgcl5anYyI %}</p>
 ]]></content>
   </entry>
   
@@ -97,54 +99,57 @@
     <link href="http://baddotrobot.com/blog/2014/04/08/classes-vs-functions/"/>
     <updated>2014-04-08T19:40:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2014/04/08/classes-vs-functions</id>
-    <content type="html"><![CDATA[<p>You can use lambdas in Java 8 anywhere you would have previously used a <a href="/blog/2014/04/07/functional-interfaces-in-java8">single method interface</a> so it may just look like syntactic sugar but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.</p>
+    <content type="html"><![CDATA[<p>You can use lambdas in Java 8 anywhere you would have previously used a <a href="{{root_url%20}}/blog/2014/04/07/functional-interfaces-in-java8">single method interface</a> so it may just look like syntactic sugar but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.</p>
 
 <!-- more -->
 
 
 <p>So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The <code>anonymousClass</code> method is calling the <code>waitFor</code> method passing in some implementation of <code>Condition</code>, in this case it's saying wait for some server to have shutdown.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitFor</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">});</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+void anonymousClass() {</p>
+
+<pre><code>final Server server = new HttpServer();
+waitFor(new Condition() {
+    @Override
+    public Boolean isSatisfied() {
+        return !server.isRunning();
+    }
+});
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>The functionally equivalent lambda would look like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
-</span><span class='line'><span class="n">waitFor</span><span class="o">(()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">());</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+void closure() {</p>
+
+<pre><code>Server server = new HttpServer();
+waitFor(() -&gt; !server.isRunning());
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Where in the interest of completeness, a naive polling <code>waitFor</code> method might look like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">static</span> <span class="kt">void</span> <span class="n">waitFor</span><span class="o">(</span><span class="n">Condition</span> <span class="n">condition</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">while</span> <span class="o">(!</span><span class="n">condition</span><span class="o">.</span><span class="na">isSatisfied</span><span class="o">())</span>
-</span><span class='line'>        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">250</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+class WaitFor {</p>
+
+<pre><code>static void waitFor(Condition condition) throws InterruptedException {
+    while (!condition.isSatisfied())
+        Thread.sleep(250);
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <h2>Some Theoretical Differences</h2>
 
-<p>Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see <a href="/blog/2010/07/13/lambdas-vs-closures">my distinction between lambdas and closures</a>. This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of <code>Condition</code>). In our example, the <code>server</code> variable.</p>
+<p>Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see <a href="{{%20root_url%20}}/blog/2010/07/13/lambdas-vs-closures">my distinction between lambdas and closures</a>. This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of <code>Condition</code>). In our example, the <code>server</code> variable.</p>
 
 <p>As it's a copy, it has to be declared final to ensure that it can not be changed between when it's captured and when it's used. These two points in time could be very different given that closures are often used to defer execution until some later point (see <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">lazy evaluation</a> for example). Java 8 uses a neat trick whereby if it can reason that a variable is never updated, it might as well be final so it treats it as "effectively final" and you don't need to declare it as <code>final</code> explicitly.</p>
 
@@ -177,38 +182,40 @@
 
 <p>For example, this class shows that the lambda can reference the <code>firstName</code> variable directly.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Jack&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">addSurname</span> <span class="o">=</span> <span class="n">surname</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">firstName</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">surname</span><span class="o">;</span>       <span class="c1">// equivalent to this.firstName</span>
-</span><span class='line'>    <span class="o">};</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class Example {</p>
+
+<pre><code>private String firstName = "Jack";
+
+public void example() {
+    Function&lt;String, String&gt; addSurname = surname -&gt; {
+        return firstName + " " + surname;       // equivalent to this.firstName
+    };
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>The anonymous class equivalent would need to explicitly refer to <code>firstName</code> from the enclosing scope.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Charlie&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">addSurname</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">surname</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">Example</span><span class="o">.</span><span class="na">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">surname</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">};</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class Example {</p>
+
+<pre><code>private String firstName = "Charlie";
+
+public void anotherExample() {
+    Function&lt;String, String&gt; addSurname = new Function&lt;String, String&gt;() {
+        @Override
+        public String apply(String surname) {
+            return Example.this.firstName + " " + surname;
+        }
+    };
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Shadowing also becomes much more straight forward to reason about (when referencing shadowed variables).</p>
 
@@ -246,28 +253,31 @@
 
 <p>For example, this interface compiles,</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public interface FunctionalInterfaceExample {
+}
+{% endcodeblock %}</p>
 
 <p>but when you indicate that it should be a <em>functional interface</em></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span> <span class="c1">// &amp;lt;- error here</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface // &lt;- error here
+public interface FunctionalInterfaceExample {
+}
+{% endcodeblock %}</p>
 
 <p>The compiler will raise an error as there is no method. It says that "Example is not a functional interface" as "no abstract method was found". It'll also error if we try and add a second method.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
-</span><span class='line'><span class="kt">void</span> <span class="nf">illegal</span><span class="o">();</span>    <span class="c1">// &amp;lt;- error here</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface
+public interface FunctionalInterfaceExample {</p>
+
+<pre><code>void apply();
+void illegal();    // &lt;- error here
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>This time it's saying "multiple, non-overriding abstract methods were found". Functional interfaces can have only <strong>one</strong> method.</p>
 
@@ -277,96 +287,100 @@
 
 <p>Let's create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still "functional". It inherits the parents <code>apply</code> method as you'd expect.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">abstract</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface
+interface A {</p>
+
+<pre><code>abstract void apply();
+</code></pre>
+
+<p>}</p>
+
+<p>interface B extends A {</p>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>If you wanted to make this clearer, you can also override the functional method from the parent.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">abstract</span> <span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface
+interface A {</p>
+
+<pre><code>abstract void apply();
+</code></pre>
+
+<p>}</p>
+
+<p>interface B extends A {</p>
+
+<pre><code>@Override
+abstract void apply();
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>We can verify it works as a functional interface if we use it as a lambda. So I'll implement a little method to show that a lambda can be assigned to a type of <code>A</code> and a type of <code>B</code>. The implementation will just print out "A" or "B".</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@Override</span>
-</span><span class='line'><span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface
+public interface A {</p>
+
+<pre><code>void apply();
+</code></pre>
+
+<p>}</p>
+
+<p>public interface B extends A {</p>
+
+<pre><code>@Override
+void apply();
+</code></pre>
+
+<p>}</p>
+
+<p>public static void main(String... args) {</p>
+
+<pre><code>A a = () -&gt; System.out.println("A");
+B b = () -&gt; System.out.println("B");
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>You can't add a new abstract method to the extending interface though, as the resulting type would have two abstract methods and the compiler will error.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">void</span> <span class="n">illegal</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>    <span class="c1">// &amp;lt;- error</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@FunctionalInterface
+public interface A {</p>
+
+<pre><code>void apply();
+</code></pre>
+
+<p>}</p>
+
+<p>public interface B extends A {</p>
+
+<pre><code>void illegal();
+</code></pre>
+
+<p>}</p>
+
+<p>public static void main(String... args) {</p>
+
+<pre><code>A a = () -&gt; System.out.println("A");
+B b = () -&gt; System.out.println("B");    // &lt;- error
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>In both cases, you can override methods from <code>Object</code> without causing problems. You can also add default methods (also new to Java 8). As you'd probably expect, it doesn't make sense to try and mark an abstract class as a functional interface.</p>
 
 <h2>Summary</h2>
 
-<p>An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the <a href="/blog/2014/04/08/classes-vs-functions">Classes vs. Functions</a> post for more details.</p>
+<p>An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the <a href="{{%20root_url%20}}/blog/2014/04/08/classes-vs-functions">Classes vs. Functions</a> post for more details.</p>
 ]]></content>
   </entry>
   
@@ -503,7 +517,7 @@
 
 <p>I found their description of the two confusing. I prefer to think of the first as an instance method of a <em>specific</em> object known ahead of time and the second as an instance method of an arbitrary object that will be <em>supplied</em> later. Interestingly, this means the first is a <em>closure</em> and the second is a <em>lambda</em>. One is <em>bound</em> and the other <em>unbound</em>.</p>
 
-<p>The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my <a href="/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
+<p>The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my <a href="{{%20root_url%20}}/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
 
 <h2>The "closure" method reference</h2>
 
@@ -634,8 +648,8 @@ function(() -&gt; "hello".toString());
 <p>}
 ```</p>
 
-<p><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?<em>encoding=UTF8&amp;ASIN=1508734178&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
-<a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;"><img itemprop="image" class="right" src="http://titlepages.leanpub.com/whatsnewjava8/bookpage" width="140" height="180" title="Learn Scala for Java Developers" ></a></p>
+<p><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ws-eu.amazon-adsystem.com/widgets/q?<em>encoding=UTF8&amp;ASIN=1508734178&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21 Learn Scala for Java Developers %}</a>
+<a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage 140 180 Learn Scala for Java Developers %}</a></p>
 
 <h2>Recommended Reading</h2>
 

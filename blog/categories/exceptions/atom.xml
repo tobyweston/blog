@@ -4,7 +4,7 @@
   <title><![CDATA[Category: exceptions | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/exceptions/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-03-27T08:22:31+01:00</updated>
+  <updated>2016-03-30T18:28:43+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -22,7 +22,7 @@
 
 <p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
 
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I've described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we'll take a quick look at Scala's syntax around exceptions and how pattern matching is employed.</p>
+<p>In a <a href="{{%20root_url%20}}/blog/2012/03/29/building-better-exceptions">previous post</a>, I've described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we'll take a quick look at Scala's syntax around exceptions and how pattern matching is employed.</p>
 
 <!-- more -->
 
@@ -31,34 +31,37 @@
 
 <p>Scala essentially treats all exception types as <code>RuntimeException</code>. This means it doesn't <em>force</em> you to handle exceptions. Instead, it combines <em>pattern matching</em> with a single <code>catch</code> block to handle exceptions. For example</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">url</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">MalformURLException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;bad url &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">IOException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;other IO problem &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;anything else!&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// cleanup</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala %}
+try {
+  val url = new URL("http://baddotrobot.com")
+} catch {
+  case e: MalformURLException => println("bad url " + e)
+  case e: IOException => println("other IO problem " + e)
+  case _ => println("anything else!")
+} finally {
+  // cleanup
+}
+{% endcodeblock %}</p>
 
 <p>Any cleanup can be achieved using the <code>finally</code> block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the <em><a href="https://wiki.scala-lang.org/display/SYGN/Loan">loan pattern</a></em>. You can see an example of the pattern in Java form in the <code>ExecuteUsingLock</code> <a href="https://github.com/tobyweston/tempus-fugit/blob/master/src/main/java/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.java">class</a> in <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>.</p>
 
 <p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// ...</span>
-</span><span class='line'>  <span class="k">throw</span> <span class="k">new</span> <span class="nc">IOException</span><span class="o">(</span><span class="s">&quot;failed to load&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala %}
+def load(url: String) {
+  // ...
+  throw new IOException("failed to load")
+}
+{% endcodeblock %}</p>
 
 <p>However, anyone calling this method won't be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the <code>throws</code> annotation but this still won't affect Scala clients.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
-</span><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala %}
+@throws(classOf[java.io.IOException])
+def load(url: String) {
+  // ...
+}
+{% endcodeblock %}</p>
 
 <p>Interestingly, Scala treats <code>throw</code> as an expression with a return type of <code>Nothing</code>. You can use it in place of any other expression even though the result wont actually evaluate to anything.</p>
 
@@ -68,39 +71,41 @@
 
 <p>Pattern matching is applied to the exception type when using <code>catch</code> above but it's also used in its vanilla form. For example, as described in <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, we can work out what to have with dinner in the example below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">dinner</span> <span class="k">match</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;chips&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;mash&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;cheese&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="k">case</span> <span class="k">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;beans?&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala %}
+def accompaniment(dinner: String) {
+  dinner match {</p>
+
+<pre><code>case "fish" =&gt; println("chips")
+case "sausage" =&gt; println("mash")
+case "sheep" =&gt; println("cheese")
+case _ =&gt; println("beans?")
+</code></pre>
+
+<p>  }
+}
+{% endcodeblock %}</p>
 
 <p>Notice that there is no need for a <code>break</code> statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="o">=&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;chips&quot;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;mash&quot;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="s">&quot;sheep&quot;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;cheese&quot;</span>
-</span><span class='line'>  <span class="k">case</span> <span class="k">_</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="s">&quot;beans goes with anything!&quot;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">println</span><span class="o">(</span><span class="n">accompaniment</span><span class="o">)</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:scala %}
+def anotherAccompaniment(dinner: String) {
+  val accompaniment =</p>
+
+<pre><code>dinner match {
+  case "fish" =&gt; "chips"
+  case "sausage" =&gt; "mash"
+  case "sheep" =&gt; "cheese"
+  case _ =&gt; "beans goes with anything!"
+}
+</code></pre>
+
+<p>  println(accompaniment)
+}
+{% endcodeblock %}</p>
 
 <h2>Conclusion</h2>
 
-<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
+<p>The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the <code>catch</code> when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to <a href="{{%20root_url}}/blog/2012/03/28/exception-handling-as-a-system-wide-concern">handle them as a system wide concern</a>.</p>
 ]]></content>
   </entry>
   
@@ -109,7 +114,7 @@
     <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
     <updated>2012-03-29T00:00:00+01:00</updated>
     <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
-    <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+    <content type="html"><![CDATA[<p>In the <a href="{{%20root_url%20}}/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
 
 <p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
 
@@ -120,33 +125,36 @@
 
 <p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+throw new BadRequestException("the field 'customer' is missing from the request");
+throw new BadRequestException("'customer' is missing");
+throw new BadRequestException("can not parse request" );
+{% endcodeblock %}</p>
 
 <p>It's an example of bad encapsulation in the <code>BadRequestException</code> class. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsistency between the wording of the first two. Are they the same error? It's also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">super</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class MissingFieldException extends BadRequestException {</p>
+
+<pre><code>public MissingFieldException(Field field) {
+    super();
+    this.field = field;
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it's there that we would decide how to map the exception type to a presentable form). We've intentionally <em>avoided</em> something like</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public MissingFieldException(Field field) {</p>
+
+<pre><code>super("the field '" + "' is missing from the request");
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>because the message is completely unimportant to the exception. It's the handling that's important and it's in the catch block that we can map to a message (if appropriate). We're encapsulating the internal details. For example, at the UI, we may map the exception to a message for display but at an internal boundary, we may generate an event for support staff that maps to a different message.</p>
 
@@ -158,25 +166,26 @@
 
 <p>How do we apply this to exceptions? Well, now we've got nicely encapsulated data it's clear that the exception itself is responsible for <em>using</em> it. In the example above, we've encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public void applyTo(Description description) {</p>
+
+<pre><code>description.append("the field").appendValue(field).append("is missing from the request");
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <h2>The Impact on Testing</h2>
 
 <p>If we handle exceptions <em>only</em> at the boundaries, we do so based on <em>type</em> in the <code>catch</code> block. Even at this point, we shouldn't ask for the internals of the exception and so we shouldn't have to <em>test against them</em>. The handler can <em>tell</em> the exception rather than <em>ask</em> and testing becomes much more straight forward.</p>
 
-<p><span class='pullquote-right' data-pullquote='we should never need to test the content of the message in a unit test '>
-If a class throws an exception, <em>we should never need to test the content of the message in a unit test</em> for that class. It's the class that would use the message that should be tested. However, if we've done things correctly, then no behaviour should depend on the message so what can we test?
-</span></p>
+<p>{% pullquote %}
+If a class throws an exception, <em>{" we should never need to test the content of the message in a unit test "}</em> for that class. It's the class that would use the message that should be tested. However, if we've done things correctly, then no behaviour should depend on the message so what can we test?
+{% endpullquote %}</p>
 
 <p>The first part is to test that the handling class responds appropriately to the exception <em>type</em> and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply <em>tell don't ask</em> and so can write simpler tests.</p>
 
-<p>In this way, we're just applying the <a href="/blog/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
+<p>In this way, we're just applying the <a href="{{%20root_url%20}}/blog/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
 
 <h2>Only using Runtime Exceptions</h2>
 
@@ -186,16 +195,16 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p> If that's truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it's a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn't make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
 
-<p> <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="c1">// ...</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="o">}</span>
-</span><span class='line'>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p> {% codeblock lang:java %}
+ public class BadRobotApplicationException extends RuntimeException {</p>
 
-<p>In the next post <a href="/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
+<pre><code>// ...
+</code></pre>
+
+<p> }
+ {% endcodeblock %}</p>
+
+<p>In the next post <a href="{{%20root_url%20}}/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
 ]]></content>
   </entry>
   
@@ -228,21 +237,22 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.SessionExpiredException<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/login<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
-</span><span class='line'><span class="nt">&lt;error-page&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>exception-type<span class="ni">&amp;gt;</span>bad.robot.example.Defect<span class="ni">&amp;lt;</span>/exception-type<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="ni">&amp;lt;</span>location<span class="ni">&amp;gt;</span>/internalServerError<span class="ni">&amp;lt;</span>/location<span class="ni">&amp;gt;</span>
-</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;/error-page&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:xml %}
+<error-page></p>
+
+<pre><code>&lt;exception-type&gt;bad.robot.example.SessionExpiredException&lt;/exception-type&gt;
+&lt;location&gt;/login&lt;/location&gt;
+</code></pre>
+
+<p></error-page>
+<error-page></p>
+
+<pre><code>&lt;exception-type&gt;bad.robot.example.Defect&lt;/exception-type&gt;
+&lt;location&gt;/internalServerError&lt;/location&gt;
+</code></pre>
+
+<p></error-page>
+{% endcodeblock %}</p>
 
 <p>For the <em>how</em>, the approach at this layer is to <em>translate</em> an underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
 
@@ -254,41 +264,44 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Provider
+public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {</p>
+
+<pre><code>public Response toResponse(CustomerNotFoundException notFound) {
+    return Response.status(404).entity(notFound.getMessage()).build();
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class NotFoundException {</p>
+
+<pre><code>public NotFound(Identifier identifier) {
+    super(format("Could not find customer \"%s\"", identifier));
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Provider</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">Response</span> <span class="n">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Provider
+public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {</p>
+
+<pre><code>public Response toResponse(Throwable exception) {
+    return Response.status(500).entity(exception).build();
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of <code>Throwable</code>.</p>
 
@@ -300,31 +313,32 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="n">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
-</span><span class='line'><span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">unitOfWork</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isOpen</span><span class="o">())</span>
-</span><span class='line'>        <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public &lt;T, E extends Exception> T run(UnitOfWork&lt;T, E> unitOfWork) throws Throwable {</p>
+
+<pre><code>Session session = sessionProvider.getCurrentSession();
+Transaction transaction = session.beginTransaction();
+try {
+    T result = unitOfWork.execute(sessionProvider);
+    transaction.commit();
+    return result;
+} catch (Throwable e) {
+    transaction.rollback();
+    throw e;
+} finally {
+    if (session.isOpen())
+        session.close();
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>This also describes the <em>how</em>. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propagate up to the UI. We've handled the exception here to maintain data integrity <em>and</em> allowed other exception handling policies to be applied. It's a good example of an <em>internal boundary</em>.</p>
 
 <p>For example; two sales clerks try and update a customer's details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a <code>OptimisticLockException</code>. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.</p>
 
-<p>See a <a href="/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
+<p>See a <a href="{{%20root_url%20}}/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
 
 <h2>Some Parting Tips</h2>
 
@@ -341,7 +355,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 </ul>
 
 
-<p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
+<p>To see an example of more specialism in exception-types, see the next article <a href="{{%20root_url%20}}/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
 
 <p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
 ]]></content>
@@ -366,20 +380,21 @@ to perform additional testing after the exception or testing against the actual 
 
 <p>The typical pattern is to catch an exception or fail explicitly if it was never thrown.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example1</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">fail</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">assertThat</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;could not find something&quot;</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="c1">// ... could have more assertions here</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Test
+public void example1() {</p>
+
+<pre><code>try {
+    find("something");
+    fail();
+} catch (NotFoundException e) {
+    assertThat(e.getMessage(), containsString("could not find something"));
+}
+// ... could have more assertions here
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>which would highlight a failure in the following way.</p>
 
@@ -395,15 +410,16 @@ to perform additional testing after the exception or testing against the actual 
 
 <p>Using the <code>expected</code> element, we can rewrite the test as follows.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span> <span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Test (expected = NotFoundException.class)
+public void example2() throws NotFoundException {</p>
+
+<pre><code>find("something");
+// ... this line will never be reached when the test is passing
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>which will result in the following failure.</p>
 
@@ -421,19 +437,20 @@ message. We've also lost the ability to make more assertions after <code>find</c
 that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
 setting up expectations in mocking frameworks like <a href="http://www.jmock.org">JMock</a>.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example3</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'><span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;exception message&quot;</span><span class="o">));</span>
-</span><span class='line'><span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="c1">// ... this line will never be reached when the test is passing</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+@Rule public ExpectedException exception = ExpectedException.none();</p>
+
+<p>@Test
+public void example3() throws NotFoundException {</p>
+
+<pre><code>exception.expect(NotFoundException.class);
+exception.expectMessage(containsString("exception message"));
+find("something");
+// ... this line will never be reached when the test is passing
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>Which would show the failure below.</p>
 
@@ -455,7 +472,7 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <h2>Summary</h2>
 
-<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="{{%20root_url%20}}/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
 
 <p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
 
@@ -477,9 +494,9 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 </div>
 
 
-<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg 'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)' %}</a></p>
 
-<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21 'Growing Object Oriented Software' %}</a></p>
 
 <h2>Recommended Reading</h2>
 
@@ -506,85 +523,89 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 
 <p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we're done.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="n">clean</span><span class="o">(</span><span class="n">Domain</span> <span class="n">domain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Exceptions</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Exceptions</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">customers</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">suppliers</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">clean</span><span class="o">(</span><span class="n">domain</span><span class="o">.</span><span class="na">invoices</span><span class="o">(),</span> <span class="n">exceptions</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">exceptions</span><span class="o">.</span><span class="na">checkAndThrow</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">(</span><span class="n">Repository</span> <span class="n">repository</span><span class="o">,</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>        <span class="o">((</span><span class="n">TestRepository</span><span class="o">)</span> <span class="n">repository</span><span class="o">).</span><span class="na">deleteAll</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">RepositoryException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">exceptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class DomainCleaner {</p>
+
+<pre><code>public static void clean(Domain domain) throws CompositeException {
+    Exceptions exceptions = new Exceptions();
+    clean(domain.customers(), exceptions);
+    clean(domain.suppliers(), exceptions);
+    clean(domain.invoices(), exceptions);
+    exceptions.checkAndThrow();
+}
+
+private static void clean(Repository repository, Exceptions exceptions) {
+    try {
+        ((TestRepository) repository).deleteAll();
+    } catch (RepositoryException e) {
+        exceptions.add(e);
+    }
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>We simply add to the exception collection class (<code>exceptions.add(e)</code>) and then when we're done, we can check it and throw a composite exception if needed with <code>exceptions.checkAndThrow()</code>.</p>
 
 <p>So far, we've only been interested in the fact that multiple exception can be handled and so haven't needed to programmatically query for specific exception types. For example, we've only needed this up until now.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ... something that calls checkAndThrow()</span>
-</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CompositeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ... this is enough for now</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+try {
+   // ... something that calls checkAndThrow()
+} catch (CompositeException e) {
+   // ... this is enough for now
+}
+{% endcodeblock %}</p>
 
 <p>The details of the classes are below.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">exceptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">Iterator</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Exception</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">iterator</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">exceptions</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkAndThrow</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">exceptions</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CompositeException</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class Exceptions implements java.lang.Iterable<Exception> {</p>
+
+<pre><code>private final List&lt;Exception&gt; exceptions = new ArrayList&lt;Exception&gt;();
+
+public void add(Exception exception) {
+    exceptions.add(exception);
+}
+
+@Override
+public Iterator&lt;Exception&gt; iterator() {
+    return exceptions.iterator();
+}
+
+public void checkAndThrow() throws CompositeException {
+    if (!exceptions.isEmpty())
+        throw new CompositeException(this);
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 
 <p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way that is consistent with how you'd expect to see regular exceptions.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">CompositeException</span><span class="o">(</span><span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="s">&quot;composite exception was thrown with embedded exceptions (see details)&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">exceptions</span> <span class="o">=</span> <span class="n">exceptions</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span> <span class="o">:</span> <span class="n">exceptions</span><span class="o">)</span>
-</span><span class='line'>        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="sc">&#39;\t&#39;</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="k">new</span> <span class="n">ExceptionToString</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">toString</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="sc">&#39;\n&#39;</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%s\n{composite exceptions=\n%s}\n%s&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">(),</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="kd">super</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock lang:java %}
+public class CompositeException extends Exception {</p>
+
+<pre><code>private final Exceptions exceptions;
+
+public CompositeException(Exceptions exceptions) {
+    super("composite exception was thrown with embedded exceptions (see details)");
+    this.exceptions = exceptions;
+}
+
+@Override
+public String toString() {
+    StringBuilder builder = new StringBuilder();
+    for (Exception exception : exceptions)
+        builder.append('\t').append(new ExceptionToString(exception).toString()).append('\n');
+    return String.format("%s\n{composite exceptions=\n%s}\n%s", this.getClass().getName(), builder.toString(), super.toString());
+}
+</code></pre>
+
+<p>}
+{% endcodeblock %}</p>
 ]]></content>
   </entry>
   

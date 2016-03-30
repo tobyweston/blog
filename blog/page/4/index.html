@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these &hellip;">
+  <meta name="description" content="Occasionally we might want our tests to span multiple files. One file for an acceptance style test and one for a unit style test. Sometimes, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-03-27 08:22:31 +0100 -->
+    <!-- last update; 2016-03-30 18:25:11 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -131,7 +131,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/28/mountain-lion-carnage/">Mountain Lion Carnage</a></h1>
+        <h1 class="entry-title"><a href="/blog/2013/01/22/junit-enclosed-tests/">Embed Multiple Tests in JUnit </a></h1>
       
     
     
@@ -148,20 +148,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-07-28 12:28:00 +0100" datetime="2012-07-28T12:28:00+01:00" pubdate data-updated="true" class="updated">Jul 28<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2013-01-22 19:14:00 +0000" datetime="2013-01-22T19:14:00+00:00" pubdate data-updated="true" class="updated">Jan 22<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.</p>
+  <div class="entry-content"><p>Occasionally we might want our tests to span multiple files. One file for an acceptance style test and one for a unit style test. Sometimes, different file names make sense and we can easily locate them. If however, you want to create a test with a strange file name, it can get lost in your source. <a href="http://junit.org">JUnit</a>&#8217;s <code>Enclosed</code> runner lets you embed multiple test classes within a single JUnit test.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/07/28/mountain-lion-carnage/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2013/01/22/junit-enclosed-tests/">Read on &rarr;</a>
     </footer>
   
 
@@ -174,7 +174,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/22/getting-things-done-ii/">Getting Things Done, Part II</a></h1>
+        <h1 class="entry-title"><a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a></h1>
       
     
     
@@ -191,40 +191,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-07-22 12:38:00 +0100" datetime="2012-07-22T12:38:00+01:00" pubdate data-updated="true" class="updated">Jul 22<span>nd</span>, 2012</time>
+<time itemprop="datePublished" content="2013-01-10 12:12:00 +0000" datetime="2013-01-10T12:12:00+00:00" pubdate data-updated="true" class="updated">Jan 10<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="../../../../../images/appigo_todo.png"><img itemprop="image" class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
-
-<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen&#8217;s book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it&#8217;s been going. I also draw parallels between Allen&#8217;s ideas and some of the principles that underpin modern agile software development.</p>
-
-<p>I&#8217;d already been using Appigo&#8217;s <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen&#8217;s standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
+  <div class="entry-content"><p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it&#8217;s supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It&#8217;s <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven&#8217;t made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/07/22/getting-things-done-ii/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2013/01/10/stack-vs-deque/">Read on &rarr;</a>
     </footer>
   
 
@@ -237,7 +217,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/20/getting-things-done-i/">Getting Things Done, Part I</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/11/18/specialisation/">Specialisation and Generalisation in OOD</a></h1>
       
     
     
@@ -254,38 +234,86 @@
   
 
 
-<time itemprop="datePublished" content="2012-07-20 15:50:00 +0100" datetime="2012-07-20T15:50:00+01:00" pubdate data-updated="true" class="updated">Jul 20<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2012-11-18 08:22:00 +0000" datetime="2012-11-18T08:22:00+00:00" pubdate data-updated="true" class="updated">Nov 18<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
+  <div class="entry-content"><p>Objects aren&#8217;t data plus behaviour, they&#8217;re really just behaviour that may use data.</p>
 
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
+<p>When subclassing, I try to adhere to the &#8220;is a&#8221; rule but more than that I also try to stick to the &#8220;exchibites same behaviour&#8221; rule.</p>
 
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
+<p>For example, I&#8217;m usually suspicious about subclassing an object that contains just data (ie, a bean). It certainly makes more sense to subclass when something has behaviour and you&#8217;re inheriting that behaviour. If that behaviour is facilitated by the use of the object&#8217;s data, great but that data doesn&#8217;t <em>define</em> the behaviour.</p>
+
+<p>Specialisation and Generatlisation</p>
+
+<p>People tend to talk in terms of inheritance when talking about the &#8220;is a&#8221; relationship. However, the more general term <em>specialisation</em> is really what we&#8217;re interested in object oriented design.</p>
+
+<p>Inheritance is just one mechanism to implement specialisation and generalisation. Composition, aggregation and role based design are all alternatives.</p>
+
+<p>Generalization/specialization is an abstraction principle that allows to define classes as a refinement of other
+classes. [1]</p>
+
+<p>Calling &#8220;super&#8221; from a sub-class to its parent, couples the child to the parent [James]. UI frameworks are a good example where the domain isn&#8217;t really a good application of OO. The noun has moved away from &#8230;?&#8230; would aggregation be prefable here? Kind of means that inheritance is well suited for varying behaviour and not algorthmic variation. That is to say, varying the algorithm defined in the super type couples to that super type, whereas varying true behaviour doesn&#8217;t. In the later case, you request an object responds to sending a message and don&#8217;t care how, in the former, there&#8217;s some implicit knowledge that to respond to the message, the reciever will ask its parent the same question.</p>
+
+<p>Aggregation vs Compoisition</p>
+
+<p>Inheritance vs Aggregation</p>
+
+<p>Inheritance for code reuse is a bad thing.</p>
+
+<p>See previous post.</p>
+
+<p>[1] GENERALIZATION/SPECIALIZATION AND ROLE IN OBJECT
+ORIENTED CONCEPTUAL MODELING, Monique Snoeck, Guido Dedene</p>
 </div>
+  
+  
 
 
-<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a></h1>
+      
+    
+    
+      <p class="meta">
+        
 
-<p>In this first post, I&#8217;ll talk a little about Allen&#8217;s ideas, summarising the first section of the book. In the <a href="/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it&#8217;s application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-10-06 12:12:00 +0100" datetime="2012-10-06T12:12:00+01:00" pubdate data-updated="true" class="updated">Oct 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img itemprop="image" class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
+
+<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we&#8217;re on the topic, we&#8217;ll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/07/20/getting-things-done-i/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Read on &rarr;</a>
     </footer>
   
 
@@ -298,7 +326,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/07/04/pair-tests-what-candidates-can-expect/">Pair Tests: What Candidates Can Expect</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/09/15/daily-standups-dont-work/">Daily Standups Don&#8217;t Work</a></h1>
       
     
     
@@ -315,24 +343,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-07-04 18:58:00 +0100" datetime="2012-07-04T18:58:00+01:00" pubdate data-updated="true" class="updated">Jul 4<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2012-09-15 06:12:00 +0100" datetime="2012-09-15T06:12:00+01:00" pubdate data-updated="true" class="updated">Sep 15<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img itemprop="image" class="right" src="../../../../../images/pairing.jpg"></p>
-
-<p>If you haven&#8217;t had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
-
-<p>This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.</p>
+  <div class="entry-content"><p>At some point, standups have stopped working for me. They&#8217;ve certainly moved away from the original intention to improve collaboration and communication. I&#8217;m not sure I can put my finger on why, but I&#8217;m just not getting much out of them any more. It&#8217;s led me to think that standups per se just don&#8217;t work. At least in most of the environments I&#8217;ve encountered. So I&#8217;ve been thinking about what could work in their place and I think its just to <em>talk</em> more.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/07/04/pair-tests-what-candidates-can-expect/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/09/15/daily-standups-dont-work/">Read on &rarr;</a>
     </footer>
   
 
@@ -345,7 +369,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/06/11/http-encoding-schemes/">HTTP Encoding Schemes</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Diff Excel with Java and Hamcrest</a></h1>
       
     
     
@@ -362,20 +386,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-06-11 18:06:00 +0100" datetime="2012-06-11T18:06:00+01:00" pubdate data-updated="true" class="updated">Jun 11<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2012-09-14 13:21:00 +0100" datetime="2012-09-14T13:21:00+01:00" pubdate data-updated="true" class="updated">Sep 14<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>What&#8217;s the difference between URL Encoding and Form URL Encoding?</p>
+  <div class="entry-content"><p>Comparing Excel spreadsheets programmatically can be tricky. Projects like <a href="http://poi.apache.org/">Apache POI</a> and <a href="http://jexcelapi.sourceforge.net/">JExcel</a> let you build and interrogate sheets but don&#8217;t offer a built in compare function. Fortunately, <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> offers a simplified API for building sheets in Java and a bunch of <a href="http://hamcrest.org/">Hamcrest</a> matchers to find any differences.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/06/11/http-encoding-schemes/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/09/14/diff-excel-with-java-and-hamcrest/">Read on &rarr;</a>
     </footer>
   
 
@@ -388,7 +412,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/09/08/dry/">DRY. Literally.</a></h1>
       
     
     
@@ -405,26 +429,97 @@
   
 
 
-<time itemprop="datePublished" content="2012-06-10 10:06:00 +0100" datetime="2012-06-10T10:06:00+01:00" pubdate data-updated="true" class="updated">Jun 10<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2012-09-08 18:12:00 +0100" datetime="2012-09-08T18:12:00+01:00" pubdate data-updated="true" class="updated">Sep 8<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I&#8217;ve been working on a library offering a straight forward API with sensible defaults. Typically, you&#8217;ll make HTTP requests with just one line of code.</p>
+  <div class="entry-content"><div class="wikipedia">
+  
+  <h2>Don&#8217;t Repeat Yourself</h2>
+  <div>
+    <p>In <a href="http://en.wikipedia.org/wiki/Software_engineering" title="Software engineering">software engineering</a>, <strong>Don&#8217;t Repeat Yourself</strong> (<strong>DRY</strong>) is a <a href="http://en.wikipedia.org/wiki/Principle#Principle_as_axiom_or_logical_fundament" title="Principle">principle</a> of <a href="http://en.wikipedia.org/wiki/Software_development_process" title="Software development process">software development</a> aimed at reducing repetition of information of all kinds, especially useful in <a href="http://en.wikipedia.org/wiki/Multi-tier_architecture" title="Multi-tier architecture" class="mw-redirect">multi-tier architectures</a>. The DRY principle is stated as &#8220;Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.&#8221; The principle has been formulated by  <a href="http://en.wikipedia.org/wiki/Andy_Hunt_(author)" title="Andy Hunt (author)">Andy Hunt</a> and <a href="http://en.wikipedia.org/wiki/Dave_Thomas_(author)" title="Dave Thomas (author)" class="mw-redirect">Dave Thomas</a> in their book <i><a href="http://en.wikipedia.org/wiki/The_Pragmatic_Programmer" title="The Pragmatic Programmer">The Pragmatic Programmer</a></i>. They apply it quite broadly to include &#8221;<a href="http://en.wikipedia.org/wiki/Database" title="Database">database</a> schemas, <a href="http://en.wikipedia.org/wiki/Test_plan" title="Test plan">test plans</a>, the <a href="http://en.wikipedia.org/wiki/Software_build" title="Software build">build</a> system, even <a href="http://en.wikipedia.org/wiki/Software_documentation" title="Software documentation">documentation</a>.&#8221;   When the DRY principle is applied successfully, a modification of any single element of a system does not require a change in other logically unrelated elements. Additionally, elements that are logically related all change predictably and uniformly, and are thus kept in <a href="http://en.wikipedia.org/wiki/Synchronization" title="Synchronization">sync</a>. Besides using <a href="http://en.wikipedia.org/wiki/Method_(computer_science)" title="Method (computer science)" class="mw-redirect">methods</a> and <a href="http://en.wikipedia.org/wiki/Subroutine" title="Subroutine">subroutines</a> in their code, Thomas and Hunt rely on <a href="http://en.wikipedia.org/wiki/Automatic_programming" title="Automatic programming">code generators</a>, automatic build systems, and scripting languages to observe the DRY principle across layers.
+</p>
+  </div>
+  <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself" target="_blank">Read more on Wikipedia</a>
+</div>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+
+<p>In software engineering, Don’t Repeat Yourself (DRY) is a principle of software development aimed at reducing repetition of information of all kinds, especially useful in multi-tier architectures. The DRY principle is stated as “Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.” The principle has been formulated by  Andy Hunt and Dave Thomas in their book The Pragmatic Programmer. They apply it quite broadly to include ”database schemas, test plans, the build system, even documentation.” When the DRY principle is applied successfully, a modification of any single element of a system does not require a change in other logically unrelated elements. Additionally, elements that are logically related all change predictably and uniformly, and are thus kept in sync. Besides using methods and subroutines in their code, Thomas and Hunt rely on code generators, automatic build systems, and scripting languages to observe the DRY principle across layers.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Price</span> <span class="nf">plus</span><span class="o">(</span><span class="n">Price</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!(</span><span class="n">price</span> <span class="k">instanceof</span> <span class="n">UnitPrice</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">Money</span> <span class="n">other</span> <span class="o">=</span> <span class="o">((</span><span class="n">UnitPrice</span><span class="o">)</span> <span class="n">price</span><span class="o">).</span><span class="na">amount</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">unitPrice</span><span class="o">(</span><span class="n">amount</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">other</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 
 
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Price</span> <span class="nf">minus</span><span class="o">(</span><span class="n">Price</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!(</span><span class="n">price</span> <span class="k">instanceof</span> <span class="n">UnitPrice</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">Money</span> <span class="n">other</span> <span class="o">=</span> <span class="o">((</span><span class="n">UnitPrice</span><span class="o">)</span> <span class="n">price</span><span class="o">).</span><span class="na">amount</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nf">unitPrice</span><span class="o">(</span><span class="n">amount</span><span class="o">.</span><span class="na">subtract</span><span class="o">(</span><span class="n">other</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>What is &#8220;duplication&#8221;</h2>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/09/03/two-oo-rules/">Two Object Oriented Rules</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-09-03 13:09:00 +0100" datetime="2012-09-03T13:09:00+01:00" pubdate data-updated="true" class="updated">Sep 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;d say it&#8217;s fairly straight forward to robotically adhere to the Law of Demeter but harder to get more out of it than just pushing the chaining of method calls down the call stack. Teasing out appropriate behaviours rather than mechanically pushing down the calls can lead to new abstractions and new objects. New objects with real collaborations moves us towards a world without central controllers and shared responsibilities. At least that&#8217;s the espoused theory.</p>
+
+<p>I&#8217;m trying to describe what I think of as</p>
+
+<p>It&#8217;s closely related to the Tell Don&#8217;t Ask principle, but missing opportunities to &#8220;tell&#8221; rather than &#8220;ask&#8221; is all too easy.</p>
+
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/06/10/http-simple/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/09/03/two-oo-rules/">Read on &rarr;</a>
     </footer>
   
 
@@ -437,7 +532,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/05/05/stop-ignoring-at-rules/">Stop Ignoring @Rules</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/08/28/play-it-next/">Play it Next App</a></h1>
       
     
     
@@ -454,16 +549,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-05-05 10:50:00 +0100" datetime="2012-05-05T10:50:00+01:00" pubdate data-updated="true" class="updated">May 5<span>th</span>, 2012</time>
+<time itemprop="datePublished" content="2012-08-28 19:29:00 +0100" datetime="2012-08-28T19:29:00+01:00" pubdate data-updated="true" class="updated">Aug 28<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>If you&#8217;re using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you may have spotted that your <code>@Rules</code> are actually being ignored when running JUnit tests. This could mean false positives. It&#8217;s because older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules.</p>
+  <div class="entry-content"><p><a href="../../../../../images/play_it_next.png"><img itemprop="image" class="right" src="../../../../../images/play_it_next.png" width="224" height="336" title="'Play it Next'" ></a></p>
 
-<p>The good news is that <a href="http://repo1.maven.org/maven2/org/jmock/">JMock 2.6.0</a> and above use the newer <code>BlockJUnit4ClassRunner</code> and this does support rules. Bear this in mind when working with any class and the <code>@RunWith</code> as they may also extend the rule ignoring runner.</p>
+<p>I&#8217;m often listening to something on my iPhone whilst thinking about what track to play next. It&#8217;s a shame the iPod app doesn&#8217;t let me queue up the next track without interrupting the one that&#8217;s playing.</p>
+
+<p>I didn&#8217;t realise how much this bothered me until I found the workaround in the form of the awesome <a href="http://playitnextapp.com/">Play it Next</a> app. Now I can queue up the next track and get all deejay without breaks in my music. It&#8217;s like iTunes Up Next feature only for your iPod. I like it so much, I just had to mention it here.</p>
+
+<p>Find it on the <a href="http://itunes.apple.com/us/app/play-it-next/id549859020?ls=1&amp;mt=8">app store</a>. I definitely recommend it but don&#8217;t take my word for it, check out the <a href="http://www.appcraver.com/play-it-next/">AppCraver review</a>.</p>
 </div>
   
   
@@ -477,7 +576,7 @@
   <header>
     
       <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a></h1>
+        <h1 class="entry-title"><a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a></h1>
       
     
     
@@ -494,112 +593,20 @@
   
 
 
-<time itemprop="datePublished" content="2012-04-03 19:33:00 +0100" datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true" class="updated">Apr 3<span>rd</span>, 2012</time>
+<time itemprop="datePublished" content="2012-08-13 19:13:00 +0100" datetime="2012-08-13T19:13:00+01:00" pubdate data-updated="true" class="updated">Aug 13<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
+  <div class="entry-content"><p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple of caveats remain when working with it from a rich client.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-03-30 22:47:00 +0100" datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true" class="updated">Mar 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
-
-<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
-
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-03-29 00:00:00 +0100" datetime="2012-03-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Mar 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system&#8217;s exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
-
-<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/29/building-better-exceptions/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2012/08/13/oauth-and-http-part-iii/">Read on &rarr;</a>
     </footer>
   
 
@@ -627,7 +634,19 @@
       </li>
     
       <li class="post">
+        <a href="/blog/2016/02/03/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/01/20/vintage-airplay-speakers/">Vintage AirPlay Speakers</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -636,6 +655,14 @@
     
       <li class="post">
         <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/16/type-classes/">Type Classes in Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/scala-implicit-classes/">Implicit Classes in Scala</a>
       </li>
     
       <li class="post">
@@ -659,6 +686,10 @@
       </li>
     
       <li class="post">
+        <a href="/blog/2014/09/21/universal-qualifier/">Universal Qualifier in Scala</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
       </li>
     
@@ -676,30 +707,6 @@
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>
