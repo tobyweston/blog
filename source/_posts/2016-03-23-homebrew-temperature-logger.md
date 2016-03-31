@@ -58,7 +58,7 @@ On the sensor itself, temperature measurements are stored in an area of memory c
     4b 01 4b 46 7f ff 05 10 d8 : crc=d8 YES
     4b 01 4b 46 7f ff 05 10 d8 t=20687
 
-The temperature is shown as the `t` value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the [data sheet](https://www.adafruit.com/datasheets/DS18B20.pdf) or [my associated README]() for more details.
+The temperature is shown as the `t` value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the [data sheet](https://www.adafruit.com/datasheets/DS18B20.pdf) or [my associated README]() for more details (including how to change the precision of the sensor).
 
 Once you can see the `w1_slave` file, you're ready to install the data logging software.
 
