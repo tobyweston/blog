@@ -64,7 +64,7 @@ Modify the `/etc/network/interfaces` file to access a network (with hidden SSID)
 Add the following to `~/.bashrc`
 
     # some more ls aliases
-    alias ll='ls -lv --group-directories-first'
+    alias ll='ls -lvh --group-directories-first'
     alias la='ls -A'
     #alias l='ls -CF'
 
