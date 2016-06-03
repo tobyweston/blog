@@ -51,7 +51,7 @@ Modify the `/etc/network/interfaces` file to access a network (with hidden SSID)
 
     $ sudo apt-get update
     $ sudo apt-get upgrade
-    $ sudo apt-get rpi-update
+    $ sudo rpi-update
 
 
 ## Standard Software
