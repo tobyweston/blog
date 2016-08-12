@@ -75,7 +75,7 @@ object NumberLike {
 }
 ```
 
-### Step 3. Call the Type Class Behaviour
+### Step 3a. Call the Type Class
 
 The whole point of the pattern is to be able to provide common behaviour to classes without tight coupling or by modifying them at all. So far, we've created specific behaviours for our classes (like `plus` above) conforming to our "contract" type class `C`. 
 
@@ -113,7 +113,7 @@ object Statistics {
 }
 ```
 
-#### Implicit Classes FTW!
+### Step 3b. Call the Type Class (with an Implicit Class)
 
 As a simple extension, you can extend "member" types directly using an `implicit` class. For example, we can add the `mean` method to any sequence of `NumberLike`s.
 
@@ -170,7 +170,7 @@ implicit val colourTypeStringDecoder = new StringDecoder[Colour] {
 ```
 
 
-### Step 3. Calling Type Classes
+### Step 3. Call the Type Classes
 
 With an implicit class extending `String`, any string value can be decoded to a type `A`.
 
