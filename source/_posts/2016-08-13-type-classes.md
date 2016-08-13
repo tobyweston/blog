@@ -33,12 +33,10 @@ From the [Neophytes Guide](http://danielwestheide.com/blog/2013/02/06/the-neophy
 
 ## Example from the Neophytes Guide
 
-> The type class here is `NumberLike` providing `plus`, `divide` and `minus` behaviours.  
+> The type class here is `NumberLike` providing abstract `plus`, `divide` and `minus` behaviours.  
 > Types `Int` and `Double` are "members" of `NumberLike`.  
 > `Int` and `Double` don't natively have the behaviors of `NumberLike`.  
 > Instead, the implementations on the `NumberLike` object provides them.  
->
-> Additionally, the `mean` method binds number-like behaviours together with a `Seq` of numbers to perform something useful.
 
 
 ### Step 1: Define Behaviour (as a trait)
@@ -77,7 +75,7 @@ object NumberLike {
 
 ### Step 3a. Call the Type Class
 
-The whole point of the pattern is to be able to provide common behaviour to classes without tight coupling or by modifying them at all. So far, we've created specific behaviours for our classes (like `plus` above) conforming to our "contract" type class `C`. 
+The whole point of the pattern is to be able to provide common behaviour to classes without tight coupling or even by modifying them at all. So far, we've created specific behaviours for our classes (like `plus` above) conforming to our "contract" type class `C`. 
 
 To call that behaviour, we use Scala's `implicit` semantics to find an appropriate implementation. It binds a concrete type of `T` (let's say `Int`) with it's corresponding type class (`NumberLikeInt`). It means we only need one method for all number-like types.
 
@@ -134,7 +132,7 @@ val numbers = List[Int](1, 5, 32, 43, 4)
 println(numbers.mean)
 ```
 
-or
+or like this for `Double`.
 
 ```scala
 val numbers = List[Double](3.2, 4.2, 3.0, 4.4)
