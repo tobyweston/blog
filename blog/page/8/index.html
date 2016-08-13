@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="&#8230;well, not quite, but they have recently announced that they&#8217;d be discontinuing the Personal E-mail Certificates and Web of Trust. These &hellip;">
+  <meta name="description" content="I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to maven central repository. oh, I should mention&#8230; tempus-fugit represents two things to me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-05-24 20:55:24 +0100 -->
+    <!-- last update; 2016-08-13 18:53:39 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/11/11/time-flies/">Time Flies 1.0</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-11-11 00:00:00 +0000" datetime="2009-11-11T00:00:00+00:00" pubdate data-updated="true" class="updated">Nov 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to <a href="http://search.maven.org/">maven central repository</a>.</p>
+
+<p>oh, I should mention&#8230; tempus-fugit represents two things to me</p>
+
+<ol>
+<li>A focal point to a lot of head scratching around the theme of testing concurrency and time sensitive code.</li>
+<li>An attempt to consolidate this thinking into a single place that can be easily reused.</li>
+</ol>
+
+
+<p>What it actually is, is</p>
+
+<ol>
+<li>a dozen or so classes that capture key abstractions we&#8217;ve found are frequently shared across domains.</li>
+<li>an even smaller number of wrapper or helper classes that we&#8217;ve found can help using concurrency in Java that little bit nicer.</li>
+<li>all with an underlying theme of testing and improving testability.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -566,121 +621,6 @@ balanced view.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/02/16/more-on-micro-dsls/">More on Micro DSLs</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2009-02-16 00:00:00 +0000" datetime="2009-02-16T00:00:00+00:00" pubdate data-updated="true" class="updated">Feb 16<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I was recently talking about what I call <a href="/blog/2009/01/06/be-more-expressive-with-builders/">micro DSLs</a> and I thought I&#8217;d follow up with another example.</p>
-
-<p>So, another example of a micro DSL I found myself writing is one of finding some object within a collection of differently typed objects. In my example, I want to find a <code>Race</code> object inside a bunch of calendar events objects, the finder micro DSL looks like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Race</span> <span class="n">race</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">race</span> <span class="o">=</span> <span class="n">race</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">static</span> <span class="n">RaceFinder</span> <span class="nf">find</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">CalendarEventEntry</span> <span class="nf">in</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">CalendarEventEntry</span><span class="o">&gt;</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">:</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">race</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getTitle</span><span class="o">().</span><span class="na">getPlainText</span><span class="o">()))</span> <span class="o">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">event</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The way the class is built, it forces the client to use it such.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Where find is statically imported and race and events have been pre-populated.</p>
-
-<p>The original version had a method in the class to do the find, in the context of this class it was harder to test the find. I had a bunch of mocks and I was testing the find function amongst other behaviours of the class. The search line looked something like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>What&#8217;s with &#8220;micro DSL&#8221;?</h2>
-
-<p>Why I term this a micro DSL is that it has a very specific usage (to find a race within a calendar) and it has a <strong>private constructor</strong> and <strong>public static creation method</strong> to ensure strict usage. The real thing though is the <strong>method names don&#8217;t really do what they imply they&#8217;re going to do</strong>. The <code>in</code> method actually does the search, but the <code>find</code> method doesn&#8217;t do any such thing; it <em>creates</em> an object.</p>
-
-<blockquote><p>Micro DSLs are recognisable by their tiny-domain, the way in which construction is done to ensure methods can only be called in a certain order that makes sense to the domain and badly named methods.</p></blockquote>
-
-<p>How do you feel about this? When its used in a tiny domain like this and when it expresses the conversation more concisely than the alternatives, I feel pretty good about it. It makes me realise its not the words (method names) that are important, its the sentences they put together. So I&#8217;m compromising on realistic method names for more expressive sentences. The fact that the class prevents you from constructing invalid sentences just makes the warm feeling grow.</p>
-
-<h2>Recommended Reading</h2>
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-
-<p><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg" title="'DSLs in Action'" ></a></p>
-
-<p><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg" title="'Domain Specific Languages (Addison-Wesley Signature)'" ></a></p>
-
-<ul>
-<li><a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">DSLs in Action</a>, DSLs in Action</li>
-<li><a href="http://www.amazon.co.uk/gp/product/1934356999/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1934356999&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">The Definitive ANTLR 4 Reference: Building Domain-Specific Languages (Pragmatic Programmers)</a>, Terence Parr</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -696,6 +636,10 @@ balanced view.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/03/23/homebrew-temperature-logger/">Home Brew Temperature Logger</a>
@@ -771,10 +715,6 @@ balanced view.</p>
     
       <li class="post">
         <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>

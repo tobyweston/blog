@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for &hellip;">
+  <meta name="description" content="Type classes provide ad-hoc inheritance which means that we can use them to create polymorphic functions that can be applied to arguments of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-05-24 20:55:24 +0100 -->
+    <!-- last update; 2016-08-13 18:53:39 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-08-13 18:42:00 +0100" datetime="2016-08-13T18:42:00+01:00" pubdate data-updated="true" class="updated">Aug 13<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Type classes provide <a href="http://bit.ly/1kr6C8E#Ad_hoc_polymorphism">ad-hoc inheritance</a> which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (<code>extends</code>) polymorphism.</p>
+
+<p>From the <a href="http://danielwestheide.com/blog/2013/02/06/the-neophytes-guide-to-scala-part-12-type-classes.html">Neophytes Guide</a>, Daniel Westheide describes type classes, slightly paraphrased, as follows.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/08/13/type-classes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -531,51 +576,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-09-21 05:12:00 +0100" datetime="2014-09-21T05:12:00+01:00" pubdate data-updated="true" class="updated">Sep 21<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In some <a href="http://baddotrobot.com/blog/categories/exceptions/">previous posts</a>, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn&#8217;t return what you wanted.</p>
-
-<p>Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">purity of function</a>. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it&#8217;s much easier to provide that system wide consistently I&#8217;ve been talking about.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/21/exceptions-as-monads/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -589,6 +589,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/03/23/homebrew-temperature-logger/">Home Brew Temperature Logger</a>
@@ -664,10 +668,6 @@
     
       <li class="post">
         <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/24/writing-my-book/">Writing my Book</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-05-24T20:55:24+01:00</updated>
+  <updated>2016-08-13T18:53:39+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,189 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Type Classes in Scala]]></title>
+    <link href="http://baddotrobot.com/blog/2016/08/13/type-classes/"/>
+    <updated>2016-08-13T18:42:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2016/08/13/type-classes</id>
+    <content type="html"><![CDATA[<p>Type classes provide <a href="http://bit.ly/1kr6C8E#Ad_hoc_polymorphism">ad-hoc inheritance</a> which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (<code>extends</code>) polymorphism.</p>
+
+<p>From the <a href="http://danielwestheide.com/blog/2013/02/06/the-neophytes-guide-to-scala-part-12-type-classes.html">Neophytes Guide</a>, Daniel Westheide describes type classes, slightly paraphrased, as follows.</p>
+
+<!-- more -->
+
+
+<blockquote><p>A type class <code>C</code> defines behaviour.<br/>
+Type <code>T</code> must support behaviour defined in <code>C</code> to be a &#8220;member&#8221; of <code>C</code>.<br/>
+If <code>T</code> is a &#8220;member&#8221;, it isn&#8217;t inherent to that type (if <code>T</code> has <code>C</code>&#8217;s behaviour, it isn&#8217;t native to that type via <code>extends</code> or otherwise).<br/>
+Instead, anyone can supply implementations of <code>C</code> behaviour for type <code>T</code> and this infers that <code>T</code> is a &#8220;member&#8221; of <code>C</code>.</p></blockquote>
+
+<h2>How to Create Type Classes</h2>
+
+<ol>
+<li>Define behaviour <code>C</code> as a trait</li>
+<li>Provide default implementations for your types (e.g. <code>T</code> above)</li>
+<li>Call the behaviours of <code>C</code> in a common way (optionally extending &#8220;members&#8221; like <code>T</code> with implicit classes)</li>
+</ol>
+
+
+<h2>Example from the Neophytes Guide</h2>
+
+<blockquote><p>The type class here is <code>NumberLike</code> providing abstract <code>plus</code>, <code>divide</code> and <code>minus</code> behaviours.<br/>
+Types <code>Int</code> and <code>Double</code> are &#8220;members&#8221; of <code>NumberLike</code>.<br/>
+<code>Int</code> and <code>Double</code> don&#8217;t natively have the behaviors of <code>NumberLike</code>.<br/>
+Instead, the implementations on the <code>NumberLike</code> object provides them.</p></blockquote>
+
+<h3>Step 1: Define Behaviour (as a trait)</h3>
+
+<p>Notice the paramaterised type <code>[T]</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Example</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">trait</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">minus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 2: Provide Implementations</h3>
+
+<p>Provide some default implementations of your type class trait in its companion object. Usually, these are singletons (<code>object</code>) but could be <code>val</code>s. They are <strong>always</strong> <code>implicit</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">NumberLike</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">implicit</span> <span class="k">object</span> <span class="nc">NumberLikeDouble</span> <span class="k">extends</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">minus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">implicit</span> <span class="k">object</span> <span class="nc">NumberLikeInt</span> <span class="k">extends</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">minus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 3a. Call the Type Class</h3>
+
+<p>The whole point of the pattern is to be able to provide common behaviour to classes without tight coupling or even by modifying them at all. So far, we&#8217;ve created specific behaviours for our classes (like <code>plus</code> above) conforming to our &#8220;contract&#8221; type class <code>C</code>.</p>
+
+<p>To call that behaviour, we use Scala&#8217;s <code>implicit</code> semantics to find an appropriate implementation. It binds a concrete type of <code>T</code> (let&#8217;s say <code>Int</code>) with it&#8217;s corresponding type class (<code>NumberLikeInt</code>). It means we only need one method for all number-like types.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So, if an implicit parameter can be found for a given type, Scala will use that implementation. The <code>NumberLikeInt</code> is used below.</p>
+
+<pre><code>scala&gt; println(Statistics.mean(List[Int](1, 2, 3, 6, 8)))
+4
+</code></pre>
+
+<p>Without an implicit in scope, you&#8217;d get an error</p>
+
+<pre><code>Error:(42, 26) could not find implicit value for parameter number: NumberLike[Int]
+  println(Statistics.mean(Seq(1, 2, 3, 6, 8)))
+</code></pre>
+
+<h4>Context Bounds</h4>
+
+<p>Another way of writing the generic method is to use context bounds (ie, use <code>T: NumberLike</code>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T:</span> <span class="kt">NumberLike</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">number</span> <span class="k">=</span> <span class="n">implicitly</span><span class="o">[</span><span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+</span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 3b. Call the Type Class (with an Implicit Class)</h3>
+
+<p>As a simple extension, you can extend &#8220;member&#8221; types directly using an <code>implicit</code> class. For example, we can add the <code>mean</code> method to any sequence of <code>NumberLike</code>s.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">class</span> <span class="nc">SeqNumberOps</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and call <code>mean</code> directly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">NumberOps</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">32</span><span class="o">,</span> <span class="mi">43</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+</span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or like this for <code>Double</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mf">3.2</span><span class="o">,</span> <span class="mf">4.2</span><span class="o">,</span> <span class="mf">3.0</span><span class="o">,</span> <span class="mf">4.4</span><span class="o">)</span>
+</span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Another Example</h2>
+
+<h3>Step 1: Define Behaviour</h3>
+
+<p>A basic &#8220;decoder&#8221; interface that uses an <code>Either</code> to return a result as either successful or unsuccessful.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">string</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Either</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">A</span><span class="o">]</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 2: Provide Implementations</h3>
+
+<p>We could provide an implementation to decode a string to a valid <code>Colour</code> type. Unsupported colours produce a &#8220;left&#8221; result.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">colourTypeStringDecoder</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">colours</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;red&quot;</span><span class="o">,</span> <span class="s">&quot;green&quot;</span><span class="o">,</span> <span class="s">&quot;yellow&quot;</span><span class="o">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">colours</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="n">value</span><span class="o">))</span> <span class="nc">Right</span><span class="o">(</span><span class="nc">Colour</span><span class="o">(</span><span class="n">value</span><span class="o">))</span>
+</span><span class='line'>      <span class="k">else</span> <span class="nc">Left</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$value is not a valid colour, chose one of ${colours.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Step 3. Call the Type Classes</h3>
+
+<p>With an implicit class extending <code>String</code>, any string value can be decoded to a type <code>A</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">StringSyntax</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">StringDecoderOps</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">decodeTo</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="k">implicit</span> <span class="n">decoder</span><span class="k">:</span> <span class="kt">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">decoder</span><span class="o">.</span><span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then anywhere you have a string and you want to decode it, just go ahead.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;red&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>      <span class="c1">// right</span>
+</span><span class='line'><span class="s">&quot;square&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>   <span class="c1">// Left(square is not a valid colour, chose one of red, green, yellow)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Home Brew Temperature Logger]]></title>
@@ -2001,24 +2184,6 @@ case object Pineapple extends Fruit(95)
 <li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Writing my Book]]></title>
-    <link href="http://baddotrobot.com/blog/2013/05/24/writing-my-book/"/>
-    <updated>2013-05-24T13:57:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2013/05/24/writing-my-book</id>
-    <content type="html"><![CDATA[<p>There haven&#8217;t been many posts on the blog recently because I&#8217;ve been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It&#8217;s published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it&#8217;s driven by dogma rather than by a genuine testing need.</p>
-
-<p>Acceptance testing in it&#8217;s generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn&#8217;t have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
-
-<p>It also talks about when not to bother; how gaining software confidence isn&#8217;t always about testing. Fast feedback and writing software that&#8217;s cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
-
-<!-- more -->
-
-
-<p>Keep an eye on my <a href="http://baddotrobot.com/book">blog&#8217;s book page</a> for the latest news and head over to <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to purchase a copy or <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">download a free sample</a>.</p>
 ]]></content>
   </entry>
   
