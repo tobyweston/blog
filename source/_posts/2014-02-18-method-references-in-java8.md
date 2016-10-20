@@ -158,7 +158,7 @@ If you liked this post, you might like my course on [Udemy](https://www.udemy.co
 
 ## Caveat
 
-**†** There's a caveat here; the example isn't a closure, so my comment about that being a distinguishing feature isn't quiet true. If, as in the later examples, it closes over some `x` (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term `x` so it's back to being a lambda. So doesn't _have_ to be a closure, it's just more than likely to be one. For example;
+**†** There's a caveat here; the example isn't a closure, so my comment about that being a distinguishing feature isn't quiet true. If, as in the later examples, it closes over some `x` (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term `x` so it's back to being a lambda. So it oesn't _have_ to be a closure, it's just more than likely to be one. For example;
 
 ``` java This time the "reference to an instance method of a arbitrary object supplied later" is a Lambda, not a closure
 public void example() {
