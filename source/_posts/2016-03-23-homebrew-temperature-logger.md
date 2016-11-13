@@ -31,7 +31,7 @@ Using a Raspberry Pi Zero, some cheap components and some custom software, you c
 | **Total** | **£ 12.45**
 
 
-**Optional extras** You might also want to consider a [USB Wifi adapter](http://amzn.to/1RhmTKQ) (about £ 6), a case (I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://amzn.to/1ZtRWoA) or the [Adafruit console cable](https://www.adafruit.com/product/954).
+**Optional extras** You might also want to consider a [USB Wifi adapter](http://amzn.to/1RhmTKQ) (about £ 6), a case (I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-v2/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://amzn.to/1ZtRWoA) or the [Adafruit console cable](https://www.adafruit.com/product/954).
 
 
 ## Setup the Hardware
