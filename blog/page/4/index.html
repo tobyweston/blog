@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Although OAuth is intended for web, mobile and desktop applications, I&#8217;ve been finding the protocol clunky when accessing a web application &hellip;">
+  <meta name="description" content="In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-08-13 18:53:39 +0100 -->
+    <!-- last update; 2017-03-01 20:48:22 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/13/oauth-and-http-part-iii/">FreeAgent, OAuth &amp; HTTP (Part III)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-13 19:13:00 +0100" datetime="2012-08-13T19:13:00+01:00" pubdate data-updated="true" class="updated">Aug 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In previous posts, we looked at setting up authentication with OAuth to access FreeAgent&#8217;s API. We&#8217;ve got something working but a couple of caveats remain when working with it from a rich client.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/13/oauth-and-http-part-iii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/08/12/oauth-and-http-part-ii/">FreeAgent, OAuth &amp; HTTP (Part II)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-08-12 11:13:00 +0100" datetime="2012-08-12T11:13:00+01:00" pubdate data-updated="true" class="updated">Aug 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2012/08/11/oauth-and-http-part-i">previous post</a>, we walked through requesting &#8220;authorisation&#8221; from <a href="https://dev.freeagent.com/docs/oauth">FreeAgent</a> using OAuth. In this next post, we&#8217;ll look at the next steps, requesting an <em>access token</em> and actually making client API calls to our target application.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/08/12/oauth-and-http-part-ii/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -516,96 +602,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Scala as a Functional OO Hybrid</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-04-03 19:33:00 +0100" datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true" class="updated">Apr 3<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/03/30/scala-exception-handling/">Scala Exception Handling</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-03-30 22:47:00 +0100" datetime="2012-03-30T22:47:00+01:00" pubdate data-updated="true" class="updated">Mar 30<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We&#8217;re very used to Java&#8217;s notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can&#8217;t force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it&#8217;s all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.</p>
-
-<p>Scala has taken a different approach. Scala has done away with checked exceptions; all exceptions are effectively <code>RuntimeException</code>s and so its left to the developer to decide when to handle them. This obviously leads to less noise but puts more responsibility on the developer. Scala makes it easy to avoid the issue but without a clear system wide policy for exception handling, we can still get into trouble.</p>
-
-<p>In a <a href="/blog/2012/03/29/building-better-exceptions">previous post</a>, I&#8217;ve described a general approach to understanding <em>when</em> and <em>how</em> to deal with exceptions in Scala or Java. In this post, we&#8217;ll take a quick look at Scala&#8217;s syntax around exceptions and how pattern matching is employed.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/03/30/scala-exception-handling/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -623,6 +619,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
       </li>
     
@@ -632,6 +632,10 @@
     
       <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -692,14 +696,6 @@
     
       <li class="post">
         <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
       </li>
     
   </ul>
@@ -800,7 +796,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2016 - Toby Weston -
+  Copyright &copy; 2006-2017 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>

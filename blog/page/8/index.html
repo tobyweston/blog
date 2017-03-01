@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve just published tempus-fugit 1.0-SNAPSHOT to maven central repository. oh, I should mention&#8230; tempus-fugit represents two things to me &hellip;">
+  <meta name="description" content="I recently added a basic deadlock detection mechanism to tempus-fugit. The DeadlockDetector class allows you to programmatically detect basic &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-08-13 18:53:39 +0100 -->
+    <!-- last update; 2017-03-01 20:48:22 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/24/deadlock/">Deadlock detection in Java</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/24/deadlock/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/12/10/atomiticy-of-thread-class/">Atomiticy of the Thread class</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-12-10 00:00:00 +0000" datetime="2009-12-10T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had an interesting time getting a couple of tests running for <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> recently. It threw up a couple of interesting aspects about using threads that I hadn&#8217;t come across before.</p>
+
+<p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForStartup</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">waitForShutdown</span><span class="o">(</span><span class="n">thread</span><span class="o">);</span>
+</span><span class='line'>   <span class="n">assertThat</span><span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">isInterrupted</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="kc">true</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.</p>
+
+<p>The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2009/12/10/atomiticy-of-thread-class/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -520,107 +630,6 @@ balanced view.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/02/26/less-is-more/">Less is More</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2009-02-26 00:00:00 +0000" datetime="2009-02-26T00:00:00+00:00" pubdate data-updated="true" class="updated">Feb 26<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Dave Denton</a> were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
-
-<blockquote><p>After running a few tests I confirmed that the lower the max heap size is, the more threads I could create. I can easily get a OutOfMemoryError when allocating memory for threads way before any real heap space is used.</p></blockquote>
-
-<p>The helpful message you&#8217;ll get is.</p>
-
-<pre><code>java.lang.OutOfMemoryError: unable to create new native thread
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/02/26/less-is-more/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/02/23/infering-type-in-micro-dsl/">Inferring the Types in a Micro DSL</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2009-02-23 00:00:00 +0000" datetime="2009-02-23T00:00:00+00:00" pubdate data-updated="true" class="updated">Feb 23<span>rd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In a recent <a href="/blog/2009/02/16/more-on-micro-dsls/">post</a>, I was talking about a micro DSL to create a simple &#8220;find x in a list&#8221; service. The key thing here is that it defines how to look for x in the list. So the list can be a list of anything, not just a list of x&#8217;s.</p>
-
-<p>Just to recap then, to find something in a list, the original client code (using a static import) looks like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2009/02/23/infering-type-in-micro-dsl/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -638,6 +647,10 @@ balanced view.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
       </li>
     
@@ -647,6 +660,10 @@ balanced view.</p>
     
       <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -707,14 +724,6 @@ balanced view.</p>
     
       <li class="post">
         <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
       </li>
     
   </ul>
@@ -815,7 +824,7 @@ balanced view.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2016 - Toby Weston -
+  Copyright &copy; 2006-2017 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>

@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="In a previous post, I was going on about how evil logging is. How it&#8217;s often confused as a requirement and often badly misused. The upshot of &hellip;">
+  <meta name="description" content="Recruiting for the next guy on your team is hard. At first glance it doesn&#8217;t seem to be, we&#8217;ve developed techniques like pair tests but &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2016-08-13 18:53:39 +0100 -->
+    <!-- last update; 2017-03-01 20:48:22 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,96 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Reflecting on Interviewing Mistakes</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-08-29 00:00:00 +0100" datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recruiting for the next guy on your team is hard. At first glance it doesn&#8217;t seem to be, we&#8217;ve developed techniques like pair tests but as I start to look at it more closely, I&#8217;ve started to notice that even the more progressive techniques don&#8217;t preclude us from making the same mistakes as the traditional interview.</p>
+
+<p>Let&#8217;s take an example from two teams.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/29/reflecting-on-interviewing-mistakes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/08/29/catching-multiple-exceptions-and/">Catching Multiple Exceptions (and rethrowing them all!)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-08-29 00:00:00 +0100" datetime="2011-08-29T00:00:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don&#8217;t want to loose any information and should really allow the client to catch the exception in a standard way.</p>
+
+<p>This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the <code>Exceptions</code> and a sub-class of <code>Exception</code> to represent an exception containing other, embedded exceptions. When you&#8217;re done collecting exceptions, you can just check and rethrow as a new exception type.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/29/catching-multiple-exceptions-and/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -508,109 +598,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/07/09/changing-test-gears/">Changing Test Gears</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2010-07-09 00:00:00 +0100" datetime="2010-07-09T00:00:00+01:00" pubdate data-updated="true" class="updated">Jul 9<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the <em>odds change</em> as the game progresses and react appropriately. It&#8217;s the same with testing, you gotta know when to change gears.</p>
-
-<p>To put it development terms, good developers know when to change gears. They know when to change their testing style from cautious to aggressive as the code evolves.</p>
-
-<p>Lets pretend there is just three types of testing; <em>unit</em>, <em>integration</em> and <em>acceptance</em>. In the interest of stereotyping, we&#8217;ll define them simplistically as</p>
-
-<ul>
-<li><em>Unit</em> - single object tests, no collaborations (strict I know, but bear with me)</li>
-<li><em>Integration</em> - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket</li>
-<li><em>Acceptance</em> - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/07/09/changing-test-gears/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2010/07/07/generate-concordion-overviews/">Generate Concordion Overviews</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2010-07-07 00:00:00 +0100" datetime="2010-07-07T00:00:00+01:00" pubdate data-updated="true" class="updated">Jul 7<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Customer authored acceptance tests are great. Getting your users to tell you exactly what they want and don&#8217;t want in the form of a <em>specification</em> can be liberating. You&#8217;ll thrash out the details and come up with <em>examples</em> that can be exercised against the running system. Everybody wins.</p>
-
-<p>I can&#8217;t really comment on some of the BDD targeting frameworks like <a href="http://jbehave.org/">JBehave</a>, <a href="http://www.easyb.org/">EasyB</a> or <a href="http://cukes.info/">Cucumber</a> but I do like using <a href="http://www.concordion.org/">Concordion</a>. We try and use it in such as way to fit in with a BDD approach, it&#8217;s actually flexible enough to use with almost any approach.</p>
-
-<p>It&#8217;s frequently cited closest comparator is probably Fit but that&#8217;s a little unfair. As I say, Concordion tries really hard not to tie you into a particular approach, whereas Fit invariably leads you down a certain route. So to compare it against the less flexible Fit, isn&#8217;t really accurate.</p>
-
-<p>Anyway, the point to this post isn&#8217;t really to comment on Concordion but to advertise a little Ant task I wrote to help auto-generate Concordion-friendly summary pages for your existing Concordion tests.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2010/07/07/generate-concordion-overviews/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -628,6 +615,10 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
       </li>
     
@@ -637,6 +628,10 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     
       <li class="post">
         <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
       </li>
     
       <li class="post">
@@ -697,14 +692,6 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     
       <li class="post">
         <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/09/automatically-rebase-on-git-pull/">Automatically rebase on git pull</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/01/optimum-number-of-threads/">Calculate the Optimum Number of Threads</a>
       </li>
     
   </ul>
@@ -805,7 +792,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2016 - Toby Weston -
+  Copyright &copy; 2006-2017 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>

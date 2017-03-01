@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2016-08-13T18:53:39+01:00</updated>
+  <updated>2017-03-01T20:48:22+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Standard Pi Setup]]></title>
+    <link href="http://baddotrobot.com/blog/2017/03/01/standard-pi-setup/"/>
+    <updated>2017-03-01T19:01:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2017/03/01/standard-pi-setup</id>
+    <content type="html"><![CDATA[<p>Here&#8217;s some common things to do when you first setup a Pi.</p>
+
+<!-- more -->
+
+
+<h2>Raspian Image</h2>
+
+<p>Download your image and <a href="https://www.raspberrypi.org/documentation/installation/installing-images/">burn to an SD card</a>. You can&#8217;t go far wrong with a <a href="http://amzn.to/1T6zIc9">SanDisk 16GB microSDHC memory card</a>for £6.99.</p>
+
+<h2><code>raspi-config</code></h2>
+
+<ul>
+<li>Expand the file system</li>
+<li>Disable GUI via boot options, set to <code>Boot Options</code> then <code>B1 Console</code></li>
+<li>Change hostname via Advanced options</li>
+</ul>
+
+
+<h2>Setup Wifi</h2>
+
+<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-scan-ssid 1
+   wpa-ap-scan 1
+   wpa-key-mgmt WPA-PSK
+   wpa-proto RSN WPA
+   wpa-pairwise CCMP TKIP
+   wpa-group CCMP TKIP
+   wpa-ssid "network-name"
+   wpa-psk 72084.....654
+
+iface default inet dhcp
+</code></pre>
+
+<h2>Update the System</h2>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo rpi-update
+</code></pre>
+
+<h2>Standard Software</h2>
+
+<pre><code>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
+</code></pre>
+
+<h2>Bash Setup</h2>
+
+<p>Add the following to <code>~/.bashrc</code></p>
+
+<pre><code># some more ls aliases
+alias ll='ls -lvh --group-directories-first'
+alias la='ls -A'
+#alias l='ls -CF'
+
+# Toby's ones
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias du='du -kh'    # Makes a more readable output.
+alias df='df -kTh'
+</code></pre>
+
+<h2>Share Disk with Mac OSX</h2>
+
+<pre><code>sudo apt-get install netatalk
+</code></pre>
+
+<h2><code>vi</code> setup</h2>
+
+<pre><code>$ echo 'set nocompatible' &gt; ~/.vimrc
+</code></pre>
+
+<h2>Timezone</h2>
+
+<pre><code>sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
+</code></pre>
+
+<h2>SBT on the Pi Zero</h2>
+
+<p>There&#8217;s not much memory, so limit <code>sbt</code>s consumption.</p>
+
+<pre><code>sbt -J-Xmx512m -J-Xms256m
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Type Classes in Scala]]></title>
@@ -268,7 +369,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 </table>
 
 
-<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case (I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-with-gpio-access/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
+<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case (I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-v2/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
 
 <h2>Setup the Hardware</h2>
 
@@ -622,6 +723,120 @@ total 16
 $ cat 8192cu.conf
 options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 </code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pi Console Lead]]></title>
+    <link href="http://baddotrobot.com/blog/2015/12/28/pi-console-lead/"/>
+    <updated>2015-12-28T19:52:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2015/12/28/pi-console-lead</id>
+    <content type="html"><![CDATA[<p>Without an ethernet port, the Pi Zero doesn&#8217;t lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.</p>
+
+<p>The Adafruit Console Lead uses the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">PL2303TA</a> (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it&#8217;s handy to use the <code>screen</code> application to effectively open a &#8220;telnet-like&#8221; terminal to your Pi.</p>
+
+<!-- more -->
+
+
+<p>Most of the guides on the internet point you to older versions of the drivers, but to get things working on the Mac with El Capitan or Sierra, I&#8217;ve found <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">v1.6 of the Prolific driver</a> is the only working option.</p>
+
+<p>It&#8217;s not hard to build you&#8217;re own cable from the basic components or you could try <a href="http://www.ebay.co.uk/sch/i.html?_from=R40&amp;_trksid=p2050601.m570.l1313.TR0.TRC0.H0.XPL2303TA.TRS0&amp;_nkw=PL2303TA&amp;_sacat=0">eBay for parts for under £2/$2</a> but I can&#8217;t say if they use genuine Prolific chips or counterfeit.</p>
+
+<h2>Create a Screen</h2>
+
+<pre><code>$ ls -la /dev/tty.usb*
+crw-rw-rw-  1 root  wheel   17,   4 28 Dec 19:49 /dev/tty.usbserial
+</code></pre>
+
+<p>Startup screen and point it to your Pi (<code>115200</code> is the baud rate to communicate with).</p>
+
+<pre><code>screen /dev/tty.usbserial 115200
+</code></pre>
+
+<p>You might need to hit the <code>enter</code> key to wake things up, but you should see a regular Linux login prompt.</p>
+
+<p>By default, the console width is 30 characters and wraps on a single line. It&#8217;s pretty annoying when you paste a long command, so you can increase it for you session with the following</p>
+
+<pre><code>stty cols 130
+</code></pre>
+
+<p>When you fire up the <code>screen</code> window manager, you can use <code>Ctrl</code> + <code>A</code> (<img src="http://baddotrobot.com/images/ks_control.gif" alt="Option" /> + <code>A</code>) to enter &#8220;command mode&#8221;, hitting a subsequent key will execute a command. For example, <code>Ctrl</code> + <code>A</code> followed by a <code>?</code> will show you some helpful commands.</p>
+
+<p>Here are some reminders of useful commands.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Command(s)        </th>
+<th> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Get some help     </td>
+<td> <code>Ctrl + A, ?</code></td>
+</tr>
+<tr>
+<td></td>
+<td> Kill a session    </td>
+<td> <code>Ctrl + A, Ctrl + \</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>Initial Setup</h2>
+
+<p>You might want to setup you&#8217;re wireless from within <code>screen</code>. Connecting to a non-hidden network is straight forward. Setting things up for a hidden network is <a href="http://www.dafinga.net/2013/01/how-to-setup-raspberry-pi-with-hidden.html">a little more involved</a>.</p>
+
+<p>Check you <code>/etc/network/interfaces</code> file and ensure it has a <code>wlan0</code> section. For open networks, something like this.</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-ssid "Guest Network"
+   wpa-psk "passphrase"
+</code></pre>
+
+<p>and for hidden networks, something like this.</p>
+
+<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-scan-ssid 1
+   wpa-ap-scan 1
+   wpa-key-mgmt WPA-PSK
+   wpa-proto RSN WPA
+   wpa-pairwise CCMP TKIP
+   wpa-group CCMP TKIP
+   wpa-ssid "network-name"
+   wpa-psk 12484.....654
+
+iface default inet dhcp
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>Using the console lead is an easy way to use a telnet-like terminal to setup your Pi when you don&#8217;t want to connect a monitor and keyboard. As an alternative, you could try a <a href="http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/">headless setup mounting an SD card</a>, whereby you&#8217;d mount an SD Card (with a raspian image) onto a unix-like machine and modify the file system directly.</p>
+
+<p>See my post on <a href="http://baddotrobot.com/blog/2017/03/01/standard-pi-setup">common Pi setup</a> for more notes and tips on general Pi setup.</p>
 ]]></content>
   </entry>
   
@@ -1880,7 +2095,7 @@ case object Pineapple extends Fruit(95)
 
 <h2>Caveat</h2>
 
-<p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So doesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
+<p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So it oesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
 
 <figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="c1">// String x = &quot;hello&quot;;</span>
@@ -2080,108 +2295,6 @@ case object Pineapple extends Fruit(95)
 <li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
 <li><a href="http://www.codecommit.com/blog/scala/function-currying-in-scala">Function Currying in Scala</a></li>
 <li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Automatically rebase on git pull]]></title>
-    <link href="http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull/"/>
-    <updated>2013-07-09T17:29:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2013/07/09/automatically-rebase-on-git-pull</id>
-    <content type="html"><![CDATA[<p>Automaticaaly rebase your Git repository when you do a <code>pull</code>.</p>
-
-<!-- more -->
-
-
-<p>To configure your repository to always rebase when pulling;</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>git config branch.master.rebase true</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which turns the relevant section of your &#8216;.git/config&#8217; from</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
-</span><span class='line'>  remote = origin
-</span><span class='line'>  merge = refs/heads/master</span></code></pre></td></tr></table></div></figure>
-
-
-<p>to</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[branch "master"]
-</span><span class='line'>  remote = origin
-</span><span class='line'>  merge = refs/heads/master
-</span><span class='line'>  rebase = true</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In IntelliJ IDEA, when doing up SCM update, it may ask you how to go about the update. Here you can override the setting above to do a regular merge (which is in fact a <code>git fetch</code> followed by a <code>git merge</code> or in one command, <code>git pull --no-rebase</code>), a rebase (<code>git fetch</code>, <code>git rebase</code> or <code>git pull --rebase</code>) or rely on the setting above in your config.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Calculate the Optimum Number of Threads]]></title>
-    <link href="http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/"/>
-    <updated>2013-06-01T20:42:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads</id>
-    <content type="html"><![CDATA[<p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
-
-<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
-
-<!-- more -->
-
-
-<h2>CPU Bound Tasks</h2>
-
-<p>For CPU bound tasks, Goetz (2002, 2006) recommends</p>
-
-<pre><code>threads = number of CPUs + 1
-</code></pre>
-
-<p>Which is intuitive as if a CPU is being kept busy, we can&#8217;t do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don&#8217;t agree and suggest just the number of CPUs is optimal.</p>
-
-<h2>IO Bound Tasks</h2>
-
-<p>Working out the optimal number for IO bound tasks is less obvious. During an IO bound task, a CPU will be left idle (waiting or blocking). This idle time can be better used in initiating another IO bound request.</p>
-
-<p>Subramaniam (2011, p.31) describes the optimal number of threads in terms of the following formula.</p>
-
-<pre><code>threads = number of cores /  (1 – blocking coefficient)
-</code></pre>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
-
-<p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
-
-<pre><code>threads = number of cores * (1 + wait time / service time)
-</code></pre>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
-
-<p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
-
-<h2>Goetz and Subramaniam Agree</h2>
-
-<p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
-
-<p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
-
-<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
-
-<p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>&#8217;s project site.</p>
-
-<h2>References</h2>
-
-<ul>
-<li>Goetz, B. 2002. <a href="http://www.ibm.com/developerworks/java/library/j-jtp0730/index.html">Java theory and practice: Thread pools and work queues</a>. IBM DeveloperWorks.</li>
-<li>Goetz, B. Peierls, T. Bloch, J. Bowbeer, J. Holmes, D. and Lea, D. 2006. <a href="http://amzn.to/NrXQPZ">Java Concurrency in Practice</a>. 1st Edition. Addison Wesley.</li>
-<li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
 </ul>
 
 ]]></content>
