@@ -1,20 +1,24 @@
 ---
 layout: post
 title: "Standard Pi Setup"
-date: 2016-02-03 19:01
+date: 2017-03-01 19:01
 comments: true
-categories: 
+categories: pi
 sidebar: false
-published: false
-keywords: ""
-description: ""
+published: true
+keywords: "pi, pi zero, zero w, raspian"
+description: "Some common setup for a new Pi"
 ---
 
-Common things to do when you first setup a Pi.
+Here's some common things to do when you first setup a Pi.
 
 <!-- more -->
 
-## raspi-config
+## Raspian Image
+
+Download your image and [burn to an SD card](https://www.raspberrypi.org/documentation/installation/installing-images/). You can't go far wrong with a [SanDisk 16GB microSDHC memory card](http://amzn.to/1T6zIc9)for £6.99.
+
+## `raspi-config`
 
 * Expand the file system
 * Disable GUI via boot options, set to `Boot Options` then `B1 Console`
@@ -80,7 +84,7 @@ Add the following to `~/.bashrc`
     sudo apt-get install netatalk
 
 
-## Vi setup
+## `vi` setup
 
     $ echo 'set nocompatible' > ~/.vimrc
 
@@ -88,3 +92,10 @@ Add the following to `~/.bashrc`
 ## Timezone
 
     sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
+    
+    
+## SBT on the Pi Zero
+
+There's not much memory, so limit `sbt`s consumption.
+
+    sbt -J-Xmx512m -J-Xms256m
