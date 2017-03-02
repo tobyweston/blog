@@ -50,6 +50,14 @@ Modify the `/etc/network/interfaces` file to access a network (with hidden SSID)
 
     iface default inet dhcp
 
+## Prevent Wifi Sleeping
+
+The `8192cu` based wifi dongles will often go to sleep if they're not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to `/etc/modprobe.d/8192cu` (create the file if it doesn't already exist).
+
+    options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+    
+You can check if you have the `8192cu` module loaded with `lsmod`. If you don't see it in the list, don't bother!
+
 
 ## Update the System
 
