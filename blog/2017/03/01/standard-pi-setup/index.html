@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-01 20:48:22 +0000 -->
+    <!-- last update; 2017-03-02 08:55:21 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -195,6 +195,15 @@ iface wlan0 inet dhcp
 
 iface default inet dhcp
 </code></pre>
+
+<h2>Prevent Wifi Sleeping</h2>
+
+<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they&#8217;re not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu</code> (create the file if it doesn&#8217;t already exist).</p>
+
+<pre><code>options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+
+<p>You can check if you have the <code>8192cu</code> module loaded with <code>lsmod</code>. If you don&#8217;t see it in the list, don&#8217;t bother!</p>
 
 <h2>Update the System</h2>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-01T20:48:22+00:00</updated>
+  <updated>2017-03-02T08:55:21+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -61,6 +61,15 @@ iface wlan0 inet dhcp
 
 iface default inet dhcp
 </code></pre>
+
+<h2>Prevent Wifi Sleeping</h2>
+
+<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they're not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu</code> (create the file if it doesn't already exist).</p>
+
+<pre><code>options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+
+<p>You can check if you have the <code>8192cu</code> module loaded with <code>lsmod</code>. If you don't see it in the list, don't bother!</p>
 
 <h2>Update the System</h2>
 
