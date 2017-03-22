@@ -70,11 +70,11 @@ There are lots of options to record the temperature data but for something a bit
 It's written in Scala and you'll need the `sbt` tool to build it. To setup `sbt` follow these steps.
 
     $ cd /usr/local/bin
-    $ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+    $ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
     $ sudo chown pi sbt-launch.jar
     $ sudo chgrp pi sbt-launch.jar
 
-Create a file `/usr/local/bin/sbt` and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.
+Create a file `/usr/local/bin/sbt` (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.
 
     #!/bin/bash
     SBT_OPTS="-Xms512M -Xmx512M"
