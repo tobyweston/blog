@@ -60,7 +60,7 @@ It's around 65 pages (15,000 words).
 
 <form action="https://leanpub.com/purchases" method="post">
 <input type="hidden" name="book_id" value="4921" />
-<input type="submit" name="commit" value="Buy Now for $23.99" class="btn btn-large btn-success" />
+<input type="submit" name="commit" value="Buy Now" class="btn btn-large btn-success" />
 </form>
 
 
@@ -82,5 +82,5 @@ The book is about 110 pages (20,000 words) and the course has about 2 hours of v
 
 <form action="https://leanpub.com/purchases" method="post">
 <input type="hidden" name="book_id" value="15121" />
-<input type="submit" name="commit" value="Buy Now for $11.99" class="btn btn-large btn-success" />
+<input type="submit" name="commit" value="Buy Now" class="btn btn-large btn-success" />
 </form>
