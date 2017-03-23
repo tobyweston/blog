@@ -52,7 +52,7 @@ Modify the `/etc/network/interfaces` file to access a network (with hidden SSID)
 
 ## Prevent Wifi Sleeping
 
-The `8192cu` based wifi dongles will often go to sleep if they're not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to `/etc/modprobe.d/8192cu` (create the file if it doesn't already exist).
+The `8192cu` based wifi dongles will often go to sleep if they're not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to `/etc/modprobe.d/8192cu.conf`. Create the file if it doesn't already exist ([reference](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=44044&start=350)).
 
     options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
     
