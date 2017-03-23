@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-02T08:55:21+00:00</updated>
+  <updated>2017-03-23T20:55:24+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -80,7 +80,29 @@ $ sudo rpi-update
 
 <h2>Standard Software</h2>
 
-<pre><code>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
+<pre><code>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev oracle-java8-jdk
+</code></pre>
+
+<h2>Install SBT</h2>
+
+<p>For Scala development.</p>
+
+<pre><code>$ cd /usr/local/bin
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
+$ sudo chown pi sbt-launch.jar
+$ sudo chgrp pi sbt-launch.jar
+</code></pre>
+
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+
+<pre><code>#!/bin/bash
+SBT_OPTS="-Xms512M -Xmx512M"
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+</code></pre>
+
+<p>Then make it executable.</p>
+
+<pre><code>chmod u+x /usr/local/bin/sbt
 </code></pre>
 
 <h2>Bash Setup</h2>
@@ -438,12 +460,12 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 <p>It&#8217;s written in Scala and you&#8217;ll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
 
 <pre><code>$ cd /usr/local/bin
-$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
 $ sudo chown pi sbt-launch.jar
 $ sudo chgrp pi sbt-launch.jar
 </code></pre>
 
-<p>Create a file <code>/usr/local/bin/sbt</code> and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
 
 <pre><code>#!/bin/bash
 SBT_OPTS="-Xms512M -Xmx512M"

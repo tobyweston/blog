@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-02 08:55:21 +0000 -->
+    <!-- last update; 2017-03-23 20:55:24 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -279,12 +279,12 @@
 <p>It&#8217;s written in Scala and you&#8217;ll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
 
 <pre><code>$ cd /usr/local/bin
-$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.9/sbt-launch.jar
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
 $ sudo chown pi sbt-launch.jar
 $ sudo chgrp pi sbt-launch.jar
 </code></pre>
 
-<p>Create a file <code>/usr/local/bin/sbt</code> and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
 
 <pre><code>#!/bin/bash
 SBT_OPTS="-Xms512M -Xmx512M"
