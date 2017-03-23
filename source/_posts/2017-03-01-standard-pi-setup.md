@@ -68,7 +68,26 @@ You can check if you have the `8192cu` module loaded with `lsmod`. If you don't 
 
 ## Standard Software
 
-    $ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev
+    $ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev oracle-java8-jdk
+
+## Install SBT 
+
+For Scala development.
+
+    $ cd /usr/local/bin
+    $ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
+    $ sudo chown pi sbt-launch.jar
+    $ sudo chgrp pi sbt-launch.jar
+
+Create a file `/usr/local/bin/sbt` (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.
+
+    #!/bin/bash
+    SBT_OPTS="-Xms512M -Xmx512M"
+    java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+
+Then make it executable.
+
+    chmod u+x /usr/local/bin/sbt
 
 
 ## Bash Setup
