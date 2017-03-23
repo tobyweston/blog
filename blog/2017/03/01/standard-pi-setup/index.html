@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-23 20:55:24 +0000 -->
+    <!-- last update; 2017-03-23 21:07:58 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -198,7 +198,7 @@ iface default inet dhcp
 
 <h2>Prevent Wifi Sleeping</h2>
 
-<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they&#8217;re not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu</code> (create the file if it doesn&#8217;t already exist).</p>
+<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they&#8217;re not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu.conf</code>. Create the file if it doesn&#8217;t already exist (<a href="https://www.raspberrypi.org/forums/viewtopic.php?f=28&amp;t=44044&amp;start=350">reference</a>).</p>
 
 <pre><code>options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 </code></pre>
@@ -234,6 +234,8 @@ SBT_OPTS="-Xms512M -Xmx512M"
 java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 </code></pre>
 
+<p>Note that there&#8217;s not much memory on the Pi, so limit <code>sbt</code>s consumption. In this case, the 512MB limit suits the Pi Zero.</p>
+
 <p>Then make it executable.</p>
 
 <pre><code>chmod u+x /usr/local/bin/sbt
@@ -268,13 +270,6 @@ alias df='df -kTh'
 <h2>Timezone</h2>
 
 <pre><code>sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
-</code></pre>
-
-<h2>SBT on the Pi Zero</h2>
-
-<p>There&#8217;s not much memory, so limit <code>sbt</code>s consumption.</p>
-
-<pre><code>sbt -J-Xmx512m -J-Xms256m
 </code></pre>
 </div>
 
