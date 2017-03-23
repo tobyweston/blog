@@ -85,6 +85,8 @@ Create a file `/usr/local/bin/sbt` (change the owner and group as above) and pas
     SBT_OPTS="-Xms512M -Xmx512M"
     java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 
+Note that there's not much memory on the Pi, so limit `sbt`s consumption. In this case, the 512MB limit suits the Pi Zero.
+
 Then make it executable.
 
     chmod u+x /usr/local/bin/sbt
@@ -120,9 +122,3 @@ Add the following to `~/.bashrc`
 
     sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
     
-    
-## SBT on the Pi Zero
-
-There's not much memory, so limit `sbt`s consumption.
-
-    sbt -J-Xmx512m -J-Xms256m
