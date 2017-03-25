@@ -44,7 +44,7 @@ Physical Pi Pin | Description | DS18b20 Connector
 7 | GPIO 4      | Data (<span style="color:orange;">yellow</span>)
 9 | Ground      | Ground (<span style="color:black;">black</span>)
 
-The other thing you'll need to do is connect the 4.7k Ω between the power and data lines. This acts as a [pull-up resistor](https://learn.sparkfun.com/tutorials/pull-up-resistors) to ensure that the Pi knows that the data line starts in a "high" state. Without it, it can't tell if it should start as high or low; it would be left _floating_.
+The other thing you'll need to do is connect the 4.7k Ω resistor between the power and data lines. This acts as a [pull-up resistor](https://learn.sparkfun.com/tutorials/pull-up-resistors) to ensure that the Pi knows that the data line starts in a "high" state. Without it, it can't tell if it should start as high or low; it would be left _floating_.
 
 
 ## Setup the Pi
