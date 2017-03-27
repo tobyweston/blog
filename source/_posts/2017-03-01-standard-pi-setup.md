@@ -108,6 +108,15 @@ Add the following to `~/.bashrc`
     alias df='df -kTh'
 
 
+## Disable Activity LED
+
+Add the following to `/boot/config.txt` (tested on the Pi Zero only).
+
+    # disable the activity LED (intended for the Pi Zero)
+    dtparam=act_led_trigger=none
+    dtparam=act_led_activelow=on
+
+
 ## Share Disk with Mac OSX
 
     sudo apt-get install netatalk
