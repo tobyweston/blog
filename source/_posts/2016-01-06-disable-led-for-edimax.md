@@ -137,6 +137,10 @@ The last remaining config files will have now been created, so you can do the ac
 
     make ARCH=arm
 
+or as Avi P points out below if you're running on a multi-core Pi like the Pi 2 or Pi 3;
+
+    make -j4 ARCH=arm
+
 
 This takes a while; on my Pi Zero, over 12 hours. There's always the option to [cross compile](https://www.raspberrypi.org/documentation/linux/kernel/building.md) if you're in a hurry.
 
@@ -147,7 +151,7 @@ For extra background, I found an interesting guide on Stack Exchange about [Conf
 
 This is the step that actually disables the LED on the dongle.
 
-Locate the `autoconf.h` file in the drivers folder (`linux/drivers/net/wireless/rtl8192cu/include`) and comment out the `CONFIG_LED` macro definition. It should look like this when you're done.
+Locate the `autoconf.h` file in the drivers folder (`linux/drivers/net/wireless/rtl8192cu/include` or `linux/drivers/net/wireless/realtek/rtl8192cu/include` in newer linux versions) and comment out the `CONFIG_LED` macro definition. It should look like this when you're done.
 
     // #define CONFIG_LED           // <-- comment this line out to disable LED
     #ifdef CONFIG_LED
@@ -160,10 +164,12 @@ Locate the `autoconf.h` file in the drivers folder (`linux/drivers/net/wireless/
 
 ## Compile the Driver
 
-The dependencies should all be available now, so you're ready to compile the driver. Compile from the location of driver source (probably `linux/drivers/net/wireless/rtl8192cu`).
+The dependencies should all be available now, so you're ready to compile the driver. Compile from the location of driver source (probably `linux/drivers/net/wireless/rtl8192cu` or `linux/drivers/net/wireless/realtek/rtl8192cu`).
 
-    $ cd linux/drivers/net/wireless/rtl8192cu
+    $ cd linux/drivers/net/wireless/realtek/rtl8192cu
     $ make ARCH=arm
+
+Again, use the `-j4` flag if you're on a big boy Pi.
 
 
 ## Test & Install the Driver
