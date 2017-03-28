@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-23 21:07:58 +0000 -->
+    <!-- last update; 2017-03-28 20:05:43 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -284,6 +284,11 @@ configuration written to .config
 <pre><code>make ARCH=arm
 </code></pre>
 
+<p>or as Avi P points out below if you&#8217;re running on a multi-core Pi like the Pi 2 or Pi 3;</p>
+
+<pre><code>make -j4 ARCH=arm
+</code></pre>
+
 <p>This takes a while; on my Pi Zero, over 12 hours. There&#8217;s always the option to <a href="https://www.raspberrypi.org/documentation/linux/kernel/building.md">cross compile</a> if you&#8217;re in a hurry.</p>
 
 <p>For extra background, I found an interesting guide on Stack Exchange about <a href="http://unix.stackexchange.com/questions/115620/configuring-compiling-and-installing-a-custom-linux-kernel/115621#115621.">Configuring, Compiling and Installing Kernels</a> (although we&#8217;re not going as far as installing the built kernel here).</p>
@@ -292,7 +297,7 @@ configuration written to .config
 
 <p>This is the step that actually disables the LED on the dongle.</p>
 
-<p>Locate the <code>autoconf.h</code> file in the drivers folder (<code>linux/drivers/net/wireless/rtl8192cu/include</code>) and comment out the <code>CONFIG_LED</code> macro definition. It should look like this when you&#8217;re done.</p>
+<p>Locate the <code>autoconf.h</code> file in the drivers folder (<code>linux/drivers/net/wireless/rtl8192cu/include</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu/include</code> in newer linux versions) and comment out the <code>CONFIG_LED</code> macro definition. It should look like this when you&#8217;re done.</p>
 
 <pre><code>// #define CONFIG_LED           // &lt;-- comment this line out to disable LED
 #ifdef CONFIG_LED
@@ -305,11 +310,13 @@ configuration written to .config
 
 <h2>Compile the Driver</h2>
 
-<p>The dependencies should all be available now, so you&#8217;re ready to compile the driver. Compile from the location of driver source (probably <code>linux/drivers/net/wireless/rtl8192cu</code>).</p>
+<p>The dependencies should all be available now, so you&#8217;re ready to compile the driver. Compile from the location of driver source (probably <code>linux/drivers/net/wireless/rtl8192cu</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu</code>).</p>
 
-<pre><code>$ cd linux/drivers/net/wireless/rtl8192cu
+<pre><code>$ cd linux/drivers/net/wireless/realtek/rtl8192cu
 $ make ARCH=arm
 </code></pre>
+
+<p>Again, use the <code>-j4</code> flag if you&#8217;re on a big boy Pi.</p>
 
 <h2>Test &amp; Install the Driver</h2>
 

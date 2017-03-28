@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-23 21:07:58 +0000 -->
+    <!-- last update; 2017-03-28 20:05:43 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -253,7 +253,7 @@
 </table>
 
 
-<p>The other thing you&#8217;ll need to do is connect the 4.7k Ω between the power and data lines. This acts as a <a href="https://learn.sparkfun.com/tutorials/pull-up-resistors">pull-up resistor</a> to ensure that the Pi knows that the data line starts in a &#8220;high&#8221; state. Without it, it can&#8217;t tell if it should start as high or low; it would be left <em>floating</em>.</p>
+<p>The other thing you&#8217;ll need to do is connect the 4.7k Ω resistor between the power and data lines. This acts as a <a href="https://learn.sparkfun.com/tutorials/pull-up-resistors">pull-up resistor</a> to ensure that the Pi knows that the data line starts in a &#8220;high&#8221; state. Without it, it can&#8217;t tell if it should start as high or low; it would be left <em>floating</em>.</p>
 
 <h2>Setup the Pi</h2>
 
@@ -268,7 +268,7 @@
 4b 01 4b 46 7f ff 05 10 d8 t=20687
 </code></pre>
 
-<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="">my associated README</a> for more details (including how to change the precision of the sensor).</p>
+<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="https://github.com/tobyweston/temperature-machine/blob/master/README.md">my associated README</a> for more details (including how to change the precision of the sensor).</p>
 
 <p>Once you can see the <code>w1_slave</code> file, you&#8217;re ready to install the data logging software.</p>
 
