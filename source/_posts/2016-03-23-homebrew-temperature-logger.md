@@ -23,12 +23,12 @@ Using a Raspberry Pi Zero, some cheap components and some custom software, you c
 | [Raspberry Pi Zero](https://shop.pimoroni.com/products/raspberry-pi-zero) | £ 4
 | [SanDisk 8GB microSDHC memory card](http://amzn.to/1T6zIc9) | £ 4
 | [2.54mm Header strip](http://amzn.to/1pIKZ7m)  | £ 0.89
-| [DS18B20 1-Wire temperature sensor](http://amzn.to/1RhmOHc)    | £ 2.49
+| [DS18B20 1-Wire temperature sensor](http://amzn.to/1RhmOHc)    | £ 1.45
 | 1 x 4.7k Ω resistor | £ 0.10
 | [Some jumper wires](http://amzn.to/1Rlrbj9) or otherwise recycled wires with connectors |    £ 0.97
 | Data logging software | <span style="color:green;">[FREE](https://github.com/tobyweston/temperature-machine)</span>
 | | &nbsp;
-| **Total** | **£ 12.45**
+| **Total** | **£ 11.41**
 
 
 **Optional extras** You might also want to consider a [USB Wifi adapter](http://amzn.to/1RhmTKQ) (about £ 6), a case (I like the one from [Switched On Components](https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-v2/) at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like [this module](http://amzn.to/1ZtRWoA) or the [Adafruit console cable](https://www.adafruit.com/product/954).

@@ -14,7 +14,9 @@ Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless
 
 <!-- more -->
 
-The only way I found to disable the LED is by modifying the [kernel module](https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules). Compiling that meant recompiling the associated kernel to get all the dependencies lined up.
+The only way I found to disable the LED is by modifying the [kernel module](https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules). Compiling that meant recompiling the associated kernel to get all the dependencies lined up. 
+
+If you don't want to have a go at compiling the kernel, you can always download the output of my efforts [here](http://robotooling.com/maven/bad/robot/temperature-machine/) (built against 4.9.17-v7+).
 
 
 ## Gather Information
@@ -179,21 +181,21 @@ Once it's compiled, remove the old driver with `sudo rmmod 8192cu` and from the 
 Running `modinfo 8192cu` doesn't help verify the new driver as non of the meta-data has changed but you can check the datestamp of the `.ko` and you should see that there's no LED flashing.
 
 
-To keep the change, I renamed the patched module to `8192cu-led.ko` and copied it into the Pi's main kernel drivers folder. I renamed the original driver to `8192cu-original.ko` and created a symbolic link for the true module name `8192cu.ko`. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any `/etc/modprobe.d/8219cu.conf` settings) or black lists.
+To keep the change, I renamed the patched module to `8192cu-no-led.ko` and copied it into the Pi's main kernel drivers folder. I renamed the original driver to `8192cu-original.ko` and created a symbolic link for the true module name `8192cu.ko`. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any `/etc/modprobe.d/8219cu.conf` settings) or black lists.
 
-    $ mv 8192cu.ko 8192cu-led.ko
-    $ sudo cp 8192cu-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+    $ mv 8192cu.ko 8192cu-no-led.ko
+    $ sudo cp 8192cu-no-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
     $ cd /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
     $ sudo mv 8192cu.ko 8192cu-original.ko
-    $ sudo ln -s 8192cu-led.ko 8192cu.ko
+    $ sudo ln -s 8192cu-no-led.ko 8192cu.ko
 
 
 You should see something like this.
 
     $ ll
     total 1332
-    lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -> 8192cu-led.ko
-    -rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-led.ko
+    lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -> 8192cu-no-led.ko
+    -rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-no-led.ko
     -rw-r--r-- 1 root root 686160 Nov 18 16:01 8192cu-original.ko
 
 You can enable the original driver by reassigning the symbolic link.
