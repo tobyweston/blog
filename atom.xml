@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-28T20:05:43+01:00</updated>
+  <updated>2017-03-29T20:30:03+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -373,7 +373,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 <tr>
 <td></td>
 <td> <a href="http://amzn.to/1RhmOHc">DS18B20 1-Wire temperature sensor</a>    </td>
-<td> £ 2.49</td>
+<td> £ 1.45</td>
 </tr>
 <tr>
 <td></td>
@@ -398,7 +398,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 <tr>
 <td></td>
 <td> <strong>Total</strong> </td>
-<td> <strong>£ 12.45</strong></td>
+<td> <strong>£ 11.41</strong></td>
 </tr>
 </tbody>
 </table>
@@ -555,6 +555,8 @@ $ sbt assembly
 
 
 <p>The only way I found to disable the LED is by modifying the <a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules">kernel module</a>. Compiling that meant recompiling the associated kernel to get all the dependencies lined up.</p>
+
+<p>If you don&#8217;t want to have a go at compiling the kernel, you can always download the output of my efforts <a href="http://robotooling.com/maven/bad/robot/temperature-machine/">here</a> (built against 4.9.17-v7+).</p>
 
 <h2>Gather Information</h2>
 
@@ -721,21 +723,21 @@ $ make ARCH=arm
 
 <p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as non of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
 
-<p>To keep the change, I renamed the patched module to <code>8192cu-led.ko</code> and copied it into the Pi&#8217;s main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
+<p>To keep the change, I renamed the patched module to <code>8192cu-no-led.ko</code> and copied it into the Pi&#8217;s main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
 
-<pre><code>$ mv 8192cu.ko 8192cu-led.ko
-$ sudo cp 8192cu-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+<pre><code>$ mv 8192cu.ko 8192cu-no-led.ko
+$ sudo cp 8192cu-no-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
 $ cd /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
 $ sudo mv 8192cu.ko 8192cu-original.ko
-$ sudo ln -s 8192cu-led.ko 8192cu.ko
+$ sudo ln -s 8192cu-no-led.ko 8192cu.ko
 </code></pre>
 
 <p>You should see something like this.</p>
 
 <pre><code>$ ll
 total 1332
-lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -&gt; 8192cu-led.ko
--rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-led.ko
+lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -&gt; 8192cu-no-led.ko
+-rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-no-led.ko
 -rw-r--r-- 1 root root 686160 Nov 18 16:01 8192cu-original.ko
 </code></pre>
 
