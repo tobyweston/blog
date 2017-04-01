@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-29T20:30:03+01:00</updated>
+  <updated>2017-04-01T12:56:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -126,10 +126,8 @@
 
 <p>Taking inspiration from Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
 
-<!-- more -->
+<!-- more -->  
 
-
-<p></p>
 
 <h2>Conway's Law</h2>
 

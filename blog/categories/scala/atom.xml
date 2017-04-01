@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-29T20:30:03+01:00</updated>
+  <updated>2017-04-01T12:56:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -50,44 +50,33 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Notice the paramaterised type <code>[T]</code>.</p>
 
-<p>```scala
-object Example {
-  trait NumberLike[T] {</p>
-
-<pre><code>def plus(x: T, y: T): T
-def divide(x: T, y: Int): T
-def minus(x: T, y: T): T
-</code></pre>
-
-<p>  }
+<pre><code class="scala">object Example {
+  trait NumberLike[T] {
+    def plus(x: T, y: T): T
+    def divide(x: T, y: Int): T
+    def minus(x: T, y: T): T
+  }
 }
-```</p>
+</code></pre>
 
 <h3>Step 2: Provide Implementations</h3>
 
 <p>Provide some default implementations of your type class trait in its companion object. Usually, these are singletons (<code>object</code>) but could be <code>val</code>s. They are <strong>always</strong> <code>implicit</code>.</p>
 
-<p>```scala
-object NumberLike {
-  implicit object NumberLikeDouble extends NumberLike[Double] {</p>
+<pre><code class="scala">object NumberLike {
+  implicit object NumberLikeDouble extends NumberLike[Double] {
+    def plus(x: Double, y: Double): Double = x + y
+    def divide(x: Double, y: Int): Double = x / y
+    def minus(x: Double, y: Double): Double = x - y
+  }
 
-<pre><code>def plus(x: Double, y: Double): Double = x + y
-def divide(x: Double, y: Int): Double = x / y
-def minus(x: Double, y: Double): Double = x - y
-</code></pre>
-
-<p>  }</p>
-
-<p>  implicit object NumberLikeInt extends NumberLike[Int] {</p>
-
-<pre><code>def plus(x: Int, y: Int): Int = x + y
-def divide(x: Int, y: Int): Int = x / y
-def minus(x: Int, y: Int): Int = x - y
-</code></pre>
-
-<p>  }
+  implicit object NumberLikeInt extends NumberLike[Int] {
+    def plus(x: Int, y: Int): Int = x + y
+    def divide(x: Int, y: Int): Int = x / y
+    def minus(x: Int, y: Int): Int = x - y
+  }
 }
-```</p>
+</code></pre>
 
 <h3>Step 3a. Call the Type Class</h3>
 
@@ -95,16 +84,12 @@ def minus(x: Int, y: Int): Int = x - y
 
 <p>To call that behaviour, we use Scala's <code>implicit</code> semantics to find an appropriate implementation. It binds a concrete type of <code>T</code> (let's say <code>Int</code>) with it's corresponding type class (<code>NumberLikeInt</code>). It means we only need one method for all number-like types.</p>
 
-<p>```scala
-object Statistics {
-  def mean<a href="numbers:%20Seq[T]">T</a>(implicit number: NumberLike[T]): T = {</p>
-
-<pre><code>number.divide(numbers.reduce(number.plus), numbers.size)
-</code></pre>
-
-<p>  }
+<pre><code class="scala">object Statistics {
+  def mean[T](numbers: Seq[T])(implicit number: NumberLike[T]): T = {
+    number.divide(numbers.reduce(number.plus), numbers.size)
+  }
 }
-```</p>
+</code></pre>
 
 <p>So, if an implicit parameter can be found for a given type, Scala will use that implementation. The <code>NumberLikeInt</code> is used below.</p>
 
@@ -122,48 +107,38 @@ object Statistics {
 
 <p>Another way of writing the generic method is to use context bounds (ie, use <code>T: NumberLike</code>).</p>
 
-<p>```scala
-object Statistics {
-  def mean<a href="numbers:%20Seq[T]">T: NumberLike</a> = {</p>
-
-<pre><code>val number = implicitly[NumberLike[T]]
-number.divide(numbers.reduce(number.plus), numbers.size)
-</code></pre>
-
-<p>  }
+<pre><code class="scala">object Statistics {
+  def mean[T: NumberLike](numbers: Seq[T]) = {
+    val number = implicitly[NumberLike[T]]
+    number.divide(numbers.reduce(number.plus), numbers.size)
+  }
 }
-```</p>
+</code></pre>
 
 <h3>Step 3b. Call the Type Class (with an Implicit Class)</h3>
 
 <p>As a simple extension, you can extend "member" types directly using an <code>implicit</code> class. For example, we can add the <code>mean</code> method to any sequence of <code>NumberLike</code>s.</p>
 
-<p>```scala
-implicit class SeqNumberOps<a href="numbers:%20Seq[T]">T</a> {
-  def mean(implicit number: NumberLike[T]): T = {</p>
-
-<pre><code>number.divide(numbers.reduce(number.plus), numbers.size)
-</code></pre>
-
-<p>  }
+<pre><code class="scala">implicit class SeqNumberOps[T](numbers: Seq[T]) {
+  def mean(implicit number: NumberLike[T]): T = {
+    number.divide(numbers.reduce(number.plus), numbers.size)
+  }
 }
-```</p>
+</code></pre>
 
 <p>and call <code>mean</code> directly.</p>
 
-<p>```scala
-import NumberOps</p>
+<pre><code class="scala">import NumberOps
 
-<p>val numbers = List<a href="1,%205,%2032,%2043,%204">Int</a>
+val numbers = List[Int](1, 5, 32, 43, 4)
 println(numbers.mean)
-```</p>
+</code></pre>
 
 <p>or like this for <code>Double</code>.</p>
 
-<p><code>scala
-val numbers = List[Double](3.2, 4.2, 3.0, 4.4)
+<pre><code class="scala">val numbers = List[Double](3.2, 4.2, 3.0, 4.4)
 println(numbers.mean)
-</code></p>
+</code></pre>
 
 <h2>Another Example</h2>
 
@@ -171,52 +146,42 @@ println(numbers.mean)
 
 <p>A basic "decoder" interface that uses an <code>Either</code> to return a result as either successful or unsuccessful.</p>
 
-<p><code>scala
-trait StringDecoder[A] {
+<pre><code class="scala">trait StringDecoder[A] {
   def fromString(string: String): Either[String, A]
 }
-</code></p>
+</code></pre>
 
 <h3>Step 2: Provide Implementations</h3>
 
 <p>We could provide an implementation to decode a string to a valid <code>Colour</code> type. Unsupported colours produce a "left" result.</p>
 
-<p>```scala
-implicit val colourTypeStringDecoder = new StringDecoder[Colour] {
-  def fromString(value: String) = {</p>
-
-<pre><code>val colours = List("red", "green", "yellow")
-  if (colours.contains(value)) Right(Colour(value)) 
-  else Left(s"$value is not a valid colour, chose one of ${colours.mkString(", ")}")
-</code></pre>
-
-<p>  }
+<pre><code class="scala">implicit val colourTypeStringDecoder = new StringDecoder[Colour] {
+  def fromString(value: String) = {
+    val colours = List("red", "green", "yellow")
+      if (colours.contains(value)) Right(Colour(value)) 
+      else Left(s"$value is not a valid colour, chose one of ${colours.mkString(", ")}")
+  }
 }
-```</p>
+</code></pre>
 
 <h3>Step 3. Call the Type Classes</h3>
 
 <p>With an implicit class extending <code>String</code>, any string value can be decoded to a type <code>A</code>.</p>
 
-<p>```scala
-object StringSyntax {
-  implicit class StringDecoderOps(value: String) {</p>
-
-<pre><code>def decodeTo[A](implicit decoder: StringDecoder[A]) = {
-  decoder.fromString(value)
+<pre><code class="scala">object StringSyntax {
+  implicit class StringDecoderOps(value: String) {
+    def decodeTo[A](implicit decoder: StringDecoder[A]) = {
+      decoder.fromString(value)
+    }
+  }
 }
 </code></pre>
 
-<p>  }
-}
-```</p>
-
 <p>Then anywhere you have a string and you want to decode it, just go ahead.</p>
 
-<p><code>scala
-"red".decodeTo[Colour]      // right
+<pre><code class="scala">"red".decodeTo[Colour]      // right
 "square".decodeTo[Colour]   // Left(square is not a valid colour, chose one of red, green, yellow)
-</code></p>
+</code></pre>
 ]]></content>
   </entry>
   
@@ -243,13 +208,10 @@ object StringSyntax {
 
 <p>You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java's lambda syntax. So rather than having to use the longhand version like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="k">new</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="o">&gt;</span><span class="nc">Element</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">})</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="k">new</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="o">&gt;</span><span class="nc">Element</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
+</span><span class='line'>  <span class="o">})</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
@@ -314,15 +276,14 @@ object StringSyntax {
 
 <p>So the full example would look like this; making <code>driver</code> an implicit <code>val</code> means we can avoid a call to <code>button.click()(driver)</code>.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="s">&quot;The &#39;save&#39; button writes to the database&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="s">&quot;The &#39;save&#39; button writes to the database&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save&quot;</span><span class="o">)&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save&quot;</span><span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// scala calls the implicit def to convert the button into a WebElement</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;//</span> <span class="n">scala</span> <span class="n">calls</span> <span class="n">the</span> <span class="k">implicit</span> <span class="k">def</span> <span class="n">to</span> <span class="n">convert</span> <span class="n">the</span> <span class="n">button</span> <span class="n">into</span> <span class="n">a</span> <span class="nc">WebElement</span>
 </span><span class='line'><span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
 </span><span class='line'><span class="c1">// ...</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
@@ -422,29 +383,23 @@ object StringSyntax {
 
 <p>As an example, the test below uses <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a> (and specifically an instance of the <code>WebDriver</code> class) to check that a button is visible on screen. The <code>beVisible</code> method creates a <code>Matcher</code> that will check this for us but rather than pass in the <code>driver</code> instance explicitly, it uses an implicit <code>val</code> to do so.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="s">&quot;The checkout button is visible&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="s">&quot;The checkout button is visible&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;checkout&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'>    <span class="n">button</span> <span class="n">must</span> <span class="n">beVisible</span>           <span class="c1">// reads better than &#39;must beVisible(driver)&#39; &lt;br/&gt;</span>
+</span><span class='line'>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;checkout&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="c1">// ...</span>
-</span><span class='line'><span class="n">button</span> <span class="n">must</span> <span class="n">beVisible</span>           <span class="c1">// reads better than &#39;must beVisible(driver)&#39;   </span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="k">def</span> <span class="n">beVisible</span><span class="o">(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span><span class="o">)</span><span class="k">:</span> <span class="kt">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">S</span> <span class="kt">&amp;lt</span><span class="err">;</span><span class="kt">:</span> <span class="kt">By</span><span class="o">](</span><span class="n">t</span><span class="k">:</span> <span class="kt">Expectable</span><span class="o">[</span><span class="kt">S</span><span class="o">])</span> <span class="k">=</span> <span class="n">result</span><span class="o">(</span>
-</span><span class='line'>  <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">isDisplayed</span><span class="o">,</span>
-</span><span class='line'>  <span class="n">s</span><span class="s">&quot;${t.value.toString} is visible&quot;</span><span class="o">,</span>
-</span><span class='line'>  <span class="n">s</span><span class="s">&quot;${t.value.toString} is not visible&quot;</span><span class="o">,</span>
-</span><span class='line'>  <span class="n">t</span><span class="o">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="k">def</span> <span class="n">beVisible</span><span class="o">(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span><span class="o">)</span><span class="k">:</span> <span class="kt">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">def</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;t:%20Expectable[S]&quot;</span><span class="o">&gt;</span><span class="n">S</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="k">:</span> <span class="kt">By&lt;/a&gt;</span> <span class="o">=</span> <span class="n">result</span><span class="o">(</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">isDisplayed</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is not visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
@@ -488,13 +443,10 @@ object StringSyntax {
 <h2>Returns</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
@@ -513,13 +465,10 @@ object StringSyntax {
 <h2>Allowing / Ignoring</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
@@ -559,13 +508,10 @@ object StringSyntax {
 <p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}}</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="o">}}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
@@ -587,13 +533,10 @@ object StringSyntax {
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
  <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
-</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>

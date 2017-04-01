@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-03-29 20:30:03 +0100 -->
+    <!-- last update; 2017-04-01 12:56:44 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -162,29 +162,24 @@
 <table>
 <thead>
 <tr>
-<th></th>
 <th> Kind                                                                           </th>
 <th> Example                                </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td> Reference to a static method                                                   </td>
 <td> <code>ContainingClass::staticMethodName</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of a particular object                         </td>
 <td> <code>ContainingObject::instanceMethodName</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of an arbitrary object of a particular type    </td>
 <td> <code>ContainingType::methodName</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to a constructor                                                     </td>
 <td> <code>ClassName::new</code></td>
 </tr>
@@ -203,7 +198,6 @@
 <table>
 <thead>
 <tr>
-<th></th>
 <th> Kind                                                                 </th>
 <th> Syntax                           </th>
 <th> Example                  </th>
@@ -211,25 +205,21 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td> Reference to a static method                                         </td>
 <td> <code>Class::staticMethodName</code>        </td>
 <td> <code>String::valueOf</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of a specific object                 </td>
 <td> <code>object::instanceMethodName</code>     </td>
 <td> <code>x::toString</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of a arbitrary object supplied later </td>
 <td> <code>Class::instanceMethodName</code>      </td>
 <td> <code>String::toString</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to a constructor                                           </td>
 <td> <code>ClassName::new</code>                 </td>
 <td> <code>String::new</code></td>
@@ -243,7 +233,6 @@
 <table>
 <thead>
 <tr>
-<th></th>
 <th> Kind                                                                 </th>
 <th> Syntax                           </th>
 <th> As Lambda                  </th>
@@ -251,25 +240,21 @@
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td> Reference to a static method                                         </td>
 <td> <code>Class::staticMethodName</code>        </td>
 <td> <code>(s) -&gt; String.valueOf(s)</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of a specific object                 </td>
 <td> <code>object::instanceMethodName</code>     </td>
 <td> <code>() -&gt; "hello".toString()</code> <strong>†</strong></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to an instance method of a arbitrary object supplied later </td>
 <td> <code>Class::instanceMethodName</code>      </td>
 <td> <code>(s) -&gt; s.toString()</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Reference to a constructor                                           </td>
 <td> <code>ClassName::new</code>                 </td>
 <td> <code>() -&gt; new String()</code></td>

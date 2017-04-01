@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-29T20:30:03+01:00</updated>
+  <updated>2017-04-01T12:56:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -166,54 +166,44 @@ dtparam=act_led_activelow=on
 <table>
 <thead>
 <tr>
-<th></th>
 <th> Item </th>
 <th> Price </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td> <a href="https://shop.pimoroni.com/products/raspberry-pi-zero">Raspberry Pi Zero</a> </td>
 <td> £ 4</td>
 </tr>
 <tr>
-<td></td>
 <td> <a href="http://amzn.to/1T6zIc9">SanDisk 8GB microSDHC memory card</a> </td>
 <td> £ 4</td>
 </tr>
 <tr>
-<td></td>
 <td> <a href="http://amzn.to/1pIKZ7m">2.54mm Header strip</a>  </td>
 <td> £ 0.89</td>
 </tr>
 <tr>
-<td></td>
 <td> <a href="http://amzn.to/1RhmOHc">DS18B20 1-Wire temperature sensor</a>    </td>
 <td> £ 1.45</td>
 </tr>
 <tr>
-<td></td>
 <td> 1 x 4.7k Ω resistor </td>
 <td> £ 0.10</td>
 </tr>
 <tr>
-<td></td>
 <td> <a href="http://amzn.to/1Rlrbj9">Some jumper wires</a> or otherwise recycled wires with connectors </td>
 <td>    £ 0.97</td>
 </tr>
 <tr>
-<td></td>
 <td> Data logging software </td>
 <td> <span style="color:green;"><a href="https://github.com/tobyweston/temperature-machine">FREE</a></span></td>
 </tr>
 <tr>
-<td></td>
 <td> </td>
 <td> &nbsp;</td>
 </tr>
 <tr>
-<td></td>
 <td> <strong>Total</strong> </td>
 <td> <strong>£ 11.41</strong></td>
 </tr>
@@ -628,19 +618,16 @@ crw-rw-rw-  1 root  wheel   17,   4 28 Dec 19:49 /dev/tty.usbserial
 <table>
 <thead>
 <tr>
-<th></th>
 <th> Command(s)        </th>
 <th> Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td> Get some help     </td>
 <td> <code>Ctrl + A, ?</code></td>
 </tr>
 <tr>
-<td></td>
 <td> Kill a session    </td>
 <td> <code>Ctrl + A, Ctrl + \</code></td>
 </tr>

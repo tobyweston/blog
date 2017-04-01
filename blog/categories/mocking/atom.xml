@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mocking | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/mocking/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-29T20:30:03+01:00</updated>
+  <updated>2017-04-01T12:56:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -43,13 +43,10 @@
 <h2>Returns</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
@@ -68,13 +65,10 @@
 <h2>Allowing / Ignoring</h2>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
@@ -114,13 +108,10 @@
 <p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}}</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="o">}}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
@@ -142,13 +133,10 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
  <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
-</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
-</span><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}});</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
@@ -254,12 +242,9 @@
 
 <p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'><span class="o">...</span>
-</span><span class='line'><span class="k">try</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">somethingRisky</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">somethingRisky</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
 </span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
 </span><span class='line'><span class="o">}</span>

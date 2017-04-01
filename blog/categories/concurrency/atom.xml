@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-03-29T20:30:03+01:00</updated>
+  <updated>2017-04-01T12:56:44+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -106,13 +106,10 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>I'm talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'> <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>However, in the process of negotiation it becomes apparent that the  <code>Kidnapper</code> is unwilling to release poor <code>Nibbles</code> until he has received the <code>Cash</code> and the <code>Negotiator</code> is unwilling to part with the <code>Cash</code> until he has poor <code>Nibbles</code> back in his arms.</p>
@@ -122,30 +119,24 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  <code>Kidnapper</code> is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  <code>Kidnapper</code> is grabbing it. Meanwhile, the <code>Negotiator</code> is synchronising on the cash, holding onto it (or again, more specifically, it's monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>     <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">take</span><span class="o">(</span><span class="n">cash</span><span class="o">);</span>
-</span><span class='line'>     <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="o">}</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">take</span><span class="o">(</span><span class="n">cash</span><span class="o">);</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>   <span class="o">}</span>
 </span><span class='line'><span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Negotiator</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
-</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>     <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">take</span><span class="o">(</span><span class="n">nibbles</span><span class="o">);</span>
-</span><span class='line'>     <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="o">}</span>
+</span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">take</span><span class="o">(</span><span class="n">nibbles</span><span class="o">);</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>   <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
@@ -204,14 +195,13 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="n">CLASS</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="kd">public</span> <span class="kd">static</span> <span class="n">Type</span> <span class="nf">FIELD</span><span class="o">(</span><span class="n">String</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>     <span class="k">return</span> <span class="n">FIELD</span><span class="o">;</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'>
