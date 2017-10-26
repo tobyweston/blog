@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-26T20:34:03+01:00</updated>
+  <updated>2017-10-26T20:38:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade Raspian Jessie to Stretch]]></title>
+    <link href="http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/"/>
+    <updated>2017-10-26T20:08:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch</id>
+    <content type="html"><![CDATA[<p>Upgrade your Raspbian install from Jessie to Stretch.</p>
+
+<!-- more -->
+
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you&#8217;re on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<p>Optionally upgrade the firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+
+<h2>Prepare <code>apt-get</code></h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces &#8220;jessie&#8221; with &#8220;stretch&#8221; in the repository locations giving <code>apt-get</code> access to the new version&#8217;s binaries.</p>
+
+<pre><code>$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list    
+$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all. Run the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each.</p>
+
+<pre><code>$ grep -lnr jessie /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+$ sudo apt-get dist-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You&#8217;ve come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Standard Pi Setup]]></title>
@@ -2174,145 +2244,6 @@ case object Pineapple extends Fruit(95)
 <p>It&#8217;s got a couple of other neat features; it gives aggregated progress when builds are running, changing it&#8217;s status as soon as a failure is detected; it runs as a standalone executable jar, <code>.exe</code> or as a Windows screen saver (<code>.scr</code>); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).</p>
 
 <p>Have a look on <a href="http://github.com/tobyweston/radiate">Github</a> and let me know what you think below.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Currying Functions in Java & Scala]]></title>
-    <link href="http://baddotrobot.com/blog/2013/07/21/curried-functions/"/>
-    <updated>2013-07-21T06:58:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2013/07/21/curried-functions</id>
-    <content type="html"><![CDATA[<p>Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.</p>
-
-<p>You can turn any function with multiple arguments into it&#8217;s curried equivalent. Let&#8217;s have a look at this in action.</p>
-
-<!-- more -->
-
-
-<h2>Java</h2>
-
-<p>For example, in Java, you can convert</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>into something like this (where <code>Function&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>                <span class="nd">@Override</span>
-</span><span class='line'>                <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>            <span class="o">};</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">};</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Calling the original method</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and calling the curried version</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
-</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
-</span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Java 8</h2>
-
-<p>In Java 8, it&#8217;s much less verbose using the new lambda syntax.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Scala</h2>
-
-<p>In Scala, the regular uncurried function would look like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As Scala supports curried functions, you can turn this into it&#8217;s curried version simply by separating out the arguments.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// shorthand</span>
-</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which is shorthand for writing it out like this.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// longhand</span>
-</span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-</span><span class='line'>  <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Using the REPL to show how they&#8217;re called;</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>     |   x + y
-</span><span class='line'>     | <span class="o">}</span>
-</span><span class='line'>add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int
-</span><span class='line'>
-</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
-</span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;Function&gt;
-</span><span class='line'>
-</span><span class='line'>scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2
-</span><span class='line'>
-</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)(</span>1<span class="o">)</span>
-</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and working with the longhand version;</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>     |   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&gt; <span class="o">{</span>
-</span><span class='line'>     |     x + y
-</span><span class='line'>     |   <span class="o">}</span>
-</span><span class='line'>     | <span class="o">}</span>
-</span><span class='line'>add2: <span class="o">(</span>x: Int<span class="o">)</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int
-</span><span class='line'>
-</span><span class='line'>scala&gt; add2<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It turns out that it&#8217;s this partial application of functions that&#8217;s really interesting. Currying in Scala allows us to defer execution and reuse functions. We&#8217;ll have a look at that in the next article.</p>
-
-<h2>More Information</h2>
-
-<ul>
-<li><a href="https://gist.github.com/tobyweston/6027570">Gist</a></li>
-<li><a href="http://www.codecommit.com/blog/scala/function-currying-in-scala">Function Currying in Scala</a></li>
-<li><a href="http://danielwestheide.com/blog/2013/01/30/the-neophytes-guide-to-scala-part-11-currying-and-partially-applied-functions.html">Currying and Partially Applied Functions</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

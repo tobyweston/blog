@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players &hellip;">
+  <meta name="description" content="I love the idea of growing teams. Team dynamics are really important and we have to be conscious of how we work together if we want to be able to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-26 20:34:03 +0100 -->
+    <!-- last update; 2017-10-26 20:38:01 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2010/07/11/growing-team-skills/">Growing Team Skills</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2010-07-11 00:00:00 +0100" datetime="2010-07-11T00:00:00+01:00" pubdate data-updated="true" class="updated">Jul 11<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I love the idea of growing teams. Team dynamics are really important and we have to be conscious of how we work together if we want to be able to reflect on how well the team are doing. It&#8217;s useful to understand the strengths and weaknesses of the team, together and individually so that we can a) improve and b) match people to tasks, and teams to projects. It all contributes to a happy working environment.</p>
+
+<p>Often, new or junior developers worry about the barrage of new and unfamiliar technologies. In my opinion, technologies are such a small part of what we do but it can be useful to be explicit about individual competencies to re-assure the bedazzled new developer. In this post, I present a tool I came up with to help, a kind of competency depth distribution chart.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2010/07/11/growing-team-skills/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -626,100 +671,6 @@ exceptions and just rethrow them in-line. For example,</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2009/12/24/flickering-tests/">Flickering Tests and a JUnit Rule</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2009-12-24 00:00:00 +0000" datetime="2009-12-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 24<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Occasionally I&#8217;ll see flickering tests. Sometimes they&#8217;re green, sometimes they&#8217;re red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven&#8217;t just been lucky and the green I&#8217;m seeing isn&#8217;t really a false positive. I&#8217;ll have to manually run the test several times before my confidence grows.</p>
-
-<p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="nd">@Intermittent</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="c1">// ...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="nd">@Intermittent</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="nd">@Intermittent</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What&#8217;s interesting here is the way in which the <code>Rule</code> and <code>Runner</code> interact with
-JUnit. Newer versions of JUnit have introduced the idea of <code>Rule</code>s and
-<code>Statement</code>s. Using a <code>Rule</code> allows access to the underlying <code>Statement</code> which in
-our case is the action to run the test method. So we&#8217;re able to run the
-underlying statement again and again. Nice.</p>
-
-<p>The <code>Runner</code> however can hook into JUnit&#8217;s framework in a different way. It can
-access more than one statement and so can position itself slightly differently.
-What this means for us is that when using the <code>Rule</code> above, any <code>@Before</code> or <code>@After</code>
-methods will only be run once but the test method will run multiple times.
-Using the <code>Runner</code> above however, will run any <code>@Before</code> or <code>@After</code> methods
-once for each test repetition.</p>
-
-<p>The code is available as part of the <a href="http://tempusfugitlibrary.org/">tempus-fugit</a> library, feel free to look around.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -735,6 +686,10 @@ once for each test repetition.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspian Jessie to Stretch</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
@@ -810,10 +765,6 @@ once for each test repetition.</p>
     
       <li class="post">
         <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-26T20:34:03+01:00</updated>
+  <updated>2017-10-26T20:38:01+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade Raspian Jessie to Stretch]]></title>
+    <link href="http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/"/>
+    <updated>2017-10-26T20:08:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch</id>
+    <content type="html"><![CDATA[<p>Upgrade your Raspbian install from Jessie to Stretch.</p>
+
+<!-- more -->
+
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you're on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<p>Optionally upgrade the firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+
+<h2>Prepare <code>apt-get</code></h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces "jessie" with "stretch" in the repository locations giving <code>apt-get</code> access to the new version's binaries.</p>
+
+<pre><code>$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list    
+$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all. Run the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each.</p>
+
+<pre><code>$ grep -lnr jessie /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+$ sudo apt-get dist-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You've come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Standard Pi Setup]]></title>

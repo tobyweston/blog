@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="I&#8217;ve been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I&#8217;m not &hellip;">
+  <meta name="description" content="I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-26 20:34:03 +0100 -->
+    <!-- last update; 2017-10-26 20:38:01 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2008/12/29/swt-applications-on-mac-os-x/">SWT Applications on Mac OS X</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2008-12-29 00:00:00 +0000" datetime="2008-12-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 29<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;ve had a couple of problems running SWT applications on Mac, in particular, getting balloon tool tips to appear and incorrect invalid thread access errors. It seems that the Mac specific VM option <code>-XstartOnFirstThread</code> is the cure! It even addresses the bug I reported <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=247218">here</a>!</p>
+
+<p>It seems that by default, Java will not start on the main thread. Cocoa/Carbon starts it all and as a consequence, the SWT UI thread might get associated with it and not your main application thread. Therefore, whenever the application tries to access it (even though it looks like it owns it in your code), it may not and invalid thread access hilarity will ensue.</p>
+
+<p>The flip side to this is that AWT/Swing apps and plugins might have problems.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -327,6 +369,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspian Jessie to Stretch</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
       </li>
     
@@ -400,10 +446,6 @@
     
       <li class="post">
         <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/21/curried-functions/">Currying Functions in Java & Scala</a>
       </li>
     
   </ul>
