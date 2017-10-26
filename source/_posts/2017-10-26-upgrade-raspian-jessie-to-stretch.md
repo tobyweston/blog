@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Upgrade Raspian Jessie to Stretch"
+title: "Upgrade Raspbian Jessie to Stretch"
 date: 2017-10-26 20:08
 comments: true
 categories: pi
