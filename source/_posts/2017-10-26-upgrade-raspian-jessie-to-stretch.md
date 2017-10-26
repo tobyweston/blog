@@ -6,11 +6,11 @@ comments: true
 categories: pi
 sidebar: false
 published: false
-keywords: ""
-description: ""
+keywords: "raspberry pi, pi, stretch, jessie, raspbian. raspian, upgrade"
+description: "Upgrade your Raspbian install from Jessie to Stretch."
 ---
 
-Upgrade your Raspian install from Jessie to Stretch.
+Upgrade your Raspbian install from Jessie to Stretch.
 
 <!-- more -->
 
