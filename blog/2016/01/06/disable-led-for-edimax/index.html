@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-26 20:41:53 +0100 -->
+    <!-- last update; 2017-10-27 21:14:30 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -215,7 +215,7 @@ SUBLEVEL = 15
 ...
 </code></pre>
 
-<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, you version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages. You could also try something <code>git log --oneline | grep "Linux 4.1.18"</code> to save manually scanning the logs.</p>
+<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, your version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages. You could also try something <code>git log --oneline | grep "Linux 4.1.18"</code> to save manually scanning the logs.</p>
 
 <p>The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That&#8217;s why I used <code>--depth=50</code> in the hope of catching the revision I&#8217;m interested in.</p>
 
