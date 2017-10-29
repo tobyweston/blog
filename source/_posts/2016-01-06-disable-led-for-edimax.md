@@ -178,7 +178,7 @@ Again, use the `-j4` flag if you're on a big boy Pi.
 
 Once it's compiled, remove the old driver with `sudo rmmod 8192cu` and from the driver folder, manually startup the newly compiled one; `sudo insmod 8192cu.ko`. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi.
 
-Running `modinfo 8192cu` doesn't help verify the new driver as non of the meta-data has changed but you can check the datestamp of the `.ko` and you should see that there's no LED flashing.
+Running `modinfo 8192cu` doesn't help verify the new driver as none of the meta-data has changed but you can check the datestamp of the `.ko` and you should see that there's no LED flashing.
 
 
 To keep the change, I renamed the patched module to `8192cu-no-led.ko` and copied it into the Pi's main kernel drivers folder. I renamed the original driver to `8192cu-original.ko` and created a symbolic link for the true module name `8192cu.ko`. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any `/etc/modprobe.d/8219cu.conf` settings) or black lists.
