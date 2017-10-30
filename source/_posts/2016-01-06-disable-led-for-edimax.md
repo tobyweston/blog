@@ -212,6 +212,25 @@ or always run the following when compiling
 
     make ARCH=arm
 
+## No `build` folder
+
+    $ make[1]: *** /lib/modules/4.9.58+/build: No such file or directory.  Stop.
+
+Create a sym
+
+    $ sudo ln -s /home/pi/code/linux build
+
+The folder should look something like this.
+
+    $ ll
+    total 1.9M
+    drwxr-xr-x 11 root root 4.0K Oct 27 18:52 kernel
+    lrwxrwxrwx  1 root root   19 Oct 29 11:33 build -> /home/pi/code/linux
+    -rw-r--r--  1 root root 471K Oct 27 18:53 modules.alias
+    -rw-r--r--  1 root root 486K Oct 27 18:53 modules.alias.bin
+    -rw-r--r--  1 root root 4.7K Oct 27 18:52 modules.builtin
+    ...
+    -rw-r--r--  1 root root 249K Oct 27 18:53 modules.symbols.bin
 
 ### Edimax Sleeps and Drops the Network
 
