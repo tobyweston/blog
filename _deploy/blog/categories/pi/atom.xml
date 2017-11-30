@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: pi | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2017-11-30T14:15:14+00:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade Raspbian Jessie to Stretch]]></title>
+    <link href="http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/"/>
+    <updated>2017-10-26T20:08:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch</id>
+    <content type="html"><![CDATA[<p>Upgrade your Raspbian install from Jessie to Stretch.</p>
+
+<!-- more -->
+
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you're on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<p>Optionally upgrade the firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+
+<h2>Prepare <code>apt-get</code></h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces "jessie" with "stretch" in the repository locations giving <code>apt-get</code> access to the new version's binaries.</p>
+
+<pre><code>$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list    
+$ sudo sed -i 's/jessie/stretch/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all. Run the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each.</p>
+
+<pre><code>$ grep -lnr jessie /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+$ sudo apt-get dist-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You've come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Standard Pi Setup]]></title>
+    <link href="http://baddotrobot.com/blog/2017/03/01/standard-pi-setup/"/>
+    <updated>2017-03-01T19:01:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2017/03/01/standard-pi-setup</id>
+    <content type="html"><![CDATA[<p>Here's some common things to do when you first setup a Pi.</p>
+
+<!-- more -->
+
+
+<h2>Raspian Image</h2>
+
+<p>Download your image and <a href="https://www.raspberrypi.org/documentation/installation/installing-images/">burn to an SD card</a>. You can't go far wrong with a <a href="http://amzn.to/1T6zIc9">SanDisk 16GB microSDHC memory card</a>for £6.99.</p>
+
+<h2><code>raspi-config</code></h2>
+
+<ul>
+<li>Expand the file system</li>
+<li>Disable GUI via boot options, set to <code>Boot Options</code> then <code>B1 Console</code></li>
+<li>Change hostname via Advanced options</li>
+</ul>
+
+
+<h2>Setup Wifi</h2>
+
+<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-scan-ssid 1
+   wpa-ap-scan 1
+   wpa-key-mgmt WPA-PSK
+   wpa-proto RSN WPA
+   wpa-pairwise CCMP TKIP
+   wpa-group CCMP TKIP
+   wpa-ssid "network-name"
+   wpa-psk 72084.....654
+
+iface default inet dhcp
+</code></pre>
+
+<h2>Prevent Wifi Sleeping</h2>
+
+<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they're not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu.conf</code>. Create the file if it doesn't already exist (<a href="https://www.raspberrypi.org/forums/viewtopic.php?f=28&amp;t=44044&amp;start=350">reference</a>).</p>
+
+<pre><code>options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+
+<p>You can check if you have the <code>8192cu</code> module loaded with <code>lsmod</code>. If you don't see it in the list, don't bother!</p>
+
+<h2>Update the System</h2>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo rpi-update
+</code></pre>
+
+<h2>Standard Software</h2>
+
+<pre><code>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev oracle-java8-jdk
+</code></pre>
+
+<h2>Install SBT</h2>
+
+<p>For Scala development.</p>
+
+<pre><code>$ cd /usr/local/bin
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
+$ sudo chown pi sbt-launch.jar
+$ sudo chgrp pi sbt-launch.jar
+</code></pre>
+
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+
+<pre><code>#!/bin/bash
+SBT_OPTS="-Xms512M -Xmx512M"
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+</code></pre>
+
+<p>Note that there's not much memory on the Pi, so limit <code>sbt</code>s consumption. In this case, the 512MB limit suits the Pi Zero.</p>
+
+<p>Then make it executable.</p>
+
+<pre><code>chmod u+x /usr/local/bin/sbt
+</code></pre>
+
+<h2>Bash Setup</h2>
+
+<p>Add the following to <code>~/.bashrc</code></p>
+
+<pre><code># some more ls aliases
+alias ll='ls -lvh --group-directories-first'
+alias la='ls -A'
+#alias l='ls -CF'
+
+# Toby's ones
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias du='du -kh'    # Makes a more readable output.
+alias df='df -kTh'
+</code></pre>
+
+<h2>Disable Activity LED</h2>
+
+<p>Add the following to <code>/boot/config.txt</code> (tested on the Pi Zero only).</p>
+
+<pre><code># disable the activity LED (intended for the Pi Zero)
+dtparam=act_led_trigger=none
+dtparam=act_led_activelow=on
+</code></pre>
+
+<h2>Share Disk with Mac OSX</h2>
+
+<pre><code>sudo apt-get install netatalk
+</code></pre>
+
+<h2><code>vi</code> setup</h2>
+
+<pre><code>$ echo 'set nocompatible' &gt; ~/.vimrc
+</code></pre>
+
+<h2>Timezone</h2>
+
+<pre><code>sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Home Brew Temperature Logger]]></title>
+    <link href="http://baddotrobot.com/blog/2016/03/23/homebrew-temperature-logger/"/>
+    <updated>2016-03-23T21:39:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2016/03/23/homebrew-temperature-logger</id>
+    <content type="html"><![CDATA[<p>Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for around £10. Track days, <a href="../../../../../images/temperature-30-days.png">weeks</a> and months worth of temperature data and display some pretty graphs via the web.</p>
+
+<p><a href="../../../../../images/temperature-machine.png"><img itemprop="image" src="../../../../../images/temperature-machine.png" title="'The &#34;temperature machine&#34; in action'" alt="'The &#34;temperature machine&#34; in action'"></a></p>
+
+<!-- more -->
+
+
+<h2>Order list</h2>
+
+<table>
+<thead>
+<tr>
+<th> Item </th>
+<th> Price </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <a href="https://shop.pimoroni.com/products/raspberry-pi-zero">Raspberry Pi Zero</a> </td>
+<td> £ 4</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1T6zIc9">SanDisk 8GB microSDHC memory card</a> </td>
+<td> £ 4</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1pIKZ7m">2.54mm Header strip</a>  </td>
+<td> £ 0.89</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1RhmOHc">DS18B20 1-Wire temperature sensor</a>    </td>
+<td> £ 1.45</td>
+</tr>
+<tr>
+<td> 1 x 4.7k Ω resistor </td>
+<td> £ 0.10</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1Rlrbj9">Some jumper wires</a> or otherwise recycled wires with connectors </td>
+<td>    £ 0.97</td>
+</tr>
+<tr>
+<td> Data logging software </td>
+<td> <span style="color:green;"><a href="https://github.com/tobyweston/temperature-machine">FREE</a></span></td>
+</tr>
+<tr>
+<td> </td>
+<td> &nbsp;</td>
+</tr>
+<tr>
+<td> <strong>Total</strong> </td>
+<td> <strong>£ 11.41</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case (I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-v2/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
+
+<h2>Setup the Hardware</h2>
+
+<p>Connecting the temperature sensor to the Pi is straight forward. There a loads of <a href="https://www.google.co.uk/search?btnG=1&amp;pws=0&amp;q=pi+ds18b20+tutorial">tutorials on the web</a> but you're looking to connect the following physical pins on the Pi to the following sensor connectors.</p>
+
+<table>
+<thead>
+<tr>
+<th>Physical Pi Pin </th>
+<th> Description </th>
+<th> DS18b20 Connector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 </td>
+<td> 3.3v Power  </td>
+<td> Power (<span style="color:red;">red</span>)</td>
+</tr>
+<tr>
+<td>7 </td>
+<td> GPIO 4      </td>
+<td> Data (<span style="color:orange;">yellow</span>)</td>
+</tr>
+<tr>
+<td>9 </td>
+<td> Ground      </td>
+<td> Ground (<span style="color:black;">black</span>)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>The other thing you'll need to do is connect the 4.7k Ω resistor between the power and data lines. This acts as a <a href="https://learn.sparkfun.com/tutorials/pull-up-resistors">pull-up resistor</a> to ensure that the Pi knows that the data line starts in a "high" state. Without it, it can't tell if it should start as high or low; it would be left <em>floating</em>.</p>
+
+<h2>Setup the Pi</h2>
+
+<p>Make sure you have the following line in your <code>/boot/config.txt</code>. It will load the GPIO 1-wire driver and any attached temperature sensor should be automatically detected.</p>
+
+<pre><code>dtoverlay=w1-gpio
+</code></pre>
+
+<p>On the sensor itself, temperature measurements are stored in an area of memory called the "scratchpad". If everything is connected ok, the contents of the scratchpad will be written to a file under <code>/sys/bus/w1/devices/28-xxx/w1_slave</code> (where <code>xxx</code> will be a HEX number unique to your sensor). Here's an example from my <code>w1_slave</code> file.</p>
+
+<pre><code>4b 01 4b 46 7f ff 05 10 d8 : crc=d8 YES
+4b 01 4b 46 7f ff 05 10 d8 t=20687
+</code></pre>
+
+<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="https://github.com/tobyweston/temperature-machine/blob/master/README.md">my associated README</a> for more details (including how to change the precision of the sensor).</p>
+
+<p>Once you can see the <code>w1_slave</code> file, you're ready to install the data logging software.</p>
+
+<h2>Setup the Data Logging Software</h2>
+
+<p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" Pi and the server stores it all in a round robin database and serves up the charts via a web page.</p>
+
+<p>It's written in Scala and you'll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
+
+<pre><code>$ cd /usr/local/bin
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
+$ sudo chown pi sbt-launch.jar
+$ sudo chgrp pi sbt-launch.jar
+</code></pre>
+
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+
+<pre><code>#!/bin/bash
+SBT_OPTS="-Xms512M -Xmx512M"
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+</code></pre>
+
+<p>Then make it executable.</p>
+
+<pre><code>chmod u+x /usr/local/bin/sbt
+</code></pre>
+
+<p>Once you've setup SBT, clone the data logger's Git repository and build the binary.</p>
+
+<pre><code>$ mkdir ~/code
+$ git clone https://github.com/tobyweston/temperature-machine.git ~/code/temperature-machine
+$ cd ~/code/temperature-machine
+$ sbt assembly
+</code></pre>
+
+<p>Then run from the project folder with the following.</p>
+
+<pre><code>$ ./start.sh
+</code></pre>
+
+<p>The data will be stored in <code>~/.temperature</code> and you can access the web page via your internal network with something like <code>http://10.0.1.55:11900</code>. Get you're IP address on the Pi with <code>hostname -I</code>.</p>
+
+<h2>Add Multiple Machines</h2>
+
+<p>Running <code>start.sh</code> will start up the app in "server" single-machine mode. It will start logging data and serve the web page but not expect any more machines to be sending it data. To support multiple machines, you need to do a little more configuration.</p>
+
+<p>Due to the way round robin databases work, you need to say upfront how many machines you want to connect. It will support up to five sensors per machine. So the first thing is to start up the server specifying the <code>hostname</code> of each machine. To do this, you can use the <code>start-server.sh</code> script instead of <code>server.sh</code>.</p>
+
+<pre><code>./start-server.sh bedroom garage
+</code></pre>
+
+<p>In this example, I changed the hostname of each machine to the room they're situated in. If you already have data in <code>~/.temperature</code>, you'll have to manually delete the contents first (<code>rm ~/.temperature/*</code>). It will start up in the server and log data sent from machines named <code>bedroom</code> and <code>garage</code>. Make sure the hostname of the machine you run this from is included in the list.</p>
+
+<p>The next job is to run the client version on each machine, so if <code>garage</code> is my server, I'd run the following on the <code>bedroom</code> machine. Ensure this machine's hostname matches what you setup on the server (i.e. <code>bedroom</code>).</p>
+
+<pre><code>./start-client.sh
+</code></pre>
+
+<p>The server broadcasts it's IP address, so any clients should automatically detect where the server is and start sending data to it.</p>
+
+<h2>Add Multiple Sensors</h2>
+
+<p>The 1-wire protocol allows you to chain multiple sensors, so each Pi can have any number of sensors attached. The software automatically supports up to five sensors. Connect them to your Pi and restart and they'll be automatically detected and included in the charts.</p>
+
+<p>I found soldering a bunch of sensor wires together along with the resistor a bit tricky so I put together a simple PCB to allow me to chain them without soldering.</p>
+
+<p><a href="../../../../../images/temperature-machine-add-on-1.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-1.png" width="266" height="200" title="'Save soldering with a multiple sensor add-on board'" ></a> <a href="../../../../../images/temperature-machine-add-on-2.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-2.png" width="266" height="200" title="'With headers and resistor soldered'" ></a> <a href="../../../../../images/temperature-machine-add-on-3.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-3.png" width="266" height="200" title="'Three sensors connected'" ></a> <a href="../../../../../images/temperature-machine-add-on-7.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-7.png" width="266" height="200" title="'Slim version with GPIO headers at the side'" ></a></p>
+
+<h2>Start Logging Automatically</h2>
+
+<p>There are different ways to start software automatically after a reboot. I chose to add the following to <code>/etc/rc.local</code> on the server.</p>
+
+<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-server.sh garage bedroom &amp;'
+</code></pre>
+
+<p>and the following to the client.</p>
+
+<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-client.sh &amp;'
+</code></pre>
+
+<p>It will run the startup scripts as the user <code>pi</code> and assumes you've cloned the code as above (to <code>/home/pi/code/temperature-machine</code>). After rebooting, you should see a log file and <code>pid</code> file in the same location.</p>
+
+<p>To stop, just run the <code>stop.sh</code> script.</p>
+
+<h2>Do Not Disturb</h2>
+
+<p>If you're monitoring temperatures in a bedroom, you might not want to be disturbed by the LEDs. To switch the Pi Zero LED off, see the <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=29&amp;t=127336">Raspberry Pi Forum</a> and <a href="http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559">Stack Overflow</a> and to switch an Edimax EW-7811 LED off, see my <a href="/blog/2016/01/06/disable-led-for-edimax/">previous post</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Disable Edimax Wifi Dongle's LED]]></title>
+    <link href="http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/"/>
+    <updated>2016-01-06T19:39:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax</id>
+    <content type="html"><![CDATA[<p>Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.</p>
+
+<!-- more -->
+
+
+<p>The only way I found to disable the LED is by modifying the <a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules">kernel module</a>. Compiling that meant recompiling the associated kernel to get all the dependencies lined up.</p>
+
+<p>If you don't want to have a go at compiling the kernel, you can always download the output of my efforts <a href="http://robotooling.com/maven/bad/robot/temperature-machine/">here</a> (built against 4.9.17-v7+).</p>
+
+<h2>Gather Information</h2>
+
+<p>You'll need to know the specific kernel version. Run the following.</p>
+
+<pre><code>$ uname -a
+</code></pre>
+
+<p>It'll show something like this</p>
+
+<pre><code>Linux raspberrypi 4.1.13+ #826 PREEMPT Fri Nov 13 20:13:22 GMT 2015 armv6l GNU/Linux
+</code></pre>
+
+<p>The Edimax uses the <code>8192cu</code> module. You can check it's loaded with <code>lsmod</code>. You'll see something like this.</p>
+
+<pre><code>$ lsmod
+Module                  Size  Used by
+cfg80211              499834  0
+rfkill                 22491  2 cfg80211
+8192cu                569532  0
+...
+</code></pre>
+
+<p>For interest, you can get more information running <code>modinfo 8192cu</code>.</p>
+
+<pre><code>filename:       /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/8192cu.ko
+version:        v4.0.2_9000.20130911
+author:         Realtek Semiconductor Corp.
+description:    Realtek Wireless Lan Driver
+license:        GPL
+srcversion:     133EACDEB0C6BEBC3ECA8D0
+vermagic:       4.1.13+ preempt mod_unload modversions ARMv6
+...
+</code></pre>
+
+<h2>Get the Source</h2>
+
+<p>You need both the <strong>module</strong> and <strong>kernel</strong> source.</p>
+
+<p>The latest driver version (<code>v4.0.2_9000</code>) on the <a href="http://218.210.127.131/downloads/downloadsView.aspx?Langid=1&amp;PNid=21&amp;PFid=48&amp;Level=5&amp;Conn=4&amp;DownTypeID=3&amp;GetDown=false&amp;Downloads=true#2772">Realtek site</a> isn't actually the latest version. At least, it's been modified for the Pi. The good news is that the modified version is bundled with the Pi kernel source at <a href="https://github.com/raspberrypi/linux.git">https://github.com/raspberrypi/linux.git</a>. On the Pi, run the following (matching your running kernel version with the <code>--branch</code> option).</p>
+
+<pre><code>$ git clone --branch=rpi-4.1.y --depth=50 https://github.com/raspberrypi/linux.git
+$ ln -s linux linux-$(uname -r)
+</code></pre>
+
+<p>The <code>git clone</code> command will download the full source (including headers and all built-in drivers) into a new folder called <code>linux</code>. The symbolic link is just a handy reminder of what you've cloned.</p>
+
+<p>The latest source may not match your running kernel version (<code>uname -r</code>). You can check in the <code>Makefile</code>;</p>
+
+<pre><code>VERSION = 4
+PATCHLEVEL = 1
+SUBLEVEL = 15
+...
+</code></pre>
+
+<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, your version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages. You could also try something <code>git log --oneline | grep "Linux 4.1.18"</code> to save manually scanning the logs.</p>
+
+<p>The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That's why I used <code>--depth=50</code> in the hope of catching the revision I'm interested in.</p>
+
+<pre><code>$ cd linux
+$ git checkout 1f2ce4a2     # the SHA of your specific version, this is 4.1.13
+</code></pre>
+
+<h2>Manually Install the Headers</h2>
+
+<p>Compiling anything in Linux usually requires you have the kernel header files available. The usual way to get these is to run <code>apt-get install linux-headers-$(uname -r)</code> but the maintainers for the Raspberry Pi linux distribution don’t make them available like this. Instead, we have to rely on the full kernel source you've just downloaded.</p>
+
+<p>Create a symbolic link to fill in for the missing <code>build</code> folder in <code>/lib/modules</code> before you try and compile the driver:</p>
+
+<pre><code>$ cd ..
+$ ln -s linux /lib/modules/$(uname -r)/build
+</code></pre>
+
+<p>This creates the missing folder but points at the newly downloaded source. It's what fixes the infamous error;</p>
+
+<pre><code>make[1]: *** /lib/modules/4.1.13+/build: No such file or directory
+</code></pre>
+
+<h2>Setup your Config</h2>
+
+<p>Before we build the kernel, we need to create a <code>.config</code> file containing the current kernel configuration. The current config should be in the <code>/proc/config.gz</code> file on the Pi. If the file doesn't exist, run <code>sudo modprobe configs</code> and check again.</p>
+
+<pre><code>$ cd linux
+$ zcat /proc/config.gz &gt; .config
+</code></pre>
+
+<h2>Compile the Kernel</h2>
+
+<p>This isn't as scary as it sounds. We need to compile the kernel source. We're not going to install it, but we do want to create various dependencies that are needed to compile the driver. For example, compiling the driver would fail with missing files like   <code>include/generated/autoconf.h</code> or <code>include/config/auto.conf</code>. Compiling the entire kernel is probably a bit overkill but I've found it easier than chasing down individual errors.</p>
+
+<p>Before compiling the kernel, get some extra dependencies</p>
+
+<pre><code>$ sudo apt-get install build-essential
+$ sudo apt-get install libncurses5-dev      # required for menuconfig
+$ sudo apt-get install bc                   # required for timeconst.h
+</code></pre>
+
+<p>You can have a go at running just <code>make</code> from the <code>linux</code> folder at this point but various options need to be set and it's probably easier to use <code>menuconfig</code>. Make sure you created the <code>.config</code> from earlier then run the following.</p>
+
+<pre><code>$ cd linux
+$ make menuconfig
+</code></pre>
+
+<p>Scan the options but as they're based on your current settings (via <code>.config</code>), you should just be able to quit (<code>ESC</code>, <code>ESC</code>) and something like the following will be output.</p>
+
+<pre><code>  HOSTCC  scripts/kconfig/mconf.o
+  HOSTCC  scripts/kconfig/zconf.tab.o
+  HOSTCC  scripts/kconfig/lxdialog/checklist.o
+  HOSTCC  scripts/kconfig/lxdialog/util.o
+  HOSTCC  scripts/kconfig/lxdialog/inputbox.o
+  HOSTCC  scripts/kconfig/lxdialog/textbox.o
+  HOSTCC  scripts/kconfig/lxdialog/yesno.o
+  HOSTCC  scripts/kconfig/lxdialog/menubox.o
+  HOSTLD  scripts/kconfig/mconf
+scripts/kconfig/mconf  Kconfig
+configuration written to .config
+
+*** End of the configuration.
+*** Execute 'make' to start the build or try 'make help'.
+</code></pre>
+
+<p>The last remaining config files will have now been created, so you can do the actual build with;</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<p>or as Avi P points out below if you're running on a multi-core Pi like the Pi 2 or Pi 3;</p>
+
+<pre><code>make -j4 ARCH=arm
+</code></pre>
+
+<p>This takes a while; on my Pi Zero, over 12 hours. There's always the option to <a href="https://www.raspberrypi.org/documentation/linux/kernel/building.md">cross compile</a> if you're in a hurry.</p>
+
+<p>For extra background, I found an interesting guide on Stack Exchange about <a href="http://unix.stackexchange.com/questions/115620/configuring-compiling-and-installing-a-custom-linux-kernel/115621#115621.">Configuring, Compiling and Installing Kernels</a> (although we're not going as far as installing the built kernel here).</p>
+
+<h2>Modify the Driver</h2>
+
+<p>This is the step that actually disables the LED on the dongle.</p>
+
+<p>Locate the <code>autoconf.h</code> file in the drivers folder (<code>linux/drivers/net/wireless/rtl8192cu/include</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu/include</code> in newer linux versions) and comment out the <code>CONFIG_LED</code> macro definition. It should look like this when you're done.</p>
+
+<pre><code>// #define CONFIG_LED           // &lt;-- comment this line out to disable LED
+#ifdef CONFIG_LED
+    #define CONFIG_SW_LED
+    #ifdef CONFIG_SW_LED
+        //#define CONFIG_LED_HANDLED_BY_CMD_THREAD
+    #endif
+#endif // CONFIG_LED
+</code></pre>
+
+<h2>Compile the Driver</h2>
+
+<p>The dependencies should all be available now, so you're ready to compile the driver. Compile from the location of driver source (probably <code>linux/drivers/net/wireless/rtl8192cu</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu</code>).</p>
+
+<pre><code>$ cd linux/drivers/net/wireless/realtek/rtl8192cu
+$ make ARCH=arm
+</code></pre>
+
+<p>Again, use the <code>-j4</code> flag if you're on a big boy Pi.</p>
+
+<h2>Test &amp; Install the Driver</h2>
+
+<p>Once it's compiled, remove the old driver with <code>sudo rmmod 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi (like a <a href="/blog/2015/12/28/pi-console-lead/">console cable</a>).</p>
+
+<p>Running <code>modinfo 8192cu</code> doesn't help verify the new driver as none of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there's no LED flashing.</p>
+
+<p>To keep the change, I renamed the patched module to <code>8192cu-no-led.ko</code> and copied it into the Pi's main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
+
+<pre><code>$ mv 8192cu.ko 8192cu-no-led.ko
+$ sudo cp 8192cu-no-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ cd /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ sudo mv 8192cu.ko 8192cu-original.ko
+$ sudo ln -s 8192cu-no-led.ko 8192cu.ko
+</code></pre>
+
+<p>You should see something like this.</p>
+
+<pre><code>$ ll
+total 1332
+lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -&gt; 8192cu-no-led.ko
+-rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-no-led.ko
+-rw-r--r-- 1 root root 686160 Nov 18 16:01 8192cu-original.ko
+</code></pre>
+
+<p>You can enable the original driver by reassigning the symbolic link.</p>
+
+<h2>Common Problems</h2>
+
+<h3>No <code>armv6l</code> folder</h3>
+
+<pre><code>$ cd linux/arch
+$ sudo ln -s arm armv6l
+</code></pre>
+
+<p>or always run the following when compiling</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<h2>No <code>build</code> folder</h2>
+
+<pre><code>$ make[1]: *** /lib/modules/4.9.58+/build: No such file or directory.  Stop.
+</code></pre>
+
+<p>Create a sym</p>
+
+<pre><code>$ sudo ln -s /home/pi/code/linux build
+</code></pre>
+
+<p>The folder should look something like this.</p>
+
+<pre><code>$ ll
+total 1.9M
+drwxr-xr-x 11 root root 4.0K Oct 27 18:52 kernel
+lrwxrwxrwx  1 root root   19 Oct 29 11:33 build -&gt; /home/pi/code/linux
+-rw-r--r--  1 root root 471K Oct 27 18:53 modules.alias
+-rw-r--r--  1 root root 486K Oct 27 18:53 modules.alias.bin
+-rw-r--r--  1 root root 4.7K Oct 27 18:52 modules.builtin
+...
+-rw-r--r--  1 root root 249K Oct 27 18:53 modules.symbols.bin
+</code></pre>
+
+<h3>Edimax Sleeps and Drops the Network</h3>
+
+<p>Setup some config in the <code>modprobe.d</code> folder.</p>
+
+<pre><code>$ cd /etc/modprobe.d/
+$ ll
+total 16
+-rw-r--r-- 1 root root  73 Jan  1 19:45 8192cu.conf
+$ cat 8192cu.conf
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pi Console Lead]]></title>
+    <link href="http://baddotrobot.com/blog/2015/12/28/pi-console-lead/"/>
+    <updated>2015-12-28T19:52:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2015/12/28/pi-console-lead</id>
+    <content type="html"><![CDATA[<p>Without an ethernet port, the Pi Zero doesn't lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.</p>
+
+<p>The Adafruit Console Lead uses the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">PL2303TA</a> (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it's handy to use the <code>screen</code> application to effectively open a "telnet-like" terminal to your Pi.</p>
+
+<!-- more -->
+
+
+<p>Most of the guides on the internet point you to older versions of the drivers, but to get things working on the Mac with El Capitan or Sierra, I've found <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">v1.6 of the Prolific driver</a> is the only working option.</p>
+
+<p>It's not hard to build you're own cable from the basic components or you could try <a href="http://www.ebay.co.uk/sch/i.html?_from=R40&amp;_trksid=p2050601.m570.l1313.TR0.TRC0.H0.XPL2303TA.TRS0&amp;_nkw=PL2303TA&amp;_sacat=0">eBay for parts for under £2/$2</a> but I can't say if they use genuine Prolific chips or counterfeit.</p>
+
+<h2>Create a Screen</h2>
+
+<pre><code>$ ls -la /dev/tty.usb*
+crw-rw-rw-  1 root  wheel   17,   4 28 Dec 19:49 /dev/tty.usbserial
+</code></pre>
+
+<p>Startup screen and point it to your Pi (<code>115200</code> is the baud rate to communicate with).</p>
+
+<pre><code>screen /dev/tty.usbserial 115200
+</code></pre>
+
+<p>You might need to hit the <code>enter</code> key to wake things up, but you should see a regular Linux login prompt.</p>
+
+<p>By default, the console width is 30 characters and wraps on a single line. It's pretty annoying when you paste a long command, so you can increase it for you session with the following</p>
+
+<pre><code>stty cols 130
+</code></pre>
+
+<p>When you fire up the <code>screen</code> window manager, you can use <code>Ctrl</code> + <code>A</code> (<img src="/images/ks_control.gif" alt="Option" /> + <code>A</code>) to enter "command mode", hitting a subsequent key will execute a command. For example, <code>Ctrl</code> + <code>A</code> followed by a <code>?</code> will show you some helpful commands.</p>
+
+<p>Here are some reminders of useful commands.</p>
+
+<table>
+<thead>
+<tr>
+<th> Command(s)        </th>
+<th> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> Get some help     </td>
+<td> <code>Ctrl + A, ?</code></td>
+</tr>
+<tr>
+<td> Kill a session    </td>
+<td> <code>Ctrl + A, Ctrl + \</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>Initial Setup</h2>
+
+<p>You might want to setup you're wireless from within <code>screen</code>. Connecting to a non-hidden network is straight forward. Setting things up for a hidden network is <a href="http://www.dafinga.net/2013/01/how-to-setup-raspberry-pi-with-hidden.html">a little more involved</a>.</p>
+
+<p>Check you <code>/etc/network/interfaces</code> file and ensure it has a <code>wlan0</code> section. For open networks, something like this.</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-ssid "Guest Network"
+   wpa-psk "passphrase"
+</code></pre>
+
+<p>and for hidden networks, something like this.</p>
+
+<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
+
+<pre><code>source-directory /etc/network/interfaces.d
+
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+   wpa-scan-ssid 1
+   wpa-ap-scan 1
+   wpa-key-mgmt WPA-PSK
+   wpa-proto RSN WPA
+   wpa-pairwise CCMP TKIP
+   wpa-group CCMP TKIP
+   wpa-ssid "network-name"
+   wpa-psk 12484.....654
+
+iface default inet dhcp
+</code></pre>
+
+<h2>Summary</h2>
+
+<p>Using the console lead is an easy way to use a telnet-like terminal to setup your Pi when you don't want to connect a monitor and keyboard. As an alternative, you could try a <a href="http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/">headless setup mounting an SD card</a>, whereby you'd mount an SD Card (with a raspian image) onto a unix-like machine and modify the file system directly.</p>
+
+<p>See my post on <a href="/blog/2017/03/01/standard-pi-setup">common Pi setup</a> for more notes and tips on general Pi setup.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Scala as a Functional OO Hybrid - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala are &hellip;">
+  <meta name="keywords" content="scala exceptions, object oriented vs functional, java vs scala, java, blending object oriented and functional, blending oo, oo, pure functions, higher order functions, referential transparency">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Scala as a Functional OO Hybrid</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-04-03 19:33:00 +0100" datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true" class="updated">Apr 3<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Scala is often described as a functional language but its as much object-oriented language as it is functional. In fact, functions in Scala <em>are</em> objects. It&#8217;s important to realise that Scala can be used to write programs in an <em>imperative</em> style as well as a <em>functional</em> style and to understand the context your working in. If you&#8217;re clear about the style you&#8217;re applying, you can get the most from the approach. Functional programming isn&#8217;t a panacea and to build effective systems, you&#8217;ll need to blend the approaches.</p>
+
+<!-- more -->
+
+
+<h2>Object-Oriented</h2>
+
+<p>Scala is a pure object-oriented language. There&#8217;s no subverting it, there are no non-objects (such as Java&#8217;s primitives like <code>int</code>) or static fields or methods which aren&#8217;t members of an object (although there is the related idea of <em>companion object</em>). Every <em>value</em> is an object including numeric types and <em>functions</em>. We have classes and traits and flexible mixin-based composition.</p>
+
+<h2>Functional</h2>
+
+<p>Scala is also a functional language; it allows you define both <em>pure functions</em> and <em>higher order functions</em>. It doesn&#8217;t enforce this though which makes it even more important to understand if you&#8217;re actually working with these ideas. Porting a Java application verbatim doesn&#8217;t necessarily mean you&#8217;re building with purely functional blocks.</p>
+
+<p>Lets review these two ideas.</p>
+
+<h3>Functions are First Class</h3>
+
+<p>Programming with higher order functions means that you can pass functions as arguments to other functions, create and return them or just store them. This allows us to build richer behaviour with function composition just like object composition in the object-oriented world. In practice, function composition tends to be finer grained but still allows us to test the <em>composites rather than the composition</em>. It&#8217;s easier to test correctness of small functions like this especially when they are <em>pure functions</em>.</p>
+
+<h3>Pure Functions</h3>
+
+<p>Another aspect of a functional language is that functions should not cause any side affects. They should operate by <em>transformation</em> rather than <em>mutation</em>. That is to say a pure function should take arguments and return results but not modify the environment in which they operate. This <a href="http://en.wikipedia.org/wiki/Pure_function"><em>purity of function</em></a> is what enables <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)"><em>referential transparency</em></a>.</p>
+
+<p>Although Odersky et al [1] describe referential transparency as literally being able to substitute a method call with its result without changing the semantics of a program, Subramaniam further relates the idea to facilitating concurrent programming [2].</p>
+
+<h2>Final Thoughts</h2>
+
+<p>I think its important to bear these definitions in mind when working with Scala, if for no other reason than to be aware of the idioms available to each style and how best to leverage them.</p>
+
+<p>A functional style can give great results for certain classes of problems but lets not forget that object-oriented solutions give huge advantages for other types of problems. It&#8217;s easy to get caught up in the hype and think we&#8217;ve left object-oriented design behind when hybrid languages blur the lines, but if we&#8217;re clear about what approach to use and when, we can blend approaches as appropriate. Just don&#8217;t expect it to be easy!</p>
+
+<h2>References</h2>
+
+<p>[1] <a href="http://www.artima.com/shop/programming_in_scala">Programming in Scala</a>, Martin Odersky et al, pg. 11-12. <br/>
+[2] <a href="http://pragprog.com/magazines/2011-12/scala-for-the-intrigued">Functional Style of Programming</a> Venkat Subramaniam</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-04-03 19:33:00 +0100" datetime="2012-04-03T19:33:00+01:00" pubdate data-updated="true" class="updated">Apr 3<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>, <a class='category' href='/blog/categories/scala/'>scala</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/30/scala-exception-handling/" title="Previous Post: Scala Exception Handling">&laquo; Scala Exception Handling</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/05/stop-ignoring-at-rules/" title="next Post: Stop Ignoring @Rules">Stop Ignoring @Rules &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

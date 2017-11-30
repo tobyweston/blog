@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Calculate the Optimum Number of Threads - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Calculate the theoretical optimal number of threads needed for both CPU and IO bound applications.">
+  <meta name="keywords" content="optimal number of threads, cpu bound, io bound, goetz, java, tempus-fugit, throughput, low latency">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Calculate the Optimum Number of Threads</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true" class="updated">Jun 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?</p>
+
+<p>In this post, we look at how to work out a good thread pool size for your CPU and IO based tasks.</p>
+
+<!-- more -->
+
+
+<h2>CPU Bound Tasks</h2>
+
+<p>For CPU bound tasks, Goetz (2002, 2006) recommends</p>
+
+<pre><code>threads = number of CPUs + 1
+</code></pre>
+
+<p>Which is intuitive as if a CPU is being kept busy, we can&#8217;t do more work than the number of CPUs. Goetz purports that the additional CPU has been shown as an improvement over omitting it (2006), but others don&#8217;t agree and suggest just the number of CPUs is optimal.</p>
+
+<h2>IO Bound Tasks</h2>
+
+<p>Working out the optimal number for IO bound tasks is less obvious. During an IO bound task, a CPU will be left idle (waiting or blocking). This idle time can be better used in initiating another IO bound request.</p>
+
+<p>Subramaniam (2011, p.31) describes the optimal number of threads in terms of the following formula.</p>
+
+<pre><code>threads = number of cores /  (1 – blocking coefficient)
+</code></pre>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>And Goetz (2002) describes the optimal number of threads in terms of the following.</p>
+
+<pre><code>threads = number of cores * (1 + wait time / service time)
+</code></pre>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-1.gif"></p>
+
+<p>Where we can think of <code>wait time / service time</code> as a measure of how contended the task is.</p>
+
+<h2>Goetz and Subramaniam Agree</h2>
+
+<p>Just out of interest, we can show that both IO bound formulas are equivalent. Starting with Goetz’s formula, we assert that <code>w+s=1</code> and remove the service time (<code>s</code>) giving the following</p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-2.gif"></p>
+
+<p>We can continue by multiplying both sides by <code>1-w</code> reducing the right hand side to <code>c</code> before reversing the operation and revealing Subramaniam’s expression.</p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-3.gif"></p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/goetz-4.gif"></p>
+
+<p><img itemprop="image" src="../../../../../images/optimal-threads/subramaniam.gif"></p>
+
+<p>This post originally appeared on my concurrency library <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>&#8217;s project site.</p>
+
+<h2>References</h2>
+
+<ul>
+<li>Goetz, B. 2002. <a href="http://www.ibm.com/developerworks/java/library/j-jtp0730/index.html">Java theory and practice: Thread pools and work queues</a>. IBM DeveloperWorks.</li>
+<li>Goetz, B. Peierls, T. Bloch, J. Bowbeer, J. Holmes, D. and Lea, D. 2006. <a href="http://amzn.to/NrXQPZ">Java Concurrency in Practice</a>. 1st Edition. Addison Wesley.</li>
+<li>Subramaniam, V. 2011. <a href="http://amzn.to/NrXXuI">Programming Concurrency on the JVM</a>. 1st Edition. Pragmatic Bookshelf.</li>
+</ul>
+
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-06-01 20:42:00 +0100" datetime="2013-06-01T20:42:00+01:00" pubdate data-updated="true" class="updated">Jun 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/tempus-fugit/'>tempus-fugit</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/24/writing-my-book/" title="Previous Post: Writing my Book">&laquo; Writing my Book</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/07/09/automatically-rebase-on-git-pull/" title="next Post: Automatically rebase on git pull">Automatically rebase on git pull &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/';
+        var disqus_url = 'http://baddotrobot.com/blog/2013/06/01/optimum-number-of-threads/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

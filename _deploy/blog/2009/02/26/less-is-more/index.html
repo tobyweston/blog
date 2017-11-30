@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Less is More - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Allocating less heap size to the JVM actually means you can create more native threads. ">
+  <meta name="keywords" content="OutOfMemory, threads, -Xmx, heap, number of threads, less heap, more threads, unable to create new native thread">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2009/02/26/less-is-more/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Less is More</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-02-26 00:00:00 +0000" datetime="2009-02-26T00:00:00+00:00" pubdate data-updated="true" class="updated">Feb 26<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://twitter.com/#!/tarkaTheRotter">Dave Denton</a> were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror&#8230; creating threads in Java takes up non-VM managed memory!</p>
+
+<blockquote><p>After running a few tests I confirmed that the lower the max heap size is, the more threads I could create. I can easily get a OutOfMemoryError when allocating memory for threads way before any real heap space is used.</p></blockquote>
+
+<p>The helpful message you&#8217;ll get is.</p>
+
+<pre><code>java.lang.OutOfMemoryError: unable to create new native thread
+</code></pre>
+
+<!-- more -->
+
+
+<p>I ran a simple loop that would create threads that do nothing but sleep and watched how many could be created before the out of memory error above. I repeated this after setting the maximum heap size with <code>-Xmx</code>. Check out the results below, you can see that no real Java heap is used, still I get an out of memory error and am limited on the number of threads I can create. As a caveat, these results should in no way taken as representative on any other environment than my laptop running Java 1.6. Your mileage may vary.</p>
+
+<ul class="gallery">
+<li><a href="../../../../../images/less-is-more/64.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 64m"><img src="../../../../../images/less-is-more/64_t.png" alt="-Xmx 64m" /></a></li><li><a href="../../../../../images/less-is-more/512.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 512m"><img src="../../../../../images/less-is-more/512_t.png" alt="-Xmx 512m" /></a></li><li><a href="../../../../../images/less-is-more/1512.png" class="fancybox" rel="gallery-5e07eaec790c18efe6f23418719e6360" title="-Xmx 1512m"><img src="../../../../../images/less-is-more/1512_t.png" alt="-Xmx 1512m" /></a></li>
+</ul>
+
+
+<p><a href="../../../../../images/less-is-more/results.png" class="fancybox" title="Heap size and the maximum number of threads created before failing "><img class="right" src="../../../../../images/less-is-more/results_t.png" alt="Heap size and the maximum number of threads created before failing " /></a></p>
+
+<p>I&#8217;d always considered OS native threads or light weight processes to be effectively unbounded with the restrictions being on the resources they are associated with. This isn&#8217;t the case though as clearly, the act of creating a thread that does nothing and has no real resources associated with it still requires OS memory allocation in my tests.</p>
+
+<p>I thought this was really interesting as it demonstrates how small decisions can have a big impact on the run-time characteristics of a system. Being able to tune your application to suit your production requirements is always tricky. Large memory models and data manipulation can often require large heap sizes but if in addition, you want to create large numbers of threads, you might get into the murky world I&#8217;ve touched on here. Of course, thread pools are generally the way to go if you want to manage your resources properly, but that&#8217;s another story all together.</p>
+
+<p>I&#8217;m sure Google can tell you more, but see this <a href="http://www.egilh.com/blog/archive/2006/06/09/2811.aspx">blog post</a> for another
+description.</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-02-26 00:00:00 +0000" datetime="2009-02-26T00:00:00+00:00" pubdate data-updated="true" class="updated">Feb 26<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/performance/'>performance</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2009/02/23/infering-type-in-micro-dsl/" title="Previous Post: Inferring the Types in a Micro DSL">&laquo; Inferring the Types in a Micro DSL</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2009/03/15/swtbot-vs-window-licker/" title="next Post: SWTBot vs Window Licker">SWTBot vs Window Licker &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2009/02/26/less-is-more/';
+        var disqus_url = 'http://baddotrobot.com/blog/2009/02/26/less-is-more/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

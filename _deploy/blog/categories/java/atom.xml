@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2017-11-30T14:15:14+00:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JMock to Scalamock Cheat Sheet]]></title>
+    <link href="http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet/"/>
+    <updated>2015-05-09T12:41:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet</id>
+    <content type="html"><![CDATA[<p>An abbreviated set of JMock examples with their Scalamock equivalents.</p>
+
+<!-- more -->
+
+
+<h2>Mock Objects &amp; the "Context"</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledExecutorService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledFuture</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Scala / Scalamock &amp; Specs2 </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">executor</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledExecutorService</span><span class="o">]&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">future</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledFuture</span><span class="o">[</span><span class="kt">Any</span><span class="o">]]</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Returns</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">waiting</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>expects()</code> is required for zero argument method call expectations.</li>
+<li>You can leave off <code>once</code>; it will default to the same behaviour</li>
+</ul>
+
+
+<h2>Allowing / Ignoring</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(&lt;</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>You could also add <code>.anyNumberOfTimes</code> after the <code>returning</code> call but it's unnecessary.</li>
+<li>There's no way to distinguish the <em>intention</em> of allowing and ignoring interactions in Scalamock.</li>
+</ul>
+
+
+<h2>Default Values</h2>
+
+<p>JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a <code>returnValue</code>. In the example below, we don't care if it returns anything so if the code under test relies on a value, but the test does not, we don't have to express anything in the test.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>If the underlying code were to check, say, that the result of <code>factory.create()</code> was not an empty list with <code>if (result.isEmpty())</code>, JMock would return something sensible and we'd avoid a <code>NullPointerException</code>. You might argue that this side affect should be captured in a test but leaving it off makes the intention of expectation clearer; we only care that <code>create</code> is called, not what it returns.</p>
+
+<p>Scalamock will return <code>null</code> by default. So the above example would give a <code>NullPointerException</code> and you're required to do something like this. Notice we're using a <code>stub</code> and not a <code>mock</code> here.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">once</span><span class="o">.</span><span class="n">returning</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="n">result</span><span class="o">))&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Any / Wildcards</h2>
+
+<p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="o">}}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>AnotherException</code> is a subtype of <code>SomeException</code> but <code>any</code> will match on literally anything. Using subtypes like this in JMock is a bit of a smell as a test won't fail if a different subtype is thrown at runtime. It may be useful to express intent.</li>
+<li><a href="http://stackoverflow.com/questions/30162263/scalamock-wildcard-argument-match-on-subtype">You can't replicate the subtype line</a> in Scalamock; (<code>(factory.notifyObservers(_: AnotherException))</code> doesn't compile.</li>
+</ul>
+
+
+<h2>Throwing Exceptions</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">throws</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">Exception</span><span class="o">)).</span><span class="n">expects</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<strong>Notes:</strong></p>
+
+<ul>
+<li>In Scalamock, <code>throws</code> and <code>throwing</code> are interchangeable.</li>
+<li>Again, <code>once</code> is optional.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dealing with Exceptions as Monads]]></title>
+    <link href="http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads/"/>
+    <updated>2014-09-21T05:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/09/21/exceptions-as-monads</id>
+    <content type="html"><![CDATA[<p>In some <a href="http://baddotrobot.com/blog/categories/exceptions/">previous posts</a>, I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.</p>
+
+<p>Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">purity of function</a>. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide that system wide consistently I've been talking about.</p>
+
+<!-- more -->
+
+
+<h2>Object-Oriented</h2>
+
+<p><strong><em>The norm for object oriented code is to use exceptions to control execution flow.</em></strong> When you have a method that can return <code>true</code> or <code>false</code> <em>and</em> throw an exception, it might as well be returning three things. It forces clients to have to reason about logic that has nothing to do with the function of the method. It's complicated and often makes it hard to treat exceptions consistently across the entire application.</p>
+
+<h2>Functional</h2>
+
+<p><strong><em>So what can we learn from functional programing languages?</em></strong> Exceptions are a fact of life, unexpected things can happen with your code and you still need to deal with them. The subtlety here is that functional languages emphasize the <em>unexpected</em> part with exceptions. They try and discourage you from using exceptions for dealing with known branches of logic and instead use them like Java uses <code>Error</code>s (ie as non-recoverable). This means thinking of exceptions of <em>exceptional behaviour</em> and not Java's notion of checked <code>Exceptions</code>.</p>
+
+<p><strong><em>So how do languages like Scala discourage you using them like Java?</em></strong> They usually offer alternative mechanisms. Scala for example has the <a href="http://www.scala-lang.org/api/2.11.1/#scala.util.Either"><code>Either</code></a> and <a href="http://www.scala-lang.org/api/2.11.1/#scala.util.Try"><code>Try</code></a> classes. These classes allow you to express using the type system, that a method was successful or unsuccessful, independently from the return value. As an additional bonus, because they are <a href="http://debasishg.blogspot.co.uk/2008/03/monads-another-way-to-abstract.html">monadic</a>, you can deal with exceptional and expected behaviour consistently in code. That means you can use the same structures to process the positive and the negative case without resorting to <code>catch</code> blocks.</p>
+
+<h2>Either in Java</h2>
+
+<p>For example, let's say we have a method <code>uploadExpenses</code> that uploads this months expenses to my online accountant's web service. It uploads a single expense at a time, so it could fail because of some network problem or if the web service rejects an individual <code>Expense</code>. Once done, I'd like to produce a report (just using <code>System.out</code> in our example).</p>
+
+<h3>Traditional Exception Throwing</h3>
+
+<p>In a traditional exception throwing version below, the <code>uploadExpenses</code> call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">appropriate system boundary</a> but dealing with exceptions consistently for the entire system is a real challenge.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
+</span><span class='line'>    <span class="n">Expenses</span> <span class="n">uploaded</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">()));</span>    <span class="c1">// &lt;- can throw exceptions</span>
+</span><span class='line'>    <span class="n">uploaded</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">e</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">HttpProblem</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// what to do?</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DuplicateExpenseFound</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// what to do?</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>Using Eithers</h3>
+
+<p>On the other hand, if we use an <code>Either</code> we can make the <code>uploadExpenses</code> call return <em>either</em> a successfully upload <code>Expense</code> or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
+</span><span class='line'><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Either</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;,</span> <span class="n">Expense</span><span class="o">&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">());&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Pair</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;&gt;</span> <span class="n">failures</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">left</span><span class="o">());</span>
+</span><span class='line'><span class="n">failures</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">failure</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">failure</span><span class="o">));&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">successes</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">right</span><span class="o">());</span>
+</span><span class='line'><span class="n">successes</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">success</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">success</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently. For a naive implementation, have a look at my <a href="https://gist.github.com/tobyweston/caefc3b5ec36348387e5">gist</a> and for fuller implementations, see <a href="https://github.com/scala/scala/blob/2.11.x/src/library/scala/util/Either.scala">Scala's version</a> or the <a href="https://code.google.com/p/totallylazy/source/browse/src/com/googlecode/totallylazy/Either.java">TotallyLazy</a> and <a href="https://functionaljava.ci.cloudbees.com/job/master/javadoc/fj/data/Either.html">Functional Java</a> versions in Java.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Udemy Java 8 Course]]></title>
+    <link href="http://baddotrobot.com/blog/2014/05/20/udemy-course/"/>
+    <updated>2014-05-20T19:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/05/20/udemy-course</id>
+    <content type="html"><![CDATA[<p>I've just published my course on Java 8 over at <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy.com</a>, for a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with coupon code BLOG10</a>!</p>
+
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/BOgcl5anYyI "></iframe></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Classes vs. Functions]]></title>
+    <link href="http://baddotrobot.com/blog/2014/04/08/classes-vs-functions/"/>
+    <updated>2014-04-08T19:40:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2014/04/08/classes-vs-functions</id>
+    <content type="html"><![CDATA[<p>You can use lambdas in Java 8 anywhere you would have previously used a <a href="/blog/2014/04/07/functional-interfaces-in-java8">single method interface</a> so it may just look like syntactic sugar but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.</p>
+
+<!-- more -->
+
+
+<p>So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The <code>anonymousClass</code> method is calling the <code>waitFor</code> method passing in some implementation of <code>Condition</code>, in this case it's saying wait for some server to have shutdown.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">waitFor</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The functionally equivalent lambda would look like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">waitFor</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Where in the interest of completeness, a naive polling <code>waitFor</code> method might look like this.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">waitFor</span><span class="o">(</span><span class="n">Condition</span> <span class="n">condition</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">condition</span><span class="o">.</span><span class="na">isSatisfied</span><span class="o">())</span>
+</span><span class='line'>            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">250</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Some Theoretical Differences</h2>
+
+<p>Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see <a href="/blog/2010/07/13/lambdas-vs-closures">my distinction between lambdas and closures</a>. This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of <code>Condition</code>). In our example, the <code>server</code> variable.</p>
+
+<p>As it's a copy, it has to be declared final to ensure that it can not be changed between when it's captured and when it's used. These two points in time could be very different given that closures are often used to defer execution until some later point (see <a href="http://en.wikipedia.org/wiki/Lazy_evaluation">lazy evaluation</a> for example). Java 8 uses a neat trick whereby if it can reason that a variable is never updated, it might as well be final so it treats it as "effectively final" and you don't need to declare it as <code>final</code> explicitly.</p>
+
+<p>A lambda on the other hand, doesn't need to copy it's environment or <em>capture any terms</em>. This means it can be treated as a genuine function and not an instance of a class. What's the difference? Plenty.</p>
+
+<h3>Functions vs. Classes</h3>
+
+<p>For a start, functions; <a href="http://en.wikipedia.org/wiki/Pure_function">genuine functions</a>, don't need to be instantiated many times. I'm not sure if instantiation is even the right word to use when talking about allocating memory and loading a chunk of machine code as a function. The point is, once it's available, it can be re-used, it's idempotent in nature as it retains no state. Static class methods are the closest thing Java has to functions.</p>
+
+<p>For Java, this means that a lambda need not be instantiated every time it's evaluated which is a big deal. Unlike instantiating an anonymous class, the memory impact should be minimal.</p>
+
+<p>In terms of some conceptual differences then;</p>
+
+<ul>
+<li>Classes must be instantiated, whereas functions are not.</li>
+<li>When classes are newed up, memory is allocated for the object.</li>
+<li>Memory need only be allocated once for functions. They are stored in the "permanent" area of the heap.</li>
+<li>Objects act on their own data, functions act on unrelated data.</li>
+<li>Static class methods in Java are roughly equivalent to functions.</li>
+</ul>
+
+
+<h2>Some Concrete Differences</h2>
+
+<h3>Capture Semantics</h3>
+
+<p>Another difference is around capture semantics for <code>this</code>. In an anonymous class, <code>this</code> refers to the instance of the anonymous class. For example, <code>Foo$InnerClass</code> and not <code>Foo</code>. That's why you have whacky syntax like <code>Foo.this.x</code> when you refer to the enclosing scope from the anonymous class.</p>
+
+<p>In lambdas on the other hand, <code>this</code> refers to the enclosing scope (<code>Foo</code> directly in our example). In fact, lambdas are <strong>entirely lexically scoped</strong>, meaning they don't inherit any names from a super type or introduce a new level of scoping at all; you can directly access fields, methods and local variables from the enclosing scope.</p>
+
+<p>For example, this class shows that the lambda can reference the <code>firstName</code> variable directly.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Jack&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">addSurname</span> <span class="o">=</span> <span class="n">surname</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">firstName</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">surname</span><span class="o">;</span>       <span class="c1">// equivalent to this.firstName</span>
+</span><span class='line'>    <span class="o">};</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The anonymous class equivalent would need to explicitly refer to <code>firstName</code> from the enclosing scope.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Charlie&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">addSurname</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">surname</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">Example</span><span class="o">.</span><span class="na">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">surname</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">};</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Shadowing also becomes much more straight forward to reason about (when referencing shadowed variables).</p>
+
+<h3>Byte Code Differences</h3>
+
+<p>The other thing to note is the byte code an anonymous class implementation produces compared to the lambda byte-code. The former will use the <code>invokespecial</code> whereas a lambda uses <code>invokedynamic</code>. The difference is about when the caller is linked to a destination; lambdas are matched at <em>runtime</em> (<code>invokedynamic</code>) rather than compile time (<code>invokespecial</code> and <code>invokevirtual</code>).</p>
+
+<p>This may not seem like a big deal but the main take-away is that these instructions can be optimised by the JVM. We can expect dynamic invocations (and so lambdas) to out-perform their more traditional counterparts.</p>
+
+<p>The <code>invokedynamic</code> instruction was originally motivated by supporting more dynamic languages on the JVM. With it, you don't need to know the types ahead of time (statically typed) and you can relax these constraints and support dynamically typed languages (like JavaScript). However, it can be used to do so much more.</p>
+
+<p>It links into type inference and target typing with Java 8, supporting method references (method handles), default methods, removing the need to create intermediary anonymous instances, avoid bridge methods as well as optimisation opportunities. It's introduction in Java 7 was under the radar for the mainstream but it's probably the biggest proponent to supporting Java 8 features like lambdas. It's the mechanism by which Java achieves no additional class loading when using lambdas.</p>
+
+<h2>Summary</h2>
+
+<p>So there we have it. Functions in the academic sense are very different things from anonymous classes (which we often treat like functions in Java pre-8). I find it useful to keep the distinctions in my head as I feel that I need to be able to justify the use of Java 8 lambdas in my code with more than just arguing for their concise syntax. Of course, there's lots of additional advantages in using lambdas (not least the retrofit of the JDK to heavily use them), but I want to be able to respond when people say "isn't that just syntactic sugar over anonymous classes?".</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[IntelliJ IDEA Retina Support JDK 1.7+]]></title>
+    <link href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/"/>
+    <updated>2014-01-20T19:33:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support</id>
+    <content type="html"><![CDATA[<p>Despite IntelliJ's <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
+
+<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
+<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
+
+<!-- more -->
+
+
+<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
+]]></content>
+  </entry>
+  
+</feed>

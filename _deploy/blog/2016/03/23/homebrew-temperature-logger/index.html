@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Home Brew Temperature Logger - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="A home brew temperature logger using the Raspberry Pi zero for around $10">
+  <meta name="keywords" content="raspberry pi, pi, pi zero, ds20b18, ds18b20, hobo, data logger, temperature, arduino, scala">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2016/03/23/homebrew-temperature-logger/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Home Brew Temperature Logger</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-03-23 21:39:00 +0000" datetime="2016-03-23T21:39:00+00:00" pubdate data-updated="true" class="updated">Mar 23<span>rd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for around £10. Track days, <a href="../../../../../images/temperature-30-days.png">weeks</a> and months worth of temperature data and display some pretty graphs via the web.</p>
+
+<p><a href="../../../../../images/temperature-machine.png"><img itemprop="image" src="../../../../../images/temperature-machine.png" title="'The &#34;temperature machine&#34; in action'" alt="'The &#34;temperature machine&#34; in action'"></a></p>
+
+<!-- more -->
+
+
+<h2>Order list</h2>
+
+<table>
+<thead>
+<tr>
+<th> Item </th>
+<th> Price </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <a href="https://shop.pimoroni.com/products/raspberry-pi-zero">Raspberry Pi Zero</a> </td>
+<td> £ 4</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1T6zIc9">SanDisk 8GB microSDHC memory card</a> </td>
+<td> £ 4</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1pIKZ7m">2.54mm Header strip</a>  </td>
+<td> £ 0.89</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1RhmOHc">DS18B20 1-Wire temperature sensor</a>    </td>
+<td> £ 1.45</td>
+</tr>
+<tr>
+<td> 1 x 4.7k Ω resistor </td>
+<td> £ 0.10</td>
+</tr>
+<tr>
+<td> <a href="http://amzn.to/1Rlrbj9">Some jumper wires</a> or otherwise recycled wires with connectors </td>
+<td>    £ 0.97</td>
+</tr>
+<tr>
+<td> Data logging software </td>
+<td> <span style="color:green;"><a href="https://github.com/tobyweston/temperature-machine">FREE</a></span></td>
+</tr>
+<tr>
+<td> </td>
+<td> &nbsp;</td>
+</tr>
+<tr>
+<td> <strong>Total</strong> </td>
+<td> <strong>£ 11.41</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+<p><strong>Optional extras</strong> You might also want to consider a <a href="http://amzn.to/1RhmTKQ">USB Wifi adapter</a> (about £ 6), a case (I like the one from <a href="https://socomponents.co.uk/shop/black-laser-cut-acrylic-raspberry-pi-zero-case-v2/">Switched On Components</a> at £ 3.80) and a USB to TTL serial connection for headless setup. Something with a PL2302TA chip in it like <a href="http://amzn.to/1ZtRWoA">this module</a> or the <a href="https://www.adafruit.com/product/954">Adafruit console cable</a>.</p>
+
+<h2>Setup the Hardware</h2>
+
+<p>Connecting the temperature sensor to the Pi is straight forward. There a loads of <a href="https://www.google.co.uk/search?btnG=1&amp;pws=0&amp;q=pi+ds18b20+tutorial">tutorials on the web</a> but you&#8217;re looking to connect the following physical pins on the Pi to the following sensor connectors.</p>
+
+<table>
+<thead>
+<tr>
+<th>Physical Pi Pin </th>
+<th> Description </th>
+<th> DS18b20 Connector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 </td>
+<td> 3.3v Power  </td>
+<td> Power (<span style="color:red;">red</span>)</td>
+</tr>
+<tr>
+<td>7 </td>
+<td> GPIO 4      </td>
+<td> Data (<span style="color:orange;">yellow</span>)</td>
+</tr>
+<tr>
+<td>9 </td>
+<td> Ground      </td>
+<td> Ground (<span style="color:black;">black</span>)</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>The other thing you&#8217;ll need to do is connect the 4.7k Ω resistor between the power and data lines. This acts as a <a href="https://learn.sparkfun.com/tutorials/pull-up-resistors">pull-up resistor</a> to ensure that the Pi knows that the data line starts in a &#8220;high&#8221; state. Without it, it can&#8217;t tell if it should start as high or low; it would be left <em>floating</em>.</p>
+
+<h2>Setup the Pi</h2>
+
+<p>Make sure you have the following line in your <code>/boot/config.txt</code>. It will load the GPIO 1-wire driver and any attached temperature sensor should be automatically detected.</p>
+
+<pre><code>dtoverlay=w1-gpio
+</code></pre>
+
+<p>On the sensor itself, temperature measurements are stored in an area of memory called the &#8220;scratchpad&#8221;. If everything is connected ok, the contents of the scratchpad will be written to a file under <code>/sys/bus/w1/devices/28-xxx/w1_slave</code> (where <code>xxx</code> will be a HEX number unique to your sensor). Here&#8217;s an example from my <code>w1_slave</code> file.</p>
+
+<pre><code>4b 01 4b 46 7f ff 05 10 d8 : crc=d8 YES
+4b 01 4b 46 7f ff 05 10 d8 t=20687
+</code></pre>
+
+<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="https://github.com/tobyweston/temperature-machine/blob/master/README.md">my associated README</a> for more details (including how to change the precision of the sensor).</p>
+
+<p>Once you can see the <code>w1_slave</code> file, you&#8217;re ready to install the data logging software.</p>
+
+<h2>Setup the Data Logging Software</h2>
+
+<p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi&#8217;s. It sends the data to a nominated &#8220;server&#8221; Pi and the server stores it all in a round robin database and serves up the charts via a web page.</p>
+
+<p>It&#8217;s written in Scala and you&#8217;ll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
+
+<pre><code>$ cd /usr/local/bin
+$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
+$ sudo chown pi sbt-launch.jar
+$ sudo chgrp pi sbt-launch.jar
+</code></pre>
+
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+
+<pre><code>#!/bin/bash
+SBT_OPTS="-Xms512M -Xmx512M"
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+</code></pre>
+
+<p>Then make it executable.</p>
+
+<pre><code>chmod u+x /usr/local/bin/sbt
+</code></pre>
+
+<p>Once you&#8217;ve setup SBT, clone the data logger&#8217;s Git repository and build the binary.</p>
+
+<pre><code>$ mkdir ~/code
+$ git clone https://github.com/tobyweston/temperature-machine.git ~/code/temperature-machine
+$ cd ~/code/temperature-machine
+$ sbt assembly
+</code></pre>
+
+<p>Then run from the project folder with the following.</p>
+
+<pre><code>$ ./start.sh
+</code></pre>
+
+<p>The data will be stored in <code>~/.temperature</code> and you can access the web page via your internal network with something like <code>http://10.0.1.55:11900</code>. Get you&#8217;re IP address on the Pi with <code>hostname -I</code>.</p>
+
+<h2>Add Multiple Machines</h2>
+
+<p>Running <code>start.sh</code> will start up the app in &#8220;server&#8221; single-machine mode. It will start logging data and serve the web page but not expect any more machines to be sending it data. To support multiple machines, you need to do a little more configuration.</p>
+
+<p>Due to the way round robin databases work, you need to say upfront how many machines you want to connect. It will support up to five sensors per machine. So the first thing is to start up the server specifying the <code>hostname</code> of each machine. To do this, you can use the <code>start-server.sh</code> script instead of <code>server.sh</code>.</p>
+
+<pre><code>./start-server.sh bedroom garage
+</code></pre>
+
+<p>In this example, I changed the hostname of each machine to the room they&#8217;re situated in. If you already have data in <code>~/.temperature</code>, you&#8217;ll have to manually delete the contents first (<code>rm ~/.temperature/*</code>). It will start up in the server and log data sent from machines named <code>bedroom</code> and <code>garage</code>. Make sure the hostname of the machine you run this from is included in the list.</p>
+
+<p>The next job is to run the client version on each machine, so if <code>garage</code> is my server, I&#8217;d run the following on the <code>bedroom</code> machine. Ensure this machine&#8217;s hostname matches what you setup on the server (i.e. <code>bedroom</code>).</p>
+
+<pre><code>./start-client.sh
+</code></pre>
+
+<p>The server broadcasts it&#8217;s IP address, so any clients should automatically detect where the server is and start sending data to it.</p>
+
+<h2>Add Multiple Sensors</h2>
+
+<p>The 1-wire protocol allows you to chain multiple sensors, so each Pi can have any number of sensors attached. The software automatically supports up to five sensors. Connect them to your Pi and restart and they&#8217;ll be automatically detected and included in the charts.</p>
+
+<p>I found soldering a bunch of sensor wires together along with the resistor a bit tricky so I put together a simple PCB to allow me to chain them without soldering.</p>
+
+<p><a href="../../../../../images/temperature-machine-add-on-1.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-1.png" width="266" height="200" title="'Save soldering with a multiple sensor add-on board'" ></a> <a href="../../../../../images/temperature-machine-add-on-2.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-2.png" width="266" height="200" title="'With headers and resistor soldered'" ></a> <a href="../../../../../images/temperature-machine-add-on-3.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-3.png" width="266" height="200" title="'Three sensors connected'" ></a> <a href="../../../../../images/temperature-machine-add-on-7.png"><img itemprop="image" src="../../../../../images/temperature-machine-add-on-7.png" width="266" height="200" title="'Slim version with GPIO headers at the side'" ></a></p>
+
+<h2>Start Logging Automatically</h2>
+
+<p>There are different ways to start software automatically after a reboot. I chose to add the following to <code>/etc/rc.local</code> on the server.</p>
+
+<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-server.sh garage bedroom &amp;'
+</code></pre>
+
+<p>and the following to the client.</p>
+
+<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-client.sh &amp;'
+</code></pre>
+
+<p>It will run the startup scripts as the user <code>pi</code> and assumes you&#8217;ve cloned the code as above (to <code>/home/pi/code/temperature-machine</code>). After rebooting, you should see a log file and <code>pid</code> file in the same location.</p>
+
+<p>To stop, just run the <code>stop.sh</code> script.</p>
+
+<h2>Do Not Disturb</h2>
+
+<p>If you&#8217;re monitoring temperatures in a bedroom, you might not want to be disturbed by the LEDs. To switch the Pi Zero LED off, see the <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=29&amp;t=127336">Raspberry Pi Forum</a> and <a href="http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559">Stack Overflow</a> and to switch an Edimax EW-7811 LED off, see my <a href="/blog/2016/01/06/disable-led-for-edimax/">previous post</a>.</p>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-03-23 21:39:00 +0000" datetime="2016-03-23T21:39:00+00:00" pubdate data-updated="true" class="updated">Mar 23<span>rd</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/pi/'>pi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/01/06/disable-led-for-edimax/" title="Previous Post: Disable Edimax Wifi Dongle's LED">&laquo; Disable Edimax Wifi Dongle's LED</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/08/13/type-classes/" title="next Post: Type Classes in Scala">Type Classes in Scala &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2016/03/23/homebrew-temperature-logger/';
+        var disqus_url = 'http://baddotrobot.com/blog/2016/03/23/homebrew-temperature-logger/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

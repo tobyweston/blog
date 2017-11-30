@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: testing | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2017-11-30T14:15:14+00:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JMock to Scalamock Cheat Sheet]]></title>
+    <link href="http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet/"/>
+    <updated>2015-05-09T12:41:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2015/05/09/jmock-to-scalamock-cheatsheet</id>
+    <content type="html"><![CDATA[<p>An abbreviated set of JMock examples with their Scalamock equivalents.</p>
+
+<!-- more -->
+
+
+<h2>Mock Objects &amp; the "Context"</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledExecutorService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledFuture</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Mocks and Mockery: Scala / Scalamock &amp; Specs2 </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">executor</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledExecutorService</span><span class="o">]&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">future</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledFuture</span><span class="o">[</span><span class="kt">Any</span><span class="o">]]</span>
+</span><span class='line'>  <span class="c1">// ...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Returns</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">waiting</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>expects()</code> is required for zero argument method call expectations.</li>
+<li>You can leave off <code>once</code>; it will default to the same behaviour</li>
+</ul>
+
+
+<h2>Allowing / Ignoring</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(&lt;</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="n">cancel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>You could also add <code>.anyNumberOfTimes</code> after the <code>returning</code> call but it's unnecessary.</li>
+<li>There's no way to distinguish the <em>intention</em> of allowing and ignoring interactions in Scalamock.</li>
+</ul>
+
+
+<h2>Default Values</h2>
+
+<p>JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a <code>returnValue</code>. In the example below, we don't care if it returns anything so if the code under test relies on a value, but the test does not, we don't have to express anything in the test.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>If the underlying code were to check, say, that the result of <code>factory.create()</code> was not an empty list with <code>if (result.isEmpty())</code>, JMock would return something sensible and we'd avoid a <code>NullPointerException</code>. You might argue that this side affect should be captured in a test but leaving it off makes the intention of expectation clearer; we only care that <code>create</code> is called, not what it returns.</p>
+
+<p>Scalamock will return <code>null</code> by default. So the above example would give a <code>NullPointerException</code> and you're required to do something like this. Notice we're using a <code>stub</code> and not a <code>mock</code> here.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Default Values: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">once</span><span class="o">.</span><span class="n">returning</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="n">result</span><span class="o">))&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>Any / Wildcards</h2>
+
+<p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
+</span><span class='line'><span class="o">}}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Any: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">once</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><code>AnotherException</code> is a subtype of <code>SomeException</code> but <code>any</code> will match on literally anything. Using subtypes like this in JMock is a bit of a smell as a test won't fail if a different subtype is thrown at runtime. It may be useful to express intent.</li>
+<li><a href="http://stackoverflow.com/questions/30162263/scalamock-wildcard-argument-match-on-subtype">You can't replicate the subtype line</a> in Scalamock; (<code>(factory.notifyObservers(_: AnotherException))</code> doesn't compile.</li>
+</ul>
+
+
+<h2>Throwing Exceptions</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
+</span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
+</span><span class='line'><span class="o">}});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;).</span><span class="n">expects</span><span class="o">().</span><span class="n">throws</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
+</span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(&lt;/</span><span class="n">em</span><span class="k">&gt;:</span> <span class="nc">Exception</span><span class="o">)).</span><span class="n">expects</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<strong>Notes:</strong></p>
+
+<ul>
+<li>In Scalamock, <code>throws</code> and <code>throwing</code> are interchangeable.</li>
+<li>Again, <code>once</code> is optional.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Writing my Book]]></title>
+    <link href="http://baddotrobot.com/blog/2013/05/24/writing-my-book/"/>
+    <updated>2013-05-24T13:57:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2013/05/24/writing-my-book</id>
+    <content type="html"><![CDATA[<p>There haven't been many posts on the blog recently because I've been super-busy working on my book <a href="http://baddotrobot.com/book/">Essential Acceptance Testing</a>. It's published via <a href="https://leanpub.com/essential_acceptance_testing">Leanpub</a> and talks about the typical acceptance testing strategy and how, more often than not, it's driven by dogma rather than by a genuine testing need.</p>
+
+<p>Acceptance testing in it's generally accepted form, is so full of duplication and cruft that gaining software confidence can come at a high price. It doesn't have to be this way. The book talks about how we can reclaim all the good parts of acceptance testing without suffering the long build times and specification overload.</p>
+
+<p>It also talks about when not to bother; how gaining software confidence isn't always about testing. Fast feedback and writing software that's cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.</p>
+
+<!-- more -->
+
+
+<p>Keep an eye on my <a href="/book">blog's book page</a> for the latest news and head over to <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to purchase a copy or <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">download a free sample</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Building Better Exceptions]]></title>
+    <link href="http://baddotrobot.com/blog/2012/03/29/building-better-exceptions/"/>
+    <updated>2012-03-29T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/03/29/building-better-exceptions</id>
+    <content type="html"><![CDATA[<p>In the <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern">previous post</a>, we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.</p>
+
+<p>This post takes the idea further by talking about exceptions as <em>real</em> objects and suggests only ever creating sub-classes of <code>RuntimeException</code> for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.</p>
+
+<!-- more -->
+
+
+<h2>Exceptions are Objects</h2>
+
+<p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>It's an example of bad encapsulation in the <code>BadRequestException</code> class. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsistency between the wording of the first two. Are they the same error? It's also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it's there that we would decide how to map the exception type to a presentable form). We've intentionally <em>avoided</em> something like</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>because the message is completely unimportant to the exception. It's the handling that's important and it's in the catch block that we can map to a message (if appropriate). We're encapsulating the internal details. For example, at the UI, we may map the exception to a message for display but at an internal boundary, we may generate an event for support staff that maps to a different message.</p>
+
+<p>Applying object oriented principles like encapsulation to exceptions means that they can do more than just be <em>caught</em>. As first class objects, they can carry <em>behaviour</em> and so can be tested appropriately. How many <em>unit</em> tests have you written for an <code>Exception</code> class?</p>
+
+<h2>Tell. Don't ask</h2>
+
+<p>We can take this further and try to apply the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">law of demeter</a> to our objects. Rather than <em>get</em> something and perform conditional logic based on it, we should be able to <em>tell</em> the object to do something. It can make decisions based on its internal, encapsulated data which means decision points are localised to appropriate places.</p>
+
+<p>How do we apply this to exceptions? Well, now we've got nicely encapsulated data it's clear that the exception itself is responsible for <em>using</em> it. In the example above, we've encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>The Impact on Testing</h2>
+
+<p>If we handle exceptions <em>only</em> at the boundaries, we do so based on <em>type</em> in the <code>catch</code> block. Even at this point, we shouldn't ask for the internals of the exception and so we shouldn't have to <em>test against them</em>. The handler can <em>tell</em> the exception rather than <em>ask</em> and testing becomes much more straight forward.</p>
+
+<p><span class='pullquote-right' data-pullquote='we should never need to test the content of the message in a unit test '>
+If a class throws an exception, <em>we should never need to test the content of the message in a unit test</em> for that class. It's the class that would use the message that should be tested. However, if we've done things correctly, then no behaviour should depend on the message so what can we test?
+</span></p>
+
+<p>The first part is to test that the handling class responds appropriately to the exception <em>type</em> and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply <em>tell don't ask</em> and so can write simpler tests.</p>
+
+<p>In this way, we're just applying the <a href="/blog/2012/02/13/hexagonal-acceptance-testing">ports and adaptors</a> idea to write overlapping tests which combine for coverage but are still simple on their own.</p>
+
+<h2>Only using Runtime Exceptions</h2>
+
+<p>If you isolate exception handling to a specific boundary, you emphasise the point at which exceptions are caught. If you're catching and dealing with exceptions in a single, well known place, why would you need to use checked exceptions?</p>
+
+<p>Checked exceptions cause noise. That's all. Nothing else bad about them but they imply a defensive style of programming that has no place in the brave world of XP. The alternative, to throw only runtime exceptions, seems fraught with danger. What if you forget to catch it? If you've setup a exception handling as a system wide policy, you would have already established where to catch them and you'll have programmatically prevented that scenario.</p>
+
+<p> If that's truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it's a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn't make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
+
+<p> <div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// ...</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In the next post <a href="/blog/2012/03/30/scala-exception-handling">Scala Exception Handling</a>, well take a look at how Scala embraces some of these ideas. For example, in Scala <em>all</em> exceptions are based on <code>RuntimeException</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Expecting Exceptions JUnit Rule]]></title>
+    <link href="http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule/"/>
+    <updated>2012-03-27T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/03/27/expecting-exception-with-junit-rule</id>
+    <content type="html"><![CDATA[<p>To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or
+the <code>expected</code> element of the <code>@Test</code> annotation. Despite being more concise than the former,
+there is an argument that using <code>expected</code> doesn't support all the cases you may want to test. The example being
+to perform additional testing after the exception or testing against the actual exception message.</p>
+
+<p>JUnit 4.7 introduces the next progression, a <code>@Rule</code> that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.</p>
+
+<!-- more -->
+
+
+<h2>The try/fail/catch Idiom</h2>
+
+<p>The typical pattern is to catch an exception or fail explicitly if it was never thrown.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example1</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">assertThat</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;could not find something&quot;</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// ... could have more assertions here</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which would highlight a failure in the following way.</p>
+
+<pre><code>java.lang.AssertionError: expected an exception
+    at org.junit.Assert.fail(Assert.java:91)
+    at bad.roboot.example.ExceptionTest.example1(ExceptionTest.java:20)
+    ...
+</code></pre>
+
+<p>The idiom has potential advantages in that it offers the opportunity to assert against the actual exception as well as performing additional work after the expectation. Aside from the noise, the major drawback however is that its very easy to forget to include the <code>fail</code> call. If genuinely doing test first, where we always run the test red, this wouldn't be a problem but all too often things slip through the net. In practice, I've seen far too many examples with a missing <code>fail</code> giving false positives.</p>
+
+<h2>@Test (expected = Exception.class)</h2>
+
+<p>Using the <code>expected</code> element, we can rewrite the test as follows.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span> <span class="o">(</span><span class="n">expected</span> <span class="o">=</span> <span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example2</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">// ... this line will never be reached when the test is passing</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which will result in the following failure.</p>
+
+<pre><code>java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
+</code></pre>
+
+<p>Much more concise, we've done away with all the noise at the cost of not being able to assert against the exception
+message. We've also lost the ability to make more assertions after <code>find</code>. However, you might decide that smaller focused tests are in fact a good thing. Using this syntax, we're lead into writing a test focused on just one thing; that an exception is thrown when we call <code>find</code>.</p>
+
+<p>The test feedback has also become clearer.</p>
+
+<h2>ExpectedException Rule</h2>
+
+<p>Using an instance of <code>ExpectedException</code>, we can define a <a href="http://www.infoq.com/news/2009/07/junit-4.7-rules">JUnit rule</a>
+that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
+setting up expectations in mocking frameworks like <a href="http://www.jmock.org">JMock</a>.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example3</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">NotFoundException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">NotFoundException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;exception message&quot;</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">find</span><span class="o">(</span><span class="s">&quot;something&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="c1">// ... this line will never be reached when the test is passing</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Which would show the failure below.</p>
+
+<pre><code>java.lang.AssertionError: Expected test to throw (exception with message a string containing "exception message" and an instance of bad.robot.example.NotFoundException)
+    at org.junit.rules.ExpectedException$ExpectedExceptionStatement.evaluate(ExpectedException.java:118)
+    ...
+</code></pre>
+
+<p>The rule allows us to assert the exception is thrown and make assertions against the message. We still can't make
+additional assertions after the <code>find</code> method call, but this may not be a bad thing.</p>
+
+<h2>Beware combining Rules with @RunWith</h2>
+
+<p>Beware though that if you combine the rule with certain <code>@RunWith</code> classes,
+you may get a false positive. Specifically, if you were to run with a class that extends <code>JUnit4ClassRunner</code> in the
+above example, the test would no longer fail. You'd get a false positive.</p>
+
+<p>For example, if you're using a version of JMock prior to 2.6.0 and use <code>@RunWith(JMock.class)</code> you'll encounter this. Older versions of the <code>JMock.class</code> extend <code>JUnit4ClassRunner</code> and <code>JUnit4ClassRunner</code> ignores rules. The newer <code>BlockJUnit4ClassRunner</code> supports rules and JMock post 2.6.0 extends this class in <code>JMock.class</code>.</p>
+
+<h2>Summary</h2>
+
+<p>The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the <code>expected</code> element offers the most straight forward syntax. In the next article <a href="/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">Exception Handling as a System Wide Concern</a>, I describe a general exception handling approach which negates the need to assert against exception messages.</p>
+
+<p>The <code>ExpectedException</code> rule comes with its own baggage. The declarative nature of the rule means <em>magic</em> just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.</p>
+
+<p>I'd love to hear which approach you prefer, so feel free to post a comment below.</p>
+
+<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ecx.images-amazon.com/images/I/41t9iO0egKL.<em>SL160</em>.jpg" title="'Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)'" ></a></p>
+
+<p><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_il?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobotco-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws.assoc-amazon.co.uk/widgets/q?<em>encoding=UTF8&amp;ASIN=0321503627&amp;Format=</em>SL160_&amp;ID=AsinImage&amp;MarketPlace=GB&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=baddotrobotco-21" title="'Growing Object Oriented Software'" ></a></p>
+
+<h2>Recommended Reading</h2>
+
+<ul>
+<li><a href="http://www.amazon.co.uk/gp/product/0974514012/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0974514012&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Pragmatic Unit Testing in Java with Junit (Pragmatic Programmers)</a>, Andy Hunt, Dave Thomas</li>
+<li><a href="http://www.amazon.co.uk/gp/product/0321503627/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321503627&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Growing Object-Oriented Software, Guided by Tests</a>, Steve Freeman, Nat Pryce</li>
+<li><a href="http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Test Driven: TDD and Acceptance TDD for Java Developers</a>, Lasse Koskela</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
+    <link href="http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
+    <updated>2012-02-13T21:24:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
+    <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
+
+<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question <em>"shouldn't we start up the entire stack in an acceptance test?"</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
+
+<p>Taking inspiration from Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
+
+<!-- more -->  
+
+
+<h2>Conway's Law</h2>
+
+<p>To paraphrase something <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> recently said</p>
+
+<p><blockquote><p>"people are usually happy to test interactions with other systems 'by specification' but are less happy to do so when testing their internal systems"</p><footer><strong>@Jazzatola</strong> <cite><a href='https://twitter.com/#!/Jazzatola'>twitter.com/#!/Jazzatola/&hellip;</a></cite></footer></blockquote></p>
+
+<p>As he points out; we're happy to say "given the external system responds with <code>X</code>, when we send a message <code>Y</code> then our system behaves <code>Z</code>". We know the API and test against it as a <em>specification</em>, typically via <em>mocking</em> the behaviour of the external system and testing against the response. We're less happy to talk about our internal interactions as internal APIs in the same way.</p>
+
+<p>I find this interesting for a couple of reasons. <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> was suggesting that this is an example of <a href="http://en.wikipedia.org/wiki/Conway's_law">Conway's law</a>; where the communication structures within an organisation are leading design. We're physically separated from our external system actors but intimately acquainted with the internal communication flows. After all, we wrote them.</p>
+
+<p>It's also interesting because it can limit how we go about implementing our acceptance tests.</p>
+
+<h2>Hexagonal Implementation</h2>
+
+<p>If we look at our system as a series of <em>ports</em> and <em>adaptors</em> (as in Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>), we can start to test it as a series of internal, co-operating handoffs. Don't we already test our systems like this; with conventional mocking? The difference is that this kind of mocking is at a finer grained level; we mock <em>collaborators</em> to create unit-style tests and drive out design. When we mock external systems and the <em>ports</em> in our internal systems, we're mocking coarse grained <em>behaviours</em>. We're confirming an established design rather than driving one out. We can formalise this established design as <em>ports</em>.</p>
+
+<p>If you look closely at the last few sentences you'll notice that I'm talking about <em>test confirm</em> at the coarse grained level rather than the <em>test driving</em> techniques we apply with unit-style tests. I think this is natural fit for acceptance testing where we should be thinking about testing the external affects produced by internal flows (more black than white box).</p>
+
+<p>So, given we expect an internal interaction to behave in such-and-such way, why do we need to startup the entire application to exercise the effect of that behaviour? We don't. We can <em>simulate</em> the specification internally by mocking and produce a series of overlapping tests. Each one supporting and giving more confidence to the last.</p>
+
+<p>We've certainly had some great successes with this technique. We've produced faster running test suites that customers were happy to "accept" or sign-off against. We built trust working with the customers to understand the approach and put ourselves more easily in their 'voice' describing the system as a series of internal API interactions.</p>
+
+<h3>Conventional Hexagonal Architecture Footnote</h3>
+
+<p>In the original article, Cockburn talks about ports and adaptors as a fairly abstract architectural approach. He describes it in terms of a pattern which have slightly different motivations than those described here.</p>
+
+<p>He talks about a relatively small number of <em>ports</em> (say ~4-5) and decoupling <em>major</em> components of a system (for example, the database and the GUI) so that it can be driven and tested by different <em>external</em> actors.</p>
+
+<p>I'm talking more about changing the <em>external</em> nature of these actors to be more <em>internal</em>. If we have a much larger number of ports (say >30), decoupling <em>minor</em> components we can achieve this substitutabiliy on a bigger scale and be more flexible on how we test the system.</p>
+
+<p>Cockburn described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
+
+<p>Have a go and see if it works for you...</p>
+
+<p>Liquid error: 765: unexpected token at ''</p>
+]]></content>
+  </entry>
+  
+</feed>

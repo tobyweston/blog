@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Things Done, Part I - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="In this first of the series, I talk a little about Allen's ideas, summarising the first section of the book and reflect a little on the changes I &hellip;">
+  <meta name="keywords" content="getting things done, GTD, Appigo Todo, task management, David Allen, Stree-free productivity">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Getting Things Done, Part I</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-07-20 15:50:00 +0100" datetime="2012-07-20T15:50:00+01:00" pubdate data-updated="true" class="updated">Jul 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I&#8217;d revisit David Allen&#8217;s ideas with a little more rigour. I&#8217;d causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I&#8217;d look at them every now and then but I didn&#8217;t exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I&#8217;d have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+
+<p>In this first post, I&#8217;ll talk a little about Allen&#8217;s ideas, summarising the first section of the book. In the <a href="/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it&#8217;s application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+
+<!-- more -->
+
+
+<h2>Open Loops and Front-end Decisions</h2>
+
+<p>Allen begins by defining two key objectives; to capture <em>all</em> the things you need to get done in a <em>trusted system</em> and being disciplined to make <em>front-end decisions</em> about these inputs.</p>
+
+<p>The things that need to get done represent &#8220;open loops&#8221;. Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you&#8217;re freed up from worrying about them. Capturing them in a system that you <em>absolutely trust</em> is key. You must have faith that the system not only records the inputs but helps you process them in a way that works for you. You <em>have</em> to be confident that you&#8217;re not just brushing them under the carpet, that you&#8217;ll got back to the system and that it&#8217;ll work.</p>
+
+<p>I decided the only way to know if I could trust Allen&#8217;s system was to try it.</p>
+
+<h2>From Inbox to Options</h2>
+
+<p>Allen suggests that if something is &#8220;on your mind&#8221;, you want it to be different than it currently is. He defines this &#8220;stuff&#8221; as anything that is on your mind that you haven&#8217;t yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of &#8220;stuff&#8221; or partial reminders into a an inventory of actionable tasks that move us towards our objectives.</p>
+
+<p>A summary of actions and <em>front-end decisions</em> that need to be made for all &#8220;open loops&#8221; is</p>
+
+<ol>
+<li>Clarify the intended outcome. Quantify the results. When is it done?</li>
+<li>Decide the very next physical action that will take you towards that goal</li>
+<li>Put reminders in place of the two previous steps</li>
+</ol>
+
+
+<p>I visualise this process as moving from a general dumping ground; the &#8220;inbox&#8221; to an &#8220;options&#8221; list. The list of concrete things I <em>could</em> do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I&#8217;m not concerned with dates or follow up tasks, just in getting things off of my mind and onto paper.</p>
+
+<h2>The Workflow</h2>
+
+<p><a href="../../../../../images/gtd-basic.png"><img itemprop="image" class="left" src="../../../../../images/gtd-basic.png" width="350" height="467" title="'Abbreviated workflow'" ></a></p>
+
+<p>So far, I&#8217;ve focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It&#8217;s probably a good time to introduce a few other of Allen&#8217;s ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen&#8217;s workflow looks like the diagram opposite.</p>
+
+<p>It describes the journey from &#8220;stuff&#8221; to either some concrete action (<em>do it</em>) or one of the other lists Allen talks about (the yellow leaf nodes). It describes how firstly, any &#8220;open loops&#8221; get captured in an &#8220;inbox&#8221;. Raw data capture, nothing fancy. The next step (<em>what is it?</em>) is to apply the first <em>front-end decision</em> and quantify the objective. The next step (<em>is it actionable?</em>) is about identifying the next definite step you can take; firming up the next action.</p>
+
+<p>At this point, if its not actionable, it&#8217;s either binned (<em>trash</em>) or moved to some other list (<em>&#8230;</em>). If it is actionable and quick, just do it. Otherwise, the next step is moved to another list. Either a list of &#8220;options&#8221; or after delegating it, a list to track external dependencies (<em>waiting</em>). The calendar captures tasks that have a definitive date associated with them.</p>
+
+<p>So, we&#8217;ve clarified our intended outcome, decided the next physical action to take and recorded that action in an appropriate bucket. The next thing is to put reminders in place. For this, Allen doesn&#8217;t prescribe any particular system. You may feel Outlook fits the bill or find a tool that &#8220;supports&#8221; <em>Getting Things Done</em> on your phone.</p>
+
+<h2>Summary</h2>
+
+<p>I&#8217;ve missed a lot out here. I&#8217;ve skipped over <em>projects</em>, <em>contexts</em> and a bunch of other stuff. I found it easier to absorb the basic principles like this though and in the next post, we&#8217;ll have a look at some examples where I&#8217;ve tried to apply just these basics to my own list of &#8220;stuff&#8221;.</p>
+</div>
+
+
+  
+<h2>More in the Getting Things Done Series</h2>
+
+<ul>
+    
+    <li class="post"><a href="/blog/2012/07/20/getting-things-done-i/">Getting Things Done, Part I</a></li>
+    
+    <li class="post"><a href="/blog/2012/07/22/getting-things-done-ii/">Getting Things Done, Part II</a></li>
+    
+</ul>
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-07-20 15:50:00 +0100" datetime="2012-07-20T15:50:00+01:00" pubdate data-updated="true" class="updated">Jul 20<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/coaching/'>coaching</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/04/pair-tests-what-candidates-can-expect/" title="Previous Post: Pair Tests: What Candidates Can Expect">&laquo; Pair Tests: What Candidates Can Expect</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/07/22/getting-things-done-ii/" title="next Post: Getting Things Done, Part II">Getting Things Done, Part II &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/';
+        var disqus_url = 'http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

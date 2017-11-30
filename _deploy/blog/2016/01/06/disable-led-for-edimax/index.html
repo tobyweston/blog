@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Disable Edimax Wifi Dongle's LED - bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Instructions how to recompile the Rasperry Pi kernel and disable the Edimax EW-7811UN LED">
+  <meta name="keywords" content="8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="no-sidebar"  >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article itemscope itemtype="http://schema.org/Article" class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 itemprop="name" class="entry-title">Disable Edimax Wifi Dongle's LED</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-01-06 19:39:00 +0000" datetime="2016-01-06T19:39:00+00:00" pubdate data-updated="true" class="updated">Jan 6<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.</p>
+
+<!-- more -->
+
+
+<p>The only way I found to disable the LED is by modifying the <a href="https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules">kernel module</a>. Compiling that meant recompiling the associated kernel to get all the dependencies lined up.</p>
+
+<p>If you don&#8217;t want to have a go at compiling the kernel, you can always download the output of my efforts <a href="http://robotooling.com/maven/bad/robot/temperature-machine/">here</a> (built against 4.9.17-v7+).</p>
+
+<h2>Gather Information</h2>
+
+<p>You&#8217;ll need to know the specific kernel version. Run the following.</p>
+
+<pre><code>$ uname -a
+</code></pre>
+
+<p>It&#8217;ll show something like this</p>
+
+<pre><code>Linux raspberrypi 4.1.13+ #826 PREEMPT Fri Nov 13 20:13:22 GMT 2015 armv6l GNU/Linux
+</code></pre>
+
+<p>The Edimax uses the <code>8192cu</code> module. You can check it&#8217;s loaded with <code>lsmod</code>. You&#8217;ll see something like this.</p>
+
+<pre><code>$ lsmod
+Module                  Size  Used by
+cfg80211              499834  0
+rfkill                 22491  2 cfg80211
+8192cu                569532  0
+...
+</code></pre>
+
+<p>For interest, you can get more information running <code>modinfo 8192cu</code>.</p>
+
+<pre><code>filename:       /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/8192cu.ko
+version:        v4.0.2_9000.20130911
+author:         Realtek Semiconductor Corp.
+description:    Realtek Wireless Lan Driver
+license:        GPL
+srcversion:     133EACDEB0C6BEBC3ECA8D0
+vermagic:       4.1.13+ preempt mod_unload modversions ARMv6
+...
+</code></pre>
+
+<h2>Get the Source</h2>
+
+<p>You need both the <strong>module</strong> and <strong>kernel</strong> source.</p>
+
+<p>The latest driver version (<code>v4.0.2_9000</code>) on the <a href="http://218.210.127.131/downloads/downloadsView.aspx?Langid=1&amp;PNid=21&amp;PFid=48&amp;Level=5&amp;Conn=4&amp;DownTypeID=3&amp;GetDown=false&amp;Downloads=true#2772">Realtek site</a> isn&#8217;t actually the latest version. At least, it&#8217;s been modified for the Pi. The good news is that the modified version is bundled with the Pi kernel source at <a href="https://github.com/raspberrypi/linux.git">https://github.com/raspberrypi/linux.git</a>. On the Pi, run the following (matching your running kernel version with the <code>--branch</code> option).</p>
+
+<pre><code>$ git clone --branch=rpi-4.1.y --depth=50 https://github.com/raspberrypi/linux.git
+$ ln -s linux linux-$(uname -r)
+</code></pre>
+
+<p>The <code>git clone</code> command will download the full source (including headers and all built-in drivers) into a new folder called <code>linux</code>. The symbolic link is just a handy reminder of what you&#8217;ve cloned.</p>
+
+<p>The latest source may not match your running kernel version (<code>uname -r</code>). You can check in the <code>Makefile</code>;</p>
+
+<pre><code>VERSION = 4
+PATCHLEVEL = 1
+SUBLEVEL = 15
+...
+</code></pre>
+
+<p>This is version <code>4.1.15</code> whereas my version was <code>4.1.13</code>. Major versions are stored as branches in the repository (hence the <code>--branch=rpi-4.1.y</code> option above) but if like me, your version is a minor level, you have to scan the commits from the appropriate branch. For example, <a href="https://github.com/raspberrypi/linux/commit/1f2ce4a2e7aea3a2123b17aff62a80553df31e21">4.1.13</a> and <a href="https://github.com/raspberrypi/linux/commit/10f9e3bce7f3ab7ab4d09a9b78c7208c9a1455f7">4.1.12</a> were documented by <a href="https://github.com/gregkh">Greg Kroah-Hartman</a> in the commit messages. You could also try something <code>git log --oneline | grep "Linux 4.1.18"</code> to save manually scanning the logs.</p>
+
+<p>The upshot is that you may need to roll back to the revision that is specifically for your kernel version. That&#8217;s why I used <code>--depth=50</code> in the hope of catching the revision I&#8217;m interested in.</p>
+
+<pre><code>$ cd linux
+$ git checkout 1f2ce4a2     # the SHA of your specific version, this is 4.1.13
+</code></pre>
+
+<h2>Manually Install the Headers</h2>
+
+<p>Compiling anything in Linux usually requires you have the kernel header files available. The usual way to get these is to run <code>apt-get install linux-headers-$(uname -r)</code> but the maintainers for the Raspberry Pi linux distribution don’t make them available like this. Instead, we have to rely on the full kernel source you&#8217;ve just downloaded.</p>
+
+<p>Create a symbolic link to fill in for the missing <code>build</code> folder in <code>/lib/modules</code> before you try and compile the driver:</p>
+
+<pre><code>$ cd ..
+$ ln -s linux /lib/modules/$(uname -r)/build
+</code></pre>
+
+<p>This creates the missing folder but points at the newly downloaded source. It&#8217;s what fixes the infamous error;</p>
+
+<pre><code>make[1]: *** /lib/modules/4.1.13+/build: No such file or directory
+</code></pre>
+
+<h2>Setup your Config</h2>
+
+<p>Before we build the kernel, we need to create a <code>.config</code> file containing the current kernel configuration. The current config should be in the <code>/proc/config.gz</code> file on the Pi. If the file doesn&#8217;t exist, run <code>sudo modprobe configs</code> and check again.</p>
+
+<pre><code>$ cd linux
+$ zcat /proc/config.gz &gt; .config
+</code></pre>
+
+<h2>Compile the Kernel</h2>
+
+<p>This isn&#8217;t as scary as it sounds. We need to compile the kernel source. We&#8217;re not going to install it, but we do want to create various dependencies that are needed to compile the driver. For example, compiling the driver would fail with missing files like   <code>include/generated/autoconf.h</code> or <code>include/config/auto.conf</code>. Compiling the entire kernel is probably a bit overkill but I&#8217;ve found it easier than chasing down individual errors.</p>
+
+<p>Before compiling the kernel, get some extra dependencies</p>
+
+<pre><code>$ sudo apt-get install build-essential
+$ sudo apt-get install libncurses5-dev      # required for menuconfig
+$ sudo apt-get install bc                   # required for timeconst.h
+</code></pre>
+
+<p>You can have a go at running just <code>make</code> from the <code>linux</code> folder at this point but various options need to be set and it&#8217;s probably easier to use <code>menuconfig</code>. Make sure you created the <code>.config</code> from earlier then run the following.</p>
+
+<pre><code>$ cd linux
+$ make menuconfig
+</code></pre>
+
+<p>Scan the options but as they&#8217;re based on your current settings (via <code>.config</code>), you should just be able to quit (<code>ESC</code>, <code>ESC</code>) and something like the following will be output.</p>
+
+<pre><code>  HOSTCC  scripts/kconfig/mconf.o
+  HOSTCC  scripts/kconfig/zconf.tab.o
+  HOSTCC  scripts/kconfig/lxdialog/checklist.o
+  HOSTCC  scripts/kconfig/lxdialog/util.o
+  HOSTCC  scripts/kconfig/lxdialog/inputbox.o
+  HOSTCC  scripts/kconfig/lxdialog/textbox.o
+  HOSTCC  scripts/kconfig/lxdialog/yesno.o
+  HOSTCC  scripts/kconfig/lxdialog/menubox.o
+  HOSTLD  scripts/kconfig/mconf
+scripts/kconfig/mconf  Kconfig
+configuration written to .config
+
+*** End of the configuration.
+*** Execute 'make' to start the build or try 'make help'.
+</code></pre>
+
+<p>The last remaining config files will have now been created, so you can do the actual build with;</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<p>or as Avi P points out below if you&#8217;re running on a multi-core Pi like the Pi 2 or Pi 3;</p>
+
+<pre><code>make -j4 ARCH=arm
+</code></pre>
+
+<p>This takes a while; on my Pi Zero, over 12 hours. There&#8217;s always the option to <a href="https://www.raspberrypi.org/documentation/linux/kernel/building.md">cross compile</a> if you&#8217;re in a hurry.</p>
+
+<p>For extra background, I found an interesting guide on Stack Exchange about <a href="http://unix.stackexchange.com/questions/115620/configuring-compiling-and-installing-a-custom-linux-kernel/115621#115621.">Configuring, Compiling and Installing Kernels</a> (although we&#8217;re not going as far as installing the built kernel here).</p>
+
+<h2>Modify the Driver</h2>
+
+<p>This is the step that actually disables the LED on the dongle.</p>
+
+<p>Locate the <code>autoconf.h</code> file in the drivers folder (<code>linux/drivers/net/wireless/rtl8192cu/include</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu/include</code> in newer linux versions) and comment out the <code>CONFIG_LED</code> macro definition. It should look like this when you&#8217;re done.</p>
+
+<pre><code>// #define CONFIG_LED           // &lt;-- comment this line out to disable LED
+#ifdef CONFIG_LED
+    #define CONFIG_SW_LED
+    #ifdef CONFIG_SW_LED
+        //#define CONFIG_LED_HANDLED_BY_CMD_THREAD
+    #endif
+#endif // CONFIG_LED
+</code></pre>
+
+<h2>Compile the Driver</h2>
+
+<p>The dependencies should all be available now, so you&#8217;re ready to compile the driver. Compile from the location of driver source (probably <code>linux/drivers/net/wireless/rtl8192cu</code> or <code>linux/drivers/net/wireless/realtek/rtl8192cu</code>).</p>
+
+<pre><code>$ cd linux/drivers/net/wireless/realtek/rtl8192cu
+$ make ARCH=arm
+</code></pre>
+
+<p>Again, use the <code>-j4</code> flag if you&#8217;re on a big boy Pi.</p>
+
+<h2>Test &amp; Install the Driver</h2>
+
+<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmod 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi (like a <a href="/blog/2015/12/28/pi-console-lead/">console cable</a>).</p>
+
+<p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as none of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
+
+<p>To keep the change, I renamed the patched module to <code>8192cu-no-led.ko</code> and copied it into the Pi&#8217;s main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
+
+<pre><code>$ mv 8192cu.ko 8192cu-no-led.ko
+$ sudo cp 8192cu-no-led.ko /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ cd /lib/modules/4.1.13+/kernel/drivers/net/wireless/rtl8192cu/
+$ sudo mv 8192cu.ko 8192cu-original.ko
+$ sudo ln -s 8192cu-no-led.ko 8192cu.ko
+</code></pre>
+
+<p>You should see something like this.</p>
+
+<pre><code>$ ll
+total 1332
+lrwxrwxrwx 1 root root     13 Jan 12 17:58 8192cu.ko -&gt; 8192cu-no-led.ko
+-rw-r--r-- 1 root root 672500 Jan 12 17:58 8192cu-no-led.ko
+-rw-r--r-- 1 root root 686160 Nov 18 16:01 8192cu-original.ko
+</code></pre>
+
+<p>You can enable the original driver by reassigning the symbolic link.</p>
+
+<h2>Common Problems</h2>
+
+<h3>No <code>armv6l</code> folder</h3>
+
+<pre><code>$ cd linux/arch
+$ sudo ln -s arm armv6l
+</code></pre>
+
+<p>or always run the following when compiling</p>
+
+<pre><code>make ARCH=arm
+</code></pre>
+
+<h2>No <code>build</code> folder</h2>
+
+<pre><code>$ make[1]: *** /lib/modules/4.9.58+/build: No such file or directory.  Stop.
+</code></pre>
+
+<p>Create a sym</p>
+
+<pre><code>$ sudo ln -s /home/pi/code/linux build
+</code></pre>
+
+<p>The folder should look something like this.</p>
+
+<pre><code>$ ll
+total 1.9M
+drwxr-xr-x 11 root root 4.0K Oct 27 18:52 kernel
+lrwxrwxrwx  1 root root   19 Oct 29 11:33 build -&gt; /home/pi/code/linux
+-rw-r--r--  1 root root 471K Oct 27 18:53 modules.alias
+-rw-r--r--  1 root root 486K Oct 27 18:53 modules.alias.bin
+-rw-r--r--  1 root root 4.7K Oct 27 18:52 modules.builtin
+...
+-rw-r--r--  1 root root 249K Oct 27 18:53 modules.symbols.bin
+</code></pre>
+
+<h3>Edimax Sleeps and Drops the Network</h3>
+
+<p>Setup some config in the <code>modprobe.d</code> folder.</p>
+
+<pre><code>$ cd /etc/modprobe.d/
+$ ll
+total 16
+-rw-r--r-- 1 root root  73 Jan  1 19:45 8192cu.conf
+$ cat 8192cu.conf
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+</code></pre>
+</div>
+
+
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard"><a href="https://plus.google.com/116267404189265967722?rel=author"><img itemprop="image" class="left" src="http://baddotrobot.com/images/author.jpg" width="32" height="32"></a>Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class="fn">Toby Weston</span></span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-01-06 19:39:00 +0000" datetime="2016-01-06T19:39:00+00:00" pubdate data-updated="true" class="updated">Jan 6<span>th</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/pi/'>pi</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/28/pi-console-lead/" title="Previous Post: Pi Console Lead">&laquo; Pi Console Lead</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/03/23/homebrew-temperature-logger/" title="next Post: Home Brew Temperature Logger">Home Brew Temperature Logger &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Over to you...</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/';
+        var disqus_url = 'http://baddotrobot.com/blog/2016/01/06/disable-led-for-edimax/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

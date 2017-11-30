@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: coaching | bad.robot]]></title>
+  <link href="http://baddotrobot.com/blog/categories/coaching/atom.xml" rel="self"/>
+  <link href="http://baddotrobot.com/"/>
+  <updated>2017-11-30T14:15:14+00:00</updated>
+  <id>http://baddotrobot.com/</id>
+  <author>
+    <name><![CDATA[Toby Weston]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Daily Standups Don't Work]]></title>
+    <link href="http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work/"/>
+    <updated>2012-09-15T06:12:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/09/15/daily-standups-dont-work</id>
+    <content type="html"><![CDATA[<p>At some point, standups have stopped working for me. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm just not getting much out of them any more. It's led me to think that standups per se just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place and I think its just to <em>talk</em> more.</p>
+
+<!-- more -->
+
+
+<h2>Typical Problems</h2>
+
+<p>Some typical problems I see again and again include standups taking too long; standups becoming a tool to chase progress or apply pressure and attendees glazing over when it's not their turn to speak. <a href="http://jchyip.blogspot.co.uk/">Jason Yip</a> talks about some other <a href="http://martinfowler.com/articles/itsNotJustStandingUp.html#HowDoWeKnowWhenAStand-upIsGoingPoorly">common problems</a>. The biggest problem that I see though, is that standups have become more about the "status update" than communication and collaboration.</p>
+
+<h2>It's Not A Status Update</h2>
+
+<p>If your standup is more about the status update than anything else, the rot may have already set in. It's a shame  the first sentence of the <a href="https://en.wikipedia.org/wiki/Stand-up_meeting">wikipedia page</a> defines a standup as being a "status update". In fact, nearly every page on the subject talks about it in terms of a "status update". Nonsense.</p>
+
+<p>In my view, it should be about communication and collaboration. The trouble with "status update" as a phrase, is that it has dark undertones. It has <em>reporting</em> connotations and can promote a command and control relationship. It's pretty common for team leads, project managers or other stakeholders to coerce the standup into a tool for reporting. <strong>That's what the board is for.</strong></p>
+
+<p>When it becomes a tool to apply pressure or push a project management agenda, things can get pretty negative. Good team leads, managers and stakeholders will use the board for status updates and go round the team individually as they need to. It's all too easy to condense this into an intense experience at standup but it won't tell them the whole story. Those in project management roles have to work hard to preserve the spirit of the standup and get management information in other ways.</p>
+
+<h2>Communication &amp; Collaboration</h2>
+
+<p>If the spirit of the standup is really about communication and collaboration, why don't we apply the same principles we apply with Extreme Programming, namely, to apply it all the time? <strong>I'd prefer standups to be more organic.</strong> Why not jump up and start a conversation when you feel like it? Grab anyone who looks up. Why prescribe a meeting first thing, when you may not have anything to talk about? When you're working in the same physical proximity, it's natural to overhear and contribute to the conversations around you. Standup, get involved.</p>
+
+<p>The standard <a href="http://www.extremeprogramming.org/rules/standupmeeting.html">three report items</a> feel a bit arbitrary and anyway, they're really intended as a guide, not a mantra. I'd go further than that and suggest that even the idea of <em>reporting</em> at standup is the thin end of the wedge. The three questions promote the idea of <em>reporting</em> when we should be promoting the idea of <em>collaboration</em>.</p>
+
+<p>In the same way, wouldn't it be nice if you pair with whomever, whenever the time is right? Rather than move board avatars around in the morning at standup to organising pairs, wouldn't it be nice to seek a collaborator as you need to and change them often? A bit like socks.</p>
+
+<h2>The Good Bits</h2>
+
+<p>Of course, none of this may be ringing true for you. Standups might be the perfect forum for communication for your team. Despite the title, I don't mean to suggest it plainly never works. I just want to emphasise how difficult it is to get it to work and avoid the pitfalls. There may even be a simpler, less leading mechanisms to promote communication and keep team focus. I'm talking here about <em>natural</em> conversation and social cohesion.</p>
+
+<p>To offer at least a token effort at balance; even in a dysfunctional standup, I can still find a few things useful. I do like to start the day with a focusing session. A bit like <a href="/blog/2012/07/20/getting-things-done-i">GTD</a> where you ask "what is my immediate next action?". It can also be a convenient time to pair up for the day and unfortunately, it does work as a status update tool for management.</p>
+
+<h2>That's All Folks</h2>
+
+<p>It's down to individuals in the team to engage. Forcing a standup meeting isn't going to do that. Individuals should be nosey, keeping an eye on the board and the backlog. They don't need to stand in front of the board and watch cards go up or move to the right in a daily standup to do that. They don't need to listen to a synopsis of yesterday's work if they were listening to it unfold yesterday. Management need another forum if they're hijacking your standup and as an engaged individual, it's up to you to champion that change.</p>
+
+<p>Like a lot of the agile practices, its easy to fall into the habit of the daily standup without stopping to consider why we're doing so. If you really don't think you're getting much out of it, stop and question things. Following agile practices mechanically isn't the goal in itself; it's about more than that.</p>
+
+<p>If you fancy shaking things up, <a href="http://www.planningforfailure.com/">Todd Charron</a>'s created an interactive course with practical ideas to improve your standup. <a href="http://www.udemy.com/improv-your-agile-scrum-stand-up?couponCode=pffcommented">Check it out</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part II]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii/"/>
+    <updated>2012-07-22T12:38:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/22/getting-things-done-ii</id>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p><a href="../../../../../images/appigo_todo.png"><img itemprop="image" class="right" src="../../../../../images/appigo_todo.png" width="224" height="336" title="'My Lists in Appigo Todo'" ></a></p>
+
+<p>In the <a href="/blog/2012/07/20/getting-things-done-i">preceding post</a>, I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.</p>
+
+<p>I'd already been using Appigo's <a href="http://www.appigo.com/todo">Todo</a> app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious <code>Home</code>, <code>Work</code>, <code>Other</code> lists and replaced them with <code>Inbox</code>, <code>Options</code>, <code>Reference</code>, <code>Someday / Maybe</code>, <code>Waiting (for someone)</code> and <code>Trash</code>.</p>
+
+<!-- more -->
+
+
+<h2>The "Think It Through Principle"</h2>
+
+<p>I wanted to apply what I started to think of as the <em>think it through principle</em> to my old items, what Allen calls <em>front end decisions</em>. So everything got put back into the global "inbox" until I performed the mental checklist; what is it?; is it actionable?; what's the next action?</p>
+
+<p>Things started to get interesting for me here as going through this process, I started to draw parallels between the way Allen talks about <em>describing, in a single written sentence, the intended successful outcome</em> and the agile dictum of identifying acceptance criteria. In both cases, a clear and distinct step is made to clarify intent and recognise when a task is actually <em>done</em>.</p>
+
+<p>In resetting my tasks, I also dropped all the dates. I was just ignoring them anyway. I had so many overdue items, they became meaningless. Allen suggests that if an item has a date, then it pretty much <em>has to get done on that date</em>, no excuses.</p>
+
+<h2>Next Steps</h2>
+
+<p>I liked the movement from "inbox" to say "options". It felt like working up a user story and moving a card on a board when the acceptance criteria had been identified. To solidify this for myself, I try to change the wording of my tasks as they move from the "inbox" to some other list. From a vague, fluffy description to something sounding more like a user story. I'll add a short description if needed.</p>
+
+<p>I also like the idea of the "next steps" part of the think it through principle. Getting things out of your mind and into a <em>trusted</em> system feels like it could free up head space; the <em>trusted</em> part being key. Focusing only on the smallest possible next step seems to concentrate the idea. Again, the similarities to the agile principle of <em>doing to simplest thing possible</em> appealed.</p>
+
+<p>So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo <a href="http://www.appigo.com/todo">Todo</a>.</p>
+
+<h3>A Couple of Examples,</h3>
+
+<blockquote><p>On receiving my first reminder from HMRC, I filed "Self Assessment 2011/12" into my "stuff" inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my "options" list having changed the one line description to be "Pay 2011/12 Self Assessment". The deliberate steps were to pause and turn an <em>open loop</em> into something that I can tick off as done. I came up with the <em>acceptance criteria</em> and gave it a date.</p>
+
+<p>I wasn't clear about the dates though and had a question I wanted to ask my accountant. So my "next step" was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my "waiting (for someone)" file.</p>
+
+<p>Another example, the <em>open loop</em> being to "Improve my blog's SEO" was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be "signed off"), and moved it into the "options" list with no date and a description "add keyword and description metadata to old articles". It's sitting in my backlog now.</p></blockquote>
+
+<h2>Conclusion so Far</h2>
+
+<p>Having Appigo's <a href="http://www.appigo.com/todo">Todo</a> on my phone makes it easy to incorporate a review of my options into my daily routine. My general list doesn't seem to be huge. So far, I'm averaging around thirty items. The inbox has the same five or so I started with. That's telling me I'm not doing anything about those; I think they're just not that important and I should really move them to "trash". All in all, I'm now in the habbit of using the list, so I'm starting to trust the system.</p>
+
+<p>I'm certainly feeling less stress about things hanging over me. I'm kind of deferring responsibility because I know they're not lost, just in a list on my phone. It's nice to immediately put something out of my mind because I know it's not going to be forgotten. I think the trick for me is to stay disciplined, not let the "inbox" fill up and keep putting things (even really trivial things) into my lists <em>as I think of them</em>.</p>
+
+<p>I'll carry on following the GTD principles in a disciplined way. As I go, I aim to take a closer look at some of the more advanced aspects I've intentionally avoided. I expect I'll finish this mini-series off in a month or two with my final reflections.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Things Done, Part I]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/20/getting-things-done-i/"/>
+    <updated>2012-07-20T15:50:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/20/getting-things-done-i</id>
+    <content type="html"><![CDATA[<div>
+    <script type="text/javascript">
+    function trackOutboundLink(link, category, action) {
+
+        try {
+            _gaq.push(['_trackEvent', category , action]);
+        } catch(err){}
+
+        setTimeout(function() {
+            document.location.href = link.href;
+        }, 100);
+    }
+    </script>
+</div>
+
+
+<p>Having toyed with the ideas from <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a> and not really getting much out of it, I thought I'd revisit David Allen's ideas with a little more rigour. I'd causally read some articles, skimmed the book, downloaded the app but all I ended up with was a bunch of lists on my phone. I'd look at them every now and then but I didn't exactly achieve the zen like effectiveness Allen talks about. This time, I thought, I'd have a proper go; practice the principles across all aspects of my life and reflect my experience in a few short articles. Here I go.</p>
+
+<p>In this first post, I'll talk a little about Allen's ideas, summarising the first section of the book. In the <a href="/blog/2012/07/22/getting-things-done-ii">second post</a>, I reflect a little on it's application and the changes I made to my personal approach to <em>getting things done</em>.</p>
+
+<!-- more -->
+
+
+<h2>Open Loops and Front-end Decisions</h2>
+
+<p>Allen begins by defining two key objectives; to capture <em>all</em> the things you need to get done in a <em>trusted system</em> and being disciplined to make <em>front-end decisions</em> about these inputs.</p>
+
+<p>The things that need to get done represent "open loops". Anything that demands your attention, if only for a moment. The idea here is that by capturing them, you're freed up from worrying about them. Capturing them in a system that you <em>absolutely trust</em> is key. You must have faith that the system not only records the inputs but helps you process them in a way that works for you. You <em>have</em> to be confident that you're not just brushing them under the carpet, that you'll got back to the system and that it'll work.</p>
+
+<p>I decided the only way to know if I could trust Allen's system was to try it.</p>
+
+<h2>From Inbox to Options</h2>
+
+<p>Allen suggests that if something is "on your mind", you want it to be different than it currently is. He defines this "stuff" as anything that is on your mind that you haven't yet determined the intended change or next steps to achieving it. So perhaps the first insight is to move from a simple list of "stuff" or partial reminders into a an inventory of actionable tasks that move us towards our objectives.</p>
+
+<p>A summary of actions and <em>front-end decisions</em> that need to be made for all "open loops" is</p>
+
+<ol>
+<li>Clarify the intended outcome. Quantify the results. When is it done?</li>
+<li>Decide the very next physical action that will take you towards that goal</li>
+<li>Put reminders in place of the two previous steps</li>
+</ol>
+
+
+<p>I visualise this process as moving from a general dumping ground; the "inbox" to an "options" list. The list of concrete things I <em>could</em> do. To move from one to the other, I go through the steps above. To solidify the movement, I move tasks from one physical list to another, rewording and strengthening the description. At this point, I'm not concerned with dates or follow up tasks, just in getting things off of my mind and onto paper.</p>
+
+<h2>The Workflow</h2>
+
+<p><a href="../../../../../images/gtd-basic.png"><img itemprop="image" class="left" src="../../../../../images/gtd-basic.png" width="350" height="467" title="'Abbreviated workflow'" ></a></p>
+
+<p>So far, I've focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It's probably a good time to introduce a few other of Allen's ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen's workflow looks like the diagram opposite.</p>
+
+<p>It describes the journey from "stuff" to either some concrete action (<em>do it</em>) or one of the other lists Allen talks about (the yellow leaf nodes). It describes how firstly, any "open loops" get captured in an "inbox". Raw data capture, nothing fancy. The next step (<em>what is it?</em>) is to apply the first <em>front-end decision</em> and quantify the objective. The next step (<em>is it actionable?</em>) is about identifying the next definite step you can take; firming up the next action.</p>
+
+<p>At this point, if its not actionable, it's either binned (<em>trash</em>) or moved to some other list (<em>...</em>). If it is actionable and quick, just do it. Otherwise, the next step is moved to another list. Either a list of "options" or after delegating it, a list to track external dependencies (<em>waiting</em>). The calendar captures tasks that have a definitive date associated with them.</p>
+
+<p>So, we've clarified our intended outcome, decided the next physical action to take and recorded that action in an appropriate bucket. The next thing is to put reminders in place. For this, Allen doesn't prescribe any particular system. You may feel Outlook fits the bill or find a tool that "supports" <em>Getting Things Done</em> on your phone.</p>
+
+<h2>Summary</h2>
+
+<p>I've missed a lot out here. I've skipped over <em>projects</em>, <em>contexts</em> and a bunch of other stuff. I found it easier to absorb the basic principles like this though and in the next post, we'll have a look at some examples where I've tried to apply just these basics to my own list of "stuff".</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pair Tests: What Candidates Can Expect]]></title>
+    <link href="http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect/"/>
+    <updated>2012-07-04T18:58:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/07/04/pair-tests-what-candidates-can-expect</id>
+    <content type="html"><![CDATA[<p><img itemprop="image" class="right" src="../../../../../images/pairing.jpg"></p>
+
+<p>If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be <em>tested</em> on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means <em>pairing</em>. The trouble is, <em>pair tests</em> are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.</p>
+
+<p>This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.</p>
+
+<!-- more -->
+
+
+<h2>What To Expect</h2>
+
+<p>Typically, you'll sit down with one or two developers, be introduced to a basic problem and asked to solve it. If it's a good sample problem, you can expect to be asked to implement or fix small, incremental pieces of functionality. It's unfortunate that we use the term "pair test". I don't see it as a "test" but as an exercise or discussion. There shouldn't be a single right or wrong answer. The prospective employer should really be looking at <em>how you work</em> rather than <em>did she solve the problem?</em> A good <em>coding exercise</em> is simple and open ended.</p>
+
+<p>Expect to be put at ease. The interviewer should make every effort to relax you and communicate their expectations. If you find that your dropped in the deep end and bombarded with all kinds of devious scenarios, you have to question the organisation's values.</p>
+
+<p>Expect a choice of IDE. If you're not given a choice, don't expect to be judged on your knowledge of the IDE.</p>
+
+<p>Expect to be coding for an hour to two. They inevitably take a while and it's unrealistic to expect a productive pairing session in just thirty minutes.</p>
+
+<p>After the exercise, you may be asked "how did you find that?". If not, I like to ask the interviewer "how was that? Was it the kind of thing you were looking for?". It may lead to further conversations that give you the chance to talk about things in more depth, discuss alternatives and generally impress.</p>
+
+<h2>Be Yourself</h2>
+
+<p>There's often an unspoken expectation that you'll be demonstrating your mad TDD skills. I think deep down though, people are interested in seeing how you work, not necessarily that you work in a test driven way. I think it's fair to say people do expect to see some tests, so make sure you write <em>some</em>. My point is that you shouldn't be penalised if you right them retrospectively rather than first. If you're not comfortable doing TDD in your day job, don't suddenly make out it's your bread and butter. Try and work how you would on your own. Don't fake it.</p>
+
+<p>Another motivation for the pairing exercise is to see if, as a prospective pair, you can get on. If you relax and let your personality come through, you'll both have a better idea what it would be like pairing day in, day out.</p>
+
+<h2>Hang ups</h2>
+
+<p>Don't get hung up on the IDE, the API or even the problem. The interviewer shouldn't be judging you based on what shortcuts your know or what API you know off by heart. If they do, then you should question what's important to them; an adaptive, bright, enthusiastic developer or a robot that knows emacs keyboard bindings?</p>
+
+<p>With regards to the problem; if its not obvious, ask. A well set pairing exercise should be simple enough to quickly understand what's required and get you coding. Bogging you down with the complexities of the problem doesn't help anyone. Really. Don't be afraid to ask, it's what we do in our day jobs right?</p>
+
+<h2>Nerves</h2>
+
+<p>The thing that always gets me is nerves. I put way too much pressure on myself with an involuntary, internal commentary saying "am I doing enough? is that what they want to see? do they want to see this fancy thing? or that fancy thing?". Don't be like me, give yourself a break. You're a professional and good at what you do, you don't need to show off.</p>
+
+<p>I guess this all leads to my final point...</p>
+
+<h2>Summary</h2>
+
+<p>Discuss the problem. Discuss what you're thinking. Discuss what you plan to do. Discuss. Discuss. Discuss.</p>
+
+<p>If you get the chance, even mention some of the awesome things you've done. It's a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats <em>their</em> boat. Remember that you're interviewing them as much as the other way round.</p>
+
+<p>Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but <a href="/blog/2011/08/29/reflecting-on-interviewing-mistakes">reflect and learn from it</a>.</p>
+
+<p>Good luck!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
+    <link href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
+    <updated>2011-08-29T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
+    <content type="html"><![CDATA[<p>Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.</p>
+
+<p>Let's take an example from two teams.</p>
+
+<!-- more -->
+
+
+<p>Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.</p>
+
+<p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
+Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?". The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
+ </span></p>
+
+<p>Hopefully, its clear that Team A's selection process is heavily biased towards developers with good memories. It's probably unfairly prejudice against candidates that haven't had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I'd prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was "that's not really what we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously, I hadn't.</p>
+
+<p>Rather than assess my approach, the interviewer was looking for a specific piece of knowledge but what for? If I got the job I'm pretty sure my first task wouldn't be to write something to work out prime numbers. Would that fix some production problem? Would it introduce a new feature that had no other solution? No.</p>
+
+<p>A huge part of what we do is learn, or at least it should be. Failure is what makes us better and in environments where failure is embraced and we write code that we can (fairly) easily rework, we get better systems (as we refine our understanding). We never now what the real problems are going to be when we start a story. The interviewer above simply brushed over this, it seemed he wanted me to reach the same conclusion he had without explaining the steps I took to get there. Without any advocacy on my part, how would he know I could do it again with a different problem?</p>
+
+<blockquote><p>"Right or wrong answers don't really have a place because there's never a right or wrong answer in what we do."</p></blockquote>
+
+<p>Having said all that, I'm sure we'd all favour a process like Team Bs but I'm starting to see that Team B are making at least some of the same mistakes just in a more subtle way...</p>
+
+<p>For the CV selection, Team A look for "spring", "hibernate" and other technology buzzwords. Team B look for "refactoring", "TDD", "XP" and other development buzz words, the reason usually cited as being because the technologies aren't as import. Team B are favouring the <em>why</em> over the <em>how</em>, they're assuming given the right approach and smart people, specifics around technologies can be learnt. Both teams are trying to expose characteristics of the candidates that mirror their own.</p>
+
+<p>Team B asks candidates to complete a short programming exercise off-line. Implement a library, a DVD store, a robot explorer, whatever. It should only take an hour or so and demonstrates the candidates style. I've certainly seen it as an effective tool to eliminate people that really can't code for toffee but I've also seen people fall into the same old trap and eliminate people who missed something specific hidden there. A trivial example might be "oh! they didn't use dependency injection. Fail!".</p>
+
+<p>Team B's pair test should be a great way to understand how a candidate operates in front of an IDE and if you'll actually be able to work with him. A bit like the unattended test, it's a good way to eliminate extreme cases. If the candidate behaves completely anti-socially, wont listen and codes like mad man, you can probably reject him with confidence. It's easy to let bad interview habits creep in though; to focus more on some obscure gotcha in the code than how the candidate is actually pairing.</p>
+
+<blockquote><p>"I think the problem with both these techniques (unattended exercise and the pair test) is when too much specificity comes in at the start. When you are looking for something specific, you'll often be disappointed."</p></blockquote>
+
+<p>I've certainly heard myself say "oh, he didn't spot that there was a precision issue with double there...". In all honesty, I'd miss that kind of bug as often as I'd spot it but I'd hire me! The upshot there, especially when we doing a couple of pair tests a week, is to stay focused on why you're doing the pair test and not on the test itself. Are we doing this to see if the candidate can spot all the traps and pitfalls that we spent so long putting in or do we want to see how they pair? In my view, if they get the "right" answer is almost irrelevant, it's how they explore the problem.</p>
+
+<p>I guess what I'm reflecting on here is how as a peer group, we pretty much realise that closed questioning limits our choices and that open ended questions lead to real conversations that are more relevant to the types of conversations we have day to day. Right or wrong answers don't really have a place because there's never a right or wrong answer in what we do. If I implement a prime number finder without the Colander of Eratosthenes, am I wrong? The tests still pass so I must be right? Is Eratosthenes more right? Despite this realisation though, we can easily fall into a more subtle way of behaving where we mentally start ticking off specifics for a candidate.</p>
+
+<p>I guess we have to keep reminding ourselves what's important and what we're looking for in a candidate. I guess I'm mellowing in the way I assess candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
+]]></content>
+  </entry>
+  
+</feed>

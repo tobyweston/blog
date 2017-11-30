@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>bad.robot</title>
+  <meta name="author" content="Toby Weston">
+
+  
+  <meta name="description" content="Upgrade your Raspbian install from Jessie to Stretch. ">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://baddotrobot.com/">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="bad.robot" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Averia+Libre:300' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+<!-- Load jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.noConflict(); // ender.js conflicts with jQuery
+</script>
+
+<!-- Load FancyBox -->
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" />
+<script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- Fix FancyBox style for OctoPress -->
+<style type="text/css">
+  .fancybox-wrap { position: fixed !important; }
+  .fancybox-opened {
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+  }
+  .fancybox-close, .fancybox-prev span, .fancybox-next span {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+</style>
+
+
+<!-- Custom Scripts -->
+<script language="Javascript" type="text/javascript">
+    // ender.js gobbles jQuery's ready event: Use ender.js $ instead
+    $(document).ready(function() {
+        jQuery(".fancybox").fancybox({
+
+            openEffect	: 'none',
+            closeEffect	: 'none',
+
+            helpers : {
+                title: {
+                    type: 'float'
+                }
+            }
+        });
+    });
+</script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3327317-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+    <!-- last update; 2017-11-30 14:15:14 +0000 -->
+    <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
+    
+    <h2>good robots do what they're told</h2>
+    
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="baddotrobot.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/book">Books</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspbian Jessie to Stretch</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2017-10-26 20:08:00 +0100" datetime="2017-10-26T20:08:00+01:00" pubdate data-updated="true" class="updated">Oct 26<span>th</span>, 2017</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Upgrade your Raspbian install from Jessie to Stretch.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2017-03-01 19:01:00 +0000" datetime="2017-03-01T19:01:00+00:00" pubdate data-updated="true" class="updated">Mar 1<span>st</span>, 2017</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Here&#8217;s some common things to do when you first setup a Pi.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2017/03/01/standard-pi-setup/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-08-13 18:42:00 +0100" datetime="2016-08-13T18:42:00+01:00" pubdate data-updated="true" class="updated">Aug 13<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Type classes provide <a href="http://bit.ly/1kr6C8E#Ad_hoc_polymorphism">ad-hoc inheritance</a> which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (<code>extends</code>) polymorphism.</p>
+
+<p>From the <a href="http://danielwestheide.com/blog/2013/02/06/the-neophytes-guide-to-scala-part-12-type-classes.html">Neophytes Guide</a>, Daniel Westheide describes type classes, slightly paraphrased, as follows.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/08/13/type-classes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2016/03/23/homebrew-temperature-logger/">Home Brew Temperature Logger</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-03-23 21:39:00 +0000" datetime="2016-03-23T21:39:00+00:00" pubdate data-updated="true" class="updated">Mar 23<span>rd</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for around £10. Track days, <a href="../../../../../images/temperature-30-days.png">weeks</a> and months worth of temperature data and display some pretty graphs via the web.</p>
+
+<p><a href="../../../../../images/temperature-machine.png"><img itemprop="image" src="../../../../../images/temperature-machine.png" title="'The &#34;temperature machine&#34; in action'" alt="'The &#34;temperature machine&#34; in action'"></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/03/23/homebrew-temperature-logger/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2016-01-06 19:39:00 +0000" datetime="2016-01-06T19:39:00+00:00" pubdate data-updated="true" class="updated">Jan 6<span>th</span>, 2016</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2016/01/06/disable-led-for-edimax/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-12-28 19:52:00 +0000" datetime="2015-12-28T19:52:00+00:00" pubdate data-updated="true" class="updated">Dec 28<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Without an ethernet port, the Pi Zero doesn&#8217;t lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.</p>
+
+<p>The Adafruit Console Lead uses the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">PL2303TA</a> (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it&#8217;s handy to use the <code>screen</code> application to effectively open a &#8220;telnet-like&#8221; terminal to your Pi.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/12/28/pi-console-lead/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/09/25/pair-tests-dont-work/">Pair Testing Doesn&#8217;t Work</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-09-25 16:57:00 +0100" datetime="2015-09-25T16:57:00+01:00" pubdate data-updated="true" class="updated">Sep 25<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Either when looking for work or looking to recruit, I&#8217;ve been doing pair tests in one form or another since 2008. I&#8217;ve only recently come to the conclusion that they just don&#8217;t work. At least not reliably.</p>
+
+<p>I&#8217;m left wondering why we still use &#8220;pair tests&#8221; for recruitment. Is it to see how candidates problem solve? How they&#8217;d be to work with? The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone works, work with them. Don&#8217;t <em>pretend</em> to work with them.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/25/pair-tests-dont-work/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-09-10 19:47:00 +0100" datetime="2015-09-10T19:47:00+01:00" pubdate data-updated="true" class="updated">Sep 10<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the <code>JAVA_HOME</code> environment variable was always a pain. Then I discovered the handy <code>java_home</code> command.</p>
+
+<pre><code>/usr/libexec/java_home -V
+</code></pre>
+
+<p>It shows the Java versions are available and where there are. For example, on my machine, the output looks like this.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/07/14/scala-implicit-functions/">Implicit Functions in Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-07-14 18:42:00 +0100" datetime="2015-07-14T18:42:00+01:00" pubdate data-updated="true" class="updated">Jul 14<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the <a href="/blog/2015/07/03/scala-implicit-parameters/">previous post</a>, we looked at implicit parameters; parameters that will be automatically passed values annotated as <code>implicit</code>. In this post, we&#8217;ll take a look at implicit functions and how they can be useful to convert things of one type to things of another.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/14/scala-implicit-functions/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/07/03/scala-implicit-parameters/">Implicit Parameters in Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-07-03 18:42:00 +0100" datetime="2015-07-03T18:42:00+01:00" pubdate data-updated="true" class="updated">Jul 3<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and <code>Int</code> to a <code>String</code> and rather than call that function <em>explicitly</em>, you can ask the compiler to do it for you, <em>implicitly</em>.</p>
+
+<p>In the next few posts, we&#8217;ll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/03/scala-implicit-parameters/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspbian Jessie to Stretch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/03/01/standard-pi-setup/">Standard Pi Setup</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/13/type-classes/">Type Classes in Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/03/23/homebrew-temperature-logger/">Home Brew Temperature Logger</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/01/06/disable-led-for-edimax/">Disable Edimax Wifi Dongle&#8217;s LED</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/28/pi-console-lead/">Pi Console Lead</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/25/pair-tests-dont-work/">Pair Testing Doesn&#8217;t Work</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/09/10/easily-switch-jdk-on-mac/">Easily Switch JDK on Mac</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/14/scala-implicit-functions/">Implicit Functions in Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/03/scala-implicit-parameters/">Implicit Parameters in Scala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/05/09/jmock-to-scalamock-cheatsheet/">JMock to Scalamock Cheat Sheet</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/scala-learning-curve/">Scala Learning Curve</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/22/scala-mixins/">Scala Mixins: The Right Way</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/21/exceptions-as-monads/">Dealing with Exceptions as Monads</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/udemy-course/">Udemy Java 8 Course</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+  <p align="justify">     
+      <a href="/blog/categories/agile/">agile</a>
+      <a href="/blog/categories/coaching/">coaching</a>
+      <a href="/blog/categories/concurrency/">concurrency</a>
+      <a href="/blog/categories/exceptions/">exception-handling</a>
+      <a href="/blog/categories/java/">java</a>
+      <a href="/blog/categories/mocking/">mocking</a>
+      <a href="/blog/categories/object-oriented/">object-oriented</a>
+      <a href="/blog/categories/performance/">performance</a>
+      <a href="/blog/categories/recipes/">recipes</a>
+      <a href="/blog/categories/rest/">REST</a>
+      <a href="/blog/categories/scala/">scala</a>
+      <a href="/blog/categories/tempus-fugit/">tempus-fugit</a>
+      <a href="/blog/categories/testing/">testing</a>
+  </p>
+</section>
+<section>
+    <h1>Books</h1>
+    <br/>
+    <iframe width="250" height="325" src="https://leanpub.com/s4j/embed" frameborder="0" allowtransparency="true"></iframe>
+    <iframe width="250" height="335" src="https://leanpub.com/whatsnewjava8/embed" frameborder="0" allowtransparency="true"></iframe>
+    <iframe width="250" height="385" src="https://leanpub.com/essential_acceptance_testing/embed" frameborder="0" allowtransparency="true"></iframe>
+</section>
+<section>
+    <h1>Publications</h1>
+    <br/>
+    <a href="/resources/JTJ-2011-05.pdf"><img class="left" src="/images/JTJ-2011-05.png" alt="Read my JDK7 article" width="125" height="150" onclick="_gaq.push(['_trackEvent', 'download', 'jdk7-article', 'pdf']);"></a>
+    <p>
+        My article on JDK7 in <a href="http://jaxenter.com/java-tech-journal">JavaTech Journal</a> (May 2011)
+    </p>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <br/>
+    <a href="/resources/concurrency-control-1.0-draft.pdf"><img class="left" src="/images/concurrency-control-1.0-draft.png" alt="Read my JDK7 article" width="125" height="150" onclick="_gaq.push(['_trackEvent', 'download', 'concurrency-control', 'pdf']);"></a>
+    <p>
+        My draft paper discussing <a href="/resources/concurrency-control-1.0-draft.pdf">Optimistic and Pessimistic Concurrency Control with Shared Memory Models</a>.
+    </p>
+
+    <br/>
+</section>
+<section>
+    <h1>Links</h1>
+    <ul>
+        <li><a href="http://dan.bodar.com/">Dan Bodart</a></li>
+        <li><a href="http://www.natpryce.com/">Nat Pryce</a></li>
+        <li><a href="http://www.higherorderlogic.com/">Steve Freeman</a></li>
+        <li><a href="http://langrsoft.com/">Jeff Langr</a></li>
+        <li><a href="http://tech.puredanger.com/">Alex Miller</a></li>
+        <li><a href="http://blog.davidpeterson.co.uk/">David Peterson</a></li>
+    </ul>
+</section>
+<section xmlns="http://www.w3.org/1999/html">
+    </br>
+    </br>
+    </br>
+    <img src="images/top5.png" style="border: none; -webkit-box-shadow: none; box-shadow: none; transform: rotate(-5deg); -moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg);"/>
+    </br>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2006-2017 - Toby Weston -
+   <a href="/excludeme">exclude from analytics</a> -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'badrobot';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
