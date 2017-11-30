@@ -4,7 +4,7 @@
   <title><![CDATA[Category: concurrency | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/concurrency/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -106,9 +106,9 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>I'm talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="n">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
@@ -183,7 +183,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
@@ -218,7 +218,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>Using the static constructor method is fine when I want to create an instance of a type but not when I want to annotate some method. For example,</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">);</span> <span class="c1">// fine</span>
 </span><span class='line'><span class="o">}</span>
@@ -231,7 +231,7 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>To get round things, you can just create several attributes for the annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a description, I was forced to have one attribute of type and another to capture the additional information.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
 </span><span class='line'>   <span class="n">String</span> <span class="nf">details</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
@@ -257,9 +257,9 @@ and <a href="http://java.net/projects/wagon/lists/users/archive/2011-02/message/
 
 <p>After experimenting with much less straight forward integrations, overriding the scheduler gave the following.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConcurrentTestRunner</span> <span class="kd">extends</span> <span class="n">BlockJUnit4ClassRunner</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="n">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="nf">ConcurrentTestRunner</span><span class="o">(</span><span class="n">Class</span> <span class="n">type</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">setScheduler</span><span class="o">(</span><span class="k">new</span> <span class="n">ConcurrentScheduler</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>

@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -266,24 +266,24 @@ for your current branch, you must specify a branch on the command line.
 
 <p>The standard <code>git status</code> output</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status
-</span><span class='line'><span class="c"># On branch master</span>
-</span><span class='line'><span class="c"># Your branch is ahead of &#39;origin/master&#39; by 1 commit.</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># Changes not staged for commit:</span>
-</span><span class='line'><span class="c">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
-</span><span class='line'><span class="c">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.h</span>
-</span><span class='line'><span class="c"># modified:   LegoWars/BattleShip.m</span>
-</span><span class='line'><span class="c">#</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ git status
+</span><span class='line'><span class="c1"># On branch master</span>
+</span><span class='line'><span class="c1"># Your branch is ahead of &#39;origin/master&#39; by 1 commit.</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1"># Changes not staged for commit:</span>
+</span><span class='line'><span class="c1">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
+</span><span class='line'><span class="c1">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="c1">#    modified:   LegoWars/BattleShip.h</span>
+</span><span class='line'><span class="c1">#    modified:   LegoWars/BattleShip.m</span>
+</span><span class='line'><span class="c1">#</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>The abbreviated <code>git status -sb</code> version</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb
-</span><span class='line'><span class="c">## master...origin/master [ahead 1]</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ git status -sb
+</span><span class='line'><span class="c1">## master...origin/master [ahead 1]</span>
 </span><span class='line'> M LegoWars/BattleShip.h
 </span><span class='line'> M LegoWars/BattleShip.m
 </span></code></pre></td></tr></table></div></figure>
@@ -293,7 +293,7 @@ for your current branch, you must specify a branch on the command line.
 
 <p>Set the proxy, your user name and a couple of useful configurations. Feed straight in from the shell.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global http.proxy myproxy:8080
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>git config --global http.proxy myproxy:8080
 </span><span class='line'>git config --global user.email me@email.com
 </span><span class='line'>git config --global user.name me
 </span><span class='line'>git config --global color.ui <span class="nb">true</span>
@@ -302,7 +302,7 @@ for your current branch, you must specify a branch on the command line.
 
 <p>Some useful aliases.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>git config --global alias.last <span class="s2">&quot;log -1 HEAD&quot;</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>git config --global alias.last <span class="s2">&quot;log -1 HEAD&quot;</span>
 </span><span class='line'>git config --global alias.st <span class="s2">&quot;status -sb&quot;</span>
 </span><span class='line'>git config --global alias.lg <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date=relative&quot;</span>
 </span></code></pre></td></tr></table></div></figure>

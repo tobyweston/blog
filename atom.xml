@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -256,7 +256,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Notice the paramaterised type <code>[T]</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">trait</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
@@ -270,7 +270,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Provide some default implementations of your type class trait in its companion object. Usually, these are singletons (<code>object</code>) but could be <code>val</code>s. They are <strong>always</strong> <code>implicit</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">NumberLike</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">NumberLike</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">object</span> <span class="nc">NumberLikeDouble</span> <span class="k">extends</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
@@ -292,7 +292,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>To call that behaviour, we use Scala&#8217;s <code>implicit</code> semantics to find an appropriate implementation. It binds a concrete type of <code>T</code> (let&#8217;s say <code>Int</code>) with it&#8217;s corresponding type class (<code>NumberLikeInt</code>). It means we only need one method for all number-like types.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
@@ -316,7 +316,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Another way of writing the generic method is to use context bounds (ie, use <code>T: NumberLike</code>).</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T:</span> <span class="kt">NumberLike</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">val</span> <span class="n">number</span> <span class="k">=</span> <span class="n">implicitly</span><span class="o">[</span><span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
@@ -329,7 +329,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>As a simple extension, you can extend &#8220;member&#8221; types directly using an <code>implicit</code> class. For example, we can add the <code>mean</code> method to any sequence of <code>NumberLike</code>s.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">class</span> <span class="nc">SeqNumberOps</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">class</span> <span class="nc">SeqNumberOps</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
@@ -339,7 +339,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>and call <code>mean</code> directly.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">NumberOps</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">import</span> <span class="nn">NumberOps</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">32</span><span class="o">,</span> <span class="mi">43</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
 </span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
@@ -348,7 +348,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>or like this for <code>Double</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mf">3.2</span><span class="o">,</span> <span class="mf">4.2</span><span class="o">,</span> <span class="mf">3.0</span><span class="o">,</span> <span class="mf">4.4</span><span class="o">)</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mf">3.2</span><span class="o">,</span> <span class="mf">4.2</span><span class="o">,</span> <span class="mf">3.0</span><span class="o">,</span> <span class="mf">4.4</span><span class="o">)</span>
 </span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -359,7 +359,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>A basic &#8220;decoder&#8221; interface that uses an <code>Either</code> to return a result as either successful or unsuccessful.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">string</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Either</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">A</span><span class="o">]</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -369,11 +369,11 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>We could provide an implementation to decode a string to a valid <code>Colour</code> type. Unsupported colours produce a &#8220;left&#8221; result.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">colourTypeStringDecoder</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">val</span> <span class="n">colourTypeStringDecoder</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">val</span> <span class="n">colours</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;red&quot;</span><span class="o">,</span> <span class="s">&quot;green&quot;</span><span class="o">,</span> <span class="s">&quot;yellow&quot;</span><span class="o">)</span>
 </span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">colours</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="n">value</span><span class="o">))</span> <span class="nc">Right</span><span class="o">(</span><span class="nc">Colour</span><span class="o">(</span><span class="n">value</span><span class="o">))</span>
-</span><span class='line'>      <span class="k">else</span> <span class="nc">Left</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$value is not a valid colour, chose one of ${colours.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
+</span><span class='line'>      <span class="k">else</span> <span class="nc">Left</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">$value</span><span class="s"> is not a valid colour, chose one of </span><span class="si">${</span><span class="n">colours</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;, &quot;</span><span class="o">)</span><span class="si">}</span><span class="s">&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -383,7 +383,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>With an implicit class extending <code>String</code>, any string value can be decoded to a type <code>A</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">StringSyntax</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">StringSyntax</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">StringDecoderOps</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">decodeTo</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="k">implicit</span> <span class="n">decoder</span><span class="k">:</span> <span class="kt">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>      <span class="n">decoder</span><span class="o">.</span><span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
@@ -395,7 +395,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Then anywhere you have a string and you want to decode it, just go ahead.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;red&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>      <span class="c1">// right</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="s">&quot;red&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>      <span class="c1">// right</span>
 </span><span class='line'><span class="s">&quot;square&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>   <span class="c1">// Left(square is not a valid colour, chose one of red, green, yellow)</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -779,9 +779,9 @@ $ make ARCH=arm
 
 <h2>Test &amp; Install the Driver</h2>
 
-<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmod 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi.</p>
+<p>Once it&#8217;s compiled, remove the old driver with <code>sudo rmmod 8192cu</code> and from the driver folder, manually startup the newly compiled one; <code>sudo insmod 8192cu.ko</code>. Note that you&#8217;ll loose network connectivity after removing the old module. Make sure you&#8217;ve got a way to connect back to your Pi (like a <a href="http://baddotrobot.com/blog/2015/12/28/pi-console-lead/">console cable</a>).</p>
 
-<p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as non of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
+<p>Running <code>modinfo 8192cu</code> doesn&#8217;t help verify the new driver as none of the meta-data has changed but you can check the datestamp of the <code>.ko</code> and you should see that there&#8217;s no LED flashing.</p>
 
 <p>To keep the change, I renamed the patched module to <code>8192cu-no-led.ko</code> and copied it into the Pi&#8217;s main kernel drivers folder. I renamed the original driver to <code>8192cu-original.ko</code> and created a symbolic link for the true module name <code>8192cu.ko</code>. This is because I want to be able to swtich back easily and not have to modify any additional configuration (for example, any <code>/etc/modprobe.d/8219cu.conf</code> settings) or black lists.</p>
 
@@ -814,6 +814,29 @@ $ sudo ln -s arm armv6l
 <p>or always run the following when compiling</p>
 
 <pre><code>make ARCH=arm
+</code></pre>
+
+<h2>No <code>build</code> folder</h2>
+
+<pre><code>$ make[1]: *** /lib/modules/4.9.58+/build: No such file or directory.  Stop.
+</code></pre>
+
+<p>Create a sym</p>
+
+<pre><code>$ sudo ln -s /home/pi/code/linux build
+</code></pre>
+
+<p>The folder should look something like this.</p>
+
+<pre><code>$ ll
+total 1.9M
+drwxr-xr-x 11 root root 4.0K Oct 27 18:52 kernel
+lrwxrwxrwx  1 root root   19 Oct 29 11:33 build -&gt; /home/pi/code/linux
+-rw-r--r--  1 root root 471K Oct 27 18:53 modules.alias
+-rw-r--r--  1 root root 486K Oct 27 18:53 modules.alias.bin
+-rw-r--r--  1 root root 4.7K Oct 27 18:52 modules.builtin
+...
+-rw-r--r--  1 root root 249K Oct 27 18:53 modules.symbols.bin
 </code></pre>
 
 <h3>Edimax Sleeps and Drops the Network</h3>
@@ -1071,7 +1094,7 @@ case object Pineapple extends Fruit(95)
 
 <p>For example, the following function allows you to convert a Scala function into a instance of the Java 8 <code>Consumer</code> <a href="http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8/">single argument method</a> but still use Scala&#8217;s concise syntax.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">toConsumer</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">function</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">toConsumer</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">function</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">arg</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">apply</span><span class="o">(</span><span class="n">arg</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1079,7 +1102,7 @@ case object Pineapple extends Fruit(95)
 
 <p>You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java&#8217;s lambda syntax. So rather than having to use the longhand version like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">Element</span><span class="o">]()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
 </span><span class='line'>  <span class="o">})</span>
@@ -1089,7 +1112,7 @@ case object Pineapple extends Fruit(95)
 
 <p>You can write this, where we just pass a Scala function to Java&#8217;s <code>forEach</code> method.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">((</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1097,7 +1120,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The argument to <code>forEach</code> is actually a function of type <code>Element =&gt; Unit</code>. Scala recognises that the <code>toConsumer</code> method could convert this into a <code>Consumer[Element]</code> and does so implicitly.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">function</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
@@ -1106,7 +1129,7 @@ case object Pineapple extends Fruit(95)
 
 <p>Which is basically short-hand for this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">status</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">toConsumer</span><span class="o">(</span><span class="n">function</span><span class="o">))</span>
 </span><span class='line'><span class="o">}</span>
@@ -1117,7 +1140,7 @@ case object Pineapple extends Fruit(95)
 
 <p>If we have a button on we web page that we&#8217;d like to find using <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a>, we&#8217;d normally write something like the following, using a &#8220;locator&#8221; to locate it by <code>id</code> attribute.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span>  <span class="k">val</span> <span class="n">button</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1126,16 +1149,16 @@ case object Pineapple extends Fruit(95)
 
 <p>The fragment below uses the <a href="https://selenium.googlecode.com/git/docs/api/java/index.html?org/openqa/selenium/support/ui/WebDriverWait.html"><code>WebDriverWait</code></a> class to wait for a UI element to appear on the screen (using <code>findElement</code> to check and retrying if necessary) and so smooths out the asynchronous issues.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="s">s&quot;waiting for element &#39;</span><span class="si">$locator</span><span class="s">&#39; on page &#39;</span><span class="si">${</span><span class="n">driver</span><span class="o">.</span><span class="n">getCurrentUrl</span><span class="si">}</span><span class="s">&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>It&#8217;s also an implicit function designed to convert a <code>By</code> locator into a <code>WebElement</code>. It means we can write something like the following where <code>button</code> is no longer a <code>WebElement</code>, but a <code>By</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span>  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1146,16 +1169,16 @@ case object Pineapple extends Fruit(95)
 
 <p>Now there&#8217;s one little bit I&#8217;ve brushed over here; namely how the <code>WebDriver</code> <code>driver</code> instance is made available. The example above assumes it&#8217;s available but it&#8217;d be nicer to pass it into the function along with <code>locator</code>. However, there&#8217;s a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala&#8217;s built in <a href="http://baddotrobot.com/blog/2013/07/21/curried-functions/">currying support</a>). By combining implicit parameters the we saw in the <a href="http://baddotrobot.com/blog/2015/07/03/scala-implicit-parameters/">previous post</a>, we can maintain the elegant API.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="s">s&quot;waiting for element &#39;</span><span class="si">$locator</span><span class="s">&#39; on page &#39;</span><span class="si">${</span><span class="n">driver</span><span class="o">.</span><span class="n">getCurrentUrl</span><span class="si">}</span><span class="s">&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>So the full example would look like this; making <code>driver</code> an implicit <code>val</code> means we can avoid a call to <code>button.click()(driver)</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
 </span><span class='line'>
@@ -1206,19 +1229,19 @@ case object Pineapple extends Fruit(95)
 
 <p>At it&#8217;s simplest, an implicit parameter is just a function parameter annotated with the <code>implicit</code> keyword. It means that if no value is supplied when called, the compiler will look for an implicit value and pass it in for you.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="k">implicit</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">by</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="k">implicit</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">by</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>You tell the compiler what it can pass in implicitly but annotating values with <code>implicit</code></p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">multiplier</span> <span class="k">=</span> <span class="mi">2</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">val</span> <span class="n">multiplier</span> <span class="k">=</span> <span class="mi">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>and call the function like this</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">multiply</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="n">multiply</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1233,7 +1256,7 @@ case object Pineapple extends Fruit(95)
 
 <p>You can ask the compiler to call your function with an implicit <code>val</code> (like we&#8217;ve just seen), a <code>var</code> or even another <code>def</code>. So, we could have written a function that returns an <code>Int</code> and Scala would attempt to use that instead.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">monday</span><span class="o">)</span> <span class="mi">4</span> <span class="k">else</span> <span class="mi">2</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">monday</span><span class="o">)</span> <span class="mi">4</span> <span class="k">else</span> <span class="mi">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1253,7 +1276,7 @@ case object Pineapple extends Fruit(95)
 
 <p>You can only use <code>implicit</code> once in a parameter list and all parameters following it will be implicit. For example;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">example1</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>                       <span class="c1">// x is implicit</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">example1</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>                       <span class="c1">// x is implicit</span>
 </span><span class='line'><span class="k">def</span> <span class="n">example2</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// x and y are implicit</span>
 </span><span class='line'><span class="k">def</span> <span class="n">example3</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// wont compile </span>
 </span><span class='line'><span class="k">def</span> <span class="n">example4</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// only y is implicit</span>
@@ -1266,7 +1289,7 @@ case object Pineapple extends Fruit(95)
 
 <p>As an example, the test below uses <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a> (and specifically an instance of the <code>WebDriver</code> class) to check that a button is visible on screen. The <code>beVisible</code> method creates a <code>Matcher</code> that will check this for us but rather than pass in the <code>driver</code> instance explicitly, it uses an implicit <code>val</code> to do so.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
 </span><span class='line'>
@@ -1279,8 +1302,8 @@ case object Pineapple extends Fruit(95)
 </span><span class='line'>  <span class="k">def</span> <span class="n">beVisible</span><span class="o">(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span><span class="o">)</span><span class="k">:</span> <span class="kt">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">S</span> <span class="k">&lt;:</span> <span class="kt">By</span><span class="o">](</span><span class="n">t</span><span class="k">:</span> <span class="kt">Expectable</span><span class="o">[</span><span class="kt">S</span><span class="o">])</span> <span class="k">=</span> <span class="n">result</span><span class="o">(</span>
 </span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">isDisplayed</span><span class="o">,</span>
-</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is visible&quot;</span><span class="o">,</span>
-</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is not visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is not visible&quot;</span><span class="o">,</span>
 </span><span class='line'>      <span class="n">t</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
@@ -1310,7 +1333,7 @@ case object Pineapple extends Fruit(95)
 <h2>Mock Objects &amp; the &#8220;Context&#8221;</h2>
 
 <figure class='code'><figcaption><span>Mocks and Mockery: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JUnit4Mockery</span><span class="o">();</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledExecutorService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">ScheduledFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">ScheduledFuture</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
@@ -1320,7 +1343,7 @@ case object Pineapple extends Fruit(95)
 
 
 <figure class='code'><figcaption><span>Mocks and Mockery: Scala / Scalamock & Specs2 </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="s">&quot;A test with a mock context in scope&quot;</span> <span class="n">in</span> <span class="k">new</span> <span class="nc">MockContext</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">executor</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledExecutorService</span><span class="o">]</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">future</span> <span class="k">=</span> <span class="n">mock</span><span class="o">[</span><span class="kt">ScheduledFuture</span><span class="o">[</span><span class="kt">Any</span><span class="o">]]</span>
 </span><span class='line'>  <span class="c1">// ...</span>
@@ -1331,7 +1354,7 @@ case object Pineapple extends Fruit(95)
 <h2>Returns</h2>
 
 <figure class='code'><figcaption><span>Return a value: Java / JMock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">shutdownNow</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)));</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">waiting</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
 </span><span class='line'><span class="o">}});</span>
@@ -1341,7 +1364,7 @@ case object Pineapple extends Fruit(95)
 
 
 <figure class='code'><figcaption><span>Return a value: Scala / Scalamock </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">shutdownNow</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">returning</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">waiting</span><span class="o">)).</span><span class="n">once</span>
 </span><span class='line'><span class="o">(</span><span class="n">waiting</span><span class="o">.</span><span class="n">cancel</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1357,7 +1380,7 @@ case object Pineapple extends Fruit(95)
 <h2>Allowing / Ignoring</h2>
 
 <figure class='code'><figcaption><span>Allowing: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
 </span><span class='line'>    <span class="n">allowing</span><span class="o">(</span><span class="n">executor</span><span class="o">).</span><span class="na">scheduleWithFixedDelay</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Runnable</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">class</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">TimeUnit</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(</span><span class="n">future</span><span class="o">));</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">future</span><span class="o">).</span><span class="na">cancel</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
 </span><span class='line'><span class="o">}});</span>
@@ -1367,7 +1390,7 @@ case object Pineapple extends Fruit(95)
 
 
 <figure class='code'><figcaption><span>Allowing: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">(*,</span> <span class="o">*,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">executor</span><span class="o">.</span><span class="n">scheduleWithFixedDelay</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">(*,</span> <span class="o">*,</span> <span class="o">*</span> <span class="o">,</span> <span class="o">*).</span><span class="n">returning</span><span class="o">(</span><span class="n">future</span><span class="o">)</span>
 </span><span class='line'><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="n">cancel</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">(</span><span class="kc">true</span><span class="o">).</span><span class="n">once</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1385,7 +1408,7 @@ case object Pineapple extends Fruit(95)
 <p>JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a <code>returnValue</code>. In the example below, we don&#8217;t care if it returns anything so if the code under test relies on a value, but the test does not, we don&#8217;t have to express anything in the test.</p>
 
 <figure class='code'><figcaption><span>Default Values: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1394,7 +1417,7 @@ case object Pineapple extends Fruit(95)
 <p>Scalamock will return <code>null</code> by default. So the above example would give a <code>NullPointerException</code> and you&#8217;re required to do something like this. Notice we&#8217;re using a <code>stub</code> and not a <code>mock</code> here.</p>
 
 <figure class='code'><figcaption><span>Default Values: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">stub</span><span class="o">[</span><span class="kt">Result</span><span class="o">]</span>
 </span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">once</span><span class="o">.</span><span class="n">returning</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="n">result</span><span class="o">))</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1404,7 +1427,7 @@ case object Pineapple extends Fruit(95)
 <p>JMock uses <code>with</code> and Hamcrest the matcher <code>IsAnything</code> (<code>any</code>) to match anything. The type is used by the compiler.</p>
 
 <figure class='code'><figcaption><span>Any: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
 </span><span class='line'>    <span class="n">ignoring</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">SomeException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">AnotherException</span><span class="o">.</span><span class="na">class</span><span class="o">)));</span>
 </span><span class='line'><span class="o">}}</span>
@@ -1414,7 +1437,7 @@ case object Pineapple extends Fruit(95)
 <p>In the Scala version, use a <a href="http://docs.scala-lang.org/style/types.html#ascription">type ascription</a> to give the compiler a hand in the partially applied method call;</p>
 
 <figure class='code'><figcaption><span>Any: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(</span><span class="k">_:</span> <span class="kt">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(</span><span class="k">_:</span> <span class="kt">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">anyNumberOfTimes</span>
 </span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(</span><span class="k">_:</span> <span class="kt">SomeException</span><span class="o">)).</span><span class="n">expects</span><span class="o">(*).</span><span class="n">once</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1430,7 +1453,7 @@ case object Pineapple extends Fruit(95)
 <h2>Throwing Exceptions</h2>
 
 <figure class='code'><figcaption><span>Exception: JMock / Java </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">final</span> <span class="n">Exception</span> <span class="n">exception</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">();</span>
 </span><span class='line'><span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">create</span><span class="o">();</span> <span class="n">will</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="n">exception</span><span class="o">));</span>
 </span><span class='line'>    <span class="n">oneOf</span><span class="o">(</span><span class="n">factory</span><span class="o">).</span><span class="na">notifyObservers</span><span class="o">(</span><span class="n">exception</span><span class="o">);</span>
@@ -1441,7 +1464,7 @@ case object Pineapple extends Fruit(95)
 
 
 <figure class='code'><figcaption><span>Exception: Scalamock / Scala </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">exception</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Exception</span>
 </span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">create</span> <span class="k">_</span><span class="o">).</span><span class="n">expects</span><span class="o">().</span><span class="n">throws</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
 </span><span class='line'><span class="o">(</span><span class="n">factory</span><span class="o">.</span><span class="n">notifyObservers</span><span class="o">(</span><span class="k">_:</span> <span class="kt">Exception</span><span class="o">)).</span><span class="n">expects</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="n">once</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1529,7 +1552,7 @@ case object Pineapple extends Fruit(95)
 
 <p>Let&#8217;s say that you have a <a href="http://martinfowler.com/eaaCatalog/repository.html">repository</a> style class who&#8217;s API talks about business operations, a <code>Customers</code> class for example. You might have an database backed version and you don&#8217;t want anything going behind your back and messing with the data; everything in production code should go through your business API.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">customer</span><span class="k">:</span> <span class="kt">Customer</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">getCustomer</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">CustomerId</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">getBasketValue</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
@@ -1540,7 +1563,7 @@ case object Pineapple extends Fruit(95)
 
 <p>Now let&#8217;s say that you want a test fixture to allow you to quickly setup test data in your <code>Customers</code> without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &lt;- bad name, this is really a &quot;fixture&quot;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &lt;- bad name, this is really a &quot;fixture&quot;</span>
 </span><span class='line'>    <span class="k">abstract</span> <span class="k">val</span> <span class="n">customers</span><span class="k">:</span> <span class="kt">Customers</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
@@ -1558,7 +1581,7 @@ case object Pineapple extends Fruit(95)
 
 <p>This says that extending classes must provide a value for <code>customers</code>. It implements some coarse grained test setup against <code>customers</code>. So when writing a test, it&#8217;s easy to just extend the trait and slot in an implementation of <code>customers</code>. For example an <code>InMemoryCustomers</code> or an Oracle implementation that by-passes any constraint checking the proper API might enforce.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">override</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span>
 </span><span class='line'>
@@ -1583,7 +1606,7 @@ case object Pineapple extends Fruit(95)
 
 <p>For example, we can rework our trait to be a self type.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">this:</span> <span class="kt">Customers</span> <span class="o">=&gt;</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
@@ -1600,7 +1623,7 @@ case object Pineapple extends Fruit(95)
 
 <p>It now enforces implementers to also be a sub-type of <code>Customers</code>. This, in turn, forces us to rewrite the test</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">private</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
 </span><span class='line'>
@@ -1615,13 +1638,13 @@ case object Pineapple extends Fruit(95)
 
 <p>So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it&#8217;s much cleaner. We use composition to give the test a <code>customers</code> instance but this time, we treat it as two things. The actual type of the thing is;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>So all the backdoor methods work along with the API methods but now we can clearer about which is which. For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &lt;- a backdoor &quot;fixture&quot; method</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &lt;- a backdoor &quot;fixture&quot; method</span>
 </span><span class='line'><span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>    <span class="c1">// &lt;- more likely to be the method under test</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1678,7 +1701,7 @@ case object Pineapple extends Fruit(95)
 
 <p>In a traditional exception throwing version below, the <code>uploadExpenses</code> call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You&#8217;re also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an <a href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/">appropriate system boundary</a> but dealing with exceptions consistently for the entire system is a real challenge.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
 </span><span class='line'>    <span class="n">Expenses</span> <span class="n">uploaded</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">()));</span>    <span class="c1">// &lt;- can throw exceptions</span>
 </span><span class='line'>    <span class="n">uploaded</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">e</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">));</span>
@@ -1694,7 +1717,7 @@ case object Pineapple extends Fruit(95)
 
 <p>On the other hand, if we use an <code>Either</code> we can make the <code>uploadExpenses</code> call return <em>either</em> a successfully upload <code>Expense</code> or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">&gt;</span> <span class="n">expenses</span> <span class="o">=</span> <span class="o">...</span>
 </span><span class='line'><span class="n">List</span><span class="o">&lt;</span><span class="n">Either</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;,</span> <span class="n">Expense</span><span class="o">&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">uploadExpenses</span><span class="o">(</span><span class="n">expenses</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">toList</span><span class="o">());</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">Stream</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">Expense</span><span class="o">,</span> <span class="n">Throwable</span><span class="o">&gt;&gt;</span> <span class="n">failures</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">either</span> <span class="o">-&gt;</span> <span class="n">either</span><span class="o">.</span><span class="na">left</span><span class="o">());</span>
@@ -1733,7 +1756,7 @@ case object Pineapple extends Fruit(95)
 
 <p>So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The <code>anonymousClass</code> method is calling the <code>waitFor</code> method passing in some implementation of <code>Condition</code>, in this case it&#8217;s saying wait for some server to have shutdown.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">waitFor</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
@@ -1747,7 +1770,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The functionally equivalent lambda would look like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">waitFor</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
@@ -1756,7 +1779,7 @@ case object Pineapple extends Fruit(95)
 
 <p>Where in the interest of completeness, a naive polling <code>waitFor</code> method might look like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{</span>
 </span><span class='line'>  <span class="kd">static</span> <span class="kt">void</span> <span class="nf">waitFor</span><span class="o">(</span><span class="n">Condition</span> <span class="n">condition</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">while</span> <span class="o">(!</span><span class="n">condition</span><span class="o">.</span><span class="na">isSatisfied</span><span class="o">())</span>
 </span><span class='line'>          <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">250</span><span class="o">);</span>
@@ -1800,7 +1823,7 @@ case object Pineapple extends Fruit(95)
 
 <p>For example, this class shows that the lambda can reference the <code>firstName</code> variable directly.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Jack&quot;</span><span class="o">;</span>
 </span><span class='line'>
@@ -1815,7 +1838,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The anonymous class equivalent would need to explicitly refer to <code>firstName</code> from the enclosing scope.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Charlie&quot;</span><span class="o">;</span>
 </span><span class='line'>
@@ -1867,14 +1890,14 @@ case object Pineapple extends Fruit(95)
 
 <p>For example, this interface compiles,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>but when you indicate that it should be a <em>functional interface</em></p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span> <span class="c1">// &lt;- error here</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span> <span class="c1">// &lt;- error here</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1882,7 +1905,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The compiler will raise an error as there is no method. It says that &#8220;Example is not a functional interface&#8221; as &#8220;no abstract method was found&#8221;. It&#8217;ll also error if we try and add a second method.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">illegal</span><span class="o">();</span>    <span class="c1">// &lt;- error here</span>
@@ -1898,7 +1921,7 @@ case object Pineapple extends Fruit(95)
 
 <p>Let&#8217;s create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still &#8220;functional&#8221;. It inherits the parents <code>apply</code> method as you&#8217;d expect.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -1911,7 +1934,7 @@ case object Pineapple extends Fruit(95)
 
 <p>If you wanted to make this clearer, you can also override the functional method from the parent.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -1925,7 +1948,7 @@ case object Pineapple extends Fruit(95)
 
 <p>We can verify it works as a functional interface if we use it as a lambda. So I&#8217;ll implement a little method to show that a lambda can be assigned to a type of <code>A</code> and a type of <code>B</code>. The implementation will just print out &#8220;A&#8221; or &#8220;B&#8221;.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -1944,7 +1967,7 @@ case object Pineapple extends Fruit(95)
 
 <p>You can&#8217;t add a new abstract method to the extending interface though, as the resulting type would have two abstract methods and the compiler will error.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -2092,16 +2115,16 @@ case object Pineapple extends Fruit(95)
 
 <p>The example above (<code>x::toString</code>) is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="nl">x:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>where the signature of <code>function</code> looks like this</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -2109,7 +2132,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The <code>Supplier</code> interface must provide a string value (the <code>get</code> call) and the only way it can do that is if it&#8217;s been supplied to it on construction. It&#8217;s equivalent to</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
@@ -2120,7 +2143,7 @@ case object Pineapple extends Fruit(95)
 
 <p>The anonymous class equivalent really makes this obvious, it looks like this.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="k">new</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
@@ -2138,15 +2161,15 @@ case object Pineapple extends Fruit(95)
 
 <p>The other example (<code>String::toString</code>) is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">String</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>The <code>String</code> part looks like it&#8217;s referring to a class but it&#8217;s actually referencing an instance. It&#8217;s confusing, I know but to see things more clearly, we need to see the function that&#8217;s making use of the lambda. It looks like this.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -2154,7 +2177,7 @@ case object Pineapple extends Fruit(95)
 
 <p>So, the string value is passed directly to the function, it would look like this as a fully qualified lambda.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -2162,7 +2185,7 @@ case object Pineapple extends Fruit(95)
 
 <p>If you expand it fully to an anonymous interface, it looks like this. The <code>x</code> parameter is made available and not closed over. It&#8217;s a lambda rather than a closure.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="nd">@Override</span>
 </span><span class='line'>      <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// &lt;- takes the argument as a parameter, doesn&#39;t need to close over it</span>
@@ -2183,7 +2206,7 @@ case object Pineapple extends Fruit(95)
 
 <p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So it oesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
 
-<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="c1">// String x = &quot;hello&quot;;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;hello&quot;</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>

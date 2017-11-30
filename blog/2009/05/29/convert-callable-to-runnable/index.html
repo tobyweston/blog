@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -167,7 +167,7 @@
 
 <p>Starting with the tests, any helper must delegate to the <code>Callable</code> and handle any exceptions.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CallableAdapterTest</span> <span class="o">{</span>
 </span><span class='line'>   <span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
 </span><span class='line'>   <span class="kd">private</span> <span class="kd">final</span> <span class="n">Callable</span> <span class="n">callable</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
@@ -199,16 +199,16 @@
 
 <p>To get a green light, the implementation is fairly trivial.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CallableAdapter</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CallableAdapter</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>   <span class="kd">public</span> <span class="kd">static</span> <span class="n">Runnable</span> <span class="nf">runnable</span><span class="o">(</span><span class="kd">final</span> <span class="n">Callable</span> <span class="n">callable</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="k">new</span> <span class="nf">Runnable</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>         <span class="nd">@Override</span>
 </span><span class='line'>         <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
 </span><span class='line'>            <span class="k">try</span>
 </span><span class='line'>               <span class="n">callable</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
 </span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>               <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+</span><span class='line'>               <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
 </span><span class='line'>            <span class="o">}</span>
 </span><span class='line'>         <span class="o">}</span>
 </span><span class='line'>      <span class="o">};</span>

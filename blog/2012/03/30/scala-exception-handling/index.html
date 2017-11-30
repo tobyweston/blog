@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -165,7 +165,7 @@
 
 <p>Scala essentially treats all exception types as <code>RuntimeException</code>. This means it doesn&#8217;t <em>force</em> you to handle exceptions. Instead, it combines <em>pattern matching</em> with a single <code>catch</code> block to handle exceptions. For example</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">url</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">case</span> <span class="n">e</span><span class="k">:</span> <span class="kt">MalformURLException</span> <span class="o">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;bad url &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">)</span>
@@ -181,7 +181,7 @@
 
 <p>Throwing exceptions is done in the same way as Java, as in the example below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="c1">// ...</span>
 </span><span class='line'>  <span class="k">throw</span> <span class="k">new</span> <span class="nc">IOException</span><span class="o">(</span><span class="s">&quot;failed to load&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
@@ -190,7 +190,7 @@
 
 <p>However, anyone calling this method won&#8217;t be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the <code>throws</code> annotation but this still won&#8217;t affect Scala clients.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="nd">@throws</span><span class="o">(</span><span class="n">classOf</span><span class="o">[</span><span class="kt">java.io.IOException</span><span class="o">])</span>
 </span><span class='line'><span class="k">def</span> <span class="n">load</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="c1">// ...</span>
 </span><span class='line'><span class="o">}</span>
@@ -205,7 +205,7 @@
 
 <p>Pattern matching is applied to the exception type when using <code>catch</code> above but it&#8217;s also used in its vanilla form. For example, as described in <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in Scala</a>, we can work out what to have with dinner in the example below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">accompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;chips&quot;</span><span class="o">)</span>
 </span><span class='line'>    <span class="k">case</span> <span class="s">&quot;sausage&quot;</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;mash&quot;</span><span class="o">)</span>
@@ -218,7 +218,7 @@
 
 <p>Notice that there is no need for a <code>break</code> statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">anotherAccompaniment</span><span class="o">(</span><span class="n">dinner</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">accompaniment</span> <span class="k">=</span>
 </span><span class='line'>    <span class="n">dinner</span> <span class="k">match</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">case</span> <span class="s">&quot;fish&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;chips&quot;</span>

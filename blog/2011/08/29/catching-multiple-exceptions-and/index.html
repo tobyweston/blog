@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -161,7 +161,7 @@
 
 <p>For example, the domain cleaning class below can throw an exception during the <code>deleteAll</code> method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we&#8217;re done.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DomainCleaner</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">(</span><span class="n">Domain</span> <span class="n">domain</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
 </span><span class='line'>        <span class="n">Exceptions</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Exceptions</span><span class="o">();</span>
@@ -187,7 +187,7 @@
 
 <p>So far, we&#8217;ve only been interested in the fact that multiple exception can be handled and so haven&#8217;t needed to programmatically query for specific exception types. For example, we&#8217;ve only needed this up until now.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ... something that calls checkAndThrow()</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">CompositeException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ... this is enough for now</span>
@@ -197,7 +197,7 @@
 
 <p>The details of the classes are below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exceptions</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Iterable</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="n">exceptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;();</span>
 </span><span class='line'>
@@ -206,13 +206,13 @@
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="n">iterator</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Exception</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">exceptions</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">checkAndThrow</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">CompositeException</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">exceptions</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
-</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">CompositeException</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="n">CompositeException</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -220,7 +220,7 @@
 
 <p>The <code>toString()</code> implementation below outputs the embedded exceptions in a way that is consistent with how you&#8217;d expect to see regular exceptions.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CompositeException</span> <span class="kd">extends</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Exceptions</span> <span class="n">exceptions</span><span class="o">;</span>
 </span><span class='line'>

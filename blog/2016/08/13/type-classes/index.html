@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -184,7 +184,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Notice the paramaterised type <code>[T]</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">trait</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">T</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span>
@@ -198,7 +198,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Provide some default implementations of your type class trait in its companion object. Usually, these are singletons (<code>object</code>) but could be <code>val</code>s. They are <strong>always</strong> <code>implicit</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">NumberLike</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">NumberLike</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">object</span> <span class="nc">NumberLikeDouble</span> <span class="k">extends</span> <span class="nc">NumberLike</span><span class="o">[</span><span class="kt">Double</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">plus</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">divide</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
@@ -220,7 +220,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>To call that behaviour, we use Scala&#8217;s <code>implicit</code> semantics to find an appropriate implementation. It binds a concrete type of <code>T</code> (let&#8217;s say <code>Int</code>) with it&#8217;s corresponding type class (<code>NumberLikeInt</code>). It means we only need one method for all number-like types.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
@@ -244,7 +244,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Another way of writing the generic method is to use context bounds (ie, use <code>T: NumberLike</code>).</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">Statistics</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">[</span><span class="kt">T:</span> <span class="kt">NumberLike</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">val</span> <span class="n">number</span> <span class="k">=</span> <span class="n">implicitly</span><span class="o">[</span><span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
@@ -257,7 +257,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>As a simple extension, you can extend &#8220;member&#8221; types directly using an <code>implicit</code> class. For example, we can add the <code>mean</code> method to any sequence of <code>NumberLike</code>s.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">class</span> <span class="nc">SeqNumberOps</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">class</span> <span class="nc">SeqNumberOps</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">numbers</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="k">implicit</span> <span class="n">number</span><span class="k">:</span> <span class="kt">NumberLike</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">number</span><span class="o">.</span><span class="n">divide</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="n">plus</span><span class="o">),</span> <span class="n">numbers</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
@@ -267,7 +267,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>and call <code>mean</code> directly.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">NumberOps</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">import</span> <span class="nn">NumberOps</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">32</span><span class="o">,</span> <span class="mi">43</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
 </span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
@@ -276,7 +276,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>or like this for <code>Double</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mf">3.2</span><span class="o">,</span> <span class="mf">4.2</span><span class="o">,</span> <span class="mf">3.0</span><span class="o">,</span> <span class="mf">4.4</span><span class="o">)</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">val</span> <span class="n">numbers</span> <span class="k">=</span> <span class="nc">List</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="mf">3.2</span><span class="o">,</span> <span class="mf">4.2</span><span class="o">,</span> <span class="mf">3.0</span><span class="o">,</span> <span class="mf">4.4</span><span class="o">)</span>
 </span><span class='line'><span class="n">println</span><span class="o">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -287,7 +287,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>A basic &#8220;decoder&#8221; interface that uses an <code>Either</code> to return a result as either successful or unsuccessful.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">string</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Either</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">A</span><span class="o">]</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -297,11 +297,11 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>We could provide an implementation to decode a string to a valid <code>Colour</code> type. Unsupported colours produce a &#8220;left&#8221; result.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">colourTypeStringDecoder</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">val</span> <span class="n">colourTypeStringDecoder</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StringDecoder</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">def</span> <span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">val</span> <span class="n">colours</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;red&quot;</span><span class="o">,</span> <span class="s">&quot;green&quot;</span><span class="o">,</span> <span class="s">&quot;yellow&quot;</span><span class="o">)</span>
 </span><span class='line'>      <span class="k">if</span> <span class="o">(</span><span class="n">colours</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="n">value</span><span class="o">))</span> <span class="nc">Right</span><span class="o">(</span><span class="nc">Colour</span><span class="o">(</span><span class="n">value</span><span class="o">))</span>
-</span><span class='line'>      <span class="k">else</span> <span class="nc">Left</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$value is not a valid colour, chose one of ${colours.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
+</span><span class='line'>      <span class="k">else</span> <span class="nc">Left</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">$value</span><span class="s"> is not a valid colour, chose one of </span><span class="si">${</span><span class="n">colours</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot;, &quot;</span><span class="o">)</span><span class="si">}</span><span class="s">&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -311,7 +311,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>With an implicit class extending <code>String</code>, any string value can be decoded to a type <code>A</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">object</span> <span class="nc">StringSyntax</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">object</span> <span class="nc">StringSyntax</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">StringDecoderOps</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">decodeTo</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="k">implicit</span> <span class="n">decoder</span><span class="k">:</span> <span class="kt">StringDecoder</span><span class="o">[</span><span class="kt">A</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>      <span class="n">decoder</span><span class="o">.</span><span class="n">fromString</span><span class="o">(</span><span class="n">value</span><span class="o">)</span>
@@ -323,7 +323,7 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 
 <p>Then anywhere you have a string and you want to decode it, just go ahead.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="s">&quot;red&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>      <span class="c1">// right</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="s">&quot;red&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>      <span class="c1">// right</span>
 </span><span class='line'><span class="s">&quot;square&quot;</span><span class="o">.</span><span class="n">decodeTo</span><span class="o">[</span><span class="kt">Colour</span><span class="o">]</span>   <span class="c1">// Left(square is not a valid colour, chose one of red, green, yellow)</span>
 </span></code></pre></td></tr></table></div></figure>
 

@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,7 +163,7 @@
 
 <p>In Java, you can create an encoded URL using</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -186,7 +186,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -194,7 +194,7 @@ name=bad.robot&amp;address=the+land+of+make+believe
 
 <p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you&#8217;d do something like the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">new</span> <span class="n">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -156,7 +156,7 @@
 
 <p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
 </span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
@@ -187,7 +187,7 @@ thread.isInterrupted() = false, thread.getState() TERMINATED
 
 <p>So my thread was interrupted! It seems to say that when a thread terminates, it will reset the interrupt status flag. Looking at the source, it looks like Java maintains the flag at the native level and not as a member of the <code>Thread</code> class.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">interrupt0</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">native</span> <span class="kt">void</span> <span class="nf">interrupt0</span><span class="o">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

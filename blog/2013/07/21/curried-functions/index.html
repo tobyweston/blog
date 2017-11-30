@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,7 +163,7 @@
 
 <p>For example, in Java, you can convert</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -171,10 +171,10 @@
 
 <p>into something like this (where <code>Function&lt;A, B&gt;</code> defines a single method <code>B apply(A a)</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="nf">add</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">apply</span><span class="o">(</span><span class="kd">final</span> <span class="n">Integer</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>            <span class="k">return</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>                <span class="nd">@Override</span>
 </span><span class='line'>                <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">apply</span><span class="o">(</span><span class="n">Integer</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
@@ -189,13 +189,13 @@
 
 <p>Calling the original method</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">add</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>                       <span class="c1">// gives 2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>and calling the curried version</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">add</span><span class="o">();</span>                          <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
 </span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>                 <span class="c1">// gives back a instance of Function&lt;[A, B]&gt;</span>
 </span><span class='line'><span class="n">add</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">apply</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>         <span class="c1">// gives 2</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -205,7 +205,7 @@
 
 <p>In Java 8, it&#8217;s much less verbose using the new lambda syntax.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">add</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="nf">add</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -215,7 +215,7 @@
 
 <p>In Scala, the regular uncurried function would look like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -223,7 +223,7 @@
 
 <p>As Scala supports curried functions, you can turn this into it&#8217;s curried version simply by separating out the arguments.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// shorthand</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="c1">// shorthand</span>
 </span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 </span><span class='line'><span class="o">}</span>
@@ -232,7 +232,7 @@
 
 <p>Which is shorthand for writing it out like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// longhand</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="c1">// longhand</span>
 </span><span class='line'><span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="o">(</span><span class="kt">Int</span> <span class="o">=&gt;</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
@@ -243,33 +243,33 @@
 
 <p>Using the REPL to show how they&#8217;re called;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>     |   x + y
-</span><span class='line'>     | <span class="o">}</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>scala&gt; def add<span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>: <span class="nv">Int</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>     <span class="p">|</span>   x + y
+</span><span class='line'>     <span class="p">|</span> <span class="o">}</span>
 </span><span class='line'>add: <span class="o">(</span>x: Int<span class="o">)(</span>y: Int<span class="o">)</span>Int
 </span><span class='line'>
-</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)</span> _
+</span><span class='line'>scala&gt; add<span class="o">(</span><span class="m">1</span><span class="o">)</span> _
 </span><span class='line'>res1: <span class="nv">Int</span> <span class="o">=</span>&gt; <span class="nv">Int</span> <span class="o">=</span> &lt;Function&gt;
 </span><span class='line'>
-</span><span class='line'>scala&gt; <span class="o">(</span>add<span class="o">(</span>1<span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> 2
+</span><span class='line'>scala&gt; <span class="o">(</span>add<span class="o">(</span><span class="m">1</span><span class="o">)</span> _<span class="o">)</span>.apply<span class="o">(</span><span class="m">1</span><span class="o">)</span>
+</span><span class='line'>res2: <span class="nv">Int</span> <span class="o">=</span> <span class="m">2</span>
 </span><span class='line'>
-</span><span class='line'>scala&gt; add<span class="o">(</span>1<span class="o">)(</span>1<span class="o">)</span>
-</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> 2
+</span><span class='line'>scala&gt; add<span class="o">(</span><span class="m">1</span><span class="o">)(</span><span class="m">1</span><span class="o">)</span>
+</span><span class='line'>res3: <span class="nv">Int</span> <span class="o">=</span> <span class="m">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>and working with the longhand version;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
-</span><span class='line'>     |   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&gt; <span class="o">{</span>
-</span><span class='line'>     |     x + y
-</span><span class='line'>     |   <span class="o">}</span>
-</span><span class='line'>     | <span class="o">}</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>scala&gt; def add2<span class="o">(</span>x: Int<span class="o">)</span>: <span class="o">(</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int<span class="o">)</span> <span class="o">=</span> <span class="o">{</span>
+</span><span class='line'>     <span class="p">|</span>   <span class="o">(</span>y: Int<span class="o">)</span> <span class="o">=</span>&gt; <span class="o">{</span>
+</span><span class='line'>     <span class="p">|</span>     x + y
+</span><span class='line'>     <span class="p">|</span>   <span class="o">}</span>
+</span><span class='line'>     <span class="p">|</span> <span class="o">}</span>
 </span><span class='line'>add2: <span class="o">(</span>x: Int<span class="o">)</span><span class="nv">Int</span> <span class="o">=</span>&gt; Int
 </span><span class='line'>
-</span><span class='line'>scala&gt; add2<span class="o">(</span>1<span class="o">)</span>.apply<span class="o">(</span>1<span class="o">)</span>
-</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> 2
+</span><span class='line'>scala&gt; add2<span class="o">(</span><span class="m">1</span><span class="o">)</span>.apply<span class="o">(</span><span class="m">1</span><span class="o">)</span>
+</span><span class='line'>res4: <span class="nv">Int</span> <span class="o">=</span> <span class="m">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

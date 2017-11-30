@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -178,7 +178,7 @@
 
 <p>For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">object</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">T</span> <span class="nf">pop</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -187,7 +187,7 @@
 
 
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Deque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">deque</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayDeque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
 </span><span class='line'>
@@ -208,7 +208,7 @@
 
 <p>For example, the naive <code>BoundedStack</code> implementation below is still a <code>Stack</code>. It inherits it, it has an &#8220;is a&#8221; relationship with <code>Stack</code>. Any stack implementation most certainly does not have a &#8220;is a&#8221; relationship with list (<code>Vector</code>) or double ended queue (<code>Deque</code>).</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoundedStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">DequeStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="c1">// ...</span>
 </span><span class='line'>
@@ -231,18 +231,7 @@
 
 <h2>Related</h2>
 
-<div class="wikipedia">
-  
-  <h2>information hiding</h2>
-  <div>
-    <p>In <a href="http://en.wikipedia.org/wiki/Computer_science" title="Computer science">computer science</a>, <strong>information hiding</strong> is the principle of segregation of the <i><a href="http://en.wikipedia.org/wiki/Design" title="Design">design</a> decisions</i> in a <a href="http://en.wikipedia.org/wiki/Computer_program" title="Computer program">computer program</a> that are most likely to change, thus protecting other parts of the program from extensive modification if the design decision is changed. The protection involves providing a stable <a href="http://en.wikipedia.org/wiki/Interface_(computer_science)" title="Interface (computer science)" class="mw-redirect">interface</a> which protects the remainder of the program from the implementation (the details that are most likely to change).
-</p>
-  </div>
-  <a href="http://en.wikipedia.org/wiki/Information_hiding" target="_blank">Read more on Wikipedia</a>
-</div>
-
-
-
+<p>Liquid error: 765: unexpected token at &#8221;</p>
 </div>
 
 

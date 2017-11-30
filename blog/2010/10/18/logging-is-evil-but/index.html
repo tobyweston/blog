@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -154,7 +154,7 @@
 
 <div class="entry-content"><p>Logging is a nightmare. I don&#8217;t mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [<em>insert your current logging framework here</em>] is a recipe for disaster. We&#8217;ve all seen too much of</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'><span class="o">...</span>
 </span><span class='line'><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">somethingRisky</span><span class="o">();</span>
@@ -186,7 +186,7 @@
 
 <p>For example, I created a interface <code>Post</code>, to handle HTTP POST requests. Why should I add logging to implementations and open the door to ad-hoc, erratic logging? I shouldn&#8217;t, but when my implementation <code>CustomerPost</code> requires logging of the request and response, I can decorate with a <code>LoggingPost</code></p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </span><span class='line'>
@@ -209,7 +209,7 @@
 
 <p>You might be concerned that the try/catch above looks very similar to the original negative example. The good thing about our decorated example above is that by being explicit about this classes responsibility, declaring the usage in the correct context, we can actually define the system wide policy for logging the <code>Post</code> calls in one place, without affecting the contract of the interface. We&#8217;d do this for example, on the system boundary, for example where the RESTful API is implemented.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Resource</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Resource</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerServlet</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">Request</span> <span class="n">chuck</span><span class="o">,</span> <span class="n">Response</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
@@ -226,14 +226,14 @@
 
 <p>In our <code>LoggingPost</code> above, we haven&#8217;t even tried to inject a logger in to make the testing easier. Instead, mostly because I was being lazy, I used the helper class below. This is intended to represent Log4J in the context of a test and give access to the logger for assertion purposes.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
@@ -256,7 +256,7 @@
 
 <p>Using it in the test for <code>LoggingPost</code> is shown below</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPostTest</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
@@ -270,14 +270,14 @@
 </span><span class='line'>        <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
 </span><span class='line'>            <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'>        <span class="o">}});</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@Test</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldLogWhenExceptionIsThrown</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>            <span class="n">postWill</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="k">new</span> <span class="n">IOException</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
-</span><span class='line'>            <span class="k">new</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'>            <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'>            <span class="n">fail</span><span class="o">();</span>
 </span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>            <span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">allOf</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;ERROR&quot;</span><span class="o">),</span> <span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: recipes | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/recipes/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -87,7 +87,7 @@
 
 <p>From a terminal window</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>defaults write com.apple.Finder AppleShowAllFiles YES
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ defaults write com.apple.Finder AppleShowAllFiles YES
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>Then relaunch Finder with Option (<img src="/images/ks_option.gif" alt="Option" />) + Right Click, <code>Relaunch</code>. Switch back using <code>NO</code>.</p>
@@ -102,7 +102,7 @@
 
 <p><img itemprop="image" src="../../../../../images/duplicate_open_with_banner.png" title="'Relaunch Finder'" ></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain <span class="nb">local</span> -domain user
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <h2><a id="calculator"></a>Show your Workings with Calculator</h2>
@@ -247,9 +247,9 @@ for your current branch, you must specify a branch on the command line.
 
 <p>The abbreviated <code>git status -sb</code> version</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb&lt;/p&gt;
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ git status -sb&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead 1<span class="o">]</span>&lt;/h2&gt;
+</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead <span class="m">1</span><span class="o">]</span>&lt;/h2&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt; M LegoWars/BattleShip.h
 </span><span class='line'> M LegoWars/BattleShip.m
@@ -326,7 +326,7 @@ git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(ye
 
 <p>Using the <code>WorkbookMatcher</code>, you can compare an entire workbook to another. The comparison is made against POI <code>Workbook</code> objects, so load these using POI.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">Workbook</span> <span class="n">actual</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">expected</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(...);</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">actual</span><span class="o">,</span> <span class="n">sameWorkbook</span><span class="o">(</span><span class="n">expected</span><span class="o">));</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
@@ -346,7 +346,7 @@ Expected: entire workbook to be equal
 
 <p>Lets say we have a class, <code>InvoiceItem</code> representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">InputStream</span> <span class="n">template</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;invoiceTemplate.xls&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="n">Workbook</span> <span class="n">invoice</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HSSFWorkbook</span><span class="o">(</span><span class="n">template</span><span class="o">);</span>
 </span><span class='line'><span class="n">InvoiceItem</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItem</span><span class="o">();</span>
 </span><span class='line'><span class="n">item</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">invoice</span><span class="o">);</span>
@@ -354,8 +354,8 @@ Expected: entire workbook to be equal
 
 <p>The <code>appendTo</code> method uses <a href="http://github.com/tobyweston/simple-excel">simple-excel</a> to append the row to the invoice (ignore the details for now) but we'd like to verify that the sheet has been modified in the right way. Using the <code>CellMatcher</code>, you can do something like this.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
-</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99</span><span class="n">D</span><span class="o">))));</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">stringCell</span><span class="o">(</span><span class="s">&quot;Mac Book Pro&quot;</span><span class="o">))));</span>
+</span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">numberCell</span><span class="o">(</span><span class="mf">999.99D</span><span class="o">))));</span>
 </span><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">getCellForCoordinate</span><span class="o">(</span><span class="n">coordinate</span><span class="o">(</span><span class="n">E</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span> <span class="n">invoice</span><span class="o">),</span> <span class="n">is</span><span class="o">(</span><span class="n">equalTo</span><span class="o">(</span><span class="n">blankCell</span><span class="o">()));</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 

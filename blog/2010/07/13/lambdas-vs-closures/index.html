@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,7 +163,7 @@
 
 <p>For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">...</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="o">...</span>
 </span><span class='line'><span class="n">server</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="n">WaitFor</span><span class="o">.</span><span class="na">waitOrTimeout</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="nd">@Override</span>
@@ -184,8 +184,8 @@
 
 <p>For example, the code snippet above will return a new <code>Condition</code> instance on each invocation. Because it will bind the variable server to the anonymous function, it will return a closure. To put it another way, we&#8217;ll extract the anonymous part to a method to explicitly create a new instance, such</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">(</span><span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="nf">Condition</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">(</span><span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="nd">@Override</span>
 </span><span class='line'>      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>         <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">();</span>
@@ -197,7 +197,7 @@
 
 <p>This should make it more obvious that the variable outside the scope of the anonymous <code>Condition</code> is required (the <code>server</code> variable), each call to the <code>isRunning</code> method will return a closure over the argument, the instance of which captures the value of server. Java implements the closure by passing a reference to the outer scoped (lets say <code>Foo.class</code>) to the anonymous class (<code>Foo$1.class</code>). The <code>access$000</code> call accesses the appropriate private field in the outer class directly in the bytecode</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">Foo</span><span class="n">$1</span> <span class="kd">implements</span> <span class="n">Condition</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">class</span> <span class="nc">Foo$1</span> <span class="kd">implements</span> <span class="n">Condition</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">Foo</span> <span class="k">this</span><span class="n">$0</span><span class="o">;</span>
 </span><span class='line'>
@@ -207,7 +207,7 @@
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">Foo</span><span class="o">.</span><span class="na">access</span><span class="n">$000</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">this</span><span class="o">).</span><span class="na">isRunning</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Foo</span><span class="o">.</span><span class="na">access$000</span><span class="o">(</span><span class="n">Foo</span><span class="o">.</span><span class="na">this</span><span class="o">).</span><span class="na">isRunning</span><span class="o">();</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -215,8 +215,8 @@
 
 <p>So, if, we have update the example again, this time removing the out of scope variable, we&#8217;re left with something like this;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="nf">Condition</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">Condition</span> <span class="nf">isRunning</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">return</span> <span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="nd">@Override</span>
 </span><span class='line'>      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSatisfied</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// optimistic!</span>

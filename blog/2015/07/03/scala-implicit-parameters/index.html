@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -175,19 +175,19 @@
 
 <p>At it&#8217;s simplest, an implicit parameter is just a function parameter annotated with the <code>implicit</code> keyword. It means that if no value is supplied when called, the compiler will look for an implicit value and pass it in for you.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="k">implicit</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">by</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">multiply</span><span class="o">(</span><span class="k">implicit</span> <span class="n">by</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">by</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>You tell the compiler what it can pass in implicitly but annotating values with <code>implicit</code></p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">val</span> <span class="n">multiplier</span> <span class="k">=</span> <span class="mi">2</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">val</span> <span class="n">multiplier</span> <span class="k">=</span> <span class="mi">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>and call the function like this</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">multiply</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="n">multiply</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -202,7 +202,7 @@
 
 <p>You can ask the compiler to call your function with an implicit <code>val</code> (like we&#8217;ve just seen), a <code>var</code> or even another <code>def</code>. So, we could have written a function that returns an <code>Int</code> and Scala would attempt to use that instead.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">monday</span><span class="o">)</span> <span class="mi">4</span> <span class="k">else</span> <span class="mi">2</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">monday</span><span class="o">)</span> <span class="mi">4</span> <span class="k">else</span> <span class="mi">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -222,7 +222,7 @@
 
 <p>You can only use <code>implicit</code> once in a parameter list and all parameters following it will be implicit. For example;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">example1</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>                       <span class="c1">// x is implicit</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">example1</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>                       <span class="c1">// x is implicit</span>
 </span><span class='line'><span class="k">def</span> <span class="n">example2</span><span class="o">(</span><span class="k">implicit</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// x and y are implicit</span>
 </span><span class='line'><span class="k">def</span> <span class="n">example3</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// wont compile </span>
 </span><span class='line'><span class="k">def</span> <span class="n">example4</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>               <span class="c1">// only y is implicit</span>
@@ -235,7 +235,7 @@
 
 <p>As an example, the test below uses <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a> (and specifically an instance of the <code>WebDriver</code> class) to check that a button is visible on screen. The <code>beVisible</code> method creates a <code>Matcher</code> that will check this for us but rather than pass in the <code>driver</code> instance explicitly, it uses an implicit <code>val</code> to do so.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
 </span><span class='line'>
@@ -248,8 +248,8 @@
 </span><span class='line'>  <span class="k">def</span> <span class="n">beVisible</span><span class="o">(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span><span class="o">)</span><span class="k">:</span> <span class="kt">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Matcher</span><span class="o">[</span><span class="kt">By</span><span class="o">]</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">apply</span><span class="o">[</span><span class="kt">S</span> <span class="k">&lt;:</span> <span class="kt">By</span><span class="o">](</span><span class="n">t</span><span class="k">:</span> <span class="kt">Expectable</span><span class="o">[</span><span class="kt">S</span><span class="o">])</span> <span class="k">=</span> <span class="n">result</span><span class="o">(</span>
 </span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">isDisplayed</span><span class="o">,</span>
-</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is visible&quot;</span><span class="o">,</span>
-</span><span class='line'>      <span class="n">s</span><span class="s">&quot;${t.value.toString} is not visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is visible&quot;</span><span class="o">,</span>
+</span><span class='line'>      <span class="s">s&quot;</span><span class="si">${</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">toString</span><span class="si">}</span><span class="s"> is not visible&quot;</span><span class="o">,</span>
 </span><span class='line'>      <span class="n">t</span><span class="o">)</span>
 </span><span class='line'>  <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>

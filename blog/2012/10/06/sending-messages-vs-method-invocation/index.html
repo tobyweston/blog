@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -178,7 +178,7 @@
 <p>Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.</p>
 
 <figure class='code'><figcaption><span>Objective-C Method  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nl">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="n">food</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">eat:</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span><span class="p">)</span> <span class="nv">food</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -187,7 +187,7 @@
 <p>The equivalent C function, would look like this. It isn&#8217;t associated with an instance of a class and would be globally available to all modules. It doesn&#8217;t make sense in the object-oriented world as there is no noun associated with the action. There is no <em>thing</em> eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3].</p>
 
 <figure class='code'><figcaption><span>C Function  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span></span><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -196,7 +196,7 @@
 <p>Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the <code>id</code> parameter, which is the receiving object of the message.</p>
 
 <figure class='code'><figcaption><span>Objective C method compiled into a C Function  </span></figcaption>
- <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="n">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+ <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='objc'><span class='line'><span></span><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="kt">id</span> <span class="nb">self</span><span class="p">,</span> <span class="kt">SEL</span> <span class="n">_cmd</span><span class="p">,</span> <span class="n">Food</span><span class="o">*</span> <span class="n">food</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="c1">// nom nom nom</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -210,7 +210,7 @@
 
 <p>So in [1] when <a href="https://www.informit.com/articles/printerfriendly.aspx?p=1571983">Chisnall</a> says &#8220;in Java, a message call looks like a call to a function pointer in a C structure&#8221;, he&#8217;s referring to a C structure that contains a pointer to a function being dereferenced and how Java&#8217;s method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span></span><span class="k">struct</span> <span class="n">person</span> <span class="p">{</span>
 </span><span class='line'>   <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">eat</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">);</span>
 </span><span class='line'><span class="p">};</span>
 </span><span class='line'><span class="k">struct</span> <span class="n">person</span> <span class="n">person</span><span class="p">;</span>
@@ -219,7 +219,7 @@
 
 <p>and dereferencing it would look similar to Java</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='c'><span class='line'><span></span><span class="n">person</span><span class="p">.</span><span class="n">eat</span><span class="p">(</span><span class="n">apple</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

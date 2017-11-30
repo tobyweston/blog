@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -156,7 +156,7 @@
 
 <p>So, another example of a micro DSL I found myself writing is one of finding some object within a collection of differently typed objects. In my example, I want to find a <code>Race</code> object inside a bunch of calendar events objects, the finder micro DSL looks like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Race</span> <span class="n">race</span><span class="o">;</span>
 </span><span class='line'>
@@ -165,7 +165,7 @@
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">static</span> <span class="n">RaceFinder</span> <span class="nf">find</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">CalendarEventEntry</span> <span class="nf">in</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">CalendarEventEntry</span><span class="o">&gt;</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
@@ -182,7 +182,7 @@
 
 <p>The way the class is built, it forces the client to use it such.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -190,7 +190,7 @@
 
 <p>The original version had a method in the class to do the find, in the context of this class it was harder to test the find. I had a bunch of mocks and I was testing the find function amongst other behaviours of the class. The search line looked something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

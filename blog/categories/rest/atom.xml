@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: REST | bad.robot]]></title>
+  <title><![CDATA[Category: rest | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/rest/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -14,281 +14,297 @@
 
   
   <entry>
-    <title type="html"><![CDATA[HTTP Encoding Schemes]]></title>
-    <link href="http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes/"/>
-    <updated>2012-06-11T18:06:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/06/11/http-encoding-schemes</id>
-    <content type="html"><![CDATA[<p>What's the difference between URL Encoding and Form URL Encoding?</p>
+    <title type="html"><![CDATA[Exception Handling as a System Wide Concern]]></title>
+    <link href="http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/"/>
+    <updated>2012-03-28T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern</id>
+    <content type="html"><![CDATA[<p>It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a <strong>system wide concern</strong>. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering <em>when</em> and <em>how</em> to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.</p>
+
+<p>In this post, we'll take a closer look with some examples.</p>
 
 <!-- more -->
 
 
-<h2>URL Encoding</h2>
+<p>To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architectural "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, <em>when</em> to catch exceptions and <em>how</em> to deal with them. Effectively, we'll define a system wide strategy for each of the following.</p>
 
-<p>Sometimes refered to as <a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent Encoding</a>, this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like <code>#</code> have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by <code>%20</code>.</p>
+<ul>
+<li>Low level exceptions which propagate to the UI</li>
+<li>An example of an externally facing API, in our case, a RESTful service</li>
+<li>Maintaining data atomicity in the face of failures</li>
+</ul>
 
-<p>In Java, you can create an encoded URL using</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URI</span><span class="o">(</span><span class="s">&quot;http&quot;</span><span class="o">,</span> <span class="s">&quot;baddotrobot.com&quot;</span><span class="o">,</span> <span class="s">&quot;/cheese sandwich&quot;</span><span class="o">).</span><span class="na">toURL</span><span class="o">();</span>
+<h2>The UI Boundary</h2>
+
+<p>A user probably isn't interested in seeing details of the majority of your exceptions. A user should certainly not be presented with a Java stack trace when visiting a public web site.</p>
+
+<p>Lets have a look at the example when a user's session times out. The server will generate a <code>SessionExpiredException</code> on subsequent requests but we don't want to relay this to the user.</p>
+
+<p>For the <em>when</em>, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span></span><span class="nt">&lt;error-page&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;exception-type&gt;</span>bad.robot.example.SessionExpiredException<span class="nt">&lt;/exception-type&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;location&gt;</span>/login<span class="nt">&lt;/location&gt;</span>
+</span><span class='line'><span class="nt">&lt;/error-page&gt;</span>
+</span><span class='line'><span class="nt">&lt;error-page&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;exception-type&gt;</span>bad.robot.example.Defect<span class="nt">&lt;/exception-type&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;location&gt;</span>/internalServerError<span class="nt">&lt;/location&gt;</span>
+</span><span class='line'><span class="nt">&lt;/error-page&gt;</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>which in this case produces</p>
+<p>For the <em>how</em>, the approach at this layer is to <em>translate</em> an underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the <code>SessionExpiredException</code>. This in turn causes the <code>login</code> page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.</p>
 
-<pre><code>http:baddotrobot.com#/cheese%20sandwich
-</code></pre>
+<h2>The API Boundary</h2>
 
-<h2>Form URL Encoding</h2>
+<p>Lets consider a RESTful web service that allows a client to <code>GET</code> customer details via a URL. To get the most out of HTTP interoperability, the correct response to a request for unknown customer details is to return the HTTP response code <code>404</code> (Not Found). In the backend however, we throw a <code>CustomerNotFoundException</code>.</p>
 
-<p>Refered to by the <code>application/x-www-form-urlencoded</code> mime-type. This scheme was based on an early version of URL Encoding but at some point diverged. For example, the space character gets replaced by the <code>+</code> rather than <code>%20</code>. It's typically used for encoding <code>POST</code> message content by HTML forms.</p>
+<p>For the <em>when</em>, again, this layer is about <em>translation</em>. We would like to turn the <code>Exception</code> into a HTTP response code at the point at which the response is generated. We can propagate the exception up through the stack until the last possible point.</p>
 
-<p>For example, a HTML form with <code>name</code> and <code>address</code> would send over the following.</p>
+<p>For <a href="http://jersey.java.net/">Jersey</a>, this means the <em>how</em> is taken care of declaratively by providing an <a href="http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435"><code>ExceptionMapper</code></a> as below.</p>
 
-<pre><code>POST http://baddotrobot.com/ HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
-
-name=bad.robot&amp;address=the+land+of+make+believe
-</code></pre>
-
-<p>Use the unhelpfully named class <code>URLEncoder</code> in Java</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">net</span><span class="o">.</span><span class="na">URLEncoder</span><span class="o">.</span><span class="na">encode</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">);</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Provider</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">NotFoundException</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">CustomerNotFoundException</span> <span class="n">notFound</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">404</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">notFound</span><span class="o">.</span><span class="na">getMessage</span><span class="o">()).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>Base64 Encoding</h2>
+<p>The above turns a <code>CustomerNotFoundException</code> into the correct response code and adds a message to the response body. We encapsulate the <code>CustomerNotFoundException</code> by only allowing a single, narrow constructor.</p>
 
-<p>Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8">Authorization</a> header with base 64 encoded username and password; you'd do something like the following.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">new</span> <span class="nf">header</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Basic &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Base64Encoder</span><span class="o">().</span><span class="na">encode</span><span class="o">(</span><span class="s">&quot;username:password&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()));</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotFoundException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">NotFound</span><span class="o">(</span><span class="n">Identifier</span> <span class="n">identifier</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">format</span><span class="o">(</span><span class="s">&quot;Could not find customer \&quot;%s\&quot;&quot;</span><span class="o">,</span> <span class="n">identifier</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Which, for example, could be used to send the following HTTP message</p>
+<p>Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP <code>500</code>).</p>
 
-<pre><code>GET /login HTTP/1.1
-Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
-</code></pre>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Provider</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RuntimeExceptionMapper</span> <span class="kd">implements</span> <span class="n">ExceptionMapper</span><span class="o">&lt;</span><span class="n">Throwable</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Response</span> <span class="nf">toResponse</span><span class="o">(</span><span class="n">Throwable</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Response</span><span class="o">.</span><span class="na">status</span><span class="o">(</span><span class="mi">500</span><span class="o">).</span><span class="na">entity</span><span class="o">(</span><span class="n">exception</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of <code>Throwable</code>.</p>
+
+<h2>The Database Transaction Boundary</h2>
+
+<p>When we're performing various database interactions in the context of a business operation, we'll likely want to maintain atomicity in the event of one of the interactions failing. The typical example is a bank account transfer. We'll credit one account then debit the other. If something goes wrong, we want to rollback. Otherwise we'd be left in an inconsistent state.</p>
+
+<p>Database transactions are the typical solution to this class of problem. We'll like to start a transaction and perform some <em>unit of work</em> before finally committing. If a problem occurs during the execution, we should rollback. We don't want to do this ad-hoc with various catch statements. If we did, it would be hard to manage and to be sure we've got all the cases. We could even 'double up' and handle exceptions twice.</p>
+
+<p>So for the <em>when</em>, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span> <span class="kd">extends</span> <span class="n">Exception</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">run</span><span class="o">(</span><span class="n">UnitOfWork</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">T</span><span class="o">,</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">unitOfWork</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sessionProvider</span><span class="o">.</span><span class="na">getCurrentSession</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="n">unitOfWork</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sessionProvider</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">transaction</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Throwable</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">transaction</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isOpen</span><span class="o">())</span>
+</span><span class='line'>            <span class="n">session</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>This also describes the <em>how</em>. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propagate up to the UI. We've handled the exception here to maintain data integrity <em>and</em> allowed other exception handling policies to be applied. It's a good example of an <em>internal boundary</em>.</p>
+
+<p>For example; two sales clerks try and update a customer's details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a <code>OptimisticLockException</code>. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.</p>
+
+<p>See a <a href="/blog/2012/01/29/transaction-management-without/">previous article</a> for more details about this kind of approach to transaction management.</p>
+
+<h2>Some Parting Tips</h2>
+
+<p>We've talked about a lot here. Hopefully, the examples demonstrate the idea and here's a few parting tips.</p>
+
+<ul>
+<li>Identify the boundaries (and so <em>when</em> to handle).</li>
+<li>Define a general handling approach for each boundary (<em>how</em> to handle).</li>
+<li>Application specific exception subclasses should be <em>specialised</em>.</li>
+<li>Exceptions are objects too; think OO.</li>
+<li>Never catch an exception and rethrow verbatim.</li>
+<li>However, if required, do <em>translate</em> an exception into another <em>only</em> at the boundaries.</li>
+<li>Don't forget that boundaries can be internal, just be explicit about where they are.</li>
+</ul>
+
+
+<p>To see an example of more specialism in exception-types, see the next article <a href="/blog/2012/03/29/building-better-exceptions/">Building Better Exceptions</a>.</p>
+
+<p>Remember though, there is no spoon. Feel free to discard these tips if they don't apply. After all, you may have different constraints or you may just know better.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[HTTP Should be Simple]]></title>
-    <link href="http://baddotrobot.com/blog/2012/06/10/http-simple/"/>
-    <updated>2012-06-10T10:06:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2012/06/10/http-simple</id>
-    <content type="html"><![CDATA[<p>Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.</p>
+    <title type="html"><![CDATA[Logging is evil but...]]></title>
+    <link href="http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but/"/>
+    <updated>2010-10-18T00:00:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2010/10/18/logging-is-evil-but</id>
+    <content type="html"><![CDATA[<p>Logging is a nightmare. I don't mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [<em>insert your current logging framework here</em>] is a recipe for disaster. We've all seen too much of</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">Logger</span> <span class="n">log</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">ThisSucks</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">somethingRisky</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SomethingVeryBadException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+</span><span class='line'>   <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>which is just one example where the exception handling policy for the system (it's a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn't logged elsewhere or that the exception is even handled correctly or the right people notified. It's not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.</p>
 
 <!-- more -->
 
 
-<h2>The API</h2>
+<p>We've taken this very literally in my current project and everyone is actively discouraged from instantiating a logger. I'd rather be explicit that some exception event has occurred and fire an event that some interested party can listen for. This makes perfect sense when you think about the huge log files that someone has to trawl through, armed only with for some vague clue as to what went wrong, a grep manual and the futile hope that developers actually log something useful. All without the context of the code to actually guide them. Good luck.</p>
 
-<p>The library, <a href="https://github.com/tobyweston/simple-http">simple-http</a>, provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.</p>
+<p>The disseminated log problem is exacerbated if there is no clear audit trail tying pieces of information together. In a system with thousands of request per second, how do you tie the logged request inputs to some stack trace embedded in the middle of another thousand requests? What's the correlation ID? What should have been a clear set of requirements from the business (in this case, presumably the support team), can easily get lost in the technical translation.</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">()</span>
-</span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">httpTimeout</span><span class="o">(</span><span class="n">seconds</span><span class="o">(</span><span class="mi">30</span><span class="o">)))</span>
-</span><span class='line'>    <span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">proxy</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://proxy.com:8999&quot;</span><span class="o">)))</span>
-</span><span class='line'>    <span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">),</span>
-</span><span class='line'>        <span class="n">headers</span><span class="o">(</span>
-</span><span class='line'>            <span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;text/html&quot;</span><span class="o">)</span>
-</span><span class='line'>        <span class="o">)</span>
-</span><span class='line'>    <span class="o">);</span>
+<blockquote><p>Logging is evil, but if you really <em>have</em> to, be honest about it...</p></blockquote>
+
+<p>Asking the business <em>"what information do you want to see in the event of x happening"</em> rather than assuming they want to see some stack trace in a huge log can make a lot of sense. We're often not logging for ourselves (we have debuggers for that), we're often logging for our customers. If we start to think about this stuff early, in terms of exception events and their audience, we can build systems that tell the outside world something meaningful in flexible ways. We start to define a system wide exception handling policy rather than relying of the default exception handler (<code>System.out</code> is rarely the right choice!).</p>
+
+<p>So back to my current project. Logging is evil, but if I really <em>have</em> to log, my saving grace is to be explicit about it. I'll hunt down a customer and I'll write a test to advertise the fact the log contains what they asked for.</p>
+
+<h2>Separating Concerns</h2>
+
+<p>Most of the common logging frameworks make it troublesome to inject a logger instance (for testing). Logging (or preferably, firing an event) should be orthogonal to the classes core behaviour. My preferred approach is the canonical example of using Aspects, or less esoterically, using decorators.</p>
+
+<p>For example, I created a interface <code>Post</code>, to handle HTTP POST requests. Why should I add logging to implementations and open the door to ad-hoc, erratic logging? I shouldn't, but when my implementation <code>CustomerPost</code> requires logging of the request and response, I can decorate with a <code>LoggingPost</code></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPost</span> <span class="kd">implements</span> <span class="n">Post</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">LOG</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">LoggingPost</span><span class="o">(</span><span class="n">Post</span> <span class="n">delegate</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">delegate</span> <span class="o">=</span> <span class="n">delegate</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Response</span> <span class="nf">post</span><span class="o">(</span><span class="n">Body</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">return</span> <span class="n">delegate</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+</span><span class='line'>   <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="n">LOG</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>       <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'>   <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>It's supposed to be so simple, it's self explanatory. If it's not, <a href="https://twitter.com/#!/jamanifin">let me know</a>. The starting point is just <code>HttpClients.anApacheClient()</code>.</p>
+<p>You might be concerned that the try/catch above looks very similar to the original negative example. The good thing about our decorated example above is that by being explicit about this classes responsibility, declaring the usage in the correct context, we can actually define the system wide policy for logging the <code>Post</code> calls in one place, without affecting the contract of the interface. We'd do this for example, on the system boundary, for example where the RESTful API is implemented.</p>
 
-<h2>Separation of Concerns</h2>
-
-<p>First and foremost, <a href="https://github.com/tobyweston/simple-http">simple-http</a> helps with separation of concern. It provides a basic <code>HttpClient</code> interface which you can easily mock in your code to assert your components send messages but not concern yourself with raw HTTP. It provides the anti-corruption layer between your application and HTTP. You depend on the <a href="https://github.com/tobyweston/simple-http">simple-http</a> interfaces and not Apache's implementations. In that way, your application's interactions with HTTP are in terms of the <em>HTTP verbs</em> and not Apache's technical details.</p>
-
-<h2>Configuration</h2>
-
-<p>Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that's fine but as it comes sensible defaults, for the most part all you'll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">withTrustingSsl</span><span class="o">();</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Resource</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerServlet</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="n">Request</span> <span class="n">chuck</span><span class="o">,</span> <span class="n">Response</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomerPost</span><span class="o">(...));</span>
+</span><span class='line'>    <span class="n">customer</span><span class="o">.</span><span class="na">post</span><span class="o">(...)</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>Regular SSL authentication is straight forward too, just add a username and password to your client.</p>
+<h2>Testing the Logger</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">with</span><span class="o">(</span><span class="s">&quot;bobby brown&quot;</span><span class="o">,</span> <span class="s">&quot;secret&quot;</span><span class="o">);</span>
+<p>In our <code>LoggingPost</code> above, we haven't even tried to inject a logger in to make the testing easier. Instead, mostly because I was being lazy, I used the helper class below. This is intended to represent Log4J in the context of a test and give access to the logger for assertion purposes.</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Log4J</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">StringWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">Log4J</span> <span class="nf">appendTo</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">Log4J</span><span class="o">(</span><span class="n">logger</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="nf">Log4J</span><span class="o">(</span><span class="n">Logger</span> <span class="n">logger</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">WriterAppender</span> <span class="n">appender</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WriterAppender</span><span class="o">(</span><span class="k">new</span> <span class="n">SimpleLayout</span><span class="o">(),</span> <span class="n">writer</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">appender</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">addAppender</span><span class="o">(</span><span class="n">appender</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">clean</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">removeAppender</span><span class="o">(</span><span class="n">uuid</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">assertThat</span><span class="o">(</span><span class="n">Matcher</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">matcher</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">writer</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">matcher</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<h2>Helping you Test</h2>
-
-<p>As <a href="https://github.com/tobyweston/simple-http">simple-http</a> ships with a bunch of <code>Matcher</code>s, it's easy to make assertions or set expectations. For a simple case, compare the following.</p>
-
-<p>Using Apache directly, you might write something like this.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">apacheResponse</span><span class="o">.</span><span class="na">getStatusLine</span><span class="o">().</span><span class="na">getStatusCode</span><span class="o">(),</span> <span class="n">is</span><span class="o">(</span><span class="mi">200</span><span class="o">));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which, when it fails presents you with the following.</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: is &lt;200&gt;
-     got: &lt;404&gt;
-</code></pre>
-
-<p>With <a href="https://github.com/tobyweston/simple-http">simple-http</a>, you write.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>which is much more helpful when it fails, showing the response's status code, message, content and headers.</p>
-
-<pre><code>java.lang.AssertionError:
-Expected: a HttpMessage with status code &lt;200&gt;
-     got: &lt;DefaultHttpResponse{statusCode=404, statusMessage='Not Found', content='{ "message", "not found" }', headers='SimpleHeaders{headers=[SimpleHeader{name='Content-Type', value='application/json'}]}'}&gt;
-</code></pre>
-
-<p>Of course, you can enrich the assertions, for example.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">allOf</span><span class="o">(</span><span class="n">has</span><span class="o">(</span><span class="n">status</span><span class="o">(</span><span class="mi">200</span><span class="o">)),</span> <span class="n">has</span><span class="o">(</span><span class="n">headerWithValue</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">containsString</span><span class="o">(</span><span class="s">&quot;json&quot;</span><span class="o">)))));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>or assert against the message body, for example.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">assertThat</span><span class="o">(</span><span class="n">response</span><span class="o">,</span> <span class="n">has</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;\&quot;error\&quot;&quot;</span><span class="o">)))));</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Or use them in an expectation, for example using <a href="http://jmock.org/">JMock</a> below, we expect a HTTP <code>GET</code> to the URL <a href="http://acme.com/stock">http://acme.com/stock</a> when we call the method <code>inventoryCount()</code>.</p>
+<p>Using it in the test for <code>LoggingPost</code> is shown below</p>
 
 <p>
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">MalformedURLException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">final</span> <span class="n">HttpClient</span> <span class="n">http</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">HttpClient</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@RunWith</span><span class="o">(</span><span class="n">JMock</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingPostTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">Mockery</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mockery</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Post</span> <span class="n">mock</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">mock</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">final</span> <span class="n">Log4J</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Log4J</span><span class="o">.</span><span class="na">appendTo</span><span class="o">(</span><span class="n">Logger</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">Post</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">EXCEPTION_MESSAGE</span> <span class="o">=</span> <span class="s">&quot;bar bar black sheep...&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldDelegate</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
-</span><span class='line'>        <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">get</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">headers</span><span class="o">(</span><span class="n">header</span><span class="o">(</span><span class="s">&quot;Accept&quot;</span><span class="o">,</span> <span class="s">&quot;application/json&quot;</span><span class="o">))));</span> <span class="n">will</span><span class="o">(</span><span class="n">returnValue</span><span class="o">(...));</span>
-</span><span class='line'>        <span class="o">...</span>
+</span><span class='line'>        <span class="n">one</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'>    <span class="k">new</span> <span class="nf">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">inventoryCount</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">assertIsSatisfied</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
 </span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Or here where we expect a HTTP <code>POST</code> to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like <code>stock=%7Bsome%3A+json+message%7D</code>. Notice how <a href="http://robotooling.com/maven/">bad.robot.repo</a> avoids this complexity.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">anotherExample</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">()</span> <span class="o">{{</span>
-</span><span class='line'>        <span class="n">oneOf</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">post</span><span class="o">(</span><span class="n">with</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://acme.com/stock&quot;</span><span class="o">)),</span> <span class="n">with</span><span class="o">(</span><span class="n">post</span><span class="o">(</span><span class="n">content</span><span class="o">(</span><span class="n">params</span><span class="o">(</span><span class="s">&quot;stock&quot;</span><span class="o">,</span> <span class="s">&quot;{some: json message}&quot;</span><span class="o">).</span><span class="na">asString</span><span class="o">()))));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">shouldLogWhenExceptionIsThrown</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">postWill</span><span class="o">(</span><span class="n">throwException</span><span class="o">(</span><span class="k">new</span> <span class="n">IOException</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">LoggingPost</span><span class="o">(</span><span class="n">mock</span><span class="o">).</span><span class="na">post</span><span class="o">(...);</span>
+</span><span class='line'>        <span class="n">fail</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">logger</span><span class="o">.</span><span class="na">assertThat</span><span class="o">(</span><span class="n">allOf</span><span class="o">(</span><span class="n">containsString</span><span class="o">(</span><span class="s">&quot;ERROR&quot;</span><span class="o">),</span> <span class="n">containsString</span><span class="o">(</span><span class="n">EXCEPTION_MESSAGE</span><span class="o">)));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@After</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">cleanupLogger</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">logger</span><span class="o">.</span><span class="na">clean</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kt">void</span> <span class="nf">postWill</span><span class="o">(</span><span class="kd">final</span> <span class="n">Action</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">context</span><span class="o">.</span><span class="na">checking</span><span class="o">(</span><span class="k">new</span> <span class="n">Expectations</span><span class="o">(){{</span>
+</span><span class='line'>        <span class="n">allowing</span><span class="o">(</span><span class="n">mock</span><span class="o">);</span> <span class="n">will</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}});</span>
-</span><span class='line'>    <span class="k">new</span> <span class="n">StockRoom</span><span class="o">(</span><span class="n">http</span><span class="o">).</span><span class="na">addStock</span><span class="o">(...);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<h2>Download</h2>
-
-<p>You can download from the <a href="http://robotooling.com/maven/">bad.robot.repo</a> Maven repository or get the source from <a href="https://github.com/tobyweston/simple-http">Github</a>.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='xml'><span class='line'><span></span><span class="nt">&lt;repositories&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;repository&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;id&gt;</span>bad.robot<span class="nt">&lt;/id&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;name&gt;</span>bad.robot repository for robotooling<span class="nt">&lt;/name&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;url&gt;</span>http://www.robotooling.com/maven/<span class="nt">&lt;/url&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/repository&gt;</span>
-</span><span class='line'><span class="nt">&lt;/repositories&gt;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;p&gt;&lt;dependency&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>bad.robot<span class="nt">&lt;/groupId&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>simple-http<span class="nt">&lt;/artifactId&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-</span><span class='line'><span class="nt">&lt;/dependency&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>Enjoy and <a href="https://twitter.com/#!/jamanifin">let me know</a> how you get on.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Force IE8 to Display JSON with Jersey]]></title>
-    <link href="http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8/"/>
-    <updated>2012-02-21T06:27:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/02/21/jersey-and-ie8</id>
-    <content type="html"><![CDATA[<p>If Internet Explorer 8 performs a HTTP <code>GET</code> against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using <a href="http://jersey.java.net/">Jersey</a>, Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.</p>
-
-<!-- more -->
-
-
-<p>The problem is in IE8's default set of <code>Accept</code> header values. For some reason, it'll ask for a very specific set of Microsoft types in the request;</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Accept: application/x-ms-application, application/xaml+xml, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, &lt;em>/&lt;/em></span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>When the server responds with a <code>Content-Type</code> of anything other than what's in the accept list,
-IE will prompt the user to save the resource instead of attempting to display it. That's fair enough as I imagine its
-saying "I didn't say I could accept this so therefore, I don't know how to display it".</p>
-
-<p>Responding to a request with the above <code>Accept</code> header from IE with a response including the following header</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Content-Type: application/json</span></code></pre></td></tr></table></div></figure></notextile></div></p>
-
-<p>will prompt IE8 to save the file rather than display 'in-browser'.</p>
-
-<p>When we return a response with a JSON content type, IE won't know how to handle it. We could send back our JSON as <code>text/plain</code> for all cases, but that kind of defeats the object of using <code>Content-Type</code> all together.</p>
-
-<p>However, we can use Jersey to handle the IE case (where the request is for say <code>application/x-ms-application</code>)
-by sending back plain text but still return JSON for all other cases.</p>
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Path</span><span class="o">(</span><span class="s">&quot;/customers&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customers</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="nd">@GET</span>
-</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/json&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getAllCustomers</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nf">allCustomersAsJson</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@GET</span>
-</span><span class='line'><span class="nd">@Produces</span><span class="o">(</span><span class="s">&quot;application/x-ms-application&quot;</span><span class="o">)</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">TextPlainOkResponse</span> <span class="nf">getAllCustomersForInternetExplorer</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">getAllCustomersAsJson</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
-<p>The class above will return a list of all Customers as JSON. The <code>getAllCustomers</code> method will be dispatched to via
-Jersey and send back the <code>String</code> with a <code>Content-Type</code> of <code>application/json</code> for all cases <em>unless</em>
-the client asks for <code>application/x-ms-application</code>. This is the case for IE. Now, although the same JSON string is
-constructed, we'll overwrite the <code>Content-Type</code> masquerading as <code>text/plain</code> in the <code>TextPlainOkResponse</code> class.</p>
+<p>It relies on Log4J's static instances to dynamically add a logger to the list of loggers and thereby appending any generated logs to something that the <code>Log4J</code> test helper can check against. I can't decide if I like this or not. It gives you an extra test that your class under test is using a logger with the name that you expect (<code>"Post.class"</code> in the example above), testing your logger configuration as a by-product.</p>
 
-<p>
-<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TextPlainOkResponse</span> <span class="kd">extends</span> <span class="n">Response</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">TextPlainOkResponse</span><span class="o">(</span><span class="n">String</span> <span class="n">json</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">json</span> <span class="o">=</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">getEntity</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStatus</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">200</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">MultivaluedMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">getMetadata</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="k">new</span> <span class="n">MetadataMap</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;()</span> <span class="o">{{</span>
-</span><span class='line'>        <span class="n">put</span><span class="o">(</span><span class="s">&quot;Content-Type&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Object</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span><span class="n">asList</span><span class="o">(</span><span class="s">&quot;text/plain&quot;</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}};</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>What I found interesting about this though was that it was always seemed a lot of effort making some logging framework play nicely with mocks, or writing and configuring a custom in memory appender and asserting on it. With the above example, I very quickly added confirmation to existing Log4J infrastructure.</p>
 
-<p>So for all clients asking for <code>application/x-ms-application</code>, they'll actually get <code>text/plain</code>. In the case of
-Internet Explorer 8, it will display the JSON 'in-browser'. It won't apply any formatting though, so you may want to
-pretty print the response before sending it back.</p>
+<p>I'd love to hear your comments and how you write tests for logging.</p>
 
-<p>If it doesn't work for you, see what headers IE is actually sending and adapt the strategy accordingly. You can using
-something like <a href="http://www.blunck.info/iehttpheaders.html">ieHttpHeaders</a> or the awesome <a href="http://www.membrane-soa.org/soap-monitor/">Membrane</a> to see what headers are going over the wire.</p>
+<p>PS. Logging really is evil.</p>
 ]]></content>
   </entry>
   

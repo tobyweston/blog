@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -165,14 +165,14 @@
 
 <p>For example, this interface compiles,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>but when you indicate that it should be a <em>functional interface</em></p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span> <span class="c1">// &lt;- error here</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span> <span class="c1">// &lt;- error here</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -180,7 +180,7 @@
 
 <p>The compiler will raise an error as there is no method. It says that &#8220;Example is not a functional interface&#8221; as &#8220;no abstract method was found&#8221;. It&#8217;ll also error if we try and add a second method.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">illegal</span><span class="o">();</span>    <span class="c1">// &lt;- error here</span>
@@ -196,7 +196,7 @@
 
 <p>Let&#8217;s create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still &#8220;functional&#8221;. It inherits the parents <code>apply</code> method as you&#8217;d expect.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -209,7 +209,7 @@
 
 <p>If you wanted to make this clearer, you can also override the functional method from the parent.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -223,7 +223,7 @@
 
 <p>We can verify it works as a functional interface if we use it as a lambda. So I&#8217;ll implement a little method to show that a lambda can be assigned to a type of <code>A</code> and a type of <code>B</code>. The implementation will just print out &#8220;A&#8221; or &#8220;B&#8221;.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -242,7 +242,7 @@
 
 <p>You can&#8217;t add a new abstract method to the extending interface though, as the resulting type would have two abstract methods and the compiler will error.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>

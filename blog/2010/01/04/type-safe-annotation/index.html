@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -170,7 +170,7 @@
 
 <p>A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from <a href="http://amzn.to/TtEnWO" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Concurrency In Practice</a>, I wanted to include an enum as a parameter type. Kind of like this</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
 </span><span class='line'>
 </span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">CLASS</span><span class="o">;</span> <span class="o">}</span>
@@ -185,7 +185,7 @@
 
 <p>So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
 </span><span class='line'>
 </span><span class='line'>   <span class="kd">public</span> <span class="kd">enum</span> <span class="n">Type</span> <span class="o">{</span>
@@ -207,7 +207,7 @@
 
 <p>Using the static constructor method is fine when I want to create an instance of a type but not when I want to annotate some method. For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@GuardedBy</span><span class="o">(</span><span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">))</span> <span class="c1">// javac cries</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">foo</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="n">GuardedBy</span><span class="o">.</span><span class="na">Type</span><span class="o">.</span><span class="na">CLASS</span><span class="o">(</span><span class="s">&quot;more info&quot;</span><span class="o">);</span> <span class="c1">// fine</span>
 </span><span class='line'><span class="o">}</span>
@@ -221,7 +221,7 @@
 
 <p>To get round things, you can just create several attributes for the annotation. Rather than have a nice <code>CLASS</code> type which can optionally have a description, I was forced to have one attribute of type and another to capture the additional information.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GuardedBy</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Type</span> <span class="nf">value</span><span class="o">();</span>
 </span><span class='line'>   <span class="n">String</span> <span class="nf">details</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
 </span><span class='line'>

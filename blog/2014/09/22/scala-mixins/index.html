@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -165,7 +165,7 @@
 
 <p>Let&#8217;s say that you have a <a href="http://martinfowler.com/eaaCatalog/repository.html">repository</a> style class who&#8217;s API talks about business operations, a <code>Customers</code> class for example. You might have an database backed version and you don&#8217;t want anything going behind your back and messing with the data; everything in production code should go through your business API.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomers</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">customer</span><span class="k">:</span> <span class="kt">Customer</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">getCustomer</span><span class="o">(</span><span class="n">id</span><span class="k">:</span> <span class="kt">CustomerId</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
 </span><span class='line'>    <span class="k">def</span> <span class="n">getBasketValue</span><span class="o">(</span><span class="n">query</span><span class="k">:</span> <span class="kt">CustomerQuery</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
@@ -176,7 +176,7 @@
 
 <p>Now let&#8217;s say that you want a test fixture to allow you to quickly setup test data in your <code>Customers</code> without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &lt;- bad name, this is really a &quot;fixture&quot;</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>                               <span class="c1">// &lt;- bad name, this is really a &quot;fixture&quot;</span>
 </span><span class='line'>    <span class="k">abstract</span> <span class="k">val</span> <span class="n">customers</span><span class="k">:</span> <span class="kt">Customers</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
@@ -194,7 +194,7 @@
 
 <p>This says that extending classes must provide a value for <code>customers</code>. It implements some coarse grained test setup against <code>customers</code>. So when writing a test, it&#8217;s easy to just extend the trait and slot in an implementation of <code>customers</code>. For example an <code>InMemoryCustomers</code> or an Oracle implementation that by-passes any constraint checking the proper API might enforce.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="k">extends</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">override</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span>
 </span><span class='line'>
@@ -219,7 +219,7 @@
 
 <p>For example, we can rework our trait to be a self type.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">trait</span> <span class="nc">BackdoorCustomers</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">this:</span> <span class="kt">Customers</span> <span class="o">=&gt;</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">def</span> <span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
@@ -236,7 +236,7 @@
 
 <p>It now enforces implementers to also be a sub-type of <code>Customers</code>. This, in turn, forces us to rewrite the test</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">OracleCustomerTest</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="k">private</span> <span class="k">val</span> <span class="n">customers</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
 </span><span class='line'>
@@ -251,13 +251,13 @@
 
 <p>So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it&#8217;s much cleaner. We use composition to give the test a <code>customers</code> instance but this time, we treat it as two things. The actual type of the thing is;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="nc">InMemoryCustomers</span> <span class="k">with</span> <span class="nc">BackdoorCustomers</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>So all the backdoor methods work along with the API methods but now we can clearer about which is which. For example,</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &lt;- a backdoor &quot;fixture&quot; method</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="n">customers</span><span class="o">.</span><span class="n">addSomeCustomersWithFullBaskets</span><span class="o">()</span>         <span class="c1">// &lt;- a backdoor &quot;fixture&quot; method</span>
 </span><span class='line'><span class="n">application</span><span class="o">.</span><span class="n">doSomethingAgainstCustomersViaTheApi</span>    <span class="c1">// &lt;- more likely to be the method under test</span>
 </span></code></pre></td></tr></table></div></figure>
 

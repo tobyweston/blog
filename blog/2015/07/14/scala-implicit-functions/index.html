@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,7 +163,7 @@
 
 <p>For example, the following function allows you to convert a Scala function into a instance of the Java 8 <code>Consumer</code> <a href="/blog/2014/04/07/functional-interfaces-in-java8/">single argument method</a> but still use Scala&#8217;s concise syntax.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">toConsumer</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">function</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">toConsumer</span><span class="o">[</span><span class="kt">A</span><span class="o">](</span><span class="n">function</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span><span class="k">:</span> <span class="kt">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">A</span><span class="o">]()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">arg</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="n">apply</span><span class="o">(</span><span class="n">arg</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -171,7 +171,7 @@
 
 <p>You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java&#8217;s lambda syntax. So rather than having to use the longhand version like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingJavaForEach</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="k">new</span> <span class="nc">Consumer</span><span class="o">[</span><span class="kt">Element</span><span class="o">]()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">override</span> <span class="k">def</span> <span class="n">accept</span><span class="o">(</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
 </span><span class='line'>  <span class="o">})</span>
@@ -181,7 +181,7 @@
 
 <p>You can write this, where we just pass a Scala function to Java&#8217;s <code>forEach</code> method.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">((</span><span class="n">element</span><span class="k">:</span> <span class="kt">Element</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -189,7 +189,7 @@
 
 <p>The argument to <code>forEach</code> is actually a function of type <code>Element =&gt; Unit</code>. Scala recognises that the <code>toConsumer</code> method could convert this into a <code>Consumer[Element]</code> and does so implicitly.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">function</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
@@ -198,7 +198,7 @@
 
 <p>Which is basically short-hand for this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">def</span> <span class="n">exampleUsingImplicitConversion</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">function</span><span class="k">:</span> <span class="kt">ObserverS</span> <span class="o">=&gt;</span> <span class="nc">Unit</span> <span class="k">=</span> <span class="o">(</span><span class="n">observer</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">observer</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">status</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">javaCollection</span><span class="o">.</span><span class="n">forEach</span><span class="o">(</span><span class="n">toConsumer</span><span class="o">(</span><span class="n">function</span><span class="o">))</span>
 </span><span class='line'><span class="o">}</span>
@@ -209,7 +209,7 @@
 
 <p>If we have a button on we web page that we&#8217;d like to find using <a href="http://www.seleniumhq.org/projects/webdriver/">Web Driver</a>, we&#8217;d normally write something like the following, using a &#8220;locator&#8221; to locate it by <code>id</code> attribute.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span>  <span class="k">val</span> <span class="n">button</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -218,16 +218,16 @@
 
 <p>The fragment below uses the <a href="https://selenium.googlecode.com/git/docs/api/java/index.html?org/openqa/selenium/support/ui/WebDriverWait.html"><code>WebDriverWait</code></a> class to wait for a UI element to appear on the screen (using <code>findElement</code> to check and retrying if necessary) and so smooths out the asynchronous issues.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)</span><span class="k">:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="s">s&quot;waiting for element &#39;</span><span class="si">$locator</span><span class="s">&#39; on page &#39;</span><span class="si">${</span><span class="n">driver</span><span class="o">.</span><span class="n">getCurrentUrl</span><span class="si">}</span><span class="s">&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>It&#8217;s also an implicit function designed to convert a <code>By</code> locator into a <code>WebElement</code>. It means we can write something like the following where <code>button</code> is no longer a <code>WebElement</code>, but a <code>By</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'>  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span>  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="nc">By</span><span class="o">.</span><span class="n">id</span><span class="o">(</span><span class="s">&quot;save-button&quot;</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -238,16 +238,16 @@
 
 <p>Now there&#8217;s one little bit I&#8217;ve brushed over here; namely how the <code>WebDriver</code> <code>driver</code> instance is made available. The example above assumes it&#8217;s available but it&#8217;d be nicer to pass it into the function along with <code>locator</code>. However, there&#8217;s a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala&#8217;s built in <a href="/blog/2013/07/21/curried-functions/">currying support</a>). By combining implicit parameters the we saw in the <a href="/blog/2015/07/03/scala-implicit-parameters/">previous post</a>, we can maintain the elegant API.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">implicit</span> <span class="k">def</span> <span class="n">waitForElement</span><span class="o">(</span><span class="n">locator</span><span class="k">:</span> <span class="kt">By</span><span class="o">)(</span><span class="k">implicit</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver:</span> <span class="kt">WebElement</span> <span class="o">=</span> <span class="o">{</span>
 </span><span class='line'>  <span class="k">val</span> <span class="n">predicate</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=&gt;</span> <span class="nc">WebElement</span> <span class="k">=</span> <span class="k">_</span><span class="o">.</span><span class="n">findElement</span><span class="o">(</span><span class="n">locator</span><span class="o">)</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;waiting for element &#39;$locator&#39; on page &#39;${driver.getCurrentUrl}&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">new</span> <span class="nc">WebDriverWait</span><span class="o">(</span><span class="n">driver</span><span class="o">,</span> <span class="mi">30</span><span class="o">).</span><span class="n">withMessage</span><span class="o">(</span><span class="s">s&quot;waiting for element &#39;</span><span class="si">$locator</span><span class="s">&#39; on page &#39;</span><span class="si">${</span><span class="n">driver</span><span class="o">.</span><span class="n">getCurrentUrl</span><span class="si">}</span><span class="s">&#39;&quot;</span><span class="o">).</span><span class="n">until</span><span class="o">(</span><span class="n">predicate</span><span class="o">)</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>So the full example would look like this; making <code>driver</code> an implicit <code>val</code> means we can avoid a call to <code>button.click()(driver)</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='scala'><span class='line'><span></span><span class="k">class</span> <span class="nc">ExampleWebDriverTest</span> <span class="k">extends</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Specification</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">implicit</span> <span class="k">val</span> <span class="n">driver</span><span class="k">:</span> <span class="kt">WebDriver</span> <span class="o">=</span> <span class="nc">Browser</span><span class="o">.</span><span class="n">create</span><span class="o">.</span><span class="n">driver</span>
 </span><span class='line'>

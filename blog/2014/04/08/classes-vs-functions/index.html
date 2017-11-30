@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -161,7 +161,7 @@
 
 <p>So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The <code>anonymousClass</code> method is calling the <code>waitFor</code> method passing in some implementation of <code>Condition</code>, in this case it&#8217;s saying wait for some server to have shutdown.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">anonymousClass</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">waitFor</span><span class="o">(</span><span class="k">new</span> <span class="n">Condition</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
@@ -175,7 +175,7 @@
 
 <p>The functionally equivalent lambda would look like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kt">void</span> <span class="nf">closure</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">Server</span> <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpServer</span><span class="o">();</span>
 </span><span class='line'>    <span class="n">waitFor</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">!</span><span class="n">server</span><span class="o">.</span><span class="na">isRunning</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
@@ -184,7 +184,7 @@
 
 <p>Where in the interest of completeness, a naive polling <code>waitFor</code> method might look like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">class</span> <span class="nc">WaitFor</span> <span class="o">{</span>
 </span><span class='line'>  <span class="kd">static</span> <span class="kt">void</span> <span class="nf">waitFor</span><span class="o">(</span><span class="n">Condition</span> <span class="n">condition</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
 </span><span class='line'>      <span class="k">while</span> <span class="o">(!</span><span class="n">condition</span><span class="o">.</span><span class="na">isSatisfied</span><span class="o">())</span>
 </span><span class='line'>          <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">250</span><span class="o">);</span>
@@ -228,7 +228,7 @@
 
 <p>For example, this class shows that the lambda can reference the <code>firstName</code> variable directly.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Jack&quot;</span><span class="o">;</span>
 </span><span class='line'>
@@ -243,7 +243,7 @@
 
 <p>The anonymous class equivalent would need to explicitly refer to <code>firstName</code> from the enclosing scope.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Example</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">&quot;Charlie&quot;</span><span class="o">;</span>
 </span><span class='line'>

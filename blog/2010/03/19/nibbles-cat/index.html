@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -156,9 +156,9 @@
 
 <p>I&#8217;m talking here about Java level deadlocks and to illustrate the point, poor old <code>Nibbles</code> got himself into quite a pickle. The situation is like this; <code>Nibbles</code> has been abducted and the <code>Kidnapper</code> and <code>Negotiator</code> threads have started a dialogue.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>     <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>     <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>     <span class="k">new</span> <span class="n">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -170,7 +170,7 @@
 
 <p>By synchronising on nibbles below, the  <code>Kidnapper</code> is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  <code>Kidnapper</code> is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  <code>Kidnapper</code> is grabbing it. Meanwhile, the <code>Negotiator</code> is synchronising on the cash, holding onto it (or again, more specifically, it&#8217;s monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="kd">synchronized</span> <span class="o">(</span><span class="n">nibbles</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">cash</span><span class="o">)</span> <span class="o">{</span>

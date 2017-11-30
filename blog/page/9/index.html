@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -256,7 +256,7 @@
 
 <p>Just to recap then, to find something in a list, the original client code (using a static import) looks like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">find</span><span class="o">(</span><span class="n">needle</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">haystack</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -307,7 +307,7 @@
 
 <p>So, another example of a micro DSL I found myself writing is one of finding some object within a collection of differently typed objects. In my example, I want to find a <code>Race</code> object inside a bunch of calendar events objects, the finder micro DSL looks like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">final</span> <span class="kd">class</span> <span class="nc">RaceFinder</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Race</span> <span class="n">race</span><span class="o">;</span>
 </span><span class='line'>
@@ -316,7 +316,7 @@
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">static</span> <span class="n">RaceFinder</span> <span class="nf">find</span><span class="o">(</span><span class="n">Race</span> <span class="n">race</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">RaceFinder</span><span class="o">(</span><span class="n">race</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">CalendarEventEntry</span> <span class="nf">in</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">CalendarEventEntry</span><span class="o">&gt;</span> <span class="n">events</span><span class="o">)</span> <span class="o">{</span>
@@ -333,7 +333,7 @@
 
 <p>The way the class is built, it forces the client to use it such.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">find</span><span class="o">(</span><span class="n">race</span><span class="o">).</span><span class="na">in</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -341,7 +341,7 @@
 
 <p>The original version had a method in the class to do the find, in the context of this class it was harder to test the find. I had a bunch of mocks and I was testing the find function amongst other behaviours of the class. The search line looked something like this.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">CalendarEventEntry</span> <span class="n">event</span> <span class="o">=</span> <span class="n">searchForRaceIn</span><span class="o">(</span><span class="n">events</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -422,7 +422,7 @@
 
 <h3>Example 1.</h3>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="c1">// ...</span>
 </span><span class='line'>    <span class="o">}</span>
@@ -435,7 +435,7 @@
 
 <h3>Example 2.</h3>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="c1">// ...</span>
@@ -489,7 +489,7 @@
 
   <div class="entry-content"><p>Why didn&#8217;t Sun add a <code>value</code> property to the <code>@Deprecated</code> annotation? Instead of</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Documented</span>
 </span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">Deprecated</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
@@ -498,7 +498,7 @@
 
 <p>which kind of implies we should do the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Deprecated</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Deprecated</span>
 </span><span class='line'><span class="cm">/** @deprecated use {@link Foo} instead */</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ...</span>
@@ -508,7 +508,7 @@
 
 <p>why can&#8217;t we have</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Documented</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Documented</span>
 </span><span class='line'><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyDeprecated</span><span class="o">{</span>
 </span><span class='line'>   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
@@ -518,7 +518,7 @@
 
 <p>which means we can use</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@MyDeprecated</span><span class="o">(</span><span class="s">&quot;use Foo instead&quot;</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GoneOff</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ...</span>
 </span><span class='line'><span class="o">}</span>
@@ -569,14 +569,14 @@
 
 <p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">startup</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">shutdown</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -585,7 +585,7 @@
 
 <p>To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called <code>await()</code>, I was able to express the same thing with the following.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">startup</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
@@ -601,7 +601,7 @@
 
 <p>Using a private constructor and verifying the internal state is essential to ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I&#8217;d suggest its a good pattern to follow. The finished class is shown below in full.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
 </span><span class='line'>
@@ -610,12 +610,12 @@
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CountDownLatchWithTimeout</span> <span class="nf">await</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">latch</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">latch</span><span class="o">);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">with</span><span class="o">(</span><span class="n">Duration</span> <span class="n">timeout</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
 </span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="n">timeout</span><span class="o">.</span><span class="na">inMillis</span><span class="o">(),</span> <span class="n">MILLISECONDS</span><span class="o">))</span>
-</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">TimeoutException</span><span class="o">();</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -719,9 +719,9 @@
 
 <p>This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the <code>main</code> method, in variations of the code below.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nf">SwtCalculator</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">public</span> <span class="n">SwtCalculator</span> <span class="o">{</span>
@@ -772,7 +772,7 @@ Stack trace:
 
 <p>A minor change to the application&#8217;s main method is required to optionally not call the event loop when calling main. For example;</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
 </span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
@@ -782,7 +782,7 @@ Stack trace:
 
 <p>The tests can then explicitly create a UI thread delegating shell setup to the <code>SwtCalculator</code> class before starting the event loop and allowing the test thread to continue.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Before</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Before</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>

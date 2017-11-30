@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -271,16 +271,16 @@
 
 <p>The example above (<code>x::toString</code>) is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="nl">x:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>where the signature of <code>function</code> looks like this</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -288,7 +288,7 @@
 
 <p>The <code>Supplier</code> interface must provide a string value (the <code>get</code> call) and the only way it can do that is if it&#8217;s been supplied to it on construction. It&#8217;s equivalent to</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
@@ -299,7 +299,7 @@
 
 <p>The anonymous class equivalent really makes this obvious, it looks like this.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="k">new</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>        <span class="nd">@Override</span>
@@ -317,15 +317,15 @@
 
 <p>The other example (<code>String::toString</code>) is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="nl">String:</span><span class="o">:</span><span class="n">toString</span><span class="o">);</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">String</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>The <code>String</code> part looks like it&#8217;s referring to a class but it&#8217;s actually referencing an instance. It&#8217;s confusing, I know but to see things more clearly, we need to see the function that&#8217;s making use of the lambda. It looks like this.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -333,7 +333,7 @@
 
 <p>So, the string value is passed directly to the function, it would look like this as a fully qualified lambda.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -341,7 +341,7 @@
 
 <p>If you expand it fully to an anonymous interface, it looks like this. The <code>x</code> parameter is made available and not closed over. It&#8217;s a lambda rather than a closure.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
 </span><span class='line'>      <span class="nd">@Override</span>
 </span><span class='line'>      <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// &lt;- takes the argument as a parameter, doesn&#39;t need to close over it</span>
@@ -362,7 +362,7 @@
 
 <p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So it oesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
 
-<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
+<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>    <span class="c1">// String x = &quot;hello&quot;;</span>
 </span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;hello&quot;</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 </span><span class='line'><span class="o">}</span>

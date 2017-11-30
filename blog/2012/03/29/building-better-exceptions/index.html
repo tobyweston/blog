@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -163,15 +163,15 @@
 
 <p>We tend to think of exceptions as beans; objects with a <code>message</code> that we get and display. It&#8217;s easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="nf">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;the field &#39;customer&#39; is missing from the request&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;&#39;customer&#39; is missing&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">throw</span> <span class="k">new</span> <span class="n">BadRequestException</span><span class="o">(</span><span class="s">&quot;can not parse request&quot;</span> <span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>It&#8217;s an example of bad encapsulation in the <code>BadRequestException</code> class. It&#8217;s hard to tell if the examples above should be handled the same or differently. There&#8217;s certainly an inconsistency between the wording of the first two. Are they the same error? It&#8217;s also not clear where the message is going to end up? A better idea would be to create sub-classes for each.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MissingFieldException</span> <span class="kd">extends</span> <span class="n">BadRequestException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>        <span class="kd">super</span><span class="o">();</span>
 </span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">;</span>
@@ -182,7 +182,7 @@
 
 <p>All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a <code>catch</code> block built for <code>BadRequest</code> (and it&#8217;s there that we would decide how to map the exception type to a presentable form). We&#8217;ve intentionally <em>avoided</em> something like</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="nf">MissingFieldException</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="kd">super</span><span class="o">(</span><span class="s">&quot;the field &#39;&quot;</span> <span class="o">+</span> <span class="s">&quot;&#39; is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -198,7 +198,7 @@
 
 <p>How do we apply this to exceptions? Well, now we&#8217;ve got nicely encapsulated data it&#8217;s clear that the exception itself is responsible for <em>using</em> it. In the example above, we&#8217;ve encapsulated a <code>field</code> object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can <em>present itself to some object</em>, in this example an implementation of a <code>Description</code> interface.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">applyTo</span><span class="o">(</span><span class="n">Description</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">description</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;the field&quot;</span><span class="o">).</span><span class="na">appendValue</span><span class="o">(</span><span class="n">field</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;is missing from the request&quot;</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -224,7 +224,7 @@ If a class throws an exception, <em>we should never need to test the content of 
 
 <p> If that&#8217;s truly the case, you can create application specific exceptions that sub-class <code>RuntimeException</code> and clean up the code base considerably. However, it&#8217;s a potentially bad idea to actually throw <code>RuntimeException</code> as this subverts the explicit catching strategy. I generally consider <code>RuntimeException</code> as an abstract class. It doesn&#8217;t make sense on its own because it implies any <code>catch</code> clause is too generic. Instead, create an root application exception that extends <code>RuntimeException</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadRobotApplicationException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
 </span><span class='line'>    <span class="c1">// ...</span>
 </span><span class='line'> <span class="o">}</span>
 </span><span class='line'>

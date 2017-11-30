@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -154,7 +154,7 @@
 
 <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -170,10 +170,10 @@
 
 
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">potentialDeadlock</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nf">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
-</span><span class='line'>  <span class="k">new</span> <span class="nf">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>  <span class="k">new</span> <span class="n">Kidnapper</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>  <span class="k">new</span> <span class="n">Negotiator</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kidnapper</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>

@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2017-10-27 21:14:30 +0100 -->
+    <!-- last update; 2017-11-30 15:00:19 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -159,7 +159,7 @@
 
 <p>In an attempt to ease the situation, I created an <code>@Intermittent</code> annotation with a corresponding JUnit <code>Rule</code> and <code>Runner</code>. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span>
 </span><span class='line'><span class="nd">@Intermittent</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flickering</span><span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>   <span class="c1">// ...</span>
@@ -169,7 +169,7 @@
 
 <p>You can then use the <code>IntermittentRule</code> to run the test method repeatedly.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
 </span><span class='line'>
@@ -184,7 +184,7 @@
 
 <p>Or use the <code>@RunWith</code> annotation to run the test using the <code>IntermittentTestRunner</code>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@RunWith</span><span class="o">(</span><span class="n">IntermittentTestRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FlickeringTest</span> <span class="o">{</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nd">@Rule</span> <span class="kd">public</span> <span class="n">IntermittentRule</span> <span class="n">rule</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntermittentRule</span><span class="o">();</span>
@@ -251,7 +251,7 @@ once for each test repetition.</p>
 
   <div class="entry-content"><p>I recently added a basic deadlock detection mechanism to <a href="http://tempusfugitlibrary.org/">tempus-fugit</a>. The <a href="http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/">DeadlockDetector</a> class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the <code>ThreadDump</code> class will automatically attempt to find any deadlocks).</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">DeadlockDetector</span><span class="o">.</span><span class="na">printDeadlocks</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -302,7 +302,7 @@ once for each test repetition.</p>
 
 <p>In one particular test, I wanted to show that interrupt is called on a thread and so followed what&#8217;s becoming a common pattern for me.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sleepInterrupted</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>   <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="n">threadSleepsForever</span><span class="o">();</span>
 </span><span class='line'>   <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
@@ -597,11 +597,11 @@ balanced view.</p>
 
 <p>For example, given the following, what&#8217;s clearer in the following exception handling code?</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>    <span class="o">...</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">RuntimeException</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">().</span><span class="na">getClass</span><span class="o">()))</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...);</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">ApplicationException</span><span class="o">(...);</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>
@@ -610,11 +610,11 @@ balanced view.</p>
 
 <p>or</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">try</span> <span class="o">{</span>
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="k">try</span> <span class="o">{</span>
 </span><span class='line'>    <span class="o">...</span>
 </span><span class='line'><span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">()</span> <span class="k">instanceof</span> <span class="n">RuntimeException</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">ApplicationException</span><span class="o">(...)</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">ApplicationException</span><span class="o">(...)</span>
 </span><span class='line'>    <span class="o">}</span>
 </span><span class='line'>    <span class="k">throw</span> <span class="n">e</span><span class="o">.</span><span class="na">getCause</span><span class="o">();</span>
 </span><span class='line'><span class="o">}</span>

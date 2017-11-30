@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/git/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -181,9 +181,9 @@ for your current branch, you must specify a branch on the command line.
 
 <p>The abbreviated <code>git status -sb</code> version</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git status -sb&lt;/p&gt;
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='sh'><span class='line'><span></span>$ git status -sb&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead 1<span class="o">]</span>&lt;/h2&gt;
+</span><span class='line'>&lt;h2&gt;master...origin/master <span class="o">[</span>ahead <span class="m">1</span><span class="o">]</span>&lt;/h2&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt; M LegoWars/BattleShip.h
 </span><span class='line'> M LegoWars/BattleShip.m

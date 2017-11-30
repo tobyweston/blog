@@ -4,7 +4,7 @@
   <title><![CDATA[Category: java, | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/java-/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-10-27T21:14:30+01:00</updated>
+  <updated>2017-11-30T15:00:19+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -31,13 +31,13 @@
 
 <p>For example, this interface compiles,</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>but when you indicate that it should be a <em>functional interface</em></p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@FunctionalInterface</span> <span class="c1">// &amp;lt;- error here</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span> <span class="c1">// &amp;lt;- error here</span>
 </span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure></notextile></div></p>
