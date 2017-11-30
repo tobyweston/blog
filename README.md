@@ -14,6 +14,23 @@ Octopress is [Jekyll](https://github.com/mojombo/jekyll) blogging at its finest.
 
 The preview site is [http://localhost:4000/](http://localhost:4000/).
 
+### Deploying
+
+There's a bunch of stuff to consider when deploying to Github Pages.
+
+See the [Ocotopress site](http://octopress.org/docs/deploying/github/).
+
+The main thing to note is that the `_deploy` folder isn't committed to `master`. Instead, it should be an independent clone of the `gh-pages` branch. The `rake deploy` will copy generated artifacts (the `public` folder) into it and commit and push it (where Github Pages pick it up and deploy proper).
+
+Run the following to bootstrap it.
+
+```
+rm -rf _deploy
+git clone git@github.com:tobyweston/blog.git _deploy
+cd _deploy
+git checkout gh-pages
+```
+
 ### Setup
 
 If you're using Homebrew:
