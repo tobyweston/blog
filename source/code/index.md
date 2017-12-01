@@ -7,7 +7,7 @@ footer: false
 ---
 Some of my highlights (checkout my [Github](https://github.com/tobyweston?tab=repositories) repositories):
 
-* [Temperature-Machine](http://temperature-machine.com) - Homebrew data logger to record and chart temperatures over time
+* [Temperature-Machine](http://temperature-machine.com) - Homebrew data logger to record and chart temperatures
 * [Scala for Java Developers](https://github.com/tobyweston/learn-scala-java-devs) - Source code companion to my [book](https://www.apress.com/gp/book/9781484231074)
 * [Radiate](https://github.com/tobyweston/radiate) - Scala build monitor for TeamCity that will run as a screensaver
 * [Unicorn-HAT](https://github.com/tobyweston/unicorn-hat) - Java library to drive WS2812B LEDs like Pimoroni's [Unicorn](https://shop.pimoroni.com/products/unicorn-hat)
