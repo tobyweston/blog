@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2017-11-30T15:57:33+00:00</updated>
+  <updated>2018-01-28T09:14:30+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -330,7 +330,7 @@ dtparam=act_led_activelow=on
 4b 01 4b 46 7f ff 05 10 d8 t=20687
 </code></pre>
 
-<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="https://github.com/tobyweston/temperature-machine/blob/master/README.md">my associated README</a> for more details (including how to change the precision of the sensor).</p>
+<p>The temperature is shown as the <code>t</code> value; 20.687 °C in this case. The scratchpad allows you to program the sensor as well as read temperature data from it. See the <a href="https://www.adafruit.com/datasheets/DS18B20.pdf">data sheet</a> or <a href="http://temperature-machine.com/docs/ds18b20_sensor.html">the project's documentation</a> for more details (including how to change the precision of the sensor).</p>
 
 <p>Once you can see the <code>w1_slave</code> file, you're ready to install the data logging software.</p>
 
