@@ -17,11 +17,11 @@ A lot of the advanced functional programming literature refers to Haskell, which
 ## Standard Functions
 
 |  Haskell |   Scala   |  Concept |                  Notes                  |
-|:--------:|:---------:|:--------:|:---------------------------------------:|
+|----------|-----------|----------|-----------------------------------------|
 | `>>=`    | `flatMap` | bind     | Defines monad                           |
-| `return` | `unit`    | identity | Defines monadDefines monadDefines monas |
+| `return` | `unit`    | identity | Defines monad                           |
 | `join`   | `flatten` |          |                                         |
-| `fmap`   | `map`     |          |                                         |
+| `fmap`   | `map`     |          | Defines a functor                       |
 
 
 ## Function Convensions
