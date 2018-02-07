@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Scala to Haskell Cheatsheet"
+title: "Scala to Haskell and FP Cheatsheet"
 date: 2018-02-04 20:01
 comments: true
 categories: haskell, scala
 sidebar: false
 published: false
-keywords: "haskell, scala, flatmap, point, >>="
+keywords: "haskell, scala, flatmap, point, >>=, FP Cheat Sheet"
 description: "Haskell conventions and how they translate to Scala"
 ---
 
@@ -29,3 +29,9 @@ A lot of the advanced functional programming literature refers to Haskell, which
  * `point` and it's alias, `pure` are "constructor" like functions that take a thing and put it in a _higher kinded type_, usually in the context of an _applicative_.
  * `zero` and `op` (`operation`) are conventially used to support _monoids_. 
 
+## FP Cheat Sheet
+
+Some general terms and their meanings.
+
+`cons` stands for _construct_ as is typically used when talking about non-empty lists in FP. List construction methods in Scala are `::` and `:::` and methods ending in `:` are associated to the right, meaning, they're used to add elements to the start of a list.
+`snoc` is `cons` backwards, so append an element to the end of a list.
