@@ -35,3 +35,12 @@ Some general terms and their meanings.
 
 `cons` stands for _construct_ as is typically used when talking about non-empty lists in FP. List construction methods in Scala are `::` and `:::` and methods ending in `:` are associated to the right, meaning, they're used to add elements to the start of a list.
 `snoc` is `cons` backwards, so append an element to the end of a list.
+
+<dl>
+  <dt><strong><code>cons</code></strong></dt>
+  <dd><code>cons</code> stands for _construct_ as is typically used when talking about non-empty lists in FP. List construction methods in Scala are <code>::</code> and <code>:::</code> and methods ending in <code>:</code> are associated to the right, meaning in this case, they're used to add elements to the start of a right hand parameter list.</dd>
+  </dl>
+  <dl>
+  <dt><strong><code>snoc</code></strong></dt>
+  <dd><code>snoc</code> is <code>cons</code> backwards, so append an element to the end of a list.</dd>
+</dl>
