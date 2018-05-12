@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2018-05-12T16:23:50+01:00</updated>
+  <updated>2018-05-12T18:35:38+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -533,27 +533,29 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 </code></pre></li>
 <li><p>Decide if you will be running the temperature-machine as a <strong>server</strong> or <strong>client</strong>.</p>
 
-<p> If you have a single machine, you want a <strong>server</strong>. If you already have a server running and you&#8217;re adding another machine, set it up as a as <strong>client</strong>.</p>
+<p> If you have a single machine, you want a <strong>server</strong>. If you already have a server running and you&#8217;re adding another machine, set it up as a <strong>client</strong>.</p>
 
-<p> Run the following before you startup the temperature-machine for the first time (if you see an error about <code>port already in use</code>, try again until it works).</p>
+<p> Run the following command (if you see an error about <code>port already in use</code>, try again until it works).</p>
 
 <pre><code class="`"> temperature-machine --init
 </code></pre>
 
 <p> It will ask you to choose between the server and client and create an appropriate configuration file in <code>~/.temperature/temperature-machine.cfg</code>.</p></li>
-<li><p>If you created a server configuration file above, update the default hosts.</p>
+<li><p>If you created a server configuration file above, update the defaulted hosts in <code>~/.temperature/temperature-machine.cfg</code>.</p>
 
-<p> The default configuration will list some default values for <code>hosts</code>, such as:</p>
+<p> The default server configuration will list some default values for <code>hosts</code>, such as:</p>
 
 <pre><code class="`"> hosts = ["garage", "lounge", "study"]
 </code></pre>
 
 <p> These are the machines you will be using in your final setup. <span class="bg-warning">Ensure these match the host names of each machine you plan to add</span>. The values are used to initialise the database on the server. If you need to change this later, you will have to delete the database and losing any historic data, so add in some spares.</p>
 
-<blockquote><p>The software starts automatically - it runs as a service but after setting up the configuration, you must either restart the service manually (run <code>sudo systemctl restart temperature-machine</code>) or wait about a minute and it will restart automatically.</p></blockquote></li>
+<blockquote><p>The software starts automatically, it runs as a service but after setting up the configuration, you must either restart the service manually (run <code>sudo systemctl restart temperature-machine</code>) or wait about a minute and it will restart automatically.</p></blockquote></li>
 <li><p>Go to to something like <a href="">http://10.0.1.55:11900</a> from your favorite browser. Find your IP address on the Pi with <code>hostname -I</code>.</p></li>
 </ol>
 
+
+<p>The logs can be found in the app or in the <code>~/.temperature/temperature-machine.log</code>.</p>
 
 <h2>Add Multiple Machines</h2>
 
