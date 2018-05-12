@@ -149,11 +149,11 @@ Look for `active (running)` in the output.
 
 To stop the service, run the following.
 
-    sudo systemctrl stop temperature-machine
+    sudo systemctl stop temperature-machine
 
 To restart, run the following (or reboot).
 
-    sudo systemctrl restart temperature-machine
+    sudo systemctl restart temperature-machine
 
 
 ## Do Not Disturb
