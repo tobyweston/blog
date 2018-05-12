@@ -83,9 +83,9 @@ There are lots of options to record the temperature data but for something a bit
 
 1. Decide if you will be running the temperature-machine as a **server** or **client**.
 
-    If you have a single machine, you want a **server**. If you already have a server running and you're adding another machine, set it up as a as **client**.
+    If you have a single machine, you want a **server**. If you already have a server running and you're adding another machine, set it up as a **client**.
 
-    Run the following before you startup the temperature-machine for the first time (if you see an error about `port already in use`, try again until it works).
+    Run the following command (if you see an error about `port already in use`, try again until it works).
     
     ```
     temperature-machine --init
@@ -93,9 +93,9 @@ There are lots of options to record the temperature data but for something a bit
     
     It will ask you to choose between the server and client and create an appropriate configuration file in `~/.temperature/temperature-machine.cfg`.
 
-1. If you created a server configuration file above, update the default hosts.
+1. If you created a server configuration file above, update the defaulted hosts in `~/.temperature/temperature-machine.cfg`.
 
-    The default configuration will list some default values for `hosts`, such as:
+    The default server configuration will list some default values for `hosts`, such as:
 
     ```
     hosts = ["garage", "lounge", "study"]
@@ -103,11 +103,12 @@ There are lots of options to record the temperature data but for something a bit
 
     These are the machines you will be using in your final setup. <span class="bg-warning">Ensure these match the host names of each machine you plan to add</span>. The values are used to initialise the database on the server. If you need to change this later, you will have to delete the database and losing any historic data, so add in some spares.
 
-    > The software starts automatically - it runs as a service but after setting up the configuration, you must either restart the service manually (run <code>sudo systemctl restart temperature-machine</code>) or wait about a minute and it will restart automatically.
+    > The software starts automatically, it runs as a service but after setting up the configuration, you must either restart the service manually (run <code>sudo systemctl restart temperature-machine</code>) or wait about a minute and it will restart automatically.
     >
     
 1. Go to to something like [http://10.0.1.55:11900]() from your favorite browser. Find your IP address on the Pi with `hostname -I`.
 
+The logs can be found in the app or in the `~/.temperature/temperature-machine.log`.
 
 
 ## Add Multiple Machines
