@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2018-01-28T09:14:30+00:00</updated>
+  <updated>2018-05-12T16:23:50+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -336,58 +336,47 @@ dtparam=act_led_activelow=on
 
 <h2>Setup the Data Logging Software</h2>
 
-<p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" Pi and the server stores it all in a round robin database and serves up the charts via a web page.</p>
+<p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" and the server stores it all in a round robin database and serves up the charts via a web page.</p>
 
-<p>It's written in Scala and you'll need the <code>sbt</code> tool to build it. To setup <code>sbt</code> follow these steps.</p>
+<ol>
+<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository.</p>
 
-<pre><code>$ cd /usr/local/bin
-$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar
-$ sudo chown pi sbt-launch.jar
-$ sudo chgrp pi sbt-launch.jar
+<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian ./" &gt;&gt; /etc/apt/sources.list'
+</code></pre></li>
+<li><p>Install.</p>
+
+<pre><code class="`"> sudo apt-get update
+ sudo apt-get install temperature-machine
+</code></pre></li>
+<li><p>Decide if you will be running the temperature-machine as a <strong>server</strong> or <strong>client</strong>.</p>
+
+<p> If you have a single machine, you want a <strong>server</strong>. If you already have a server running and you're adding another machine, set it up as a as <strong>client</strong>.</p>
+
+<p> Run the following before you startup the temperature-machine for the first time (if you see an error about <code>port already in use</code>, try again until it works).</p>
+
+<pre><code class="`"> temperature-machine --init
 </code></pre>
 
-<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+<p> It will ask you to choose between the server and client and create an appropriate configuration file in <code>~/.temperature/temperature-machine.cfg</code>.</p></li>
+<li><p>If you created a server configuration file above, update the default hosts.</p>
 
-<pre><code>#!/bin/bash
-SBT_OPTS="-Xms512M -Xmx512M"
-java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
+<p> The default configuration will list some default values for <code>hosts</code>, such as:</p>
+
+<pre><code class="`"> hosts = ["garage", "lounge", "study"]
 </code></pre>
 
-<p>Then make it executable.</p>
+<p> These are the machines you will be using in your final setup. <span class="bg-warning">Ensure these match the host names of each machine you plan to add</span>. The values are used to initialise the database on the server. If you need to change this later, you will have to delete the database and losing any historic data, so add in some spares.</p>
 
-<pre><code>chmod u+x /usr/local/bin/sbt
-</code></pre>
+<blockquote><p>The software starts automatically - it runs as a service but after setting up the configuration, you must either restart the service manually (run <code>sudo systemctl restart temperature-machine</code>) or wait about a minute and it will restart automatically.</p></blockquote></li>
+<li><p>Go to to something like <a href="">http://10.0.1.55:11900</a> from your favorite browser. Find your IP address on the Pi with <code>hostname -I</code>.</p></li>
+</ol>
 
-<p>Once you've setup SBT, clone the data logger's Git repository and build the binary.</p>
-
-<pre><code>$ mkdir ~/code
-$ git clone https://github.com/tobyweston/temperature-machine.git ~/code/temperature-machine
-$ cd ~/code/temperature-machine
-$ sbt assembly
-</code></pre>
-
-<p>Then run from the project folder with the following.</p>
-
-<pre><code>$ ./start.sh
-</code></pre>
-
-<p>The data will be stored in <code>~/.temperature</code> and you can access the web page via your internal network with something like <code>http://10.0.1.55:11900</code>. Get you're IP address on the Pi with <code>hostname -I</code>.</p>
 
 <h2>Add Multiple Machines</h2>
 
-<p>Running <code>start.sh</code> will start up the app in "server" single-machine mode. It will start logging data and serve the web page but not expect any more machines to be sending it data. To support multiple machines, you need to do a little more configuration.</p>
+<p>You can add as many client machines as you like and each machine can have up to five sensors attached. For example, add them to rooms and set the hostnames to match the room (just make sure the hostnames match what you put in your server <code>temperature-machine.cfg</code> file).</p>
 
-<p>Due to the way round robin databases work, you need to say upfront how many machines you want to connect. It will support up to five sensors per machine. So the first thing is to start up the server specifying the <code>hostname</code> of each machine. To do this, you can use the <code>start-server.sh</code> script instead of <code>server.sh</code>.</p>
-
-<pre><code>./start-server.sh bedroom garage
-</code></pre>
-
-<p>In this example, I changed the hostname of each machine to the room they're situated in. If you already have data in <code>~/.temperature</code>, you'll have to manually delete the contents first (<code>rm ~/.temperature/*</code>). It will start up in the server and log data sent from machines named <code>bedroom</code> and <code>garage</code>. Make sure the hostname of the machine you run this from is included in the list.</p>
-
-<p>The next job is to run the client version on each machine, so if <code>garage</code> is my server, I'd run the following on the <code>bedroom</code> machine. Ensure this machine's hostname matches what you setup on the server (i.e. <code>bedroom</code>).</p>
-
-<pre><code>./start-client.sh
-</code></pre>
+<p>Follow the steps above but select <code>client</code> when you run <code>temperature-machine --init</code>.</p>
 
 <p>The server broadcasts it's IP address, so any clients should automatically detect where the server is and start sending data to it.</p>
 
@@ -401,23 +390,40 @@ $ sbt assembly
 
 <h2>Start Logging Automatically</h2>
 
-<p>There are different ways to start software automatically after a reboot. I chose to add the following to <code>/etc/rc.local</code> on the server.</p>
+<p>The software will automatically start as a service, it will even restart after a crash or reboot.</p>
 
-<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-server.sh garage bedroom &amp;'
+<p>To see if it's running, run the following.</p>
+
+<pre><code>systemctl status temperature-machine
 </code></pre>
 
-<p>and the following to the client.</p>
+<p>Look for <code>active (running)</code> in the output.</p>
 
-<pre><code>su pi -c 'cd /home/pi/code/temperature-machine &amp;&amp; ./start-client.sh &amp;'
+<pre><code>● temperature-machine.service - temperature-machine
+   Loaded: loaded (/lib/systemd/system/temperature-machine.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2018-05-09 19:54:32 UTC; 2 days ago
+ Main PID: 22980 (java)
+   CGroup: /system.slice/temperature-machine.service
+           └─22980 java -Djava.rmi.server.hostname=10.0.1.26 -Xms256m -Xmx512m ...
 </code></pre>
 
-<p>It will run the startup scripts as the user <code>pi</code> and assumes you've cloned the code as above (to <code>/home/pi/code/temperature-machine</code>). After rebooting, you should see a log file and <code>pid</code> file in the same location.</p>
+<p>To stop the service, run the following.</p>
 
-<p>To stop, just run the <code>stop.sh</code> script.</p>
+<pre><code>sudo systemctl stop temperature-machine
+</code></pre>
+
+<p>To restart, run the following (or reboot).</p>
+
+<pre><code>sudo systemctl restart temperature-machine
+</code></pre>
 
 <h2>Do Not Disturb</h2>
 
 <p>If you're monitoring temperatures in a bedroom, you might not want to be disturbed by the LEDs. To switch the Pi Zero LED off, see the <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=29&amp;t=127336">Raspberry Pi Forum</a> and <a href="http://raspberrypi.stackexchange.com/questions/40559/disable-leds-pi-zero?noredirect=1#comment57599_40559">Stack Overflow</a> and to switch an Edimax EW-7811 LED off, see my <a href="/blog/2016/01/06/disable-led-for-edimax/">previous post</a>.</p>
+
+<h2>Find out More</h2>
+
+<p>Head over to the project's website at <a href="http://temperature-machine.com/docs">temperature-machine.com</a> for the full docs.</p>
 ]]></content>
   </entry>
   
