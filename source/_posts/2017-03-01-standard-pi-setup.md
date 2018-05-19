@@ -97,7 +97,7 @@ Then make it executable.
 Add the following to `~/.bashrc`
 
     # some more ls aliases
-    alias ll='ls -lvh --group-directories-first'
+    alias ll='ls -lavh --group-directories-first'
     alias la='ls -A'
     #alias l='ls -CF'
 
