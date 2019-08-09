@@ -10,7 +10,7 @@ keywords: "java 8, java, online training, refactoring, martin fowler, refactorin
 description: "Learn refactoring in 10 minutes"
 ---
 
-I recently created a free place online where to collect training materials and videos around eXtreme Programming. I'm creating or curating a set of live workshops (think meetup.com) under the name of **XP Dojo**.
+I recently created a free place online to collect training materials and videos around eXtreme Programming. I'm creating or curating a set of live workshops (think meetup.com) under the name of **XP Dojo**.
 
 Check it out at https://xpdojo.org.
 
