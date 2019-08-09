@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Inheritance vs Composition - bad.robot</title>
+  <title>Refactoring in 10 Minutes - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Java's stack class isn't a stack at all! It favours inheritance over composition causing it to no longer be just a stack.">
-  <meta name="keywords" content="inheritance vs composition, inheritance vs aggregation">
+  <meta name="description" content="Learn refactoring in 10 minutes">
+  <meta name="keywords" content="java 8, java, online training, refactoring, martin fowler, refactoring to patterns, refactoring in 10 minutes, XP, extreme programming, agile">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 itemprop="name" class="entry-title">Inheritance vs Composition</h1>
+        <h1 itemprop="name" class="entry-title">Refactoring in 10 Minutes</h1>
       
     
     
@@ -145,45 +145,19 @@
   
 
 
-<time itemprop="datePublished" content="2009-01-24 00:00:00 +0000" datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 24<span>th</span>, 2009</time>
+<time itemprop="datePublished" content="2019-08-09 11:40:00 +0100" datetime="2019-08-09T11:40:00+01:00" pubdate data-updated="true" class="updated">Aug 9<span>th</span>, 2019</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a <code>Stack</code> as an example.</p>
+<div class="entry-content"><p>I recently created a free place online to collect training materials and videos around eXtreme Programming. I&#8217;m creating or curating a set of live workshops, check it out at <a href="https://xpdojo.org">https://xpdojo.org</a>.</p>
 
-<h3>Example 1.</h3>
+<p>The first video on the site gives an introduction to refactoring and some examples in Java from chapter 1 of <a href="https://amzn.to/31rSy4U">Martin Fowler&#8217;s book</a>. The source code is on <a href="https://github.com/tobyweston/Refactoring-Chapter-1">GitHub</a>.</p>
 
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EvilStack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/-lkiccO8h6w "></iframe></div>
 
-
-<h3>Example 2.</h3>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Stack</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">T</span> <span class="nf">pop</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">push</span><span class="o">(</span><span class="n">T</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// ...</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Extending <code>Vector</code> as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an <code>EvilStack</code>.</p>
-
-<p>So I was surprised when looking at the Java source to see that <code>java.util.Stack</code> actually extends <code>Vector</code>! Naughty and things <a href="/blog/2013/01/10/stack-vs-deque">aren&#8217;t any better in Java 7 and 8</a>.</p>
 </div>
 
 
@@ -207,12 +181,12 @@
   
 
 
-<time itemprop="datePublished" content="2009-01-24 00:00:00 +0000" datetime="2009-01-24T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 24<span>th</span>, 2009</time>
+<time itemprop="datePublished" content="2019-08-09 11:40:00 +0100" datetime="2019-08-09T11:40:00+01:00" pubdate data-updated="true" class="updated">Aug 9<span>th</span>, 2019</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/object-oriented/'>object-oriented</a>
+    <a class='category' href='/blog/categories/agile/'>agile</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/testing/'>testing</a>
   
 </span>
 
@@ -228,10 +202,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2009/01/22/deprecated-annotation/" title="Previous Post: Deprecated Annotation">&laquo; Deprecated Annotation</a>
+        <a class="basic-alignment left" href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/" title="Previous Post: Upgrade Raspbian Jessie to Stretch">&laquo; Upgrade Raspbian Jessie to Stretch</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2009/02/16/more-on-micro-dsls/" title="next Post: More on Micro DSLs">More on Micro DSLs &raquo;</a>
       
     </p>
   </footer>
@@ -262,8 +234,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
-        var disqus_url = 'http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/';
+        var disqus_url = 'http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/';
         var disqus_script = 'embed.js';
       
     (function () {

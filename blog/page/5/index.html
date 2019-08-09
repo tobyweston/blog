@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="If you&#8217;re using a version of JMock prior to 2.6.0 and use @RunWith(JMock.class) you may have spotted that your @Rules are actually being &hellip;">
+  <meta name="description" content="Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2018-05-12 18:35:38 +0100 -->
+    <!-- last update; 2019-08-09 12:39:30 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2012/06/10/http-simple/">HTTP Should be Simple</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-06-10 10:06:00 +0100" datetime="2012-06-10T10:06:00+01:00" pubdate data-updated="true" class="updated">Jun 10<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Apache&#8217;s HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I&#8217;ve been working on a library offering a straight forward API with sensible defaults. Typically, you&#8217;ll make HTTP requests with just one line of code.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">anApacheClient</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">&quot;http://baddotrobot.com&quot;</span><span class="o">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/06/10/http-simple/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -529,51 +578,6 @@ banner. So far, we have&#8230;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/01/29/transaction-management-without/">Transaction Management without the Frameworks</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-01-29 00:00:00 +0000" datetime="2012-01-29T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It&#8217;s easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it&#8217;s often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we&#8217;re not tied into yet another framework, why wouldn&#8217;t we? Aside from just avoiding frameworks though, how does replacing <code>@Transctional</code> with something bespoke really help us?</p>
-
-<p>Moving from a declarative approach to a more imperative one can help us with testing and by virtue; <em>composability</em>. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/01/29/transaction-management-without/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -589,6 +593,10 @@ banner. So far, we have&#8230;</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/09/refactoring-in-10-minutes/">Refactoring in 10 Minutes</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspbian Jessie to Stretch</a>
@@ -666,10 +674,6 @@ banner. So far, we have&#8230;</p>
         <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -742,7 +746,7 @@ banner. So far, we have&#8230;</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2018 - Toby Weston -
+  Copyright &copy; 2006-2019 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>

@@ -376,15 +376,19 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2017/03/01/standard-pi-setup/</loc>
-        <lastmod>2017-11-30T13:52:27+00:00</lastmod>
+        <lastmod>2019-08-09T12:33:07+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/</loc>
         <lastmod>2017-11-30T13:52:27+00:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/</loc>
+        <lastmod>2019-08-09T12:37:39+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2018-05-12T18:34:45+01:00</lastmod>
+        <lastmod>2019-08-09T12:37:39+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -404,7 +408,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2018-05-12T18:34:45+01:00</lastmod>
+        <lastmod>2019-08-09T12:37:39+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>

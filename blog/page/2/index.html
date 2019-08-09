@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="An abbreviated set of JMock examples with their Scalamock equivalents. ">
+  <meta name="description" content="Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2018-05-12 18:35:38 +0100 -->
+    <!-- last update; 2019-08-09 12:39:30 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2015/07/03/scala-implicit-parameters/">Implicit Parameters in Scala</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2015-07-03 18:42:00 +0100" datetime="2015-07-03T18:42:00+01:00" pubdate data-updated="true" class="updated">Jul 3<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Scala &#8220;implicits&#8221; allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and <code>Int</code> to a <code>String</code> and rather than call that function <em>explicitly</em>, you can ask the compiler to do it for you, <em>implicitly</em>.</p>
+
+<p>In the next few posts, we&#8217;ll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/03/scala-implicit-parameters/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -527,54 +572,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2014-01-01 09:57:00 +0000" datetime="2014-01-01T09:57:00+00:00" pubdate data-updated="true" class="updated">Jan 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
-
-
-<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/01/01/another-teamcity-build-monitor/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -590,6 +587,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/08/09/refactoring-in-10-minutes/">Refactoring in 10 Minutes</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch/">Upgrade Raspbian Jessie to Stretch</a>
@@ -667,10 +668,6 @@
         <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/01/01/another-teamcity-build-monitor/">Yet Another TeamCity Build Monitor</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -743,7 +740,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2006-2018 - Toby Weston -
+  Copyright &copy; 2006-2019 - Toby Weston -
    <a href="/excludeme">exclude from analytics</a> -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>, theme by <a href="http://melandri.net/"> @alemelandri</a></span>
 </p>

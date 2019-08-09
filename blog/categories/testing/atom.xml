@@ -4,7 +4,7 @@
   <title><![CDATA[Category: testing | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2018-05-12T18:35:38+01:00</updated>
+  <updated>2019-08-09T12:39:30+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Refactoring in 10 Minutes]]></title>
+    <link href="http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/"/>
+    <updated>2019-08-09T11:40:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes</id>
+    <content type="html"><![CDATA[<p>I recently created a free place online to collect training materials and videos around eXtreme Programming. I'm creating or curating a set of live workshops, check it out at <a href="https://xpdojo.org">https://xpdojo.org</a>.</p>
+
+<p>The first video on the site gives an introduction to refactoring and some examples in Java from chapter 1 of <a href="https://amzn.to/31rSy4U">Martin Fowler's book</a>. The source code is on <a href="https://github.com/tobyweston/Refactoring-Chapter-1">GitHub</a>.</p>
+
+<p><div class="embed-video-container"><iframe src="http://www.youtube.com/embed/-lkiccO8h6w "></iframe></div></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[JMock to Scalamock Cheat Sheet]]></title>
@@ -390,58 +403,6 @@ above example, the test would no longer fail. You'd get a false positive.</p>
 <li><a href="http://www.amazon.co.uk/gp/product/1932394850/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1932394850&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Test Driven: TDD and Acceptance TDD for Java Developers</a>, Lasse Koskela</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hexagonal Acceptance Testing]]></title>
-    <link href="http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing/"/>
-    <updated>2012-02-13T21:24:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2012/02/13/hexagonal-acceptance-testing</id>
-    <content type="html"><![CDATA[<p>There's no reason a unit test can't also be an acceptance test. If you can prove that the <em>unit</em> behaves a certain way <em>and</em> that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.</p>
-
-<p>What seems to make things harder to discuss is that its difficult to agree on a common definition for the different types of testing. As a peer-group, we're usually horrified by the previous paragraph and ask the question <em>"shouldn't we start up the entire stack in an acceptance test?"</em>. This often leads us to long-running, duplicative and expensive tests in the name of acceptance testing.</p>
-
-<p>Taking inspiration from Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a> and being more flexible in our technical definitions of acceptance testing however, we <em>can</em> create lightning fast acceptance testing.</p>
-
-<!-- more -->  
-
-
-<h2>Conway's Law</h2>
-
-<p>To paraphrase something <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> recently said</p>
-
-<p><blockquote><p>"people are usually happy to test interactions with other systems 'by specification' but are less happy to do so when testing their internal systems"</p><footer><strong>@Jazzatola</strong> <cite><a href='https://twitter.com/#!/Jazzatola'>twitter.com/#!/Jazzatola/&hellip;</a></cite></footer></blockquote></p>
-
-<p>As he points out; we're happy to say "given the external system responds with <code>X</code>, when we send a message <code>Y</code> then our system behaves <code>Z</code>". We know the API and test against it as a <em>specification</em>, typically via <em>mocking</em> the behaviour of the external system and testing against the response. We're less happy to talk about our internal interactions as internal APIs in the same way.</p>
-
-<p>I find this interesting for a couple of reasons. <a href="https://twitter.com/#!/Jazzatola">@Jazzatola</a> was suggesting that this is an example of <a href="http://en.wikipedia.org/wiki/Conway's_law">Conway's law</a>; where the communication structures within an organisation are leading design. We're physically separated from our external system actors but intimately acquainted with the internal communication flows. After all, we wrote them.</p>
-
-<p>It's also interesting because it can limit how we go about implementing our acceptance tests.</p>
-
-<h2>Hexagonal Implementation</h2>
-
-<p>If we look at our system as a series of <em>ports</em> and <em>adaptors</em> (as in Cockburn's <a href="http://alistair.cockburn.us/Hexagonal+architecture">Hexagonal Architecture</a>), we can start to test it as a series of internal, co-operating handoffs. Don't we already test our systems like this; with conventional mocking? The difference is that this kind of mocking is at a finer grained level; we mock <em>collaborators</em> to create unit-style tests and drive out design. When we mock external systems and the <em>ports</em> in our internal systems, we're mocking coarse grained <em>behaviours</em>. We're confirming an established design rather than driving one out. We can formalise this established design as <em>ports</em>.</p>
-
-<p>If you look closely at the last few sentences you'll notice that I'm talking about <em>test confirm</em> at the coarse grained level rather than the <em>test driving</em> techniques we apply with unit-style tests. I think this is natural fit for acceptance testing where we should be thinking about testing the external affects produced by internal flows (more black than white box).</p>
-
-<p>So, given we expect an internal interaction to behave in such-and-such way, why do we need to startup the entire application to exercise the effect of that behaviour? We don't. We can <em>simulate</em> the specification internally by mocking and produce a series of overlapping tests. Each one supporting and giving more confidence to the last.</p>
-
-<p>We've certainly had some great successes with this technique. We've produced faster running test suites that customers were happy to "accept" or sign-off against. We built trust working with the customers to understand the approach and put ourselves more easily in their 'voice' describing the system as a series of internal API interactions.</p>
-
-<h3>Conventional Hexagonal Architecture Footnote</h3>
-
-<p>In the original article, Cockburn talks about ports and adaptors as a fairly abstract architectural approach. He describes it in terms of a pattern which have slightly different motivations than those described here.</p>
-
-<p>He talks about a relatively small number of <em>ports</em> (say ~4-5) and decoupling <em>major</em> components of a system (for example, the database and the GUI) so that it can be driven and tested by different <em>external</em> actors.</p>
-
-<p>I'm talking more about changing the <em>external</em> nature of these actors to be more <em>internal</em>. If we have a much larger number of ports (say >30), decoupling <em>minor</em> components we can achieve this substitutabiliy on a bigger scale and be more flexible on how we test the system.</p>
-
-<p>Cockburn described an approach where we can test the system at end-to-end via it's ports. Taking this further to confirm small business functionality or <em>acceptance criteria</em> is a logical progression and fits nicely into iterative development.</p>
-
-<p>Have a go and see if it works for you...</p>
-
-<p>Liquid error: 765: unexpected token at ''</p>
 ]]></content>
   </entry>
   

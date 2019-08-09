@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2018-05-12T18:35:38+01:00</updated>
+  <updated>2019-08-09T12:39:30+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Refactoring in 10 Minutes]]></title>
+    <link href="http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes/"/>
+    <updated>2019-08-09T11:40:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/08/09/refactoring-in-10-minutes</id>
+    <content type="html"><![CDATA[<p>I recently created a free place online to collect training materials and videos around eXtreme Programming. I&#8217;m creating or curating a set of live workshops, check it out at <a href="https://xpdojo.org">https://xpdojo.org</a>.</p>
+
+<p>The first video on the site gives an introduction to refactoring and some examples in Java from chapter 1 of <a href="https://amzn.to/31rSy4U">Martin Fowler&#8217;s book</a>. The source code is on <a href="https://github.com/tobyweston/Refactoring-Chapter-1">GitHub</a>.</p>
+
+<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/-lkiccO8h6w "></iframe></div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upgrade Raspbian Jessie to Stretch]]></title>
@@ -182,7 +196,7 @@ java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"
 <p>Add the following to <code>~/.bashrc</code></p>
 
 <pre><code># some more ls aliases
-alias ll='ls -lvh --group-directories-first'
+alias ll='ls -lavh --group-directories-first'
 alias la='ls -A'
 #alias l='ls -CF'
 
@@ -2252,29 +2266,6 @@ case object Pineapple extends Fruit(95)
 
 
 <p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Yet Another TeamCity Build Monitor]]></title>
-    <link href="http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor/"/>
-    <updated>2014-01-01T09:57:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2014/01/01/another-teamcity-build-monitor</id>
-    <content type="html"><![CDATA[<p>My build monitor is a little different from the rest; it aggregates the status of all the builds on TeamCity to a single visual pass or fail. When build radiators show the status of individual builds on a single page, people can be tempted to ignore specific builds. They learn to ignore that flaky build or disregard the one that they haven&#8217;t been working on.</p>
-
-<div class="embed-video-container"><iframe src="http://www.youtube.com/embed/ZMQn-J435Lk "></iframe></div>
-
-
-<p><a href="http://github.com/tobyweston/radiate">Radiate</a> takes a zero tolerance approach. Every build is as important as the next (else why have separate builds at all?) so Radiate hides which build is actually failing. Red or green, that&#8217;s all you get. It&#8217;s up to you to investigate the cause.</p>
-
-<!-- more -->
-
-
-<p>Build monitors are supposed to be highly visual, you should be able get some important piece of information from across the other side of the office. The <em>only</em> important piece of information for Radiate, is whether the build is passing or failing. Anything else is superfluous. After all, to investigate a failure, we&#8217;d typically open up the TeamCity page.</p>
-
-<p>It&#8217;s got a couple of other neat features; it gives aggregated progress when builds are running, changing it&#8217;s status as soon as a failure is detected; it runs as a standalone executable jar, <code>.exe</code> or as a Windows screen saver (<code>.scr</code>); and it tries to be as light as possible on configuration (just configure an environment variable with your TeamCity host, and it figures out the rest).</p>
-
-<p>Have a look on <a href="http://github.com/tobyweston/radiate">Github</a> and let me know what you think below.</p>
 ]]></content>
   </entry>
   
