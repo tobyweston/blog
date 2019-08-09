@@ -38,7 +38,7 @@ If you're using Homebrew:
 * See what's installed with `brew list`
 * install Ruby with `brew install ruby`
 * If you get errors like `LoadError: cannot load such file -- bundler/setup`, run `gem install bundler & bundle install`
-* The `Gemfile.lock` has the versions of dependencies from the last time you ran the bundle install command(?), delete it and let `bundle install` regenerate it (with more recent versions) if you need to.
+* The `Gemfile.lock` has the versions of dependencies from the last time you ran the bundle install command(?), delete it and let `bundle install` regenerate it (with more recent versions) if you need to. `bundle update` may also do the same thing, I don't really know.
 
 #### My Crapy Ruby Install Log 
 
