@@ -33,7 +33,7 @@ Update the sources to `apt-get`. This replaces "stretch" with "buster" in the re
     $ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list    
     $ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list.d/raspi.list    
     
-Verify this caught them all by running the following, expecting no output. If the command returns anything having previously run the `sed` commands above, it means more files may need tweaking. Run the `sed` command for each. The aim is to replace all isntances of "stretch".
+Verify this caught them all by running the following, expecting no output. If the command returns anything having previously run the `sed` commands above, it means more files may need tweaking. Run the `sed` command for each. The aim is to replace all instances of "stretch".
 
     $ grep -lnr stretch /etc/apt    
 
