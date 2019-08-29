@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Upgrade Raspbian Stretch to Buster"
-date: 2017-10-26 20:08
+date: 2019-08-29 20:18
 comments: true
 categories: pi
 sidebar: false
