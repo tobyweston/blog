@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-08-09T12:39:30+01:00</updated>
+  <updated>2019-08-29T20:36:54+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade Raspbian Stretch to Buster]]></title>
+    <link href="http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/"/>
+    <updated>2019-08-29T20:18:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster</id>
+    <content type="html"><![CDATA[<p>Upgrade your Raspbian install from Stretch to Buster. This is basically the same procedure as upgrading <a href="http://baddotrobot.com/blog/2017/10/26/upgrade-raspian-jessie-to-stretch">Jessie to Stretch</a> that I covered previously.</p>
+
+<!-- more -->
+
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you&#8217;re on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<h2>Prepare <code>apt-get</code> Sources</h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces &#8220;stretch&#8221; with &#8220;buster&#8221; in the repository locations giving <code>apt-get</code> access to the new version&#8217;s binaries.</p>
+
+<pre><code>$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list    
+$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all by running the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each. The aim is to replace all instances of &#8220;stretch&#8221;.</p>
+
+<pre><code>$ grep -lnr stretch /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<p>To update existing packages without updating kernel modules or removing packages, run the following.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Alternatively, to include kernel modules and removing packages if required, run the following (choose one, not both. See this <a href="https://askubuntu.com/questions/81585/what-is-dist-upgrade-and-why-does-it-upgrade-more-than-upgrade">question</a> for details).</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get full-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You&#8217;ve come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Refactoring in 10 Minutes]]></title>
@@ -2249,23 +2318,6 @@ case object Pineapple extends Fruit(95)
 <p>&nbsp;
 &nbsp;
 &nbsp;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[IntelliJ IDEA Retina Support JDK 1.7+]]></title>
-    <link href="http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support/"/>
-    <updated>2014-01-20T19:33:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2014/01/20/intellij-idea-retina-support</id>
-    <content type="html"><![CDATA[<p>Despite IntelliJ&#8217;s <a href="http://blog.jetbrains.com/idea/2013/09/jdk7_compatibility/">improvements to retina support</a>, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself below.</p>
-
-<p><a href="../../../../../images/IntelliJ_on_1.6.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.6.png' width='266' height='148' title='Running on JDK 6'><span class='caption-text'>Running on JDK 6</span></span></a>
-<a href="../../../../../images/IntelliJ_on_1.7.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.7.png' width='266' height='148' title='Running on JDK 7'><span class='caption-text'>Running on JDK 7</span></span></a></p>
-
-<!-- more -->
-
-
-<p><a href="../../../../../images/IntelliJ_on_1.8ea.png"><span class='caption-wrapper'><img class='caption' src='http://baddotrobot.com/../../../../images/IntelliJ_on_1.8ea.png' width='266' height='148' title='Running on JDK 8'><span class='caption-text'>Running on JDK 8</span></span></a></p>
 ]]></content>
   </entry>
   

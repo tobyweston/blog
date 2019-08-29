@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Window Licker is a framework designed to help you define your own API for GUI testing. It provides a driver style API that your Swing or Ajax &hellip;">
+  <meta name="description" content="Following up from the post SWT Support in Window Licker. The thing I found most interesting about looking at this was having to be more explicit &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2019-08-09 12:39:30 +0100 -->
+    <!-- last update; 2019-08-29 20:36:54 +0100 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,169 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/">Be Explicit with the UI Thread</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2008-12-30 00:00:00 +0000" datetime="2008-12-30T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 30<span>th</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Following up from the post <a href="/blog/2008/12/29/swt-support-for-window-licker/">SWT Support in Window Licker</a>.</p>
+
+<p>The thing I found most interesting about looking at this was having to be more explicit about the UI thread. When developing SWT applications, we&#8217;re all aware that accessing almost anything graphical in SWT from any other thread than the UI thread spells &#8220;invalid thread access&#8221;, but it was fun to be more explicit about the &#8220;UI thread&#8221;.</p>
+
+<p>When I started to look at how I go about writing SWT applications, I noticed that</p>
+
+<ul>
+<li>I often run the application from a <code>main</code> method somewhere which runs on the <code>main</code> thread.</li>
+<li>I often discover invalid thread access problems at run time.</li>
+<li>I often plug the problem by wrapping the offender in a <code>Display.sync(...)</code> or <code>Display.async(...)</code> call.</li>
+<li>I often have very few long running processes that need to spawn a thread and update the UI.</li>
+</ul>
+
+
+<p>It wasn&#8217;t until I started looking at being able to run the application from the context of a JUnit test that I started to think in more detail about these.</p>
+
+<h2>Running the application from a main method</h2>
+
+<p>This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the <code>main</code> method, in variations of the code below.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwtCalculator</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">SwtCalculator</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">display</span> <span class="o">=</span> <span class="n">Display</span><span class="o">.</span><span class="na">detDefault</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">shell</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Shell</span><span class="o">(</span><span class="n">display</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">shell</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Calculator&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// shell setup</span>
+</span><span class='line'>        <span class="n">startEventLoop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startEVentLoop</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">shell</span><span class="o">.</span><span class="na">isDisposed</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(!</span><span class="n">display</span><span class="o">.</span><span class="na">readAndDispatch</span><span class="o">())</span>
+</span><span class='line'>                <span class="n">display</span><span class="o">.</span><span class="na">sleep</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">display</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The default constructor would do or delegate the work to setup the various shells and widgets and finally start the event loop. When using JFace&#8217;s <code>ApplicationWindow</code>, I&#8217;d do pretty much the same thing. Calling <code>window.setBlockOnOpen(true)</code> just shifts the responsibility of starting the event loop to the <code>ApplicationWindow class</code>. If you call <code>window.setBlockOnOpen(false)</code> for example, you have to manually start an event loop.</p>
+
+<p>However you do it, getting into that event loop blocks the client and <strong>it&#8217;s the thread that executes this event loop that is called the UI thread</strong>. It just so happens that most SWT applications will hit that loop from the main thread as you can see from the following partial thread dump.</p>
+
+<pre><code>Name: main
+State: RUNNABLE
+Total blocked: 0 Total waited: 0
+
+Stack trace:
+    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
+    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
+    com.objogate...SwtCalculator.startEventLoop(SwtCalculator.java:104)
+    com.objogate...SwtCalculator.main(SwtCalculator.java:113)
+</code></pre>
+
+<p>At this point, the SWT event loop is doing its thing, waiting for UI events (mouse clicks, keyboard input etc) and dispatching them to the appropriate listeners. So, we can define what we mean by the UI thread;</p>
+
+<blockquote><p>The UI thread or event dispatching thread is the thread that executes the standard SWT event loop.</p></blockquote>
+
+<h2>Running the tests and GUI in different threads</h2>
+
+<p>So, if the event loop was called from within say a <code>@Before</code> annotated method in a test, the test would block until the event loop finished, the display would be disposed and any subsequent tests against the GUI elements would quickly discover that they no longer exist.</p>
+
+<p>It should be pretty clear then that in order to test GUI elements the event loop has to be started in a different thread than the tests run in. The gotcha is that the test thread will likely want to interact with this UI thread in order to push buttons and make assertions and that&#8217;s when we get into invalid thread access territory with SWT.</p>
+
+<p>The way I implemented this was to use a class extending <code>Thread</code> to represent the UI thread and to start the event loop in its <code>run()</code> method. The tests can interact with the UI thread by either searching for the display with <code>Display.findDisplay(thread)</code> or by cooperating and ensuring that only the default display is used (retrieving it using <code>Display.getDefault()</code>).</p>
+
+<p>A minor change to the application&#8217;s main method is required to optionally not call the event loop when calling main. For example;</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">SwtCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculator</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">shouldBlock</span><span class="o">(</span><span class="n">args</span><span class="o">))</span>
+</span><span class='line'>        <span class="n">calculator</span><span class="o">.</span><span class="na">startEventLoop</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The tests can then explicitly create a UI thread delegating shell setup to the <code>SwtCalculator</code> class before starting the event loop and allowing the test thread to continue.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@Before</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">runTheApplication</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">thread</span> <span class="o">=</span> <span class="n">UIThread</span><span class="o">.</span><span class="na">startNewUIThread</span><span class="o">(</span><span class="k">new</span> <span class="n">UISetupClosure</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">performAdditionalSetup</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">SwtCalculator</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="n">DONT_BLOCK_ON_OPEN</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'>    <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SwtCalculatorDriver</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">calculatorCanAddTwoNumbers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// testing the calculator whilst the main thread is running and</span>
+</span><span class='line'>    <span class="c1">// the UI has been started in another thread (from @Before)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@After</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">stopTheApplication</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">thread</span><span class="o">.</span><span class="na">interrupt</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>UISetupClosure</code> allows the setup code (in this case the main method) to run inside the UI thread. This uses the strategy pattern but an alternative design could just as easily sub-class the <code>UIThread</code> and use the template pattern in a similar way.</p>
+
+<p>The interrupt allows the event loop on the UI thread to be interrupted and stop gracefully.</p>
+
+<p>The following partial thread dump shows it in action. As you can see, an explicit thread has started the event loop (the <code>Display.sleep</code> and <code>WaitMessage</code>
+are the hints).</p>
+
+<pre><code>Name: SWT-Event-Dispatcher-Thread-1
+State: RUNNABLE
+Total blocked: 0 Total waited: 0
+
+Stack trace:
+    org.eclipse.swt.internal.win32.OS.WaitMessage(Native Method)
+    org.eclipse.swt.widgets.Display.sleep(Unknown Source)
+    com.objogate.wl.swt.UIThread.startEventLoop(UIThread.java:90)
+    com.objogate.wl.swt.UIThread.run(UIThread.java:68)
+    - locked java.lang.Class@1d7fbfb
+</code></pre>
+
+<p>It was a good exercise exploring the UI thread and I encourage you to take a look at <a href="http://code.google.com/p/windowlicker/">Window Licker</a> (and my <a href="http://windowlicker-users.googlegroups.com/web/window-licker-swt-spike.patch">SWT patch</a>). Have a play and see if you agree with the approach I took above.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -413,6 +576,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2019/08/29/upgrade-raspian-stretch-to-buster/">Upgrade Raspbian Stretch to Buster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2019/08/09/refactoring-in-10-minutes/">Refactoring in 10 Minutes</a>
       </li>
     
@@ -486,10 +653,6 @@
     
       <li class="post">
         <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/01/20/intellij-idea-retina-support/">IntelliJ IDEA Retina Support JDK 1.7+</a>
       </li>
     
   </ul>

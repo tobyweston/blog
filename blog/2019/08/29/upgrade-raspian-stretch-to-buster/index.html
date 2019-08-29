@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>JDK7 Article in JavaTech Journal - bad.robot</title>
+  <title>Upgrade Raspbian Stretch to Buster - bad.robot</title>
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="My JDK7 article 'Java the language vs Java the platform' was recently published in the Java Tech Journal. Find out what's new and noteworthy in Java &hellip;">
-  <meta name="keywords" content="JDK7, Java 7, Open JDK, Java 8, Lambda, Java Tech Journal, jaxenter, JAX">
+  <meta name="description" content="Upgrade your Raspbian install from Stretch to Buster.">
+  <meta name="keywords" content="raspberry pi, pi, buster, stretch, raspbian. raspian, upgrade">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/">
+  <link rel="canonical" href="http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -128,7 +128,7 @@
   <header>
     
       
-        <h1 itemprop="name" class="entry-title">JDK7 Article in JavaTech Journal</h1>
+        <h1 itemprop="name" class="entry-title">Upgrade Raspbian Stretch to Buster</h1>
       
     
     
@@ -145,19 +145,74 @@
   
 
 
-<time itemprop="datePublished" content="2011-06-10 00:00:00 +0100" datetime="2011-06-10T00:00:00+01:00" pubdate data-updated="true" class="updated">Jun 10<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2019-08-29 20:18:00 +0100" datetime="2019-08-29T20:18:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2019</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><a href="http://baddotrobot.com/resources/JTJ-2011-05.pdf"><img itemprop="image" class="right" src="http://baddotrobot.com/images/JTJ-2011-05.png"></a></p>
+<div class="entry-content"><p>Upgrade your Raspbian install from Stretch to Buster. This is basically the same procedure as upgrading <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch">Jessie to Stretch</a> that I covered previously.</p>
 
-<p>My article &#8220;Java the language vs Java the platform&#8221; (about the new release of JDK7) has been published in this months
-<a href="http://jaxenter.com/java-tech-journal/">Java Tech Journal</a>. <strong>Click on the image to download the PDF</strong> or read the article <a href="http://jaxenter.com/new-and-noteworthy-in-jdk7-36843.html">online</a>.</p>
+<!-- more -->
 
-<p>I&#8217;d love to get some feedback, so please feel free to comment here.</p>
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you&#8217;re on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<h2>Prepare <code>apt-get</code> Sources</h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces &#8220;stretch&#8221; with &#8220;buster&#8221; in the repository locations giving <code>apt-get</code> access to the new version&#8217;s binaries.</p>
+
+<pre><code>$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list    
+$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all by running the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each. The aim is to replace all instances of &#8220;stretch&#8221;.</p>
+
+<pre><code>$ grep -lnr stretch /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<p>To update existing packages without updating kernel modules or removing packages, run the following.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Alternatively, to include kernel modules and removing packages if required, run the following (choose one, not both. See this <a href="https://askubuntu.com/questions/81585/what-is-dist-upgrade-and-why-does-it-upgrade-more-than-upgrade">question</a> for details).</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get full-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You&#8217;ve come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
 </div>
 
 
@@ -181,12 +236,12 @@
   
 
 
-<time itemprop="datePublished" content="2011-06-10 00:00:00 +0100" datetime="2011-06-10T00:00:00+01:00" pubdate data-updated="true" class="updated">Jun 10<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2019-08-29 20:18:00 +0100" datetime="2019-08-29T20:18:00+01:00" pubdate data-updated="true" class="updated">Aug 29<span>th</span>, 2019</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/java/'>java</a>
+    <a class='category' href='/blog/categories/pi/'>pi</a>
   
 </span>
 
@@ -202,10 +257,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/04/13/tempus-fugit-1.1-released/" title="Previous Post: tempus-fugit 1.1 released">&laquo; tempus-fugit 1.1 released</a>
+        <a class="basic-alignment left" href="/blog/2019/08/09/refactoring-in-10-minutes/" title="Previous Post: Refactoring in 10 Minutes">&laquo; Refactoring in 10 Minutes</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2011/06/22/loggin-is-still-evil-but/" title="next Post: Logging is still evil but...">Logging is still evil but... &raquo;</a>
       
     </p>
   </footer>
@@ -236,8 +289,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/';
-        var disqus_url = 'http://baddotrobot.com/blog/2011/06/10/artcile-in-javatech-journal/';
+        var disqus_identifier = 'http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/';
+        var disqus_url = 'http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/';
         var disqus_script = 'embed.js';
       
     (function () {

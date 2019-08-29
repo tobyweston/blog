@@ -387,8 +387,12 @@
         <lastmod>2019-08-09T12:37:39+01:00</lastmod>
     </url>
     <url>
+        <loc>http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/</loc>
+        <lastmod>2019-08-29T20:35:41+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://baddotrobot.com/</loc>
-        <lastmod>2019-08-09T12:37:39+01:00</lastmod>
+        <lastmod>2019-08-29T20:35:41+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/404.html</loc>
@@ -408,7 +412,7 @@
     </url>
     <url>
         <loc>http://baddotrobot.com/blog/archives/</loc>
-        <lastmod>2019-08-09T12:37:39+01:00</lastmod>
+        <lastmod>2019-08-29T20:35:41+01:00</lastmod>
     </url>
     <url>
         <loc>http://baddotrobot.com/book/</loc>

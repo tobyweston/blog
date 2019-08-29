@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-08-09T12:39:30+01:00</updated>
+  <updated>2019-08-29T20:36:54+01:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade Raspbian Stretch to Buster]]></title>
+    <link href="http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster/"/>
+    <updated>2019-08-29T20:18:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/08/29/upgrade-raspian-stretch-to-buster</id>
+    <content type="html"><![CDATA[<p>Upgrade your Raspbian install from Stretch to Buster. This is basically the same procedure as upgrading <a href="/blog/2017/10/26/upgrade-raspian-jessie-to-stretch">Jessie to Stretch</a> that I covered previously.</p>
+
+<!-- more -->
+
+
+<h2>Prepare</h2>
+
+<p>Get up to date.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you're on your own here!).</p>
+
+<pre><code>$ dpkg -C
+$ apt-mark showhold
+</code></pre>
+
+<h2>Prepare <code>apt-get</code> Sources</h2>
+
+<p>Update the sources to <code>apt-get</code>. This replaces "stretch" with "buster" in the repository locations giving <code>apt-get</code> access to the new version's binaries.</p>
+
+<pre><code>$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list    
+$ sudo sed -i 's/stretch/buster/g' /etc/apt/sources.list.d/raspi.list    
+</code></pre>
+
+<p>Verify this caught them all by running the following, expecting no output. If the command returns anything having previously run the <code>sed</code> commands above, it means more files may need tweaking. Run the <code>sed</code> command for each. The aim is to replace all instances of "stretch".</p>
+
+<pre><code>$ grep -lnr stretch /etc/apt    
+</code></pre>
+
+<p>Speed up subsequent steps by removing the list change package.</p>
+
+<pre><code>$ sudo apt-get remove apt-listchanges
+</code></pre>
+
+<h2>Do the Upgrade</h2>
+
+<p>To update existing packages without updating kernel modules or removing packages, run the following.</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+</code></pre>
+
+<p>Alternatively, to include kernel modules and removing packages if required, run the following (choose one, not both. See this <a href="https://askubuntu.com/questions/81585/what-is-dist-upgrade-and-why-does-it-upgrade-more-than-upgrade">question</a> for details).</p>
+
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get full-upgrade -y
+</code></pre>
+
+<p>Cleanup old outdated packages.</p>
+
+<pre><code>$ sudo apt-get autoremove -y &amp;&amp; sudo apt-get autoclean
+</code></pre>
+
+<p>Verify with <code>cat /etc/os-release</code>.</p>
+
+<h2>Update Firmware</h2>
+
+<p>You've come this far, might as well get the latest firmware.</p>
+
+<pre><code>$ sudo rpi-update    
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upgrade Raspbian Jessie to Stretch]]></title>
@@ -675,117 +744,6 @@ total 16
 $ cat 8192cu.conf
 options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pi Console Lead]]></title>
-    <link href="http://baddotrobot.com/blog/2015/12/28/pi-console-lead/"/>
-    <updated>2015-12-28T19:52:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2015/12/28/pi-console-lead</id>
-    <content type="html"><![CDATA[<p>Without an ethernet port, the Pi Zero doesn't lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.</p>
-
-<p>The Adafruit Console Lead uses the <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41">PL2303TA</a> (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it's handy to use the <code>screen</code> application to effectively open a "telnet-like" terminal to your Pi.</p>
-
-<!-- more -->
-
-
-<p>Most of the guides on the internet point you to older versions of the drivers, but to get things working on the Mac with El Capitan or Sierra, I've found <a href="http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&amp;pcid=41">v1.6 of the Prolific driver</a> is the only working option.</p>
-
-<p>It's not hard to build you're own cable from the basic components or you could try <a href="http://www.ebay.co.uk/sch/i.html?_from=R40&amp;_trksid=p2050601.m570.l1313.TR0.TRC0.H0.XPL2303TA.TRS0&amp;_nkw=PL2303TA&amp;_sacat=0">eBay for parts for under £2/$2</a> but I can't say if they use genuine Prolific chips or counterfeit.</p>
-
-<h2>Create a Screen</h2>
-
-<pre><code>$ ls -la /dev/tty.usb*
-crw-rw-rw-  1 root  wheel   17,   4 28 Dec 19:49 /dev/tty.usbserial
-</code></pre>
-
-<p>Startup screen and point it to your Pi (<code>115200</code> is the baud rate to communicate with).</p>
-
-<pre><code>screen /dev/tty.usbserial 115200
-</code></pre>
-
-<p>You might need to hit the <code>enter</code> key to wake things up, but you should see a regular Linux login prompt.</p>
-
-<p>By default, the console width is 30 characters and wraps on a single line. It's pretty annoying when you paste a long command, so you can increase it for you session with the following</p>
-
-<pre><code>stty cols 130
-</code></pre>
-
-<p>When you fire up the <code>screen</code> window manager, you can use <code>Ctrl</code> + <code>A</code> (<img src="/images/ks_control.gif" alt="Option" /> + <code>A</code>) to enter "command mode", hitting a subsequent key will execute a command. For example, <code>Ctrl</code> + <code>A</code> followed by a <code>?</code> will show you some helpful commands.</p>
-
-<p>Here are some reminders of useful commands.</p>
-
-<table>
-<thead>
-<tr>
-<th> Command(s)        </th>
-<th> Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Get some help     </td>
-<td> <code>Ctrl + A, ?</code></td>
-</tr>
-<tr>
-<td> Kill a session    </td>
-<td> <code>Ctrl + A, Ctrl + \</code></td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>Initial Setup</h2>
-
-<p>You might want to setup you're wireless from within <code>screen</code>. Connecting to a non-hidden network is straight forward. Setting things up for a hidden network is <a href="http://www.dafinga.net/2013/01/how-to-setup-raspberry-pi-with-hidden.html">a little more involved</a>.</p>
-
-<p>Check you <code>/etc/network/interfaces</code> file and ensure it has a <code>wlan0</code> section. For open networks, something like this.</p>
-
-<pre><code>source-directory /etc/network/interfaces.d
-
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-   wpa-ssid "Guest Network"
-   wpa-psk "passphrase"
-</code></pre>
-
-<p>and for hidden networks, something like this.</p>
-
-<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
-
-<pre><code>source-directory /etc/network/interfaces.d
-
-auto lo
-
-iface lo inet loopback
-iface eth0 inet dhcp
-
-auto wlan0
-allow-hotplug wlan0
-iface wlan0 inet dhcp
-   wpa-scan-ssid 1
-   wpa-ap-scan 1
-   wpa-key-mgmt WPA-PSK
-   wpa-proto RSN WPA
-   wpa-pairwise CCMP TKIP
-   wpa-group CCMP TKIP
-   wpa-ssid "network-name"
-   wpa-psk 12484.....654
-
-iface default inet dhcp
-</code></pre>
-
-<h2>Summary</h2>
-
-<p>Using the console lead is an easy way to use a telnet-like terminal to setup your Pi when you don't want to connect a monitor and keyboard. As an alternative, you could try a <a href="http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/">headless setup mounting an SD card</a>, whereby you'd mount an SD Card (with a raspian image) onto a unix-like machine and modify the file system directly.</p>
-
-<p>See my post on <a href="/blog/2017/03/01/standard-pi-setup">common Pi setup</a> for more notes and tips on general Pi setup.</p>
 ]]></content>
   </entry>
   
