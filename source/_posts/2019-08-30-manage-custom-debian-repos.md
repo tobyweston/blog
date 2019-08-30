@@ -77,7 +77,7 @@ The end result is:
     │       ├── InRelease
     │       ├── Release
     │       ├── Release.gpg
-    │       └── temperature-machine         <- component
+    │       └── temperature-machine         <- component (defaults to main)
     │           ├── Contents-all.gz
     │           └── binary-all
     │               ├── Packages
@@ -181,3 +181,7 @@ Release file
 ### How's to backup the GPG key?
 
 ### How to handle the existing folder structure for upgrades?
+
+### What instructions do I give my users?
+
+See http://repo.aptly.info/ (you'll need to ensure they install the gpg key and upload it to some key server)
