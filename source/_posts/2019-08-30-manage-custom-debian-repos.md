@@ -189,3 +189,29 @@ Clean up published artifacts.
 ### What instructions do I give my users?
 
 See http://repo.aptly.info/ (you'll need to ensure they install the gpg key and upload it to some key server)
+
+    $ apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+
+### How do I upload my key to a key server?
+
+https://debian-administration.org/article/451/Submitting_your_GPG_key_to_a_keyserver
+
+    $ gpg --send-keys 39E273602C8E7CE30DDDC32700258F48226612AE
+    gpg: sending key 00258F48226612AE to hkps://hkps.pool.sks-keyservers.net
+    gpg: keyserver send failed: No route to host
+    gpg: keyserver send failed: No route to host
+    $ echo $?
+    2
+
+Try an alternative (non default) key server:
+
+    $ gpg --keyserver hkp://subkeys.pgp.net --send-keys 39E273602C8E7CE30DDDC32700258F48226612AE
+    
+Having listed the secret keys with:
+    $ gpg --list-secret-keys
+    
+Can also upload manually via the website http://pool.sks-keyservers.net/#submit having exported the key:
+   
+    $ gpg --armor --export 00258F48226612AE
+    
+and search for it by email http://pool.sks-keyservers.net/pks/lookup?op=vindex&search=toby.weston%40gmail.com
