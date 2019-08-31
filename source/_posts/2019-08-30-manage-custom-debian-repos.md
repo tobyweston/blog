@@ -16,10 +16,10 @@ Create a repository called `badrobot-releases`. The `distribution` argument is `
 
     $ aptly repo create -distribution=stable -component=temperature-machine badrobot-releases
 
-Adding `.deb` packages to the repository.
+Adding `.deb` packages to the repository (where `target` contains the `.dev` files).
 
     $ brew install gnupg
-    $ aptly repo add badrobot-releases
+    $ aptly repo add badrobot-releases target
 
 Check the repository has some packages.
 
@@ -52,7 +52,7 @@ Probably should have added those details in when creating the repository:
     
 but, this seems to work:
 
-    $ aptly -distribution=stable -architectures=all publish repo badrobot-releases
+    $ aptly -distribution=stable -architectures=armhf publish repo badrobot-releases
     Loading packages...
     Generating metadata files and linking package files...
     Finalizing metadata files...
@@ -73,22 +73,23 @@ The end result is:
     /Users/toby/.aptly/public/
     ├── dists
     │   └── stable                          <- distribution
-    │       ├── Contents-all.gz
+    │       ├── Contents-armhf.gz
     │       ├── InRelease
     │       ├── Release
     │       ├── Release.gpg
     │       └── temperature-machine         <- component (defaults to main)
-    │           ├── Contents-all.gz
-    │           └── binary-all
+    │           ├── Contents-armhf.gz       
+    │           └── binary-armhf            <- architecture
     │               ├── Packages
     │               ├── Packages.bz2
     │               ├── Packages.gz
     │               └── Release
     └── pool
-        └── main
+        └── temperature-machine
             └── t
                 └── temperature-machine
-                    └── temperature-machine_2.3_all.deb
+                    ├── temperature-machine_2.1_all.deb
+                    └── temperature-machine_2.2_all.deb
     
     8 directories, 10 files
 
@@ -168,13 +169,16 @@ Packages file (from "robotooling" / hand rolled)
 
 Release file
 
-    $ cat main/binary-all/Release 
-    Origin: . debian
-    Label: . debian
-    Archive: debian
-    Architecture: all
-    Component: main
+    $ cat ~/.aptly/public/dists/stable/temperature-machine/binary-armhf/Release 
+    Origin: . stable
+    Label: . stable
+    Archive: stable
+    Architecture: armhf
+    Component: temperature-machine
 
+Clean up published artifacts.
+
+    $ aptly repo 
 
 ## Questions
 
