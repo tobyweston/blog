@@ -217,6 +217,15 @@ I saw this:
     gpg: import from '[stdin]' failed: General error
     gpg: Total number processed: 0
 
+You need to run as **root**.
+
+    $ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+    Executing: /tmp/apt-key-gpghome.54qrv7Xovw/gpg.1.sh --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+    gpg: key 00258F48226612AE: public key "Toby Weston (tempreature-machine.com) <toby.weston@gmail.com>" imported
+    gpg: Total number processed: 1
+    gpg:               imported: 1
+
+
 ### How do I upload my key to a key server?
 
 https://debian-administration.org/article/451/Submitting_your_GPG_key_to_a_keyserver
