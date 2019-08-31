@@ -10,6 +10,14 @@ keywords: "raspberry pi, pi, buster, stretch, raspbian. debian, repositories"
 description: "How to create your own Debian repository to distribute your software."
 ---
 
+## PGP
+
+You'll need `gnupg` installed and a key generated.
+
+    $ gpg --full-generate-key
+
+If you create a couple, when it comes to `aptly` signing your packages, it may not use the one you're expecting, make sure you use the `-gpg-key=???` flag.
+
 ## Create a Repository
 
 Create a repository called `badrobot-releases`. The `distribution` argument is `stretch`, `buster`, `stable` etc and will sit under the `dists` folder.
@@ -52,7 +60,8 @@ Probably should have added those details in when creating the repository:
     
 but, this seems to work:
 
-    $ aptly -distribution=stable -architectures=armhf publish repo badrobot-releases
+    $ aptly -distribution=stable -architectures=armhf -gpg-key=B80FD561478F7E75 -passphrase=secret publish repo badrobot-releases
+    
     Loading packages...
     Generating metadata files and linking package files...
     Finalizing metadata files...
@@ -66,6 +75,9 @@ but, this seems to work:
     Don't forget to add your GPG key to apt with apt-key.
     
     You can also use `aptly serve` to publish your repositories over HTTP quickly.
+    
+    
+## Folder Structure    
     
 The end result is:
 
@@ -180,6 +192,7 @@ Clean up published artifacts.
 
     $ aptly repo 
 
+
 ## Questions
 
 ### How's to backup the GPG key?
@@ -191,6 +204,18 @@ Clean up published artifacts.
 See http://repo.aptly.info/ (you'll need to ensure they install the gpg key and upload it to some key server)
 
     $ apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+    
+I saw this:
+
+    $ apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+    Executing: /tmp/apt-key-gpghome.bFn3KlgTJh/gpg.1.sh --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+    gpg: key 00258F48226612AE: public key "Toby Weston (tempreature-machine.com) <toby.weston@gmail.com>" imported
+    gpg: Total number processed: 1
+    gpg:               imported: 1
+    gpg: no writable keyring found: Not found
+    gpg: error reading '[stdin]': General error
+    gpg: import from '[stdin]' failed: General error
+    gpg: Total number processed: 0
 
 ### How do I upload my key to a key server?
 
@@ -208,6 +233,7 @@ Try an alternative (non default) key server:
     $ gpg --keyserver hkp://subkeys.pgp.net --send-keys 39E273602C8E7CE30DDDC32700258F48226612AE
     
 Having listed the secret keys with:
+
     $ gpg --list-secret-keys
     
 Can also upload manually via the website http://pool.sks-keyservers.net/#submit having exported the key:
