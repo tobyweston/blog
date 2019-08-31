@@ -240,4 +240,6 @@ Can also upload manually via the website http://pool.sks-keyservers.net/#submit 
    
     $ gpg --armor --export 00258F48226612AE
     
-and search for it by email http://pool.sks-keyservers.net/pks/lookup?op=vindex&search=toby.weston%40gmail.com
+and search for it by email http://pool.sks-keyservers.net/pks/lookup?op=vindex&search=blar%40gmail.com or full ID (prefixed with `0x`.
+
+    http://pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x39E273602C8E7CE30DDDC32700258F48226612AE
