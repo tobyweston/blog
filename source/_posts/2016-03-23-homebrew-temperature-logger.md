@@ -68,10 +68,11 @@ Once you can see the `w1_slave` file, you're ready to install the data logging s
 
 There are lots of options to record the temperature data but for something a bit different, the [temperature-machine](https://github.com/tobyweston/temperature-machine) software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" and the server stores it all in a round robin database and serves up the charts via a web page.
 
-1. Setup `apt-get` to recognise the temperature-machine repository.
+1. Setup `apt-get` to recognise the temperature-machine repository and import the public key (increasing security by ensuring only official packages are installed from it).
 
     ```
-    sudo bash -c 'echo "deb http://robotooling.com/debian ./" >> /etc/apt/sources.list'
+    sudo bash -c 'echo "deb http://robotooling.com/debian stable temperature-machine" >> /etc/apt/sources.list'
+    sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
     ```
     
 1. Install. 
