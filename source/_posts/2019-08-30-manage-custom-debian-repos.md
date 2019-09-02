@@ -43,24 +43,7 @@ Check the repository has some packages.
       
 Publish to a local file system (without additional configuration, the default output will be `~/.aptly/public`).
 
-    $ aptly publish repo badrobot-releases
-    ERROR: unable to publish: unable to guess distribution name, please specify explicitly
-    
-    $ aptly -distribution=stable publish repo badrobot-releases
-    Loading packages...
-    ERROR: unable to publish: unable to figure out list of architectures, please supply explicit list
-    
-Nothing got created.
-
-    $ ll ~/.aptly/public/dists/stable/    
-    
-Probably should have added those details in when creating the repository:
-
-    aptly repo create -distribution=stable -component=temperature-machine badrobot-releases
-    
-but, this seems to work:
-
-    $ aptly -distribution=stable -architectures=armhf -gpg-key=B80FD561478F7E75 -passphrase=secret publish repo badrobot-releases
+    $ aptly -distribution=stable -architectures=armhf -force-overwrite -gpg-key=00258F48226612AE -passphrase=secret publish repo badrobot-releases
     
     Loading packages...
     Generating metadata files and linking package files...
