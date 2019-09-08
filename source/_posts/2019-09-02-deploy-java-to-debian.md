@@ -6,7 +6,7 @@ date: 2019-09-02 09:06
 comments: true
 categories: 
 sidebar: false
-published: false
+published: true
 keywords: "java, scala, debian, debian repositories, aptly, ubuntu"
 description: "Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt."
 ---
@@ -20,7 +20,7 @@ Level up the way you distribute your Java/Scala/Kotlin applications by packaging
 The basic approach:
 
 1. Create a `.deb` package using `sbt` and the excellent `sbt-native-packager`
-1. Use `aptly` to create a manage your own debian repository which you then serve over HTTP
+1. Create your own Debian repository, add your packages and then serve them over HTTP
 1. Tell your customers where your repository is hosted
 1. Profit
 
