@@ -11,7 +11,7 @@ keywords: "java, scala, debian, debian repositories, aptly, ubuntu"
 description: "Create your own Debian repository for deploying your Java / Scala apps"
 ---
 
-In this post, we'll look at to how to setup your own [debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` on popular Linux distros like Debian and Ubuntu.
+In this post, we'll look at to how to setup your own [Debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` on popular Linux distros like Debian and Ubuntu.
 
 <!-- more -->
 
@@ -25,9 +25,136 @@ The basic approach:
 1. Profit
 
 
-### Debian Repository Format
+### Debian Repositories
+
+Debian package archives or repositories are collections of packages in a standard file structure. They're usually made available over the web so package managers like `apt` can retrieve and update systems. Debian has an official repository for itself but if you can't get your software distributed as part of Linux, you can create and share your own repositories. The list of repositories used is usually configured in `/etc/sources.list`. 
+
+The [format](https://wiki.debian.org/DebianRepository/Format) is a bit complicated but a bunch of files are required to tell package managers what versions of your software are available and where to download them from. Archives should also be cryptographically signed to prove that the software was publish by who they say they were. 
+
+So if you can create a folder structure that conforms, setup key files like `InRelease` / `Release` and `Pacakges` and ensure everything is singed, you can just host your own web server and configure your clients to point to it. 
+
+Initially, I tried creating everything manually as part of a deployment script (for example, you can create a `Pacakges` file using `dpkg-scanpackages`). I wanted to be able to create the repository across platforms and many of the tools weren't available on MacOS. There where just [too many problems](https://github.com/tobyweston/temperature-machine/issues/84) trying to do it manually. That's where `aptly` comes it.
+
 
 ## `aptly`
 
+The [`aptly`](https://www.aptly.info/doc/configuration/) software lets you create and manager repositories, add (otherwise known as _publishing_) your packages and even serving the repos over HTTP. [Download](https://www.aptly.info/download/) the software or on MacOS just run `brew install aptly`).
+
+Once setup, follow these steps.
+
+1. Create the repository
+1. Add your application package to the repository
+1. Publish your repository (this requires signing, so you'll need `gpg` installed and a key generated)
+1. Share your public key 
+1. Share your repository details
+
+
+### Create a Repository
+
+Create a repository, lets call it `my-releases`. The `distribution` argument is `stretch`, `buster`, `stable` etc and will create a sub-folder using `dists` in the resulting repository. The `component` argument can be used to namespace your application, if you leave it blank, it will default to `main`. Again, you'll see it in the generated folder structure.
+
+```bash
+$ aptly repo create -distribution=stable -component=my-application my-releases
+```
+
+### Add Packages to the Repository
+
+With your repo setup, you can start adding versions of your application. 
+
+```bash
+$ aptly repo add my-releases target
+```
+
+Check the repository has some packages.
+
+```bash
+$ aptly repo show -with-packages my-releases
+
+Name: my-releases
+Comment: 
+Default Distribution: 
+Default Component: main
+Number of packages: 1
+Packages:
+  my-application_2.1_all
+  my-application_2.2_all
+  my-application_2.3_all
+```
+
+### Publish the Repository
+
+Publishing in `aptly` takes your repository, all the packages it contains and creates the repository folder structure locally, digitally signing all the artifacts. By default, it will output to `~/.aptly/public`.
+
+You'll need `gpg` to sign, so if you don't have it setup, install and create a new key.
+
+```bash
+$ brew install gnupg
+$ gpg --full-generate-key
+```
+
+If you have more than one key, `aptly` may not use the one you're expecting to sign. Make sure you use the `-gpg-key=???` flag for `aptly` commands.
+
+```bash
+$ aptly -distribution=stable -architectures=armhf -force-overwrite -gpg-key=00258F4822661 -passphrase=<secret> \
+               publish repo my-releases
+
+Loading packages...
+Generating metadata files and linking package files...
+Finalizing metadata files...
+Signing file 'Release' with gpg, please enter your passphrase when prompted:
+Clearsigning file 'Release' with gpg, please enter your passphrase when prompted:
+
+Local repo my-releases has been successfully published.
+Please setup your webserver to serve directory '/Users/toby/.aptly/public' with autoindexing.
+Now you can add following line to apt sources:
+  deb http://your-server/ stable main
+Don't forget to add your GPG key to apt with apt-key.
+```
+ 
+When you want to update the repository with a new version of your software, you use `publish update` rather than the initialising `publish`.
+
+```bash
+$ aptly -architectures=armhf -force-overwrite -gpg-key=00258F48226612AE -passphrase=<secret> \
+            publish update stable
+```
+
+### Share your GPG Key    
+
+For users to download your packages without problems, you need to share the key you generated earlier. You do this by uploading to a know [key server](https://debian-administration.org/article/451/Submitting_your_GPG_key_to_a_keyserver).
+
+Check your secret keys with:
+
+```bash
+$ gpg --list-secret-keys
+```
+    
+...then upload with the following using the key hash from the previous command..
+
+```bash
+$ gpg --send-keys 39E273602C8E734335F6612AE
+```
+    
+If you have problems, you can also upload manually via the website http://pool.sks-keyservers.net/#submit having exported the key with the following:
+   
+```bash
+$ gpg --armor --export 00258F48226612AE
+```
+    
+Check it's available publicly by [searching for it](http://pool.sks-keyservers.net/) by email or full ID (prefixed with `0x`.
+
+
 ## Users Setup `apt` 
 
+Users have to add an entry in `/etc/sources.list` to point to the new repository. For example,
+
+```bash
+deb http://robotooling.com/debian/ stable temperature-machine
+```
+
+and then manually import the appropriate key (which on the Raspberry Pi, requires sudo)
+
+```bash
+$ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
+```
+
+From that point on, users can run `sudo apt-get update` to index the files and install and upgrade via `apt-get install`.
