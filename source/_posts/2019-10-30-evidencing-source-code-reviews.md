@@ -145,6 +145,18 @@ gpg --import secretkey_toby.asc
 Just pass in the name you used when creating the key to the `-S` argument. In my case `-Stoby`.
 
 
+# Why it Doesn't Work
+
+Unfortunately, this technique doesn't come without it's problems. 
+
+* Rebasing
+* Tool support
+
+Rebasing will overwrite the signatory, destroying the evidence. This is a blocker as rebasing (from a single branch as is the case for TBD) is a very common use case. Even if merging is used within a team, it only takes one rebase to subvert the process.
+
+IDE support is limited. IntelliJ IDEA doesn't support it (vote for the [issue here](https://youtrack.jetbrains.com/issue/IDEA-110261)) so you're left to use the command line for commits.
+
+
 ## References
 
 *As of 2009
