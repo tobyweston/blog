@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-10-30T13:51:49+00:00</updated>
+  <updated>2019-10-30T13:59:29+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Easily Deploy Java to Debian]]></title>
+    <link href="http://baddotrobot.com/blog/2019/09/02/deploy-java-to-debian/"/>
+    <updated>2019-09-02T09:06:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/09/02/deploy-java-to-debian</id>
+    <content type="html"><![CDATA[<p>Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as <code>.deb</code> files and deploying via <code>apt</code>.</p>
+
+<!-- more -->
+
+
+<h2>Approach</h2>
+
+<p>The basic approach:</p>
+
+<ol>
+<li>Create a <code>.deb</code> package using <code>sbt</code> and the excellent <code>sbt-native-packager</code></li>
+<li>Create your own Debian repository, add your packages and then serve them over HTTP</li>
+<li>Tell your customers where your repository is hosted</li>
+<li>Profit</li>
+</ol>
+
+
+<p>This post looks at the first step, creating the <code>.deb</code> package using the <code>sbt-native-packager</code> plugin. In the <a href="/blog/2019/09/03/create-debian-repositories">next post</a>, we'll look at how setup your own <a href="https://wiki.debian.org/DebianRepository">debian repository</a> so users can install and upgrade your software via <code>apt-get</code> to popular Linux distros like Debian and Ubuntu.</p>
+
+<p>Thanks and appreciation to <a href="https://github.com/muuki88">@muuki88</a> and the project maintainers for <code>sbt-native-manager</code>, it's a seriously useful piece of software.</p>
+
+<h2>Packaging</h2>
+
+<p>The <a href="https://www.scala-sbt.org/sbt-native-packager/index.html"><code>sbt-native-packager</code></a> plugin can create platform specific distributions for any <code>sbt</code> project. It can create a simple zip bundle for your application (the <code>universal</code> package), tarballs, rpms, Mac dmgs, Windows MSIs, Docker images and, the one we're interested in, <code>.deb</code> files. Debian and derivatives like Ubuntu use this package format with <code>dpkg</code> and <code>apt</code> as the standard way to install and manage software. If you want to make it easy for Linux user's to get hold of your software, this is the way to do it.</p>
+
+<h3>Native Packager Core Concepts</h3>
+
+<p>The native packager takes care of packaging, the act of putting a list of <em>mappings</em> (source file to install target path) into the chosen package format (zip, rpm, etc.). Each <a href="https://www.scala-sbt.org/sbt-native-packager/formats/index.html">packaging format</a> you use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in <code>src\universal</code> for files to add to the zip. Debian packaging will look for <code>src\debian</code>.</p>
+
+<p>You'll need to read up a little on how to use the plugin, see <a href="https://www.scala-sbt.org/sbt-native-packager/formats/debian.html">Debian specific instructions</a> but the core concepts include:</p>
+
+<ol>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#format-plugins">Packaging format plugins</a> - <em>how</em> an application is packaged; universal, linux, debian, rpm, docker, windows etc</li>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#archetype-plugins">Archetype plugins</a> - <em>what's</em> packaged (predefined configurations); java application, java server application, system loaders etc</li>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#mappings">Mappings</a> map source files to target system locations</li>
+</ol>
+
+
+<p>The native packager uses <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html">Project Arcetypes</a> like the <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html">Java CLI Application Archetype</a> or <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html">Java Server Application Archetype</a> to add additional files to the mappings enriching the created package. They don’t provide any new features per se.</p>
+
+<h3>Running as a Service</h3>
+
+<p>One of the many awesome features of the packager is that it can set your application up as a service on the target system. For example, if you want to start your application using <code>systemd</code>, just add a <code>enablePlugins(SystemdPlugin)</code> line to your build. The OS will take care of everything else, even restarting your application should it crash.</p>
+
+<p>The native packagers doesn't provide application lifecyle management however. Custom start/stop scripts, PID management, etc. are not part of native packager.</p>
+
+<h3>Extras</h3>
+
+<p>For some additional nice to haves, you might consider adding <code>man</code> pages (with <code>ronn</code>), creating a "fat" JAR (with <a href="https://github.com/sbt/sbt-assembly"><code>sbt-assembly</code></a> plugin) and stripping unused Scala library classes with ProGuard.</p>
+
+<h2>Deploying Debian Repository</h2>
+
+<p>The native packager doesn't take care of deployment. You use it to create your <code>.deb</code> package but what you do with it is down to you. The obvious choice is to deploy it to a Debian repository for your users to download via <code>apt</code>. Read the <a href="/blog/2019/09/03/create-debian-repositories">next post</a> to find out how.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Type Classes in Scala]]></title>
@@ -553,60 +614,6 @@ println(numbers.mean)
 <li>Again, <code>once</code> is optional.</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala Learning Curve]]></title>
-    <link href="http://baddotrobot.com/blog/2014/11/25/scala-learning-curve/"/>
-    <updated>2014-11-25T07:09:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2014/11/25/scala-learning-curve</id>
-    <content type="html"><![CDATA[<p>If you've just started to learn Scala and are wondering what to expect, it's typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.</p>
-
-<p><img itemprop="image" class="center" src="../../../../../images/learning_curve.png" width="752" height="389"></p>
-
-<p>Taken from my <a href="http://bit.ly/1DsYl9f">Pluralsight</a> course, the chart shows experience (or time) along the <code>x</code> axis and some measure of "learning" on the <code>y</code>.</p>
-
-<!-- more -->
-
-
-<h2>Milestone 1</h2>
-
-<p>When you first start, you can expect getting up to speed with the language to be a fairly steep incline. That's not to say that it's difficult to get to the first plateau, so by "steep", I really mean "short"; you can expect a relatively quick increment in learning.</p>
-
-<p>You'll probably sit here for a bit applying what you've learnt. I see this as the first milestone; to be able to build object-oriented or imperative applications using language specific constructs and features but without necessarily adopting functional programming. Just like learning any other language in the Java / C family.</p>
-
-<h2>Milestone 2</h2>
-
-<p>I see the next milestone as adopting functional programming techniques.</p>
-
-<p>This is much more challenging and likely to be a shallower curve. Typically this will involve using traditional architecture design but implementing functional programming techniques in the small. You can think of this approach as <a href="http://www.johndcook.com/blog/2009/03/23/functional-in-the-small-oo-in-the-large/">"functional in the small, OO in the large"</a>. Starting to embrace a new functional way of thinking and unlearning some of the traditional techniques can be hard, hence the shallower incline.</p>
-
-<p>Concrete examples here are more than just language syntax, so things like <a href="http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/">higher order and pure functions</a>, <a href="http://en.wikipedia.org/wiki/Referential_transparency_(computer_science)">referential transparency</a>, immutability and side-affect free, more declarative coding; all the things that are typically offered by <a href="http://en.wikipedia.org/wiki/Pure_function">pure</a> functional languages. <strong>The key thing here is that they're applied in small, isolated areas.</strong></p>
-
-<h2>Milestone 3</h2>
-
-<p>The next challenge is working towards a more cohesive functional design; this really means adopting a functional style at a system level; architecting the entire application as functions and abandoning the object-oriented style completely. So, aiming for something like a Haskell application.</p>
-
-<p>All the concrete functional programming mechanisms above apply but this time, throughout the system; not to isolated areas but lifted to application-wide concerns. Picking up advanced libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> seems to go hand-in-hand with this point of the curve.</p>
-
-<h2>As a Continuum</h2>
-
-<p>You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right.</p>
-
-<p><img itemprop="image" class="center" src="../../../../../images/continuum.png" width="591" height="368"></p>
-
-<p>You can think of the far right as Haskell on the JVM. Haskell is a pure functional language so you don't have any choice but to design your app in a functional way. Scala is an object-oriented / functional hybrid, it can only give you the tools. It can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.</p>
-
-<p>So as you start out on the continuum using Java and move to the right, libraries like <a href="http://www.functionaljava.org/">Functional Java</a>, <a href="https://code.google.com/p/totallylazy/">Totally Lazy</a> and even <a href="https://leanpub.com/whatsnewjava8">Java 8 features</a> help you adopt a more functional style. There comes a point where a language switch helps even more. Functional idioms become a <strong>language feature</strong> rather than a <strong>library feature</strong>. The syntactical sugar of for-comprehensions are a good example.</p>
-
-<h2>Final Thoughts</h2>
-
-<p>Libraries like <a href="http://eed3si9n.com/learning-scalaz/index.html">Scalaz</a> make it easier to a develop a purely functional style. It's worth noting that reaching the far right of the continuum (or top right quadrant of the learning curve) doesn't have to be the goal. There are plenty of teams operating effectively across the continuum.</p>
-
-<p>When you're adopting Scala, make a deliberate decision about where you want to be on the continuum, be clear about <em>why</em> and use my learning curve as a way to gauge your progress.</p>
-
-<p>I've developed a video course exclusively for <a href="http://bit.ly/1DsYl9f">Pluralsight</a> to help Java teams make the transition to Scala. If you're interested and liked this post, <a href="http://bit.ly/1DsYl9f">check it out</a> or read my book <a href="http://amzn.to/1M0w9jZ">Learn Scala for Java Developers</a>.</p>
 ]]></content>
   </entry>
   

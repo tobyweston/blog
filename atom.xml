@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-10-30T13:51:49+00:00</updated>
+  <updated>2019-10-30T13:59:29+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -250,9 +250,7 @@
 
 <h3>Native Packager Core Concepts</h3>
 
-<p>The native packager takes care of packaging, the act of putting a list of <em>mappings</em> (source file to install target path) into the chosen package format (zip, rpm, etc.). Each <a href="https://www.scala-sbt.org/sbt-native-packager/formats/index.html">packing format</a> your use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in <code>src\universal</code> for files to add to the zip. Debian packaging will look for <code>src\debian</code>.</p>
-
-<p>It uses <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html">Project Arcetypes</a> like the <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html">Java CLI Application Archetype</a> or <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html">Java Server Application Archetype</a> to add additional files to the mappings enriching the created package. They don’t provide any new features per se.</p>
+<p>The native packager takes care of packaging, the act of putting a list of <em>mappings</em> (source file to install target path) into the chosen package format (zip, rpm, etc.). Each <a href="https://www.scala-sbt.org/sbt-native-packager/formats/index.html">packaging format</a> you use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in <code>src\universal</code> for files to add to the zip. Debian packaging will look for <code>src\debian</code>.</p>
 
 <p>You&#8217;ll need to read up a little on how to use the plugin, see <a href="https://www.scala-sbt.org/sbt-native-packager/formats/debian.html">Debian specific instructions</a> but the core concepts include:</p>
 
@@ -262,6 +260,8 @@
 <li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#mappings">Mappings</a> map source files to target system locations</li>
 </ol>
 
+
+<p>The native packager uses <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html">Project Arcetypes</a> like the <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html">Java CLI Application Archetype</a> or <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html">Java Server Application Archetype</a> to add additional files to the mappings enriching the created package. They don’t provide any new features per se.</p>
 
 <h3>Running as a Service</h3>
 
