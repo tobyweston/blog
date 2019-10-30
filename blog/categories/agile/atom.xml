@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-10-30T14:28:24+00:00</updated>
+  <updated>2019-10-30T18:09:06+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -51,7 +51,7 @@
 
 <p>Pair Programming as an alternative to traditional out-of-band code reviews offer significant advantages. Again, mostly this is around <strong>shortening the feedback loop</strong> and fixing potential problems early. If code reviews are a good idea, why not do them all the time? When you're actually coding and not when you've finished?</p>
 
-<p>So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you've had multiple developers work on a single piece of code? Perhaps crypto-evidence can help?</p>
+<p>So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you've had multiple developers work on a single piece of code? Perhaps "crypto-evidence" can help.</p>
 
 <h2>Crypto-evidence</h2>
 
@@ -81,14 +81,14 @@ Date:   Wed Oct 30 12:37:18 2019 +0000
 
 <h3>Proving Pair Programming</h3>
 
-<p>I brushed over a little bit there. Assuming we want to prove Pair Programming was being done, we need to show an alternative author from the signatory. We can do that either supplying the <code>--author</code> argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.</p>
+<p>Assuming we want to prove Pair Programming was used, we need to show an alternative author from the signatory. We can do that either supplying the <code>--author</code> argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.</p>
 
 <ol>
 <li><p>On my computer (the default key is set with <code>git config --global user.signingkey 39E273602</code>) and with Barry pairing:</p>
 
 <pre><code class="bash">$ git commit -S --author="Barry &lt;barry@badrobot.com&gt;" -m "commit from Toby's machine with Barry as the author"
 </code></pre></li>
-<li><p>Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from every machine.</p>
+<li><p>Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from any machine.</p>
 
 <p>From Barry's machine (with Toby pairing):</p>
 
@@ -112,7 +112,7 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 
 <p>Showing Toby as the signatory (code reviewer) and Barry as the the author. Cryptographically provable that two developers worked on the code.</p>
 
-<p>When you force each commit to be signed (with <code>git config --global commit.gpgsign true</code>), you should be able to build a report from the Git log showing every commit was paired on.</p>
+<p>When you force each commit to be signed (with <code>git config --global commit.gpgsign true</code>), you should be able to build a report from the Git log showing every commit was paired on and so code reviewed.</p>
 
 <pre><code class="bash">$ git lgs
 * e128af7 - (HEAD -&gt; master) commit showing alt author (21 minutes ago) &lt;Barry&gt; (🔒 Toby &lt;toby@badrobot.com.com&gt;)
@@ -136,7 +136,7 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 
 <h1>Why it Doesn't Work</h1>
 
-<p>Unfortunately, this technique doesn't come without it's problems.</p>
+<p>Unfortunately, this technique doesn't come without problems.</p>
 
 <ul>
 <li>Rebasing will overwrite the signatories</li>
@@ -145,17 +145,19 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 </ul>
 
 
-<p>Rebasing will rewrite a commit after pulling down changes. As it attempt to rewrite the commit, it will take your <code>commit.gpgsign</code> setting into account and potentially overwrite someone else signature with your own. If the setting is <code>false</code>, it will appear as if there was no signatory. This is potentially a deal breaker as rebasing (from a single branch as is the case for TBD) is a <strong>very</strong> common use case. Even if merging is used within a team, it only takes one rebase to subvert the entire process.</p>
+<p>Rebasing will rewrite a commit after pulling down changes. As it attempts to rewrite the commit, it will take your <code>commit.gpgsign</code> setting into account and potentially overwrite someone else's signature with your own. If the setting is <code>false</code>, it will appear as if there was no signature at all. This is potentially a deal breaker as rebasing (even from a single branch, as is the case for TBD) is a <strong>very</strong> common use case. Even when merging rather than rebasing, it only takes one rebase to subvert the entire process.</p>
 
-<p>IDE support is limited. IntelliJ IDEA doesn't support it (vote for the <a href="https://youtrack.jetbrains.com/issue/IDEA-110261">issue here</a>) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the <code>--author</code> has changed.</p>
+<p>IDE support is also limited. IntelliJ IDEA doesn't support it (vote for the <a href="https://youtrack.jetbrains.com/issue/IDEA-110261">issue here</a>) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the <code>--author</code> has changed which may limit your options.</p>
 
 <h2>Summary</h2>
 
-<p>Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it, it just breaks down in a few key areas.</p>
+<p>Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it. It just breaks down in a few key areas.</p>
 
 <p>A warning from Git's own documentation:</p>
 
 <p><blockquote><p>Signing tags and commits is great, but if you decide to use this in your normal workflow, you’ll have to make sure that everyone on your team understands how to do so. If you don’t, you’ll end up spending a lot of time helping people figure out how to rewrite their commits with signed versions. Make sure you understand GPG and the benefits of signing things before adopting this as part of your standard workflow.</p><footer><strong>Git - Signing Your Work</strong> <cite><a href='https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work'>Git Tools</a></cite></footer></blockquote></p>
+
+<p>I'd love to know you're experiences with TBD, Pair Programming and evidencing source code reviews, let me know below.</p>
 
 <h2>References</h2>
 
