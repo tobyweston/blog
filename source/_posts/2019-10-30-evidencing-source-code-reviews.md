@@ -175,7 +175,7 @@ I'd love to know you're experiences with TBD, Pair Programming and evidencing so
 * [Git - Signing your Work](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work)
 * [Git adoption figures](https://softwareengineering.stackexchange.com/questions/136079/are-there-any-statistics-that-show-the-popularity-of-git-versus-svn)
 * [TBD vs Branching](https://www.toptal.com/software/trunk-based-development-git-flow)
-* [Technology Risk Management Guidelines](https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf)
+* [Technology Risk Management Guidelines from the MAS](https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf)
 
 
 ## Miscellaneous Setup
