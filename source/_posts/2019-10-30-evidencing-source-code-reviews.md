@@ -54,12 +54,12 @@ So how do you practice trunk based developed, utilise Pair Programming and still
 
 ## Crypto-evidence
 
-Crypto-evidence is a term I made up for this post but it implies that we should be able to supply evidence that can be proven via cryptographical means. With traditional techniques, a code reviewer can be proven to be who she says she is (and that she's a different person than the original author) by the login credentials they used with the review and VCS tools. These would be encrypted and so (in theory) can not be subverted or faked. Assuming the rest of the review is locked down, we have our evidence.
+Crypto-evidence is a term I made up for this post but it implies that we should be able to supply evidence that can be proven via cryptographical means. With traditional techniques, a code reviewer can be proven to be who she says she is (and that she's a different person than the original author) by the login credentials used with the review and VCS tools. These would be encrypted and so (in theory) can not be subverted or faked. Assuming the rest of the review is locked down, we have our evidence.
 
 
 ### Git Digital Signatures
 
-Git is probably the most widely used VCS today (some figures suggesting it's used by 70% of projects). It offers a feature called **signed commits** whereby the person committing code digitally signs the commit with GPG. This can be retrieved (along with the author information) and, in theory, prove a different individual "signed" a commit than it's author. This signature could be used as a sign-off for a code review. Just use `-S` (not `-s`):
+Git is probably the most widely used VCS today (some figures suggesting it's used by 70% of projects). It offers a feature called **signed commits** whereby the person committing code digitally signs the commit with GPG. This can be retrieved (along with the author information) and, in theory, prove a different individual "signed" a commit than it's author. This signature could be used as a sign-off for a code review as only the signatory knows her passphrase. Just use `-S` (not `-s`):
 
 ```bash
 $ git -S -m "initial commit"
@@ -80,7 +80,7 @@ Date:   Wed Oct 30 12:37:18 2019 +0000
 
 ```
 
-The key line includes `Signature made ... using RSA key 39E273602`. Evidence, job done. Not quite...
+The key line includes `Signature made ... using RSA key 39E273602`. Job done? Not quite...
 
 
 ### Proving Pair Programming
@@ -93,7 +93,9 @@ I brushed over a little bit there. Assuming we want to prove Pair Programming wa
    $ git commit -S --author="Barry <barry@badrobot.com>" -m "commit from Toby's machine with Barry as the author"
    ```
 
-1. Or if each machine has each developer's private key installed in GPG and from Barry's machine (with Toby pairing):
+1. Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from every machine.
+ 
+   From Barry's machine (with Toby pairing):
 
    ```bash
    $ git commit -Stoby -m "commit as Barry with Toby signing the commit"
@@ -114,11 +116,17 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 
 ```
 
-When you force each commit to be signed, you should be able to build a report from the Git log showing every commit was paired on.
+Showing Toby as the signatory (code reviewer) and Barry as the the author. Cryptographically provable that two developers worked on the code.
+
+When you force each commit to be signed (with `git config --global commit.gpgsign true`), you should be able to build a report from the Git log showing every commit was paired on.
 
 ```bash
-git config --global commit.gpgsign true
+$ git lgs
+* e128af7 - (HEAD -> master) commit showing alt author (21 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* fa6f6e5 - commit showing alt author (34 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* d001cb9 - initial commit (38 minutes ago) <Toby> (🔒 Barry <barry@badrobot.com.com>)
 ```
+
 
 ### Sharing and Importing Secrets
 
@@ -135,6 +143,7 @@ gpg --import secretkey_toby.asc
 ```
 
 Just pass in the name you used when creating the key to the `-S` argument. In my case `-Stoby`.
+
 
 ## References
 
@@ -159,9 +168,9 @@ $ git config --global alias.lgs "log --graph --pretty=format:'%Cred%h%Creset -%C
 
 ```bash
 $ git lgs
-* e128af7 - (HEAD -> master) commit showing alt author (17 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
-* fa6f6e5 - commit showing alt author (30 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
-* fa6f6e5 - commit showing alt author (30 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* e128af7 - (HEAD -> master) commit showing alt author (21 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* fa6f6e5 - commit showing alt author (34 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* d001cb9 - initial commit (38 minutes ago) <Toby> (🔒 Barry <barry@badrobot.com.com>)
 ```
 
 ### Troubleshooting
