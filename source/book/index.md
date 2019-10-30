@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Learn Scala for Java Developers
+title: Scala for Java Developers, A Practical Primer
 comments: false
 sharing: true
 footer: false
@@ -24,22 +24,25 @@ description: "My books on Learning Scala for Java Developers, Essential Acceptan
     </script>
 </div>
 
-<a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://titlepages.leanpub.com/s4j/bookpage Learn Scala for Java Developers is available on Amazon%}</a>
+<a href="https://amzn.to/2oz84hE" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right https://images-na.ssl-images-amazon.com/images/I/41QL1f99HpL._SX348_BO1,204,203,200_.jpg 270 385 Scala for Java Developers: A Practical Primer is available on Amazon%}</a>
 
 This book is for Java developers looking to transition to programming Scala. It helps translate what you already know in Java to Scala and kick starts your functional programming journey.
 
 The book takes a tour of Scala to get you up and running then compares Java syntax directly to Scala to give you a quick start translating one-to-one. It goes on to describe Scala specific features including monads and for-comprehensions. The book wraps up with some general advice adopting Scala in Java teams.
 
-It's around 230 pages (39,000 words).
+The source code is available on [GitHub](https://github.com/tobyweston/learn-scala-java-devs).
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 
-<form action="http://amzn.to/1M0w9jZ" method="get">
+<div>
+<form style="display: inline" action="https://amzn.to/2oz84hE" method="get">
 <input type="submit" value="Buy on Amazon" class="btn btn-large btn-success" />
 </form>
-
+<form style="display: inline" action="https://www.apress.com/gp/book/9781484231074" method="get">
+<input type="submit" value="Buy on Apress" class="btn btn-large btn-success" />
+</div>
 
 
 
