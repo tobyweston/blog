@@ -4,7 +4,7 @@ title: "Creating Debian Repositories"
 series: Deploying to Debian
 date: 2019-09-03 09:06
 comments: true
-categories: 
+categories: java, scala
 sidebar: false
 published: false
 keywords: "java, scala, debian, debian repositories, aptly, ubuntu"

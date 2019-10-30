@@ -4,7 +4,7 @@ title: "Easily Deploy Java to Debian"
 series: Deploying to Debian
 date: 2019-09-02 09:06
 comments: true
-categories: 
+categories: java, scala
 sidebar: false
 published: true
 keywords: "java, scala, debian, debian repositories, aptly, ubuntu"

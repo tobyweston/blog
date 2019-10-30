@@ -48,7 +48,7 @@ Trunk based development has lots of advantages in it own right, not least of whi
 
 Pair Programming as an alternative to traditional out-of-band code reviews offer significant advantages. Again, mostly this is around __shortening the feedback loop__ and fixing potential problems early. If code reviews are a good idea, why not do them all the time? When you're actually coding and not when you've finished?
 
-So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you've had multiple developers work on a single piece of code? Perhaps crypto-evidence can help?
+So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you've had multiple developers work on a single piece of code? Perhaps "crypto-evidence" can help.
 
 
 ## Crypto-evidence
@@ -84,7 +84,7 @@ The key line includes `Signature made ... using RSA key 39E273602`. Job done? No
 
 ### Proving Pair Programming
 
-I brushed over a little bit there. Assuming we want to prove Pair Programming was being done, we need to show an alternative author from the signatory. We can do that either supplying the `--author` argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.
+Assuming we want to prove Pair Programming was used, we need to show an alternative author from the signatory. We can do that either supplying the `--author` argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.
 
 1. On my computer (the default key is set with `git config --global user.signingkey 39E273602`) and with Barry pairing:
 
@@ -92,7 +92,7 @@ I brushed over a little bit there. Assuming we want to prove Pair Programming wa
    $ git commit -S --author="Barry <barry@badrobot.com>" -m "commit from Toby's machine with Barry as the author"
    ```
 
-1. Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from every machine.
+1. Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from any machine.
  
    From Barry's machine (with Toby pairing):
 
@@ -117,7 +117,7 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 
 Showing Toby as the signatory (code reviewer) and Barry as the the author. Cryptographically provable that two developers worked on the code.
 
-When you force each commit to be signed (with `git config --global commit.gpgsign true`), you should be able to build a report from the Git log showing every commit was paired on.
+When you force each commit to be signed (with `git config --global commit.gpgsign true`), you should be able to build a report from the Git log showing every commit was paired on and so code reviewed.
 
 ```bash
 $ git lgs
@@ -146,26 +146,28 @@ Just pass in the name you used when creating the key to the `-S` argument. In my
 
 # Why it Doesn't Work
 
-Unfortunately, this technique doesn't come without it's problems. 
+Unfortunately, this technique doesn't come without problems. 
 
 * Rebasing will overwrite the signatories
 * Tool support means the terminal is the only option
 * Sharing private keys
 
-Rebasing will rewrite a commit after pulling down changes. As it attempt to rewrite the commit, it will take your `commit.gpgsign` setting into account and potentially overwrite someone else signature with your own. If the setting is `false`, it will appear as if there was no signatory. This is potentially a deal breaker as rebasing (from a single branch as is the case for TBD) is a **very** common use case. Even if merging is used within a team, it only takes one rebase to subvert the entire process.
+Rebasing will rewrite a commit after pulling down changes. As it attempts to rewrite the commit, it will take your `commit.gpgsign` setting into account and potentially overwrite someone else's signature with your own. If the setting is `false`, it will appear as if there was no signature at all. This is potentially a deal breaker as rebasing (even from a single branch, as is the case for TBD) is a **very** common use case. Even when merging rather than rebasing, it only takes one rebase to subvert the entire process.
 
-IDE support is limited. IntelliJ IDEA doesn't support it (vote for the [issue here](https://youtrack.jetbrains.com/issue/IDEA-110261)) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the `--author` has changed. 
+IDE support is also limited. IntelliJ IDEA doesn't support it (vote for the [issue here](https://youtrack.jetbrains.com/issue/IDEA-110261)) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the `--author` has changed which may limit your options.
 
 
 ## Summary
 
-Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it, it just breaks down in a few key areas.
+Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it. It just breaks down in a few key areas.
 
 A warning from Git's own documentation:
 
 {% blockquote Git - Signing Your Work https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work Git Tools %}
 Signing tags and commits is great, but if you decide to use this in your normal workflow, you’ll have to make sure that everyone on your team understands how to do so. If you don’t, you’ll end up spending a lot of time helping people figure out how to rewrite their commits with signed versions. Make sure you understand GPG and the benefits of signing things before adopting this as part of your standard workflow.
 {% endblockquote %}
+
+I'd love to know you're experiences with TBD, Pair Programming and evidencing source code reviews, let me know below.
 
 
 ## References
