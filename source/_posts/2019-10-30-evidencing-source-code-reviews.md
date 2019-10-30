@@ -14,9 +14,8 @@ Many industries need to evidence that code reviews have taken place. This is typ
 
 The result is a tension between old-fashioned bureaucracy and modern development practices; the need to prove you have a rigorous process in-place and the desire to push frequent releases to production without wasteful paperwork. 
 
-Amazon have thousands of "applications" and deploy to production every 2 seconds*. How would they demonstrate that each has been the subject of a thorough code review without constantly producing reams of documentation?
-
 <!-- more -->
+
 
 ## The Regulators
 
@@ -158,8 +157,6 @@ IDE support is limited. IntelliJ IDEA doesn't support it (vote for the [issue he
 
 
 ## References
-
-*As of 2009
 
 * [Git adoption figures](https://softwareengineering.stackexchange.com/questions/136079/are-there-any-statistics-that-show-the-popularity-of-git-versus-svn)
 * [TBD vs Branching](https://www.toptal.com/software/trunk-based-development-git-flow)
