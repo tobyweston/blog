@@ -114,6 +114,27 @@ Date:   Wed Oct 30 12:54:49 2019 +0000
 
 ```
 
+When you force each commit to be signed, you should be able to build a report from the Git log showing every commit was paired on.
+
+```bash
+git config --global commit.gpgsign true
+```
+
+### Sharing and Importing Secrets
+
+To share private keys, export your key (you may choose to share this via Git alongside your source code).
+
+```bash
+$ gpg --export-secret-key --armor toby@badrobot.com > secretkey_toby.asc
+```
+
+...and import it on each developer's machine. 
+
+```bash
+gpg --import secretkey_toby.asc
+```
+
+Just pass in the name you used when creating the key to the `-S` argument. In my case `-Stoby`.
 
 ## References
 
