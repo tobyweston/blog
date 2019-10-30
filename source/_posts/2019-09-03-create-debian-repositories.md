@@ -53,7 +53,7 @@ Once setup, follow these steps.
 
 Create a repository, lets call it `my-releases`. The `distribution` argument is `stretch`, `buster`, `stable` etc and will create a sub-folder using `dists` in the resulting repository. The `component` argument can be used to namespace your application, if you leave it blank, it will default to `main`. Again, you'll see it in the generated folder structure.
 
-```bash
+```console
 $ aptly repo create -distribution=stable -component=my-application my-releases
 ```
 
@@ -61,13 +61,13 @@ $ aptly repo create -distribution=stable -component=my-application my-releases
 
 With your repo setup, you can start adding versions of your application. 
 
-```bash
+```console
 $ aptly repo add my-releases target
 ```
 
 Check the repository has some packages.
 
-```bash
+```console
 $ aptly repo show -with-packages my-releases
 
 Name: my-releases
@@ -87,14 +87,14 @@ Publishing in `aptly` takes your repository, all the packages it contains and cr
 
 You'll need `gpg` to sign, so if you don't have it setup, install and create a new key.
 
-```bash
+```console
 $ brew install gnupg
 $ gpg --full-generate-key
 ```
 
 If you have more than one key, `aptly` may not use the one you're expecting to sign. Make sure you use the `-gpg-key=???` flag for `aptly` commands.
 
-```bash
+```console
 $ aptly -distribution=stable -architectures=armhf -force-overwrite -gpg-key=00258F4822661 -passphrase=<secret> \
                publish repo my-releases
 
@@ -108,12 +108,12 @@ Local repo my-releases has been successfully published.
 Please setup your webserver to serve directory '/Users/toby/.aptly/public' with autoindexing.
 Now you can add following line to apt sources:
   deb http://your-server/ stable main
-Don't forget to add your GPG key to apt with apt-key.
+Dont forget to add your GPG key to apt with apt-key.
 ```
  
 When you want to update the repository with a new version of your software, you use `publish update` rather than the initialising `publish`.
 
-```bash
+```console
 $ aptly -architectures=armhf -force-overwrite -gpg-key=00258F48226612AE -passphrase=<secret> \
             publish update stable
 ```
@@ -124,19 +124,19 @@ For users to download your packages without problems, you need to share the key 
 
 Check your secret keys with:
 
-```bash
+```console
 $ gpg --list-secret-keys
 ```
     
 ...then upload with the following using the key hash from the previous command..
 
-```bash
-$ gpg --send-keys 39E273602C8E734335F6612AE
+```console
+$ gpg --send-keys 00258F48226612AE
 ```
     
 If you have problems, you can also upload manually via the website http://pool.sks-keyservers.net/#submit having exported the key with the following:
    
-```bash
+```console
 $ gpg --armor --export 00258F48226612AE
 ```
     
@@ -147,13 +147,13 @@ Check it's available publicly by [searching for it](http://pool.sks-keyservers.n
 
 Users have to add an entry in `/etc/sources.list` to point to the new repository. For example,
 
-```bash
+```console
 deb http://robotooling.com/debian/ stable temperature-machine
 ```
 
 and then manually import the appropriate key (which on the Raspberry Pi, requires sudo)
 
-```bash
+```console
 $ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
 ```
 
