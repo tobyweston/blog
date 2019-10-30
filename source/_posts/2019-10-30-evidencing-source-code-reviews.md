@@ -87,13 +87,13 @@ The key line includes `Signature made ... using RSA key 39E273602`. Evidence, jo
 
 I brushed over a little bit there. Assuming we want to prove Pair Programming was being done, we need to show an alternative author from the signatory. We can do that either supplying the `--author` argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.
 
-1. On Toby's computer (the default key is Toby's set with `git config --global user.signingkey 39E273602`) and Barry pairing:
+1. On my computer (the default key is set with `git config --global user.signingkey 39E273602`) and with Barry pairing:
 
    ```bash
    $ git commit -S --author="Barry <barry@badrobot.com>" -m "commit from Toby's machine with Barry as the author"
    ```
 
-1. Or if each machine has each developer's private key installed in GPG and from Barry's machine (Toby pairing):
+1. Or if each machine has each developer's private key installed in GPG and from Barry's machine (with Toby pairing):
 
    ```bash
    $ git commit -Stoby -m "commit as Barry with Toby signing the commit"
@@ -148,6 +148,23 @@ Just pass in the name you used when creating the key to the `-S` argument. In my
 
 
 ## Miscellaneous Setup
+
+### Reporting
+
+With the following alias, you can print a nice one liner per commit including who signed it.
+
+```bash
+$ git config --global alias.lgs "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %C(yellow)(🔒 %GS)%Creset' --abbrev-commit --date=relative"
+```
+
+```bash
+$ git lgs
+* e128af7 - (HEAD -> master) commit showing alt author (17 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* fa6f6e5 - commit showing alt author (30 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+* fa6f6e5 - commit showing alt author (30 minutes ago) <Barry> (🔒 Toby <toby@badrobot.com.com>)
+```
+
+### Troubleshooting
 
 To test your GPG program, run the following.
 
