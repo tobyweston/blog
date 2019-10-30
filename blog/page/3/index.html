@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Despite IntelliJ&#8217;s improvements to retina support, IDEA still looks shabby when running a retina display with the JDK 7 and 8. See for yourself &hellip;">
+  <meta name="description" content="Java 8 treats lambdas as an instance of an interface type. It formalises this into something it calls &#8220;functional interfaces&#8221;. A &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2019-08-29 20:36:54 +0100 -->
+    <!-- last update; 2019-10-30 13:51:49 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,94 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2014-04-07 21:33:00 +0100" datetime="2014-04-07T21:33:00+01:00" pubdate data-updated="true" class="updated">Apr 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Java 8 treats lambdas as an instance of an interface type. It formalises this into something it calls &#8220;functional interfaces&#8221;. A functional interface is just an interface with a single method. Java calls the method a &#8220;functional method&#8221; but the name &#8220;single abstract method&#8221; or SAM is often used. All the existing single method interfaces like <code>Runnable</code> and <code>Callable</code> in the JDK are now functional interfaces and lambdas can be used anywhere a single abstract method interface is used.</p>
+
+<p>Let&#8217;s run through the basic syntax.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/07/functional-interfaces-in-java8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2014-02-18 21:33:00 +0000" datetime="2014-02-18T21:33:00+00:00" pubdate data-updated="true" class="updated">Feb 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle docs</a> describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/02/18/method-references-in-java8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -501,94 +589,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2013/01/10/stack-vs-deque/">Java Stack vs Deque</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-01-10 12:12:00 +0000" datetime="2013-01-10T12:12:00+00:00" pubdate data-updated="true" class="updated">Jan 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Java has long had a <a href="/blog/2009/01/24/inheritance-vs-composition/">badly written</a> implementation of a stack. The stack is a great example of single responsibility; it&#8217;s supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of <code>Stack</code>. It extends <code>Vector</code> and so is implemented in terms of inheritance rather than aggregation. It&#8217;s <em>both</em> a <code>Stack</code> <em>and</em> a <code>Vector</code>. They haven&#8217;t made the situation any better when recently deprecating <code>Stack</code> in favour of <code>Deque</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/10/stack-vs-deque/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
-        <h1 class="entry-title"><a href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Sending Messages vs Method Invocation</a></h1>
-      
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2012-10-06 12:12:00 +0100" datetime="2012-10-06T12:12:00+01:00" pubdate data-updated="true" class="updated">Oct 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img itemprop="image" class="right" src="../../../../../images/letter.jpg" title="'Send a message'" ></p>
-
-<p>In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we&#8217;ll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we&#8217;re on the topic, we&#8217;ll look at the difference between a function and a method and discuss the difference between an object reference and a pointer.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/10/06/sending-messages-vs-method-invocation/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -604,6 +604,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2019/10/30/evidencing-source-code-reviews/">Evidencing Source Code Reviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/09/02/deploy-java-to-debian/">Easily Deploy Java to Debian</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2019/08/29/upgrade-raspian-stretch-to-buster/">Upgrade Raspbian Stretch to Buster</a>
@@ -675,14 +683,6 @@
     
       <li class="post">
         <a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
       </li>
     
   </ul>

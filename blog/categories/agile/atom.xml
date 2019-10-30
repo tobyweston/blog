@@ -4,7 +4,7 @@
   <title><![CDATA[Category: agile | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/agile/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-08-29T20:36:54+01:00</updated>
+  <updated>2019-10-30T13:51:49+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,195 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Evidencing Source Code Reviews]]></title>
+    <link href="http://baddotrobot.com/blog/2019/10/30/evidencing-source-code-reviews/"/>
+    <updated>2019-10-30T08:16:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2019/10/30/evidencing-source-code-reviews</id>
+    <content type="html"><![CDATA[<p>Many industries need to evidence that code reviews have taken place. This is typical in regulated environments like Banking but the Regulators aren't clear what constitutes a good source code review process and don't yet understand modern practices like Pair Programming. They can't help you streamline your process.</p>
+
+<p>The result is a tension between old-fashioned bureaucracy and modern development practices; the need to prove you have a rigorous process in-place and the desire to push frequent releases to production without wasteful paperwork.</p>
+
+<!-- more -->
+
+
+<h2>The Regulators</h2>
+
+<p>The Monetary Authority of Singapore (MAS) is Singapore's central bank and regulatory authority. If you want to do business in Singapore, you need to comply with their regulations. They've published what they call the Technology Risk Management (TRM) Guidelines to help with "the adoption of sound practices and processes for managing technology". Each financial institution with an interest in Singapore is expected to adopt these guidelines with the following caveat.</p>
+
+<p><blockquote><p>"Financial institutions (FIs) may adapt these guidelines, taking into account the diverse activities they engage in and the markets in which they conduct transactions. FIs should read the Guidelines in conjunction with relevant regulatory requirements and industry standards."</p><footer><strong>Monetary Authority of Singapore</strong> <cite>TRM Guidelines - Section 2.0.1</cite></footer></blockquote></p>
+
+<p>One area of the TRM guidelines talks about the need to conduct code reviews (section 6.3). Each institution must interpret these guidelines and be comfortable articulating how the manage the source code review process. The TRM guidelines don't say <em>how</em> to conduct reviews and doing effective code reviews is hard.</p>
+
+<p>Regulators struggle to keep up with modern software development practices and how they can help give confidence that guidelines are being followed. They struggle to assess the impact of things like containerised deployments and having data on the public cloud. For source code reviews, each institution must adapt the guidelines to fit their development practices but at a minimum, each should be able to provide evidence.</p>
+
+<h2>Evidence</h2>
+
+<p>So how do we evidence that code reviews have taken place? A traditional process would be to conduct an out-of-band code review (after the coding task has been completed) and document it via some tool like Codacy or Crucible. GitHub (and GitHub Enterprise) have nice integrated review tools and BitBucket have something similar. These are often combined with the act of merging a Pull Request, i.e. you do the code review when you accept a PR.</p>
+
+<h3>Trunk Based Development vs Branch</h3>
+
+<p>Tools that combine merging branches with code reviews <strong>conflate two distinct ideas</strong> (managing your source code and peer reviewing source code). If you do both actions together, your branching model has been chosen for you and doing trunk based development (TBD) becomes harder. If you do try for TBD and use short lived branches purely to facilitate code reviews, <strong>you're introducing waste</strong> (albeit the cost may be reclaimed somewhat by the tooling that motivated the decision).</p>
+
+<p>Trunk based development has lots of advantages in it own right, not least of which is that it offers <strong>continuous integration</strong> (CI). CI has been around since the early 90s and helps reduce the feedback loop for dev teams. Compared to long running feature branches where by definition, integration takes place intermittently and infrequently, it helps find potential problems early.</p>
+
+<p><blockquote><p>"Continuous Integration doesn’t get rid of bugs, but it does make them dramatically easier to find and remove."</p><footer><strong>Martin Fowler</strong> <cite>Chief Scientist @ ThoughtWorks</cite></footer></blockquote></p>
+
+<h3>Pair Programming vs Code Reviews</h3>
+
+<p>Pair Programming as an alternative to traditional out-of-band code reviews offer significant advantages. Again, mostly this is around <strong>shortening the feedback loop</strong> and fixing potential problems early. If code reviews are a good idea, why not do them all the time? When you're actually coding and not when you've finished?</p>
+
+<p>So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you've had multiple developers work on a single piece of code? Perhaps crypto-evidence can help?</p>
+
+<h2>Crypto-evidence</h2>
+
+<p>Crypto-evidence is a term I made up for this post but it implies that we should be able to supply evidence that can be proven via cryptographical means. With traditional techniques, a code reviewer can be proven to be who she says she is (and that she's a different person than the original author) by the login credentials used with the review and VCS tools. These would be encrypted and so (in theory) can not be subverted or faked. Assuming the rest of the review is locked down, we have our evidence.</p>
+
+<h3>Git Digital Signatures</h3>
+
+<p>Git is probably the most widely used VCS today (some figures suggesting it's used by 70% of projects). It offers a feature called <strong>signed commits</strong> whereby the person committing code digitally signs the commit with GPG. This can be retrieved (along with the author information) and, in theory, prove a different individual "signed" a commit than it's author. This signature could be used as a sign-off for a code review as only the signatory knows her passphrase. Just use <code>-S</code> (not <code>-s</code>):</p>
+
+<pre><code class="bash">$ git -S -m "initial commit"
+</code></pre>
+
+<p>...and verify with <code>git log --show-signature</code>:</p>
+
+<pre><code class="bash">$ git log --show-signature
+commit d001cb9e78a2dbf4ce8ddad3eb2fe8b14234e3c5 (HEAD -&gt; master)
+gpg: Signature made Wed 30 Oct 12:37:18 2019 GMT
+gpg:                using RSA key 39E273602
+gpg: Good signature from "Toby (baddotrobot.com) &lt;toby@badrobot.com&gt;" [ultimate]
+Author: Toby &lt;toby@badrobot.com&gt;
+Date:   Wed Oct 30 12:37:18 2019 +0000
+
+    initial commit
+</code></pre>
+
+<p>The key line includes <code>Signature made ... using RSA key 39E273602</code>. Job done? Not quite...</p>
+
+<h3>Proving Pair Programming</h3>
+
+<p>I brushed over a little bit there. Assuming we want to prove Pair Programming was being done, we need to show an alternative author from the signatory. We can do that either supplying the <code>--author</code> argument or (more practically) sharing the team's private keys securely and signing based on who's at the computer.</p>
+
+<ol>
+<li><p>On my computer (the default key is set with <code>git config --global user.signingkey 39E273602</code>) and with Barry pairing:</p>
+
+<pre><code class="bash">$ git commit -S --author="Barry &lt;barry@badrobot.com&gt;" -m "commit from Toby's machine with Barry as the author"
+</code></pre></li>
+<li><p>Or, if each machine has every developer's private key installed in GPG, we can rotate developers and sign from every machine.</p>
+
+<p>From Barry's machine (with Toby pairing):</p>
+
+<pre><code class="bash">$ git commit -Stoby -m "commit as Barry with Toby signing the commit"
+</code></pre></li>
+</ol>
+
+
+<p>Both would result in something like the following.</p>
+
+<pre><code class="bash">$ git log --show-signature
+commit e128af7f51e272eae29cee8f1c124ec0be3b64ad (HEAD -&gt; master)
+gpg: Signature made Wed 30 Oct 12:54:49 2019 GMT
+gpg:                using RSA key 39E273602
+gpg: Good signature from "Toby (baddotrobot.com) &lt;toby@badrobot.com&gt;" [ultimate]
+Author: Barry &lt;barry@badrobot.com&gt;
+Date:   Wed Oct 30 12:54:49 2019 +0000
+
+    commit as Barry with Toby signing the commit
+</code></pre>
+
+<p>Showing Toby as the signatory (code reviewer) and Barry as the the author. Cryptographically provable that two developers worked on the code.</p>
+
+<p>When you force each commit to be signed (with <code>git config --global commit.gpgsign true</code>), you should be able to build a report from the Git log showing every commit was paired on.</p>
+
+<pre><code class="bash">$ git lgs
+* e128af7 - (HEAD -&gt; master) commit showing alt author (21 minutes ago) &lt;Barry&gt; (🔒 Toby &lt;toby@badrobot.com.com&gt;)
+* fa6f6e5 - commit showing alt author (34 minutes ago) &lt;Barry&gt; (🔒 Toby &lt;toby@badrobot.com.com&gt;)
+* d001cb9 - initial commit (38 minutes ago) &lt;Toby&gt; (🔒 Barry &lt;barry@badrobot.com.com&gt;)
+</code></pre>
+
+<h3>Sharing and Importing Secrets</h3>
+
+<p>To share private keys, export your key (you may choose to share this via Git alongside your source code).</p>
+
+<pre><code class="bash">$ gpg --export-secret-key --armor toby@badrobot.com &gt; secretkey_toby.asc
+</code></pre>
+
+<p>...and import it on each developer's machine.</p>
+
+<pre><code class="bash">gpg --import secretkey_toby.asc
+</code></pre>
+
+<p>Just pass in the name you used when creating the key to the <code>-S</code> argument. In my case <code>-Stoby</code>.</p>
+
+<h1>Why it Doesn't Work</h1>
+
+<p>Unfortunately, this technique doesn't come without it's problems.</p>
+
+<ul>
+<li>Rebasing will overwrite the signatories</li>
+<li>Tool support means the terminal is the only option</li>
+<li>Sharing private keys</li>
+</ul>
+
+
+<p>Rebasing will rewrite a commit after pulling down changes. As it attempt to rewrite the commit, it will take your <code>commit.gpgsign</code> setting into account and potentially overwrite someone else signature with your own. If the setting is <code>false</code>, it will appear as if there was no signatory. This is potentially a deal breaker as rebasing (from a single branch as is the case for TBD) is a <strong>very</strong> common use case. Even if merging is used within a team, it only takes one rebase to subvert the entire process.</p>
+
+<p>IDE support is limited. IntelliJ IDEA doesn't support it (vote for the <a href="https://youtrack.jetbrains.com/issue/IDEA-110261">issue here</a>) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the <code>--author</code> has changed.</p>
+
+<h2>Summary</h2>
+
+<p>Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it, it just breaks down in a few key areas.</p>
+
+<p>A warning from Git's own documentation:</p>
+
+<p><blockquote><p>Signing tags and commits is great, but if you decide to use this in your normal workflow, you’ll have to make sure that everyone on your team understands how to do so. If you don’t, you’ll end up spending a lot of time helping people figure out how to rewrite their commits with signed versions. Make sure you understand GPG and the benefits of signing things before adopting this as part of your standard workflow.</p><footer><strong>Git - Signing Your Work</strong> <cite><a href='https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work'>Git Tools</a></cite></footer></blockquote></p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work">Git - Signing your Work</a></li>
+<li><a href="https://softwareengineering.stackexchange.com/questions/136079/are-there-any-statistics-that-show-the-popularity-of-git-versus-svn">Git adoption figures</a></li>
+<li><a href="https://www.toptal.com/software/trunk-based-development-git-flow">TBD vs Branching</a></li>
+<li><a href="https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf">Technology Risk Management Guidelines</a></li>
+</ul>
+
+
+<h2>Miscellaneous Setup</h2>
+
+<h3>Reporting</h3>
+
+<p>With the following alias, you can print a nice one liner per commit including who signed it.</p>
+
+<pre><code class="bash">$ git config --global alias.lgs "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset %C(yellow)(🔒 %GS)%Creset' --abbrev-commit --date=relative"
+</code></pre>
+
+<pre><code class="bash">$ git lgs
+* e128af7 - (HEAD -&gt; master) commit showing alt author (21 minutes ago) &lt;Barry&gt; (🔒 Toby &lt;toby@badrobot.com.com&gt;)
+* fa6f6e5 - commit showing alt author (34 minutes ago) &lt;Barry&gt; (🔒 Toby &lt;toby@badrobot.com.com&gt;)
+* d001cb9 - initial commit (38 minutes ago) &lt;Toby&gt; (🔒 Barry &lt;barry@badrobot.com.com&gt;)
+</code></pre>
+
+<h3>Troubleshooting</h3>
+
+<p>To test your GPG program, run the following.</p>
+
+<pre><code class="bash">$ echo "test" | gpg --clearsign
+</code></pre>
+
+<p>If the output includes the following.</p>
+
+<pre><code class="bash">gpg: signing failed: Inappropriate ioctl for device
+gpg: [stdin]: clear-sign failed: Inappropriate ioctl for device
+</code></pre>
+
+<p>You may need to run the following (I did on MacOSX).</p>
+
+<pre><code class="bash">$ export GPG_TTY=$(tty)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Refactoring in 10 Minutes]]></title>
@@ -177,50 +366,6 @@
 <p>Have a go and see if it works for you...</p>
 
 <p>Liquid error: 765: unexpected token at ''</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflecting on Interviewing Mistakes]]></title>
-    <link href="http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes/"/>
-    <updated>2011-08-29T00:00:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2011/08/29/reflecting-on-interviewing-mistakes</id>
-    <content type="html"><![CDATA[<p>Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.</p>
-
-<p>Let's take an example from two teams.</p>
-
-<!-- more -->
-
-
-<p>Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.</p>
-
-<p><span class='pullquote-right' data-pullquote='but often an implied hurdle that the candidate must jump is &#8220;has he reached the same conclusion as me on topic X?&#8221; '>
-Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?". The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
- </span></p>
-
-<p>Hopefully, its clear that Team A's selection process is heavily biased towards developers with good memories. It's probably unfairly prejudice against candidates that haven't had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I'd prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was "that's not really what we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously, I hadn't.</p>
-
-<p>Rather than assess my approach, the interviewer was looking for a specific piece of knowledge but what for? If I got the job I'm pretty sure my first task wouldn't be to write something to work out prime numbers. Would that fix some production problem? Would it introduce a new feature that had no other solution? No.</p>
-
-<p>A huge part of what we do is learn, or at least it should be. Failure is what makes us better and in environments where failure is embraced and we write code that we can (fairly) easily rework, we get better systems (as we refine our understanding). We never now what the real problems are going to be when we start a story. The interviewer above simply brushed over this, it seemed he wanted me to reach the same conclusion he had without explaining the steps I took to get there. Without any advocacy on my part, how would he know I could do it again with a different problem?</p>
-
-<blockquote><p>"Right or wrong answers don't really have a place because there's never a right or wrong answer in what we do."</p></blockquote>
-
-<p>Having said all that, I'm sure we'd all favour a process like Team Bs but I'm starting to see that Team B are making at least some of the same mistakes just in a more subtle way...</p>
-
-<p>For the CV selection, Team A look for "spring", "hibernate" and other technology buzzwords. Team B look for "refactoring", "TDD", "XP" and other development buzz words, the reason usually cited as being because the technologies aren't as import. Team B are favouring the <em>why</em> over the <em>how</em>, they're assuming given the right approach and smart people, specifics around technologies can be learnt. Both teams are trying to expose characteristics of the candidates that mirror their own.</p>
-
-<p>Team B asks candidates to complete a short programming exercise off-line. Implement a library, a DVD store, a robot explorer, whatever. It should only take an hour or so and demonstrates the candidates style. I've certainly seen it as an effective tool to eliminate people that really can't code for toffee but I've also seen people fall into the same old trap and eliminate people who missed something specific hidden there. A trivial example might be "oh! they didn't use dependency injection. Fail!".</p>
-
-<p>Team B's pair test should be a great way to understand how a candidate operates in front of an IDE and if you'll actually be able to work with him. A bit like the unattended test, it's a good way to eliminate extreme cases. If the candidate behaves completely anti-socially, wont listen and codes like mad man, you can probably reject him with confidence. It's easy to let bad interview habits creep in though; to focus more on some obscure gotcha in the code than how the candidate is actually pairing.</p>
-
-<blockquote><p>"I think the problem with both these techniques (unattended exercise and the pair test) is when too much specificity comes in at the start. When you are looking for something specific, you'll often be disappointed."</p></blockquote>
-
-<p>I've certainly heard myself say "oh, he didn't spot that there was a precision issue with double there...". In all honesty, I'd miss that kind of bug as often as I'd spot it but I'd hire me! The upshot there, especially when we doing a couple of pair tests a week, is to stay focused on why you're doing the pair test and not on the test itself. Are we doing this to see if the candidate can spot all the traps and pitfalls that we spent so long putting in or do we want to see how they pair? In my view, if they get the "right" answer is almost irrelevant, it's how they explore the problem.</p>
-
-<p>I guess what I'm reflecting on here is how as a peer group, we pretty much realise that closed questioning limits our choices and that open ended questions lead to real conversations that are more relevant to the types of conversations we have day to day. Right or wrong answers don't really have a place because there's never a right or wrong answer in what we do. If I implement a prime number finder without the Colander of Eratosthenes, am I wrong? The tests still pass so I must be right? Is Eratosthenes more right? Despite this realisation though, we can easily fall into a more subtle way of behaving where we mentally start ticking off specifics for a candidate.</p>
-
-<p>I guess we have to keep reminding ourselves what's important and what we're looking for in a candidate. I guess I'm mellowing in the way I assess candidates and probably rejected a fair few unfairly in the past. Sorry.</p>
 ]]></content>
   </entry>
   

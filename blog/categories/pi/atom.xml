@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pi | bad.robot]]></title>
   <link href="http://baddotrobot.com/blog/categories/pi/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-08-29T20:36:54+01:00</updated>
+  <updated>2019-10-30T13:51:49+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -408,9 +408,10 @@ dtparam=act_led_activelow=on
 <p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi's. It sends the data to a nominated "server" and the server stores it all in a round robin database and serves up the charts via a web page.</p>
 
 <ol>
-<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository.</p>
+<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository and import the public key (increasing security by ensuring only official packages are installed from it).</p>
 
-<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian ./" &gt;&gt; /etc/apt/sources.list'
+<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian stable temperature-machine" &gt;&gt; /etc/apt/sources.list'
+ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
 </code></pre></li>
 <li><p>Install.</p>
 

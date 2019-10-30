@@ -4,7 +4,7 @@
   <title><![CDATA[bad.robot]]></title>
   <link href="http://baddotrobot.com/atom.xml" rel="self"/>
   <link href="http://baddotrobot.com/"/>
-  <updated>2019-08-29T20:36:54+01:00</updated>
+  <updated>2019-10-30T13:51:49+00:00</updated>
   <id>http://baddotrobot.com/</id>
   <author>
     <name><![CDATA[Toby Weston]]></name>
@@ -12,6 +12,272 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Evidencing Source Code Reviews]]></title>
+    <link href="http://baddotrobot.com/blog/2019/10/30/evidencing-source-code-reviews/"/>
+    <updated>2019-10-30T08:16:00+00:00</updated>
+    <id>http://baddotrobot.com/blog/2019/10/30/evidencing-source-code-reviews</id>
+    <content type="html"><![CDATA[<p>Many industries need to evidence that code reviews have taken place. This is typical in regulated environments like Banking but the Regulators aren&#8217;t clear what constitutes a good source code review process and don&#8217;t yet understand modern practices like Pair Programming. They can&#8217;t help you streamline your process.</p>
+
+<p>The result is a tension between old-fashioned bureaucracy and modern development practices; the need to prove you have a rigorous process in-place and the desire to push frequent releases to production without wasteful paperwork.</p>
+
+<!-- more -->
+
+
+<h2>The Regulators</h2>
+
+<p>The Monetary Authority of Singapore (MAS) is Singapore&#8217;s central bank and regulatory authority. If you want to do business in Singapore, you need to comply with their regulations. They&#8217;ve published what they call the Technology Risk Management (TRM) Guidelines to help with &#8220;the adoption of sound practices and processes for managing technology&#8221;. Each financial institution with an interest in Singapore is expected to adopt these guidelines with the following caveat.</p>
+
+<blockquote><p>&#8220;Financial institutions (FIs) may adapt these guidelines, taking into account the diverse activities they engage in and the markets in which they conduct transactions. FIs should read the Guidelines in conjunction with relevant regulatory requirements and industry standards.&#8221;</p><footer><strong>Monetary Authority of Singapore</strong> <cite>TRM Guidelines - Section 2.0.1</cite></footer></blockquote>
+
+
+<p>One area of the TRM guidelines talks about the need to conduct code reviews (section 6.3). Each institution must interpret these guidelines and be comfortable articulating how the manage the source code review process. The TRM guidelines don&#8217;t say <em>how</em> to conduct reviews and doing effective code reviews is hard.</p>
+
+<p>Regulators struggle to keep up with modern software development practices and how they can help give confidence that guidelines are being followed. They struggle to assess the impact of things like containerised deployments and having data on the public cloud. For source code reviews, each institution must adapt the guidelines to fit their development practices but at a minimum, each should be able to provide evidence.</p>
+
+<h2>Evidence</h2>
+
+<p>So how do we evidence that code reviews have taken place? A traditional process would be to conduct an out-of-band code review (after the coding task has been completed) and document it via some tool like Codacy or Crucible. GitHub (and GitHub Enterprise) have nice integrated review tools and BitBucket have something similar. These are often combined with the act of merging a Pull Request, i.e. you do the code review when you accept a PR.</p>
+
+<h3>Trunk Based Development vs Branch</h3>
+
+<p>Tools that combine merging branches with code reviews <strong>conflate two distinct ideas</strong> (managing your source code and peer reviewing source code). If you do both actions together, your branching model has been chosen for you and doing trunk based development (TBD) becomes harder. If you do try for TBD and use short lived branches purely to facilitate code reviews, <strong>you&#8217;re introducing waste</strong> (albeit the cost may be reclaimed somewhat by the tooling that motivated the decision).</p>
+
+<p>Trunk based development has lots of advantages in it own right, not least of which is that it offers <strong>continuous integration</strong> (CI). CI has been around since the early 90s and helps reduce the feedback loop for dev teams. Compared to long running feature branches where by definition, integration takes place intermittently and infrequently, it helps find potential problems early.</p>
+
+<blockquote><p>&#8220;Continuous Integration doesn’t get rid of bugs, but it does make them dramatically easier to find and remove.&#8221;</p><footer><strong>Martin Fowler</strong> <cite>Chief Scientist @ ThoughtWorks</cite></footer></blockquote>
+
+
+<h3>Pair Programming vs Code Reviews</h3>
+
+<p>Pair Programming as an alternative to traditional out-of-band code reviews offer significant advantages. Again, mostly this is around <strong>shortening the feedback loop</strong> and fixing potential problems early. If code reviews are a good idea, why not do them all the time? When you&#8217;re actually coding and not when you&#8217;ve finished?</p>
+
+<p>So how do you practice trunk based developed, utilise Pair Programming and still provide evidence that you&#8217;ve had multiple developers work on a single piece of code? Perhaps crypto-evidence can help?</p>
+
+<h2>Crypto-evidence</h2>
+
+<p>Crypto-evidence is a term I made up for this post but it implies that we should be able to supply evidence that can be proven via cryptographical means. With traditional techniques, a code reviewer can be proven to be who she says she is (and that she&#8217;s a different person than the original author) by the login credentials used with the review and VCS tools. These would be encrypted and so (in theory) can not be subverted or faked. Assuming the rest of the review is locked down, we have our evidence.</p>
+
+<h3>Git Digital Signatures</h3>
+
+<p>Git is probably the most widely used VCS today (some figures suggesting it&#8217;s used by 70% of projects). It offers a feature called <strong>signed commits</strong> whereby the person committing code digitally signs the commit with GPG. This can be retrieved (along with the author information) and, in theory, prove a different individual &#8220;signed&#8221; a commit than it&#8217;s author. This signature could be used as a sign-off for a code review as only the signatory knows her passphrase. Just use <code>-S</code> (not <code>-s</code>):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git -S -m <span class="s2">&quot;initial commit&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8230;and verify with <code>git log --show-signature</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git log --show-signature
+</span><span class='line'>commit d001cb9e78a2dbf4ce8ddad3eb2fe8b14234e3c5 <span class="o">(</span>HEAD -&gt; master<span class="o">)</span>
+</span><span class='line'>gpg: Signature made Wed <span class="m">30</span> Oct <span class="m">12</span>:37:18 <span class="m">2019</span> GMT
+</span><span class='line'>gpg:                using RSA key 39E273602
+</span><span class='line'>gpg: Good signature from <span class="s2">&quot;Toby (baddotrobot.com) &lt;toby@badrobot.com&gt;&quot;</span> <span class="o">[</span>ultimate<span class="o">]</span>
+</span><span class='line'>Author: Toby &lt;toby@badrobot.com&gt;
+</span><span class='line'>Date:   Wed Oct <span class="m">30</span> <span class="m">12</span>:37:18 <span class="m">2019</span> +0000
+</span><span class='line'>
+</span><span class='line'>    initial commit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The key line includes <code>Signature made ... using RSA key 39E273602</code>. Job done? Not quite&#8230;</p>
+
+<h3>Proving Pair Programming</h3>
+
+<p>I brushed over a little bit there. Assuming we want to prove Pair Programming was being done, we need to show an alternative author from the signatory. We can do that either supplying the <code>--author</code> argument or (more practically) sharing the team&#8217;s private keys securely and signing based on who&#8217;s at the computer.</p>
+
+<ol>
+<li><p>On my computer (the default key is set with <code>git config --global user.signingkey 39E273602</code>) and with Barry pairing:</p>
+
+<pre><code class="bash">$ git commit -S --author="Barry &lt;barry@badrobot.com&gt;" -m "commit from Toby's machine with Barry as the author"
+</code></pre></li>
+<li><p>Or, if each machine has every developer&#8217;s private key installed in GPG, we can rotate developers and sign from every machine.</p>
+
+<p>From Barry&#8217;s machine (with Toby pairing):</p>
+
+<pre><code class="bash">$ git commit -Stoby -m "commit as Barry with Toby signing the commit"
+</code></pre></li>
+</ol>
+
+
+<p>Both would result in something like the following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git log --show-signature
+</span><span class='line'>commit e128af7f51e272eae29cee8f1c124ec0be3b64ad <span class="o">(</span>HEAD -&gt; master<span class="o">)</span>
+</span><span class='line'>gpg: Signature made Wed <span class="m">30</span> Oct <span class="m">12</span>:54:49 <span class="m">2019</span> GMT
+</span><span class='line'>gpg:                using RSA key 39E273602
+</span><span class='line'>gpg: Good signature from <span class="s2">&quot;Toby (baddotrobot.com) &lt;toby@badrobot.com&gt;&quot;</span> <span class="o">[</span>ultimate<span class="o">]</span>
+</span><span class='line'>Author: Barry &lt;barry@badrobot.com&gt;
+</span><span class='line'>Date:   Wed Oct <span class="m">30</span> <span class="m">12</span>:54:49 <span class="m">2019</span> +0000
+</span><span class='line'>
+</span><span class='line'>    commit as Barry with Toby signing the commit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Showing Toby as the signatory (code reviewer) and Barry as the the author. Cryptographically provable that two developers worked on the code.</p>
+
+<p>When you force each commit to be signed (with <code>git config --global commit.gpgsign true</code>), you should be able to build a report from the Git log showing every commit was paired on.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git lgs
+</span><span class='line'>* e128af7 - <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> commit showing alt author <span class="o">(</span><span class="m">21</span> minutes ago<span class="o">)</span> &lt;Barry&gt; <span class="o">(</span>🔒 Toby &lt;toby@badrobot.com.com&gt;<span class="o">)</span>
+</span><span class='line'>* fa6f6e5 - commit showing alt author <span class="o">(</span><span class="m">34</span> minutes ago<span class="o">)</span> &lt;Barry&gt; <span class="o">(</span>🔒 Toby &lt;toby@badrobot.com.com&gt;<span class="o">)</span>
+</span><span class='line'>* d001cb9 - initial commit <span class="o">(</span><span class="m">38</span> minutes ago<span class="o">)</span> &lt;Toby&gt; <span class="o">(</span>🔒 Barry &lt;barry@badrobot.com.com&gt;<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sharing and Importing Secrets</h3>
+
+<p>To share private keys, export your key (you may choose to share this via Git alongside your source code).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ gpg --export-secret-key --armor toby@badrobot.com &gt; secretkey_toby.asc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8230;and import it on each developer&#8217;s machine.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>gpg --import secretkey_toby.asc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just pass in the name you used when creating the key to the <code>-S</code> argument. In my case <code>-Stoby</code>.</p>
+
+<h1>Why it Doesn&#8217;t Work</h1>
+
+<p>Unfortunately, this technique doesn&#8217;t come without it&#8217;s problems.</p>
+
+<ul>
+<li>Rebasing will overwrite the signatories</li>
+<li>Tool support means the terminal is the only option</li>
+<li>Sharing private keys</li>
+</ul>
+
+
+<p>Rebasing will rewrite a commit after pulling down changes. As it attempt to rewrite the commit, it will take your <code>commit.gpgsign</code> setting into account and potentially overwrite someone else signature with your own. If the setting is <code>false</code>, it will appear as if there was no signatory. This is potentially a deal breaker as rebasing (from a single branch as is the case for TBD) is a <strong>very</strong> common use case. Even if merging is used within a team, it only takes one rebase to subvert the entire process.</p>
+
+<p>IDE support is limited. IntelliJ IDEA doesn&#8217;t support it (vote for the <a href="https://youtrack.jetbrains.com/issue/IDEA-110261">issue here</a>) so you&#8217;re left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the <code>--author</code> has changed.</p>
+
+<h2>Summary</h2>
+
+<p>Git&#8217;s signed commit feature was never meant for this. It&#8217;s really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We&#8217;re trying to misuse the feature here and we get someway in achieving our goals with it, it just breaks down in a few key areas.</p>
+
+<p>A warning from Git&#8217;s own documentation:</p>
+
+<blockquote><p>Signing tags and commits is great, but if you decide to use this in your normal workflow, you’ll have to make sure that everyone on your team understands how to do so. If you don’t, you’ll end up spending a lot of time helping people figure out how to rewrite their commits with signed versions. Make sure you understand GPG and the benefits of signing things before adopting this as part of your standard workflow.</p><footer><strong>Git - Signing Your Work</strong> <cite><a href='https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work'>Git Tools</a></cite></footer></blockquote>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work">Git - Signing your Work</a></li>
+<li><a href="https://softwareengineering.stackexchange.com/questions/136079/are-there-any-statistics-that-show-the-popularity-of-git-versus-svn">Git adoption figures</a></li>
+<li><a href="https://www.toptal.com/software/trunk-based-development-git-flow">TBD vs Branching</a></li>
+<li><a href="https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf">Technology Risk Management Guidelines</a></li>
+</ul>
+
+
+<h2>Miscellaneous Setup</h2>
+
+<h3>Reporting</h3>
+
+<p>With the following alias, you can print a nice one liner per commit including who signed it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git config --global alias.lgs <span class="s2">&quot;log --graph --pretty=format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset %C(yellow)(🔒 %GS)%Creset&#39; --abbrev-commit --date=relative&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ git lgs
+</span><span class='line'>* e128af7 - <span class="o">(</span>HEAD -&gt; master<span class="o">)</span> commit showing alt author <span class="o">(</span><span class="m">21</span> minutes ago<span class="o">)</span> &lt;Barry&gt; <span class="o">(</span>🔒 Toby &lt;toby@badrobot.com.com&gt;<span class="o">)</span>
+</span><span class='line'>* fa6f6e5 - commit showing alt author <span class="o">(</span><span class="m">34</span> minutes ago<span class="o">)</span> &lt;Barry&gt; <span class="o">(</span>🔒 Toby &lt;toby@badrobot.com.com&gt;<span class="o">)</span>
+</span><span class='line'>* d001cb9 - initial commit <span class="o">(</span><span class="m">38</span> minutes ago<span class="o">)</span> &lt;Toby&gt; <span class="o">(</span>🔒 Barry &lt;barry@badrobot.com.com&gt;<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Troubleshooting</h3>
+
+<p>To test your GPG program, run the following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ <span class="nb">echo</span> <span class="s2">&quot;test&quot;</span> <span class="p">|</span> gpg --clearsign
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the output includes the following.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>gpg: signing failed: Inappropriate ioctl <span class="k">for</span> device
+</span><span class='line'>gpg: <span class="o">[</span>stdin<span class="o">]</span>: clear-sign failed: Inappropriate ioctl <span class="k">for</span> device
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may need to run the following (I did on MacOSX).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span></span>$ <span class="nb">export</span> <span class="nv">GPG_TTY</span><span class="o">=</span><span class="k">$(</span>tty<span class="k">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Easily Deploy Java to Debian]]></title>
+    <link href="http://baddotrobot.com/blog/2019/09/02/deploy-java-to-debian/"/>
+    <updated>2019-09-02T09:06:00+01:00</updated>
+    <id>http://baddotrobot.com/blog/2019/09/02/deploy-java-to-debian</id>
+    <content type="html"><![CDATA[<p>Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as <code>.deb</code> files and deploying via <code>apt</code>.</p>
+
+<!-- more -->
+
+
+<h2>Approach</h2>
+
+<p>The basic approach:</p>
+
+<ol>
+<li>Create a <code>.deb</code> package using <code>sbt</code> and the excellent <code>sbt-native-packager</code></li>
+<li>Create your own Debian repository, add your packages and then serve them over HTTP</li>
+<li>Tell your customers where your repository is hosted</li>
+<li>Profit</li>
+</ol>
+
+
+<p>This post looks at the first step, creating the <code>.deb</code> package using the <code>sbt-native-packager</code> plugin. In the <a href="http://baddotrobot.com/blog/2019/09/03/create-debian-repositories">next post</a>, we&#8217;ll look at how setup your own <a href="https://wiki.debian.org/DebianRepository">debian repository</a> so users can install and upgrade your software via <code>apt-get</code> to popular Linux distros like Debian and Ubuntu.</p>
+
+<p>Thanks and appreciation to <a href="https://github.com/muuki88">@muuki88</a> and the project maintainers for <code>sbt-native-manager</code>, it&#8217;s a seriously useful piece of software.</p>
+
+<h2>Packaging</h2>
+
+<p>The <a href="https://www.scala-sbt.org/sbt-native-packager/index.html"><code>sbt-native-packager</code></a> plugin can create platform specific distributions for any <code>sbt</code> project. It can create a simple zip bundle for your application (the <code>universal</code> package), tarballs, rpms, Mac dmgs, Windows MSIs, Docker images and, the one we&#8217;re interested in, <code>.deb</code> files. Debian and derivatives like Ubuntu use this package format with <code>dpkg</code> and <code>apt</code> as the standard way to install and manage software. If you want to make it easy for Linux user&#8217;s to get hold of your software, this is the way to do it.</p>
+
+<h3>Native Packager Core Concepts</h3>
+
+<p>The native packager takes care of packaging, the act of putting a list of <em>mappings</em> (source file to install target path) into the chosen package format (zip, rpm, etc.). Each <a href="https://www.scala-sbt.org/sbt-native-packager/formats/index.html">packing format</a> your use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in <code>src\universal</code> for files to add to the zip. Debian packaging will look for <code>src\debian</code>.</p>
+
+<p>It uses <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html">Project Arcetypes</a> like the <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html">Java CLI Application Archetype</a> or <a href="https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html">Java Server Application Archetype</a> to add additional files to the mappings enriching the created package. They don’t provide any new features per se.</p>
+
+<p>You&#8217;ll need to read up a little on how to use the plugin, see <a href="https://www.scala-sbt.org/sbt-native-packager/formats/debian.html">Debian specific instructions</a> but the core concepts include:</p>
+
+<ol>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#format-plugins">Packaging format plugins</a> - <em>how</em> an application is packaged; universal, linux, debian, rpm, docker, windows etc</li>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#archetype-plugins">Archetype plugins</a> - <em>what&#8217;s</em> packaged (predefined configurations); java application, java server application, system loaders etc</li>
+<li><a href="https://www.scala-sbt.org/sbt-native-packager/introduction.html#mappings">Mappings</a> map source files to target system locations</li>
+</ol>
+
+
+<h3>Running as a Service</h3>
+
+<p>One of the many awesome features of the packager is that it can set your application up as a service on the target system. For example, if you want to start your application using <code>systemd</code>, just add a <code>enablePlugins(SystemdPlugin)</code> line to your build. The OS will take care of everything else, even restarting your application should it crash.</p>
+
+<p>The native packagers doesn&#8217;t provide application lifecyle management however. Custom start/stop scripts, PID management, etc. are not part of native packager.</p>
+
+<h3>Extras</h3>
+
+<p>For some additional nice to haves, you might consider adding <code>man</code> pages (with <code>ronn</code>), creating a &#8220;fat&#8221; JAR (with <a href="https://github.com/sbt/sbt-assembly"><code>sbt-assembly</code></a> plugin) and stripping unused Scala library classes with ProGuard.</p>
+
+<h2>Deploying Debian Repository</h2>
+
+<p>The native packager doesn&#8217;t take care of deployment. You use it to create your <code>.deb</code> package but what you do with it is down to you. The obvious choice is to deploy it to a Debian repository for your users to download via <code>apt</code>. Read the <a href="http://baddotrobot.com/blog/2019/09/03/create-debian-repositories">next post</a> to find out how.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upgrade Raspbian Stretch to Buster]]></title>
@@ -605,9 +871,10 @@ Instead, the implementations on the <code>NumberLike</code> object provides them
 <p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi&#8217;s. It sends the data to a nominated &#8220;server&#8221; and the server stores it all in a round robin database and serves up the charts via a web page.</p>
 
 <ol>
-<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository.</p>
+<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository and import the public key (increasing security by ensuring only official packages are installed from it).</p>
 
-<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian ./" &gt;&gt; /etc/apt/sources.list'
+<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian stable temperature-machine" &gt;&gt; /etc/apt/sources.list'
+ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
 </code></pre></li>
 <li><p>Install.</p>
 
@@ -1960,364 +2227,6 @@ case object Pineapple extends Fruit(95)
 <h2>Summary</h2>
 
 <p>So there we have it. Functions in the academic sense are very different things from anonymous classes (which we often treat like functions in Java pre-8). I find it useful to keep the distinctions in my head as I feel that I need to be able to justify the use of Java 8 lambdas in my code with more than just arguing for their concise syntax. Of course, there&#8217;s lots of additional advantages in using lambdas (not least the retrofit of the JDK to heavily use them), but I want to be able to respond when people say &#8220;isn&#8217;t that just syntactic sugar over anonymous classes?&#8221;.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Functional Interfaces in Java 8]]></title>
-    <link href="http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8/"/>
-    <updated>2014-04-07T21:33:00+01:00</updated>
-    <id>http://baddotrobot.com/blog/2014/04/07/functional-interfaces-in-java8</id>
-    <content type="html"><![CDATA[<p>Java 8 treats lambdas as an instance of an interface type. It formalises this into something it calls &#8220;functional interfaces&#8221;. A functional interface is just an interface with a single method. Java calls the method a &#8220;functional method&#8221; but the name &#8220;single abstract method&#8221; or SAM is often used. All the existing single method interfaces like <code>Runnable</code> and <code>Callable</code> in the JDK are now functional interfaces and lambdas can be used anywhere a single abstract method interface is used.</p>
-
-<p>Let&#8217;s run through the basic syntax.</p>
-
-<!-- more -->
-
-
-<h2>@FunctionalInterface</h2>
-
-<p>Oracle have introduced a new annotation <code>@FunctionalInterface</code> to mark an interface as such. It&#8217;s basically to communicate intent but also allows the compiler to do some additional checks.</p>
-
-<p>For example, this interface compiles,</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>but when you indicate that it should be a <em>functional interface</em></p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span> <span class="c1">// &lt;- error here</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The compiler will raise an error as there is no method. It says that &#8220;Example is not a functional interface&#8221; as &#8220;no abstract method was found&#8221;. It&#8217;ll also error if we try and add a second method.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">FunctionalInterfaceExample</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">illegal</span><span class="o">();</span>    <span class="c1">// &lt;- error here</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time it&#8217;s saying &#8220;multiple, non-overriding abstract methods were found&#8221;. Functional interfaces can have only <strong>one</strong> method.</p>
-
-<h2>Extension</h2>
-
-<p>What about the case of an interfaces that extends another interfaces?</p>
-
-<p>Let&#8217;s create a new functional interface called <code>A</code> and another called <code>B</code>. <code>B</code> extends <code>A</code>. <code>B</code> is still &#8220;functional&#8221;. It inherits the parents <code>apply</code> method as you&#8217;d expect.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you wanted to make this clearer, you can also override the functional method from the parent.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We can verify it works as a functional interface if we use it as a lambda. So I&#8217;ll implement a little method to show that a lambda can be assigned to a type of <code>A</code> and a type of <code>B</code>. The implementation will just print out &#8220;A&#8221; or &#8220;B&#8221;.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can&#8217;t add a new abstract method to the extending interface though, as the resulting type would have two abstract methods and the compiler will error.</p>
-
-<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="nd">@FunctionalInterface</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">apply</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">illegal</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;A&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">);</span>    <span class="c1">// &lt;- error</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In both cases, you can override methods from <code>Object</code> without causing problems. You can also add default methods (also new to Java 8). As you&#8217;d probably expect, it doesn&#8217;t make sense to try and mark an abstract class as a functional interface.</p>
-
-<h2>Summary</h2>
-
-<p>An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they&#8217;re actually quiet different. See the <a href="http://baddotrobot.com/blog/2014/04/08/classes-vs-functions">Classes vs. Functions</a> post for more details.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Method References in Java 8]]></title>
-    <link href="http://baddotrobot.com/blog/2014/02/18/method-references-in-java8/"/>
-    <updated>2014-02-18T21:33:00+00:00</updated>
-    <id>http://baddotrobot.com/blog/2014/02/18/method-references-in-java8</id>
-    <content type="html"><![CDATA[<p>Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The <a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle docs</a> describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.</p>
-
-<!-- more -->
-
-
-<p><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html">Oracle describe the four kinds of method reference</a> as follows.</p>
-
-<table>
-<thead>
-<tr>
-<th> Kind                                                                           </th>
-<th> Example                                </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Reference to a static method                                                   </td>
-<td> <code>ContainingClass::staticMethodName</code></td>
-</tr>
-<tr>
-<td> Reference to an instance method of a particular object                         </td>
-<td> <code>ContainingObject::instanceMethodName</code></td>
-</tr>
-<tr>
-<td> Reference to an instance method of an arbitrary object of a particular type    </td>
-<td> <code>ContainingType::methodName</code></td>
-</tr>
-<tr>
-<td> Reference to a constructor                                                     </td>
-<td> <code>ClassName::new</code></td>
-</tr>
-</tbody>
-</table>
-
-
-<p>Static and constructor references are straight forward but it&#8217;s their description of instance method references that muddies the waters. What on earth is an instance method of an arbitrary object of a particular type? Aren&#8217;t all objects <em>of a</em> particular type?  Why is it important that the object is <em>arbitrary</em>?</p>
-
-<h2>What they should have written</h2>
-
-<p>It&#8217;s talking about four types of method reference; constructor references, static method references, instance method references and what it calls instance method references of a particular type. The last one is really just another kind of instance method reference.</p>
-
-<p>What they should have written is this.</p>
-
-<table>
-<thead>
-<tr>
-<th> Kind                                                                 </th>
-<th> Syntax                           </th>
-<th> Example                  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Reference to a static method                                         </td>
-<td> <code>Class::staticMethodName</code>        </td>
-<td> <code>String::valueOf</code></td>
-</tr>
-<tr>
-<td> Reference to an instance method of a specific object                 </td>
-<td> <code>object::instanceMethodName</code>     </td>
-<td> <code>x::toString</code></td>
-</tr>
-<tr>
-<td> Reference to an instance method of a arbitrary object supplied later </td>
-<td> <code>Class::instanceMethodName</code>      </td>
-<td> <code>String::toString</code></td>
-</tr>
-<tr>
-<td> Reference to a constructor                                           </td>
-<td> <code>ClassName::new</code>                 </td>
-<td> <code>String::new</code></td>
-</tr>
-</tbody>
-</table>
-
-
-<p>or as lambdas</p>
-
-<table>
-<thead>
-<tr>
-<th> Kind                                                                 </th>
-<th> Syntax                           </th>
-<th> As Lambda                  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Reference to a static method                                         </td>
-<td> <code>Class::staticMethodName</code>        </td>
-<td> <code>(s) -&gt; String.valueOf(s)</code></td>
-</tr>
-<tr>
-<td> Reference to an instance method of a specific object                 </td>
-<td> <code>object::instanceMethodName</code>     </td>
-<td> <code>() -&gt; "hello".toString()</code> <strong>†</strong></td>
-</tr>
-<tr>
-<td> Reference to an instance method of a arbitrary object supplied later </td>
-<td> <code>Class::instanceMethodName</code>      </td>
-<td> <code>(s) -&gt; s.toString()</code></td>
-</tr>
-<tr>
-<td> Reference to a constructor                                           </td>
-<td> <code>ClassName::new</code>                 </td>
-<td> <code>() -&gt; new String()</code></td>
-</tr>
-</tbody>
-</table>
-
-
-<p>I found their description of the two confusing. I prefer to think of the first as an instance method of a <em>specific</em> object known ahead of time and the second as an instance method of an arbitrary object that will be <em>supplied</em> later. Interestingly, this means the first is a <em>closure</em> and the second is a <em>lambda</em>. One is <em>bound</em> and the other <em>unbound</em>.</p>
-
-<p>The distinction between a method reference that closes over something (a closure) and one that doesn&#8217;t (a lambda) may be a bit academic but at least it&#8217;s a more formal definition than Oracle&#8217;s unhelpful description. If you&#8217;re interested in the difference between a closure and a lambda, check out my <a href="http://baddotrobot.com/blog/2010/07/13/lambdas-vs-closures">previous article</a>.</p>
-
-<h2>The &#8220;closure&#8221; method reference</h2>
-
-<p>The example above (<code>x::toString</code>) is an instance method reference using a closure. It creates a lambda that will call the <code>toString</code> method on the instance <code>x</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>where the signature of <code>function</code> looks like this</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>Supplier</code> interface must provide a string value (the <code>get</code> call) and the only way it can do that is if it&#8217;s been supplied to it on construction. It&#8217;s equivalent to</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Notice here that the lambda has no arguments (it uses the &#8216;hamburger&#8217; symbol). This shows that the value of <code>x</code> isn&#8217;t available in the lambda&#8217;s local scope and so can only be available from outside it&#8217;s scope. It&#8217;s a closure because must close over <code>x</code>.</p>
-
-<p>The anonymous class equivalent really makes this obvious, it looks like this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">x</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="k">new</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="c1">// &lt;- closes over &#39;x&#39;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All three of these are equivalent. Compare this to the lambda variation of an instance method reference where it doesn&#8217;t have it&#8217;s argument explicitly passed in from an outside scope.</p>
-
-<h2>The &#8220;lambda&#8221; method reference</h2>
-
-<p>The other example (<code>String::toString</code>) is similar to the previous one, it calls the <code>toString</code> method of a string only this time, the string is supplied to the function that&#8217;s making use of the lambda and not passed in from an outside scope.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">String</span><span class="o">::</span><span class="n">toString</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>String</code> part looks like it&#8217;s referring to a class but it&#8217;s actually referencing an instance. It&#8217;s confusing, I know but to see things more clearly, we need to see the function that&#8217;s making use of the lambda. It looks like this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">function</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">,</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">function</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So, the string value is passed directly to the function, it would look like this as a fully qualified lambda.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you expand it fully to an anonymous interface, it looks like this. The <code>x</code> parameter is made available and not closed over. It&#8217;s a lambda rather than a closure.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">lambdaExample</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(</span><span class="s">&quot;value&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="nd">@Override</span>
-</span><span class='line'>      <span class="kd">public</span> <span class="n">String</span> <span class="nf">apply</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// &lt;- takes the argument as a parameter, doesn&#39;t need to close over it</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Summary</h2>
-
-<p>The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you&#8217;ll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle&#8217;s documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It&#8217;s <em>the</em> canonical reference material but it&#8217;s just plain confusing. It feels like interns are producing this stuff.</p>
-
-<p>If you liked this post, you might like my course on <a href="https://www.udemy.com/whats-new-in-java-8/">Udemy</a>. For a limited time only, get <a href="https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10">10% off with this coupon</a>!</p>
-
-<h2>Caveat</h2>
-
-<p><strong>†</strong> There&#8217;s a caveat here; the example isn&#8217;t a closure, so my comment about that being a distinguishing feature isn&#8217;t quiet true. If, as in the later examples, it closes over some <code>x</code> (as is more likely), great. If however, you use a literal value (as in my starred example), it wont close over the term <code>x</code> so it&#8217;s back to being a lambda. So it oesn&#8217;t <em>have</em> to be a closure, it&#8217;s just more than likely to be one. For example;</p>
-
-<figure class='code'><figcaption><span>This time the &#8220;reference to an instance method of a arbitrary object supplied later&#8221; is a Lambda, not a closure</span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">example</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="c1">// String x = &quot;hello&quot;;</span>
-</span><span class='line'>    <span class="n">function</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="s">&quot;hello&quot;</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;"><img itemprop="image" class="right" src="http://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1508734178&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21" title="Learn Scala for Java Developers" ></a>
-<a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;"><img itemprop="image" class="right" src="http://titlepages.leanpub.com/whatsnewjava8/bookpage" width="140" height="180" title="Learn Scala for Java Developers" ></a></p>
-
-<h2>Recommended Reading</h2>
-
-<ul>
-<li><a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What&#8217;s New in Java 8</a>, Toby Weston</li>
-<li><a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston</li>
-</ul>
-
-
-<p>&nbsp;
-&nbsp;
-&nbsp;</p>
 ]]></content>
   </entry>
   

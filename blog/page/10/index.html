@@ -9,7 +9,7 @@
   <meta name="author" content="Toby Weston">
 
   
-  <meta name="description" content="Following up from the post SWT Support in Window Licker. The thing I found most interesting about looking at this was having to be more explicit &hellip;">
+  <meta name="description" content="I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -92,7 +92,7 @@
 
 <body   >
   <header role="banner"><hgroup>
-    <!-- last update; 2019-08-29 20:36:54 +0100 -->
+    <!-- last update; 2019-10-30 13:51:49 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -124,6 +124,142 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2009/01/06/be-more-expressive-with-builders/">Be more Expressive with Builders</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2009-01-06 00:00:00 +0000" datetime="2009-01-06T00:00:00+00:00" pubdate data-updated="true" class="updated">Jan 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I came up with a neat little pattern that&#8217;s helped me be more expressive in some (fairly specific) situations. Here I&#8217;ll give you a feel for it using the <code>CountDownLatch</code> class as an example.</p>
+
+<h2>CountDownLatch.await()</h2>
+
+<p>Using an instance of a <code>CountDownLatch</code>, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">startup</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">shutdown</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">SECONDS</span><span class="o">))</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Using a Builder with Static Constructor</h2>
+
+<p>To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called <code>await()</code>, I was able to express the same thing with the following.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForStartup</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">startup</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">waitForShutdown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">await</span><span class="o">(</span><span class="n">shutdown</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="n">TIMEOUT</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>with(...)</code> method is the thing that actually wraps the call to the <code>await()</code> method on the latch. I created a <code>Duration</code> class in the above case to capture the timeout constant.</p>
+
+<p>This can be a neat little pattern which when used sparingly can lead to little nuggets of really readable code. However, the helper class that employs the static factory can feel unnatural as the method names don&#8217;t really represent their function but <strong>rather their context within the DSL that the class defines</strong>.</p>
+
+<p>Using a private constructor and verifying the internal state is essential to ensure that the DSL can&#8217;t be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I&#8217;d suggest its a good pattern to follow. The finished class is shown below in full.</p>
+
+<figure class='code'> <div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='java'><span class='line'><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountDownLatchWithTimeout</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="nf">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">latch</span> <span class="o">=</span> <span class="n">latch</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">CountDownLatchWithTimeout</span> <span class="nf">await</span><span class="o">(</span><span class="n">CountDownLatch</span> <span class="n">latch</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="n">CountDownLatchWithTimeout</span><span class="o">(</span><span class="n">latch</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">with</span><span class="o">(</span><span class="n">Duration</span> <span class="n">timeout</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">TimeoutException</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">(</span><span class="n">timeout</span><span class="o">.</span><span class="na">inMillis</span><span class="o">(),</span> <span class="n">MILLISECONDS</span><span class="o">))</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="n">TimeoutException</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2008/12/31/what-makes-good-pair/">What Makes a Good Pair?</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2008-12-31 00:00:00 +0000" datetime="2008-12-31T00:00:00+00:00" pubdate data-updated="true" class="updated">Dec 31<span>st</span>, 2008</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="../../../../../images/cookies_milk.png"><img itemprop="image" class="right" src="../../../../../images/cookies_milk.png"></a></p>
+
+<p>Communication plays such a big part in what we do, we&#8217;re always striving to be more expressive in our code, conveying our intent as clearly as possible. It&#8217;s the same when pairing. We need to be expressive, communicate our intent, engage, listen and feedback. When we don&#8217;t do these things, pairing just doesn&#8217;t work. When we don&#8217;t collaborate, we&#8217;re not getting as much out of pairing as we could be. Perhaps it&#8217;s only after working in a good pair that you realise what you&#8217;re missing working in a bad pairing.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -576,6 +712,14 @@ Stack trace:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2019/10/30/evidencing-source-code-reviews/">Evidencing Source Code Reviews</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2019/09/02/deploy-java-to-debian/">Easily Deploy Java to Debian</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2019/08/29/upgrade-raspian-stretch-to-buster/">Upgrade Raspbian Stretch to Buster</a>
       </li>
     
@@ -645,14 +789,6 @@ Stack trace:
     
       <li class="post">
         <a href="/blog/2014/04/08/classes-vs-functions/">Classes vs. Functions</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/07/functional-interfaces-in-java8/">Functional Interfaces in Java 8</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/18/method-references-in-java8/">Method References in Java 8</a>
       </li>
     
   </ul>

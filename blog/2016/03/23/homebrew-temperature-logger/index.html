@@ -92,7 +92,7 @@
 
 <body   class="no-sidebar"  >
   <header role="banner"><hgroup>
-    <!-- last update; 2019-08-29 20:36:54 +0100 -->
+    <!-- last update; 2019-10-30 13:51:49 +0000 -->
     <h1><a href="/"><font color="#C7DEBC">bad</font><font color="#C8CDCB">.robot</font></a></h1>
     
     <h2>good robots do what they're told</h2>
@@ -267,9 +267,10 @@
 <p>There are lots of options to record the temperature data but for something a bit different, the <a href="https://github.com/tobyweston/temperature-machine">temperature-machine</a> software logs temperatures from multiple sensors on multiple Pi&#8217;s. It sends the data to a nominated &#8220;server&#8221; and the server stores it all in a round robin database and serves up the charts via a web page.</p>
 
 <ol>
-<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository.</p>
+<li><p>Setup <code>apt-get</code> to recognise the temperature-machine repository and import the public key (increasing security by ensuring only official packages are installed from it).</p>
 
-<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian ./" &gt;&gt; /etc/apt/sources.list'
+<pre><code class="`"> sudo bash -c 'echo "deb http://robotooling.com/debian stable temperature-machine" &gt;&gt; /etc/apt/sources.list'
+ sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-keys 00258F48226612AE
 </code></pre></li>
 <li><p>Install.</p>
 
