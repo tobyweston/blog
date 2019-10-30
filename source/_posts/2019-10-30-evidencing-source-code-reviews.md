@@ -148,21 +148,32 @@ Just pass in the name you used when creating the key to the `-S` argument. In my
 
 Unfortunately, this technique doesn't come without it's problems. 
 
-* Rebasing
-* Tool support
+* Rebasing will overwrite the signatories
+* Tool support means the terminal is the only option
+* Sharing private keys
 
-Rebasing will overwrite the signatory, destroying the evidence. This is a blocker as rebasing (from a single branch as is the case for TBD) is a very common use case. Even if merging is used within a team, it only takes one rebase to subvert the process.
+Rebasing will rewrite a commit after pulling down changes. As it attempt to rewrite the commit, it will take your `commit.gpgsign` setting into account and potentially overwrite someone else signature with your own. If the setting is `false`, it will appear as if there was no signatory. This is potentially a deal breaker as rebasing (from a single branch as is the case for TBD) is a **very** common use case. Even if merging is used within a team, it only takes one rebase to subvert the entire process.
 
-IDE support is limited. IntelliJ IDEA doesn't support it (vote for the [issue here](https://youtrack.jetbrains.com/issue/IDEA-110261)) so you're left to use the command line for commits.
+IDE support is limited. IntelliJ IDEA doesn't support it (vote for the [issue here](https://youtrack.jetbrains.com/issue/IDEA-110261)) so you're left to use the command line for commits. Your VCS system might also cause your problems - your organisation might reject commits where the `--author` has changed. 
+
+
+## Summary
+
+Git's signed commit feature was never meant for this. It's really a way to prove a commit came from who it was claimed to come from. It was motivated by large open source projects where the authenticity of commits is required (for example, for merging only from trusted authors). We're trying to misuse the feature here and we get someway in achieving our goals with it, it just breaks down in a few key areas.
+
+A warning from Git's own documentation:
+
+{% blockquote Git - Signing Your Work https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work Git Tools %}
+Signing tags and commits is great, but if you decide to use this in your normal workflow, you’ll have to make sure that everyone on your team understands how to do so. If you don’t, you’ll end up spending a lot of time helping people figure out how to rewrite their commits with signed versions. Make sure you understand GPG and the benefits of signing things before adopting this as part of your standard workflow.
+{% endblockquote %}
 
 
 ## References
 
+* [Git - Signing your Work](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work)
 * [Git adoption figures](https://softwareengineering.stackexchange.com/questions/136079/are-there-any-statistics-that-show-the-popularity-of-git-versus-svn)
 * [TBD vs Branching](https://www.toptal.com/software/trunk-based-development-git-flow)
-
-
-[Technology Risk Management Guidelines](https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf)
+* [Technology Risk Management Guidelines](https://www.mas.gov.sg/-/media/MAS/Regulations-and-Financial-Stability/Regulatory-and-Supervisory-Framework/Risk-Management/TRM-Guidelines--21-June-2013.pdf)
 
 
 ## Miscellaneous Setup
