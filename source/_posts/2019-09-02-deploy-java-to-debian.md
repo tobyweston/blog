@@ -36,10 +36,7 @@ The [`sbt-native-packager`](https://www.scala-sbt.org/sbt-native-packager/index.
 
 ### Native Packager Core Concepts
 
-The native packager takes care of packaging, the act of putting a list of *mappings* (source file to install target path) into the chosen package format (zip, rpm, etc.). Each [packing format](https://www.scala-sbt.org/sbt-native-packager/formats/index.html) your use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in `src\universal` for files to add to the zip. Debian packaging will look for `src\debian`.
-
-
-It uses [Project Arcetypes](https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html) like the [Java CLI Application Archetype](https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html) or [Java Server Application Archetype](https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html) to add additional files to the mappings enriching the created package. They don’t provide any new features per se.
+The native packager takes care of packaging, the act of putting a list of *mappings* (source file to install target path) into the chosen package format (zip, rpm, etc.). Each [packaging format](https://www.scala-sbt.org/sbt-native-packager/formats/index.html) you use will expect the package specific files in a specific folder location in your source. For example, the Universal plugin will look in `src\universal` for files to add to the zip. Debian packaging will look for `src\debian`.
 
 
 You'll need to read up a little on how to use the plugin, see [Debian specific instructions](https://www.scala-sbt.org/sbt-native-packager/formats/debian.html) but the core concepts include:
@@ -47,6 +44,8 @@ You'll need to read up a little on how to use the plugin, see [Debian specific i
 1. [Packaging format plugins](https://www.scala-sbt.org/sbt-native-packager/introduction.html#format-plugins) - _how_ an application is packaged; universal, linux, debian, rpm, docker, windows etc 
 1. [Archetype plugins](https://www.scala-sbt.org/sbt-native-packager/introduction.html#archetype-plugins) - _what's_ packaged (predefined configurations); java application, java server application, system loaders etc
 1. [Mappings](https://www.scala-sbt.org/sbt-native-packager/introduction.html#mappings) map source files to target system locations
+
+The native packager uses [Project Arcetypes](https://www.scala-sbt.org/sbt-native-packager/archetypes/index.html) like the [Java CLI Application Archetype](https://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/index.html) or [Java Server Application Archetype](https://www.scala-sbt.org/sbt-native-packager/archetypes/java_server/index.html) to add additional files to the mappings enriching the created package. They don’t provide any new features per se.
 
 
 ### Running as a Service
