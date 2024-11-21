@@ -24,28 +24,26 @@ So we can think of the unit of work as something that can be executed and when i
 
   
 
-{% codeblock lang:java %}
+``` java
 public interface UnitOfWork<R, E extends Exception> {
     R execute(SessionProvider sessionProvider) throws E;
 }
-{% endcodeblock %}
-
+```
   
 Something that would be responsible for executing the unit of work might look like this.
 
   
 
-{% codeblock lang:java %}
+``` java
 public interface UnitOfWorkRunner {
     <T, E extends Exception> T run(UnitOfWork<T, E> unitOfWork) throws Throwable;
 }
-{% endcodeblock %}
-
+```
   
 When it comes to using Hibernate, we might have a concrete `UnitOfWorkRunner` look something like the following. The key thing here is that the transaction management is handled here, its a simple try catch finally pattern and as you can see, is very simple.
 
 
-{% codeblock lang:java %}
+``` java
 public class TransactionalUnitOfWorkRunner implements UnitOfWorkRunner {
 
     private final SessionProvider sessionProvider;
@@ -75,8 +73,7 @@ public class TransactionalUnitOfWorkRunner implements UnitOfWorkRunner {
         return new TransactionalUnitOfWorkRunner(sessionProvider).run(unitOfWork);
     }
 }
-{% endcodeblock %}
-    
+```    
 
   
 It's this class and interface that allows us to be explicit about our transactional boundary. Clients to this define the transaction boundary. In most containers and frameworks, the transactional boundary is around the request/response cycle and the developer has little influence. Using the `UnitOfWorkRunner` directly in your code gives more control over this. You can use a servlet filter to achieve a similar request/response scoped transaction or you can be finer grained and produce what I prefer; a transaction scoped to a coherent _business operation_.
@@ -87,13 +84,12 @@ For example, lets have a interface describing current account business functions
   
 
     
-{% codeblock lang:java %}
+``` java
 // "business" operations
 public interface CurrentAccount {
    void deposit(From<BankAccount> from, To<BankAccount> to);
 }
-{% endcodeblock %}
-    
+```    
 
   
 When we implement the `CurrentAccount`, we can define the transactional behavior as a separate concern from the business behavior. For example,
@@ -101,14 +97,13 @@ When we implement the `CurrentAccount`, we can define the transactional behavior
   
 
     
-{% codeblock lang:java %}
+``` java
 Accounts repository = new AccountRepository();
 CurrentAccount currentAccount = new AcmeBankCurrentAccount(repository);
 CurrentAccount transactionally = transactionally(sessionProvider, currentAccount);
 // ...
 transactionally.deposit(...);
-{% endcodeblock %}
-    
+```    
 
   
 Where `transactionally` is a statically imported creation method that wires up the `AcmeBankCurrentAccount` (the business services) with transactional behavior. It does this via decoration but essentially creates an anonymous `UnitOfWork` in which to execute the business operation within.
@@ -119,7 +114,7 @@ The full class looks like this
   
 
     
-{% codeblock lang:java %}
+``` java
 public class TransactionWrapper<R> implements InvocationHandler {
 
     private final SessionProvider sessionProvider;
@@ -148,8 +143,7 @@ public class TransactionWrapper<R> implements InvocationHandler {
         }
     }
 }
-{% endcodeblock %}
-    
+```    
 
   
 The underlying business functionality within the `AcmeBankCurrentAccount` isn't concerned with transactions. Instead, its decorated with transactionality and we can use this decorating proxy to wrap any business interface as a transaction.
@@ -157,7 +151,7 @@ The underlying business functionality within the `AcmeBankCurrentAccount` isn't 
   
 
     
-{% codeblock lang:java %}
+``` java
 public class AcmeBankCurrentAccount implements CurrentAccount {
 
     private final AccountRepository accounts;
@@ -176,7 +170,6 @@ public class AcmeBankCurrentAccount implements CurrentAccount {
         accounts.save(beneficiary);
     }
 }
-{% endcodeblock %}
-
+```
 
 This can come in handy when testing as we can isolate and test the different responsibilities. We're also left with a handy framework to add ad-hoc data directly to the database and it's easy enough to wire up an in-memory only `UnitOfWorkRunner`. Back to the point earlier about composability, the overall approach leaves us with loosely composed objects which combine to provide high level behavior. The composites are simpler than the sum of its parts to borrow a phrase from [GOOS](http://www.growing-object-oriented-software.com/).

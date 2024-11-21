@@ -17,16 +17,14 @@ Oracle put out the preview release of JDK7 last month. I guess they felt they ha
   
 Which allows a little brevity to the garrulity of the language, at least against generic object instantiation where the type can be inferred. For example,
 
-{% codeblock lang:java %}
+``` java
 private Map<Size, List<Shoe>> stock = new HashMap<Size, List<Shoe>>();
-{% endcodeblock %}
-
+```
 can be reduced to
 
-{% codeblock lang:java %}
+``` java
 private Map<Size, List<Shoe>> stock = new HashMap<>();
-{% endcodeblock %}
-
+```
 <!-- more -->
 
 where the _diamond operator_ can be filled in or inferred from the declaration. It's subtly different than leaving out the generic completely which will reduce your type to being of `Object` Things don't get much better than this.
@@ -34,7 +32,7 @@ where the _diamond operator_ can be filled in or inferred from the declaration. 
   
 Actually, it does. Just a little. Constructor generics always used to be fun and that hasn't really changed, although with JDK7 you can do a little more. For example,
 
-{% codeblock lang:java %}
+``` java
 public class Bob<Y> {
 
     public <T> Bob(T t) {
@@ -48,8 +46,7 @@ public class Bob<Y> {
         Bob<Integer> bob = new <String> Bob<>("yum");
     }
 }
-{% endcodeblock %}
-
+```
       
     
 
@@ -65,7 +62,7 @@ Another bugbear with the verbosity of Java has always been the try-catch-finally
   
 For example,
 
-{% codeblock lang:java %}
+``` java
 private String example() throws IOException {
 
     BufferedReader reader = new BufferedReader(...);
@@ -76,19 +73,17 @@ private String example() throws IOException {
         reader.close();
     }
 }
-{% endcodeblock %}
-
+```
       
 gets replaced with
 
-{% codeblock lang:java %}
+``` java
 private String example() throws IOException {
     try(BufferedReader reader = new BufferedReader(...) {
          return reader.readLine();
     }
 }
-{% endcodeblock %}
-
+```
 Dr Heinz combined this technique with a way to automatically unlock locked resources in a [recent news letter](http://www.javaspecialists.eu/archive/Issue190.html).
 
 There may be a little gotcha using this where exceptions can be suppressed and have to be retrieved using `Throwable.getSuppressed()`. This seems like it could be nasty.
@@ -98,13 +93,12 @@ There may be a little gotcha using this where exceptions can be suppressed and h
   
 This one allows you to catch multiple exceptions using a pipe to separate the exception types. This looks like another work around for the general grips with Java but removes the duplicated code you often get catching several exceptions and treating them in the same way. For example,
 
-{% codeblock lang:java %}
+``` java
 catch (IOException | SQLException e) {
     logger.log(e);
     throw ex;
 }
-{% endcodeblock %}
-
+```
       
     
 

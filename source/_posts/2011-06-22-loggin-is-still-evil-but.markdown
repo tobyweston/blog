@@ -24,7 +24,7 @@ So I updated the helper class to include a log level override which will ignore 
   
 The updated class looks like this.
 
-{% codeblock lang:java %}
+``` java
 public class Log4J {
 
     private final StringWriter writer = new StringWriter();
@@ -55,21 +55,18 @@ public class Log4J {
         org.junit.Assert.assertThat(writer.toString(), matcher);
     }
 }
-{% endcodeblock %}
-
+```
   
 Which means you can setup to expect a log level at say the ERROR level like this.
 
   
-{% codeblock lang:java %}
+``` java
 private final Log4J logger = Log4J.appendTo(Logger.getLogger(Post.class), LogLevel.ERROR);
-{% endcodeblock %}
-  
+```  
 The make assertions like this (which would fail if the matcher fails or because its not logged at the expected level.
 
-{% codeblock lang:java %}
+``` java
 logger.assertThat(containsString(EXCEPTION_MESSAGE));
-{% endcodeblock %}
-
+```
 I still think logging is evil and try _really_ hard not to use a single log statement but if you have to, I hope the helper class helps keep you honest in your tests ;) Have a look at the [previous post]({{ root_url }}/blog/2010/10/18/logging-is-evil-but/) for more details and extended examples.
 

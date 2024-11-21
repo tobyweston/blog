@@ -21,31 +21,28 @@ This post takes the idea further by talking about exceptions as _real_ objects a
 
 We tend to think of exceptions as beans; objects with a `message` that we get and display. It's easy to forget that exceptions are objects too. How often do you see this type of thing in the same code base.
 
-{% codeblock lang:java %}
+``` java
 throw new BadRequestException("the field 'customer' is missing from the request");
 throw new BadRequestException("'customer' is missing");
 throw new BadRequestException("can not parse request" );
-{% endcodeblock %}
-
+```
 It's an example of bad encapsulation in the `BadRequestException` class. It's hard to tell if the examples above should be handled the same or differently. There's certainly an inconsistency between the wording of the first two. Are they the same error? It's also not clear where the message is going to end up? A better idea would be to create sub-classes for each.
 
-{% codeblock lang:java %}
+``` java
 public class MissingFieldException extends BadRequestException {
     public MissingFieldException(Field field) {
         super();
         this.field = field;
     }
 }
-{% endcodeblock %}
-
+```
 All other constructors have been disabled so the exception can only be constructed as we intend. It can still be handled in a `catch` block built for `BadRequest` (and it's there that we would decide how to map the exception type to a presentable form). We've intentionally _avoided_ something like
 
-{% codeblock lang:java %}
+``` java
 public MissingFieldException(Field field) {
     super("the field '" + "' is missing from the request");
 }
-{% endcodeblock %}
-
+```
 because the message is completely unimportant to the exception. It's the handling that's important and it's in the catch block that we can map to a message (if appropriate). We're encapsulating the internal details. For example, at the UI, we may map the exception to a message for display but at an internal boundary, we may generate an event for support staff that maps to a different message.
 
 Applying object oriented principles like encapsulation to exceptions means that they can do more than just be _caught_. As first class objects, they can carry _behaviour_ and so can be tested appropriately. How many _unit_ tests have you written for an `Exception` class?
@@ -57,12 +54,11 @@ We can take this further and try to apply the [law of demeter](http://en.wikiped
 
 How do we apply this to exceptions? Well, now we've got nicely encapsulated data it's clear that the exception itself is responsible for _using_ it. In the example above, we've encapsulated a `field` object. The implication being that the exception may want to influence something based on it. This could be the simple case where the exception can _present itself to some object_, in this example an implementation of a `Description` interface.
 
-{% codeblock lang:java %}
+``` java
 public void applyTo(Description description) {
     description.append("the field").appendValue(field).append("is missing from the request");
 }
-{% endcodeblock %}
-
+```
 
 ## The Impact on Testing
 
@@ -85,12 +81,11 @@ Checked exceptions cause noise. That's all. Nothing else bad about them but they
 
  If that's truly the case, you can create application specific exceptions that sub-class `RuntimeException` and clean up the code base considerably. However, it's a potentially bad idea to actually throw `RuntimeException` as this subverts the explicit catching strategy. I generally consider `RuntimeException` as an abstract class. It doesn't make sense on its own because it implies any `catch` clause is too generic. Instead, create an root application exception that extends `RuntimeException`.
 
- {% codeblock lang:java %}
+ ``` java
  public class BadRobotApplicationException extends RuntimeException {
     // ...
  }
- {% endcodeblock %}
-
+ ```
 
 
 In the next post [Scala Exception Handling]({{ root_url }}/blog/2012/03/30/scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.

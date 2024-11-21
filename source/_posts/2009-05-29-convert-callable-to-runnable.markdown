@@ -28,7 +28,7 @@ Starting with the tests, any helper must delegate to the `Callable` and handle a
 
     
 {% assign braces = '{{' %}
-{% codeblock lang:java %}
+``` java
 @RunWith(JMock.class)
 public class CallableAdapterTest {
    private final Mockery context = new Mockery();
@@ -54,15 +54,14 @@ public class CallableAdapterTest {
       }});
    }
 }
-{% endcodeblock %}
-
+```
 
 ## The Code
   
 To get a green light, the implementation is fairly trivial.
 
 
-{% codeblock lang:java %}
+``` java
 public class CallableAdapter {
 
    public static Runnable runnable(final Callable callable) {
@@ -78,8 +77,7 @@ public class CallableAdapter {
       };
    }
 }
-{% endcodeblock %}
-
+```
 
 You can find the code in the [tempus-fugit](http://tempusfugitlibrary.org/) project.
 

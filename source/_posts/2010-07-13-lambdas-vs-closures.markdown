@@ -20,7 +20,7 @@ Lets take the `WaitFor` class from [tempus-fugit](http://tempusfugitlibrary.org/
 
 For example,
   
-{% codeblock lang:java %}
+``` java
 ...
 server.start();
 WaitFor.waitOrTimeout(new Condition() {
@@ -29,8 +29,7 @@ WaitFor.waitOrTimeout(new Condition() {
       return server.isRunning();
    }
 }, timeout(seconds(5)));
-{% endcodeblock %}
-
+```
 
 The anonymous class implementing `Condition` is evaluated by the method `waitOrTimeout` (which will call the `isSatisfied`) method.
 
@@ -45,7 +44,7 @@ So, we want to be able to define anonymous functions on the fly, the result of t
 For example, the code snippet above will return a new `Condition` instance on each invocation. Because it will bind the variable server to the anonymous function, it will return a closure. To put it another way, we'll extract the anonymous part to a method to explicitly create a new instance, such
 
   
-{% codeblock lang:java %}
+``` java
 private static Condition isRunning(final Server server) {
    return new Condition() {
       @Override
@@ -54,12 +53,11 @@ private static Condition isRunning(final Server server) {
       }
    };
 }
-{% endcodeblock %}
-
+```
 This should make it more obvious that the variable outside the scope of the anonymous `Condition` is required (the `server` variable), each call to the `isRunning` method will return a closure over the argument, the instance of which captures the value of server. Java implements the closure by passing a reference to the outer scoped (lets say `Foo.class`) to the anonymous class (`Foo$1.class`). The `access$000` call accesses the appropriate private field in the outer class directly in the bytecode
 
   
-{% codeblock lang:java %}
+``` java
 class Foo$1 implements Condition {
 
     final Foo this$0;
@@ -73,13 +71,12 @@ class Foo$1 implements Condition {
         return Foo.access$000(Foo.this).isRunning();
     }
 }
-{% endcodeblock %}
-
+```
 
   
 So, if, we have update the example again, this time removing the out of scope variable, we're left with something like this;
 
-{% codeblock lang:java %}
+``` java
 private static Condition isRunning() {
    return new Condition() {
       @Override
@@ -88,8 +85,7 @@ private static Condition isRunning() {
       };
    }
 }
-{% endcodeblock %}
-
+```
 
 Then no out of scope variables are required, the term doesn't need to be closed. The anonymous function that is left is effectively a lambda.
 

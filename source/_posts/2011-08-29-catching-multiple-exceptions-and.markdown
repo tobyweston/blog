@@ -19,7 +19,7 @@ This got me thinking about how we should deal with this kind of thing. In the en
 For example, the domain cleaning class below can throw an exception during the `deleteAll` method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we're done.
 
 
-{% codeblock lang:java %}
+``` java
 public class DomainCleaner {
 
     public static void clean(Domain domain) throws CompositeException {
@@ -39,8 +39,7 @@ public class DomainCleaner {
     }
 
 }
-{% endcodeblock %}
-    
+```    
 
 We simply add to the exception collection class (`exceptions.add(e)`) and then when we're done, we can check it and throw a composite exception if needed with `exceptions.checkAndThrow()`.
 
@@ -48,19 +47,18 @@ We simply add to the exception collection class (`exceptions.add(e)`) and then w
 So far, we've only been interested in the fact that multiple exception can be handled and so haven't needed to programmatically query for specific exception types. For example, we've only needed this up until now.
 
 
-{% codeblock lang:java %}
+``` java
 try {
    // ... something that calls checkAndThrow()
 } catch (CompositeException e) {
    // ... this is enough for now
 }
-{% endcodeblock %}
-
+```
 
 The details of the classes are below.
 
 
-{% codeblock lang:java %}
+``` java
 public class Exceptions implements java.lang.Iterable<Exception> {
 
     private final List<Exception> exceptions = new ArrayList<Exception>();
@@ -79,12 +77,11 @@ public class Exceptions implements java.lang.Iterable<Exception> {
             throw new CompositeException(this);
     }
 }
-{% endcodeblock %}
-
+```
 The `toString()` implementation below outputs the embedded exceptions in a way that is consistent with how you'd expect to see regular exceptions.
 
   
-{% codeblock lang:java %}
+``` java
 public class CompositeException extends Exception {
 
     private final Exceptions exceptions;
@@ -102,5 +99,4 @@ public class CompositeException extends Exception {
         return String.format("%s\n{composite exceptions=\n%s}\n%s", this.getClass().getName(), builder.toString(), super.toString());
     }
 }
-{% endcodeblock %}
-    
+```    

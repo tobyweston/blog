@@ -15,7 +15,7 @@ For some reason, common perception is that using `instanceof` is a bit of smell.
 For example, given the following, what's clearer in the following exception handling code?
 
       
-{% codeblock lang:java %}
+``` java
 try {
     ...
 } catch (InvocationTargetException e) {
@@ -24,11 +24,10 @@ try {
     }
     throw e.getCause();
 }
-{% endcodeblock %}
-
+```
 or
 
-{% codeblock lang:java %}
+``` java
 try {
     ...
 } catch (InvocationTargetException e) {
@@ -37,8 +36,7 @@ try {
     }
     throw e.getCause();
 }
-{% endcodeblock %}
-
+```
 
 <!-- more -->
 

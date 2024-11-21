@@ -15,18 +15,17 @@ Occasionally I'll see flickering tests. Sometimes they're green, sometimes they'
 In an attempt to ease the situation, I created an `@Intermittent` annotation with a corresponding JUnit `Rule` and `Runner`. Now, I can mark up a suspect test and get JUnit to do the repetition. Joy.
 
 
-{% codeblock lang:java %}
+``` java
 @Test
 @Intermittent
 public void flickering() {
    // ...
 }
-{% endcodeblock %}
-
+```
 You can then use the `IntermittentRule` to run the test method repeatedly.
 
       
-{% codeblock lang:java %}
+``` java
 public class FlickeringTest {
 
     @Rule public IntermittentRule rule = new IntermittentRule();
@@ -37,11 +36,10 @@ public class FlickeringTest {
         // ...
     }
 }
-{% endcodeblock %}
-
+```
 Or use the `@RunWith` annotation to run the test using the `IntermittentTestRunner`.
 
-{% codeblock lang:java %}
+``` java
 @RunWith(IntermittentTestRunner.class)
 public class FlickeringTest {
 
@@ -53,8 +51,7 @@ public class FlickeringTest {
         // ...
     }
 }
-{% endcodeblock %}
-
+```
 What's interesting here is the way in which the `Rule` and `Runner` interact with
 JUnit. Newer versions of JUnit have introduced the idea of `Rule`s and
 `Statement`s. Using a `Rule` allows access to the underlying `Statement` which in

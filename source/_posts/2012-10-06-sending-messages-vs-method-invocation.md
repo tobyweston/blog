@@ -37,31 +37,28 @@ Functions and procedures are [subroutines](http://en.wikipedia.org/wiki/Subrouti
 
 Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.
 
-{% codeblock Objective-C Method lang:objc %}
+``` objective-c
 - (void) eat:(Food*) food {
     // nom nom nom
 }
-{% endcodeblock %}
-
+```
 
 The equivalent C function, would look like this. It isn't associated with an instance of a class and would be globally available to all modules. It doesn't make sense in the object-oriented world as there is no noun associated with the action. There is no *thing* eating the food. The act of eating simply affects some data structure. A C function is equivalent to a static class method in Java [3]. 
 
 
-{% codeblock C Function lang:c %}
+``` c
 void eat(Food* food) {
     // nom nom nom
 }
-{% endcodeblock %}
-
+```
 
 Objective-C would compile down the method above into a C function something like the following [3, pg 96-97][4]. The important thing to note is the `id` parameter, which is the receiving object of the message.
 
-{% codeblock Objective C method compiled into a C Function lang:objc %}
+``` objective-c
 void eat(id self, SEL _cmd, Food* food) {
     // nom nom nom
 }
-{% endcodeblock %}
-
+```
 
 ## Object References
 
@@ -71,19 +68,17 @@ Java uses *object references* not *pointers*. Pointers are variables who's *valu
 
 So in [1] when [Chisnall](https://www.informit.com/articles/printerfriendly.aspx?p=1571983) says "in Java, a message call looks like a call to a function pointer in a C structure", he's referring to a C structure that contains a pointer to a function being dereferenced and how Java's method invocation syntax looks similar. You access a C structure using the dot notation, so a structure containing a pointer to our C function might look like the following.  
 
-{% codeblock lang:c %}
+``` c
 struct person {
    int (*eat)(void *);
 };
 struct person person;
-{% endcodeblock %}
-
+```
 and dereferencing it would look similar to Java
 
-{% codeblock lang:c %}
+``` c
 person.eat(apple)
-{% endcodeblock %}
-
+```
 
 In the context of his article, Chisnall is highlighting that Objective-C makes it's syntax as distinct as possible when talking about message sending. It's a useful idea as it makes the terminology of sending messages explicit and baked into the way you work with the language. With Java, you have to work harder to conceptually take up the metaphor. Java's terminology is around calling a method so it brushes over some of these subtleties.
 

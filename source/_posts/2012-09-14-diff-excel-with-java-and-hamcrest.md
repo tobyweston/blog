@@ -28,12 +28,11 @@ The matchers you're most likely to use can be found in the `bad.robot.excel.matc
 
 Using the `WorkbookMatcher`, you can compare an entire workbook to another. The comparison is made against POI `Workbook` objects, so load these using POI.
 
-{% codeblock lang:java %}
+``` java
 Workbook actual = new HSSFWorkbook(...);
 Workbook expected = new HSSFWorkbook(...);
 assertThat(actual, sameWorkbook(expected));
-{% endcodeblock %}
-
+```
 
 If you use the `MatcherAssert.assertThat` from Hamcrest rather than the vanilla JUnit version (`org.junit.Assert.assertThat`), you'll see useful information on a failure.
 
@@ -51,21 +50,19 @@ Other failures might include differing number of sheets, differently named sheet
 
 Lets say we have a class, `InvoiceItem` representing a sale item. We'd like to append this line item as a row on an invoice. It might look something like this.
 
-{% codeblock lang:java %}
+``` java
 InputStream template = this.getClass().getResourceAsStream("invoiceTemplate.xls");
 Workbook invoice = new HSSFWorkbook(template);
 InvoiceItem item = new InvoiceItem();
 item.appendTo(invoice);
-{% endcodeblock %}
-
+```
 The `appendTo` method uses [simple-excel](http://github.com/tobyweston/simple-excel) to append the row to the invoice (ignore the details for now) but we'd like to verify that the sheet has been modified in the right way. Using the `CellMatcher`, you can do something like this.
 
-{% codeblock lang:java %}
+``` java
 assertThat(getCellForCoordinate(coordinate(E, 1), invoice), is(equalTo(stringCell("Mac Book Pro"))));
 assertThat(getCellForCoordinate(coordinate(E, 2), invoice), is(equalTo(numberCell(999.99D))));
 assertThat(getCellForCoordinate(coordinate(E, 3), invoice), is(equalTo(blankCell()));
-{% endcodeblock %}
-
+```
 Where the `getCellForCoordinate` returns a POI `Cell` object and `equalTo` is statically imported from `bad.robot.excel.matchers.Matchers` (not regular Hamcrest `equalTo`);
 
 When it fails, you'll get something friendly like this;

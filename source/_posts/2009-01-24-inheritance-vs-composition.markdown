@@ -15,7 +15,7 @@ When interviewing, I often like to ask a candidate to discuss inheritance vs com
 
 ### Example 1.
 
-{% codeblock lang:java %}
+``` java
 public class EvilStack<T> extends Vector<T> {
     public T pop() {
         // ...
@@ -24,12 +24,11 @@ public class EvilStack<T> extends Vector<T> {
         // ...
     }
 }
-{% endcodeblock %}
-
+```
 
 ### Example 2.
 
-{% codeblock lang:java %}
+``` java
 public class Stack<T> {
     private Vector<T> items = new Vector<T>();
     public T pop() {
@@ -39,8 +38,7 @@ public class Stack<T> {
         // ...
     }
 }
-{% endcodeblock %}
-
+```
 
   
 Extending `Vector` as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an `EvilStack`.

@@ -53,15 +53,14 @@ I think it's trying to say that your application isn't allowed to request a new 
 
 In a successful exchange of _authorisation code_ for _access token_, you should see a response like this.
 
-{% codeblock lang:js %}
+``` js
 {
     "access_token":"2YotasFasFzCXcCsMWp1",
     "token_type":"bearer",
     "expires_in":604800,
     "refresh_token":"1Gzv0XG5Qx2T3JOkFlKWyj"
 }
-{% endcodeblock %}
-
+```
 In OAuth, The `expires_in` value should be the time in seconds that the _access token_ is valid.
 
 {% blockquote OAuth 2.0 Specification https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2 %}
@@ -86,10 +85,10 @@ The process is similar to the [requesting the original _access token_]({{ root_u
 
 which will return something like
 
-{% codeblock lang:js %}
+``` js
 {
     "access_token":"2YotasFasFzCXcCsMWp1",
     "token_type":"bearer",
     "expires_in":604800
 }
-{% endcodeblock %}
+```

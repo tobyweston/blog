@@ -22,19 +22,18 @@ It can be tricky not break the [inheritance vs. composition](http://en.wikipedia
 
 Let's say that you have a [repository](http://martinfowler.com/eaaCatalog/repository.html) style class who's API talks about business operations, a `Customers` class for example. You might have an database backed version and you don't want anything going behind your back and messing with the data; everything in production code should go through your business API.
 
-{% codeblock lang:scala %}
+``` scala
 class OracleCustomers {
     def add(customer: Customer) = { ... }
     def getCustomer(id: CustomerId) = { ... }
     def getBasketValue(query: CustomerQuery) = { ... }
     def ship(query: CustomerQuery) = { ... }
 }
-{% endcodeblock %}
-
+```
 Now let's say that you want a test fixture to allow you to quickly setup test data in your `Customers` without having to go through the production API. You can provide an implementation to a trait and collect some data together like this;
 
 
-{% codeblock lang:scala %}
+``` scala
 trait BackdoorCustomers {                               // <- bad name, this is really a "fixture"
     abstract val customers: Customers
 
@@ -48,13 +47,12 @@ trait BackdoorCustomers {                               // <- bad name, this is 
         customers.add(RandomExpiredCustomer())
     }
 }
-{% endcodeblock %}
-
+```
 
 This says that extending classes must provide a value for `customers`. It implements some coarse grained test setup against `customers`. So when writing a test, it's easy to just extend the trait and slot in an implementation of `customers`. For example an `InMemoryCustomers` or an Oracle implementation that by-passes any constraint checking the proper API might enforce.
  
  
-{% codeblock lang:scala %}
+``` scala
 class OracleCustomerTest extends BackdoorCustomers {        
     
     override val customers = new InMemoryCustomers
@@ -67,8 +65,7 @@ class OracleCustomerTest extends BackdoorCustomers {
         result should be(asExpected)
     }
 }
-{% endcodeblock %}
-
+```
     
     
 But we're saying here that an `OracleCustomerTest` _is a_ `BackdoorCustomers`. That doesn't even make sense. There's no strong notion of a `BackdoorCustomers`; it's not a meaningful _noun_. Best case scenario, you're upfront about the fact that it's a fixture and rename `BackdoorCustomers` to `CustomersTestFixture` but even then, the *test* is not a *fixture*, the two are independent. **One is test apparatus that supports the test, the other is the test or experiment itself**.
@@ -82,7 +79,7 @@ Using inheritance to mixin behaviour contradicts the inheritance vs. composition
 
 For example, we can rework our trait to be a self type. 
 
-{% codeblock lang:scala %}
+``` scala
 trait BackdoorCustomers {
     this: Customers =>
     
@@ -95,12 +92,11 @@ trait BackdoorCustomers {
         add(RandomExpiredCustomer())
     }
 }
-{% endcodeblock %}
-
+```
     
 It now enforces implementers to also be a sub-type of `Customers`. This, in turn, forces us to rewrite the test
 
-{% codeblock lang:scala %}
+``` scala
 class OracleCustomerTest {        
     
     private val customers = new InMemoryCustomers with BackdoorCustomers
@@ -111,25 +107,22 @@ class OracleCustomerTest {
         // ...
     }
 }
-{% endcodeblock %}
-
+```
     
 
 So now our test is not inheriting an orthogonal type. From an object-oriented perspective, it's much cleaner. We use composition to give the test a `customers` instance but this time, we treat it as two things. The actual type of the thing is;
   
-{% codeblock lang:scala %}
+``` scala
 InMemoryCustomers with BackdoorCustomers
-{% endcodeblock %}
-
+```
 
 So all the backdoor methods work along with the API methods but now we can clearer about which is which. For example,
 
 
-{% codeblock lang:scala %}
+``` scala
 customers.addSomeCustomersWithFullBaskets()         // <- a backdoor "fixture" method
 application.doSomethingAgainstCustomersViaTheApi    // <- more likely to be the method under test
-{% endcodeblock %}
-    
+```    
 ## Conclusion
 
 Scala is both an object-oriented language and a functional language. So unless your team is entirely behind doing things functionally, you're still going to come across object-oriented thinking and principles. Traits that have behaviour make it awkward because functionally-thinking, you could argue that nouns aren't important and behaviour in traits is just behaviour. So why not extend that behaviour by whatever means (including inheritance)?

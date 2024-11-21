@@ -134,13 +134,12 @@ $ git status
 ```
 The abbreviated `git status -sb` version
 
-{% codeblock lang:sh %}
+``` sh
 $ git status -sb
 ## master...origin/master [ahead 1]
  M LegoWars/BattleShip.h
  M LegoWars/BattleShip.m
-{% endcodeblock %}
-
+```
 
 ## <a id="alias"></a>Useful Git aliases and config
 

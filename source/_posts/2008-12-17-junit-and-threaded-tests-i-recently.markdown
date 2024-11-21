@@ -12,7 +12,7 @@ description: "Find out how threaded tests exit early thanks to your test runner.
 
 I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;
   
-{% codeblock lang:java %}
+``` java
 @Test
 public void exaple() {
     Thread thread = new Thread(new Runnable() {
@@ -30,8 +30,7 @@ public void exaple() {
     assertThat(thread.isDaemon(), is(NON_DAEMON));
     thread.start();
 }
-{% endcodeblock %}
-
+```
 Here, the string "bye" is never shown, it would seem that when the test method finishes it somehow messes with the threads...
 
 Looking into things, it seems in my case that naughty Eclipse is muddying the water! The `RemoteTestRunner` class which Eclipse uses to run the tests ends up calling `System.exit(0)` after it's run all the tests to kill the parent Java process. Even if we changed the daemon status of the thread, you'd get the same behaviour, ie, no "bye" being shown.

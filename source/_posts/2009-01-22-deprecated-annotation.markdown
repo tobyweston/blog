@@ -13,48 +13,44 @@ description: "Why didn't Sun add a `value` property to the `@Deprecated` annotat
 Why didn't Sun add a `value` property to the `@Deprecated` annotation? Instead of
   
 
-{% codeblock lang:java %}
+``` java
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Deprecated {
 }
-{% endcodeblock %}
-
+```
 
 which kind of implies we should do the following.
 
 
-{% codeblock lang:java %}
+``` java
 @Deprecated
 /** @deprecated use {@link Foo} instead */
 public class GoneOff {
    // ...
 }
-{% endcodeblock %}
-
+```
 
 why can't we have
 
 
-{% codeblock lang:java %}
+``` java
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MyDeprecated{
    public abstract String value() default "";
 }
-{% endcodeblock %}
-
+```
 
 which means we can use
 
 
-{% codeblock lang:java %}
+``` java
 @MyDeprecated("use Foo instead")
 public class GoneOff {
    // ...
 }
-{% endcodeblock %}
-
+```
 
 
 

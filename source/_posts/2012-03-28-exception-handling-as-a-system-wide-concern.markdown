@@ -32,7 +32,7 @@ Lets have a look at the example when a user's session times out. The server will
 
 For the _when_, most web UI frameworks have a convenient mechanism. In the servlet space, you can declaratively configure a page to be displayed based on an exception type.
 
-{% codeblock lang:xml %}
+``` xml
 <error-page>
     <exception-type>bad.robot.example.SessionExpiredException</exception-type>
     <location>/login</location>
@@ -41,8 +41,7 @@ For the _when_, most web UI frameworks have a convenient mechanism. In the servl
     <exception-type>bad.robot.example.Defect</exception-type>
     <location>/internalServerError</location>
 </error-page>
-{% endcodeblock %}
-
+```
 
 For the _how_, the approach at this layer is to _translate_ an underlying exception into something appropriate. This could just mean something that is more presentable to the user. In the example above, when the server is asked to work with a session that has expired, it will generate the `SessionExpiredException`. This in turn causes the `login` page to be displayed prompting the user to log back in. No stack traces appear and we allow the user to continue working.
 
@@ -54,37 +53,34 @@ For the _when_, again, this layer is about _translation_. We would like to turn 
 
 For [Jersey](http://jersey.java.net/), this means the _how_ is taken care of declaratively by providing an [`ExceptionMapper`](http://jersey.java.net/nonav/documentation/latest/user-guide.html#d4e435) as below.
 
-{% codeblock lang:java %}
+``` java
 @Provider
 public class NotFoundExceptionMapper implements ExceptionMapper<NotFoundException> {
     public Response toResponse(CustomerNotFoundException notFound) {
         return Response.status(404).entity(notFound.getMessage()).build();
     }
 }
-{% endcodeblock %}
-
+```
 The above turns a `CustomerNotFoundException` into the correct response code and adds a message to the response body. We encapsulate the `CustomerNotFoundException` by only allowing a single, narrow constructor.
 
-{% codeblock lang:java %}
+``` java
 public class NotFoundException {
     public NotFound(Identifier identifier) {
         super(format("Could not find customer \"%s\"", identifier));
     }
 }
-{% endcodeblock %}
-
+```
 
 Then we can complete the task by defining a default exception handler to turn any unexpected exceptions into an internal server errors (HTTP `500`).
 
-{% codeblock lang:java %}
+``` java
 @Provider
 public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
         return Response.status(500).entity(exception).build();
     }
 }
-{% endcodeblock %}
-
+```
 With this addition, we've implemented our system wide policy. All exceptions will be handled consistently thanks to the class hierarchy of `Throwable`. 
 
 ## The Database Transaction Boundary
@@ -95,7 +91,7 @@ Database transactions are the typical solution to this class of problem. We'll l
 
 So for the _when_, unlike the declarative examples above, we can put a more imperative mechanism in place and ensure all database work uses the method below.
 
-{% codeblock lang:java %}
+``` java
 public <T, E extends Exception> T run(UnitOfWork<T, E> unitOfWork) throws Throwable {
 	Session session = sessionProvider.getCurrentSession();
 	Transaction transaction = session.beginTransaction();
@@ -111,8 +107,7 @@ public <T, E extends Exception> T run(UnitOfWork<T, E> unitOfWork) throws Throwa
 			session.close();
 	}
 }
-{% endcodeblock %}
-
+```
 This also describes the _how_. We've chosen to handle the exception by rolling back the transaction and interestingly, rethrowing the exception. Although we've identified this database interaction as a boundary, by rethrowing the exception, we're recognising that there are additional boundaries to consider. In the context of a database call, for example, the exception could propagate up to the UI. We've handled the exception here to maintain data integrity _and_ allowed other exception handling policies to be applied. It's a good example of an _internal boundary_.
 
 For example; two sales clerks try and update a customer's details at the same time in their web app causing a conflict. Hibernate detects the problem and throws a `OptimisticLockException`. Our database exception handling policy kicks in to rollback one of the transactions. It rethrows the exception which the web app redirects to an error page listing the diff and allowing the user to merge and retry.

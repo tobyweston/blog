@@ -13,7 +13,7 @@ description: "Don't let logging clutter up your code, follow these tips to separ
 Logging is a nightmare. I don't mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [_insert your current logging framework here_] is a recipe for disaster. We've all seen too much of
 
 
-{% codeblock lang:java %}
+``` java
 Logger log = Logger.getLogger(ThisSucks.class);
 ...
 try {
@@ -22,8 +22,7 @@ try {
    log.error(e);
    throw e;
 }
-{% endcodeblock %}
-
+```
 
 which is just one example where the exception handling policy for the system (it's a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn't logged elsewhere or that the exception is even handled correctly or the right people notified. It's not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.
 
@@ -46,7 +45,7 @@ Most of the common logging frameworks make it troublesome to inject a logger ins
 For example, I created a interface `Post`, to handle HTTP POST requests. Why should I add logging to implementations and open the door to ad-hoc, erratic logging? I shouldn't, but when my implementation `CustomerPost` requires logging of the request and response, I can decorate with a `LoggingPost`
 
 
-{% codeblock lang:java %}
+``` java
 public class LoggingPost implements Post {
 
     private static final Logger LOG = Logger.getLogger(Post.class);
@@ -65,12 +64,11 @@ public class LoggingPost implements Post {
        }
     }
 }
-{% endcodeblock %}
-
+```
 
 You might be concerned that the try/catch above looks very similar to the original negative example. The good thing about our decorated example above is that by being explicit about this classes responsibility, declaring the usage in the correct context, we can actually define the system wide policy for logging the `Post` calls in one place, without affecting the contract of the interface. We'd do this for example, on the system boundary, for example where the RESTful API is implemented.
 
-{% codeblock lang:java %}
+``` java
 @Resource
 public class CustomerServlet {
 
@@ -81,13 +79,12 @@ public class CustomerServlet {
         ...
     }
 }
-{% endcodeblock %}
-
+```
 ## Testing the Logger
 
 In our `LoggingPost` above, we haven't even tried to inject a logger in to make the testing easier. Instead, mostly because I was being lazy, I used the helper class below. This is intended to represent Log4J in the context of a test and give access to the logger for assertion purposes.
 
-{% codeblock lang:java %}
+``` java
 public class Log4J {
 
     private final StringWriter writer = new StringWriter();
@@ -113,12 +110,11 @@ public class Log4J {
         org.junit.Assert.assertThat(writer.toString(), matcher);
     }
 }
-{% endcodeblock %}
-
+```
 Using it in the test for `LoggingPost` is shown below
 
 {% assign braces = '{{' %}
-{% codeblock lang:java %}
+``` java
 @RunWith(JMock.class)
 public class LoggingPostTest {
 
@@ -158,8 +154,7 @@ public class LoggingPostTest {
         }});
     }
 }
-{% endcodeblock %}
-
+```
 It relies on Log4J's static instances to dynamically add a logger to the list of loggers and thereby appending any generated logs to something that the `Log4J` test helper can check against. I can't decide if I like this or not. It gives you an extra test that your class under test is using a logger with the name that you expect (`"Post.class"` in the example above), testing your logger configuration as a by-product.
 
 What I found interesting about this though was that it was always seemed a lot of effort making some logging framework play nicely with mocks, or writing and configuring a custom in memory appender and asserting on it. With the above example, I very quickly added confirmation to existing Log4J infrastructure.

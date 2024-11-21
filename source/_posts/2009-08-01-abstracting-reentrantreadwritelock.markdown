@@ -21,7 +21,7 @@ With all [Lock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks
 Vanilla Java would have you;
 
 
-{% codeblock lang:java %}
+``` java
 Lock l = ...;
 l.lock();
 try {
@@ -29,15 +29,14 @@ try {
 } finally {
     l.unlock();
 }
-{% endcodeblock %}
-
+```
 
 Why not wrap the boiler plate code up in a mini DSL and pass in a lambda to execute the cleanup? Any implementation must call both lock and unlock and re-throw any exceptions. The following test shows this to be true.
 
 <!-- more -->
 
 {% assign braces = '{{' %}
-{% codeblock lang:java %}
+``` java
 @RunWith(JMock.class)
 public class ExecuteUsingLockTest {
 
@@ -95,13 +94,12 @@ public class ExecuteUsingLockTest {
         }});
     }
 }
-{% endcodeblock %}
-
+```
 
 The implementation is fairly straight forward with a couple of interesting points to note around generics.
 
     
-{% codeblock lang:java %}
+``` java
 public class ExecuteUsingLock<T, E extends Exception> {
 
     private final Callable<T, E> callable;
@@ -132,8 +130,7 @@ public class ExecuteUsingLock<T, E extends Exception> {
         }
     }
 }
-{% endcodeblock %}
-
+```
 
   
 Having the [micro-DSL]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I couldn't make just the method generic and instead had to link the types by making the class definition generic. You might also notice that the `Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception` as a generic type.
@@ -144,7 +141,7 @@ Having the [micro-DSL]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/) pass 
 A real world example might be something that updates a status probe where the variable lock below is an instance of `ReentrantReadWriteLock`.
 
     
-{% codeblock lang:java %}
+``` java
 public void setStatus(final Status status) {
     execute(settingStatus(status)).using(lock.writeLock());
 }
@@ -169,8 +166,7 @@ private Callable<Status, RuntimeException> gettingStatus() {
         }
     };
 }
-{% endcodeblock %}
-
+```
 
 All this to avoid the boiler plate code. You can try it for yourself by using the [tempus-fugit](http://tempusfugitlibrary.org/) project.
 

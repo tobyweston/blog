@@ -36,7 +36,7 @@ For example, let's say we have a method `uploadExpenses` that uploads this month
 
 In a traditional exception throwing version below, the `uploadExpenses` call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an [appropriate system boundary](http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/) but dealing with exceptions consistently for the entire system is a real challenge.
 
-{% codeblock lang:java %}
+``` java
 try {
     List<Expense> expenses = ...
     Expenses uploaded = uploadExpenses(expenses).collect(toList()));    // <- can throw exceptions
@@ -46,15 +46,14 @@ try {
 } catch (DuplicateExpenseFound e) {
     // what to do?
 }
-{% endcodeblock %}
-
+```
 
 ### Using Eithers
 
 On the other hand, if we use an `Either` we can make the `uploadExpenses` call return _either_ a successfully upload `Expense` or a tuple detailing the expense that failed to upload along with the reason why. Once we have a list of these, we can process them in the same way to produce our report. The neat thing here is that the exceptional behaviour is encoded in the return type; clients know that this thing could fail and can deal with it without coding alternative logic.
 
 
-{% codeblock lang:java %}
+``` java
 List<Expense> expenses = ...
 List<Either<Pair<Expense, Throwable>, Expense>> results = uploadExpenses(expenses).collect(toList());
 
@@ -63,6 +62,5 @@ failures.forEach(failure -> System.out.println(failure));
 
 Stream<Expense> successes = results.stream().flatMap(either -> either.right());
 successes.forEach(success -> System.out.println(success));
-{% endcodeblock %}
-
+```
 In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently. For a naive implementation, have a look at my [gist](https://gist.github.com/tobyweston/caefc3b5ec36348387e5) and for fuller implementations, see [Scala's version](https://github.com/scala/scala/blob/2.11.x/src/library/scala/util/Either.scala) or the [TotallyLazy](https://code.google.com/p/totallylazy/source/browse/src/com/googlecode/totallylazy/Either.java) and [Functional Java](https://functionaljava.ci.cloudbees.com/job/master/javadoc/fj/data/Either.html) versions in Java.

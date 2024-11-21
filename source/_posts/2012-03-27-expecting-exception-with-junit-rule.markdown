@@ -24,7 +24,7 @@ JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of bot
 
 The typical pattern is to catch an exception or fail explicitly if it was never thrown.
 
-{% codeblock lang:java %}
+``` java
 @Test
 public void example1() {
     try {
@@ -35,8 +35,7 @@ public void example1() {
     }
     // ... could have more assertions here
 }
-{% endcodeblock %}
-
+```
 
 which would highlight a failure in the following way.	
 	
@@ -51,14 +50,13 @@ The idiom has potential advantages in that it offers the opportunity to assert a
 
 Using the `expected` element, we can rewrite the test as follows.
 
-{% codeblock lang:java %}
+``` java
 @Test (expected = NotFoundException.class)
 public void example2() throws NotFoundException {
     find("something");
     // ... this line will never be reached when the test is passing
 }
-{% endcodeblock %}
-
+```
 which will result in the following failure.	
 	
 	java.lang.AssertionError: Expected exception: bad.robot.example.NotFoundException
@@ -74,7 +72,7 @@ Using an instance of `ExpectedException`, we can define a [JUnit rule](http://ww
 that allows us to setup expectations that are checked after the test concludes. It has a similar feel to
 setting up expectations in mocking frameworks like [JMock](http://www.jmock.org).
 
-{% codeblock lang:java %}
+``` java
 @Rule public ExpectedException exception = ExpectedException.none();
 
 @Test
@@ -84,8 +82,7 @@ public void example3() throws NotFoundException {
     find("something");
     // ... this line will never be reached when the test is passing
 }
-{% endcodeblock %}
-
+```
 Which would show the failure below.
 
 	java.lang.AssertionError: Expected test to throw (exception with message a string containing "exception message" and an instance of bad.robot.example.NotFoundException)

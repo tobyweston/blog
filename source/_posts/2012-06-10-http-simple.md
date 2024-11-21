@@ -11,17 +11,16 @@ keywords: "simple-http, simple http, java, apache hc, apache http, configuring a
 
 Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.
 
-{% codeblock lang:java %}
+``` java
 HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
-{% endcodeblock %}
-
+```
 <!-- more -->
 
 ## The API
 
 The library, [simple-http](https://github.com/tobyweston/simple-http), provides an implementation agnostic API. It ships with support for Apache's HTTP client 4.x but can be extended to use any underlying HTTP client library without changes to the API. It's essentially a builder ontop of the Apache library. You configure your client in a builder style then hit the HTTP verbs. For example.
 
-{% codeblock lang:java %}
+``` java
 HttpResponse response = anApacheClient()
     .with(httpTimeout(seconds(30)))
     .with(proxy(new URL("http://proxy.com:8999")))
@@ -30,8 +29,7 @@ HttpResponse response = anApacheClient()
             header("Accept", "text/html")
         )
     );
-{% endcodeblock %}
-
+```
 
 It's supposed to be so simple, it's self explanatory. If it's not, [let me know](https://twitter.com/#!/jamanifin). The starting point is just `HttpClients.anApacheClient()`.
 
@@ -43,16 +41,14 @@ First and foremost, [simple-http](https://github.com/tobyweston/simple-http) hel
 
 Secondarily, the library provides a fluent, straight-forward interface to instantiate and use a HTTP client. If you need special configuration, that's fine but as it comes sensible defaults, for the most part all you'll need to do is new it up. For example, to create a HTTP client which trusts self signed certificates, do the following.
 
-{% codeblock lang:java %}
+``` java
 HttpClient http = anApacheClient().withTrustingSsl();
-{% endcodeblock %}
-
+```
 Regular SSL authentication is straight forward too, just add a username and password to your client.
 
-{% codeblock lang:java %}
+``` java
 HttpClient http = anApacheClient().with("bobby brown", "secret");
-{% endcodeblock %}
-
+```
 
 ## Helping you Test
 
@@ -60,10 +56,9 @@ As [simple-http](https://github.com/tobyweston/simple-http) ships with a bunch o
 
 Using Apache directly, you might write something like this.
 
-{% codeblock lang:java %}
+``` java
 assertThat(apacheResponse.getStatusLine().getStatusCode(), is(200));
-{% endcodeblock %}
-
+```
 which, when it fails presents you with the following.
 
     java.lang.AssertionError:
@@ -73,10 +68,9 @@ which, when it fails presents you with the following.
 
 With [simple-http](https://github.com/tobyweston/simple-http), you write.
 
-{% codeblock lang:java %}
+``` java
 assertThat(response, has(status(200)));
-{% endcodeblock %}
-
+```
 
 which is much more helpful when it fails, showing the response's status code, message, content and headers.
 
@@ -86,21 +80,19 @@ which is much more helpful when it fails, showing the response's status code, me
 
 Of course, you can enrich the assertions, for example.
 
-{% codeblock lang:java %}
+``` java
 assertThat(response, allOf(has(status(200)), has(headerWithValue("Content-Type", containsString("json")))));
-{% endcodeblock %}
-
+```
 or assert against the message body, for example.
 
-{% codeblock lang:java %}
+``` java
 assertThat(response, has(content(not(containsString("\"error\"")))));
-{% endcodeblock %}
-
+```
 
 Or use them in an expectation, for example using [JMock](http://jmock.org/) below, we expect a HTTP `GET` to the URL [http://acme.com/stock](http://acme.com/stock) when we call the method `inventoryCount()`.
 
 {% assign braces = '{{' %}
-{% codeblock lang:java %}
+``` java
 @Test
 public void anExample() throws MalformedURLException {
     final HttpClient http = context.mock(HttpClient.class);
@@ -111,24 +103,22 @@ public void anExample() throws MalformedURLException {
     new StockRoom(http).inventoryCount();
     context.assertIsSatisfied();
 }
-{% endcodeblock %}
-
+```
 Or here where we expect a HTTP `POST` to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like `stock=%7Bsome%3A+json+message%7D`. Notice how [bad.robot.repo](http://robotooling.com/maven/) avoids this complexity.
 
-{% codeblock lang:java %}
+``` java
 public void anotherExample() throws Exception {
 	checking(new Expectations() {{ braces }}
 		oneOf(http).post(with(new URL("http://acme.com/stock")), with(post(content(params("stock", "{some: json message}").asString()))));
 	}});
 	new StockRoom(http).addStock(...);
 }
-{% endcodeblock %}
-
+```
 ## Download
 
 You can download from the [bad.robot.repo](http://robotooling.com/maven/) Maven repository or get the source from [Github](https://github.com/tobyweston/simple-http).
 
-{% codeblock lang:xml %}
+``` xml
 <repositories>
     <repository>
         <id>bad.robot</id>
@@ -142,7 +132,6 @@ You can download from the [bad.robot.repo](http://robotooling.com/maven/) Maven 
     <artifactId>simple-http</artifactId>
     <version>1.0-SNAPSHOT</version>
 </dependency>
-{% endcodeblock %}
-
+```
 
 Enjoy and [let me know](https://twitter.com/#!/jamanifin) how you get on.

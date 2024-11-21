@@ -17,7 +17,7 @@ I came up with a neat little pattern that's helped me be more expressive in some
 
 Using an instance of a `CountDownLatch`, we can wait for the latch to count down to zero, blocking the calling thread before continuing. When using a timeout, the method returns true if the count reached zero or false if the timeout expires. To make the timeout more explicit in my application code, I started with the following.
 
-{% codeblock lang:java %}
+``` java
 public void waitForStartup() throws InterruptedException, TimeoutException {
     if (!startup.await(5, SECONDS))
         throw new TimeoutException();
@@ -27,15 +27,14 @@ public void waitForShutdown() throws InterruptedException, TimeoutException {
     if (!shutdown.await(5, SECONDS))
         throw new TimeoutException();
 }
-{% endcodeblock %}
-
+```
 
 ## Using a Builder with Static Constructor
 
 To be more concise, I wanted to wrap the logic above in some kind of helper class. Thanks to lovely static imports, a private constructor and a static factory method called `await()`, I was able to express the same thing with the following.
 
   
-{% codeblock lang:java %}
+``` java
 public void waitForStartup() throws InterruptedException, TimeoutException {
     await(startup).with(TIMEOUT);
 }
@@ -43,8 +42,7 @@ public void waitForStartup() throws InterruptedException, TimeoutException {
 public void waitForShutdown() throws InterruptedException, TimeoutException {
     await(shutdown).with(TIMEOUT);
 }
-{% endcodeblock %}
-
+```
 
 The `with(...)` method is the thing that actually wraps the call to the `await()` method on the latch. I created a `Duration` class in the above case to capture the timeout constant.
 
@@ -54,7 +52,7 @@ This can be a neat little pattern which when used sparingly can lead to little n
 Using a private constructor and verifying the internal state is essential to ensure that the DSL can't be used incorrectly. Basically, if there are very few methods and you make sure they can only be called in a sensible order, I'd suggest its a good pattern to follow. The finished class is shown below in full.
 
   
-{% codeblock lang:java %}
+``` java
 public class CountDownLatchWithTimeout {
 
     private final CountDownLatch latch;
@@ -72,8 +70,7 @@ public class CountDownLatchWithTimeout {
             throw new TimeoutException();
     }
 }
-{% endcodeblock %}
-
+```
   
 
 

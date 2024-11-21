@@ -15,7 +15,7 @@ I had an interesting time getting a couple of tests running for [tempus-fugit](h
 In one particular test, I wanted to show that interrupt is called on a thread and so followed what's becoming a common pattern for me.
 
     
-{% codeblock lang:java %}
+``` java
 @Test
 public void sleepInterrupted() throws Exception {
    Thread thread = threadSleepsForever();
@@ -24,8 +24,7 @@ public void sleepInterrupted() throws Exception {
    thread.interrupt();
    waitForShutdown(thread);
    assertThat(thread.isInterrupted(), is(true));
-}  {% endcodeblock %}
-
+}  ```
     
 
 The alternative patten is to wait for the assertion and avoid the wait for shutdown method above. Either way, the test above is testing that the thread created has been interrupted by checking the interrupt flag.
@@ -47,10 +46,9 @@ I setup another thread to just poll the sleeping thread for its status and it sh
 So my thread was interrupted! It seems to say that when a thread terminates, it will reset the interrupt status flag. Looking at the source, it looks like Java maintains the flag at the native level and not as a member of the `Thread` class.
 
 
-{% codeblock lang:java %}
+``` java
 private native void interrupt0();
-{% endcodeblock %}
-
+```
 
 Looking at another run, I got the following
 

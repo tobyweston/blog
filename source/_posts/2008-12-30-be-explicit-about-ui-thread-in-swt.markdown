@@ -30,7 +30,7 @@ It wasn't until I started looking at being able to run the application from the 
 This seems simple but being more explicit about the UI thread means that this is worth a closer look. I always used to start an SWT application from the `main` method, in variations of the code below.
 
   
-{% codeblock lang:java %}
+``` java
 public class SwtCalculator {
     public static void main(String... args) {
         new SwtCalculator();
@@ -52,8 +52,7 @@ public class SwtCalculator {
         display.dispose();
     }
 }
-{% endcodeblock %}
-
+```
 The default constructor would do or delegate the work to setup the various shells and widgets and finally start the event loop. When using JFace's `ApplicationWindow`, I'd do pretty much the same thing. Calling `window.setBlockOnOpen(true)` just shifts the responsibility of starting the event loop to the `ApplicationWindow class`. If you call `window.setBlockOnOpen(false)` for example, you have to manually start an event loop.
 
   
@@ -90,17 +89,16 @@ The way I implemented this was to use a class extending `Thread` to represent th
   
 A minor change to the application's main method is required to optionally not call the event loop when calling main. For example;
 
-{% codeblock lang:java %}
+``` java
 public static void main(String... args) {
     SwtCalculator calculator = new SwtCalculator();
     if (shouldBlock(args))
         calculator.startEventLoop();
 }
-{% endcodeblock %}
-
+```
 The tests can then explicitly create a UI thread delegating shell setup to the `SwtCalculator` class before starting the event loop and allowing the test thread to continue.
 
-{% codeblock lang:java %}
+``` java
 @Before
 public void runTheApplication() {
     thread = UIThread.startNewUIThread(new UISetupClosure() {
@@ -121,8 +119,7 @@ public void calculatorCanAddTwoNumbers() {
 public void stopTheApplication() {
     thread.interrupt();
 }
-{% endcodeblock %}
-
+```
 
 The `UISetupClosure` allows the setup code (in this case the main method) to run inside the UI thread. This uses the strategy pattern but an alternative design could just as easily sub-class the `UIThread` and use the template pattern in a similar way.
 

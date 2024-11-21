@@ -22,7 +22,7 @@ In a [previous post]({{ root_url }}/blog/2012/03/29/building-better-exceptions),
 
 Scala essentially treats all exception types as `RuntimeException`. This means it doesn't _force_ you to handle exceptions. Instead, it combines _pattern matching_ with a single `catch` block to handle exceptions. For example
 
-{% codeblock lang:scala %}
+``` scala
 try {
   val url = new URL("http://baddotrobot.com")
 } catch {
@@ -32,29 +32,26 @@ try {
 } finally {
   // cleanup
 }
-{% endcodeblock %}
-
+```
 
 Any cleanup can be achieved using the `finally` block as expected. This works exactly the same way as in Java but perhaps a more idiomatic alternative is to use the _[loan pattern](https://wiki.scala-lang.org/display/SYGN/Loan)_. You can see an example of the pattern in Java form in the `ExecuteUsingLock` [class](https://github.com/tobyweston/tempus-fugit/blob/master/src/main/java/com/google/code/tempusfugit/concurrency/ExecuteUsingLock.java) in [tempus-fugit](http://tempusfugitlibrary.org/).
 
 Throwing exceptions is done in the same way as Java, as in the example below.
 
-{% codeblock lang:scala %}
+``` scala
 def load(url: String) {
   // ...
   throw new IOException("failed to load")
 }
-{% endcodeblock %}
-
+```
 However, anyone calling this method won't be forced by the compiler to catch the exception. If you intend to call your Scala code from Java however, you can force checked exceptions using the `throws` annotation but this still won't affect Scala clients.
 
-{% codeblock lang:scala %}
+``` scala
 @throws(classOf[java.io.IOException])
 def load(url: String) {
   // ...
 }
-{% endcodeblock %}
-
+```
 Interestingly, Scala treats `throw` as an expression with a return type of `Nothing`. You can use it in place of any other expression even though the result wont actually evaluate to anything.
 
 
@@ -64,7 +61,7 @@ Pattern matching is a bit like a switch statement but unlike Java's switch state
 
 Pattern matching is applied to the exception type when using `catch` above but it's also used in its vanilla form. For example, as described in [Programming in Scala](http://www.artima.com/shop/programming_in_scala_2ed), we can work out what to have with dinner in the example below.
 
-{% codeblock lang:scala %}
+``` scala
 def accompaniment(dinner: String) {
   dinner match {
     case "fish" => println("chips")
@@ -73,11 +70,10 @@ def accompaniment(dinner: String) {
     case _ => println("beans?")
   }
 }
-{% endcodeblock %}
-
+```
 Notice that there is no need for a `break` statement and that each match expression results in a value. So we can take advantage of resulting value and rewrite the above to the following.
 
-{% codeblock lang:scala %}
+``` scala
 def anotherAccompaniment(dinner: String) {
   val accompaniment =
     dinner match {
@@ -88,8 +84,7 @@ def anotherAccompaniment(dinner: String) {
     }
   println(accompaniment)
 }
-{% endcodeblock %}
-
+```
 
 ## Conclusion
 

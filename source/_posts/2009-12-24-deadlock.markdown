@@ -12,17 +12,16 @@ description: "Detect deadlocks in Java code programmatically with the DeadlockDe
 
 I recently added a basic deadlock detection mechanism to [tempus-fugit](http://tempusfugitlibrary.org/). The [DeadlockDetector](http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
 
-{% codeblock lang:java %}
+``` java
 DeadlockDetector.printDeadlocks(System.out);
-{% endcodeblock %}
-
+```
 <!-- more -->
 
 The `DeadlockDetector` class will spot Java monitor cyclic locking problems and additionally detect `Lock` based cyclic problems. It's implementation is basically the same as that used by `jconsole` and `jstack`. An example is illustrated in the example below.
 
 <!-- more -->
     
-{% codeblock lang:java %}
+``` java
 @Test
 public void potentialDeadlock() {
   new Kidnapper().start();
@@ -48,8 +47,7 @@ public class Negotiator extends Thread {
      }
   }
 }
-{% endcodeblock %}
-
+```
   
 Here, the Kidnapper is unwilling to release poor Nibbles the Cat until he has
 the Cash but our Negotiator is unwilling to part with the Cash until he has

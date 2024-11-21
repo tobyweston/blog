@@ -19,10 +19,9 @@ Sometimes refered to as [Percent Encoding](http://en.wikipedia.org/wiki/Percent-
 
 In Java, you can create an encoded URL using
 
-{% codeblock lang:java %}
+``` java
 new java.net.URI("http", "baddotrobot.com", "/cheese sandwich").toURL();
-{% endcodeblock %}
-
+```
 
 which in this case produces
 
@@ -41,10 +40,9 @@ For example, a HTML form with `name` and `address` would send over the following
 
 Use the unhelpfully named class `URLEncoder` in Java
 
-{% codeblock lang:java %}
+``` java
 java.net.URLEncoder.encode(value, "UTF-8");
-{% endcodeblock %}
-
+```
 
 
 
@@ -53,10 +51,9 @@ java.net.URLEncoder.encode(value, "UTF-8");
 
 Another one to be aware of, this is a basic encoding used by various protocols related to HTTP. For example, basic authentication is supported by adding a [Authorization](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8) header with base 64 encoded username and password; you'd do something like the following.
 
-{% codeblock lang:java %}
+``` java
 new header("Authorization", "Basic " + new sun.misc.Base64Encoder().encode("username:password".getBytes()));
-{% endcodeblock %}
-
+```
 Which, for example, could be used to send the following HTTP message
 
 	GET /login HTTP/1.1

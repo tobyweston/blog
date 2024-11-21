@@ -15,7 +15,7 @@ I was recently talking about what I call [micro DSLs]({{ root_url }}/blog/2009/0
 So, another example of a micro DSL I found myself writing is one of finding some object within a collection of differently typed objects. In my example, I want to find a `Race` object inside a bunch of calendar events objects, the finder micro DSL looks like this.
 
   
-{% codeblock lang:java %}
+``` java
 final class RaceFinder {
 
     private final Race race;
@@ -37,16 +37,14 @@ final class RaceFinder {
         return null;
     }
 }
-{% endcodeblock %}
-
+```
 
 The way the class is built, it forces the client to use it such.
 
 
-{% codeblock lang:java %}
+``` java
 CalendarEventEntry event = find(race).in(events);
-{% endcodeblock %}
-
+```
 
   
 Where find is statically imported and race and events have been pre-populated.
@@ -56,10 +54,9 @@ Where find is statically imported and race and events have been pre-populated.
 The original version had a method in the class to do the find, in the context of this class it was harder to test the find. I had a bunch of mocks and I was testing the find function amongst other behaviours of the class. The search line looked something like this.
 
     
-{% codeblock lang:java %}
+``` java
 CalendarEventEntry event = searchForRaceIn(events);
-{% endcodeblock %}
-
+```
 
 ## What's with "micro DSL"?
 

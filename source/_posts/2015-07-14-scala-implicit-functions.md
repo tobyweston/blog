@@ -21,76 +21,69 @@ Implicit functions will be called automatically if the compiler thinks it's a go
 
 For example, the following function allows you to convert a Scala function into a instance of the Java 8 `Consumer` [single argument method]({{ root_url }}/blog/2014/04/07/functional-interfaces-in-java8/) but still use Scala's concise syntax. 
 
-{% codeblock lang:scala %}
+``` scala
 implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
   override def accept(arg: A): Unit = function.apply(arg)
 }
-{% endcodeblock %}
-
+```
 You can avoid having to write clunky anonymous class instantiation when interfacing with Java and so mimic Java's lambda syntax. So rather than having to use the longhand version like this. 
 
-{% codeblock lang:scala %}
+``` scala
 def exampleUsingJavaForEach() {
   javaCollection.forEach(new Consumer[Element]() {
     override def accept(element: Element): Unit = observer.update
   })
 }
-{% endcodeblock %}
-
+```
 You can write this, where we just pass a Scala function to Java's `forEach` method.
  
-{% codeblock lang:scala %}
+``` scala
 def exampleUsingImplicitConversion() {
   javaCollection.forEach((element: Element) => observer.update)
 }
-{% endcodeblock %}
-
+```
 The argument to `forEach` is actually a function of type `Element => Unit`. Scala recognises that the `toConsumer` method could convert this into a `Consumer[Element]` and does so implicitly.     
 
-{% codeblock lang:scala %}
+``` scala
 def exampleUsingImplicitConversion() {
   val function: ObserverS => Unit = (observer) => observer.update
   javaCollection.forEach(function)
 }
-{% endcodeblock %}
-
+```
 Which is basically short-hand for this.
 
-{% codeblock lang:scala %}
+``` scala
 def exampleUsingImplicitConversion() {
   val function: ObserverS => Unit = (observer) => observer.update(this, status)
   javaCollection.forEach(toConsumer(function))
 }
-{% endcodeblock %}
-
+```
   
 ## Another Example
 
 If we have a button on we web page that we'd like to find using [Web Driver](http://www.seleniumhq.org/projects/webdriver/), we'd normally write something like the following, using a "locator" to locate it by `id` attribute.
 
-{% codeblock lang:scala %}
+``` scala
   val button: WebElement = driver.findElement(By.id("save-button")
   button.click()
-{% endcodeblock %}
-
+```
 It doesn't take into account that the element might not be there when we call it (for example, when our UI uses ajax and adds the button asynchronously) and it's also a bit verbose. We can use an implicit function to address both of these issues.
 
 The fragment below uses the [`WebDriverWait`](https://selenium.googlecode.com/git/docs/api/java/index.html?org/openqa/selenium/support/ui/WebDriverWait.html) class to wait for a UI element to appear on the screen (using `findElement` to check and retrying if necessary) and so smooths out the asynchronous issues.
 
-{% codeblock lang:scala %}
+``` scala
 implicit def waitForElement(locator: By): WebElement = {
   val predicate: WebDriver => WebElement = _.findElement(locator)
   new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}'").until(predicate)
 }
-{% endcodeblock %}
-
+```
 
 It's also an implicit function designed to convert a `By` locator into a `WebElement`. It means we can write something like the following where `button` is no longer a `WebElement`, but a `By`.
 
-{% codeblock lang:scala %}
+``` scala
   val button = By.id("save-button")
   button.click()
-{% endcodeblock %}  
+```  
 
 Without the implicit `waitForElement` function, the code wouldn't compile; `By` doesn't have a `click` method on it. With the implicit function in scope however, the compiler works out that calling it (and passing in `create` as the argument), would return something that _does_ have the `click` method and would compile. 
 
@@ -98,16 +91,15 @@ Without the implicit `waitForElement` function, the code wouldn't compile; `By` 
 
 Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support]({{ root_url}}/blog/2013/07/21/curried-functions/)). By combining implicit parameters the we saw in the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
   
-{% codeblock lang:scala %}
+``` scala
 implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement = {
   val predicate: WebDriver => WebElement = _.findElement(locator)
   new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}'").until(predicate)
 }
-{% endcodeblock %}
-
+```
 So the full example would look like this; making `driver` an implicit `val` means we can avoid a call to `button.click()(driver)`.
 
-{% codeblock lang:scala %}
+``` scala
 class ExampleWebDriverTest extends mutable.Specification {
 
   implicit val driver: WebDriver = Browser.create.driver
@@ -120,8 +112,7 @@ class ExampleWebDriverTest extends mutable.Specification {
     // ...
   }
 }
-{% endcodeblock %}
-
+```
 
 ## Roundup
 

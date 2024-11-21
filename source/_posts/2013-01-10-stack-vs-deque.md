@@ -39,14 +39,13 @@ It seems like we should really use a `Stack` abstraction to define the _role_ an
 
 For example,
 
-{% codeblock lang:java %}
+``` java
 public interface Stack<T> {
     void push(T object);
     T pop();
 }
-{% endcodeblock %}
-
-{% codeblock lang:java %}
+```
+``` java
 public class DequeStack<T> implements Stack<T> {
 
     private final Deque<T> deque = new ArrayDeque<T>();
@@ -61,13 +60,12 @@ public class DequeStack<T> implements Stack<T> {
         return deque.removeFirst();
     }
 }
-{% endcodeblock %}
-
+```
 It's important to note that I'm not saying use composition to enforce encapsulation though. The example above restricts what can be done with the underlying `Deque`. It's _hiding the implementation details_ and exposing the role through an interface. It's using information hiding to achieve encapsulation. That's not to say that you can't achieve the same thing using inheritance.
 
 For example, the naive `BoundedStack` implementation below is still a `Stack`. It inherits it, it has an "is a" relationship with `Stack`. Any stack implementation most certainly does not have a "is a" relationship with list (`Vector`) or double ended queue (`Deque`).
 
-{% codeblock lang:java %}
+``` java
 public class BoundedStack<T> extends DequeStack<T> {
 
     // ...
@@ -86,8 +84,7 @@ public class BoundedStack<T> extends DequeStack<T> {
         return deque.removeFirst();
     }
 }
-{% endcodeblock %}
-
+```
 ## Related
 
 {% wikipedia Information_hiding %}

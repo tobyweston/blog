@@ -19,7 +19,7 @@ Looking more into recent versions of JUnit, there seems to be lots of integratio
 
 After experimenting with much less straight forward integrations, overriding the scheduler gave the following.
 
-{% codeblock lang:java %}
+``` java
 public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
 
     public ConcurrentTestRunner(Class type) throws Exception {
@@ -44,8 +44,7 @@ public class ConcurrentTestRunner extends BlockJUnit4ClassRunner {
         }
     }
 }
-{% endcodeblock %}
-
+```
 
 This results in all the test methods within a given class running in parallel. I'm excited about speeding up the execution time of my tests, next step would be run all tests across classes in parallel.
 

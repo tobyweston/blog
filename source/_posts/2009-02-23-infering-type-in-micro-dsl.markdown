@@ -14,10 +14,9 @@ In a recent [post]({{ root_url }}/blog/2009/02/16/more-on-micro-dsls/), I was ta
   
 Just to recap then, to find something in a list, the original client code (using a static import) looks like this.
 
-{% codeblock lang:java %}
+``` java
 find(needle).in(haystack)
-{% endcodeblock %}
-
+```
 
 <!-- more -->
   
@@ -28,7 +27,7 @@ The class (in this case `NeedleFinder`) implements the DSL and specifically deci
 The generified class looks like this.
 
       
-{% codeblock lang:java %}
+``` java
 public final class ListFinder<T, L> {
     private final T target;
     private List<L> list = new ArrayList<L>();
@@ -59,13 +58,12 @@ public final class ListFinder<T, L> {
         boolean equals(T target, L item);
     }
 }
-{% endcodeblock %}
-
+```
 
   
 With the following test case showing its usage (the `Needle` and `Bale` class aren't show for brevity).
 
-{% codeblock lang:java %}
+``` java
 public class ListFinderTest {
 
     private final Needle needle = new Needle("Bob");
@@ -96,8 +94,7 @@ public class ListFinderTest {
         return ListFinder.find(value);
     }
 }
-{% endcodeblock %}
-
+```
 ## Equality
   
 Here we're defining the equality of a `Needle` in a list of `Bale` objects to be when the name of a `Needle` is contained in the name of the `Bale`. A silly example I know but it illustrates that we redefine what we mean by equality for the list finder by implementing the `ListFinder.Comparator`. The concrete example that spawned the idea was when searching for a `Race` object inside a list of `Event` objects; two completely different entities.
@@ -107,10 +104,9 @@ Here we're defining the equality of a `Needle` in a list of `Bale` objects to be
 Anyway, what I thought was interesting about this example was the type inference going on in the static find method. I originally wanted to just use `ListFinder.find` method directly as in the following.
 
 
-{% codeblock lang:java %}
+``` java
 ListFinder.find(needle).in(haystack).using(comparator)
-{% endcodeblock %}
-
+```
     
 
   
@@ -121,10 +117,9 @@ The alternative is to use the full notation as follows.
 
     
       
-{% codeblock lang:java %}
+``` java
 ListFinder.<Needle, Bale>find(needle).in(haystack).using(comparator)
-{% endcodeblock %}
-
+```
   
 Or (as I've done in the test) use an internal method who's return type gives the compiler enough information to infer both types. I prefer this approach as it makes the DSL expression to find a needle much more readable.
 

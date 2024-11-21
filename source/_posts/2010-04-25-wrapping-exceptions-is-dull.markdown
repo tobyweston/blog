@@ -12,17 +12,16 @@ keywords: "exception wrapping, wrap exceptions, auto-wrap"
 
 I'm totally bored of wrapping exceptions in Java,
   
-{% codeblock lang:java %}
+```
 try {
    // do something
 } catch (BoredomException e) {
    // do something else
 }
-{% endcodeblock %}
-
+```
 It's verbose, ugly and has nothing to do with what you're really trying to convey. It's just noise. For example, when using the _dreadful_ Google Data API to access my calendar, I wrapped a couple of underlying Google services to be able to mock. Each service wanted to throw a bunch of Google specific exceptions which I wanted to rethrow as application specific exceptions.
 
-{% codeblock lang:java %}
+``` java
 public O call() throws CalendarException {
     try {
         return service.call();  // the call to the google service
@@ -36,8 +35,7 @@ public O call() throws CalendarException {
         throw new CalendarException(SERVICE_EXCEPTION_MESSAGE, e);
     }
 }
-{% endcodeblock %}
-
+```
 
   
 If I didn't delegate like this, every internal call would have to wrap and handle the google exceptions rather than my application specific one. There's no class hierarchy in Google's API here.
@@ -48,21 +46,19 @@ As I've done this a few times, I decided to add it to [tempus-fugit](http://temp
 So, in a similar way to the above, the client can ignore any declared
 exceptions and just rethrow them in-line. For example,
 
-{% codeblock lang:java %}
+``` java
 wrapAnyException(new Callable<Object>() {
     @Override
     public Object call() throws ServiceException {
          // nasty code throwing a bunch of exceptions
     }
 }, with(CalendarException.class));
-{% endcodeblock %}
-
+```
 when this is in-lined further, it hopefully becomes more succinct.
 
-{% codeblock lang:java %}
+``` java
 wrapAnyException(serviceCall(), with(CalendarException.class));
-{% endcodeblock %}
-
+```
   
 This will wrap any exception and rethrow as a new `CalendarException` to include as the cause any underlying exception. It uses reflection to create the new exception, and forces the syntactically sugary `with` by taking a `WithException` as the second parameter.
 

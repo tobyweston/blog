@@ -21,15 +21,14 @@ You can turn any function with multiple arguments into it's curried equivalent. 
 
 For example, in Java, you can convert
 
-{% codeblock lang:java %}
+``` java
 public static int add(int a, int b) {
     return a + b;
 }
-{% endcodeblock %}
-
+```
 into something like this (where `Function<A, B>` defines a single method `B apply(A a)`).
 
-{% codeblock lang:java %}
+``` java
 public static Function<Integer, Function<Integer, Integer>> add() {
     return new Function<Integer, Function<Integer, Integer>>() {
         @Override
@@ -43,70 +42,63 @@ public static Function<Integer, Function<Integer, Integer>> add() {
         }
     };
 }
-{% endcodeblock %}
-
+```
 Calling the original method
 
-{% codeblock lang:java %}
+``` java
 add(1, 1);                       // gives 2
-{% endcodeblock %}
-
+```
 and calling the curried version
 
-{% codeblock lang:java %}
+``` java
 add();                          // gives back a instance of Function<[A, B]>
 add().apply(1);                 // gives back a instance of Function<[A, B]>
 add().apply(1).apply(1)         // gives 2
-{% endcodeblock %}
-
+```
 
 ## Java 8
 
 In Java 8, it's much less verbose using the new lambda syntax.
 
-{% codeblock lang:java %}
+``` java
 public static Function<Integer, Function<Integer, Integer>> add() {
     return x -> y -> x + y;
 }
-{% endcodeblock %}
-
+```
 
 ## Scala
 
 In Scala, the regular uncurried function would look like this.
 
-{% codeblock lang:scala %}
+``` scala
 def add(x: Int, y: Int): Int = {
   x + y
 }
-{% endcodeblock %}
-
+```
 
 As Scala supports curried functions, you can turn this into it's curried version simply by separating out the arguments.
 
 
-{% codeblock lang:scala %}
+``` scala
 // shorthand
 def add(x: Int)(y: Int): Int = {
   x + y
 }
-{% endcodeblock %}
-
+```
 Which is shorthand for writing it out like this.
 
-{% codeblock lang:scala %}
+``` scala
 // longhand
 def add(x: Int): (Int => Int) = {
   (y: Int) => {
     x + y
   }
 }
-{% endcodeblock %}
-
+```
 
 Using the REPL to show how they're called;
 
-{% codeblock lang:sh %}
+``` sh
 scala> def add(x: Int)(y: Int): Int = {
      |   x + y
      | }
@@ -120,11 +112,10 @@ res2: Int = 2
 
 scala> add(1)(1)
 res3: Int = 2
-{% endcodeblock %}
-
+```
 and working with the longhand version;
 
-{% codeblock lang:sh %}
+``` sh
 scala> def add2(x: Int): (Int => Int) = {
      |   (y: Int) => {
      |     x + y
@@ -134,8 +125,7 @@ add2: (x: Int)Int => Int
 
 scala> add2(1).apply(1)
 res4: Int = 2
-{% endcodeblock %}
-
+```
 
 It turns out that it's this partial application of functions that's really interesting. Currying in Scala allows us to defer execution and reuse functions. We'll have a look at that in the next article.
 

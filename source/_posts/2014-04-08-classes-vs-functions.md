@@ -18,7 +18,7 @@ You can use lambdas in Java 8 anywhere you would have previously used a [single 
 
 So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The `anonymousClass` method is calling the `waitFor` method passing in some implementation of `Condition`, in this case it's saying wait for some server to have shutdown.
 
-{% codeblock lang:java %}
+``` java
 void anonymousClass() {
     final Server server = new HttpServer();
     waitFor(new Condition() {
@@ -28,28 +28,25 @@ void anonymousClass() {
         }
     });
 }
-{% endcodeblock %}
-
+```
 The functionally equivalent lambda would look like this.
 
-{% codeblock lang:java %}
+``` java
 void closure() {
     Server server = new HttpServer();
     waitFor(() -> !server.isRunning());
 }
-{% endcodeblock %}
-
+```
 Where in the interest of completeness, a naive polling `waitFor` method might look like this.
 
-{% codeblock lang:java %}
+``` java
 class WaitFor {
 	static void waitFor(Condition condition) throws InterruptedException {
 		while (!condition.isSatisfied())
 			Thread.sleep(250);
 	}
 }
-{% endcodeblock %}
-
+```
 
 ## Some Theoretical Differences
 
@@ -85,7 +82,7 @@ In lambdas on the other hand, `this` refers to the enclosing scope (`Foo` direct
 
 For example, this class shows that the lambda can reference the `firstName` variable directly.
 
-{% codeblock lang:java %}
+``` java
 public class Example {
 
 	private String firstName = "Jack";
@@ -96,11 +93,10 @@ public class Example {
 		};
 	}
 }
-{% endcodeblock %}
-
+```
 The anonymous class equivalent would need to explicitly refer to `firstName` from the enclosing scope.
 
-{% codeblock lang:java %}
+``` java
 public class Example {
 
 	private String firstName = "Charlie";
@@ -114,8 +110,7 @@ public class Example {
         };
     }
 }
-{% endcodeblock %}
-
+```
 
 Shadowing also becomes much more straight forward to reason about (when referencing shadowed variables).
 

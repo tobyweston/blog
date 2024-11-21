@@ -120,3 +120,76 @@ Which got upgraded to:
 $ ruby --version
 ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-darwin17]
 ```
+
+## New Machine Problems
+
+A new machine wasn't working out of the box with 3.x Ruby installed.
+
+The version doesn't seem to work (it would fail on dependencies and refuse to update/install those):
+
+```
+$ ruby --version
+ruby 3.1.0p0 (2021-12-25 revision fb4df44d16) [x86_64-darwin21]
+lion:blog toby$ 
+```
+
+...and
+```
+$ gem env
+RubyGems Environment:
+  - RUBYGEMS VERSION: 3.3.3
+  - RUBY VERSION: 3.1.0 (2021-12-25 patchlevel 0) [x86_64-darwin21]
+  - INSTALLATION DIRECTORY: /usr/local/lib/ruby/gems/3.1.0
+  - USER INSTALLATION DIRECTORY: /Users/toby/.gem/ruby/3.1.0
+  - RUBY EXECUTABLE: /usr/local/opt/ruby/bin/ruby
+  - GIT EXECUTABLE: /usr/bin/git
+  - EXECUTABLE DIRECTORY: /usr/local/lib/ruby/gems/3.1.0/bin
+  - SPEC CACHE DIRECTORY: /Users/toby/.gem/specs
+  - SYSTEM CONFIGURATION DIRECTORY: /usr/local/Cellar/ruby/3.1.0/etc
+  - RUBYGEMS PLATFORMS:
+     - ruby
+     - x86_64-darwin-21
+  - GEM PATHS:
+     - /usr/local/lib/ruby/gems/3.1.0
+     - /Users/toby/.gem/ruby/3.1.0
+     - /usr/local/Cellar/ruby/3.1.0/lib/ruby/gems/3.1.0
+  - GEM CONFIGURATION:
+     - :update_sources => true
+     - :verbose => true
+     - :backtrace => false
+     - :bulk_threshold => 1000
+  - REMOTE SOURCES:
+     - https://rubygems.org/
+  - SHELL PATH:
+     - /usr/local/opt/ruby/bin
+     - /Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/bin
+     - /usr/local/bin
+     - /usr/bin
+     - /bin
+     - /usr/sbin
+     - /sbin
+```
+
+Tried installing a specific version with `rbenv`.
+
+```
+$ brew update
+$ brew install rbenv
+$ brew install ruby-build
+$ rbenv install 2.6.9
+```
+
+To set the version as the default, run the following command:
+
+    $ rbenv global 2.6.9
+
+Although that didn't affect `ruby --version`, so I had to add to the path...
+
+``` 
+export PATH=/Users/toby/.rbenv/versions/2.6.9/bin/
+$ ruby --version
+ruby 2.6.9p207 (2021-11-24 revision 67954) [x86_64-darwin21]
+
+```
+
+Removing `Genfile.lock` and trying `bundle install` seemed to allow a broader range of deps to be brought in and it stopped erroring. However, I couldn't start octopress/preview.Ï
