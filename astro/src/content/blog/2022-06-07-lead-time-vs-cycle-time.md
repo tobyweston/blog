@@ -59,7 +59,7 @@ The Google research and assessment programme around DevOps have lead to their co
 They go on to say... 
 
 > Lead Time to Change metric requires two important pieces of data: when the commit happened, and when the deployment happened. This means that for every deployment, you need to maintain a list of all the changes included in the deployment. This is easily done by using triggers with a SHA mapping back to the commits. With the list of changes in the deploy table, you can join back to the changes table to get the timestamps, and then calculate the median lead time 
-> - Google
+> — <cite>Google</cite>
 
 
 ### How to Measure DORA's Lead Time
