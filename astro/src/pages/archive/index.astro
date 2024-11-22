@@ -1,60 +1,68 @@
 ---
 import {getCollection} from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-import FormattedYear from '../../components/FormattedYear.astro';
 import FormattedMonthAndDay from '../../components/FormattedMonthAndDay.astro';
 import Main from "../../layouts/Main.astro";
 
 const posts = (await getCollection('blog')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-const byYear = Object.groupBy(posts, ({slug, data}) => data.pubDate.getFullYear())
+const byYear = Object.groupBy(posts, ({data}) => data.pubDate.getFullYear())
 ---
 
 <Main>
     <section>
-        {Object.keys(byYear).map((year) => {
+        {Object.keys(byYear).sort((a, b) => b - a).map((year) => {
             const posts = byYear[year]
             return (
-                    <ul>
-                        <p class="year">
+                    <div class="year">
+                        <p>
                             {year}
                         </p>
-
-                        {
-                            posts.map((post) => (
-                                    <li>
-                                        <a href={`/blog/${post.slug}/`}>
+                        <ul>
+                            {
+                                posts.map((post) => (
+                                        <li>
                                             <p class="date">
                                                 <FormattedMonthAndDay date={post.data.pubDate}/>
                                             </p>
-                                            <h4 class="title">{post.data.title}</h4>
-                                        </a>
-                                    </li>
-                            ))
-                        }
-                    </ul>
+                                            <a href={`/blog/${post.slug}/`}>
+                                                <h4 class="title">{post.data.title}</h4>
+                                            </a>
+                                        </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
             )
         })}
     </section>
 </Main>
 
 <style>
+    .year {
+        display: flex;
+    }
+
+    .year > p {
+        margin-top: 0;
+        color: rgb(var(--gray));
+    }
+
     main {
-        width: 70%;
+        width: 720px;
     }
 
     ul {
-        display: grid;
         gap: 2rem;
         list-style-type: none;
         margin: 0;
-        padding: 0;
+        padding-left: 2em;
     }
 
     ul li {
-        width: calc(90% - 1rem);
+        width: calc(720px - 1rem);
+        margin-bottom: 1em;
     }
 
     ul li * {
@@ -89,9 +97,6 @@ const byYear = Object.groupBy(posts, ({slug, data}) => data.pubDate.getFullYear(
 
     ul a:hover img {
         box-shadow: var(--box-shadow);
-    }
-
-    .year {
     }
 
     @media (max-width: 720px) {
