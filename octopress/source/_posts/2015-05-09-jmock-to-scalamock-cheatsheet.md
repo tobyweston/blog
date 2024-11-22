@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "JMock to Scalamock Cheat Sheet"
-date: 2015-05-09 12:41
+pubDate: 2015-05-09 12:41
 comments: true
 categories: scala java mocking testing
 sidebar: false

@@ -1,19 +1,15 @@
-
 ---
-layout: post
-title: "Home Brew Temperature Logger"
-date: 2016-03-23 21:39
-comments: true
-categories: pi
-sidebar: false
-published: true
-keywords: "raspberry pi, pi, pi zero, ds20b18, ds18b20, hobo, data logger, temperature, arduino, scala"
-description: "A home brew temperature logger using the Raspberry Pi zero for around $10"
+title: 'Home Brew Temperature Logger'
+pubDate: '2016-03-23'
+categories: 'pi'
+keywords: 'raspberry pi, pi, pi zero, ds20b18, ds18b20, hobo, data logger, temperature, arduino, scala'
+description: 'A home brew temperature logger using the Raspberry Pi zero for around $10'
+heroImage: '../images/temperature-machine.png'
 ---
 
 Using a Raspberry Pi Zero, some cheap components and some custom software, you can build a data logger to track ambient temperature in your home for around £10. Track days, [weeks](../../../../../images/temperature-30-days.png) and months worth of temperature data and display some pretty graphs via the web.
 
-[{% img ../../../../../images/temperature-machine.png 'The "temperature machine" in action' %}](../../../../../images/temperature-machine.png)
+![XXX](../images/temperature-machine.png)
 
 <!-- more -->
 

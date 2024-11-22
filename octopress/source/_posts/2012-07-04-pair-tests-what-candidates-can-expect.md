@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Pair Tests: What Candidates Can Expect"
-date: 2012-07-04 18:58
+pubDate: 2012-07-04 18:58
 comments: true
 categories: agile coaching
 sidebar: false

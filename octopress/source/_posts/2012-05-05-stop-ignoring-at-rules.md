@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Stop Ignoring @Rules"
-date: 2012-05-05 10:50
+pubDate: 2012-05-05 10:50
 comments: true
 categories: java mocking recipes
 sidebar : false

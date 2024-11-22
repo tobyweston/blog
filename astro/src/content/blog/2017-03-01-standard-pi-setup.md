@@ -1,13 +1,9 @@
 ---
-layout: post
-title: "Standard Pi Setup"
-date: 2017-03-01 19:01
-comments: true
-categories: pi
-sidebar: false
-published: true
-keywords: "pi, pi zero, zero w, raspian"
-description: "Some common setup for a new Pi"
+title: 'Standard Pi Setup'
+pubDate: '2017-03-01'
+categories: 'pi'
+keywords: 'pi, pi zero, zero w, raspian'
+description: 'Some common setup for a new Pi'
 ---
 
 Here's some common things to do when you first setup a Pi.

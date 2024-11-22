@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Diff Excel with Java and Hamcrest"
-date: 2012-09-14 13:21
+pubDate: 2012-09-14 13:21
 comments: true
 categories: java recipes
 sidebar: false

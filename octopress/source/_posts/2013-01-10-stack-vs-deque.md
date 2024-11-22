@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java Stack vs Deque"
-date: 2013-01-10 12:12
+pubDate: 2013-01-10 12:12
 comments: true
 categories: java object-oriented
 sidebar: false

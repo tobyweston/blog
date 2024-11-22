@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Method References in Java 8"
-date: 2014-02-18 21:33
+pubDate: 2014-02-18 21:33
 comments: true
 categories: java, java8
 sidebar: false

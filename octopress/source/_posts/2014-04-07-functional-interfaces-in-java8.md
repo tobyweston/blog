@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Functional Interfaces in Java 8"
-date: 2014-04-07 21:33
+pubDate: 2014-04-07 21:33
 comments: true
 categories: java, java8
 sidebar: false

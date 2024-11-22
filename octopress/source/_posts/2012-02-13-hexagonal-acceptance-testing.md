@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Hexagonal Acceptance Testing
-date: 2012-02-13 21:24
+pubDate: 2012-02-13 21:24
 comments: true
 categories: java testing agile
 sidebar : false

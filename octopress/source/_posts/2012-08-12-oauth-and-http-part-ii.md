@@ -2,7 +2,7 @@
 layout: post
 title: "FreeAgent, OAuth &amp; HTTP (Part II)"
 series: FreeAgent OAuth
-date: 2012-08-12 11:13
+pubDate: 2012-08-12 11:13
 comments: true
 categories: java recipes
 sidebar: false

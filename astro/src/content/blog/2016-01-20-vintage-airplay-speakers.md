@@ -1,10 +1,7 @@
 ---
-layout: post
-title: "Vintage AirPlay Speakers"
-date: 2016-01-20 19:01
-comments: true
-categories: 
-sidebar: false
+title: 'Vintage AirPlay Speakers'
+pubDate: '2016-01-20'
+categories: 'pi'
 published: false
 keywords: ""
 description: ""

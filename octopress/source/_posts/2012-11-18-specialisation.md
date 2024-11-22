@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Specialisation and Generalisation in OOD"
-date: 2012-11-18 08:22
+pubDate: 2012-11-18 08:22
 comments: true
 categories: java object-oriented
 sidebar: false

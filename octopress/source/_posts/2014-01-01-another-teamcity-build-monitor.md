@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Yet Another TeamCity Build Monitor"
-date: 2014-01-01 09:57
+pubDate: 2014-01-01 09:57
 comments: true
 categories: java
 sidebar: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Object Oriented Naming"
-date: 2012-08-09 09:25
+pubDate: 2012-08-09 09:25
 comments: true
 categories: java, object-oriented
 sidebar: false

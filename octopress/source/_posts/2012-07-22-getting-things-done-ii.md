@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Getting Things Done, Part II"
-date: 2012-07-22 12:38
+pubDate: 2012-07-22 12:38
 comments: true
 categories: coaching ios
 sidebar: false

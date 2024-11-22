@@ -2,7 +2,7 @@
 layout: post
 title: "Automatically rebase on git pull"
 series: Git
-date: 2013-07-09 17:29
+pubDate: 2013-07-09 17:29
 comments: true
 categories: recipes git
 sidebar: false

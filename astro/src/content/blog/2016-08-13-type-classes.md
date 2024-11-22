@@ -1,14 +1,10 @@
 ---
-layout: post
-title: "Type Classes in Scala"
-date: 2016-08-13 18:42
-comments: true
-categories: scala
-sidebar: false
-published: true
-series: Scala Implicits
-keywords: "scala, implicit, type class, type-class, neophytes guide"
-description: "Type-classes provide a way to 'extend' classes without resorting to conventional inheritance."
+title: 'Type Classes in Scala'
+pubDate: '2016-08-13'
+categories: 'scala'
+series: 'Scala Implicits'
+keywords: 'scala, implicit, type class, type-class, neophytes guide'
+description: 'Type-classes provide a way to extend classes without resorting to conventional inheritance.'
 ---
 
 Type classes provide [ad-hoc inheritance](http://bit.ly/1kr6C8E#Ad_hoc_polymorphism) which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (`extends`) polymorphism.

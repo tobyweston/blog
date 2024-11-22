@@ -1,6 +1,6 @@
 ---
 title: "UNPUBLISHED Creating Debian Repositories"
-pubDate: 2019 08 30
+pubDate: '2019-08-30'
 categories: pi
 keywords: "raspberry pi, pi, buster, stretch, raspbian. debian, repositories"
 description: "How to create your own Debian repository to distribute your software."

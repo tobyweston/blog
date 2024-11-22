@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "An Object Oriented Example"
-date: 2012-07-17 18:58
+pubDate: 2012-07-17 18:58
 comments: true
 categories: java object-oriented
 sidebar: false

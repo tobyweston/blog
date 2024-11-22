@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Writing my Book"
-date: 2013-05-24 13:57
+pubDate: 2013-05-24 13:57
 comments: false
 categories: recipes testing
 sidebar: false

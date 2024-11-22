@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Easily Switch JDK on Mac"
-date: 2015-09-10 19:47
+pubDate: 2015-09-10 19:47
 comments: true
 categories: 
 sidebar: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tail Recursion Optimisation in Scala"
-date: 2013-07-16 06:47
+pubDate: 2013-07-16 06:47
 comments: true
 categories: java scala
 sidebar: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Scala Mixins: The Right Way"
-date: 2014-09-22 06:09
+pubDate: 2014-09-22 06:09
 comments: true
 categories: scala
 sidebar: false

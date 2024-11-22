@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Udemy Java 8 Course"
-date: 2014-05-20 19:12
+pubDate: 2014-05-20 19:12
 comments: true
 categories: java java8
 sidebar: false

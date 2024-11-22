@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Pair Testing Doesn't Work"
-date: 2015-09-25 16:57
+pubDate: 2015-09-25 16:57
 comments: true
 categories: 
 sidebar: false

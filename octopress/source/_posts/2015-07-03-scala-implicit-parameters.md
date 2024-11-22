@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Implicit Parameters in Scala"
-date: 2015-07-03 18:42
+pubDate: 2015-07-03 18:42
 comments: true
 categories: scala
 sidebar: false

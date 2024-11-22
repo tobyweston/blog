@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Daily Standups Don't Work"
-date: 2012-09-15 06:12
+pubDate: 2012-09-15 06:12
 comments: true
 categories: agile coaching
 sidebar: false

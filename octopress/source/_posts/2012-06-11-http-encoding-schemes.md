@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "HTTP Encoding Schemes"
-date: 2012-06-11 18:06
+pubDate: 2012-06-11 18:06
 comments: true
 categories: java REST
 sidebar: false

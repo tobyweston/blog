@@ -1,13 +1,9 @@
 ---
-layout: post
-title: "Disable Edimax Wifi Dongle's LED"
-date: 2016-01-06 19:39
-comments: true
-categories: pi
-sidebar: false
-published: true
-keywords: "8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi"
-description: "Instructions how to recompile the Rasperry Pi kernel and disable the Edimax EW-7811UN LED"
+title: 'Disable Edimax Wifi Dongles LED'
+pubDate: '2016-01-06'
+categories: 'pi'
+keywords: '8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi'
+description: 'Instructions how to recompile the Raspberry Pi kernel and disable the Edimax EW-7811UN LED'
 ---
 
 Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Calculate the Optimum Number of Threads"
-date: 2013-06-01 20:42
+pubDate: 2013-06-01 20:42
 comments: true
 categories: java tempus-fugit concurrency
 sidebar: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Universal Qualifier in Scala"
-date: 2014-09-21 05:12
+pubDate: 2014-09-21 05:12
 comments: true
 categories: java java8 scala
 sidebar: false

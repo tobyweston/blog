@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "HTTP Should be Simple"
-date: 2012-06-10 10:06
+pubDate: 2012-06-10 10:06
 comments: true
 categories: java REST
 sidebar: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Currying Functions in Java & Scala"
-date: 2013-07-21 06:58
+pubDate: 2013-07-21 06:58
 comments: true
 categories: java scala java8
 sidebar: false

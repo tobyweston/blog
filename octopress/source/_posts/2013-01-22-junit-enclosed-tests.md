@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Embed Multiple Tests in JUnit "
-date: 2013-01-22 19:14
+pubDate: 2013-01-22 19:14
 comments: true
 categories: java object-oriented
 sidebar: false

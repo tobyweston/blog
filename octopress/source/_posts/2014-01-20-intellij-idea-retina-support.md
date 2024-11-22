@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "IntelliJ IDEA Retina Support JDK 1.7+"
-date: 2014-01-20 19:33
+pubDate: 2014-01-20 19:33
 comments: true
 categories: java
 sidebar: false

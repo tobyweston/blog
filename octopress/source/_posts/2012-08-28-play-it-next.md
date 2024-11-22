@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Play it Next App"
-date: 2012-08-28 19:29
+pubDate: 2012-08-28 19:29
 comments: true
 categories: ios
 sidebar: false

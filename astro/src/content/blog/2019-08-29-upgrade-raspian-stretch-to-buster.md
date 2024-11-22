@@ -1,9 +1,9 @@
 ---
-title: "Upgrade Raspbian Stretch to Buster"
-pubDate: 2019 08 29
-categories: pi
-keywords: "raspberry pi, pi, buster, stretch, raspbian. raspian, upgrade"
-description: "Upgrade your Raspbian install from Stretch to Buster."
+title: 'Upgrade Raspbian Stretch to Buster'
+pubDate: '2019-08-29'
+categories: 'pi'
+keywords: 'raspberry pi, pi, buster, stretch, raspbian. raspian, upgrade'
+description: 'Upgrade your Raspbian install from Stretch to Buster.'
 ---
 
 Upgrade your Raspbian install from Stretch to Buster. This is basically the same procedure as upgrading [Jessie to Stretch](blog/upgrade-raspian-jessie-to-stretch.md) that I covered previously.
