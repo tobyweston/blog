@@ -1,19 +1,14 @@
 ---
-layout: post
-title: "Easily Deploy Java to Debian"
-series: Deploying to Debian
-date: 2019-09-02 09:06
-comments: true
-categories: java, scala
-sidebar: false
-published: true
-keywords: "java, scala, debian, debian repositories, aptly, ubuntu"
-description: "Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt."
+title: 'Easily Deploy Java to Debian'
+series: 'Deploying to Debian'
+pubDate: '2019-09-02'
+categories: 'java, scala'
+keywords: 'java, scala, debian, debian repositories, aptly, ubuntu'
+description: 'Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt.'
 ---
 
 Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as `.deb` files and deploying via `apt`. 
 
-<!-- more -->
 
 ## Approach
 
@@ -60,4 +55,4 @@ For some additional nice to haves, you might consider adding `man` pages (with `
 
 ## Deploying Debian Repository
 
-The native packager doesn't take care of deployment. You use it to create your `.deb` package but what you do with it is down to you. The obvious choice is to deploy it to a Debian repository for your users to download via `apt`. Read the [next post]({{ root_url }}/blog/2019/09/03/create-debian-repositories) to find out how.
+The native packager doesn't take care of deployment. You use it to create your `.deb` package but what you do with it is down to you. The obvious choice is to deploy it to a Debian repository for your users to download via `apt`. Read the [next post](../../blog/create-debian-repositories.md) to find out how.

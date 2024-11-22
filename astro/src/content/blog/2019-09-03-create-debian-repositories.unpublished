@@ -1,14 +1,10 @@
 ---
-layout: post
-title: "Creating Debian Repositories"
-series: Deploying to Debian
-date: 2019-09-03 09:06
-comments: true
-categories: java, scala
-sidebar: false
-published: false
-keywords: "java, scala, debian, debian repositories, aptly, ubuntu"
-description: "Create your own Debian repository for deploying your Java / Scala apps"
+title: 'UNPUBLISHED Creating Debian Repositories - Part 1'
+series: 'Deploying to Debian'
+pubDate: '2019-09-03'
+categories: 'java, scala'
+keywords: 'java, scala, debian, debian repositories, aptly, ubuntu'
+description: 'Create your own Debian repository for deploying your Java / Scala apps'
 ---
 
 In this post, we'll look at to how to setup your own [Debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` on popular Linux distros like Debian and Ubuntu.
