@@ -85,13 +85,17 @@ object Statistics {
 
 So, if an implicit parameter can be found for a given type, Scala will use that implementation. The `NumberLikeInt` is used below.
 
-    scala> println(Statistics.mean(List[Int](1, 2, 3, 6, 8)))
-    4
-    
+```bash
+scala> println(Statistics.mean(List[Int](1, 2, 3, 6, 8)))
+4
+```
+
 Without an implicit in scope, you'd get an error
 
-    Error:(42, 26) could not find implicit value for parameter number: NumberLike[Int]
-      println(Statistics.mean(Seq(1, 2, 3, 6, 8)))
+```bash
+Error:(42, 26) could not find implicit value for parameter number: NumberLike[Int]
+  println(Statistics.mean(Seq(1, 2, 3, 6, 8)))
+```
       
       
 #### Context Bounds      

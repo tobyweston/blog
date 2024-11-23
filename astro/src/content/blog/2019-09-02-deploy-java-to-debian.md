@@ -19,7 +19,7 @@ The basic approach:
 1. Tell your customers where your repository is hosted
 1. Profit
 
-This post looks at the first step, creating the `.deb` package using the `sbt-native-packager` plugin. In the [next post]({{ root_url }}/blog/2019/09/03/create-debian-repositories), we'll look at how setup your own [debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` to popular Linux distros like Debian and Ubuntu.
+This post looks at the first step, creating the `.deb` package using the `sbt-native-packager` plugin. In the [next post](/blog/2019/09/03/create-debian-repositories), we'll look at how setup your own [debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` to popular Linux distros like Debian and Ubuntu.
 
 Thanks and appreciation to [@muuki88](https://github.com/muuki88) and the project maintainers for `sbt-native-manager`, it's a seriously useful piece of software. 
 

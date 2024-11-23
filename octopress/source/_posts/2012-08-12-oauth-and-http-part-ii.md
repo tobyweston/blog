@@ -10,14 +10,14 @@ description: "Retrieving the FreeAgent OAuth access token requires a basic auth 
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
 
-In the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i), we walked through requesting "authorisation" from [FreeAgent](https://dev.freeagent.com/docs/oauth) using OAuth. In this next post, we'll look at the next steps, requesting an _access token_ and actually making client API calls to our target application.
+In the [previous post](/blog/2012/08/11/oauth-and-http-part-i), we walked through requesting "authorisation" from [FreeAgent](https://dev.freeagent.com/docs/oauth) using OAuth. In this next post, we'll look at the next steps, requesting an _access token_ and actually making client API calls to our target application.
 
 <!-- more -->
 
 
 ## After Authorisation
 
-Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i). 
+Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_. If you don't know what I'm talking about in terms of authorisation, refer back to the [previous post](/blog/2012/08/11/oauth-and-http-part-i). 
 
 To request the access token, you make a HTTP `POST` to the _token endpoint_. The request should give you back a _temporary_ token which is required in _every subsequent_ request to the target resources.
 
@@ -35,7 +35,7 @@ Should be encoded and sent over in the header. It'll look something like this.
 The `POST` body should include the following [x-www-form-urlencoded](/blog/2012/06/11/http-encoding-schemes) parameters.
 
  * `grant_type=authorization_code`
- * `code=`the authorisation code (see [previous post]({{ root_url }}/blog/2012/08/11/oauth-and-http-part-i))
+ * `code=`the authorisation code (see [previous post](/blog/2012/08/11/oauth-and-http-part-i))
  * `redirect_uri=`your redirect URI
 
 FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a `GET` request.

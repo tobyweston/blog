@@ -69,7 +69,7 @@ RECOMMENDED. The lifetime in seconds of the access token. For example, the value
 
 FreeAgent return `604800` which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I convert the number into a concrete date when I get the response. That way, I can see later if I actually need to refresh the token. However, it seems that you can refresh your token at any point.
 
-The process is similar to the [requesting the original _access token_]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii). Make a Basic auth HTTP POST but with a slightly smaller body.
+The process is similar to the [requesting the original _access token_](/blog/2012/08/12/oauth-and-http-part-ii). Make a Basic auth HTTP POST but with a slightly smaller body.
 
     POST /v2/token_endpoint HTTP/1.1
     Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=

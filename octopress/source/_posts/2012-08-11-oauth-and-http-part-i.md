@@ -35,7 +35,7 @@ The [FreeAgent documentation](https://dev.freeagent.com/docs/oauth) talks about 
 
 If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.
 
-[{% img ../../../../../images/freeagent_auth_confirmation.png 'Authorisation confirmation' %}](../../../../../images/freeagent_auth_confirmation.png)
+[../images/freeagent_auth_confirmation.png 'Authorisation confirmation' %}](../images/freeagent_auth_confirmation.png)
 
 At this point, FreeAgent will redirect to the _redirect URL_ you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it's only required a HTTP _client_, not a running _server_.
 
@@ -49,16 +49,16 @@ In lieu of this, I resorted to firing up a temporary HTTP server to reproduce th
 
 All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow, it looks like this.
 
-[{% img ../../../../../images/freeagent_oob_spoof.png 'OOB Spoof' %}](../../../../../images/freeagent_oob_spoof.png)
+[../images/freeagent_oob_spoof.png 'OOB Spoof' %}](../images/freeagent_oob_spoof.png)
 
 
 At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be the case. The FreeAgent documentation doesn't make it very clear when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.
 
-[{% img ../../../../../images/freeagent_authorised.png 'My app is authorised' %}](../../../../../images/freeagent_authorised.png)
+[../images/freeagent_authorised.png 'My app is authorised' %}](../images/freeagent_authorised.png)
 
 ## Next Up
 
 Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_.
 
-I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post]({{ root_url }}/blog/2012/08/12/oauth-and-http-part-ii).
+I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post](/blog/2012/08/12/oauth-and-http-part-ii).
 

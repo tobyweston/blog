@@ -96,4 +96,4 @@ Modify the `/etc/network/interfaces` file to access a network (with hidden SSID)
 
 Using the console lead is an easy way to use a telnet-like terminal to setup your Pi when you don't want to connect a monitor and keyboard. As an alternative, you could try a [headless setup mounting an SD card](http://davidmaitland.me/2015/12/raspberry-pi-zero-headless-setup/), whereby you'd mount an SD Card (with a raspian image) onto a unix-like machine and modify the file system directly.
 
-See my post on [common Pi setup]({{ root_url }}/blog/2017/03/01/standard-pi-setup) for more notes and tips on general Pi setup.
+See my post on [common Pi setup](/blog/2017/03/01/standard-pi-setup) for more notes and tips on general Pi setup.

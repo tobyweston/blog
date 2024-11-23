@@ -41,10 +41,12 @@ When you ask a candidate to solve a problem, however trivial you might think it 
 
 As an example, I did a pair test with a TV broadcasting company recently. They asked me to solve the [Shopping Basket Problem](https://github.com/tobyweston/shopping_basket). I floundered when I was put was on the spot but had another go later. At home, I spent an hour or so and came up with something I was really pleased with, including an elegant way to [mixin](https://github.com/tobyweston/shopping_basket/blob/master/src/main/scala/shopping/Fruit.scala) offers to shopping items.
 
-    case object Banana extends Fruit(51) with ThreeForTwo
-    case object Apple extends Fruit(12) with TwoForOne
-    case object Pineapple extends Fruit(95)
-
+```scala
+// scala
+case object Banana extends Fruit(51) with ThreeForTwo
+case object Apple extends Fruit(12) with TwoForOne
+case object Pineapple extends Fruit(95)
+```
 
 ## Not Objective
 

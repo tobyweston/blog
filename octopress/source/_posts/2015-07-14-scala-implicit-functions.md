@@ -11,7 +11,7 @@ keywords: "scala, implicit, implicit function, implicit conversion, SAM, implici
 description: "Implicit functions, their usages and examples. Learn how implicit functions help make your APIs more succinct, reduce your code and convert types."
 ---
 
-In the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we looked at implicit parameters; parameters that will be automatically passed values annotated as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.
+In the [previous post](/blog/2015/07/03/scala-implicit-parameters/), we looked at implicit parameters; parameters that will be automatically passed values annotated as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.
 
 <!-- more -->
 
@@ -19,7 +19,7 @@ In the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/
 
 Implicit functions will be called automatically if the compiler thinks it's a good idea to do so. What that means is that if your code doesn't compile but would, if a call was made to an implicit function, Scala will call that function to make it compile. They're typically used to create _implicit conversion functions_; single argument functions to automatically convert from one type to another.
 
-For example, the following function allows you to convert a Scala function into a instance of the Java 8 `Consumer` [single argument method]({{ root_url }}/blog/2014/04/07/functional-interfaces-in-java8/) but still use Scala's concise syntax. 
+For example, the following function allows you to convert a Scala function into a instance of the Java 8 `Consumer` [single argument method](/blog/2014/04/07/functional-interfaces-in-java8/) but still use Scala's concise syntax. 
 
 ``` scala
 implicit def toConsumer[A](function: A => Unit): Consumer[A] = new Consumer[A]() {
@@ -89,7 +89,7 @@ Without the implicit `waitForElement` function, the code wouldn't compile; `By` 
 
 ## Single Arguments Only Please
 
-Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support]({{ root_url}}/blog/2013/07/21/curried-functions/)). By combining implicit parameters the we saw in the [previous post]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
+Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support]({{ root_url}}/blog/2013/07/21/curried-functions/)). By combining implicit parameters the we saw in the [previous post](/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
   
 ``` scala
 implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement = {

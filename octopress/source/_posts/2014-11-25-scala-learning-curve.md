@@ -13,7 +13,7 @@ description: "Scala's learning curve; expect a quick ramp up in skill but a shal
 
 If you've just started to learn Scala and are wondering what to expect, it's typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.
 
-{% img center ../../../../../images/learning_curve.png 752 389 %}
+{% img center ../images/learning_curve.png 752 389 %}
 
 Taken from my [Pluralsight](http://bit.ly/1DsYl9f) course, the chart shows experience (or time) along the `x` axis and some measure of "learning" on the `y`.
 
@@ -47,7 +47,7 @@ All the concrete functional programming mechanisms above apply but this time, th
 
 You can also think of adoption as more of a continuum with traditional imperative programming on the left and pure functionally programming on the right.
 
-{% img center ../../../../../images/continuum.png 591 368 %}
+{% img center ../images/continuum.png 591 368 %}
 
 You can think of the far right as Haskell on the JVM. Haskell is a pure functional language so you don't have any choice but to design your app in a functional way. Scala is an object-oriented / functional hybrid, it can only give you the tools. It can't enforce functional programming; you need discipline and experience in Scala to avoid mutating state for example. Haskell will physically stop you.
 

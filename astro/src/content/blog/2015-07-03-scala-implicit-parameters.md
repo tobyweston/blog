@@ -15,8 +15,8 @@ In the next few posts, we'll look at the different types of implicit bindings Sc
 
 There are three categories of "implicits";
 
-1. **[Implicit parameters]({{ root_url }}/blog/2015/07/03/scala-implicit-parameters/)** (aka implicit values) will be automatically passed values that have been marked as `implicit`
-1. **[Implicit functions]({{ root_url }}/blog/2015/07/14/scala-implicit-functions/)** are `def`s that will be called automatically if the code wouldn't otherwise compile
+1. **[Implicit parameters](/blog/2015-07-03-scala-implicit-parameters)** (aka implicit values) will be automatically passed values that have been marked as `implicit`
+1. **[Implicit functions](/blog/2015-07-14-scala-implicit-functions/)** are `def`s that will be called automatically if the code wouldn't otherwise compile
 1. **Implicit classes** extend behaviour of existing classes you don't otherwise control (akin to [categories](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html) in Objective-C)
 
 

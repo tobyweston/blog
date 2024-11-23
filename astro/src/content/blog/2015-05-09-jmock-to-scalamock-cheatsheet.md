@@ -11,14 +11,14 @@ An abbreviated set of JMock examples with their Scalamock equivalents.
 
 ## Mock Objects & the "Context"
 
-```
+```java
 private final Mockery context = new JUnit4Mockery();
 
 private final ScheduledExecutorService executor = context.mock(ScheduledExecutorService.class);
 private final ScheduledFuture future = context.mock(ScheduledFuture.class);
 ```
 
-```
+```java
 "A test with a mock context in scope" in new MockContext {
   val executor = mock[ScheduledExecutorService]  
   val future = mock[ScheduledFuture[Any]]
@@ -28,13 +28,15 @@ private final ScheduledFuture future = context.mock(ScheduledFuture.class);
 
 ## Returns
 
-``` 
+```java 
+// java
 context.checking(new Expectations() {{ braces }}
     oneOf(executor).shutdownNow(); will(returnValue(asList(waiting)));
     oneOf(waiting).cancel(true);
 }});
 ```
-```
+```scala
+// scala
 (executor.shutdownNow _).expects().returning(asList(waiting)).once
 (waiting.cancel _).expects(true).once
 ```
@@ -46,13 +48,15 @@ context.checking(new Expectations() {{ braces }}
 
 ## Allowing / Ignoring
 
-``` java
+```java
+// java
 context.checking(new Expectations() {{ braces }}
     allowing(executor).scheduleWithFixedDelay(with(any(Runnable.class)), with(any(Long.class)), with(any(Long.class)), with(any(TimeUnit.class))); will(returnValue(future));
     oneOf(future).cancel(true);
 }});
 ```
-``` scala
+```scala
+// scala
 (executor.scheduleWithFixedDelay _).expects(*, *, * , *).returning(future)
 (future.cancel _).expects(true).once
 ```
@@ -66,14 +70,14 @@ context.checking(new Expectations() {{ braces }}
 
 JMock will return a default value (as a dynamic proxy) if you set up an expectation but leave off a `returnValue`. In the example below, we don't care if it returns anything so if the code under test relies on a value, but the test does not, we don't have to express anything in the test.
 
-``` java
+```java
 oneOf(factory).create();
 ```
 If the underlying code were to check, say, that the result of `factory.create()` was not an empty list with `if (result.isEmpty())`, JMock would return something sensible and we'd avoid a `NullPointerException`. You might argue that this side affect should be captured in a test but leaving it off makes the intention of expectation clearer; we only care that `create` is called, not what it returns.
 
 Scalamock will return `null` by default. So the above example would give a `NullPointerException` and you're required to do something like this. Notice we're using a `stub` and not a `mock` here.
 
-``` scala
+```scala
 val result = stub[Result]
 (factory.create _).expects().once.returning(List(result))
 
@@ -82,7 +86,7 @@ val result = stub[Result]
 
 JMock uses `with` and Hamcrest the matcher `IsAnything` (`any`) to match anything. The type is used by the compiler.
 
-``` java
+```java
 context.checking(new Expectations() {{ braces }}
     ignoring(factory).notifyObservers(with(any(SomeException.class)));
     oneOf(factory).notifyObservers(with(any(AnotherException.class)));
@@ -90,7 +94,7 @@ context.checking(new Expectations() {{ braces }}
 ```
 In the Scala version, use a [type ascription](http://docs.scala-lang.org/style/types.html#ascription) to give the compiler a hand in the partially applied method call;
 
-``` scala
+```scala
 (factory.notifyObservers(_: SomeException)).expects(*).anyNumberOfTimes
 (factory.notifyObservers(_: SomeException)).expects(*).once
 ```
@@ -103,19 +107,20 @@ In the Scala version, use a [type ascription](http://docs.scala-lang.org/style/t
  
 ## Throwing Exceptions
 
-``` java
+```java
 final Exception exception = new RuntimeException();
 context.checking(new Expectations() {{ braces }}
     oneOf(factory).create(); will(throwException(exception));
     oneOf(factory).notifyObservers(exception);
 }});
 ```
-``` scala
+```scala
 val exception = new Exception
 (factory.create _).expects().throws(exception).once
 (factory.notifyObservers(_: Exception)).expects(exception).once
+```
 
-```**Notes:** 
-  
+**Notes:** 
+
  * In Scalamock, `throws` and `throwing` are interchangeable.
  * Again, `once` is optional.

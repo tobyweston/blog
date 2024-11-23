@@ -54,7 +54,7 @@ or as lambdas
 
 I found their description of the two confusing. I prefer to think of the first as an instance method of a _specific_ object known ahead of time and the second as an instance method of an arbitrary object that will be _supplied_ later. Interestingly, this means the first is a _closure_ and the second is a _lambda_. One is _bound_ and the other _unbound_.
 
-The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my [previous article]({{ root_url }}/blog/2010/07/13/lambdas-vs-closures).
+The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my [previous article](/blog/2010/07/13/lambdas-vs-closures).
 
 ## The "closure" method reference
 

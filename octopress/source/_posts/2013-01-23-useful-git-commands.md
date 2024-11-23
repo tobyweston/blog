@@ -13,12 +13,12 @@ description: "Some git commands I find useful but keep forgetting like removing 
 
 <a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.
 
- - [Create a branch on a remote (pushing a branch to a remote)]({{ root_url }}/blog/2013/01/23/useful-git-commands#create_remote_branch)
- - [Delete a remote branch]({{ root_url }}/blog/2013/01/23/useful-git-commands#delete_remote_branch)
- - [Switch from HTTP to git/ssh]({{ root_url }}/blog/2013/01/23/useful-git-commands#switch_to_ssh)
- - [Set upstream branch]({{ root_url }}/blog/2013/01/23/useful-git-commands#set_upstream_branch)
- - [Abbreviated status]({{ root_url }}/blog/2013/01/23/useful-git-commands#status)
- - [Useful Git aliases]({{ root_url }}/blog/2013/01/23/useful-git-commands#alias)
+ - [Create a branch on a remote (pushing a branch to a remote)](/blog/2013/01/23/useful-git-commands#create_remote_branch)
+ - [Delete a remote branch](/blog/2013/01/23/useful-git-commands#delete_remote_branch)
+ - [Switch from HTTP to git/ssh](/blog/2013/01/23/useful-git-commands#switch_to_ssh)
+ - [Set upstream branch](/blog/2013/01/23/useful-git-commands#set_upstream_branch)
+ - [Abbreviated status](/blog/2013/01/23/useful-git-commands#status)
+ - [Useful Git aliases](/blog/2013/01/23/useful-git-commands#alias)
 
 
 <!-- more -->

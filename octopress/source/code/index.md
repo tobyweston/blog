@@ -17,8 +17,8 @@ Some of my highlights (checkout my [Github](https://github.com/tobyweston?tab=re
 Some of my open source projects which had some traction:
 
 * [tempus-fugit](http://tempusfugitlibrary.org/) - Java library focused around concurrency and testing
-* [simple-http](https://github.com/tobyweston/simple-http) - An improved Java API over the Apache HC HTTP library. [Read a little about it]({{ root_url }}/blog/2012/06/10/http-simple/).
-* [simple-excel](https://github.com/tobyweston/simple-excel) - An improved Java API over the Apache POI project. Generate and test spreadsheets. [Read a little about it]({{ root_url }}/blog/2012/09/14/diff-excel-with-java-and-hamcrest/).
+* [simple-http](https://github.com/tobyweston/simple-http) - An improved Java API over the Apache HC HTTP library. [Read a little about it](/blog/2012/06/10/http-simple/).
+* [simple-excel](https://github.com/tobyweston/simple-excel) - An improved Java API over the Apache POI project. Generate and test spreadsheets. [Read a little about it](/blog/2012/09/14/diff-excel-with-java-and-hamcrest/).
 
 
 Some of my other projects and contributions, mostly inactive now:

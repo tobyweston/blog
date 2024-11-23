@@ -10,7 +10,7 @@ keywords: "message sending, objective-c, smalltalk, java, object-oriented, metho
 description: "What's the difference between sending an object a message and just invoking a method on an object? Why is a function different than a method?"
 ---
 
-{% img right ../../../../../images/letter.jpg  'Send a message'%}
+{% img right ../images/letter.jpg  'Send a message'%}
 
 In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we'll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we're on the topic, we'll look at the difference between a function and a method and discuss the difference between an object reference and a pointer. 
 

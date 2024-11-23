@@ -9,7 +9,7 @@ keywords: "iTunes, ipod, ios, queue up songs, play it next, up next, apple"
 description: "Queue songs without interrupting the currently playing track with Play it Next"
 ---
 
-[{% img right ../../../../../images/play_it_next.png 224 336 'Play it Next'%}](../../../../../images/play_it_next.png)
+[{% img right ../images/play_it_next.png 224 336 'Play it Next'%}](../images/play_it_next.png)
 
 I'm often listening to something on my iPhone whilst thinking about what track to play next. It's a shame the iPod app doesn't let me queue up the next track without interrupting the one that's playing.
 
