@@ -1,20 +1,15 @@
 ---
-layout: post
 title: "Scala Mixins: The Right Way"
-pubDate: 2014-09-22 06:09
-comments: true
-categories: scala
-sidebar: false
-published: true
+pubDate: '2014-09-22'
+categories: 'scala'
 keywords: "scala, trait, mixin, ruby"
 description: "Avoid the inheritance vs. composition argument by using mixin traits in the right way. Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle, so when is a trait with behaviour a genuine mixin? Find out here."
 ---
 
-Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science) _and_ to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use [is a bad idea](http://baddotrobot.com/blog/2009/01/24/inheritance-vs-composition/).
+Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science) _and_ to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use [is a bad idea](/blog/2009-01-24-inheritance-vs-composition/).
 
 It can be tricky not break the [inheritance vs. composition](http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits) principle when using traits with behaviour. Is it clear to you when you might be?
 
-<!-- more -->
 
 ## Mixins the Wrong Way
 
@@ -134,8 +129,9 @@ By that logic, it feels like extending traits for re-use in a functional program
 
 ## Recommended Reading
 
- * <a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What's New in Java 8</a>, Toby Weston
- * <a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston
+* <a href="http://leanpub.com/whatsnewjava8">What's New in Java 8</a> (LeanPub), Toby Weston
+* <a href="https://amzn.eu/d/f0iH92N">Learning Java Lambdas</a> (Amazon), Toby Weston
+* <a href="https://amzn.eu/d/dcJRJ41">Learn Scala for Java Developers</a> (Amazon), Toby Weston
 
 &nbsp;
 &nbsp;

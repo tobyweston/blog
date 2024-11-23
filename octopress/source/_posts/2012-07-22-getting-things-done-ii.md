@@ -25,7 +25,7 @@ series: Getting Things Done
     </script>
 </div>
 
-[{% img right ../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../images/appigo_todo.png)
+[![](../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../images/appigo_todo.png)
 
 In the [preceding post](/blog/2012/07/20/getting-things-done-i), I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
 

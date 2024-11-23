@@ -9,7 +9,7 @@ keywords: "pair tests, interview, tdd, pairing exercise, agile pair test, what t
 description: "This post talks a little about what to expect from a pair test and offers a few tips to surviving the ordeal."
 ---
 
-{% img right ../images/pairing.jpg %}
+![](../images/pairing.jpg %}
 
 If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be _tested_ on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means _pairing_. The trouble is, _pair tests_ are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.
 

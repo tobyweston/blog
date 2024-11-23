@@ -1,12 +1,8 @@
 ---
-layout: post
 title: "Functional Interfaces in Java 8"
-pubDate: 2014-04-07 21:33
-comments: true
-categories: java, java8
-sidebar: false
-published: true
-series: What's new in Java 8
+pubDate: '2014-04-07'
+categories: 'java, java8'
+series: "What's new in Java 8"
 keywords: "JDK 8, Java 8, OpenJDK 8, functional interface, @FunctionalInterface, lambda"
 description: "Functional interfaces in Java 8 are just interfaces with a single method. Anywhere a functional interface is used, you can use a lambda. Let's run through the basic syntax."
 ---
@@ -15,7 +11,6 @@ Java 8 treats lambdas as an instance of an interface type. It formalises this in
 
 Let's run through the basic syntax.
 
-<!-- more -->
 
 ## @FunctionalInterface
 
@@ -118,4 +113,4 @@ In both cases, you can override methods from `Object` without causing problems. 
 
 ## Summary
 
-An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the [Classes vs. Functions](/blog/2014/04/08/classes-vs-functions) post for more details.
+An important point to take away was the idea that any place a functional interface is used, you can now use lambdas. Lambdas can be used in-lieu of anonymous implementations of the functional interface. Using a lambda instead of the anonymous class may seem like syntactic sugar, but they're actually quiet different. See the [Classes vs. Functions](/blog/2014-04-08-classes-vs-functions) post for more details.

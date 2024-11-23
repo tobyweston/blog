@@ -1,12 +1,8 @@
 ---
-layout: post
 title: "Method References in Java 8"
-pubDate: 2014-02-18 21:33
-comments: true
-categories: java, java8
-sidebar: false
-published: true
-series: What's new in Java 8
+pubDate: '2014-02-18'
+categories: 'java, java8'
+series: "What's new in Java 8"
 keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method references in java, oracle docs"
 description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
 ---
@@ -54,7 +50,7 @@ or as lambdas
 
 I found their description of the two confusing. I prefer to think of the first as an instance method of a _specific_ object known ahead of time and the second as an instance method of an arbitrary object that will be _supplied_ later. Interestingly, this means the first is a _closure_ and the second is a _lambda_. One is _bound_ and the other _unbound_.
 
-The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my [previous article](/blog/2010/07/13/lambdas-vs-closures).
+The distinction between a method reference that closes over something (a closure) and one that doesn't (a lambda) may be a bit academic but at least it's a more formal definition than Oracle's unhelpful description. If you're interested in the difference between a closure and a lambda, check out my [previous article](/blog/2010-07-13-lambdas-vs-closures).
 
 ## The "closure" method reference
 
@@ -152,7 +148,7 @@ public void lambdaExample() {
 
 ## Summary
 
-The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's _the_ canonical reference material but it's just plain confusing. It feels like interns are producing this stuff.
+The difference between the two types of instance method reference is interesting but basically academic. Sometimes, you'll need to pass something in, other times, the usage of the lambda will supply it for you. My gripe is with Oracle's documentation. They make a big deal out of the distinction but fail to describe it in an easily understandable way. It's _the_ canonical reference material, but it's just plain confusing. It feels like interns are producing this stuff.
 
 If you liked this post, you might like my course on [Udemy](https://www.udemy.com/whats-new-in-java-8/). For a limited time only, get [10% off with this coupon](https://www.udemy.com/whats-new-in-java-8/?couponCode=BLOG10)!
 
@@ -167,15 +163,12 @@ public void example() {
 }
 ```
 
-<a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ws-eu.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1508734178&Format=_SL160_&ID=AsinImage&MarketPlace=GB&ServiceVersion=20070822&WS=1&tag=baddotrobotco-21 Learn Scala for Java Developers %}</a>
-<a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">{% img right http://titlepages.leanpub.com/whatsnewjava8/bookpage 140 180 Learn Scala for Java Developers %}</a>
-
-
 
 ## Recommended Reading
 
- * <a href="http://leanpub.com/whatsnewjava8" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">What's New in Java 8</a>, Toby Weston
- * <a href="http://amzn.to/1M0w9jZ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Scala for Java Developers</a>, Toby Weston
+ * <a href="http://leanpub.com/whatsnewjava8">What's New in Java 8</a> (LeanPub), Toby Weston
+ * <a href="https://amzn.eu/d/f0iH92N">Learning Java Lambdas</a> (Amazon), Toby Weston
+ * <a href="https://amzn.eu/d/dcJRJ41">Learn Scala for Java Developers</a> (Amazon), Toby Weston
 
 &nbsp;
 &nbsp;

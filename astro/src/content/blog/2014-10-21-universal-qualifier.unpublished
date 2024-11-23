@@ -1,16 +1,13 @@
 ---
-layout: post
 title: "Universal Qualifier in Scala"
-pubDate: 2014-09-21 05:12
-comments: true
-categories: java java8 scala
-sidebar: false
+pubDate: '2014-09-21' 
+categories: 'java java8 scala'
 published: false
 keywords: "java 8, java, scala, universal qualifier"
 description: ""
 ---
 
-or should this post be called exesential qualifier?
+or should this post be called existential qualifier?
 
 http://www.drmaciver.com/2008/03/existential-types-in-scala/
 

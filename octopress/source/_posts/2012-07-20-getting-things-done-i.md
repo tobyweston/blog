@@ -56,7 +56,7 @@ I visualise this process as moving from a general dumping ground; the "inbox" to
 
 ## The Workflow
 
-[{% img left ../images/gtd-basic.png 350 467 'Abbreviated workflow'%}](../images/gtd-basic.png)
+[![](../images/gtd-basic.png 350 467 'Abbreviated workflow'%}](../images/gtd-basic.png)
 
 So far, I've focused on what I interpret as the core principle; to get things off of your mind and into a trusted system. It's probably a good time to introduce a few other of Allen's ideas; namely the different list types and a basic workflow. In a slightly simplified form, Allen's workflow looks like the diagram opposite.
 

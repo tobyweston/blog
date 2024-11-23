@@ -1,25 +1,20 @@
 ---
-layout: post
 title: "Dealing with Exceptions as Monads"
-pubDate: 2014-09-21 05:12
-comments: true
-categories: java java8 exception-handling scala
-sidebar: false
-series: Exception Handling
-published: true
+pubDate: '2014-09-21'
+categories: 'java java8 exception-handling scala'
+series: 'Exception Handling'
 keywords: "java 8, java, monads, either, scala, try, scalaz, option, monadically"
 description: "Functional languages often discourage the use of exceptions because they can subvert control execution flow; they introduce side-affects. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide system wide consistently."
 ---
 
-In some [previous posts](http://baddotrobot.com/blog/categories/exceptions/), I wrote about treating exceptions as a system wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.
+In some previous posts, I wrote about treating exceptions as a system-wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.
 
-Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side-affects and violate [purity of function](http://baddotrobot.com/blog/2012/04/03/scala-as-a-functional-oo-hybrid/). By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide that system wide consistently I've been talking about.
+Pure functional languages often discourage the use of exceptions because when they are used to control execution flow, they introduce side effects and violate [purity of function](/blog/2012-04-03-scala-as-a-functional-oo-hybrid/). By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide that system wide consistently I've been talking about.
 
-<!-- more -->
 
 ## Object-Oriented
 
-***The norm for object oriented code is to use exceptions to control execution flow.*** When you have a method that can return `true` or `false` _and_ throw an exception, it might as well be returning three things. It forces clients to have to reason about logic that has nothing to do with the function of the method. It's complicated and often makes it hard to treat exceptions consistently across the entire application.
+***The norm for object-oriented code is to use exceptions to control execution flow.*** When you have a method that can return `true` or `false` _and_ throw an exception, it might as well be returning three things. It forces clients to have to reason about logic that has nothing to do with the function of the method. It's complicated and often makes it hard to treat exceptions consistently across the entire application.
 
 
 ## Functional
@@ -34,7 +29,7 @@ For example, let's say we have a method `uploadExpenses` that uploads this month
 
 ### Traditional Exception Throwing
 
-In a traditional exception throwing version below, the `uploadExpenses` call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an [appropriate system boundary](http://baddotrobot.com/blog/2012/03/28/exception-handling-as-a-system-wide-concern/) but dealing with exceptions consistently for the entire system is a real challenge.
+In a traditional exception throwing version below, the `uploadExpenses` call can break after only some expenses have been uploaded. With no report, it would be hard to work out which were successfully uploaded. You're also left to deal with the exceptions. If other code depends on this, it may make sense to propagate the exception to an [appropriate system boundary](/blog/2012-03-28-exception-handling-as-a-system-wide-concern/) but dealing with exceptions consistently for the entire system is a real challenge.
 
 ``` java
 try {
@@ -63,4 +58,5 @@ failures.forEach(failure -> System.out.println(failure));
 Stream<Expense> successes = results.stream().flatMap(either -> either.right());
 successes.forEach(success -> System.out.println(success));
 ```
+
 In this way, having the semantics baked into the return types is what forces clients to deal with the exceptional behaviour. Dealing with them monadically ensures that we can deal with them consistently. For a naive implementation, have a look at my [gist](https://gist.github.com/tobyweston/caefc3b5ec36348387e5) and for fuller implementations, see [Scala's version](https://github.com/scala/scala/blob/2.11.x/src/library/scala/util/Either.scala) or the [TotallyLazy](https://code.google.com/p/totallylazy/source/browse/src/com/googlecode/totallylazy/Either.java) and [Functional Java](https://functionaljava.ci.cloudbees.com/job/master/javadoc/fj/data/Either.html) versions in Java.

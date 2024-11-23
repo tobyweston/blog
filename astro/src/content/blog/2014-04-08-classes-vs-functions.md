@@ -1,20 +1,15 @@
 ---
-layout: post
 title: "Classes vs. Functions"
-pubDate: 2014-04-08 19:40
-updated: 2014-11-25 19:28
-comments: true
-categories: java java8
-sidebar: false
-published: true
-series: What's new in Java 8
+pubDate: '2014-04-08'
+updatedDate: '2014-11-25'
+categories: 'java java8'
+series: "What's new in Java 8"
 keywords: "lambdas, java 8, OpenJDK 8, lambda support, JDK 8, anonymous classes, class vs lambda"
 description: "Find out why a lambda in Java 8 not just syntactic sugar over the usual anonymous class implementation. It's all about lambdas vs. anonymous class or functions vs. classes."
 ---
 
-You can use lambdas in Java 8 anywhere you would have previously used a [single method interface]({{root_url }}/blog/2014/04/07/functional-interfaces-in-java8) so it may just look like syntactic sugar but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.
+You can use lambdas in Java 8 anywhere you would have previously used a [single method interface](/blog/2014-04-07-functional-interfaces-in-java8) so it may just look like syntactic sugar, but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.
 
-<!-- more -->
 
 So, a typical implementation of an anonymous class (a single method interface) in Java pre-8, might look something like this. The `anonymousClass` method is calling the `waitFor` method passing in some implementation of `Condition`, in this case it's saying wait for some server to have shutdown.
 
@@ -50,11 +45,11 @@ class WaitFor {
 
 ## Some Theoretical Differences
 
-Firstly, both implementations are in-fact closures, the later is also a lambda. Confused, see [my distinction between lambdas and closures](/blog/2010/07/13/lambdas-vs-closures). This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of an class (an anonymous instances of `Condition`). In our example, the `server` variable.
+Firstly, both implementations are in-fact closures, the latter is also a lambda. Confused, see [my distinction between lambdas and closures](/blog/2010-07-13-lambdas-vs-closures). This means that both have to capture their "environment" at runtime. In Java pre-8, this means copying the things the closure needs into an instance of a class (an anonymous instances of `Condition`). In our example, the `server` variable.
 
 As it's a copy, it has to be declared final to ensure that it can not be changed between when it's captured and when it's used. These two points in time could be very different given that closures are often used to defer execution until some later point (see [lazy evaluation](http://en.wikipedia.org/wiki/Lazy_evaluation) for example). Java 8 uses a neat trick whereby if it can reason that a variable is never updated, it might as well be final so it treats it as "effectively final" and you don't need to declare it as `final` explicitly.
 
-A lambda on the other hand, doesn't need to copy it's environment or _capture any terms_. This means it can be treated as a genuine function and not an instance of a class. What's the difference? Plenty.
+A lambda on the other hand, doesn't need to copy its environment or _capture any terms_. This means it can be treated as a genuine function and not an instance of a class. What's the difference? Plenty.
 
 
 ### Functions vs. Classes
