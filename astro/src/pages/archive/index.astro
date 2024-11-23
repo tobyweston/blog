@@ -7,6 +7,7 @@ const posts = (await getCollection('blog')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
+// requires node 21+
 const byYear = Object.groupBy(posts, ({data}) => data.pubDate.getFullYear())
 ---
 
