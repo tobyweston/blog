@@ -8,7 +8,8 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
-		categories: z.string()
+		categories: z.string(),
+		keywords: z.string().optional()
 	}),
 });
 
@@ -19,6 +20,7 @@ const book = defineCollection({
 		description: z.string(),
 		pubDate: z.coerce.date(),
 		coverImage: z.string().optional(),
+		keywords: z.string().optional()
 	}),
 });
 
