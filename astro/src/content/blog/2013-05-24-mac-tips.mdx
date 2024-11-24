@@ -1,0 +1,55 @@
+---
+title: "Mac Tips"
+pubDate: '2013-05-24'
+categories: 'recipes'
+keywords: "mac fu, mac, terminal, tips, short cuts, commands, command line, shell, bash"
+description: "Useful Mac commands"
+---
+
+import { Image } from 'astro:assets';
+import relaunch from "../images/relaunch_finder.png";
+import relaunch2 from "../images/duplicate_open_with_banner.png";
+import calc from "../images/calculator-paper-tape.png";
+
+- [Show hidden files and folders in Finder](/blog/2013-05-24-mac-tips#show_hidden_finder)
+- [Show hidden files and folders from an application's Open dialog](/blog/2013-05-24-mac-tips#show_hidden_open)
+- [Remove Duplicate Entries in 'Open With' Menu](/blog/2013-05-24-mac-tips#duplicates)
+- [Show your workings with Calculator](/blog/2013-05-24/-ac-tips#calculator)
+
+
+##  <a id="show_hidden_finder"></a>Show hidden files and folders in Finder
+
+<Image src={relaunch} width="220" height="290" alt="Relaunch Finder"/>
+
+From a terminal window
+
+``` sh
+$ defaults write com.apple.Finder AppleShowAllFiles YES
+```
+
+Then relaunch Finder with Option (![Option](../images/ks_option.gif)) + Right Click, `Relaunch`. Switch back using `NO`.
+
+
+
+## <a id="show_hidden_open"></a>Show hidden files and folders from an application's Open dialog
+
+When you've got the dialog open, just hit Command (![Command](../images/ks_command.gif)) + Shift (![Shift](../images/ks_shift.gif)) + `.` to toggle. Nice.
+
+
+## <a id="duplicates"></a>Remove Duplicate Entries in 'Open With' Menu
+
+Remove duplicate entries from the terminal window.
+
+<Image src={relaunch2} alt='Relaunch Finder'/>
+
+``` sh
+$ /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain user
+```
+
+
+## <a id="calculator"></a>Show your Workings with Calculator
+
+Hitting Command (![Command](../images/ks_command.gif)) + T in the Calculator app shows the paper tape so you can see you past calculations!
+
+<Image src={calc} alt="Calculator's Paper Tape" width="205" height="258" />
+

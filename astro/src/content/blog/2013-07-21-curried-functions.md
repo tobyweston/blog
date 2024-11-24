@@ -1,11 +1,7 @@
 ---
-layout: post
 title: "Currying Functions in Java & Scala"
-pubDate: 2013-07-21 06:58
-comments: true
-categories: java scala java8
-sidebar: false
-published: true
+pubDate: '2013-07-21'
+categories: 'java scala java8'
 keywords: "curried function, partial application, java, scala, functional programming"
 description: "Currying in Java and Scala. A quick look at what curried functions are and how you'd curry a Java function and it's counterpart in Scala."
 ---
@@ -14,7 +10,6 @@ Currying is the technique of transforming a function with multiple arguments int
 
 You can turn any function with multiple arguments into it's curried equivalent. Let's have a look at this in action.
 
-<!-- more -->
 
 
 ## Java

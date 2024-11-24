@@ -1,11 +1,7 @@
 ---
-layout: post
 title: "Writing my Book"
-pubDate: 2013-05-24 13:57
-comments: false
-categories: recipes testing
-sidebar: false
-published: true
+pubDate: '2013-05-24'
+categories: 'recipes testing'
 keywords: "ebook, leanpub, effective acceptance testing, acceptance testing, concordion, yatspec, fit, fitnesse, ATDD, TDD"
 description: "Check out my book Essential Acceptance Testing where I talk about acceptance testing as dogma and when it's actually useful and when it can just hold you back."
 ---
@@ -18,4 +14,4 @@ It also talks about when not to bother; how gaining software confidence isn't al
 
 <!-- more -->
 
-Keep an eye on my [blog's book page](/book) for the latest news and head over to <a href="https://leanpub.com/essential_acceptance_testing" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">Leanpub</a> to purchase a copy or <a href="http://samples.leanpub.com/essential_acceptance_testing-sample.pdf" onClick="trackOutboundLink(this, 'Outbound Links', 'leanpub.com'); return false;">download a free sample</a>.
+Keep an eye on my [blog's book page](/book) for the latest news and head over to [https://leanpub.com/essential_acceptance_testing](Leanpub) to purchase a copy or [http://samples.leanpub.com/essential_acceptance_testing-sample.pdf](download a free sample).

@@ -1,12 +1,9 @@
 ---
-layout: post
 title: "Tail Recursion Optimisation in Scala"
-pubDate: 2013-07-16 06:47
-comments: true
-categories: java scala
-sidebar: false
+pubDate: '2013-07-16'
+categories: 'java scala'
 published: false
-description: ""
+description: "Scala can optimise recursive calls where the last statement in a method is a recursive one. In this post we'll have a look at what this means and why call tail optimisation is useful. Along the way, we'll also discuss infinite tail recursion."
 keywords: ""
 ---
 
@@ -65,6 +62,7 @@ Which would output the following stack trace
 
 ## Recursive
 
+```
   public int tick(int a) {
     iload 1
     iconst_0
@@ -84,10 +82,11 @@ Which would output the following stack trace
     iadd                // pop and add
     ireturn
   }
-
+```
 
 ## Call tail optimisation
 
+```
   public final int tick(int a) {
    l0
     iload 1
@@ -105,6 +104,7 @@ Which would output the following stack trace
     istore 1
     _goto l0            // this is the good bit
   }
+```
 
 Reverse engineering this from the byte code to Java, shows the optimisation long hand.
 
@@ -118,8 +118,8 @@ public final int tick(int countdown) {
 }
 ```
 
-### Resourcse
+### Resources
 
-http://blog.richdougherty.com/2009/04/tail-calls-tailrec-and-trampolines.html
-http://docs.oracle.com/javase/specs/jvms/se7/jvms7.pdf
-http://stronglytypedblog.blogspot.co.uk/2009/08/scala-tail-recursion.html
+* http://blog.richdougherty.com/2009/04/tail-calls-tailrec-and-trampolines.html
+* http://docs.oracle.com/javase/specs/jvms/se7/jvms7.pdf
+* http://stronglytypedblog.blogspot.co.uk/2009/08/scala-tail-recursion.html

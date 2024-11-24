@@ -1,29 +1,24 @@
 ---
-layout: post
 title: "Automatically rebase on git pull"
-series: Git
-pubDate: 2013-07-09 17:29
-comments: true
-categories: recipes git
-sidebar: false
-published: true
+series: 'Git'
+pubDate: '2013-07-09'
+categories: 'recipes git'
 keywords: "git, rebase, pull, merge, intellij"
 description: "Learn how to automatically rebase your git repository on every pull (including configuring IntelliJ IDEA)"
 ---
 
-Automaticaaly rebase your Git repository when you do a `pull`.
+Automatically rebase your Git repository when you do a `pull`.
 
-<!-- more -->
 
 To configure your repository to always rebase when pulling;
 
-```
+```shell
 git config branch.master.rebase true
 ```
 
 which turns the relevant section of your '.git/config' from
 
-```
+```shell
 [branch "master"]
   remote = origin
   merge = refs/heads/master
@@ -31,7 +26,7 @@ which turns the relevant section of your '.git/config' from
 
 to
 
-```
+```shell
 [branch "master"]
   remote = origin
   merge = refs/heads/master

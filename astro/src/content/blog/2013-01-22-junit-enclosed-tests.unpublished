@@ -1,10 +1,7 @@
 ---
-layout: post
 title: "Embed Multiple Tests in JUnit "
-pubDate: 2013-01-22 19:14
-comments: true
-categories: java object-oriented
-sidebar: false
+pubDate: '2013-01-22'
+categories: 'java object-oriented'
 published: false
 keywords: ""
 description: ""

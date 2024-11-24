@@ -1,16 +1,12 @@
 ---
-layout: post
 title: "Java Stack vs Deque"
-pubDate: 2013-01-10 12:12
-comments: true
-categories: java object-oriented
-sidebar: false
-published: true
+pubDate: '2013-01-10'
+categories: 'java object-oriented'
 keywords: "java stack, inheritance vs composition, inheritance vs aggregation, deque, LIFO, FIFO"
 description: "Oracle broke encapsulation with their Stack implementation and haven't bothered fixing it and instead recommend using Deque instead."
 ---
 
-Java has long had a [badly written](/blog/2009/01/24/inheritance-vs-composition/) implementation of a stack. The stack is a great example of single responsibility; it's supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of `Stack`. It extends `Vector` and so is implemented in terms of inheritance rather than aggregation. It's _both_ a `Stack` *and* a `Vector`. They haven't made the situation any better when recently deprecating `Stack` in favour of `Deque`.
+Java has long had a [badly written](/blog/2009-01-24-inheritance-vs-composition/) implementation of a stack. The stack is a great example of single responsibility; it's supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of `Stack`. It extends `Vector` and so is implemented in terms of inheritance rather than aggregation. It's _both_ a `Stack` *and* a `Vector`. They haven't made the situation any better when recently deprecating `Stack` in favour of `Deque`.
 
 <!-- more -->
 
@@ -18,10 +14,8 @@ Java has long had a [badly written](/blog/2009/01/24/inheritance-vs-composition/
 
 I can understand that Sun/Oracle never corrected the mistake given Java's principle of backwards compatibility but I was surprised when I noticed they recommend using Deque instead.
 
-{% blockquote Oracle Documentation for Stack http://docs.oracle.com/javase/7/docs/api/index.html?java/util/Stack.html %}
-A more complete and consistent set of LIFO stack operations is provided by the Deque interface and its implementations, which should be used in preference to this class.
-{% endblockquote %}
-
+> A more complete and consistent set of LIFO stack operations is provided by the Deque interface and its implementations, which should be used in preference to this class.   
+> — <cite>Oracle Documentation for Stack http://docs.oracle.com/javase/7/docs/api/index.html?java/util/Stack.html </cite>
 
 A deque is a double ended queue, by definition it is **not** a stack. It allows LIFO *and* FIFO behaviour. I can't see why Sun/Oracle are so happy to abandon encapsulation like this.
 
@@ -37,7 +31,7 @@ You could argue that this is the client code's choice. For classes with well kno
 
 It seems like we should really use a `Stack` abstraction to define the _role_ and composition to implement the stack. That way, we're able to substitute any implementation and expect our clients to still work. We won't be able to break encapsulation by exposing methods we shouldn't and we'll allow clients to substitute alternative implementations.
 
-For example,
+For example:
 
 ``` java
 public interface Stack<T> {
@@ -85,7 +79,7 @@ public class BoundedStack<T> extends DequeStack<T> {
     }
 }
 ```
+
 ## Related
 
-{% wikipedia Information_hiding %}
-
+See [Information Hiding](https://en.wikipedia.org/wiki/Information_hiding) on Wikipedia.
