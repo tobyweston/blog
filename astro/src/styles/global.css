@@ -48,12 +48,7 @@ main {
 	margin: auto;
 	padding: 3em 1em;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
 	line-height: 1.2;
@@ -151,4 +146,9 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+.date {
+	margin-bottom: 0.5em;
+	color: rgb(var(--gray));
 }

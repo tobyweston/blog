@@ -1,7 +1,7 @@
 ---
 title: "Scala Learning Curve"
 pubDate: '2014-11-25'
-updatedDate: 2014-11-27 19:24
+updatedDate: '2014-11-27'
 categories: 'scala'
 keywords: "scala, scala learning curve, training, pluralsight"
 description: "Scala's learning curve; expect a quick ramp up in skill but a shallower increase (slow down) as you adopt more sophisticated and advanced functional features. Read more."
