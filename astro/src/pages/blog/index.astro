@@ -1,105 +1,121 @@
 ---
-import { getCollection } from 'astro:content';
+import {getCollection} from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Main from "../../layouts/Main.astro";
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <Main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-								<a href={`/blog/${post.slug}/`}>
-									<h4 class="title">{post.data.title}</h4>
-									<!--{ post.data.heroImage &&-->
-									<!--	// <img width={720} height={360} src={post.data.heroImage} alt="" />-->
-									<!--}-->
-								</a>
-								<p>
-									{post.data.description}
-								</p>
-								<a href={`/blog/${post.slug}/`}>
-									<span class="readon">Read on →</span>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+    <section>
+        <ul>
+            {
+                posts.map((post) => (
+                        <li>
+                            <p class="date">
+                                <FormattedDate date={post.data.pubDate}/>
+                            </p>
+                            <a href={`/blog/${post.slug}/`}>
+                                <h4 class="title">{post.data.title}</h4>
+                                <!--{ post.data.heroImage &&-->
+                                <!--	// <img width={720} height={360} src={post.data.heroImage} alt="" />-->
+                                <!--}-->
+                            </a>
+                            <p>
+                                {post.data.description}
+                            </p>
+                            <a href={`/blog/${post.slug}/`}>
+                                <span class="readon">Read on →</span>
+                            </a>
+                        </li>
+                ))
+            }
+        </ul>
+    </section>
 </Main>
 
 <style>
-	main {
-		width: 70%;
-	}
-	ul {
-		display: grid;
-		gap: 2rem;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-	ul li {
-		width: calc(50% - 1rem);
-	}
-	ul li * {
-		text-decoration: none;
-		transition: 0.2s ease;
-	}
-	ul li {
-		width: 100%;
-		margin-bottom: 1rem;
-	}
-	ul li img {
-		width: 100%;
-		margin-bottom: 0.5rem;
-		border-radius: 12px;
-	}
-	ul li .title {
-		font-size: 2.369rem;
-	}
-	ul li a {
-		display: block;
-	}
-	.title {
-		margin: 0;
-		color: rgb(var(--black));
-		line-height: 1;
-	}
-	.date {
-		margin: 0;
-		color: rgb(var(--gray));
-	}
-	ul li a:hover h4,
-	ul li a:hover .date {
-		color: rgb(var(--accent));
-	}
-	ul a:hover img {
-		box-shadow: var(--box-shadow);
-	}
-	.readon:hover {
-		background-color: #1b88ff;
-	}
-	@media (max-width: 720px) {
-		ul {
-			gap: 0.5em;
-		}
-		ul li {
-			width: 100%;
-		}
-		ul li {
-			margin-bottom: 0;
-		}
-		ul li .title {
-			font-size: 1.563em;
-		}
-	}
+    main {
+        width: 70%;
+    }
+
+    ul {
+        display: grid;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul li {
+        width: calc(50% - 1rem);
+    }
+
+    ul li * {
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    ul li {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    ul li img {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+    }
+
+    ul li .title {
+        font-size: 2.369rem;
+    }
+
+    ul li a {
+        display: block;
+    }
+
+    .title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1;
+    }
+
+    .date {
+        margin: 0;
+        color: rgb(var(--gray));
+    }
+
+    ul li a:hover h4,
+    ul li a:hover .date {
+        color: rgb(var(--accent));
+    }
+
+    ul a:hover img {
+        box-shadow: var(--box-shadow);
+    }
+
+    .readon:hover {
+        background-color: #1b88ff;
+    }
+
+    @media (max-width: 720px) {
+        ul {
+            gap: 0.5em;
+        }
+
+        ul li {
+            width: 100%;
+        }
+
+        ul li {
+            margin-bottom: 0;
+        }
+
+        ul li .title {
+            font-size: 1.563em;
+        }
+    }
 </style>
