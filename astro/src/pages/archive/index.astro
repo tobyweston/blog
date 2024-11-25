@@ -35,6 +35,7 @@ const byYear = Object.groupBy(posts, ({data}) => data.pubDate.getFullYear())
                             }
                         </ul>
                     </div>
+                    <hr/>
             )
         })}
     </section>
@@ -98,6 +99,10 @@ const byYear = Object.groupBy(posts, ({data}) => data.pubDate.getFullYear())
 
     ul a:hover img {
         box-shadow: var(--box-shadow);
+    }
+
+    hr {
+        margin-bottom: 1em;
     }
 
     @media (max-width: 720px) {
