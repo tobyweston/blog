@@ -1,11 +1,7 @@
 ---
-layout: post
 title: "Daily Standups Don't Work"
-pubDate: 2012-09-15 06:12
-comments: true
-categories: agile coaching
-sidebar: false
-published: true
+pubDate: "2012-09-15"
+categories: "agile coaching"
 keywords: "agile, daily standup, standup, lean"
 description: "The daily standup doesn't work for most teams. We've become brow beaten to mechanically go through the motions and we've stopped asking 'why are we doing this?'"
 ---
