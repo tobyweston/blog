@@ -1,0 +1,79 @@
+---
+name: deadlock
+layout: post
+title: Deadlock detection in Java
+pubDate: 2009-12-24 15:41:00 +00:00
+categories: java concurrency tempus-fugit recipes
+comments: true
+sidebar : false
+keywords: "deadlock detection, junit, deadlock, find deadlocks programmatically"
+description: "Detect deadlocks in Java code programmatically with the DeadlockDetector class"
+---
+
+I recently added a basic deadlock detection mechanism to [tempus-fugit](http://tempusfugitlibrary.org/). The [DeadlockDetector](http://tempusfugitlibrary.org/recipes/2012/05/26/detecting-deadlocks/) class allows you to programmatically detect basic deadlocks in your Java code. You can output deadlocks using the following code (note that printing a thread dump using the `ThreadDump` class will automatically attempt to find any deadlocks).
+
+``` java
+DeadlockDetector.printDeadlocks(System.out);
+```
+<!-- more -->
+
+The `DeadlockDetector` class will spot Java monitor cyclic locking problems and additionally detect `Lock` based cyclic problems. It's implementation is basically the same as that used by `jconsole` and `jstack`. An example is illustrated in the example below.
+
+<!-- more -->
+    
+``` java
+@Test
+public void potentialDeadlock() {
+  new Kidnapper().start();
+  new Negotiator().start();
+}
+
+public class Kidnapper extends Thread {
+  public void run() {
+     synchronized (nibbles) {
+        synchronized (cash) {
+            take(cash);
+        }
+     }
+  }
+}
+
+public class Negotiator extends Thread {
+  public void run() {
+     synchronized (cash) {
+        synchronized (nibbles) {
+            take(nibbles);
+        }
+     }
+  }
+}
+```
+  
+Here, the Kidnapper is unwilling to release poor Nibbles the Cat until he has
+the Cash but our Negotiator is unwilling to part with the Cash until he has
+poor Nibbles back in his arms. The deadlock detector displays this woeful
+situation as follows.
+
+    
+      
+     Deadlock detected  
+     =================  
+      
+     "Negotiator-Thread-1":  
+        waiting to lock Monitor of ...DeadlockDetectorTest$Cat@ce4a8a  
+        which is held by "Kidnapper-Thread-0"  
+      
+     "Kidnapper-Thread-0":  
+        waiting to lock Monitor of ...DeadlockDetectorTest$Cash@7fc8b2  
+        which is held by "Negotiator-Thread-1"  
+    
+
+  
+I don't imagine you'll need to print out information about deadlocks or thread
+dumps from within your code very often, but on the off chance you'll need to
+during debugging, they are both available for you to use in the [tempus-fugit](http://tempusfugitlibrary.org/) project.
+
+  
+
+
+
