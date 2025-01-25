@@ -1,10 +1,8 @@
 ---
 name: objectives
-layout: post
 title: Objectives
 pubDate: 2010-06-17 08:13:00 +01:00
 categories: coaching
-comments: true
 sidebar : false
 description: "It's objective setting time again, put the YOU into it and be SMART about your goals."
 keywords: "Objective setting, SMART, coding diary, coding journal, developer journal"

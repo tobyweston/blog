@@ -1,10 +1,8 @@
 ---
 name: abstracting-reentrantreadwritelock
-layout: post
 title: Abstracting ReentrantReadWriteLock
 pubDate: 2009-08-01 10:47:00 +01:00
 categories: java concurrency tempus-fugit
-comments: true
 sidebar : false
 keywords: "reentrant locks, java, locks, read write lock, concurrency, synchronized, ReentrantReadWriteLock"
 description: "All locks in Java are reentrant. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronized method and then call the superclass method without deadlocking"

@@ -1,10 +1,8 @@
 ---
 name: swt-applications-on-mac-os-x
-layout: post
 title: SWT Applications on Mac OS X
 pubDate: 2008-12-29 12:03:00 +00:00
 categories: java
-comments: true
 sidebar : false
 keywords: "SWT, mac, mac OSX, -XstartOnFirstThread, startOnFirstThread, thread, start on main thread"
 description: "Invalid thread access running SWT applications on the Mac fixed with -XstartOnFirstThread"

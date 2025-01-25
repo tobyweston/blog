@@ -1,10 +1,7 @@
 ---
-layout: post
 title: "Getting Things Done, Part I"
 pubDate: 2012-07-20 15:50
-comments: true
 categories: coaching
-sidebar: false
 keywords: "getting things done, GTD, Appigo Todo, task management, David Allen, Stree-free productivity"
 description: "In this first of the series, I talk a little about Allen's ideas, summarising the first section of the book and reflect a little on the changes I made to my personal approach to getting things done."
 series: Getting Things Done

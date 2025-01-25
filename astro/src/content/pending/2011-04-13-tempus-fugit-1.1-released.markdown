@@ -1,10 +1,8 @@
 ---
 name: released
-layout: post
 title: tempus-fugit 1.1 released
 pubDate: 2011-04-13 10:36:00 +01:00
 categories: java tempus-fugit concurrency testing
-comments: true
 sidebar : false
 description: "Announcing the release of the new version of the tempus-fugit library."
 keywords: "tempus-fugit, concurrency, concurrency library, testing concurrent code"

@@ -1,10 +1,8 @@
 ---
 name: deadlock
-layout: post
 title: Deadlock detection in Java
 pubDate: 2009-12-24 15:41:00 +00:00
 categories: java concurrency tempus-fugit recipes
-comments: true
 sidebar : false
 keywords: "deadlock detection, junit, deadlock, find deadlocks programmatically"
 description: "Detect deadlocks in Java code programmatically with the DeadlockDetector class"

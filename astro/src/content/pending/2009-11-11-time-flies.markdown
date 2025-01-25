@@ -1,10 +1,8 @@
 ---
 name: time-flies
-layout: post
 title: Time Flies 1.0
 pubDate: 2009-11-11 22:01:00 +00:00
 categories: java concurrency tempus-fugit
-comments: true
 sidebar : false
 keywords: "tempus-fugit, concurrency framework"
 description: "New version of the tempus-fugit concurrency library released."

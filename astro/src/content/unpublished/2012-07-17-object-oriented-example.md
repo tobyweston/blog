@@ -1,10 +1,7 @@
 ---
-layout: post
 title: "An Object Oriented Example"
 pubDate: 2012-07-17 18:58
-comments: true
 categories: java object-oriented
-sidebar: false
 published: false
 keywords: "OO, object-oriented, stop watch"
 description: ""

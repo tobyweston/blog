@@ -1,10 +1,8 @@
 ---
 name: lambdas-vs-closures
-layout: post
 title: Lambdas vs. Closures
 pubDate: 2010-07-13 23:21:00 +01:00
 categories: java tempus-fugit
-comments: true
 sidebar : false
 description: "What's the difference between a lambda and a closure? Find out here!"
 keywords: "lambda vs closures, closures vs lambdas, functional style java, higher order functions, pure functions"

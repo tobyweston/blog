@@ -1,10 +1,8 @@
 ---
 name: infering-type-in-micro-dsl
-layout: post
 title: Inferring the Types in a Micro DSL
 pubDate: 2009-02-23 19:34:00 +00:00
 categories: java testing
-comments: true
 sidebar : false
 keywords: "dsl, fluent api, generics, java"
 description: "Java can have trouble inferring multiple types, see and example and create a fluent API in Java using generics."

@@ -1,10 +1,8 @@
 ---
 name: logging-is-evil-but
-layout: post
 title: Logging is evil but...
 pubDate: 2010-10-18 20:51:00 +01:00
 categories: java mocking testing exceptions rest recipes
-comments: true
 sidebar : false
 keywords: "logging, log4j, testing log4j, logging as a feature, logging is bad, why is logging bad"
 description: "Don't let logging clutter up your code, follow these tips to separate concerns and move towards logging as a feature. We also look at how to actually test against logging."

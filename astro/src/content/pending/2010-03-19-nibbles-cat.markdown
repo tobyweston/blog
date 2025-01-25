@@ -1,10 +1,8 @@
 ---
 name: nibbles-cat
-layout: post
 title: Nibbles the Cat & Concurrency
 pubDate: 2010-03-19 21:39:00 +00:00
 categories: java concurrency tempus-fugit
-comments: true
 sidebar : false
 keywords: "concurrency, deadlock, deadlock detection,"
 description: "Detect deadlocks programmatically with the DeadlockDetector class. Shows an example of deadlock."

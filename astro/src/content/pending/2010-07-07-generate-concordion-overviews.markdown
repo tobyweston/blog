@@ -1,10 +1,8 @@
 ---
 name: generate-concordion-overviews
-layout: post
 title: Generate Concordion Overviews
 pubDate: 2010-07-07 22:01:00 +01:00
 categories: java agile testing
-comments: true
 sidebar : false
 description: "Generate a Concordion test overview page with the Concordion Ant Task"
 keywords: "Concordion, David Peterson, acceptance testing, java, FIT, Fitnesse, Yatspec, Xcordion"

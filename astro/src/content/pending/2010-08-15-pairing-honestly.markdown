@@ -1,10 +1,8 @@
 ---
 name: pairing-honestly
-layout: post
 title: Pairing Honestly
 pubDate: 2010-08-15 11:39:00 +01:00
 categories: agile coaching
-comments: true
 sidebar : false
 description: "Some tips when pairing in agile team"
 keywords: "pair programming, pairing, agile teams, agile, pair stairs"

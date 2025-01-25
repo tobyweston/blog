@@ -1,10 +1,8 @@
 ---
 name: setter-vs-constructor-injection
-layout: post
 title: Setter vs Constructor Injection
 pubDate: 2010-05-01 09:18:00 +01:00
 categories: java
-comments: true
 sidebar : false
 description: "Setter vs constructor injection. Explore the options here."
 keywords: "setter vs constructor injection, spring, setter, getter, constructor, java"

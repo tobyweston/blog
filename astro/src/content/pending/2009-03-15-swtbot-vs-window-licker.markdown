@@ -1,10 +1,8 @@
 ---
 name: swtbot-vs-window-licker
-layout: post
 title: SWTBot vs Window Licker
 pubDate: 2009-03-15 11:30:00 +00:00
 categories: java testing
-comments: true
 sidebar : false
 keywords: "swtbot, window licker, swtbot vs window licker, awt, swing, awt robot, selenium, rich clients"
 description: "A comparison of SWTBot and Window Licker from a developer's perspective. Both are rich client testing frameworks used in a record/replay style but via a programmatic API. Think Selenium for desktop apps."

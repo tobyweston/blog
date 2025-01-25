@@ -1,6 +1,5 @@
 ---
 name: java-source-for-mac-osx
-layout: post
 title: Java source for Mac OSX
 pubDate: 2009-08-01 12:53:00 +01:00
 categories: java

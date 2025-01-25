@@ -1,10 +1,8 @@
 ---
 name: what-makes-good-pair
-layout: post
 title: What Makes a Good Pair?
 pubDate: 2008-12-31 09:15:00 +00:00
 categories: agile coaching
-comments: true
 sidebar : false
 keywords: "pair programming, xp, pairing, peer programming"
 description: "Communication plays such a big part in programming, we're always striving to be more expressive in our code, conveying our intent clearly. It's the same when pairing."

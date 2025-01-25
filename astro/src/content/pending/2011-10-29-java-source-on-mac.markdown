@@ -1,6 +1,5 @@
 ---
 name: java-source-on-mac
-layout: post
 title: Java source on Mac
 pubDate: 2011-10-29 11:11:00 +01:00
 categories: java recipes

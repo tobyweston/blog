@@ -1,10 +1,8 @@
 ---
 name: catching-multiple-exceptions-and
-layout: post
 title: Catching Multiple Exceptions (and rethrowing them all!)
 pubDate: 2011-08-29 13:09:00 +01:00
 categories: java exceptions recipes
-comments: true
 sidebar : false
 keywords: "rethrowing multiple exceptions, exception handling in java"
 description: "Learn how to catch multiple exceptions, ignore and continue processing before finally retesting and rethrowing them all."

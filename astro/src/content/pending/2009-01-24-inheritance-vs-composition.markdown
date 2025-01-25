@@ -1,10 +1,8 @@
 ---
 name: inheritance-vs-composition
-layout: post
 title: Inheritance vs Composition
 pubDate: 2009-01-24 12:12:00 +00:00
 categories: java object-oriented
-comments: true
 sidebar : false
 keywords: "inheritance vs composition, inheritance vs aggregation"
 description: "Java's stack class isn't a stack at all! It favours inheritance over composition causing it to no longer be just a stack."

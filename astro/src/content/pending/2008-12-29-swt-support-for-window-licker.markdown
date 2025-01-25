@@ -1,10 +1,8 @@
 ---
 name: swt-support-for-window-licker
-layout: post
 title: SWT Support for Window Licker
 pubDate: 2008-12-29 14:05:00 +00:00
 categories: java
-comments: true
 sidebar : false
 keywords: "SWT, WindowLicker, testing UI, swing/awt, webdriver"
 description: "SWT Support for Window Licker, the rich UI testing, WebDriver-style framework"

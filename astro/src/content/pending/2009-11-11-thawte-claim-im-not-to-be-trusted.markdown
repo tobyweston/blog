@@ -1,10 +1,8 @@
 ---
 name: thawte-claim-im-not-to-be-trusted
-layout: post
 title: Thawte claim I'm not to be trusted...
 pubDate: 2009-11-11 19:48:00 +00:00
 categories: uncategorized
-comments: true
 sidebar : false
 keywords: "twarte, personal email certificates, web of trust"
 description: "Twarte announced that they'd be discontinuing personal email certificates and web of trust."

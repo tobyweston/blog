@@ -1,10 +1,8 @@
 ---
 name: type-safe-annotation
-layout: post
 title: Type Safe Annotation
 pubDate: 2010-01-04 20:51:00 +00:00
 categories: java concurrency tempus-fugit
-comments: true
 sidebar : false
 keywords: "java, annotation, goetz, enum annotation must be an enum constant"
 description: "Why does Java insist that an enum annotation value must be an enum constant?"

@@ -1,10 +1,8 @@
 ---
 name: more-on-micro-dsls
-layout: post
 title: More on Micro DSLs
 pubDate: 2009-02-16 20:06:00 +00:00
 categories: java
-comments: true
 sidebar : false
 keywords: "dsl, domain specific langauges, micro-dsl, fluent api, java,"
 description: "An example of a micro DSL to find items in a list using a fluent style API."

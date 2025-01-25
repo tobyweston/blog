@@ -1,10 +1,7 @@
 ---
-layout: post
 title: "Mountain Lion Carnage"
 pubDate: 2012-07-28 12:28
-comments: true
 categories: java
-sidebar: false
 keywords: "mountain lion, mac osx, 10.8, java, svn, git, git broken after mountain lion, svn broken after mountain lion"
 description: "The Mountain Lion upgrade blasts Java, svn and git. Find out how to get them back"
 ---

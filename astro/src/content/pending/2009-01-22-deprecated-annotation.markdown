@@ -1,10 +1,8 @@
 ---
 name: deprecated-annotation
-layout: post
 title: Deprecated Annotation
 pubDate: 2009-01-22 15:25:00 +00:00
 categories: java
-comments: true
 sidebar : false
 keywords: "java, deprecated, annotation, sun mistakes"
 description: "Why didn't Sun add a `value` property to the `@Deprecated` annotation?"
