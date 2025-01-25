@@ -3,7 +3,6 @@ name: artcile-in-javatech-journal
 title: JDK7 Article in JavaTech Journal
 pubDate: 2011-06-10 16:52:00 +01:00
 categories: java
-sidebar : false
 description: "My JDK7 article 'Java the language vs Java the platform' was recently published in the Java Tech Journal. Find out what's new and noteworthy in Java 7."
 keywords: "JDK7, Java 7, Open JDK, Java 8, Lambda, Java Tech Journal, jaxenter, JAX"
 ---

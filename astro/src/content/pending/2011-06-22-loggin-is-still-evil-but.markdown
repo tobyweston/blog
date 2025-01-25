@@ -3,7 +3,6 @@ name: loggin-is-still-evil-but
 title: Logging is still evil but...
 pubDate: 2011-06-22 21:14:00 +01:00
 categories: java object-oriented mocking testing recipes
-sidebar : false
 keywords: "logging, log4j, event driven vs logging, event driven"
 description: "This post shows how to make assertions against Log4J and test your application's logging. If you can't avoid it, treat logging as a requirement and test against it."
 ---

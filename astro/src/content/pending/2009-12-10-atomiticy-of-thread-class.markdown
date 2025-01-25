@@ -3,7 +3,6 @@ name: atomiticy-of-thread-class
 title: Atomiticy of the Thread class
 pubDate: 2009-12-10 09:18:00 +00:00
 categories: java concurrency tempus-fugit
-sidebar : false
 keywords: "thread, interrupt status flag, interrupt, state, RUNNABLE, WAITING, TIMED_WAITING, TERMINATED"
 description: "Java's Thread seems not to maintain it's state (RUNNABLE, WAITING etc) atomically with it's interrupt status flag"
 ---

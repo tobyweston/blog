@@ -3,7 +3,6 @@ name: interfaces-vs-class-impostorisers
 title: Interfaces vs Class impostorisers
 pubDate: 2008-12-24 11:36:00 +00:00
 categories: java testing mocking
-sidebar : false
 keywords: "jmock, mocking, imposterizer, cg-lib"
 description: "Mocking with JMock without using an interface, ie, using an impostor, isn't always a bad thing."
 ---

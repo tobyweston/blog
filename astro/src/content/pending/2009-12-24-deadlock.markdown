@@ -3,7 +3,6 @@ name: deadlock
 title: Deadlock detection in Java
 pubDate: 2009-12-24 15:41:00 +00:00
 categories: java concurrency tempus-fugit recipes
-sidebar : false
 keywords: "deadlock detection, junit, deadlock, find deadlocks programmatically"
 description: "Detect deadlocks in Java code programmatically with the DeadlockDetector class"
 ---

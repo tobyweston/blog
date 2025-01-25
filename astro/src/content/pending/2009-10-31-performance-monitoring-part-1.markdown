@@ -3,7 +3,6 @@ name: performance-monitoring-part-1
 title: Performance Monitoring Basics
 pubDate: 2009-10-31 20:15:00 +00:00
 categories: java performance
-sidebar : false
 keywords: "performance, monitoring, tuning, scalability, instrumentation, aop, aspectj, requests per second, rps, java melody, jmx"
 description: "Keeping an eye on performance is something that's easy to neglect. Get a few pointers about setting this up early, what to watch for and a few implementation tips."
 ---

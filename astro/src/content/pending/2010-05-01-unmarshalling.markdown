@@ -3,7 +3,6 @@ name: unmarshalling
 title: Un/Marshalling
 pubDate: 2010-05-01 09:35:00 +01:00
 categories: java
-sidebar : false
 description: "Almost all unmarshalling frameworks cause problems. By extension, all frameworks cause problems. There's generally idiosyncrasies or constraints that won't work for you're app. Roll your own, please, it's simpler than you think"
 keywords: "unmarshalling frameworks, castor, JAXB, json, xml"
 

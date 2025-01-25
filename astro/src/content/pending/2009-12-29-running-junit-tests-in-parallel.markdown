@@ -3,7 +3,6 @@ name: running-junit-tests-in-parallel
 title: Running JUnit tests in parallel
 pubDate: 2009-12-29 19:03:00 +00:00
 categories: java concurrency tempus-fugit recipes
-sidebar : false
 keywords: "testing, concurrency, parallel tests, run concurrently, multi threaded tests"
 description: "Use JUnit to run tests in parallel."
 ---

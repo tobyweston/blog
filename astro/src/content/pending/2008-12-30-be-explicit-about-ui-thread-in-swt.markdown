@@ -3,7 +3,6 @@ name: be-explicit-about-ui-thread-in-swt
 title: Be Explicit with the UI Thread
 pubDate: 2008-12-30 12:00:00 +00:00
 categories: java testing concurrency
-sidebar : false
 keywords: "SWT, EDT, event dispatching thread, testing on the main thread"
 description: "Understand which is the main, event dispatching thread and take control when running UI tests."
 ---

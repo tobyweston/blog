@@ -3,7 +3,6 @@ name: java-source-on-mac
 title: Java source on Mac
 pubDate: 2011-10-29 11:11:00 +01:00
 categories: java recipes
-sidebar : false
 description: "Getting Java source on your Mac"
 keywords: "mac, java source, org/codehaus/plexus/classworlds/launcher/Launcher, maven, m2_home, mvn"
 ---

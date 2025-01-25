@@ -3,7 +3,6 @@ name: wrapping-exceptions-is-dull
 title: Wrapping Exceptions is Dull
 pubDate: 2010-04-25 18:19:00 +01:00
 categories: java tempus-fugit exceptions recipes
-sidebar : false
 description: "Wrapping exceptions to rethrow in Java is verbose, use this handy class to auto-wrap exceptions."
 keywords: "exception wrapping, wrap exceptions, auto-wrap"
 ---

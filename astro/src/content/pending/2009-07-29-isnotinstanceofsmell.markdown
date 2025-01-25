@@ -3,7 +3,6 @@ name: isnotinstanceofsmell
 title: is(not(instanceOf(smell)));
 pubDate: 2009-07-29 19:17:00 +01:00
 categories: java object-oriented
-sidebar : false
 keywords: "instanceof, smell"
 description: "The instanceof operator in Java isn't always a bad thing"
 ---
