@@ -1,12 +1,12 @@
 ---
 title: "Pair Tests: What Candidates Can Expect"
-pubDate: 2012-07-04 18:58
-categories: agile coaching
+pubDate: "2012-07-04"
+categories: "agile coaching"
 keywords: "pair tests, interview, tdd, pairing exercise, agile pair test, what to expect from an agile pair interview"
 description: "This post talks a little about what to expect from a pair test and offers a few tips to surviving the ordeal."
 ---
 
-![](../images/pairing.jpg %}
+![](../images/pairing.jpg)
 
 If you haven't had the opportunity to pair much in your day job, it may seem a little unfair to be _tested_ on the subject. More and more, people are trying to recreate working environments in order to assess candidates and that means _pairing_. The trouble is, _pair tests_ are often not an accurate recreation and it takes some skill from both candidate and interviewer to get through a pair test smoothly.
 
@@ -51,6 +51,6 @@ Discuss the problem. Discuss what you're thinking. Discuss what you plan to do. 
 
 If you get the chance, even mention some of the awesome things you've done. It's a great opportunity to talk to the devs you could actually be working with. So ask them about the project, about what floats _their_ boat. Remember that you're interviewing them as much as the other way round.
 
-Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but [reflect and learn from it](/blog/2011/08/29/reflecting-on-interviewing-mistakes).
+Communication is key in what we do and it's key in any pairing exercises. If you're open, honest and communicative, you won't go far wrong in a well conducted pairing exercise. Don't forget too that conducting a pairing exercise is difficult and takes practice. So don't be too disheartened if it doesn't go well, but [reflect and learn from it](/blog/2011-08-29-reflecting-on-interviewing-mistakes).
 
 Good luck!

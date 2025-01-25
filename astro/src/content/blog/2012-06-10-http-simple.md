@@ -88,7 +88,6 @@ assertThat(response, has(content(not(containsString("\"error\"")))));
 
 Or use them in an expectation, for example using [JMock](http://jmock.org/) below, we expect a HTTP `GET` to the URL [http://acme.com/stock](http://acme.com/stock) when we call the method `inventoryCount()`.
 
-{% assign braces = '{{' %}
 ``` java
 @Test
 public void anExample() throws MalformedURLException {
