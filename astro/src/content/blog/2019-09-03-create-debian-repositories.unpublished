@@ -15,7 +15,7 @@ In this post, we'll look at to how to setup your own [Debian repository](https:/
 
 The basic approach:
 
-1. Create a `.deb` package (see the [previous post]({{ root_url }}/blog/2019/09/02/deploy-java-to-debian) for doing so with Java/Scala and `sbt`)
+1. Create a `.deb` package (see the [previous post](/blog/2019/09/02/deploy-java-to-debian) for doing so with Java/Scala and `sbt`)
 1. Use `aptly` to create a manage your own debian repository, serving your packages over HTTP
 1. Tell your customers where your repository is hosted
 1. Profit
