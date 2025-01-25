@@ -1,16 +1,12 @@
 ---
-layout: post
 title: "Sending Messages vs Method Invocation"
-pubDate: 2012-10-06 12:12
-comments: true
-categories: java object-oriented objective-c
-sidebar: false
-published: true
+pubDate: "2012-10-06"
+categories: "java object-oriented objective-c"
 keywords: "message sending, objective-c, smalltalk, java, object-oriented, method invocation"
 description: "What's the difference between sending an object a message and just invoking a method on an object? Why is a function different than a method?"
 ---
 
-![](../images/letter.jpg  'Send a message'%}
+![Send a message](../images/letter.jpg)
 
 In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we'll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we're on the topic, we'll look at the difference between a function and a method and discuss the difference between an object reference and a pointer. 
 
@@ -25,7 +21,7 @@ With the arrival of "objects" to encapsulate state *and* behaviour, the messagin
 
 > So sending messages helps us think in object-oriented terms rather than procedural or functional terms; we think in terms of behaviours rather than data structures. However, there is also a more concrete, technical difference.
 
-Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In lanaguages like Java, the function (or procedure) lookup is still done, it's just done behind the scenes at runtime. By calling a method, for example, `person.eat(apple)`, the reference to `person` allows the JVM to associate the object with the procedure `eat`. It's a process called [dynamic dispatch](http://en.wikipedia.org/wiki/Dynamic_dispatch).
+Sending a message means the receiving object decides how to handle a message whilst a call to a function (or procedure) is a more static or class level notion [1]. In languages like Java, the function (or procedure) lookup is still done, it's just done behind the scenes at runtime. By calling a method, for example, `person.eat(apple)`, the reference to `person` allows the JVM to associate the object with the procedure `eat`. It's a process called [dynamic dispatch](http://en.wikipedia.org/wiki/Dynamic_dispatch).
 
 It's very similar in concept to the distinction between functions and methods.
 
@@ -35,7 +31,7 @@ It's very similar in concept to the distinction between functions and methods.
 
 Functions and procedures are [subroutines](http://en.wikipedia.org/wiki/Subroutine) disassociated from the data they act upon. Methods on the other hand are subroutines associated with objects. Functions are class level subroutines whereas methods are object level subroutines. For example, a *method* in Objective-C, is compiled down to a C *function* with additional parameters, one of which is the receiver object (`id`). It associates the function with this object.
 
-Lets have a look at that in detail. For example, our method above would look like the following in Objective-C.
+Let's have a look at that in detail. For example, our method above would look like the following in Objective-C.
 
 ``` objective-c
 - (void) eat:(Food*) food {
@@ -60,6 +56,8 @@ void eat(id self, SEL _cmd, Food* food) {
 }
 ```
 
+  
+  
 ## Object References
 
 So where does object references come in?
@@ -74,7 +72,7 @@ struct person {
 };
 struct person person;
 ```
-and dereferencing it would look similar to Java
+...and dereferencing it would look similar to Java
 
 ``` c
 person.eat(apple)
@@ -88,23 +86,8 @@ For me, the challenge of working with object-oriented designs is keeping my obje
 
 ## References
 
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
 [1] Objective-C for Java Programmers, [Part 1](https://www.informit.com/articles/printerfriendly.aspx?p=1568732), [Part 2](https://www.informit.com/articles/printerfriendly.aspx?p=1571983), David Chisnall   
 [2] [Object-Oriented Programming with Objective-C](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html), Apple.      
-[3] <a href="http://amzn.to/Tm1Sh1" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Learn Objective-C for Java Developers</a>, James Bucanek
+[3] [Learn Objective-C for Java Developers](http://amzn.to/Tm1Sh1), James Bucanek  
 [4] [Object-C Messages](http://www.mikeash.com/pyblog/friday-qa-2009-03-20-objective-c-messaging.html), Mike Ash
 
