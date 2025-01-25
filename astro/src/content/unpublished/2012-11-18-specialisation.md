@@ -2,7 +2,6 @@
 title: "Specialisation and Generalisation in OOD"
 pubDate: "2012-11-18"
 categories: "java object-oriented"
-published: false
 keywords: "generalisation, specialisation, inheritance, composition, aggregation"
 description: "Specialisation and generalisation in OOD and how inheritance, aggregation and compoisition fit in."
 ---
