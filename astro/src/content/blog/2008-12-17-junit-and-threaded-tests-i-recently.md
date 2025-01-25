@@ -1,9 +1,7 @@
 ---
-name: junit-and-threaded-tests-i-recently
-title: JUnit and Threaded Tests
-pubDate: 2008-12-17 18:52:00 +00:00
-categories: java concurrency testing
-sidebar : false
+title: "JUnit and Threaded Tests"
+pubDate: "2008-12-17"
+categories: "java concurrency testing"
 keywords: "junit, concurrent, concurrent tests, tests, eclipse, false positive"
 description: "Find out how threaded tests exit early thanks to your test runner. Eclipse (and others) will call exit so unless you wait, you may get false-positive results."
 ---
