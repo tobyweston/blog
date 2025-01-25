@@ -100,7 +100,7 @@ public void anExample() throws MalformedURLException {
     context.assertIsSatisfied();
 }
 ```
-Or here where we expect a HTTP `POST` to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like `stock=%7Bsome%3A+json+message%7D`. Notice how [bad.robot.repo](http://robotooling.com/maven/) avoids this complexity.
+Or here where we expect a HTTP `POST` to submit a URL form encoded body to add some stock. In the example, the form parameter we're expecting should look like `stock=%7Bsome%3A+json+message%7D`.
 
 ``` java
 public void anotherExample() throws Exception {
@@ -112,21 +112,13 @@ public void anotherExample() throws Exception {
 ```
 ## Download
 
-You can download from the [bad.robot.repo](http://robotooling.com/maven/) Maven repository or get the source from [Github](https://github.com/tobyweston/simple-http).
+You can download from [Maven Central](https://central.sonatype.com/artifact/com.simple-http/simple-http) Maven repository or get the source from [Github](https://github.com/tobyweston/simple-http).
 
 ``` xml
-<repositories>
-    <repository>
-        <id>bad.robot</id>
-        <name>bad.robot repository for robotooling</name>
-        <url>http://www.robotooling.com/maven/</url>
-    </repository>
-</repositories>
-
 <dependency>
-    <groupId>bad.robot</groupId>
+    <groupId>com.simple-http</groupId>
     <artifactId>simple-http</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.4</version>
 </dependency>
 ```
 
