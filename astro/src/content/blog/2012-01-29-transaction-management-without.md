@@ -1,11 +1,7 @@
 ---
-name: transaction-management-without
-layout: post
-title: Transaction Management without the Frameworks
-time: 2012-01-29 13:58:00 +00:00
-categories: java object-oriented
-comments: true
-sidebar : false
+title: 'Transaction Management without the Frameworks'
+pubDate: '2012-01-29'
+categories: 'java object-oriented'
 description: "Avoid frameworks like Spring and roll your own transaction management. Declarative approaches like Spring, by definition, take away control. Moving towards an imperative approach gives it back. Don't be put of, it's actually very straight forward."
 keywords: "transactions, acid, transaction management, transactionality, GOOS, unit of work, declarative vs imperative, spring"
 ---
@@ -14,9 +10,7 @@ It's easy to avoid manually managing transactions when frameworks like Spring an
   
 Moving from a declarative approach to a more imperative one can help us with testing and by virtue; _composability_. We can move from something which can only be tested using the framework or container (implying an integration or end-to-end style test) to a more focused style (without the need of said frameworks or containers). If we manage things ourselves and are explicit about the transactional boundaries in production code, we can be more lightweight in our tests.
 
-<!-- more -->
-
-Lets take a look at an example in detail.
+Let's take a look at an example in detail.
 
 It's probably helpful to be clear what we mean by a _unit of work_ here. Intimately related to the idea of a database transaction, a unit of work is a series of database operations that when applied together adhere to all the transactional characteristics (_atomic_, _coherent_, _isolated_ and _durable_). For example, when updating the database to increment one bank account and decrementing another, things should be atomic (both operations happen or neither does), consistent (the bank accounts actually exist), isolated (protected from concurrent updates to the same accounts) and durable (permanently applied). Describing both operations as a unit of work and applying then transactionally achieves this.
 
