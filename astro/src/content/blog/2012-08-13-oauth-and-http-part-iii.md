@@ -1,12 +1,8 @@
 ---
-layout: post
-title: "FreeAgent, OAuth &amp; HTTP (Part III)"
-series: FreeAgent OAuth
-pubDate: 2012-08-13 19:13
-comments: true
-categories: java
-sidebar: false
-published: true
+title: "FreeAgent, OAuth & HTTP (Part III)"
+series: "FreeAgent OAuth"
+pubDate: "2012-08-13"
+categories: 'java'
 description: "Caveats access the FreeAgent API using OAuth"
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
@@ -34,18 +30,20 @@ It's not always clear, but step 1. above is a one time operation. You don't make
 
 Again, it's not always clear but the _access token_ request only needs to be made once. In fact, if you've successfully retrieved an _access token_ and then request a new one, FreeAgent will error with a basic authentication failure.
 
-    HTTP/1.1 401 Unauthorized
-    Server: nginx/1.0.14
-    pubDarte: Mon, 13 Aug 2012 18:13:44 GMT
-    Content-Type: text/html; charset=utf-8
-    Status: 401 Unauthorized
-    WWW-Authenticate: Basic realm="Application"
-    X-UA-Compatible: IE=Edge,chrome=1
-    X-RunpubDate: 0.099212
-    X-Rev: 9301db5
-    X-Host: web3
+``` shell
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.0.14
+pubDarte: Mon, 13 Aug 2012 18:13:44 GMT
+Content-Type: text/html; charset=utf-8
+Status: 401 Unauthorized
+WWW-Authenticate: Basic realm="Application"
+X-UA-Compatible: IE=Edge,chrome=1
+X-RunpubDate: 0.099212
+X-Rev: 9301db5
+X-Host: web3
 
-    HTTP Basic: Access denied.
+HTTP Basic: Access denied.
+```
 
 I think it's trying to say that your application isn't allowed to request a new access token whilst one is already valid.
 
@@ -71,19 +69,20 @@ FreeAgent return `604800` which is consistent with their documentation as it wor
 
 The process is similar to the [requesting the original _access token_](/blog/2012/08/12/oauth-and-http-part-ii). Make a Basic auth HTTP POST but with a slightly smaller body.
 
-    POST /v2/token_endpoint HTTP/1.1
-    Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
-    Accept: application/json
-    Content-Type: application/x-www-form-urlencoded
-    User-Agent: Java/1.6.0_33
-    Host: api.freeagent.com
-    Connection: close
-    Content-Length: 127
+``` shell
+POST /v2/token_endpoint HTTP/1.1
+Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Java/1.6.0_33
+Host: api.freeagent.com
+Connection: close
+Content-Length: 127
 
-    grant_type=refresh_token&refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
+grant_type=refresh_token&refresh_token=12wXjd7SL7SLOE1sdsaX8oCgix
+```
 
-
-which will return something like
+...which will return something like
 
 ``` js
 {

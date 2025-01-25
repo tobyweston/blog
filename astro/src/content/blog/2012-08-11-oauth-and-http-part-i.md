@@ -1,11 +1,8 @@
 ---
-layout: post
-title: "FreeAgent, OAuth &amp; HTTP (Part I)"
-series: FreeAgent OAuth
-pubDate: 2012-08-11 19:20
-comments: true
-categories: java recipes
-sidebar: false
+title: "FreeAgent, OAuth & HTTP (Part I)"
+series: "FreeAgent OAuth"
+pubDate: "2012-08-11"
+categories: "java recipes"
 description: "Access FreeAgent OAuth from a desktop app has it's idiosyncrasies, the hardest part is covering the redirect part of the protocol. Find out how I did it here."
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
 ---
@@ -29,13 +26,15 @@ Once you have an application _client id_ and _client secret_, you can request an
 
 A `GET` is made to the target _authorisation endpoint_ with the _client id_ and a _redirect URL_ in the query string.
 
-    GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&response_type=code&client_id=YYY HTTP/1.1
+``` shell
+GET https://api.freeagent.com/v2/approve_app?redirect_uri=XXX&response_type=code&client_id=YYY HTTP/1.1
+```
 
 The [FreeAgent documentation](https://dev.freeagent.com/docs/oauth) talks about your application making this request but it really needs to be done in a browser environment. Fine, if your application is a web app. Not fine, if you're trying to programmatically do the HTTP `GET` request. At least, things got complicated for me when I tried.
 
 If you do make the request in a browser environment, you'll log into FreeAgent with your user account and be asked to authorise the client application.
 
-[../images/freeagent_auth_confirmation.png 'Authorisation confirmation' %}](../images/freeagent_auth_confirmation.png)
+![Authorisation confirmation](../images/freeagent_auth_confirmation.png)
 
 At this point, FreeAgent will redirect to the _redirect URL_ you supplied with the authorisation request. This is where it gets clunky. For a desktop application, where should you redirect to? The protocol causes tension because it requires a HTTP endpoint. Up and till now, it's only required a HTTP _client_, not a running _server_.
 
@@ -45,20 +44,22 @@ There is an "out of band" option in the OAuth specification. Using this, you wou
 
 In lieu of this, I resorted to firing up a temporary HTTP server to reproduce the affect. The server runs on `localhost:8088/oauth` for example, and will extract the code from the response to the original authorisation request. If you set the `redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth`, the request will be redirected here after you've manually confirmed authorisation in the browser. Crucially, it will pass along the _authorisation code_ in the URL.
 
-    http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
+``` shell
+http://localhost:8080/oauth?code=1A18cTY2tK7_ZHUsYSknCVWbVRYB4Nk
+```
 
 All that's left to do is extract it programmatically or display it for some cut and paste action. In my spoofed "out of band" workflow, it looks like this.
 
-[../images/freeagent_oob_spoof.png 'OOB Spoof' %}](../images/freeagent_oob_spoof.png)
+![OOB Spoof](../images/freeagent_oob_spoof.png)
 
 
 At this point, you're application is now authorised to access the target. Jumping into my FreeAgent account, I can see this to be the case. The FreeAgent documentation doesn't make it very clear when it says the next step happens "out of band", but once you've got your authorisation code, it'll be valid for a while. You don't need to go through this step every time your application uses the target API.
 
-[../images/freeagent_authorised.png 'My app is authorised' %}](../images/freeagent_authorised.png)
+![My app is authorised](../images/freeagent_authorised.png)
 
 ## Next Up
 
 Once you've got the _authorisation code_ but before actually being able to access target resources, you need to exchange the code for an _access token_.
 
-I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post](/blog/2012/08/12/oauth-and-http-part-ii).
+I think that's quiet enough for now though, so we'll take a look at how that's done in the [next post](/blog/2012-08-12-oauth-and-http-part-ii).
 
