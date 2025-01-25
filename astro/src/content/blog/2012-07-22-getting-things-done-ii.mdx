@@ -1,34 +1,24 @@
 ---
 title: "Getting Things Done, Part II"
-pubDate: 2012-07-22 12:38
-categories: coaching ios
+pubDate: "2012-07-22"
+categories: "coaching ios"
 keywords: "getting things done, GTD, Appigo Todo, task management, David Allen, Stree-free productivity, agile vs GTD"
 description: "In the previous post, I summarised some of the ideas from David Allen's book Getting Things Done. In this post, I talk more about applying the basic ideas and talk about the parallels between GTD and agile software development."
-series: Getting Things Done
+series: "Getting Things Done"
 ---
 
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
 
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
+import { Image } from 'astro:assets';
+import appigo_todo from "../images/appigo_todo.png";
 
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
 
-[![](../images/appigo_todo.png 224 336 'My Lists in Appigo Todo'%}](../images/appigo_todo.png)
+<Image src={appigo_todo} alt="My Lists in Appigo Tod" width="224" height="336" />
 
-In the [preceding post](/blog/2012/07/20/getting-things-done-i), I summarised some of the ideas from David Allen's book <a href="http://amzn.to/Tm1FdQ" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Getting Things Done</a>. In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
+
+In the [preceding post](/blog/2012-07-20-getting-things-done-i), I summarised some of the ideas from David Allen's book [Getting Things Done](http://amzn.to/Tm1FdQ). In this second post, I talk more about trying to apply the basic ideas with more rigour and reflect on how it's been going. I also draw parallels between Allen's ideas and some of the principles that underpin modern agile software development.
 
 I'd already been using Appigo's [Todo](http://www.appigo.com/todo) app to capture todos against various lists. After reading the first section of the book, one of the first things I did was to delete my custom lists and replace them with Allen's standard set. I removed the spurious `Home`, `Work`, `Other` lists and replaced them with `Inbox`, `Options`, `Reference`, `Someday / Maybe`, `Waiting (for someone)` and `Trash`.
 
-<!-- more -->
 
 ## The "Think It Through Principle"
 
@@ -47,13 +37,11 @@ I also like the idea of the "next steps" part of the think it through principle.
 
 So far, I think its working for me. I certainly feel like I'm starting to trust the system. It feels like there's a real difference between keeping things in my head and off loading them to Appigo [Todo](http://www.appigo.com/todo).
 
-### A Couple of Examples,
+### A Couple of Examples
 
-> On receiving my first reminder from HMRC, I filed "Self Assessment 2011/12" into my "stuff" inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my "options" list having changed the one line description to be "Pay 2011/12 Self Assessment". The deliberate steps were to pause and turn an _open loop_ into something that I can tick off as done. I came up with the _acceptance criteria_ and gave it a date.
-
-> I wasn't clear about the dates though and had a question I wanted to ask my accountant. So my "next step" was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my "waiting (for someone)" file.
-
-> Another example, the _open loop_ being to "Improve my blog's SEO" was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be "signed off"), and moved it into the "options" list with no date and a description "add keyword and description metadata to old articles". It's sitting in my backlog now.
+* On receiving my first reminder from HMRC, I filed "Self Assessment 2011/12" into my "stuff" inbox, no date, nothing concrete. Just a label. Almost straight away, I moved it into my "options" list having changed the one line description to be "Pay 2011/12 Self Assessment". The deliberate steps were to pause and turn an _open loop_ into something that I can tick off as done. I came up with the _acceptance criteria_ and gave it a date.
+* I wasn't clear about the dates though and had a question I wanted to ask my accountant. So my "next step" was to email my accountant. It was going to take less than 2 minutes, so I just fired off a quick mail and moved the item into my "waiting (for someone)" file.
+* Another example, the _open loop_ being to "Improve my blog's SEO" was captured in my inbox. Again, I stopped, thought about the acceptance criteria (what would have to happen for this to be "signed off"), and moved it into the "options" list with no date and a description "add keyword and description metadata to old articles". It's sitting in my backlog now.
 
 
 ## Conclusion so Far
