@@ -3,16 +3,6 @@ const {kicker, title, subtitle, cta} = Astro.props;
 ---
 <section class="relative py-16 bg-surface">
   <div class="container mx-auto px-4">
-    <!-- Hero Logo -->
-    <!--<div class="mb-8 text-center hero-reveal" data-idx="0">-->
-    <!--  <img-->
-    <!--    src="/images/robot-logo_105x132.png"-->
-    <!--    alt="bad.robot logo"-->
-    <!--    class="hero-logo mx-auto"-->
-    <!--    loading="eager"-->
-    <!--  />-->
-    <!--</div>-->
-
     <div class="max-w-3xl mx-auto text-center">
       {kicker && (
         <div class="text-sm uppercase tracking-widest text-accent font-semibold mb-4 hero-reveal" data-idx="1">
@@ -21,7 +11,7 @@ const {kicker, title, subtitle, cta} = Astro.props;
       )}
 
       {title && (
-        <h1 class="logo-text text-5xl mb-4 hero-reveal" data-idx="2">
+        <h1 class="logo-text text-6xl mb-4 hero-reveal" data-idx="2">
           {title}
         </h1>
       )}
@@ -49,18 +39,18 @@ const {kicker, title, subtitle, cta} = Astro.props;
     const elems = document.querySelectorAll('.hero-reveal');
     const revealElement = (el) => el.classList.add('revealed');
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        elems.forEach((el) => {
-          const idx = el.dataset.idx ? Number(el.dataset.idx) : 0;
-          setTimeout(() => revealElement(el), 150 * (idx + 1));
-        });
-      });
-    } else {
+    const runReveal = () => {
       elems.forEach((el) => {
         const idx = el.dataset.idx ? Number(el.dataset.idx) : 0;
-        setTimeout(() => revealElement(el), 150 * (idx + 1));
+        // staggered reveals but keep overall duration sensible
+        setTimeout(() => revealElement(el), 120 * (idx + 1));
       });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runReveal);
+    } else {
+      runReveal();
     }
   </script>
 </section>
