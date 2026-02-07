@@ -3,24 +3,88 @@ import { SITE_TITLE } from '../consts';
 import { Image } from 'astro:assets';
 import logoImage from '../assets/robot-logo.png';
 ---
-<header class="py-4 border-b border-gray-200">
-  <div class="container mx-auto flex items-center justify-between px-4">
-    <a href="/" class="flex items-center gap-3" style="--header-logo-width:84px;">
-      <Image
-        src={logoImage}
-        alt="bad.robot logo"
-        width={84}
-        height={106}
-        class="header-logo-image"
-        densities={[1, 2]}
-      />
-      <span class="logo-text header-logo-text">{SITE_TITLE}</span>
-    </a>
+<header class="header">
+  <div class="header-container">
+    <div class="logo-section">
+      <a href="/" class="logo-link">
+        <Image
+          src={logoImage}
+          alt="bad.robot logo"
+          width={84}
+          height={106}
+          class="logo-image"
+          densities={[1, 2]}
+        />
+        <h1 class="logo-title">{SITE_TITLE}</h1>
+      </a>
+    </div>
 
-    <nav class="flex items-center gap-6 text-sm font-medium">
-      <a href="/blog" class="hover:text-accent transition-colors">Blog</a>
-      <a href="/book" class="hover:text-accent transition-colors">Books</a>
-      <a href="/archive" class="hover:text-accent transition-colors">Archive</a>
+    <nav class="nav">
+      <a href="/blog">Blog</a>
+      <a href="/book">Books</a>
+      <a href="/archive">Archive</a>
     </nav>
   </div>
 </header>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+  .header {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem 2rem;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    max-width: 100%;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-image {
+    width: 84px;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .logo-title {
+    margin: 0;
+    font-family: 'Lobster', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .nav {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+  }
+
+  .nav a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .nav a:hover {
+    color: #0066cc;
+  }
+</style>
+
