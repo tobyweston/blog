@@ -51,6 +51,7 @@
 
   /* header-specific logo sizing so the header doesn't dominate */
   .header-logo-text {
+    padding-left: 1rem;
     font-size: 4rem;
   }
 
