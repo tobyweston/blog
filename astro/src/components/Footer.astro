@@ -1,25 +1,9 @@
 ---
 const today = new Date();
 ---
-
-<footer>
-    &copy; 2016-{today.getFullYear()} Toby Weston. All rights reserved.
-    <div class="trailer">
-        <img src="/images/waving_with_cane_104x166.png"/>
-    </div>
+<footer class="py-8 border-t border-gray-200 mt-12">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm text-gray-600">&copy; 2016-{today.getFullYear()} Toby Weston. All rights reserved.</p>
+    <p class="text-xs text-gray-400 mt-2">Built with Astro</p>
+  </div>
 </footer>
-<style>
-    footer {
-        padding: 2em 1em 6em 1em;
-        background: linear-gradient(var(--gray-gradient)) no-repeat;
-        color: rgb(var(--gray));
-        text-align: center;
-    }
-
-    .trailer {
-        display: flex;
-        justify-content: center;
-        gap: 1em;
-        margin-top: 1em;
-    }
-</style>

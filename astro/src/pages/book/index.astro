@@ -1,29 +1,22 @@
 ---
 import {getCollection} from 'astro:content';
-import Main from "../../layouts/Main.astro";
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from '../../components/ui/SiteLayout.astro';
 
-const books = (await getCollection('book')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-)
+const books = (await getCollection('book')) as CollectionEntry<'book'>[];
+books.sort((a: CollectionEntry<'book'>, b: CollectionEntry<'book'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Main>
-    <section>
-        <ul>
-            {
-                books.map((book) => (
-                        <li>
-                            <!-- how to I embed the full page/content here? -->
-                            <!--await book.render();-->
-                            <div class="book">
-                                <a href={`/book/${book.slug}/`}>
-                                    <h4 class="title">{book.data.title}</h4>
-                                </a>
-                                {book.data} <!-- this is a promise, how do I wait? -->
-                            </div>
-                        </li>
-                ))
-            }
-        </ul>
-    </section>
-</Main>
+<SiteLayout title="Books - bad.robot" description="Books by Toby Weston">
+  <section>
+    <h1 class="text-3xl font-bold mb-6">Books</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {books.map((b: CollectionEntry<'book'>) => (
+        <article class="border rounded p-4">
+          <a href={`/book/${b.slug}/`} class="text-xl font-semibold">{b.data.title}</a>
+          {b.data.description && <p class="text-slate-600 mt-2">{b.data.description}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+</SiteLayout>

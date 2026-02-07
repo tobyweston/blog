@@ -1,122 +1,45 @@
 ---
 import {getCollection} from 'astro:content';
-import FormattedMonthAndDay from '../../components/FormattedMonthAndDay.astro';
-import Main from "../../layouts/Main.astro";
+import SiteLayout from '../../components/ui/SiteLayout.astro';
 
 // Fetch posts (avoid using generic type syntax in frontmatter which can be parsed as JSX)
-const posts = await getCollection('blog');
-
-posts.sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
-
-// requires node 21+ (Object.groupBy returns a Record<string, any[]>)
-const byYear = Object.groupBy(posts, ({ data }) => data.pubDate.getFullYear()) as Record<string, any[]>;
+const posts = (await getCollection('blog')).sort((a,b)=> b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const byYear = Object.groupBy(posts, p => String(p.data.pubDate.getFullYear()));
 ---
 
-<Main>
-    <section>
-        {Object.keys(byYear).sort((a, b) => Number(b) - Number(a)).map((year: string) => {
-            const postsForYear = byYear[year] as any[];
-            return (
-                    <div class="year-block">
-                        <div class="year">
-                            <p>
-                                {year}
-                            </p>
-                            <ul>
-                                {
-                                    postsForYear.map((post: any) => (
-                                            <li>
-                                                <p class="date">
-                                                    <FormattedMonthAndDay date={post.data.pubDate}/>
-                                                </p>
-                                                <a href={`/blog/${post.slug}/`}>
-                                                    <h4 class="title">{post.data.title}</h4>
-                                                </a>
-                                            </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                        <hr/>
-                    </div>
-             )
-         })}
-     </section>
-</Main>
+<SiteLayout title="Archive - bad.robot" description="All posts">
+  <section>
+    <h1 class="text-3xl font-bold mb-4">Archive</h1>
+    <div class="mb-6">
+      <input id="search" placeholder="Search posts by title..." class="w-full border rounded px-3 py-2" />
+    </div>
 
-<style>
-    .year {
-        display: flex;
-    }
+    <div id="posts">
+      {Object.keys(byYear).sort((a,b)=>Number(b)-Number(a)).map(year => (
+        <div class="mb-8">
+          <h2 class="text-xl font-semibold mb-3">{year}</h2>
+          <ul class="list-disc pl-6 space-y-2">
+            {(byYear[year] || []).map(p => (
+              <li data-title={p.data.title.toLowerCase()}>
+                <a href={`/blog/${p.slug}/`} class="text-slate-800 hover:text-sky-600">{p.data.title}</a>
+                <div class="text-sm text-slate-500">{p.data.pubDate.toDateString()}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
 
-    .year > p {
-        margin-top: 0;
-        color: rgb(var(--gray));
-    }
-
-    main {
-        width: 720px;
-    }
-
-    ul {
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding-left: 2em;
-    }
-
-    ul li {
-        width: calc(720px - 1rem);
-        margin-bottom: 1em;
-    }
-
-    ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-    }
-
-    ul li img {
-        margin-bottom: 0.5rem;
-        border-radius: 12px;
-    }
-
-    ul li a {
-        display: block;
-    }
-
-    .title {
-        margin: 0;
-        color: rgb(var(--black));
-        line-height: 1;
-    }
-
-    .date {
-        margin: 0;
-        color: rgb(var(--gray));
-    }
-
-    ul li a:hover h4,
-    ul li a:hover .date {
-        color: rgb(var(--accent));
-    }
-
-    ul a:hover img {
-        box-shadow: var(--box-shadow);
-    }
-
-    hr {
-        margin-bottom: 1em;
-    }
-
-    @media (max-width: 720px) {
-        ul {
-            gap: 0.5em;
-        }
-
-        ul li {
-            width: 100%;
-            text-align: center;
-        }
-    }
-
-</style>
+  <script type="module">
+    const input = document.getElementById('search');
+    const posts = Array.from(document.querySelectorAll('#posts li'));
+    input.addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      posts.forEach(li => {
+        const t = li.dataset.title || '';
+        li.style.display = t.includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+</SiteLayout>

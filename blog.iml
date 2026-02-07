@@ -8,9 +8,9 @@
       <excludeFolder url="file://$MODULE_DIR$/.sass-cache" />
       <excludeFolder url="file://$MODULE_DIR$/_deploy" />
       <excludeFolder url="file://$MODULE_DIR$/public" />
+      <excludeFolder url="file://$MODULE_DIR$/octopress" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
-

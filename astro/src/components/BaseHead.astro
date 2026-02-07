@@ -1,18 +1,21 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
+// Import the Tailwind theme input so it's included on all pages.
+import '../themes/fresh-tailwind/input.css';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 interface Props {
-	title: string;
+	title?: string;
     keywords?: string;
-	description: string;
+	description?: string;
 	image?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, keywords, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const title = Astro.props.title || SITE_TITLE;
+const description = Astro.props.description || SITE_DESCRIPTION || '';
+const keywords = Astro.props.keywords || '';
+const image = Astro.props.image || '/blog-placeholder-1.jpg';
 ---
 
 <!-- Global Metadata -->
@@ -20,10 +23,6 @@ const { title, keywords, description, image = '/blog-placeholder-1.jpg' } = Astr
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
-
-<!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -47,3 +46,4 @@ const { title, keywords, description, image = '/blog-placeholder-1.jpg' } = Astr
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
