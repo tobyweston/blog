@@ -1,6 +1,6 @@
 ---
-title: "Reflecting on Interviewing Mistakes'"
-pubDate: "2011-08-29'"
+title: "Reflecting on Interviewing Mistakes"
+pubDate: "2011-08-29"
 categories: 'agile coaching'
 keywords: "interviewing, agile interview, pair test, reflections on interviewing, open questions, honesty when interviewing"
 description: "Reflecting on the last few years of heavily interviewing for agile developers. We've got the process down but often fool ourselves and let good guys slip through. Right or wrong answers don’t really have a place because there’s never a right or wrong answer in what we do."

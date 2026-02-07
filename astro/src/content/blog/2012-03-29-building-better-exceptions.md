@@ -1,6 +1,6 @@
 ---
-title: "Building Better Exceptions'"
-pubDate: "2012-03-28'"
+title: "Building Better Exceptions"
+pubDate: "2012-03-28"
 categories: 'java testing object-oriented exceptions'
 keywords: "checked vs runtime exceptions, exception handling, java, LoD, tell don't ask, test exception message, never test exception message, testing exceptions, ports and adaptors"
 description: "Isolate the internal boundaries within your system and isolate exception handling. Extend the idea and treat exceptions as real objects. Add behaviour, tell them do do things, don't ask"
@@ -37,7 +37,7 @@ All other constructors have been disabled so the exception can only be construct
 
 ``` java
 public MissingFieldException(Field field) {
-    super("the field '" + "' is missing from the request");
+    super("the field " + "' is missing from the request");
 }
 ```
 because the message is completely unimportant to the exception. It's the handling that's important and it's in the catch block that we can map to a message (if appropriate). We're encapsulating the internal details. For example, at the UI, we may map the exception to a message for display but at an internal boundary, we may generate an event for support staff that maps to a different message.

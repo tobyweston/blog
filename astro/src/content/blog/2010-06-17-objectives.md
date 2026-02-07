@@ -1,6 +1,6 @@
 ---
-title: "Objectives'"
-pubDate: "2010-06-17'"
+title: "Objectives"
+pubDate: "2010-06-17"
 categories: 'coaching'
 keywords: "Objective setting, SMART, coding diary, coding journal, developer journal"
 description: "It's objective setting time again, put the YOU into it and be SMART about your goals."

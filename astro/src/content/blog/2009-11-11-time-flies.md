@@ -1,6 +1,6 @@
 ---
-title: "Time Flies 1.0'"
-pubDate: "2009-11-11'"
+title: "Time Flies 1.0"
+pubDate: "2009-11-11"
 categories: 'java concurrency tempus-fugit'
 keywords: "tempus-fugit, concurrency framework"
 description: "New version of the tempus-fugit concurrency library released."

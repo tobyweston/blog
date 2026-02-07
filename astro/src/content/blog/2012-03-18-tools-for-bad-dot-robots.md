@@ -1,6 +1,6 @@
 ---
-title: "Tools for bad.robots'"
-pubDate: "2012-03-18'"
+title: "Tools for bad.robots"
+pubDate: "2012-03-18"
 categories: 'java robotooling'
 keywords: "java, tempus-fugit, simple-http, simple-excel, concordion ant task"
 description: "Introducing the robotooling project; a collection of useful Java tools (capturing the things I do again and again)"

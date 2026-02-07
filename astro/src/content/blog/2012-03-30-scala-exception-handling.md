@@ -1,6 +1,6 @@
 ---
-title: "Scala Exception Handling'"
-pubDate: "2012-03-30'"
+title: "Scala Exception Handling"
+pubDate: "2012-03-30"
 categories: 'java scala exceptions'
 keywords: "scala exception handling, scala, java, checked vs runtime"
 description: "Let's take a quick look at Scala’s syntax around exception handling and pattern matching. Scala uses runtime exceptions as apposed to checked exceptions and so forces more responsibility onto the developer."

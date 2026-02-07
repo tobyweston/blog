@@ -1,6 +1,6 @@
 ---
-title: "Stop Ignoring @Rules'"
-pubDate: "2012-05-05'"
+title: "Stop Ignoring @Rules"
+pubDate: "2012-05-05"
 categories: 'java mocking recipes'
 keywords: "junit, java, junit rules, jmock, jmock.class, ignoring junit rules, rules ignored, BlockJUnit4ClassRunner"
 description: "RunWith(JMock.class) causes JUnit rules to be ignored."

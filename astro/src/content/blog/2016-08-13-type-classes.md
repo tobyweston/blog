@@ -1,8 +1,8 @@
 ---
-title: "Type Classes in Scala'"
-pubDate: "2016-08-13'"
+title: "Type Classes in Scala"
+pubDate: "2016-08-13"
 categories: 'scala'
-keywords: "scala, implicit, type class, type-class, neophytes guide'"
+keywords: "scala, implicit, type class, type-class, neophytes guide"
 description: "Type-classes provide a way to extend classes without resorting to conventional inheritance."
 series: 'Scala Implicits'
 ---

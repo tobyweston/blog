@@ -1,6 +1,6 @@
 ---
-title: "Changing Test Gears'"
-pubDate: "2010-07-09'"
+title: "Changing Test Gears"
+pubDate: "2010-07-09"
 categories: 'agile coaching java mocking testing'
 keywords: "unit testing, acceptance testing, integration testing, unit vs acceptance testing, agile testing, user testing, uat, java, spring, application context, builder pattern"
 description: "Understanding different types of testing (unit, integration, acceptance) and when each is appropriate is a subtle skill. Optimising your approach and avoiding duplicate testing requires you know the context you're working in and what's coming up."

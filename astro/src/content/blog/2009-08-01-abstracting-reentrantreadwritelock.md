@@ -1,6 +1,6 @@
 ---
-title: "Abstracting ReentrantReadWriteLock'"
-pubDate: "2009-08-01'"
+title: "Abstracting ReentrantReadWriteLock"
+pubDate: "2009-08-01"
 categories: 'java concurrency tempus-fugit'
 keywords: "reentrant locks, java, locks, read write lock, concurrency, synchronized, ReentrantReadWriteLock"
 description: "All locks in Java are reentrant. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronized method and then call the superclass method without deadlocking"

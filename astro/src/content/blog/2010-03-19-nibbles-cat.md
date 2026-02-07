@@ -1,6 +1,6 @@
 ---
-title: "Nibbles the Cat & Concurrency'"
-pubDate: "2010-03-19'"
+title: "Nibbles the Cat & Concurrency"
+pubDate: "2010-03-19"
 categories: 'java concurrency tempus-fugit'
 keywords: "concurrency, deadlock, deadlock detection,"
 description: "Detect deadlocks programmatically with the DeadlockDetector class. Shows an example of deadlock."

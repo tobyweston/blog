@@ -1,6 +1,6 @@
 ---
-title: "Be more Expressive with Builders'"
-pubDate: "2009-01-06'"
+title: "Be more Expressive with Builders"
+pubDate: "2009-01-06"
 categories: 'java concurrency tempus-fugit'
 keywords: "CountDownLatch, micro-DSL, DSL, builder pattern"
 description: "Chain methods to create a micro-DSL and a more concise, human readable sequence of events in your code."

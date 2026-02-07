@@ -1,6 +1,6 @@
 ---
-title: "Force IE8 to Display JSON with Jersey'"
-pubDate: "2012-02-21'"
+title: "Force IE8 to Display JSON with Jersey"
+pubDate: "2012-02-21"
 categories: 'java REST recipes'
 keywords: "ie8, json, in-browser, jersey, application/x-ms-application"
 description: "Force IE8 to open JSON content within the browser with Jersey rather than prompt you to download and save as a file."

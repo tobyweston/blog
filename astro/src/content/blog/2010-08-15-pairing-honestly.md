@@ -1,6 +1,6 @@
 ---
-title: "Pairing Honestly'"
-pubDate: "2010-08-15'"
+title: "Pairing Honestly"
+pubDate: "2010-08-15"
 categories: 'agile coaching'
 keywords: "pair programming, pairing, agile teams, agile, pair stairs"
 description: "Some tips when pairing in agile team"

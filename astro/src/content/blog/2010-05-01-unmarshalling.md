@@ -1,6 +1,6 @@
 ---
-title: "Un/Marshalling'"
-pubDate: "2010-05-01'"
+title: "Un/Marshalling"
+pubDate: "2010-05-01"
 categories: 'java'
 keywords: "unmarshalling frameworks, castor, JAXB, json, xml"
 description: "Almost all unmarshalling frameworks cause problems. By extension, all frameworks cause problems. There's generally idiosyncrasies or constraints that won't work for you're app. Roll your own, please, it's simpler than you think"

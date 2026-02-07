@@ -1,6 +1,6 @@
 ---
-title: "Scala to Haskell and FP Cheatsheet'"
-pubDate: "2018-02-04'"
+title: "Scala to Haskell and FP Cheatsheet"
+pubDate: "2018-02-04"
 categories: 'haskell, scala'
 keywords: "haskell, scala, flatmap, point, >>=, FP Cheat Sheet"
 description: "Haskell conventions and how they translate to Scala"

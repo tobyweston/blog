@@ -1,10 +1,10 @@
 ---
-title: "Easily Deploy Java to Debian'"
+title: "Easily Deploy Java to Debian"
 pubDate: '2019-09-02'
 categories: 'java, scala'
-keywords: "java, scala, debian, debian repositories, aptly, ubuntu'"
+keywords: "java, scala, debian, debian repositories, aptly, ubuntu"
 description: "Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt."
-series: "Deploying to Debian'"
+series: "Deploying to Debian"
 ---
 
 Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as `.deb` files and deploying via `apt`. 

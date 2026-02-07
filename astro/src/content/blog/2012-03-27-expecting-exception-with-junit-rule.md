@@ -1,6 +1,6 @@
 ---
-title: "Expecting Exceptions JUnit Rule'"
-pubDate: "2012-03-27'"
+title: "Expecting Exceptions JUnit Rule"
+pubDate: "2012-03-27"
 categories: 'java testing exceptions recipes'
 keywords: "try catch, junit, junit rule, expected =, ExpectedException, ExpectedException rule"
 description: "Avoid the try-fail-catch idiom and use the ExpectedException JUnit rule when testing for exceptions."

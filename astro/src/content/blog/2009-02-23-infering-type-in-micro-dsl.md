@@ -1,6 +1,6 @@
 ---
-title: "Inferring the Types in a Micro DSL'"
-pubDate: "2009-02-23'"
+title: "Inferring the Types in a Micro DSL"
+pubDate: "2009-02-23"
 categories: 'java testing'
 keywords: "dsl, fluent api, generics, java"
 description: "Java can have trouble inferring multiple types, see and example and create a fluent API in Java using generics."

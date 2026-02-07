@@ -1,6 +1,6 @@
 ---
-title: "Scala as a Functional OO Hybrid'"
-pubDate: "2012-04-03'"
+title: "Scala as a Functional OO Hybrid"
+pubDate: "2012-04-03"
 categories: 'scala object-oriented'
 keywords: "scala exceptions, object oriented vs functional, java vs scala, java, blending object oriented and functional, blending oo, oo, pure functions, higher order functions, referential transparency"
 description: ""

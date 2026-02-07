@@ -1,6 +1,6 @@
 ---
-title: "More on Micro DSLs'"
-pubDate: "2009-02-16'"
+title: "More on Micro DSLs"
+pubDate: "2009-02-16"
 categories: 'java'
 keywords: "dsl, domain specific langauges, micro-dsl, fluent api, java,"
 description: "An example of a micro DSL to find items in a list using a fluent style API."

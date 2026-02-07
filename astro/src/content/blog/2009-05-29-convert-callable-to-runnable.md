@@ -1,6 +1,6 @@
 ---
-title: "Convert a Callable to a Runnable'"
-pubDate: "2009-05-29'"
+title: "Convert a Callable to a Runnable"
+pubDate: "2009-05-29"
 categories: 'java object-oriented tempus-fugit recipes'
 keywords: "callable, lambda, runnable, java, Executors framework, fixed rate delay, fixed rate, executors, doug lea"
 description: "Convert Java Callable objects to Runnable to schedule them at a fixed rate with the Executors framework"

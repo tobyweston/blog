@@ -1,6 +1,6 @@
 ---
-title: "Transaction Management without the Frameworks'"
-pubDate: "2012-01-29'"
+title: "Transaction Management without the Frameworks"
+pubDate: "2012-01-29"
 categories: 'java object-oriented'
 keywords: "transactions, acid, transaction management, transactionality, GOOS, unit of work, declarative vs imperative, spring"
 description: "Avoid frameworks like Spring and roll your own transaction management. Declarative approaches like Spring, by definition, take away control. Moving towards an imperative approach gives it back. Don't be put of, it's actually very straight forward."

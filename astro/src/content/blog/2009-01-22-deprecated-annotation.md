@@ -1,6 +1,6 @@
 ---
-title: "Deprecated Annotation'"
-pubDate: "2009-01-22'"
+title: "Deprecated Annotation"
+pubDate: "2009-01-22"
 categories: 'java'
 keywords: "java, deprecated, annotation, sun mistakes"
 description: "Why didn't Sun add a `value` property to the `@Deprecated` annotation?"

@@ -1,6 +1,6 @@
 ---
-title: "SWT Applications on Mac OS X'"
-pubDate: "2008-12-29'"
+title: "SWT Applications on Mac OS X"
+pubDate: "2008-12-29"
 categories: 'java'
 keywords: "SWT, mac, mac OSX, -XstartOnFirstThread, startOnFirstThread, thread, start on main thread"
 description: "Invalid thread access running SWT applications on the Mac fixed with -XstartOnFirstThread"

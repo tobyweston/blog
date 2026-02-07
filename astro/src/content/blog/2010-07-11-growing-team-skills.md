@@ -1,6 +1,6 @@
 ---
-title: "Growing Team Skills'"
-pubDate: "2010-07-11'"
+title: "Growing Team Skills"
+pubDate: "2010-07-11"
 categories: 'agile coaching'
 keywords: "competency depth distribution chart, team skills, agile teams, coaching, gap analysis, technical agile skills"
 description: "Use a competency depth distribution chart to see where the teams skills are and what may need development."

@@ -1,8 +1,8 @@
 ---
-title: "Upgrade Raspbian Stretch to Buster'"
-pubDate: "2019-08-29'"
+title: "Upgrade Raspbian Stretch to Buster"
+pubDate: "2019-08-29"
 categories: 'pi'
-keywords: "raspberry pi, pi, buster, stretch, raspbian. raspian, upgrade'"
+keywords: "raspberry pi, pi, buster, stretch, raspbian. raspian, upgrade"
 description: "Upgrade your Raspbian install from Stretch to Buster."
 ---
 

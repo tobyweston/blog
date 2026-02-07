@@ -1,6 +1,6 @@
 ---
-title: "Flickering Tests and a JUnit Rule'"
-pubDate: "2009-12-24'"
+title: "Flickering Tests and a JUnit Rule"
+pubDate: "2009-12-24"
 categories: 'java concurrency tempus-fugit'
 keywords: "flickering tests, nondeterminism, intermittent tests, java, intermittent, junit"
 description: "Repeat intermittently failing tests automatically with a JUnit rule."

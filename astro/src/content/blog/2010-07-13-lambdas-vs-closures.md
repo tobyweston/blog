@@ -1,6 +1,6 @@
 ---
-title: "Lambdas vs. Closures'"
-pubDate: "2010-07-13'"
+title: "Lambdas vs. Closures"
+pubDate: "2010-07-13"
 categories: 'java tempus-fugit'
 keywords: "lambda vs closures, closures vs lambdas, functional style java, higher order functions, pure functions"
 description: "What's the difference between a lambda and a closure? Find out here!"

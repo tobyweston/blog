@@ -70,7 +70,7 @@ The fragment below uses the [`WebDriverWait`](https://selenium.googlecode.com/gi
 ``` scala
 implicit def waitForElement(locator: By): WebElement = {
   val predicate: WebDriver => WebElement = _.findElement(locator)
-  new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}'").until(predicate)
+  new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}").until(predicate)
 }
 ```
 
@@ -90,7 +90,7 @@ Now there's one little bit I've brushed over here; namely how the `WebDriver` `d
 ``` scala
 implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement = {
   val predicate: WebDriver => WebElement = _.findElement(locator)
-  new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}'").until(predicate)
+  new WebDriverWait(driver, 30).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}").until(predicate)
 }
 ```
 So the full example would look like this; making `driver` an implicit `val` means we can avoid a call to `button.click()(driver)`.

@@ -1,6 +1,6 @@
 ---
-title: "tempus-fugit 1.1 released'"
-pubDate: "2011-04-13'"
+title: "tempus-fugit 1.1 released"
+pubDate: "2011-04-13"
 categories: 'java tempus-fugit concurrency testing'
 keywords: "tempus-fugit, concurrency, concurrency library, testing concurrent code"
 description: "Announcing the release of the new version of the tempus-fugit library."

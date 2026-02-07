@@ -1,6 +1,6 @@
 ---
-title: "Logging is evil but...'"
-pubDate: "2010-10-18'"
+title: "Logging is evil but..."
+pubDate: "2010-10-18"
 categories: 'java mocking testing exceptions rest recipes'
 keywords: "logging, log4j, testing log4j, logging as a feature, logging is bad, why is logging bad"
 description: "Don't let logging clutter up your code, follow these tips to separate concerns and move towards logging as a feature. We also look at how to actually test against logging."

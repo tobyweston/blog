@@ -1,6 +1,6 @@
 ---
-title: "is(not(instanceOf(smell)));'"
-pubDate: "2009-07-29'"
+title: "is(not(instanceOf(smell)));"
+pubDate: "2009-07-29"
 categories: 'java object-oriented'
 keywords: "instanceof, smell"
 description: "The instanceof operator in Java isn't always a bad thing"

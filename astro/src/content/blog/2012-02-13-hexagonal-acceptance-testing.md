@@ -1,6 +1,6 @@
 ---
-title: "Hexagonal Acceptance Testing'"
-pubDate: "2012-02-13'"
+title: "Hexagonal Acceptance Testing"
+pubDate: "2012-02-13"
 categories: 'java testing agile'
 keywords: "ports and adaptors, hexagonal architecture, acceptance testing"
 description: "By splitting your application up, you can compose your acceptance tests differently and test without starting the entire stack. Applying an ports and adaptors architecture helps built and test in more flexible ways."

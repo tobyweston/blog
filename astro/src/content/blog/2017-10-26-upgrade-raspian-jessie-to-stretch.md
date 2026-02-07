@@ -1,8 +1,8 @@
 ---
-title: "Upgrade Raspbian Jessie to Stretch'"
-pubDate: "2017-10-26'"
+title: "Upgrade Raspbian Jessie to Stretch"
+pubDate: "2017-10-26"
 categories: 'pi'
-keywords: "raspberry pi, pi, stretch, jessie, raspbian. raspian, upgrade'"
+keywords: "raspberry pi, pi, stretch, jessie, raspbian. raspian, upgrade"
 description: "Upgrade your Raspbian install from Jessie to Stretch."
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: "Setter vs Constructor Injection'"
-pubDate: "2010-05-01'"
+title: "Setter vs Constructor Injection"
+pubDate: "2010-05-01"
 categories: 'java'
 keywords: "setter vs constructor injection, spring, setter, getter, constructor, java"
 description: "Setter vs constructor injection. Explore the options here."

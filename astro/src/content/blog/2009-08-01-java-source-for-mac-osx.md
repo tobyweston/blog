@@ -1,6 +1,6 @@
 ---
-title: "Java source for Mac OSX'"
-pubDate: "2009-08-01'"
+title: "Java source for Mac OSX"
+pubDate: "2009-08-01"
 categories: 'java'
 keywords: ""
 description: ""

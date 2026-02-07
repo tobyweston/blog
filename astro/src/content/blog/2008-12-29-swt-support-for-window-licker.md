@@ -1,6 +1,6 @@
 ---
-title: "SWT Support for Window Licker'"
-pubDate: "2008-12-29'"
+title: "SWT Support for Window Licker"
+pubDate: "2008-12-29"
 categories: 'java'
 keywords: "SWT, WindowLicker, testing UI, swing/awt, webdriver"
 description: "SWT Support for Window Licker, the rich UI testing, WebDriver-style framework"

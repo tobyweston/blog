@@ -1,6 +1,6 @@
 ---
-title: "Exception Handling as a System Wide Concern'"
-pubDate: "2012-03-28'"
+title: "Exception Handling as a System Wide Concern"
+pubDate: "2012-03-28"
 categories: 'java rest object-oriented exceptions'
 keywords: "exception handling, system wide policy for exception handling, java"
 description: "Be more explicit about handling exceptions as a system wide concern. Examples of identifying boundaries to catch and deal with exceptions at appropriate & coherent points."

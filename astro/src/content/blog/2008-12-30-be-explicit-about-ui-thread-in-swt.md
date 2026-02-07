@@ -1,6 +1,6 @@
 ---
-title: "Be Explicit with the UI Thread'"
-pubDate: "2008-12-30'"
+title: "Be Explicit with the UI Thread"
+pubDate: "2008-12-30"
 categories: 'java testing concurrency'
 keywords: "SWT, EDT, event dispatching thread, testing on the main thread"
 description: "Understand which is the main, event dispatching thread and take control when running UI tests."

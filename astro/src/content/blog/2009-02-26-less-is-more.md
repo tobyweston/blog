@@ -1,6 +1,6 @@
 ---
-title: "Less is More'"
-pubDate: "2009-02-26'"
+title: "Less is More"
+pubDate: "2009-02-26"
 categories: 'java performance'
 keywords: "OutOfMemory, threads, -Xmx, heap, number of threads, less heap, more threads, unable to create new native thread"
 description: "Allocating less heap size to the JVM actually means you can create more native threads. "

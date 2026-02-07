@@ -1,6 +1,6 @@
 ---
-title: "Java source on Mac'"
-pubDate: "2011-10-29'"
+title: "Java source on Mac"
+pubDate: "2011-10-29"
 categories: 'java recipes'
 keywords: "mac, java source, org/codehaus/plexus/classworlds/launcher/Launcher, maven, m2_home, mvn"
 description: "Getting Java source on your Mac"

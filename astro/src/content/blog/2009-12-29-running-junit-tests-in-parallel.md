@@ -1,6 +1,6 @@
 ---
-title: "Running JUnit tests in parallel'"
-pubDate: "2009-12-29'"
+title: "Running JUnit tests in parallel"
+pubDate: "2009-12-29"
 categories: 'java concurrency tempus-fugit recipes'
 keywords: "testing, concurrency, parallel tests, run concurrently, multi threaded tests"
 description: "Use JUnit to run tests in parallel."
