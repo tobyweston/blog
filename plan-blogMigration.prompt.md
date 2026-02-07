@@ -335,3 +335,14 @@ published: false
 - **Categories:** Currently stored as space-separated strings; consider if array format would be better for indexing
 - **Backup Strategy:** Ensure git history preserves all post versions before bulk operations
 
+## Follup Options
+
+run a quick spot-check script that opens a random sample of built HTML files and validates presence of title/meta? (I can implement one)
+
+convert categories to arrays and update config.ts schema if you want typed categories?
+
+ migrate the Octopress posts if you point me to their location?
+
+archive or delete Octopress source
+
+
