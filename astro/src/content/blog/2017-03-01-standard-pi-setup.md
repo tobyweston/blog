@@ -1,12 +1,12 @@
 ---
-title: 'Standard Pi Setup'
-pubDate: '2017-03-01'
+title: "Standard Pi Setup'"
+pubDate: "2017-03-01'"
 categories: 'pi'
-keywords: 'pi, pi zero, zero w, raspian'
-description: 'Some common setup for a new Pi'
+keywords: "pi, pi zero, zero w, raspian'"
+description: "Some common setup for a new Pi"
 ---
 
-Here's some common things to do when you first setup a Pi.
+Here"s some common things to do when you first setup a Pi.
 
 <!-- more -->
 

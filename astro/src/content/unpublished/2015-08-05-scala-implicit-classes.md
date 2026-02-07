@@ -2,10 +2,10 @@
 title: "Implicit Classes in Scala"
 pubDate: '2015-08-05'
 categories: 'scala'
-published: false
-series: Scala Implicits
 keywords: ""
 description: ""
+published: false
+series: Scala Implicits
 ---
 
 Implicits in Scala are either really awesome or really nasty. 

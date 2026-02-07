@@ -2,9 +2,9 @@
 title: "Tail Recursion Optimisation in Scala"
 pubDate: '2013-07-16'
 categories: 'java scala'
-published: false
-description: "Scala can optimise recursive calls where the last statement in a method is a recursive one. In this post we'll have a look at what this means and why call tail optimisation is useful. Along the way, we'll also discuss infinite tail recursion."
 keywords: ""
+description: "Scala can optimise recursive calls where the last statement in a method is a recursive one. In this post we'll have a look at what this means and why call tail optimisation is useful. Along the way, we'll also discuss infinite tail recursion."
+published: false
 ---
 
 Scala can optimise recursive calls where the last statement in a method is a recursive one. In this post we'll have a look at what this means and why call tail optimisation is useful. Along the way, we'll also discuss infinite tail recursion.

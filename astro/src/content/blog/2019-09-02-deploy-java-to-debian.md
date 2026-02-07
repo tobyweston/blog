@@ -1,10 +1,10 @@
 ---
-title: 'Easily Deploy Java to Debian'
-series: 'Deploying to Debian'
+title: "Easily Deploy Java to Debian'"
 pubDate: '2019-09-02'
 categories: 'java, scala'
-keywords: 'java, scala, debian, debian repositories, aptly, ubuntu'
-description: 'Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt.'
+keywords: "java, scala, debian, debian repositories, aptly, ubuntu'"
+description: "Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as .deb files and deploying via apt."
+series: "Deploying to Debian'"
 ---
 
 Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as `.deb` files and deploying via `apt`. 
@@ -19,7 +19,7 @@ The basic approach:
 1. Tell your customers where your repository is hosted
 1. Profit
 
-This post looks at the first step, creating the `.deb` package using the `sbt-native-packager` plugin. In the [next post](/blog/2019/09/03/create-debian-repositories), we'll look at how setup your own [debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` to popular Linux distros like Debian and Ubuntu.
+This post looks at the first step, creating the `.deb` package using the `sbt-native-packager` plugin. In the [next post](/blog/2019/09/03/create-debian-repositories), we"ll look at how setup your own [debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` to popular Linux distros like Debian and Ubuntu.
 
 Thanks and appreciation to [@muuki88](https://github.com/muuki88) and the project maintainers for `sbt-native-manager`, it's a seriously useful piece of software. 
 

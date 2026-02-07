@@ -1,10 +1,10 @@
 ---
 title: "Automatically rebase on git pull"
-series: 'Git'
 pubDate: '2013-07-09'
 categories: 'recipes git'
 keywords: "git, rebase, pull, merge, intellij"
 description: "Learn how to automatically rebase your git repository on every pull (including configuring IntelliJ IDEA)"
+series: 'Git'
 ---
 
 Automatically rebase your Git repository when you do a `pull`.

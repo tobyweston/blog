@@ -1,11 +1,11 @@
 ---
 title: "Classes vs. Functions"
 pubDate: '2014-04-08'
-updatedDate: '2014-11-25'
 categories: 'java java8'
-series: "What's new in Java 8"
 keywords: "lambdas, java 8, OpenJDK 8, lambda support, JDK 8, anonymous classes, class vs lambda"
 description: "Find out why a lambda in Java 8 not just syntactic sugar over the usual anonymous class implementation. It's all about lambdas vs. anonymous class or functions vs. classes."
+updatedDate: '2014-11-25'
+series: "What's new in Java 8"
 ---
 
 You can use lambdas in Java 8 anywhere you would have previously used a [single method interface](/blog/2014-04-07-functional-interfaces-in-java8) so it may just look like syntactic sugar, but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.

@@ -2,8 +2,8 @@
 title: "HTTP Encoding Schemes"
 pubDate: '2012-06-11'
 categories: 'java REST'
-description: "Find out the difference between URL Encoding and Form URL Encoding and how to encode to both schemes in Java"
 keywords: "URL vs form encoding, URL encoding in Java, URL form encoding, percent encoding, x-www-form-urlencoded"
+description: "Find out the difference between URL Encoding and Form URL Encoding and how to encode to both schemes in Java"
 ---
 
 What's the difference between URL Encoding and Form URL Encoding?
@@ -12,7 +12,7 @@ What's the difference between URL Encoding and Form URL Encoding?
 
 ## URL Encoding
 
-Sometimes refered to as [Percent Encoding](http://en.wikipedia.org/wiki/Percent-encoding), this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like `#` have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by `%20`.
+Sometimes referred to as [Percent Encoding](http://en.wikipedia.org/wiki/Percent-encoding), this scheme is intended to encode non-ASCII characters consistently in URLs. For example, characters like `#` have special meaning in a URL and would need to be converted to avoid problems. The scheme is recognisable by the replacement of characters with a percentage value. For example, the space character gets replaced by `%20`.
 
 In Java, you can create an encoded URL using
 

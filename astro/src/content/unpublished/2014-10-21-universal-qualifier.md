@@ -1,10 +1,10 @@
 ---
 title: "Universal Qualifier in Scala"
-pubDate: '2014-09-21' 
+pubDate: '2014-09-21'
 categories: 'java java8 scala'
-published: false
 keywords: "java 8, java, scala, universal qualifier"
 description: ""
+published: false
 ---
 
 or should this post be called existential qualifier?

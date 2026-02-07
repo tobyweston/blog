@@ -2,8 +2,8 @@
 title: "HTTP Should be Simple"
 pubDate: '2012-06-10'
 categories: 'java REST'
-description: "Examples from simple-http, a Java HTTP client library making HTTP calls much more straight forward"
 keywords: "simple-http, simple http, java, apache hc, apache http, configuring apache http, java"
+description: "Examples from simple-http, a Java HTTP client library making HTTP calls much more straight forward"
 ---
 
 Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.

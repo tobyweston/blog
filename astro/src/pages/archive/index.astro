@@ -3,42 +3,45 @@ import {getCollection} from 'astro:content';
 import FormattedMonthAndDay from '../../components/FormattedMonthAndDay.astro';
 import Main from "../../layouts/Main.astro";
 
-const posts = (await getCollection('blog')).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+// Fetch posts (avoid using generic type syntax in frontmatter which can be parsed as JSX)
+const posts = await getCollection('blog');
 
-// requires node 21+
-const byYear = Object.groupBy(posts, ({data}) => data.pubDate.getFullYear())
+posts.sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
+
+// requires node 21+ (Object.groupBy returns a Record<string, any[]>)
+const byYear = Object.groupBy(posts, ({ data }) => data.pubDate.getFullYear()) as Record<string, any[]>;
 ---
 
 <Main>
     <section>
-        {Object.keys(byYear).sort((a, b) => b - a).map((year) => {
-            const posts = byYear[year]
+        {Object.keys(byYear).sort((a, b) => Number(b) - Number(a)).map((year: string) => {
+            const postsForYear = byYear[year] as any[];
             return (
-                    <div class="year">
-                        <p>
-                            {year}
-                        </p>
-                        <ul>
-                            {
-                                posts.map((post) => (
-                                        <li>
-                                            <p class="date">
-                                                <FormattedMonthAndDay date={post.data.pubDate}/>
-                                            </p>
-                                            <a href={`/blog/${post.slug}/`}>
-                                                <h4 class="title">{post.data.title}</h4>
-                                            </a>
-                                        </li>
-                                ))
-                            }
-                        </ul>
+                    <div class="year-block">
+                        <div class="year">
+                            <p>
+                                {year}
+                            </p>
+                            <ul>
+                                {
+                                    postsForYear.map((post: any) => (
+                                            <li>
+                                                <p class="date">
+                                                    <FormattedMonthAndDay date={post.data.pubDate}/>
+                                                </p>
+                                                <a href={`/blog/${post.slug}/`}>
+                                                    <h4 class="title">{post.data.title}</h4>
+                                                </a>
+                                            </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        <hr/>
                     </div>
-                    <hr/>
-            )
-        })}
-    </section>
+             )
+         })}
+     </section>
 </Main>
 
 <style>

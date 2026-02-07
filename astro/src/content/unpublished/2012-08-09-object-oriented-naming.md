@@ -1,10 +1,10 @@
 ---
 title: "Object Oriented Naming"
-pubDate: 2012-08-09 09:25
-categories: java, object-oriented
-published: false
+pubDate: "2012-08-09 09:25"
+categories: "java, object-oriented"
 keywords: "java, object-oriented, variable naming"
 description: ""
+published: false
 ---
 
 ``` java

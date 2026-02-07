@@ -1,10 +1,10 @@
 ---
 title: "An Object Oriented Example"
-pubDate: 2012-07-17 18:58
-categories: java object-oriented
-published: false
+pubDate: "2012-07-17 18:58"
+categories: "java object-oriented"
 keywords: "OO, object-oriented, stop watch"
 description: ""
+published: false
 ---
 
 When we model a domain, we often try and model the real world. Sometimes that's helpful, other times we work too hard to model ...

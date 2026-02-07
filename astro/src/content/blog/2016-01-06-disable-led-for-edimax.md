@@ -1,9 +1,9 @@
 ---
-title: 'Disable Edimax Wifi Dongles LED'
-pubDate: '2016-01-06'
+title: "Disable Edimax Wifi Dongles LED'"
+pubDate: "2016-01-06'"
 categories: 'pi'
-keywords: '8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi'
-description: 'Instructions how to recompile the Raspberry Pi kernel and disable the Edimax EW-7811UN LED'
+keywords: "8192cu, edimax, rasperry pi, pi zero, EW-7811, EW-7811UN, pi'"
+description: "Instructions how to recompile the Raspberry Pi kernel and disable the Edimax EW-7811UN LED"
 ---
 
 Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.
@@ -12,7 +12,7 @@ Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless
 
 The only way I found to disable the LED is by modifying the [kernel module](https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules). Compiling that meant recompiling the associated kernel to get all the dependencies lined up. 
 
-If you don't want to have a go at compiling the kernel, you can always download the output of my efforts [here](http://robotooling.com/maven/bad/robot/temperature-machine/) (built against 4.9.17-v7+).
+If you don"t want to have a go at compiling the kernel, you can always download the output of my efforts [here](http://robotooling.com/maven/bad/robot/temperature-machine/) (built against 4.9.17-v7+).
 
 
 ## Gather Information

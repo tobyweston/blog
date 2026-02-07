@@ -1,10 +1,10 @@
 ---
-title: 'Scala to Haskell and FP Cheatsheet'
-pubDate: '2018-02-04'
+title: "Scala to Haskell and FP Cheatsheet'"
+pubDate: "2018-02-04'"
 categories: 'haskell, scala'
-published: false
 keywords: "haskell, scala, flatmap, point, >>=, FP Cheat Sheet"
 description: "Haskell conventions and how they translate to Scala"
+published: false
 ---
 
 A lot of the advanced functional programming literature refers to Haskell, which when you're comming from Scala, may not be so helpful. If you want to know what `fmap` in Haskell maps to in Scala, read on...

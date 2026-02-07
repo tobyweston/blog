@@ -2,9 +2,9 @@
 title: "Implicit Functions in Scala"
 pubDate: '2015-07-14'
 categories: 'scala'
-series: 'Scala Implicits'
 keywords: "scala, implicit, implicit function, implicit conversion, SAM, implicits"
 description: "Implicit functions, their usages and examples. Learn how implicit functions help make your APIs more succinct, reduce your code and convert types."
+series: 'Scala Implicits'
 ---
 
 In the [previous post](/blog/2015-07-03-scala-implicit-parameters/), we looked at implicit parameters; parameters that will be automatically passed values annotated as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.

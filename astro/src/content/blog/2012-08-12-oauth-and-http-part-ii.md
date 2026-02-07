@@ -1,10 +1,10 @@
 ---
 title: "FreeAgent, OAuth & HTTP (Part II)"
-series: "FreeAgent OAuth"
 pubDate: "2012-08-12"
 categories: "java recipes"
-description: "Retrieving the FreeAgent OAuth access token requires a basic auth POST request with a body with content previously retrieved. See the details here."
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
+description: "Retrieving the FreeAgent OAuth access token requires a basic auth POST request with a body with content previously retrieved. See the details here."
+series: "FreeAgent OAuth"
 ---
 
 In the [previous post](/blog/2012-08-11-oauth-and-http-part-i), we walked through requesting "authorisation" from [FreeAgent](https://dev.freeagent.com/docs/oauth) using OAuth. In this next post, we'll look at the next steps, requesting an _access token_ and actually making client API calls to our target application.

@@ -1,9 +1,9 @@
 ---
-title: 'Upgrade Raspbian Jessie to Stretch'
-pubDate: '2017-10-26'
+title: "Upgrade Raspbian Jessie to Stretch'"
+pubDate: "2017-10-26'"
 categories: 'pi'
-keywords: 'raspberry pi, pi, stretch, jessie, raspbian. raspian, upgrade'
-description: 'Upgrade your Raspbian install from Jessie to Stretch.'
+keywords: "raspberry pi, pi, stretch, jessie, raspbian. raspian, upgrade'"
+description: "Upgrade your Raspbian install from Jessie to Stretch."
 ---
 
 Upgrade your Raspbian install from Jessie to Stretch.
@@ -17,7 +17,7 @@ Get up to date.
     $ sudo apt-get upgrade
     $ sudo apt-get dist-upgrade
 
-Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you're on your own here!).
+Verify nothing is wrong. Verify no errors are reported after each command. Fix as required (you"re on your own here!).
 
     $ dpkg -C
     $ apt-mark showhold

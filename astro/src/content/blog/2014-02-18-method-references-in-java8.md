@@ -2,9 +2,9 @@
 title: "Method References in Java 8"
 pubDate: '2014-02-18'
 categories: 'java, java8'
-series: "What's new in Java 8"
 keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method references in java, oracle docs"
 description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
+series: "What's new in Java 8"
 ---
 
 Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The [Oracle docs](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.

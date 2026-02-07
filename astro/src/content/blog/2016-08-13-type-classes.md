@@ -1,10 +1,10 @@
 ---
-title: 'Type Classes in Scala'
-pubDate: '2016-08-13'
+title: "Type Classes in Scala'"
+pubDate: "2016-08-13'"
 categories: 'scala'
+keywords: "scala, implicit, type class, type-class, neophytes guide'"
+description: "Type-classes provide a way to extend classes without resorting to conventional inheritance."
 series: 'Scala Implicits'
-keywords: 'scala, implicit, type class, type-class, neophytes guide'
-description: 'Type-classes provide a way to extend classes without resorting to conventional inheritance.'
 ---
 
 Type classes provide [ad-hoc inheritance](http://bit.ly/1kr6C8E#Ad_hoc_polymorphism) which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (`extends`) polymorphism.
@@ -15,7 +15,7 @@ From the [Neophytes Guide](http://danielwestheide.com/blog/2013/02/06/the-neophy
 
 > A type class `C` defines behaviour.  
 > Type `T` must support behaviour defined in `C` to be a "member" of `C`.  
-> If `T` is a "member", it isn't inherent to that type (if `T` has `C`'s behaviour, it isn't native to that type via `extends` or otherwise).  
+> If `T` is a "member", it isn"t inherent to that type (if `T` has `C`'s behaviour, it isn't native to that type via `extends` or otherwise).  
 > Instead, anyone can supply implementations of `C` behaviour for type `T` and this infers that `T` is a "member" of `C`.
 
 

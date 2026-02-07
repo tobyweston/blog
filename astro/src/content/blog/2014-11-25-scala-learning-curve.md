@@ -1,10 +1,10 @@
 ---
 title: "Scala Learning Curve"
 pubDate: '2014-11-25'
-updatedDate: '2014-11-27'
 categories: 'scala'
 keywords: "scala, scala learning curve, training, pluralsight"
 description: "Scala's learning curve; expect a quick ramp up in skill but a shallower increase (slow down) as you adopt more sophisticated and advanced functional features. Read more."
+updatedDate: '2014-11-27'
 ---
 
 If you've just started to learn Scala and are wondering what to expect, it's typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.

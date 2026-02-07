@@ -2,9 +2,9 @@
 title: "Dealing with Exceptions as Monads"
 pubDate: '2014-09-21'
 categories: 'java java8 exception-handling scala'
-series: 'Exception Handling'
 keywords: "java 8, java, monads, either, scala, try, scalaz, option, monadically"
 description: "Functional languages often discourage the use of exceptions because they can subvert control execution flow; they introduce side-affects. By using the type system to capture exceptional behaviour and dealing with exceptions monadically, it's much easier to provide system wide consistently."
+series: 'Exception Handling'
 ---
 
 In some previous posts, I wrote about treating exceptions as a system-wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.

@@ -1,10 +1,10 @@
 ---
 title: "Useful Git Commands"
-series: 'Git'
 pubDate: '2013-01-23'
 categories: 'recipes git'
 keywords: "git, tips, delete remote branch, remove branch, github, ssh, https"
 description: "Some git commands I find useful but keep forgetting like removing a remote branch."
+series: 'Git'
 ---
 
 <a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.
