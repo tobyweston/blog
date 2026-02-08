@@ -24,4 +24,15 @@ const book = defineCollection({
 	}),
 });
 
-export const collections = { blog, book };
+const video = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		pubDate: z.coerce.date(),
+		youtubeId: z.string(),
+		keywords: z.string().optional()
+	}),
+});
+
+export const collections = { blog, book, video };
