@@ -15,7 +15,7 @@ This is an **Astro-based static blog**. The blog features:
 - **Blog**: Article grid with pagination
 - **Books**: Book reviews
 - **Archive**: Historical post archive with search
-- **Videos**: Reserved for future video content
+- **Videos**: Video collection with inline playback
 
 ---
 
@@ -258,6 +258,178 @@ List top 5 most recent posts with a hero section and site introduction.
 
 
 ### 6. BOOK DETAIL PAGE (/book/[slug])
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      HEADER COMPONENT                       │
+│  ┌──────────────┐                        ┌────────────────┐ │
+│  │ Robot Logo   │ bad.robot              │ Blog  Books    │ │
+│  │ + Title      │ good robots do...      │      Archive   │ │
+│  └──────────────┘                        └────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│                      Book Layout                            │
+│                                                             │
+│  Book Title (text-4xl font-bold)                            │
+│                                                             │
+│  Mar 29, 2012 (FormattedDate component)                     │
+│                                                             │
+│  ┌─────────────────────────────────────────────────┐        │
+│  │                                                 │        │
+│  │  [Book Cover Image (if coverImage field set)]   │        │
+│  │  Optimized via Astro Image component            │        │
+│  │                                                 │        │
+│  └─────────────────────────────────────────────────┘        │
+│                                                             │
+│  ───────────────────────────────────────────────────────    │
+│                                                             │
+│  This is the book description in Markdown or MDX.           │
+│  It can contain:                                            │
+│                                                             │
+│  • Review paragraphs                                        │
+│  • Code examples (if relevant)                              │
+│  • Lists and quotes                                         │
+│  • Links                                                    │
+│  • Embedded content                                         │
+│                                                             │
+│  The review flows naturally with proper spacing.            │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                      FOOTER COMPONENT                       │
+│           © 2008-2026 Toby Weston. All rights reserved.     │
+├─────────────────────────────────────────────────────────────┤
+```
+
+---
+
+### 7. VIDEO INDEX PAGE (/video)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      HEADER COMPONENT                       │
+│  ┌──────────────┐                        ┌────────────────┐ │
+│  │ Robot Logo   │ bad.robot              │ Blog │ Books   │ │
+│  │ + Title      │ good robots do...      │ Videos│Archive │ │
+│  └──────────────┘                        └────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Videos                                                     │
+│  (heading text-3xl font-bold)                               │
+│                                                             │
+│  Talks, demos, and walkthroughs from my YouTube channel.    │
+│  Videos play inline so you can watch without leaving        │
+│  the site.                                                  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ VideoPreviewCard #1                                   │  │
+│  │ ┌───────────────────────────────────────────────────┐ │  │
+│  │ │                                                   │ │  │
+│  │ │  [YouTube iframe embedded - 16:9 aspect]          │ │  │
+│  │ │  (full bleed, lazy loaded)                        │ │  │
+│  │ │                                                   │ │  │
+│  │ └───────────────────────────────────────────────────┘ │  │
+│  │                                                       │  │
+│  │  Video Title (text-2xl font-semibold)                 │  │
+│  │  Feb 8, 2026 (FormattedDate)                          │  │
+│  │                                                       │  │
+│  │  Description text explaining what the video covers... │  │
+│  │                                                       │  │
+│  │  [Watch full video →] (CTA link to detail page)       │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │ VideoPreviewCard #2                                   │  │
+│  │ ┌───────────────────────────────────────────────────┐ │  │
+│  │ │                                                   │ │  │
+│  │ │  [YouTube iframe embedded - 16:9 aspect]          │ │  │
+│  │ │  (full bleed, lazy loaded)                        │ │  │
+│  │ │                                                   │ │  │
+│  │ └───────────────────────────────────────────────────┘ │  │
+│  │                                                       │  │
+│  │  Video Title (text-2xl font-semibold)                 │  │
+│  │  Feb 8, 2026 (FormattedDate)                          │  │
+│  │                                                       │  │
+│  │  Description text explaining what the video covers... │  │
+│  │                                                       │  │
+│  │  [Watch full video →] (CTA link to detail page)       │  │
+│  └───────────────────────────────────────────────────────┘  │
+│                                                             │
+│  [More videos stacked vertically...]                        │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                      FOOTER COMPONENT                       │
+│           © 2008-2026 Toby Weston. All rights reserved.     │
+├─────────────────────────────────────────────────────────────┤
+```
+
+**Components Used:**
+- `Header` - Logo, site title/tagline, navigation (includes Videos)
+- `VideoPreviewCard` (×N) - Embedded player, title, date, description, CTA
+- `Footer` - Copyright info
+
+**Key Classes:** `space-y-8`, `card`, `video-preview-frame`, `video-preview-cta`  
+**Features:** Inline YouTube embeds with lazy loading, click-through to detail page
+
+---
+
+### 8. VIDEO DETAIL PAGE (/video/[slug])
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      HEADER COMPONENT                       │
+│  ┌──────────────┐                        ┌────────────────┐ │
+│  │ Robot Logo   │ bad.robot              │ Blog │ Books   │ │
+│  │ + Title      │ good robots do...      │ Videos│Archive │ │
+│  └──────────────┘                        └────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│                      Video Detail                           │
+│                                                             │
+│  VIDEO                                                      │
+│  (kicker text - uppercase, small)                           │
+│                                                             │
+│  Video Title (text-4xl font-bold)                           │
+│                                                             │
+│  Feb 8, 2026 (FormattedDate component)                      │
+│                                                             │
+│  Video description explaining the content and context...    │
+│                                                             │
+│  ┌─────────────────────────────────────────────────┐        │
+│  │                                                 │        │
+│  │  [YouTube iframe embedded - 16:9 aspect]        │        │
+│  │  (full width, lazy loaded, rounded corners)     │        │
+│  │                                                 │        │
+│  │                                                 │        │
+│  └─────────────────────────────────────────────────┘        │
+│                                                             │
+│  ───────────────────────────────────────────────────────    │
+│                                                             │
+│  This is the body content from the video MDX file.          │
+│  Rendered via the Content component. Can contain:           │
+│                                                             │
+│  • Additional notes and context                             │
+│  • Timestamps and chapters                                  │
+│  • Links to resources mentioned                             │
+│  • Code examples from the video                             │
+│  • Related videos or content                                │
+│                                                             │
+│  The content flows naturally with proper spacing.           │
+│                                                             │
+├─────────────────────────────────────────────────────────────┤
+│                      FOOTER COMPONENT                       │
+│           © 2008-2026 Toby Weston. All rights reserved.     │
+├─────────────────────────────────────────────────────────────┤
+```
+
+**Components Used:**
+- `Header` - Logo, site title/tagline, navigation
+- `BaseHead` - Page metadata, SEO tags
+- `FormattedDate` - Formatted publication date
+- `Content` - Rendered MDX body content (via video.render())
+- `Footer` - Copyright info
+
+**Key Classes:** `video-detail`, `video-detail-frame`, `video-detail-kicker`, `video-detail-content`  
+**Features:** Full-page video player, MDX content rendering below video
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
