@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster:wght@400&family=Lato:wght@300;400;700&family=Merriweather:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -49,7 +50,16 @@
     letter-spacing: -0.02em;
   }
 
-  /* header-specific logo sizing so the header doesn't dominate */
+  .logo-subtitle-text {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New', monospace;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+    padding-left: 1rem;
+  }
+
   .header-logo-text {
     padding-left: 1rem;
     font-size: 4rem;

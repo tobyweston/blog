@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Image } from 'astro:assets';
 import logoImage from '../assets/robot-logo.png';
 ---
@@ -15,7 +15,10 @@ import logoImage from '../assets/robot-logo.png';
           class="logo-image"
           densities={[1, 2]}
         />
-        <h1 class="logo-title">{SITE_TITLE}</h1>
+        <div class="logo-text-block">
+          <h1 class="logo-title logo-text header-logo-text">{SITE_TITLE}</h1>
+          <h2 class="logo-subtitle logo-subtitle-text header-subtitle">{SITE_DESCRIPTION}</h2>
+        </div>
       </a>
     </div>
 
@@ -28,8 +31,6 @@ import logoImage from '../assets/robot-logo.png';
 </header>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-
   .header {
     border-bottom: 1px solid #e5e7eb;
     padding: 1rem 2rem;
@@ -63,10 +64,27 @@ import logoImage from '../assets/robot-logo.png';
 
   .logo-title {
     margin: 0;
-    font-family: 'Lobster', cursive;
-    font-size: 2.5rem;
+    text-align: left;
+  }
+
+  .logo-text-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .logo-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
     font-weight: 400;
-    text-align: center;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  .header-subtitle {
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
   }
 
   .nav {
@@ -87,4 +105,3 @@ import logoImage from '../assets/robot-logo.png';
     color: #0066cc;
   }
 </style>
-
