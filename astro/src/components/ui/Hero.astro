@@ -1,37 +1,38 @@
 ---
-const {kicker, title, subtitle, cta} = Astro.props;
+const { kicker, title, subtitle, cta } = Astro.props;
 ---
 <section class="relative py-16 bg-surface">
   <div class="container mx-auto px-4">
-    <div class="max-w-3xl mx-auto text-center">
-      {kicker && (
-        <div class="text-sm uppercase tracking-widest text-accent font-semibold mb-4 hero-reveal" data-idx="1">
-          {kicker}
-        </div>
-      )}
+    <div class="hero-layout">
 
-      {title && (
-        <h1 class="logo-text text-6xl mb-4 hero-reveal" data-idx="2">
-          {title}
-        </h1>
-      )}
+      <div class="hero-copy">
+        {kicker && (
+          <div class="hero-kicker hero-reveal" data-idx="1">
+            {kicker}
+          </div>
+        )}
 
-      {subtitle && (
-        <p class="text-xl text-gray-600 mb-8 hero-reveal" data-idx="3">
-          {subtitle}
-        </p>
-      )}
+        {title && (
+          <h1 class="logo-text hero-title hero-reveal" data-idx="2">
+            {title}
+          </h1>
+        )}
 
-      {cta && (
-        <div class="hero-reveal" data-idx="4">
+        {subtitle && (
+          <p class="hero-subtitle hero-reveal" data-idx="3">
+            {subtitle}
+          </p>
+        )}
+
+        <div class="hero-cta hero-reveal" data-idx="4">
           <a
-            href={cta.href}
-            class="inline-block px-8 py-3 bg-accent text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-soft"
+            href={cta?.href ?? '/blog'}
+            class="hero-cta-link"
           >
-            {cta.text}
+            {cta?.text ?? 'Read Posts'}
           </a>
         </div>
-      )}
+      </div>
     </div>
   </div>
 
@@ -54,3 +55,76 @@ const {kicker, title, subtitle, cta} = Astro.props;
     }
   </script>
 </section>
+
+<style>
+  .hero-layout {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+
+  .hero-copy {
+    flex: 1 1 auto;
+    max-width: 680px;
+  }
+
+  .hero-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 3rem;
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      'Liberation Mono', 'Courier New', monospace;
+    font-weight: 600;
+  }
+
+  .hero-subtitle {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 46ch;
+  }
+
+  .hero-cta {
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta-link {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0.6rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .hero-cta-link:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 720px) {
+    .hero-layout {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-copy {
+      max-width: 100%;
+    }
+
+    .hero-subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
