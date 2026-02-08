@@ -7,8 +7,9 @@ description: "What's the difference between a lambda and a closure? Find out her
 ---
 
 import ImgTag from '../../components/ImgTag.astro';
+import lambdaImg from '../images/lambda.png';
 
-<ImgTag class="right" src="/images/lambda.png" alt="The Lambda greek character" title="The Lambda greek character" />
+<ImgTag class="right" src={lambdaImg} alt="The Lambda greek character" title="The Lambda greek character" />
 
 When writing Java in a functional style, things tend to get very verbose. We often create a bunch of anonymous implementation fragments and pass them around akin to a _function_ in functional languages. These fragments often get called closures or lambdas, but what's the difference between the two terms?
 
@@ -91,8 +92,3 @@ Then no out of scope variables are required, the term doesn't need to be closed.
 A lambda will generally be more efficient that a closure as it [only needs to evaluated once](http://mail.openjdk.java.net/pipermail/lambda-dev/2012-November/006867.html). As a closure closes over something not in it's environment, it has to be evaluated every time it's called.
   
 What JDK7 will (finger's crossed) bring is more explicit, concise way of expressing the same ideas. It will support lambdas as a language feature although I can't quite figure out what the example would look like in those terms. See the [straw man proposal](http://cr.openjdk.java.net/%7Emr/lambda/straw-man/) and see if you can figure it out!
-
-
-
-
-

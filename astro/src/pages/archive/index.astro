@@ -4,7 +4,13 @@ import SiteLayout from '../../components/ui/SiteLayout.astro';
 
 // Fetch posts (avoid using generic type syntax in frontmatter which can be parsed as JSX)
 const posts = (await getCollection('blog')).sort((a,b)=> b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const byYear = Object.groupBy(posts, p => String(p.data.pubDate.getFullYear()));
+// Replace Object.groupBy (not available in some Node versions) with a compatible reduce-based helper
+const byYear = posts.reduce((acc, p) => {
+  const year = String(p.data.pubDate.getFullYear());
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(p);
+  return acc;
+}, {});
 ---
 
 <SiteLayout title="Archive - bad.robot" description="All posts">

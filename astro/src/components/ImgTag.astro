@@ -1,20 +1,9 @@
 ---
-/**
- * ImgTag - Replaces Octopress {% img %} liquid tags
- *
- * Supports:
- * - Class names (e.g., "right", "left", "center")
- * - Width and height attributes
- * - Title and alt text
- *
- * Usage:
- * <ImgTag src="/images/ninja.png" alt="Ninja Attack!" />
- * <ImgTag class="right" src="/images/ninja.png" alt="Ninja Attack!" />
- * <ImgTag class="right" src="/images/ninja.png" width={150} height={150} title="Ninja Attack!" alt="Alt text" />
- */
+
+import { Image } from 'astro:assets';
 
 interface Props {
-  src: string;
+  src: string | any;
   class?: string;
   width?: number;
   height?: number;
@@ -24,26 +13,32 @@ interface Props {
 
 const { src, class: className, width, height, title, alt } = Astro.props;
 
-// Normalize image path - handle relative paths from old Octopress structure
-let normalizedSrc = src;
-if (src.startsWith('../../../../../images/')) {
-  normalizedSrc = src.replace('../../../../../images/', '/images/');
-} else if (src.startsWith('../images/')) {
-  normalizedSrc = src.replace('../images/', '/images/');
-} else if (!src.startsWith('http') && !src.startsWith('/')) {
-  normalizedSrc = `/images/${src}`;
-}
+let resolvedSrc: string | any = src;
 ---
 
-<img
-  src={normalizedSrc}
-  class={className}
-  width={width}
-  height={height}
-  title={title}
-  alt={alt || title || ''}
-  loading="lazy"
-/>
+{resolvedSrc && typeof resolvedSrc === 'object' ? (
+  /* If resolvedSrc is an imported module (ImageMetadata or module), use Astro Image for optimization */
+  <Image
+    src={resolvedSrc}
+    class={className}
+    width={width}
+    height={height}
+    title={title}
+    alt={alt || title || ''}
+    loading="lazy"
+  />
+) : (
+  /* Fallback to a normal img tag (public or external URLs) */
+  <img
+    src={resolvedSrc}
+    class={className}
+    width={width}
+    height={height}
+    title={title}
+    alt={alt || title || ''}
+    loading="lazy"
+  />
+)}
 
 <style>
   img {
@@ -87,4 +82,3 @@ if (src.startsWith('../../../../../images/')) {
     }
   }
 </style>
-
