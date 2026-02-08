@@ -10,7 +10,6 @@ Recently we had particularly good retrospective where the team were able to admi
 
 There can be a fair amount of peer pressure to pair but if the pair don't know what they can get out of it, it's unlikely to succeed. We should be honest about that. What makes a good pair (see a [previous post](/blog/2008/12/31/what-makes-good-pair/)) and how do we know that we're getting something out of it?
 
-<!-- more -->
 
 Once we honest in our experiences and expectations around pairing, we were able to be explicit in what we want to achieve. We had the conversation along the lines of "do we even believe we _could_ get something out of pairing? Do we want to try?" and when the team bought into that idea we could be explicit about starting from scratch and putting tools in place to help us.
 

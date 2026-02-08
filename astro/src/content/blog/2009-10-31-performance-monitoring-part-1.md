@@ -10,7 +10,6 @@ Keeping an eye on the performance of your applications is something that it easy
   
 I've been doing a fair bit of performance monitoring work lately and thought it might be a good idea to capture a few thoughts.
 
-<!-- more -->
   
 ## Set up early
 

@@ -10,7 +10,6 @@ Many industries need to evidence that code reviews have taken place. This is typ
 
 The result is a tension between old-fashioned bureaucracy and modern development practices; the need to prove you have a rigorous process in-place and the desire to push frequent releases to production without wasteful paperwork. 
 
-<!-- more -->
 
 
 ## The Regulators

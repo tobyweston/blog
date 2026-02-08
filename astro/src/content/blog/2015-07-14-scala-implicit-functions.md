@@ -9,7 +9,6 @@ series: 'Scala Implicits'
 
 In the [previous post](/blog/2015-07-03-scala-implicit-parameters/), we looked at implicit parameters; parameters that will be automatically passed values annotated as `implicit`. In this post, we'll take a look at implicit functions and how they can be useful to convert things of one type to things of another.
 
-<!-- more -->
 
 ## Implicit Functions
 

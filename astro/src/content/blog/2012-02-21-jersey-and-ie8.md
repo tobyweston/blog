@@ -8,7 +8,6 @@ description: "Force IE8 to open JSON content within the browser with Jersey rath
 
 If Internet Explorer 8 performs a HTTP `GET` against some resource and receives a mime-type that it wasn't expecting, it will ask the user to download the resource and save it. Annoyingly for JSON content this means you wont see the JSON 'in-browser' like in Firefox and Chrome. If you're using [Jersey](http://jersey.java.net/), Oracle's JAX-RS reference implementation, here's how to make IE8 play nice.
 
-<!-- more -->
 
 The problem is in IE8's default set of `Accept` header values. For some reason, it'll ask for a very specific set of Microsoft types in the request;
 

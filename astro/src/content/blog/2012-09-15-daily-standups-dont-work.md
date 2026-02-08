@@ -8,7 +8,6 @@ description: "The daily standup doesn't work for most teams. We've become brow b
 
 At some point, standups have stopped working for me. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm just not getting much out of them any more. It's led me to think that standups per se just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place and I think its just to _talk_ more.
 
-<!-- more -->
 
 ## Typical Problems
 

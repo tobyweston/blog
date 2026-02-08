@@ -10,7 +10,6 @@ Recruiting for the next guy on your team is hard. At first glance it doesn't see
   
 Let's take an example from two teams.
 
-<!-- more -->
   
 Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.
 

@@ -10,7 +10,6 @@ Without an ethernet port, the Pi Zero doesn't lend itself to being setup without
 
 The Adafruit Console Lead uses the [PL2303TA](http://www.prolific.com.tw/US/ShowProduct.aspx?pcid=41) (a USB-to-serial/parallel converter chip) to talk to the Pi over GPIO pins 8 and 10 via USB. You can use this kind of USB to serial communication on plenty of devices but with the Pi, it's handy to use the `screen` application to effectively open a "telnet-like" terminal to your Pi.
 
-<!-- more -->
 
 Most of the guides on the internet point you to older versions of the drivers, but to get things working on the Mac with El Capitan or Sierra, I've found [v1.6 of the Prolific driver](http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=229&pcid=41) is the only working option.
 

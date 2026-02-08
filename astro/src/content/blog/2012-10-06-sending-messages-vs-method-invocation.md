@@ -10,7 +10,6 @@ description: "What's the difference between sending an object a message and just
 
 In object-oriented languages, some people talk about sending messages whilst others talk about invoking methods. In this post, we'll take a look at the conceptual difference in terminology and the more concrete, technical differences. Whilst we're on the topic, we'll look at the difference between a function and a method and discuss the difference between an object reference and a pointer. 
 
-<!-- more -->
 
 
 ## Sending Messages

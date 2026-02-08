@@ -10,7 +10,6 @@ In a [previous post](/blog/2010/10/18/logging-is-evil-but/), I was going on abou
   
 Mocking Log4J however can be a real pain. I've managed it in the past using Apache's logging abstraction and configuring it to use Log4J under the covers but in my previous post, I demonstrated a slightly easier way. A helper class called Log4J that we can use to represent the logging system and that we can make assertions against. Pretty cool so far.
 
-<!-- more -->
   
 There was one caveat, I wasn't entirely happy with the fact that the class would rely on your external Log4J configuration. To assert that a log message appeared at the level INFO for example, you'd have to make sure that the test environment sets up the appropriate class to log at that level. It made for a kind of integration / environmental test which in some cases might be a sensible test but for the most part, I kept seeing test failures down to configuration on different environments. Yuk.
 

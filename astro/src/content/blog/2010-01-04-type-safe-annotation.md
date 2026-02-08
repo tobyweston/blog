@@ -30,7 +30,6 @@ public @interface GuardedBy {
    public enum Type { FIELD, CLASS; }
 }
 ```
-<!-- more -->
 
 So far so good. I then wanted to somehow parameterise the enum constants themselves to give extra information.
 

@@ -21,7 +21,6 @@ can be reduced to
 ``` java
 private Map<Size, List<Shoe>> stock = new HashMap<>();
 ```
-<!-- more -->
 
 where the _diamond operator_ can be filled in or inferred from the declaration. It's subtly different than leaving out the generic completely which will reduce your type to being of `Object` Things don't get much better than this.
 

@@ -11,7 +11,6 @@ Although OAuth is intended for web, mobile and desktop applications, I've been f
 
 As a result, I'm journaling my experiences and hopefully learning a thing or two about OAuth along the way.
 
-<!-- more -->
 
 ## OAuth
 

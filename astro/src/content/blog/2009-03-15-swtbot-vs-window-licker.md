@@ -12,7 +12,6 @@ The title is a bit misleading because these guys aren't really squaring off like
   
 My comments are really based on having a go at [implementing some basic SWT support](http://groups.google.com/group/windowlicker-users/browse_thread/thread/6fb792261a9cd1e7) in Window Licker and adding some features to SWTBot so it shouldn't be taken as authoritative. This entry is more of an experience report after trying to contribute to both projects. I'll try to follow up with an API usage report when I've used both more with my applications.
 
-<!-- more -->
 
 ## The Code
 

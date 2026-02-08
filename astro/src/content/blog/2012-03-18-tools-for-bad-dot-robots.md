@@ -11,7 +11,6 @@ a collection of useful Java tools available for download via the [bad.robot.repo
 Rather than re-implement the same utility code again and again, I've started to collect things under the bad.robot
 banner. So far, we have...
 
-<!-- more -->
 
 * simple-http; a simple way to build a HTTP client and work with the HTTP verbs. No more lengthy configuration,
 it just works out of the box.

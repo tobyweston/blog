@@ -16,7 +16,6 @@ Lets pretend there is just three types of testing; _unit_, _integration_ and _ac
   * _Integration_ - testing object collaborations, for the purposes of this article, lets assume end-to-end testing slot into this bracket
   * _Acceptance_ - leaning towards end-to-end but key here is that they are customer authored. As such, to convince the customer these will likely be relatively coarse grained and start outside the system boundary
 
-<!-- more -->
 
 ## Starting in a Low Gear with Unit Tests
 

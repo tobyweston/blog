@@ -6,12 +6,14 @@ keywords: "dsl, domain specific langauges, micro-dsl, fluent api, java,"
 description: "An example of a micro DSL to find items in a list using a fluent style API."
 ---
 
+import ImgTag from '../../components/ImgTag.astro';
+
 I was recently talking about what I call [micro DSLs](/blog/2009/01/06/be-more-expressive-with-builders/) and I thought I'd follow up with another example.
 
 So, another example of a micro DSL I found myself writing is one of finding some object within a collection of differently typed objects. In my example, I want to find a `Race` object inside a bunch of calendar events objects, the finder micro DSL looks like this.
 
   
-``` java
+```java
 final class RaceFinder {
 
     private final Race race;
@@ -66,25 +68,6 @@ How do you feel about this? When its used in a tiny domain like this and when it
 
   
 ## Recommended Reading
-
-<div>
-    <script type="text/javascript">
-    function trackOutboundLink(link, category, action) {
-
-        try {
-            _gaq.push(['_trackEvent', category , action]);
-        } catch(err){}
-
-        setTimeout(function() {
-            document.location.href = link.href;
-        }, 100);
-    }
-    </script>
-</div>
-
-<a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/51KkyQcrsVL._SL160_.jpg 'DSLs in Action' %}</a>
-
-<a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">{% img right http://ecx.images-amazon.com/images/I/51FwzT0U4LL._SL160_.jpg 'Domain Specific Languages (Addison-Wesley Signature)' %}</a>
 
  * <a href="http://www.amazon.co.uk/gp/product/0321712943/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=0321712943&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">Domain Specific Languages (Addison-Wesley Signature)</a>, Martin Fowler
  * <a href="http://www.amazon.co.uk/gp/product/1935182455/ref=as_li_ss_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=1935182455&linkCode=as2&tag=baddotrobot-21" onClick="trackOutboundLink(this, 'Outbound Links', 'amazon.com'); return false;">DSLs in Action</a>, DSLs in Action

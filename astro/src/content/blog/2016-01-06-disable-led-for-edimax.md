@@ -8,7 +8,6 @@ description: "Instructions how to recompile the Raspberry Pi kernel and disable 
 
 Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.
 
-<!-- more -->
 
 The only way I found to disable the LED is by modifying the [kernel module](https://en.wikibooks.org/wiki/The_Linux_Kernel/Modules). Compiling that meant recompiling the associated kernel to get all the dependencies lined up. 
 

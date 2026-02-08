@@ -8,7 +8,6 @@ description: "Some common setup for a new Pi"
 
 Here"s some common things to do when you first setup a Pi.
 
-<!-- more -->
 
 ## Raspian Image
 

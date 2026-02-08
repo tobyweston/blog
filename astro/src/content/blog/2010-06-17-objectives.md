@@ -16,7 +16,6 @@ I like the think of them as
   
 Where the Y is all about __YOU__; make it personal.
 
-<!-- more -->
 
 For example, we all want to be better developers but how do you phrase that as an acceptable business objective that management can neatly label it, put in a box and pull out in twelve months time to see if it's flourished? Defining "better" in terms of SMART isn't going to be easy.
 

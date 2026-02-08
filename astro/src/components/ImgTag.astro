@@ -1,0 +1,90 @@
+---
+/**
+ * ImgTag - Replaces Octopress {% img %} liquid tags
+ *
+ * Supports:
+ * - Class names (e.g., "right", "left", "center")
+ * - Width and height attributes
+ * - Title and alt text
+ *
+ * Usage:
+ * <ImgTag src="/images/ninja.png" alt="Ninja Attack!" />
+ * <ImgTag class="right" src="/images/ninja.png" alt="Ninja Attack!" />
+ * <ImgTag class="right" src="/images/ninja.png" width={150} height={150} title="Ninja Attack!" alt="Alt text" />
+ */
+
+interface Props {
+  src: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  title?: string;
+  alt?: string;
+}
+
+const { src, class: className, width, height, title, alt } = Astro.props;
+
+// Normalize image path - handle relative paths from old Octopress structure
+let normalizedSrc = src;
+if (src.startsWith('../../../../../images/')) {
+  normalizedSrc = src.replace('../../../../../images/', '/images/');
+} else if (src.startsWith('../images/')) {
+  normalizedSrc = src.replace('../images/', '/images/');
+} else if (!src.startsWith('http') && !src.startsWith('/')) {
+  normalizedSrc = `/images/${src}`;
+}
+---
+
+<img
+  src={normalizedSrc}
+  class={className}
+  width={width}
+  height={height}
+  title={title}
+  alt={alt || title || ''}
+  loading="lazy"
+/>
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Float right with text wrapping on the left */
+  img.right {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+    max-width: 50%;
+  }
+
+  /* Float left with text wrapping on the right */
+  img.left {
+    float: left;
+    margin: 0 1.5rem 1.5rem 0;
+    max-width: 50%;
+  }
+
+  /* Center image */
+  img.center {
+    display: block;
+    margin: 1.5rem auto;
+  }
+
+  /* Half width images */
+  img.half {
+    max-width: 48%;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    img.right,
+    img.left {
+      float: none;
+      display: block;
+      margin: 1.5rem auto;
+      max-width: 100%;
+    }
+  }
+</style>
+

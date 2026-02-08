@@ -27,7 +27,6 @@ The alternative patten is to wait for the assertion and avoid the wait for shutd
   
 The test was failing for me even though I was able to show that the interrupt is called and the interrupt flag is set immediately after the sleeping thread is woken. However, when the test reached the assertion, it was false. Weird.
 
-<!-- more -->
 
 I setup another thread to just poll the sleeping thread for its status and it showed the following.
 

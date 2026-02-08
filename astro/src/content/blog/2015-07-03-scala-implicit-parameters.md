@@ -11,7 +11,6 @@ Scala "implicits" allow you to omit calling methods or referencing variables dir
 
 In the next few posts, we'll look at the different types of implicit bindings Scala offers and show some examples of when they can be useful.
 
-<!-- more -->
 
 There are three categories of "implicits";
 
@@ -20,7 +19,6 @@ There are three categories of "implicits";
 1. **Implicit classes** extend behaviour of existing classes you don't otherwise control (akin to [categories](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/CustomizingExistingClasses/CustomizingExistingClasses.html) in Objective-C)
 
 
-<!-- more -->
 
 ## Implicit Parameters
 
