@@ -1,19 +1,18 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Image } from 'astro:assets';
-import logoImage from '../assets/robot-logo.png';
+import logo from '../content/images/robot-logo_105x132.png';
 ---
 <header class="header">
   <div class="header-container">
     <div class="logo-section">
       <a href="/" class="logo-link">
         <Image
-          src={logoImage}
+          src={logo}
           alt="bad.robot logo"
           width={84}
           height={106}
           class="logo-image"
-          densities={[1, 2]}
         />
         <div class="logo-text-block">
           <h1 class="logo-title logo-text header-logo-text">{SITE_TITLE}</h1>
