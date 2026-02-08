@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { video } = Astro.props as { video: CollectionEntry<'video'> };
+const { Content } = await video.render();
 const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}?rel=0`;
 ---
 
@@ -40,7 +41,7 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}
     </div>
 
     <section class="video-detail-content">
-      <slot />
+      <Content />
     </section>
   </article>
 </SiteLayout>

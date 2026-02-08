@@ -1,0 +1,268 @@
+---
+title: "Java 8 Lambda Basic Syntax - Udemy"
+description: "An extract from my Udemy course describing Lamdas"
+pubDate: "2014-05-19"
+youtubeId: "By6DRlP74z8"
+---
+
+# Understanding Java Lambda Syntax 
+
+If you’ve ever written Java before Java 8, you’ll remember the ceremony. Anonymous classes. Verbose method overrides. Lots of boilerplate just to pass behaviour around.  Enter **lambdas**.
+
+Let’s break down what they are, how they work, and how to write them — cleanly.
+
+
+## What Is a Lambda?
+
+A lambda is essentially an **anonymous block of functionality**.
+
+Think of it like a lightweight anonymous class — but without all the ceremony.
+
+Before lambdas, if you wanted to pass behaviour (like sorting logic), you’d typically create an anonymous class instance.
+
+For example, sorting an array using `Arrays.sort()` required a `Comparator`:
+
+```java
+Arrays.sort(array, new Comparator<Integer>() {
+    @Override
+    public int compare(Integer a, Integer b) {
+        return a - b;
+    }
+});
+```
+
+That `Comparator` instance doesn’t mean anything on its own. It only becomes useful when passed into `Arrays.sort()`.
+
+It’s just a bundle of behaviour.
+
+
+
+## Replacing Anonymous Classes with Lambdas
+
+With Java 8+, that same logic becomes:
+
+```java
+Arrays.sort(array, (a, b) -> a - b);
+```
+
+That’s it.
+
+Shorter. Clearer. No boilerplate.
+
+Even though it looks different, Java treats this lambda as an instance of `Comparator<Integer>`.
+
+Why does this work?
+
+Because `Comparator` has only **one abstract method** (`compare`). That makes it a *functional interface*.
+
+The compiler sees:
+
+* A single abstract method
+* A lambda expression
+* Matching parameter and return types
+
+…and it connects the dots.
+
+
+
+## Why Lambdas Work: Functional Interfaces
+
+A lambda can replace any interface that has **exactly one abstract method**.
+
+These are called **functional interfaces**.
+
+Example:
+
+```java
+interface Example {
+    R apply(T arg);
+}
+```
+
+Before lambdas:
+
+```java
+Example ex = new Example() {
+    @Override
+    public R apply(T arg) {
+        return ...;
+    }
+};
+```
+
+After converting to a lambda?
+
+We trim the fat.
+
+1. Remove instantiation
+2. Remove method name
+3. Remove override annotation
+4. Keep parameters and body
+5. Add the arrow `->`
+
+Result:
+
+```java
+Example ex = (arg) -> ...;
+```
+
+That’s the core syntax.
+
+
+
+## Lambda Syntax Explained
+
+At its most verbose, a lambda looks like this:
+
+```java
+(Type arg1, Type arg2) -> {
+    // body
+}
+```
+
+It consists of:
+
+1. **Parameters** (in parentheses)
+2. The arrow `->`
+3. A **body** (either a block or expression)
+
+
+
+## Syntax Shortcuts (The Good Stuff)
+
+Java lets you simplify lambdas quite a bit.
+
+### 1️⃣ Drop Parameter Types (Type Inference)
+
+If the compiler can figure out the types from context, you can omit them:
+
+```java
+(a, b) -> a - b
+```
+
+Java uses **type inference** based on where the lambda is used.
+
+
+
+### 2️⃣ Drop Braces for Single Expressions
+
+If the body is just one expression:
+
+```java
+(a, b) -> a - b
+```
+
+You don’t need:
+
+* Curly braces
+* `return`
+
+Java knows a single expression must return a value consistent with the functional interface.
+
+
+
+### 3️⃣ Drop Parentheses for One Parameter
+
+If there’s only one argument:
+
+```java
+x -> x + 1
+```
+
+No parentheses required.
+
+
+
+### 4️⃣ No Arguments? Use Empty Parentheses
+
+If the lambda takes no parameters:
+
+```java
+() -> System.out.println("Hello");
+```
+
+The “hamburger symbol” (empty brackets) is required.
+
+
+
+## Syntax Recap
+
+Here’s the progression from most verbose to most concise:
+
+**Most verbose:**
+
+```java
+(Type x) -> {
+    return x + 1;
+}
+```
+
+**With inferred types:**
+
+```java
+(x) -> {
+    return x + 1;
+}
+```
+
+**Single expression:**
+
+```java
+(x) -> x + 1
+```
+
+**Single parameter shortcut:**
+
+```java
+x -> x + 1
+```
+
+Java allows these reductions because of:
+
+* Functional interfaces
+* Type inference improvements
+* Context-aware compilation
+
+
+
+## Method References (A Shortcut to Lambdas)
+
+There’s one more shortcut worth mentioning: **method references**.
+
+Sometimes instead of writing:
+
+```java
+x -> System.out.println(x)
+```
+
+You can write:
+
+```java
+System.out::println
+```
+
+Method references are just shorthand for specific kinds of lambdas.
+
+We’ll dive deeper into those separately — but for now, just know they can be used anywhere a lambda is expected.
+
+
+
+## Final Thoughts
+
+Lambdas didn’t just reduce syntax — they changed how Java code feels.
+
+They make:
+
+* Behaviour easier to pass around
+* Code more expressive
+* Functional-style patterns natural in Java
+
+The key ideas to remember:
+
+* Lambdas replace single-method interfaces
+* The arrow `->` separates parameters from body
+* The compiler does a lot of heavy lifting for you
+* You can progressively simplify syntax when context allows
+
+Once you internalise that, lambdas stop looking magical and start feeling obvious.
+
