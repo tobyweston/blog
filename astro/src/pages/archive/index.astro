@@ -10,7 +10,7 @@ const byYear = posts.reduce((acc, p) => {
   if (!acc[year]) acc[year] = [];
   acc[year].push(p);
   return acc;
-}, {});
+}, {} as Record<string, typeof posts>);
 ---
 
 <SiteLayout title="Archive - bad.robot" description="All posts">
