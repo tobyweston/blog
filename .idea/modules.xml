@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/blog.iml" filepath="$PROJECT_DIR$/blog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../pre-migrated-blog/pre-migration/pre-migration.iml" filepath="$PROJECT_DIR$/../pre-migrated-blog/pre-migration/pre-migration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../octopress/octopress.iml" filepath="$PROJECT_DIR$/../octopress/octopress.iml" />
     </modules>
   </component>
 </project>
