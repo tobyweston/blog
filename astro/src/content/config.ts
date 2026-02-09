@@ -20,7 +20,11 @@ const book = defineCollection({
 		description: z.string(),
 		pubDate: z.coerce.date(),
 		coverImage: z.string().optional(),
-		keywords: z.string().optional()
+		keywords: z.string().optional(),
+		purchaseLinks: z.array(z.object({
+			name: z.string(),
+			url: z.string()
+		})).optional()
 	}),
 });
 

@@ -2,6 +2,7 @@
 import {getCollection} from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import SiteLayout from '../../components/ui/SiteLayout.astro';
+import BookPreviewCard from '../../components/ui/BookPreviewCard.astro';
 
 const books = (await getCollection('book')) as CollectionEntry<'book'>[];
 books.sort((a: CollectionEntry<'book'>, b: CollectionEntry<'book'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -9,14 +10,15 @@ books.sort((a: CollectionEntry<'book'>, b: CollectionEntry<'book'>) => b.data.pu
 
 <SiteLayout title="Books - bad.robot" description="Books by Toby Weston">
   <section>
-    <h1 class="text-3xl font-bold mb-6">Books</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {books.map((b: CollectionEntry<'book'>) => (
-        <article class="border rounded p-4">
-          <a href={`/book/${b.slug}/`} class="text-xl font-semibold">{b.data.title}</a>
-          {b.data.description && <p class="text-slate-600 mt-2">{b.data.description}</p>}
-        </article>
-      ))}
-    </div>
+    <h1 class="text-3xl font-bold mb-4">Books</h1>
+    <p class="text-gray-700 max-w-2xl mb-8">
+      A collection of books I've written on programming, software design, and development practices.
+    </p>
+  </section>
+
+  <section class="mt-10 space-y-8">
+    {books.map((book: CollectionEntry<'book'>) => (
+      <BookPreviewCard book={book} />
+    ))}
   </section>
 </SiteLayout>
