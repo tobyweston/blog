@@ -36,7 +36,7 @@ const { kicker, title, subtitle, cta } = Astro.props;
     </div>
   </div>
 
-  <script type="module">
+  <script is:inline type="module">
     const elems = document.querySelectorAll('.hero-reveal');
     const revealElement = (el) => el.classList.add('revealed');
 

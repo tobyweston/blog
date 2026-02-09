@@ -37,7 +37,7 @@ const byYear = posts.reduce((acc, p) => {
     </div>
   </section>
 
-  <script type="module">
+  <script is:inline type="module">
     const input = document.getElementById('search');
     const posts = Array.from(document.querySelectorAll('#posts li'));
     input.addEventListener('input', (e) => {
