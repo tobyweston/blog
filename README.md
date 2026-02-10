@@ -27,6 +27,7 @@ The site will be available at `http://localhost:4321/`
 1. Build the site: `npm run build`
 2. The output in `dist/` can be deployed to GitHub Pages
 
-# Testing
+# Developers
 
-See Cypress's [README](./cypress/README.md).
+See Astro's [README](./astro/README.md).
+See Cypress's [README](./astro/cypress/README.md).
