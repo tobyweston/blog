@@ -44,9 +44,9 @@ jobs:
           npx wait-on http://localhost:4321 --timeout 60000
 
       - name: Run Cypress visual tests
-        working-directory: ./astro
         uses: cypress-io/github-action@v5
         with:
+          working-directory: ./astro
           browser: ${{ matrix.browser }}
           command: npm run test:visual
           install: false
