@@ -13,7 +13,6 @@ to perform additional testing after the exception or testing against the actual 
 
 JUnit 4.7 introduces the next progression, a `@Rule` that offers the best of both worlds. This articles weighs up the pros and cons of each approach and takes a closer look at the syntax of each.
 
-<!-- more -->
 
 ## The try/fail/catch Idiom
 

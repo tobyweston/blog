@@ -8,7 +8,6 @@ description: "Convert Java Callable objects to Runnable to schedule them at a fi
 
 The `Executors` class has helper methods to convert from a `Runnable` to a `Callable`, presumably so you can submit a `Runnable` task to an executor, but it doesn't offer the counterpart helper. Something to convert a `Callable` to a `Runnable`.
 
-<!-- more -->
 
 `Callable`, like `Runnable`, is still just something that can be called. It offers a return type but really has nothing to do with concurrency, it just so happens to fit in nicely with the executor framework like `Runnable` does with `Thread`.
 

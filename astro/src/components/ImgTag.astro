@@ -1,0 +1,84 @@
+---
+
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string | any;
+  class?: string;
+  width?: number;
+  height?: number;
+  title?: string;
+  alt?: string;
+}
+
+const { src, class: className, width, height, title, alt } = Astro.props;
+
+let resolvedSrc: string | any = src;
+---
+
+{resolvedSrc && typeof resolvedSrc === 'object' ? (
+  /* If resolvedSrc is an imported module (ImageMetadata or module), use Astro Image for optimization */
+  <Image
+    src={resolvedSrc}
+    class={className}
+    width={width}
+    height={height}
+    title={title}
+    alt={alt || title || ''}
+    loading="lazy"
+  />
+) : (
+  /* Fallback to a normal img tag (public or external URLs) */
+  <img
+    src={resolvedSrc}
+    class={className}
+    width={width}
+    height={height}
+    title={title}
+    alt={alt || title || ''}
+    loading="lazy"
+  />
+)}
+
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Float right with text wrapping on the left */
+  img.right {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+    max-width: 50%;
+  }
+
+  /* Float left with text wrapping on the right */
+  img.left {
+    float: left;
+    margin: 0 1.5rem 1.5rem 0;
+    max-width: 50%;
+  }
+
+  /* Center image */
+  img.center {
+    display: block;
+    margin: 1.5rem auto;
+  }
+
+  /* Half width images */
+  img.half {
+    max-width: 48%;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    img.right,
+    img.left {
+      float: none;
+      display: block;
+      margin: 1.5rem auto;
+      max-width: 100%;
+    }
+  }
+</style>

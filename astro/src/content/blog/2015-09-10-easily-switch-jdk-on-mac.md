@@ -14,7 +14,6 @@ I have several versions of Java installed on my Mac. Trouble is, I can never rem
     
 It shows the Java versions are available and where there are. For example, on my machine, the output looks like this.
 
-<!-- more -->
 
 ```bash
 Matching Java Virtual Machines (4):

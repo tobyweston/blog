@@ -10,7 +10,6 @@ Sometimes, we may want to catch an exception, temporarily ignoring it to continu
 
 This got me thinking about how we should deal with this kind of thing. In the end, I came up with the idea of a collection class to capture the `Exceptions` and a sub-class of `Exception` to represent an exception containing other, embedded exceptions. When you're done collecting exceptions, you can just check and rethrow as a new exception type.
 
-<!-- more -->
   
 For example, the domain cleaning class below can throw an exception during the `deleteAll` method. Rather than abandon the cleanup of subsequent objects, we can employ this tactic to continue the cleanup and throw an exception containing the underlying problems when we're done.
 

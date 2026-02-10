@@ -12,7 +12,6 @@ Scala has taken a different approach. Scala has done away with checked exception
 
 In a [previous post](/blog/2012-03-29-building-better-exceptions), I've described a general approach to understanding _when_ and _how_ to deal with exceptions in Scala or Java. In this post, we'll take a quick look at Scala's syntax around exceptions and how pattern matching is employed.
 
-<!-- more -->
 
 ## Exceptions
 

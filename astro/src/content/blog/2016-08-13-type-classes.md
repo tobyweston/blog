@@ -11,7 +11,6 @@ Type classes provide [ad-hoc inheritance](http://bit.ly/1kr6C8E#Ad_hoc_polymorph
 
 From the [Neophytes Guide](http://danielwestheide.com/blog/2013/02/06/the-neophytes-guide-to-scala-part-12-type-classes.html), Daniel Westheide describes type classes, slightly paraphrased, as follows.
 
-<!-- more -->
 
 > A type class `C` defines behaviour.  
 > Type `T` must support behaviour defined in `C` to be a "member" of `C`.  

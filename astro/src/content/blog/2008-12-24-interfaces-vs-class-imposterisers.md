@@ -12,7 +12,6 @@ I've been doing a lot with SWT lately and generally want to unit test the UI ele
 
 I understand that by slowly teasing out behaviour during the mocking / TDD process you can clearly express the collaborations a class may have but I feel that you can still be clear about class behaviour when using an impostor. It's just code right? I'm not sure I care that collaborations are documented as interfaces or not, my tests express the relationships and I've gone through the same thought process to understand clearly how the classes under test interact. So why is an impostor the bad guy?
 
-<!-- more -->
 
 In the case of legacy code or third part code, you're kind of stuck with impostorisers right? I mean you could build an application layer between your code and the third party stuff but I'd want better motivation for doing this than to avoid using impostorisers.
 

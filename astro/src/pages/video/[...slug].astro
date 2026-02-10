@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from '../../components/ui/SiteLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const videos = await getCollection('video');
+  return videos.map((video) => ({
+    params: { slug: video.slug },
+    props: { video },
+  }));
+}
+
+const { video } = Astro.props as { video: CollectionEntry<'video'> };
+const { Content } = await video.render();
+const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}?rel=0`;
+---
+
+<SiteLayout title={`${video.data.title} - Videos`} description={video.data.description}>
+  <article class="video-detail">
+    <header class="video-detail-header">
+      <p class="detail-kicker">Video</p>
+      <h1 class="text-4xl font-bold">{video.data.title}</h1>
+      <div class="text-sm text-gray-500 font-medium">
+        <FormattedDate date={video.data.pubDate} />
+      </div>
+      <p class="text-gray-700 max-w-2xl">
+        {video.data.description}
+      </p>
+    </header>
+
+    <div class="video-detail-frame">
+      <iframe
+        src={embedUrl}
+        title={video.data.title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <section class="video-detail-content">
+      <Content />
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .video-detail {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .video-detail-header {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+
+  .video-detail-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #0f172a;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .video-detail-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-detail-content {
+    color: var(--text-secondary);
+  }
+</style>
+

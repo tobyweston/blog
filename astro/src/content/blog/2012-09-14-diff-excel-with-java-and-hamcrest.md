@@ -8,7 +8,6 @@ description: "Diff Excel using Java and Hamcrest. Build and compare Excel files 
 
 Comparing Excel spreadsheets programmatically can be tricky. Projects like [Apache POI](http://poi.apache.org/) and [JExcel](http://jexcelapi.sourceforge.net/) let you build and interrogate sheets but don't offer a built in compare function. Fortunately, [simple-excel](http://github.com/tobyweston/simple-excel) offers a simplified API for building sheets in Java and a bunch of [Hamcrest](http://hamcrest.org/) matchers to find any differences.
 
-<!-- more -->
 
 ## Building Spreadsheets
 

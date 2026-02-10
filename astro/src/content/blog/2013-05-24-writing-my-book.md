@@ -12,6 +12,5 @@ Acceptance testing in it's generally accepted form, is so full of duplication an
 
 It also talks about when not to bother; how gaining software confidence isn't always about testing. Fast feedback and writing software that's cheap to change can be an effective alternative to testing and help shorten the path from concept to cash.
 
-<!-- more -->
 
 Keep an eye on my [blog's book page](/book) for the latest news and head over to [https://leanpub.com/essential_acceptance_testing](Leanpub) to purchase a copy or [http://samples.leanpub.com/essential_acceptance_testing-sample.pdf](download a free sample).

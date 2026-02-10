@@ -12,7 +12,6 @@ If you haven't had the opportunity to pair much in your day job, it may seem a l
 
 This post talks a little about what to expect from a pair test and offers a few tips to surviving the process.
 
-<!-- more -->
 
 ## What To Expect
 

@@ -8,7 +8,6 @@ description: "Getting Java source on your Mac"
 
 Mostly as a reminder to myself, getting the Java source on your Mac involves the following.
 
-<!-- more -->
 
   1. Go to the [Apple Developer Connection downloads page](https://developer.apple.com/downloads).
   1. For Lion and above, search for **Java for Mac OS X (2006-2012) Developer Package**. The developer bundle includes the source whereas the regular software update version does not.

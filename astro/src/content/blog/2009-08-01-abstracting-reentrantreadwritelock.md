@@ -12,7 +12,6 @@ Java's [ReentrantReadWriteLock](http://java.sun.com/javase/6/docs/api/java/util/
 
 With all [Lock](http://java.sun.com/javase/6/docs/api/java/util/concurrent/locks/Lock.html) implementations, you specifically acquire the lock and are politely asked to release the lock within a finally block. Makes sense but gives unlock responsibility on the developer.
 
-<!-- more -->
   
 Vanilla Java would have you;
 
@@ -29,7 +28,6 @@ try {
 
 Why not wrap the boiler plate code up in a mini DSL and pass in a lambda to execute the cleanup? Any implementation must call both lock and unlock and re-throw any exceptions. The following test shows this to be true.
 
-<!-- more -->
 
 {% assign braces = '{{' %}
 ``` java

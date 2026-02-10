@@ -8,7 +8,6 @@ description: "Find out the difference between URL Encoding and Form URL Encoding
 
 What's the difference between URL Encoding and Form URL Encoding?
 
-<!-- more -->
 
 ## URL Encoding
 

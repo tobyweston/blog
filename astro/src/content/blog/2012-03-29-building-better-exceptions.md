@@ -10,7 +10,6 @@ In the [previous post](/blog/2012-03-28-exception-handling-as-a-system-wide-conc
 
 This post takes the idea further by talking about exceptions as _real_ objects and suggests only ever creating subclasses of `RuntimeException` for your application exceptions. Once exception handling points are isolated, testing becomes more straightforward and we reduce the noise of checked exceptions. When we get it right, we should never need to assert against exception messages.
 
-<!-- more -->
 
 ## Exceptions are Objects
 

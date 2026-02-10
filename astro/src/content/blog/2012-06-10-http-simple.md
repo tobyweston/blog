@@ -11,7 +11,6 @@ Apache's HTTP client libraries (version 4.x has a very different API than 3.x) a
 ``` java
 HttpResponse response = anApacheClient().get(new URL("http://baddotrobot.com"));
 ```
-<!-- more -->
 
 ## The API
 

@@ -22,7 +22,6 @@ try {
 
 which is just one example where the exception handling policy for the system (it's a system-wide concern remember) is muddled at best. Nothing is saying that the same exception isn't logged elsewhere or that the exception is even handled correctly or the right people notified. It's not ok to just log and rethrow and every single time we go to declare a new logger, we should think twice.
 
-<!-- more -->
 
 We've taken this very literally in my current project and everyone is actively discouraged from instantiating a logger. I'd rather be explicit that some exception event has occurred and fire an event that some interested party can listen for. This makes perfect sense when you think about the huge log files that someone has to trawl through, armed only with for some vague clue as to what went wrong, a grep manual and the futile hope that developers actually log something useful. All without the context of the code to actually guide them. Good luck.
 

@@ -10,7 +10,6 @@ Either when looking for work or looking to recruit, I've been doing pair tests i
 
 I'm left wondering why we still use "pair tests" for recruitment. Is it to see how candidates problem solve? How they'd be to work with? The only way to assess these things is actually to do them. Pair tests are a poor simulation. If you want to see how someone works, work with them. Don't _pretend_ to work with them.
 
-<!-- more -->
 
 
 ## From the Interviewer Perspective

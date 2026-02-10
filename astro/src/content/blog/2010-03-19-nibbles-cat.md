@@ -19,7 +19,6 @@ public void potentialDeadlock() {
 
 However, in the process of negotiation it becomes apparent that the  `Kidnapper` is unwilling to release poor `Nibbles` until he has received the `Cash` and the `Negotiator` is unwilling to part with the `Cash` until he has poor `Nibbles` back in his arms.
 
-<!-- more -->
   
 By synchronising on nibbles below, the  `Kidnapper` is holding onto him (more specifically his monitor) until the end of the synchronised block. However, within this block the  `Kidnapper` is trying to take the cash. The access to this method is itself synchronised on the cash, meaning that no one else can access the cash whilst the  `Kidnapper` is grabbing it. Meanwhile, the `Negotiator` is synchronising on the cash, holding onto it (or again, more specifically, it's monitor) until the end of the synchronised block then within that block, it requires nibbles. We can start to see the potential for deadlock.
 

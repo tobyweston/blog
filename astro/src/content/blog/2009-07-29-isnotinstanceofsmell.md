@@ -34,7 +34,6 @@ try {
 }
 ```
 
-<!-- more -->
 
 There seems very little difference in the semantics of the two calls, both handle class hierarchies and both handle interfaces. I think the legitimate use for `Class.isAssignableFrom` is around scenarios where reflective-type checks are more suited (for example, where the class to check against is only known or may change at runtime). Using `Class.isInstance` is a similar alternative. The other point that the [API documentation](http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Class.html#isAssignableFrom%28java.lang.Class) points out is that `isAssignableFrom` works with primitives whereas `instanceof` can not.
 

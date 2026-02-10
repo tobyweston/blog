@@ -15,7 +15,6 @@ The helpful message you'll get is.
 
     java.lang.OutOfMemoryError: unable to create new native thread
 
-<!-- more -->
 
 I ran a simple loop that would create threads that do nothing but sleep and watched how many could be created before the out of memory error above. I repeated this after setting the maximum heap size with `-Xmx`. Check out the results below, you can see that no real Java heap is used, still I get an out of memory error and am limited on the number of threads I can create. As a caveat, these results should in no way taken as representative on any other environment than my laptop running Java 1.6. Your mileage may vary.
 

@@ -10,7 +10,6 @@ It's not ok to handle exceptions in an ad-hoc way. Exception handling should be 
 
 In this post, we'll take a closer look with some examples.
 
-<!-- more -->
 
 To help make the strategy explicit, it's a good general approach to deal with exceptions at the boundaries of your system. However, recognising the boundaries can be tricky. The UI is an obvious boundary. Here, the user will likely be interested that something went wrong. Architectural "layers" can be more subtle. For example, any internal API is a candidate but you have to consider them carefully. Lets take a look at a few examples, in each case we'll identify the boundary, _when_ to catch exceptions and _how_ to deal with them. Effectively, we'll define a system wide strategy for each of the following.
 

@@ -17,7 +17,6 @@ series: 'Git'
  - [Useful Git aliases](/blog/2013-01-23-useful-git-commands#alias)
 
 
-<!-- more -->
 
 ## <a id="create_remote_branch"></a>Create a branch on a remote (pushing a branch to a remote)
 

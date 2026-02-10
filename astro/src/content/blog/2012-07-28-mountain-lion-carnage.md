@@ -8,7 +8,6 @@ description: "The Mountain Lion upgrade blasts Java, svn and git. Find out how t
 
 After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.
 
-<!-- more -->
 
 ## Git
 
