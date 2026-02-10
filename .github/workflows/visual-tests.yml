@@ -30,9 +30,11 @@ jobs:
         run: npm ci
 
       - name: Build site
+        working-directory: ./astro
         run: npm run build
 
       - name: Start preview server
+        working-directory: ./astro
         run: |
           npm run preview &
           echo "SERVER_PID=$!" >> $GITHUB_ENV
