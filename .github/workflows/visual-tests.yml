@@ -55,26 +55,26 @@ jobs:
 
       - name: Upload screenshots on failure
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots-${{ matrix.browser }}
-          path: cypress/screenshots/
+          path: astro/cypress/screenshots/
           retention-days: 7
 
       - name: Upload diff images on failure
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: visual-diffs-${{ matrix.browser }}
-          path: cypress/snapshots/**/__diff_output__/
+          path: astro/cypress/snapshots/**/__diff_output__/
           retention-days: 7
 
       - name: Upload videos on failure
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos-${{ matrix.browser }}
-          path: cypress/videos/
+          path: astro/cypress/videos/
           retention-days: 7
 
   # Optional: Update baselines job (manual trigger only)
