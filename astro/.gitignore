@@ -22,3 +22,11 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/*
+!cypress/screenshots/base/
+cypress/downloads/
+cypress/snapshots/**/__diff_output__/
+

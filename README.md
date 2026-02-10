@@ -22,8 +22,11 @@ npm run dev
 
 The site will be available at `http://localhost:4321/`
 
-```
 # Deployment
 
 1. Build the site: `npm run build`
 2. The output in `dist/` can be deployed to GitHub Pages
+
+# Testing
+
+See Cypress's [README](./cypress/README.md).
