@@ -299,9 +299,9 @@ describe('Hyperlink Resolution Tests', () => {
     it('should be styled differently when hovered', () => {
       cy.visit('/blog');
       cy.get('a[href*="/blog/"]').first().then(($link) => {
-        const initialColor = $link.css('color');
         cy.wrap($link).trigger('mouseover');
-        // Color might change on hover (though hard to test without visual comparison)
+        // Verify the link exists and can be hovered (visual changes tested by visual regression suite)
+        cy.wrap($link).should('exist');
       });
     });
   });

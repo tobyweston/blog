@@ -50,9 +50,11 @@ npm run cypress:open             # Direct UI
 ```
 cypress/
 ├── e2e/                         # Test specs
-│   ├── visual-regression.cy.js  # Core pages
-│   ├── blog-posts.cy.js         # Blog tests
-│   └── book-video.cy.js         # Book & video tests
+│   ├── visual-regression.cy.js  # Core pages (visual)
+│   ├── blog-posts.cy.js         # Blog tests (visual)
+│   ├── book-video.cy.js         # Book & video tests (visual)
+│   ├── video-pages.cy.js        # Video functionality (functional) 
+│   └── hyperlink-resolution.cy.js # Link validation (functional)
 ├── support/
 │   ├── e2e.js                   # Custom commands
 │   └── commands.d.ts            # TypeScript definitions
