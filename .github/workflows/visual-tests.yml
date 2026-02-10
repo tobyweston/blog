@@ -89,22 +89,27 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '21'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
+        working-directory: ./astro
         run: npm ci
 
       - name: Build site
+        working-directory: ./astro
         run: npm run build
 
       - name: Start preview server
+        working-directory: ./astro
         run: npm run preview &
 
       - name: Wait for server
         run: npx wait-on http://localhost:4321
 
       - name: Update baselines
+        working-directory: ./astro
         run: npm run test:visual:baseline
 
       - name: Create Pull Request
