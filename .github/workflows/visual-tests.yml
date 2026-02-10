@@ -26,6 +26,7 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
+        working-directory: ./astro
         run: npm ci
 
       - name: Build site
