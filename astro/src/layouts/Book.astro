@@ -7,7 +7,7 @@ import type { ImageMetadata } from 'astro';
 
 type BookProps = CollectionEntry<'book'>['data'];
 
-const { title, description, pubDate, coverImage, keywords, purchaseLinks }: BookProps = Astro.props;
+const { title, description, pubDate, coverImage, keywords, purchaseLinks } = Astro.props as BookProps;
 
 // Dynamically import image from the images folder if coverImage is specified
 let coverImageImport;

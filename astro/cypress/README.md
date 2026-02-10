@@ -82,6 +82,7 @@ git commit -m "Add visual regression baselines"
 ```
 
 ### After CSS Changes
+
 ```bash
 npm run test:visual         # New screenshots created
 git diff cypress/screenshots/  # See what changed

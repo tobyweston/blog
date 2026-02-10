@@ -5,12 +5,13 @@ import SiteLayout from '../../components/ui/SiteLayout.astro';
 // Fetch posts (avoid using generic type syntax in frontmatter which can be parsed as JSX)
 const posts = (await getCollection('blog')).sort((a,b)=> b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 // Replace Object.groupBy (not available in some Node versions) with a compatible reduce-based helper
-const byYear = posts.reduce((acc, p) => {
+type PostsByYear = Record<string, typeof posts>;
+const byYear = posts.reduce((acc: PostsByYear, p) => {
   const year = String(p.data.pubDate.getFullYear());
   if (!acc[year]) acc[year] = [];
   acc[year].push(p);
   return acc;
-}, {});
+}, {} as PostsByYear);
 ---
 
 <SiteLayout title="Archive - bad.robot" description="All posts">
@@ -25,7 +26,7 @@ const byYear = posts.reduce((acc, p) => {
         <div class="mb-8">
           <h2 class="text-xl font-semibold mb-3">{year}</h2>
           <ul class="list-disc pl-6 space-y-2">
-            {(byYear[year] || []).map(p => (
+            {(byYear[year] || []).map((p: typeof posts[0]) => (
               <li data-title={p.data.title.toLowerCase()}>
                 <a href={`/blog/${p.slug}/`} class="text-slate-800 hover:text-sky-600">{p.data.title}</a>
                 <div class="text-sm text-slate-500">{p.data.pubDate.toDateString()}</div>
@@ -37,7 +38,7 @@ const byYear = posts.reduce((acc, p) => {
     </div>
   </section>
 
-  <script type="module">
+  <script type="module" is:inline>
     const input = document.getElementById('search');
     const posts = Array.from(document.querySelectorAll('#posts li'));
     input.addEventListener('input', (e) => {

@@ -39,7 +39,7 @@ Cypress.Commands.add('testPageVisually', (url, pageName) => {
 });
 
 // Prevent uncaught exceptions from failing tests (but log them)
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', (err, _runnable) => {
   // Log the error
   cy.log('Uncaught exception:', err.message);
   // Return false to prevent the error from failing the test
