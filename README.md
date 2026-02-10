@@ -29,5 +29,5 @@ The site will be available at `http://localhost:4321/`
 
 # Developers
 
-See Astro's [README](./astro/README.md).
-See Cypress's [README](./astro/cypress/README.md).
+* See Astro's [README](./astro/README.md).
+* See Cypress's [README](./astro/cypress/README.md).
