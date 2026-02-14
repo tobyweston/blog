@@ -1,3 +1,5 @@
+[![Visual Regression Tests](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml/badge.svg)](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml)
+
 # bad.robot
 
 Source of [baddotrobot.com](https://baddotrobot.com).
