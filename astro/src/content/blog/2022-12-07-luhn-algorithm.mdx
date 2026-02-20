@@ -1,0 +1,103 @@
+---
+title: "Luhn Algorithm"
+pubDate: "2022-12-07"
+categories: 'functional programming'
+keywords: ""
+description: ""
+---
+
+I wanted to compare a typical imperative implementation of the Luhn Algorithm with a more Functional (as in Functional Programming) approach.
+
+Check out the video below before we discuss in a little more detail.
+
+<VideoPreviewCard video={"asdasd"} />
+
+      <VideoPreviewCard video={video} />
+
+# Imperative Java
+
+The imperative implementation is fairly typical. We call it imperative because its a very prescriptive set of statements which run in sequence from top to bottom. The statements or commands alter the state of the program and in our case, give a result. The program very much describes _how_ to get that result.
+
+Imperative is often used in contrast to declarative programming. In declarative programming, the program focuses less on how to achieve some result and more on _what_ the program should accomplish. The details of the _how_ are left to the runtime or interpreter (the thing that's going to execute the program).
+
+I would also add that there is no real attempt at abstraction or object-oriented modelling in this solution. For me, that means there's been no attempt to help the reader understand what the program is trying to achieve only how it goes about it. We should expect it to be hard to work with going forward. You can also see that this will be tricky to test, specifically to test in small bite size pieces. Usually, moving towards better abstractions and OO naturally leads to easier to read, reason and test code. There's a related but subtle build on this when we think about test _driving_ code. When you write tests first and implementation second, you make the priority to be able to write easy to test code. As a side effect, you often get good abstraction and good design.
+
+```java
+public class Validator {
+
+    public boolean validate(String number) {
+        int sum = 0;
+        boolean isSecond = false;
+
+        for (int index = number.length() - 1; index >= 0; index--) {
+
+            // get current string digit, converting to an int
+            int digit = number.charAt(index) - '0';
+
+            if (isSecond)
+                digit = digit * 2;
+
+            // Add two digits to handle products > 9
+            sum += digit / 10;
+            sum += digit % 10;
+
+            isSecond = !isSecond;
+        }
+
+        return (sum % 10 == 0);
+    }
+}
+```
+
+# Functional Scala
+
+In the Scala version, we've moved away from an imperative style to an approach where we describe the algorithm as a sequence of steps, or in our case _transformations_. It's less imperative because the implementation of these "steps" is opaque to the developer. We're simply combining _functions_ like `map` and `flatMap` and allowing the implementation to figure out how to implement that (don't worry about the names, that's not important). The classic example is that the same function call can be used but one implementation may process sequentially whilst another processes concurrently. The developer isn't prescribing either but is thinking at a higher level and focused on the _what_ not the _how_.
+
+```scala
+object Example extends App {
+
+    def validate(number: String): Boolean = {
+        val sum = number
+            .map(_.asDigit)
+            .reverse
+            .zipWithIndex
+            .map { case (digit, index) =>
+                if (index % 2 == 0) digit else digit * 2
+            }
+            .flatMap(number => List(number / 10, number % 10))
+            .sum
+
+        sum % 10 == 0
+    }
+}
+```
+In and unto itself though, a move towards a declarative approach doesn't always mean a move towards a "functional approach". Using something like Spring annotations is another form of declarative programming but not functional programming. To claim that the Scala implementation is in the functional style, we have to look at another set of characteristics.
+
+Programming languages have to support a rich set of (fairly formal) features to be able to called a functional programming language. Scala is in fact a hybrid functional and object-oriented language. It can do both and it can do both fairly well. More purist functional programming languages like Haskell don't have the ability to (natively) model objects and object interactions and force you to adhere to the formalisms of functional programming. Java has attempted to retro fit functional programming features but they're done at the library level and it ultimately falls short as a serious functional programming choice.
+
+# What is Functional Programming?
+
+So what are these formalisms and which are we demonstrating in the Scala implementation above? Typically, a functional language should support:
+
+* Higher order and first class functions (typically with anonymous functions, aka lambdas)
+* "Pure" functions
+* Referential transparency
+* Recursion
+* Lazy evaluations
+* An emphasis on transformation and immutable data structures to support the above
+* An emphasis on stateless programs (see transformation above)
+* A rich type system supporting identifying incomplete or invalid programs based purely on their types
+
+In general however, its a bit unfair to define a language as "functional" or otherwise. It's more about a style of programming than the language itself. You can write programs in JavaScript in a functional style without trying to claim JavaScript is an "FP language". Some languages do a better job than others and some have been built explicitly as an FP language whilst others just so happen to support some of the above. A good example is recursion. I don't know any higher order languages that don't support recursion but something like Scala does a very good of making recursion intuitive and a natural tool to lean on when processing data structures.
+
+In the Scala example above, we have a series of chained functions. Each _transforming_ the data output from the last. The program doesn't retain any state and doesn't mutate data (unlike the Java version). This is because each of the transformation functions (like reverse) creates a new data structure (a copy of the input collection modified as appropriate), the original data isn't modified. The functions are also "pure" as they don't introduce any side effects. It's interesting here that Scala encourages this by treating everything as expressions, there are no inherent _statements_ (the difference being that an expression must return a value where as a statement does not need to).
+
+As a final note, Java can also do a lot of these things. It might be an interesting exercise for the reader to write a new Java Luhn implementation in the functional style. For some inspiration, see this example (from earlier). If you want to see a more test driven, expanded Scala solution, have a look at this example.
+
+# Find out More
+
+If you're interested in learning Scala or more about the "functional style" (which is just as applicable in Java by the way), I'd encourage you to check out my [course on Pluralsight](http://app.pluralsight.com/library/courses/scala-collections/table-of-contents?utm_source=youtube&utm_medium=video&utm_campaign=authordemo. Although it's focus is on collection types, it's really more of an introduction to Scala and FP using collections as the exemplars.
+
+
+
+
