@@ -146,21 +146,24 @@
   }
 
   .prose code {
-    background-color: var(--surface-alt);
-    color: var(--accent);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.95em;
+    background-color: rgba(11, 114, 133, 0.08);
+    color: #d73a49;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 0.85em;
+    font-weight: 500;
   }
 
   .prose pre {
     background-color: #2d2d2d;
     color: #f8f8f2;
-    padding: 1.5rem;
-    border-radius: 8px;
+    padding: 0.875rem;
+    border-radius: 6px;
+    border: 1px solid #1e1e1e;
     overflow-x: auto;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .prose pre code {
@@ -168,6 +171,10 @@
     color: inherit;
     padding: 0;
     border-radius: 0;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 0.85em;
+    line-height: 1.5;
+    letter-spacing: 0.005em;
   }
 
   .prose img {

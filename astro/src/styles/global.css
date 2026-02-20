@@ -100,16 +100,31 @@ img {
 	border-radius: 8px;
 }
 code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
+	padding: 0.15em 0.3em;
+	background-color: rgba(11, 114, 133, 0.08);
+	border-radius: 3px;
+	font-family: 'IBM Plex Mono', 'Courier New', monospace;
+	font-size: 0.85em;
+	color: #d73a49;
 }
 pre {
-	padding: 1.5em;
-	border-radius: 8px;
+	padding: 0.875rem;
+	border-radius: 6px;
+	overflow-x: auto;
+	margin: 1rem 0;
+	background-color: #2d2d2d;
+	color: #f8f8f2;
+	border: 1px solid #1e1e1e;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 pre > code {
 	all: unset;
+	display: block;
+	color: #f8f8f2;
+	font-family: 'IBM Plex Mono', 'Courier New', monospace;
+	font-size: 0.85em;
+	line-height: 1.5;
+	letter-spacing: 0.005em;
 }
 blockquote {
 	border-left: 4px solid var(--accent);
