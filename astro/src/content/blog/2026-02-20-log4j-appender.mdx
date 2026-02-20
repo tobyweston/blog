@@ -1,0 +1,109 @@
+---
+title: "Log4j Appenders as a Messaging Bus"
+pubDate: "2026-02-20"
+categories: 'java logging object-oriented'
+keywords: "log4j, logback, logging, appender, messaging bus, anti-pattern, java, coupling, side effects, hidden business logic"
+description: "Is using a custom Log4j appender to route user activity events to a central server via HTTP innovative engineering — or a hidden maintenance nightmare? Let's pull it apart."
+---
+
+import YouTubeEmbed from '../../components/ui/YouTubeEmbed.astro';
+
+Imagine a central system that needs to know when users are active. The requirement is specific: if a user hasn't logged on in six months, trigger an offboarding process. It's part of the organisation's onboarding and offboarding lifecycle, and given the audit implications, it's a hard requirement.
+
+Here's the proposed technical mechanism. The developer adds a single log statement:
+
+```java
+log.debug("Bob has logged on at " + Instant.now());
+```
+
+A custom Log4j appender intercepts that message, recognises it as a user login event, and fires an HTTP call to the central system.
+
+Is that innovative? Check out the talk below before I share my view.
+
+<YouTubeEmbed youtubeId="TODO_REPLACE_WITH_YOUTUBE_ID" title="Log4j Appenders as a Messaging Bus" />
+
+## The Appeal
+
+There's a certain cleverness to it. The developer doesn't touch any business logic. They drop in a log line and delegate all the integration work to an appender configured in `log4j2.xml`. The code is unchanged. The behaviour is new.
+
+Log4j's appender mechanism is genuinely flexible. You can route log output to files, databases, JMS queues, and socket endpoints. Writing a custom one to POST to an HTTP endpoint is straightforward. For someone who wants to track application events without modifying existing code, it's tempting.
+
+
+## Why It's a Problem
+
+### Fragile Coupling Through Strings
+
+The appender has to match on the log message string. The moment someone changes `"Bob has logged on at "` — for a typo fix, for clarity, for a refactor — the integration silently breaks. There's no compiler error. There's no failing test at the point of the change. The coupling is invisible and the failure mode is silent.
+
+If a piece of business logic depends on the exact wording of a log statement, that log statement is no longer just a log statement.
+
+
+### Log Statements Are Not a Contract
+
+[Logging is already a liability](/blog/2010-10-18-logging-is-evil-but). Log statements are added informally, changed freely, and removed when they clutter the code. They're a developer convenience, not a stable API. Treating a log message as a first-class event that another system depends on inverts everything we expect of logging.
+
+> A log message that cannot safely be changed is not a log message. It's a message in disguise.
+
+
+### Side Effects in the Logging Pipeline
+
+Logging is expected to be fast and non-disruptive. Placing a blocking HTTP call inside an appender violates that expectation. If the central server is slow or unavailable, every call that triggers the appender will block. Worse, exceptions from the HTTP call can surface as errors in application code — a benign log call becoming a source of runtime failures.
+
+Testing becomes harder too. Do you spin up a real HTTP server in your tests? Do you mock the appender? The complexity bleeds into places it has no business being.
+
+
+### Hidden Business Logic
+
+This is the most damaging part. There is a critical business rule — users inactive for six months should be offboarded — and its implementation is buried in logging infrastructure. The next developer asked to trace this feature will look in the service layer, the database layer, the event system. Everywhere except `log4j2.xml`.
+
+It's not just a code smell. It's an architectural one. Important behaviour should be explicit and traceable, not hidden in configuration.
+
+
+## What to Do Instead
+
+The requirement is clear: notify the central system when a user logs on. Make that dependency explicit.
+
+```java
+public class LoginService {
+
+    private final ActivityTracker activityTracker;
+
+    public LoginService(ActivityTracker activityTracker) {
+        this.activityTracker = activityTracker;
+    }
+
+    public void login(User user) {
+        user.authenticate();
+        activityTracker.record(user.getName(), Instant.now());
+    }
+}
+```
+
+The `ActivityTracker` is an explicit collaborator. It's testable, injectable, and replaceable. Whether it makes an HTTP call, publishes to a message queue, or writes to a database is an implementation detail hidden behind the interface.
+
+If you really don't want to modify the existing `LoginService`, a decorator keeps the concern separate without hiding it:
+
+```java
+public class TrackingLoginService implements LoginService {
+
+    private final LoginService delegate;
+    private final ActivityTracker activityTracker;
+
+    @Override
+    public void login(User user) {
+        delegate.login(user);
+        activityTracker.record(user.getName(), Instant.now());
+    }
+}
+```
+
+The intent is visible in the code. The integration is testable. It won't silently break when someone rephrases a log message. This is also the approach I described in [separating concerns with decorators](/blog/2010-10-18-logging-is-evil-but) in an earlier post on the same topic.
+
+
+## So Is It Innovative?
+
+No. It's the kind of technical creativity that creates maintenance debt. Cleverness in the wrong place is a liability, not an asset.
+
+The logging framework is not a message bus. It wasn't designed to carry business-critical integrations. Using it as one conflates two concerns that should stay separate: observability (what the system is doing) and behaviour (what the system is supposed to do).
+
+If someone suggests routing business events through Log4j appenders, it's probably time to ask what the actual requirement is and find a mechanism designed for the job.

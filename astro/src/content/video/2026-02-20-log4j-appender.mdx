@@ -1,0 +1,11 @@
+---
+title: "Log4j Appenders as a Messaging Bus"
+description: "A talk exploring whether a custom Log4j appender that fires HTTP calls to a central system based on log message content is clever engineering or a hidden maintenance trap."
+pubDate: "2026-02-20"
+youtubeId: "TODO_REPLACE_WITH_YOUTUBE_ID"
+keywords: "log4j, logback, logging, appender, messaging bus, integration, anti-pattern, java"
+---
+
+A custom Log4j appender intercepts a developer's log statement and uses it to fire an HTTP call to a central server. The requirement is real: track user logins, trigger offboarding for accounts inactive for six months. The mechanism is... creative.
+
+Watch the talk, then read the [companion post](/blog/2026-02-20-log4j-appender) for a full breakdown of why this pattern is more trap than technique.
