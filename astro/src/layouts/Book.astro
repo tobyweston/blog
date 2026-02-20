@@ -44,50 +44,48 @@ if (coverImage) {
 
       <div class="book-detail-content">
         <slot />
-
-        {purchaseLinks && purchaseLinks.length > 0 ? (
-            <section class="book-purchase-section">
-              <h2 class="text-2xl font-bold mb-4">Get the Book</h2>
-              <div class="purchase-links">
-                {purchaseLinks.map((link) => (
-                    <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="purchase-link"
-                    >
-                      {link.name} →
-                    </a>
-                ))}
-              </div>
-            </section>
-        ) : null}
       </div>
+
+      {purchaseLinks && purchaseLinks.length > 0 ? (
+          <section class="book-purchase-section">
+            <h2 class="text-2xl font-bold mb-4">Get the Book</h2>
+            <div class="purchase-links">
+              {purchaseLinks.map((link) => (
+                  <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="purchase-link"
+                  >
+                    {link.name} →
+                  </a>
+              ))}
+            </div>
+          </section>
+      ) : null}
     </div>
   </article>
 </SiteLayout>
 
 <style>
   .book-detail {
-    display: grid;
-    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
   }
 
   .book-detail-header {
-    display: grid;
-    gap: 0.75rem;
+    margin-bottom: 2rem;
   }
 
   .book-detail-main {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 2rem;
+    line-height: 1.8;
   }
 
   .book-detail-cover {
-    position: sticky;
-    top: 2rem;
-    max-width: 250px;
+    float: right;
+    margin: 0 0 1.5rem 2rem;
+    max-width: 280px;
   }
 
   .book-detail-cover img {
@@ -98,11 +96,11 @@ if (coverImage) {
   }
 
   .book-detail-content {
-    display: grid;
-    gap: 2rem;
+    /* Content flows naturally around the floated cover */
   }
 
   .book-purchase-section {
+    clear: both;
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid #e5e7eb;
@@ -134,14 +132,11 @@ if (coverImage) {
   }
 
   @media (max-width: 768px) {
-    .book-detail-main {
-      grid-template-columns: 1fr;
-    }
-
     .book-detail-cover {
-      position: relative;
-      top: auto;
+      float: none;
+      margin: 0 auto 1.5rem;
       max-width: 100%;
+      display: block;
     }
   }
 </style>
