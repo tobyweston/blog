@@ -51,6 +51,88 @@ jobs:
           browser: ${{ matrix.browser }}
           command: npm run test:visual
           install: false
+        continue-on-error: true
+        id: cypress-tests
+
+      - name: Parse test results and create annotations
+        if: always()
+        run: |
+          chmod +x .github/scripts/parse-test-results.sh
+          .github/scripts/parse-test-results.sh
+        continue-on-error: true
+
+      - name: Generate test report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Cypress Tests (${{ matrix.browser }})
+          path: astro/cypress/results/*.xml
+          reporter: java-junit
+          fail-on-error: false
+          only-summary: false
+
+      - name: Create test summary
+        if: always()
+        run: |
+          cd astro
+          echo "## 🧪 Visual Regression Test Results - ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Count test results from XML files
+          if [ -d "cypress/results" ] && [ "$(ls -A cypress/results/*.xml 2>/dev/null)" ]; then
+            total_tests=$(grep -o '<testcase' cypress/results/*.xml | wc -l | tr -d ' ')
+            total_failures=$(grep -o '<failure' cypress/results/*.xml 2>/dev/null | wc -l | tr -d ' ')
+            total_passes=$((total_tests - total_failures))
+            
+            echo "### 📊 Test Statistics" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| ✅ Passed | $total_passes |" >> $GITHUB_STEP_SUMMARY
+            echo "| ❌ Failed | $total_failures |" >> $GITHUB_STEP_SUMMARY
+            echo "| 📝 Total | $total_tests |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          if [ "${{ steps.cypress-tests.outcome }}" == "success" ]; then
+            echo "### ✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Some tests failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # List failed tests from XML
+            if [ -d "cypress/results" ] && [ "$(ls -A cypress/results/*.xml 2>/dev/null)" ]; then
+              echo "#### Failed Tests:" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              grep -h '<testcase.*<failure' cypress/results/*.xml 2>/dev/null | while IFS= read -r line; do
+                test_name=$(echo "$line" | sed -n 's/.*name="\([^"]*\)".*/\1/p')
+                classname=$(echo "$line" | sed -n 's/.*classname="\([^"]*\)".*/\1/p')
+                if [ ! -z "$test_name" ]; then
+                  echo "- ❌ **$classname** → $test_name" >> $GITHUB_STEP_SUMMARY
+                fi
+              done
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            # List screenshots
+            if [ -d "cypress/screenshots" ] && [ "$(ls -A cypress/screenshots 2>/dev/null)" ]; then
+              echo "#### 📸 Screenshots:" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              find cypress/screenshots -type f -name "*.png" | while read screenshot; do
+                relative_path=$(echo "$screenshot" | sed 's|cypress/screenshots/||')
+                echo "- \`$relative_path\`" >> $GITHUB_STEP_SUMMARY
+              done
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "💾 Screenshots are available as artifacts in this workflow run" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+          
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Browser:** ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ steps.cypress-tests.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Stop server
         if: always()

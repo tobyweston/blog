@@ -12,6 +12,16 @@ export default defineConfig({
     },
   },
 
+  reporter: 'junit',
+  reporterOptions: {
+    mochaFile: 'cypress/results/test-results-[hash].xml',
+    toConsole: true,
+    outputs: true,
+    testCaseSwitchClassnameAndName: false,
+    suiteTitleSeparatedBy: ' > ',
+    useFullSuiteTitle: true,
+  },
+
   env: {
     // Viewport configurations for different device sizes
     viewports: {
