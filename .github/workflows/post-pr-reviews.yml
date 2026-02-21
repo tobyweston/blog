@@ -124,8 +124,8 @@ jobs:
           In `BlogPost.astro`, the structured data has:
           ```js
           "publisher": {
-            "@type": "Person",   // ← Should be "Organization" for a publication
-            "name": "bad.robot"  // ← This is the blog name, not a person
+            "@type": "Person",   // should be "Organization" for a publication
+            "name": "bad.robot"  // this is the blog name, not a person's name
           }
           ```
 
