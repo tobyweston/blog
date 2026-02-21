@@ -1,7 +1,7 @@
 ---
 title: "Objectives"
 pubDate: "2010-06-17"
-categories: 'coaching'
+categories: 'agile'
 keywords: "SMART goals, objective setting, developer career, coding journal, personal development, agile career"
 description: "Put the YOU into your objectives. Use SMART+Y goal setting to make career goals personal, meaningful, and motivating — not just things your manager wants."
 ---

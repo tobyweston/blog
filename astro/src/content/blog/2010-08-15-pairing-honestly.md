@@ -1,7 +1,7 @@
 ---
 title: "Pairing Honestly"
 pubDate: "2010-08-15"
-categories: 'agile coaching'
+categories: 'agile'
 keywords: "pair programming, pair stairs, agile, XP, developer collaboration, honest pairing, team dynamics"
 description: "Practical tips for more honest and effective pair programming in agile teams. Covers the pair stairs technique and how to get the most from pairing."
 ---

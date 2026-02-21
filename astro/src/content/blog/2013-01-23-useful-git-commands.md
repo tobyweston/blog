@@ -1,7 +1,7 @@
 ---
 title: "Useful Git Commands"
 pubDate: '2013-01-23'
-categories: 'recipes git'
+categories: 'tools'
 keywords: "Git, useful git commands, delete remote branch, SSH, HTTPS, GitHub, git tips"
 description: "A collection of useful Git commands including how to delete remote branches, switch between SSH and HTTPS, and other handy tips for everyday Git use."
 series: 'Git'

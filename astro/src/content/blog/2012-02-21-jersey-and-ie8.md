@@ -1,7 +1,7 @@
 ---
 title: "Force IE8 to Display JSON with Jersey"
 pubDate: "2012-02-21"
-categories: 'java REST recipes'
+categories: 'java web'
 keywords: "Jersey, IE8, JSON, REST, application/json, content type, Internet Explorer, workaround"
 description: "Fix IE8 prompting to download JSON responses from Jersey REST services by setting the correct Content-Type and response headers."
 ---

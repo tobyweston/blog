@@ -1,7 +1,7 @@
 ---
 title: "Catching Multiple Exceptions (and rethrowing them all!)"
 pubDate: "2011-08-29"
-categories: 'java exceptions recipes'
+categories: 'java'
 keywords: "Java exceptions, catch multiple exceptions, rethrow, exception handling, Java 7, multi-catch"
 description: "How to catch multiple exceptions, process them independently, then rethrow them all. A pattern for collecting and re-throwing exceptions in batch processing."
 ---

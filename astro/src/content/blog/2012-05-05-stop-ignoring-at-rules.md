@@ -1,7 +1,7 @@
 ---
 title: "Stop Ignoring @Rules"
 pubDate: "2012-05-05"
-categories: 'java mocking recipes'
+categories: 'java testing'
 keywords: "JUnit @Rule, ExternalResource, TemporaryFolder, JUnit rules, test fixtures, setup teardown"
 description: "Stop overlooking JUnit's @Rule annotation. Discover how ExternalResource, TemporaryFolder and custom rules make test setup and teardown cleaner."
 ---

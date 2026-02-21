@@ -1,7 +1,7 @@
 ---
 title: "is(not(instanceOf(smell)));"
 pubDate: "2009-07-29"
-categories: 'java object-oriented'
+categories: 'java'
 keywords: "Java instanceof, code smell, polymorphism, exception handling, InvocationTargetException, OOP"
 description: "Is instanceof really a code smell? Examines when using instanceof is reasonable and why its bad reputation is sometimes undeserved."
 ---

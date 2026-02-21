@@ -1,7 +1,7 @@
 ---
 title: "Writing my Book"
 pubDate: '2013-05-24'
-categories: 'recipes testing'
+categories: 'agile'
 keywords: "writing a book, Leanpub, acceptance testing, ebook, self-publishing, effective acceptance testing"
 description: "Behind the scenes of writing 'Effective Acceptance Testing' — choosing Leanpub for self-publishing, the writing process, and why I decided to write the book."
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Logging is evil but..."
 pubDate: "2010-10-18"
-categories: 'java mocking testing exceptions rest recipes'
+categories: 'java testing'
 keywords: "logging, log4j, testing logging, separation of concerns, logging as feature, assertions on logs"
 description: "Logging clutters code and couples concerns. Learn how to treat logging as a feature, separate it from business logic, and write tests that assert on log output."
 ---

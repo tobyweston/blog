@@ -1,7 +1,7 @@
 ---
 title: "HTTP Should be Simple"
 pubDate: '2012-06-10'
-categories: 'java REST'
+categories: 'web'
 keywords: "HTTP, REST, HTTP verbs, GET POST PUT DELETE, status codes, simple-http, Java HTTP client"
 description: "A simple introduction to HTTP and REST. Covers HTTP verbs, status codes, and practical Java examples using the simple-http library."
 ---

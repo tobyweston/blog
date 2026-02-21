@@ -1,7 +1,7 @@
 ---
 title: "Building Better Exceptions"
 pubDate: "2012-03-28"
-categories: 'java testing object-oriented exceptions'
+categories: 'java testing'
 keywords: "Java exceptions, exception design, checked vs unchecked, Law of Demeter, tell don't ask, exception behaviour"
 description: "Design better exceptions by treating them as proper objects with behaviour. Apply the Law of Demeter and 'tell don't ask' to keep exception handling clean."
 ---

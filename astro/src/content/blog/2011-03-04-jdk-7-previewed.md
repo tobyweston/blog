@@ -1,7 +1,7 @@
 ---
 title: "JDK7 Previewed"
 pubDate: "2011-03-04"
-categories: 'java exceptions'
+categories: 'java'
 keywords: "Java 7, JDK 7, diamond operator, try-with-resources, AutoCloseable, type inference, switch on strings"
 description: "A preview of noteworthy Java 7 features: diamond operator, try-with-resources, switch on strings, and the foundation they lay for Java 8 lambdas."
 ---

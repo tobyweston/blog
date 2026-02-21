@@ -1,7 +1,7 @@
 ---
 title: "Performance Monitoring Basics"
 pubDate: "2009-10-31"
-categories: 'java performance'
+categories: 'java'
 keywords: "Java performance monitoring, JMX, AOP, AspectJ, requests per second, Java Melody, instrumentation, tuning"
 description: "Set up performance monitoring early. Covers real-time performance metrics, resource usage tracking, instrumentation with AOP/AspectJ, and tools like JMX and Java Melody."
 ---

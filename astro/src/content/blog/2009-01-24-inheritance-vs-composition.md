@@ -1,7 +1,7 @@
 ---
 title: "Inheritance vs Composition"
 pubDate: "2009-01-24"
-categories: 'java object-oriented'
+categories: 'java'
 keywords: "inheritance vs composition, Java Stack, Vector, object-oriented design, composition over inheritance"
 description: "Java's Stack class extends Vector, making it not a true stack. A real-world example of why composition beats inheritance for code reuse."
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Evidencing Source Code Reviews"
 pubDate: '2019-10-30'
-categories: "agile"
+categories: 'agile'
 keywords: "code review, signed commits, pair programming, MAS, regulated industry, git, crypto evidence, pull requests"
 description: "How to evidence source code reviews in regulated environments. Signed commits and pair programming as a code review mechanism without wasteful bureaucracy."
 ---

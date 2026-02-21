@@ -1,7 +1,7 @@
 ---
 title: "Functional Interfaces in Java 8"
 pubDate: '2014-04-07'
-categories: 'java, java8'
+categories: 'java functional-programming'
 keywords: "Java 8, functional interface, @FunctionalInterface, lambda, SAM, Runnable, Callable, single abstract method"
 description: "Functional interfaces in Java 8 are single-method interfaces. Anywhere you use a lambda, you're using a functional interface. Learn the syntax and built-in examples."
 series: "What's new in Java 8"

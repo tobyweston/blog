@@ -1,7 +1,7 @@
 ---
 title: "Java source for Mac OSX"
 pubDate: "2009-08-01"
-categories: 'java'
+categories: 'tools'
 keywords: "Java source, Mac OS X, Apple, JDK source, Maven, developer tools"
 description: "Getting Java source code on Mac OS X — Apple's Java distribution quirks and how to access JDK source for IDE integration."
 ---

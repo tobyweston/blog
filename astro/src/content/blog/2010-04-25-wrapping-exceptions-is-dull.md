@@ -1,7 +1,7 @@
 ---
 title: "Wrapping Exceptions is Dull"
 pubDate: "2010-04-25"
-categories: 'java tempus-fugit exceptions recipes'
+categories: 'java'
 keywords: "Java exception wrapping, checked exceptions, runtime exceptions, tempus-fugit, boilerplate, auto-wrap"
 description: "Wrapping checked exceptions to rethrow as RuntimeExceptions is verbose boilerplate. Use tempus-fugit's Exceptions helper to wrap them automatically."
 ---

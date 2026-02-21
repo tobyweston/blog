@@ -1,7 +1,7 @@
 ---
 title: "Time Flies 1.0"
 pubDate: "2009-11-11"
-categories: 'java concurrency tempus-fugit'
+categories: 'java concurrency'
 keywords: "tempus-fugit, Java concurrency library, concurrent testing, thread utilities, Maven central, open source"
 description: "Announcing tempus-fugit 1.0, a Java library for testing concurrent and time-sensitive code. Now available on Maven Central."
 ---
