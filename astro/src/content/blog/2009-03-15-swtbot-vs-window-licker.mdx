@@ -7,10 +7,10 @@ keywords: "swtbot, window licker, swtbot vs window licker, awt, swing, awt robot
 description: "A comparison of SWTBot and Window Licker from a developer's perspective. Both are rich client testing frameworks used in a record/replay style but via a programmatic API. Think Selenium for desktop apps."
 ---
 
-import { Image } from 'astro:assets';
+import ImgTag from '../../components/ImgTag.astro';
 import windowLicker from '../images/window-licker.png';
 
-<Image src={windowLicker} alt="Window Licker" />
+[<ImgTag class="left" src={windowLicker} alt="Window Licker" />]({windowLicker})
 
 The title is a bit misleading because these guys aren't really squaring off like Gozilla and Gigan, the projects aren't competing and this blog isn't really a full or fair comparison. For a start Window Licker doesn't yet support SWT and as its name suggests SWTBot does.
   
@@ -43,7 +43,7 @@ Window Licker is much more low key, at the time of writing there is no pre-packa
 ## Conclusion
 
   
-For me, SWTBot really lets itself down is how it's being run. We all realise that open source software often has to take a back seat to your day job but if you're going to release something open source and encourage participation (say by hosting it on Eclipse.org) you should really be able to take the helm and support your community. As such, I had a bit of a bad experience with SWTBot trying to get a feature committed. In short, I did a whole bunch of work after explicitly being asked to do so in order to get it committed, then when it was done, the team lead ignored it and committed a previous version I'd submitted. The previous version works fine, it did the job but i was asked to re-jig things to better fit in with the project's standards, yet it got dumped. See the [Bugzilla trail](https://bugs.eclipse.org/bugs/show_bug.cgi?id=259860#c28).
+For me, SWTBot really lets itself down is how it's being run. We all realise that open source software often has to take a back seat to your day job but if you're going to release something open source and encourage participation (say by hosting it on Eclipse.org) you should really be able to take the helm and support your community. As such, I had a bit of a bad experience with SWTBot trying to get a feature committed. In short, I did a bunch of work after explicitly being asked to do so in order to get it committed, then when it was done, the team lead ignored it and committed a previous version I'd submitted. The previous version works fine, it did the job but I was asked to re-jig things to better fit in with the project's standards, yet it got dumped. See the [Bugzilla trail](https://bugs.eclipse.org/bugs/show_bug.cgi?id=259860#c28).
 
   
 It's a shame because experiences like that just lower confidence in a project, I'm unlikely to want to push any changes back now. I guess though in summary, SWTBot's code was easier to contribute to (although I was working in one small area of a large project structure). Window Licker is probably the superior technically and in terms of code quality but was harder (for me) to work with. I was working on essentially cloning some of the core Licker functionality to work with SWT and found that I didn't fully understand all the abstractions and mechanisms. I suspect that in a pairing environment, it wouldn't be a problem but contributing via email and patches is unlikely to get the most out of collaboration.

@@ -10,7 +10,6 @@
     "astro": "astro",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:visual": "cypress run",
     "test:visual:baseline": "cypress run --env updateSnapshots=true",
     "test:visual:open": "cypress open"
   },
@@ -26,5 +25,8 @@
   "devDependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "cypress": "^13.0.0"
+  },
+  "overrides": {
+    "esbuild": "0.20.2"
   }
 }

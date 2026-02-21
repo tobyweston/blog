@@ -56,7 +56,7 @@ Some things that are usually constant though are an emphasis on time, correctnes
 ## Resources
 
   
-The section on resources is more open ended. By resources, I mean both hardware and software resources. Of course, taking into account the resource usage of interrelated external systems may also be of interest to the happy tuner and its all about avoiding resources starvation and spotting bottlenecks.
+The section on resources is more open-ended. By resources, I mean both hardware and software resources. Of course, taking into account the resource usage of interrelated external systems may also be of interest to the happy tuner and its all about avoiding resources starvation and spotting bottlenecks.
 
   * __CPU__ - see the sidebar on the [optimal number of threads](http://tempusfugitlibrary.org/recipes/2012/07/12/optimise-the-number-of-threads/)
 
@@ -72,7 +72,7 @@ The section on resources is more open ended. By resources, I mean both hardware 
   
 Once we have an idea of what to measure, the next step is to think about how to capture and represent the raw data. We need to capture the raw _data_ and turn it into _information_ that's actually useful. It's all too easy to get information overload and more choosing what's actually important can be tricky.
 
-You could capture all the data about every single request but it's unlikely that this is the information you'll need without doing some form of manipulation. Instead, I prefer to capture information, manipulating and aggregating the data from each request as we go.
+You could capture all the data about every single request, but it's unlikely that this is the information you'll need without doing some form of manipulation. Instead, I prefer to capture information, manipulating and aggregating the data from each request as we go.
 
 For example, typically you might be interested in the means, samples or percentile based information.
 
@@ -96,12 +96,7 @@ This might give you results something like the image to the right. Without a sli
 There's plenty of ways to get statistics out of your application. Instrumenting the code at key points using [decoration](http://en.wikipedia.org/wiki/Composite_pattern) is a good option. Using something like AspectJ is another option and both free your code from any clutter that would otherwise pollute and distract from your classes real responsibilities. Logging is a good example of instrumentation polluting things. Typically, the act of logging has nothing to do with the role of the class doing the logging.
 
   
-The instrumenting code will likely be modifying objects in memory that collect and manipulate the raw data. You'll almost certainly want to make sure this memory object is thread safe and performant, it should be light weight and non-obtrusive.
+The instrumenting code will likely be modifying objects in memory that collect and manipulate the raw data. You'll almost certainly want to make sure this memory object is thread safe and performant, it should be lightweight and non-obtrusive.
 
   
-What happens to the memory object is up to you, but you'll need to output it for analysis at some point. I prefer to publish the objects via JMX, that way you can setup a separate 'collector' to periodically read the values and have it's wicked way with them. With this approach, its even more important to keep the object lightweight - the MBean will always be in memory (the MBean server will see to this) and so if it contains rogue references to big objects, they'll never get garbage collected. The other tip is to create one of these such objects per request type, don't create a new one per request for example.
-
-
-  
-
-
+What happens to the memory object is up to you, but you'll need to output it for analysis at some point. I prefer to publish the objects via JMX, that way you can set up a separate 'collector' to periodically read the values and have it's wicked way with them. With this approach, it's even more important to keep the object lightweight - the MBean will always be in memory (the MBean server will see to this) and so if it contains rogue references to big objects, they'll never get garbage collected. The other tip is to create one of these such objects per request type, don't create a new one per request for example.
