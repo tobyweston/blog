@@ -146,12 +146,12 @@ describe('Hyperlink Resolution Tests', () => {
 
     describe('YouTube Video Links', () => {
       it('should have YouTube embeds on video pages', () => {
-        cy.visit('/video/2026-02-08-refactoring');
+        cy.visit('/video/2019-06-29-refactoring/');
         cy.get('iframe[src*="youtube"]').should('exist');
       });
 
       it('should use youtube-nocookie.com domain', () => {
-        cy.visit('/video/2026-02-08-refactoring');
+        cy.visit('/video/2019-06-29-refactoring/');
         cy.get('iframe')
           .should('have.attr', 'src')
           .and('include', 'youtube-nocookie.com');
@@ -184,7 +184,7 @@ describe('Hyperlink Resolution Tests', () => {
       });
 
       it('should load sample video page', () => {
-        cy.request('/video/2026-02-08-refactoring')
+        cy.request('/video/2019-06-29-refactoring/')
           .its('status')
           .should('eq', 200);
       });
@@ -232,6 +232,49 @@ describe('Hyperlink Resolution Tests', () => {
             cy.request(href).its('status').should('eq', 200);
           });
         });
+      });
+    });
+
+    describe('Crawl Internal Links', () => {
+      it('should crawl internal links and ensure they resolve', () => {
+        const maxPages = 50;
+        const visited = new Set();
+        const queue = ['/'];
+
+        const crawlNext = () => {
+          if (queue.length === 0 || visited.size >= maxPages) {
+            return;
+          }
+
+          const next = queue.shift();
+          if (!next || visited.has(next)) {
+            return crawlNext();
+          }
+
+          visited.add(next);
+
+          cy.request(next).its('status').should('eq', 200);
+          cy.visit(next);
+
+          cy.get('a[href^="/"]').then(($links) => {
+            const hrefs = [...new Set(
+              $links
+                .toArray()
+                .map((link) => link.getAttribute('href'))
+                .filter((href) => href && !href.includes('#'))
+            )];
+
+            hrefs.forEach((href) => {
+              if (!visited.has(href) && queue.length + visited.size < maxPages) {
+                queue.push(href);
+              }
+            });
+          });
+
+          cy.then(crawlNext);
+        };
+
+        cy.then(crawlNext);
       });
     });
 
@@ -338,5 +381,4 @@ describe('Hyperlink Resolution Tests', () => {
     });
   });
 });
-
 
