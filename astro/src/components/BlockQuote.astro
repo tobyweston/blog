@@ -1,0 +1,49 @@
+---
+interface Props {
+  source?: string;
+  url?: string;
+}
+
+const { source, url } = Astro.props;
+---
+
+<figure class="block-quote">
+  <blockquote>
+    <slot />
+  </blockquote>
+  {source && (
+    <figcaption>
+      {url ? <a href={url}>{source}</a> : source}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .block-quote {
+    margin: 2rem 0;
+  }
+
+  .block-quote blockquote {
+    border-left: 4px solid var(--accent);
+    padding: 0 0 0 20px;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1em;
+    font-style: italic;
+    color: rgb(var(--gray-dark));
+  }
+
+  .block-quote figcaption {
+    padding-left: 24px;
+    font-size: 0.9em;
+    color: rgb(var(--gray));
+  }
+
+  .block-quote figcaption::before {
+    content: '— ';
+  }
+
+  .block-quote figcaption a {
+    color: rgb(var(--gray));
+    text-decoration: underline;
+  }
+</style>
