@@ -1,0 +1,27 @@
+# bad.robot
+
+> A developer blog by Toby Weston covering Java, concurrency, functional programming, Scala, agile coaching, Raspberry Pi projects, and developer tools.
+
+This site contains long-form technical blog posts and tutorials aimed at professional software developers. Content spans 2008 to the present.
+
+## Topics
+
+- **Java**: Core Java programming, OOP design patterns, Java 8+ features, lambdas, streams, exceptions, annotations, generics
+- **Concurrency**: Java threading, locks, deadlock detection, the tempus-fugit concurrency library, concurrent testing
+- **Testing**: JUnit, JMock, Scalamock, acceptance testing, TDD, BDD, Concordion, test reliability
+- **Scala**: Scala programming, implicits, type classes, mixins, functional error handling
+- **Functional Programming**: Lambdas, closures, currying, monads, higher-order functions, pure functions
+- **Agile**: Pair programming, XP, agile coaching, interviewing, team skills, lead time, cycle time, pull requests
+- **Raspberry Pi**: Pi hardware projects, Raspbian setup and upgrades, IoT, temperature logging
+- **Tools**: Git, Mac tips, IntelliJ IDEA, build tools, developer productivity
+- **Web**: HTTP, REST APIs, OAuth, URL encoding
+
+## Author
+
+Toby Weston — software developer, agile coach, author of "Effective Acceptance Testing" (Leanpub), and creator of the tempus-fugit Java concurrency library.
+
+## Site
+
+- URL: https://baddotrobot.com
+- RSS: https://baddotrobot.com/rss.xml
+- Sitemap: https://baddotrobot.com/sitemap-index.xml
