@@ -41,12 +41,12 @@ describe('Video Pages - Enhanced Tests', () => {
   describe('Video Detail Pages', () => {
     const testVideos = [
       {
-        slug: '2026-02-08-refactoring',
+        slug: '2019-06-29-refactoring',
         title: 'Refactoring in 10 Minutes',
         youtubeId: '-lkiccO8h6w'
       },
       {
-        slug: '2026-02-08-java-lamdas',
+        slug: '2014-05-19-java-lamdas',
         title: 'Java 8 Lambda',
       },
       {

@@ -35,8 +35,8 @@ describe('Visual Regression - Book & Video Pages', () => {
 
   describe('Video pages', () => {
     const sampleVideos = [
-      { slug: '2026-02-08-refactoring', name: 'video-refactoring' },
-      { slug: '2026-02-08-java-lamdas', name: 'video-lambdas' },
+      { slug: '2019-06-29-refactoring', name: 'video-refactoring' },
+      { slug: '2014-05-19-java-lamdas', name: 'video-lambdas' },
     ];
 
     sampleVideos.forEach(({ slug, name }) => {
