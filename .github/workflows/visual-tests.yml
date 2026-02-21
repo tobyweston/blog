@@ -51,7 +51,6 @@ jobs:
           browser: ${{ matrix.browser }}
           command: npm run test:visual
           install: false
-        continue-on-error: true
         id: cypress-tests
 
       - name: Parse test results and create annotations
@@ -138,6 +137,12 @@ jobs:
         if: always()
         run: |
           kill $SERVER_PID || true
+
+      - name: Fail job if tests failed
+        if: steps.cypress-tests.outcome == 'failure'
+        run: |
+          echo "::error::Cypress tests failed"
+          exit 1
 
       - name: Upload screenshots on failure
         if: failure()
