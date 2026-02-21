@@ -1,0 +1,42 @@
+---
+title: "Pull Requests and Trust"
+subTitle: "A (sketchy) History of the Pull Request"
+pubDate: '2021-01-04'
+categories: "agile"
+keywords: ""
+description: ""
+---
+
+## A (Sketchy) History of the Pull Request
+
+The nomenclature "pull request" actually came out of GitHub where they we're using the git-request-pull command as the basis of their new feature to manage code reviews and merges. From a Git perspective (and [Linus'](https://github.com/torvalds/linux/pull/17#issuecomment-5654674), a third party can request a project "pull" potential changes into their internal repository - it's literally a request to pull changes from some other repo. From the GitHub product perspective, Pull Requests (PRs) were designed to help review and integrate code from third parties via their platform. The need for which stems from the open source community where we try and encouraging contribution from the public.
+
+![](git-request-pull.png)
+
+The thing is, all this was mainly designed to make it easier to accepting code from people outside the project's set of trusted committers. There's a natural connotation here that if we don't trust you, we have some tools to help review your changes before we accept them.
+
+So if you trust someone, why would you need to review (and implied, govern) their changes? Why would you insist on using a PR?
+
+## What's the Problem with Pull Requests?
+
+Putting this question aside for a moment, **PRs introduce delay**. They afford the _opportunity_ for code review and tools like GitHub and Stash even afford the _ability_ to perform a code review but by definition, it's performed **out-of-band**, at the end a development cycle. This is one form of delay but it's compounded due to the time it takes to respond to a PR. In most teams, developers are not going to be able to respond quickly. If they are able to, it's likely they will be context switching which has a negative impact on overall _flow_ (when you attempt to complete several tasks at once, the time to actually finish just one of them can increase compared to doing them serially).
+
+The other kind of delay PRs introduce is around the idea that they represent the antithesis of **continuous integration**. Integrating others code early reduces rework and minimises integration effort. Have you ever worked on a team where folks develop in isolation and only try and bring all the changes together at the end, near some sort of QA phase? I don't want to relive that ever again. By their nature **PRs encourage the exact opposite behavior of continuous integration - they encourage late integration**. Even short lives branches represent _waste_. In practice, I don't see many teams merging branches that have lived less than a few days. I don't think I've ever seen short lived branches with lifespans in hours.
+
+These delays may or may not be important to you but if you want to deliver software quickly, you're probably interested in reducing this kind of _waste_.
+
+Even on bigger teams (where PRs are often seen as the only way to manage the development process), the cost of these delays can easily outweigh the effort needed to be able to avoid PRs in the first place (which would be offset by encouraging faster paced delivery).
+
+## What does Trust Mean?
+
+So when are PRs useful? As I said earlier, if you want to accept changes from external contributors, they can give you the opportunity to ensure quality standards and consistency are applied - they let you do code reviews. I happen to think that these kinds of things are really **team behaviours** and that the team as a whole should agree on what good looks like and be able to establish trust that they are all pulling in the same direction. When everyone agrees, we can move from _policing_ and _enforcement_ to a more generative culture when we all grow together and build that trust.
+
+It's worth noting too that this is different from **sharing knowledge**8. PRs are not a great mechanism for this as that goal can compete with code review goals. Unless the entire team is going to review a PR, you won't even come close. Frequently collaborating and working on the same problems is what helps to avoid silos.
+
+{% pullquote %}
+Using pull requests for code changes by your own team members is like having your family members go through an airport security checkpoint to enter your home. It's a costly solution to a different problem. Kief Morris - Thoughtworks
+{% endpullquote %}
+
+I think that if you don't trust your team, using PRs is the easy option. PRs will give you some degree of control over things like quality and consistency but they won't help the team grow as a whole and establish a team collective. Instead, put the effort in to create that trust, that generative culture - work closely, collaborate, pair, agree, disagree and come out the other side better together. Yes, even for big, distributed teams. If a team is too big to manage, break it up into smaller teams. Find a better way.
+
+ Easier said than done, I know. So what's your experience? How have you grown as a team? How did you agree on standards and conventions? Does autocracy help? Have [ADRs](https://github.com/joelparkerhenderson/architecture-decision-record) helped you?
