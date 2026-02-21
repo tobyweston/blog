@@ -1,17 +1,18 @@
 ---
 interface Props {
-	quote: string;
 	author?: string;
 	company?: string;
 }
 
-const { quote, author, company } = Astro.props;
+const { author, company } = Astro.props;
 ---
 
 <blockquote class="pullquote">
 	<div class="pullquote-content">
 		<span class="quote-mark quote-mark-open" aria-hidden="true">“</span>
-		<p class="pullquote-text">{quote}</p>
+		<div class="pullquote-text">
+			<slot />
+		</div>
 		<span class="quote-mark quote-mark-close" aria-hidden="true">”</span>
 	</div>
 	{(author || company) && (
@@ -35,6 +36,8 @@ const { quote, author, company } = Astro.props;
 		border-radius: 0 8px 8px 0;
 		padding: 2rem 2rem 2rem 2.5rem;
 		position: relative;
+		--quote-mark-size: 3.5rem;
+		--quote-mark-gap: 1rem;
 	}
 
 	.pullquote-content {
@@ -42,11 +45,10 @@ const { quote, author, company } = Astro.props;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 1.5rem;
 	}
 
 	.quote-mark {
-		font-size: 3.5rem;
+		font-size: var(--quote-mark-size);
 		line-height: 1;
 		color: var(--accent);
 		opacity: 0.25;
@@ -57,13 +59,13 @@ const { quote, author, company } = Astro.props;
 
 	.quote-mark-open {
 		order: -1;
-		margin-right: 1rem;
+		margin-right: var(--quote-mark-gap);
 		align-self: flex-start;
 	}
 
 	.quote-mark-close {
 		order: 1;
-		margin-left: 1rem;
+		margin-left: var(--quote-mark-gap);
 		align-self: flex-end;
 	}
 
@@ -76,6 +78,10 @@ const { quote, author, company } = Astro.props;
 		font-size: 1.1em;
 	}
 
+	.pullquote-text :global(p) {
+		margin: 0;
+	}
+
 	.pullquote-footer {
 		display: flex;
 		align-items: center;
@@ -85,6 +91,10 @@ const { quote, author, company } = Astro.props;
 		color: rgb(var(--gray));
 		font-style: normal;
 		font-weight: normal;
+		margin-left: calc(var(--quote-mark-size) + var(--quote-mark-gap));
+		margin-right: calc(var(--quote-mark-size) + var(--quote-mark-gap));
+		justify-content: flex-end;
+		text-align: right;
 	}
 
 	.pullquote-author {
@@ -104,6 +114,8 @@ const { quote, author, company } = Astro.props;
 		.pullquote {
 			padding: 1.5rem 1.5rem 1.5rem 2rem;
 			border-left-width: 3px;
+			--quote-mark-size: 2.5rem;
+			--quote-mark-gap: 0;
 		}
 
 		.pullquote-content {
@@ -131,6 +143,13 @@ const { quote, author, company } = Astro.props;
 			order: 2;
 			align-self: flex-end;
 			margin-top: 0.5rem;
+		}
+
+		.pullquote-footer {
+			margin-left: 0;
+			margin-right: 0;
+			justify-content: flex-end;
+			text-align: right;
 		}
 	}
 </style>
