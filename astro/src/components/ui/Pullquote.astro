@@ -1,0 +1,136 @@
+---
+interface Props {
+	quote: string;
+	author?: string;
+	company?: string;
+}
+
+const { quote, author, company } = Astro.props;
+---
+
+<blockquote class="pullquote">
+	<div class="pullquote-content">
+		<span class="quote-mark quote-mark-open" aria-hidden="true">“</span>
+		<p class="pullquote-text">{quote}</p>
+		<span class="quote-mark quote-mark-close" aria-hidden="true">”</span>
+	</div>
+	{(author || company) && (
+		<footer class="pullquote-footer">
+			{author && <span class="pullquote-author">{author}</span>}
+			{author && company && <span class="pullquote-separator">—</span>}
+			{company && <span class="pullquote-company">{company}</span>}
+		</footer>
+	)}
+</blockquote>
+
+<style>
+	.pullquote {
+		margin: 2rem 0;
+		padding: 0;
+		border: none;
+		font-size: 1.1em;
+		line-height: 1.6;
+		background: linear-gradient(135deg, rgba(35, 55, 255, 0.04) 0%, rgba(35, 55, 255, 0.02) 100%);
+		border-left: 4px solid var(--accent);
+		border-radius: 0 8px 8px 0;
+		padding: 2rem 2rem 2rem 2.5rem;
+		position: relative;
+	}
+
+	.pullquote-content {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+	}
+
+	.quote-mark {
+		font-size: 3.5rem;
+		line-height: 1;
+		color: var(--accent);
+		opacity: 0.25;
+		flex-shrink: 0;
+		font-weight: 700;
+		font-family: Georgia, serif;
+	}
+
+	.quote-mark-open {
+		order: -1;
+		margin-right: 1rem;
+		align-self: flex-start;
+	}
+
+	.quote-mark-close {
+		order: 1;
+		margin-left: 1rem;
+		align-self: flex-end;
+	}
+
+	.pullquote-text {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+		font-style: italic;
+		font-weight: 500;
+		flex: 1;
+		font-size: 1.1em;
+	}
+
+	.pullquote-footer {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 1.25rem;
+		font-size: 0.875em;
+		color: rgb(var(--gray));
+		font-style: normal;
+		font-weight: normal;
+	}
+
+	.pullquote-author {
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+	}
+
+	.pullquote-separator {
+		color: rgb(var(--gray));
+	}
+
+	.pullquote-company {
+		color: rgb(var(--gray));
+	}
+
+	@media (max-width: 720px) {
+		.pullquote {
+			padding: 1.5rem 1.5rem 1.5rem 2rem;
+			border-left-width: 3px;
+		}
+
+		.pullquote-content {
+			flex-wrap: wrap;
+		}
+
+		.quote-mark {
+			font-size: 2.5rem;
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		.pullquote-text {
+			flex-basis: 100%;
+			order: 1;
+		}
+
+		.quote-mark-open {
+			order: 0;
+			align-self: flex-start;
+			margin-bottom: 0.5rem;
+		}
+
+		.quote-mark-close {
+			order: 2;
+			align-self: flex-end;
+			margin-top: 0.5rem;
+		}
+	}
+</style>

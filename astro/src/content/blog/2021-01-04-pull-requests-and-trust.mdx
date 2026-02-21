@@ -7,6 +7,8 @@ keywords: ""
 description: ""
 ---
 
+import Pullquote from '../../components/ui/Pullquote.astro';
+
 ## A (Sketchy) History of the Pull Request
 
 The nomenclature "pull request" actually came out of GitHub where they were using the git-request-pull command as the basis of their new feature to manage code reviews and merges. From a Git perspective (and [Linus'](https://github.com/torvalds/linux/pull/17#issuecomment-5654674), a third party can request a project "pull" potential changes into their internal repository - it's literally a request to pull changes from some other repo. From the GitHub product perspective, Pull Requests (PRs) were designed to help review and integrate code from third parties via their platform. The need for which stems from the open source community where we try and encouraging contribution from the public.
@@ -31,11 +33,9 @@ Even on bigger teams (where PRs are often seen as the only way to manage the dev
 
 So when are PRs useful? As I said earlier, if you want to accept changes from external contributors, they can give you the opportunity to ensure quality standards and consistency are applied - they let you do code reviews. I happen to think that these kinds of things are really **team behaviours** and that the team as a whole should agree on what good looks like and be able to establish trust that they are all pulling in the same direction. When everyone agrees, we can move from _policing_ and _enforcement_ to a more generative culture when we all grow together and build that trust.
 
-It's worth noting that this is different from **sharing knowledge**8. PRs are not a great mechanism for this as that goal can compete with code review goals. Unless the entire team is going to review a PR, you won't even come close. Frequently collaborating and working on the same problems is what helps to avoid silos.
+It's worth noting that this is different from **sharing knowledge**. PRs are not a great mechanism for this as that goal can compete with code review goals. Unless the entire team is going to review a PR, you won't even come close. Frequently collaborating and working on the same problems is what helps to avoid silos.
 
-{% pullquote %}
-Using pull requests for code changes by your own team members is like having your family members go through an airport security checkpoint to enter your home. It's a costly solution to a different problem. Kief Morris - ThoughtWorks
-{% endpullquote %}
+<Pullquote quote="Using pull requests for code changes by your own team members is like having your family members go through an airport security checkpoint to enter your home. It's a costly solution to a different problem." author="Kief Morris" company="ThoughtWorks" />
 
 I think that if you don't trust your team, using PRs is the easy option. PRs will give you some degree of control over things like quality and consistency but they won't help the team grow as a whole and establish a team collective. Instead, put the effort in to create that trust, that generative culture - work closely, collaborate, pair, agree, disagree and come out the other side better together. Yes, even for big, distributed teams. If a team is too big to manage, break it up into smaller teams. Find a better way.
 
