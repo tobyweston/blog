@@ -22,7 +22,6 @@ None the less, I'd like to schedule something at a fixed rate (ignoring the resu
 Starting with the tests, any helper must delegate to the `Callable` and handle any exceptions.
 
     
-{% assign braces = '{{' %}
 ``` java
 @RunWith(JMock.class)
 public class CallableAdapterTest {
@@ -44,7 +43,7 @@ public class CallableAdapterTest {
    }
 
    private void callableWill(final Action action) throws Exception {
-      context.checking(new Expectations() {{ braces }}
+      context.checking(new Expectations() {{
          one(callable).call(); will(action);
       }});
    }

@@ -29,12 +29,11 @@ try {
 Why not wrap the boiler plate code up in a mini DSL and pass in a lambda to execute the cleanup? Any implementation must call both lock and unlock and re-throw any exceptions. The following test shows this to be true.
 
 
-{% assign braces = '{{' %}
 ``` java
 @RunWith(JMock.class)
 public class ExecuteUsingLockTest {
 
-    private final Mockery context = new JUnit4Mockery() {{ braces }}
+    private final Mockery context = new JUnit4Mockery() {{
         setImposteriser(ClassImposteriser.INSTANCE);
     }};
 
@@ -82,7 +81,7 @@ public class ExecuteUsingLockTest {
     }
 
     private void setExpectationsOn(final Lock lock) {
-        context.checking(new Expectations() {{ braces }}
+        context.checking(new Expectations() {{
             one(lock).lock();
             one(lock).unlock();
         }});

@@ -6,6 +6,8 @@ keywords: "interviewing, agile interview, pair test, reflections on interviewing
 description: "Reflecting on the last few years of heavily interviewing for agile developers. We've got the process down but often fool ourselves and let good guys slip through. Right or wrong answers don't really have a place because there's never a right or wrong answer in what we do."
 ---
 
+import PullQuote from '../../components/ui/PullQuote.astro';
+
 Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.
   
 Let's take an example from two teams.
@@ -13,6 +15,9 @@ Let's take an example from two teams.
   
 Team A's process starts off by favoring buzz word heavy CVs and CVs that meet a minimum number of years of experience. A unattended pen and paper test, characterised by very closed questioning against specialist areas of the programming language. This might include questions around language syntax semantics (keywords and modifiers, object equality etc etc). Things like bubble sorts algorithms are requested. Scores out of 100 are tallied. Things are fairly black and white.
 
+<PullQuote>
+Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?". The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
+</PullQuote>
 > Team B's process favors mention of agile experience in the CV. Follow up questions prompt genuine conversation {" but often an implied hurdle that the candidate must jump is "has he reached the same conclusion as me on topic X?" "}. The unattended coding exercise is not a test, at least it should be more of an exercise to explore the way a candidate approaches things. The team might require the presence of unit tests and evidence of TDD but should actively not persecute style or syntax. Something that's harder in practice to do than in theory.
 
 Hopefully, it's clear that Team A's selection process is heavily biased towards developers with good memories. It's probably unfairly prejudice against candidates that haven't had specific exposure to specific scenarios / solutions. I experienced this when I was asked to write a algorithm to calculate prime numbers with pen and paper. I fumbled through and handed over my scrawl. I explained that I'd prefer write tests, experiment with the code and improve the design; basically to learn as I went along. The response from the interviewer, looking down at my scribbling, was "that's not really what we're looking for... have you heard of the Sieve of Eratosthenes?". Obviously, I hadn't.

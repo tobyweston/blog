@@ -108,7 +108,6 @@ public class Log4J {
 ```
 Using it in the test for `LoggingPost` is shown below
 
-{% assign braces = '{{' %}
 ``` java
 @RunWith(JMock.class)
 public class LoggingPostTest {
@@ -121,7 +120,7 @@ public class LoggingPostTest {
 
     @Test
     public void shouldDelegate() throws Exception {
-        context.checking(new Expectations() {{ braces }}
+        context.checking(new Expectations() {{
             one(mock).post(...);
         }});
         new LoggingPost(mock).post(...);
@@ -144,7 +143,7 @@ public class LoggingPostTest {
     }
 
     private void postWill(final Action action) {
-        context.checking(new Expectations(){{ braces }}
+        context.checking(new Expectations(){{
             allowing(mock); will(action);
         }});
     }

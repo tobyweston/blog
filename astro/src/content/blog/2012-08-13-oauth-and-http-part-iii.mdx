@@ -7,6 +7,8 @@ description: "Caveats access the FreeAgent API using OAuth"
 series: "FreeAgent OAuth"
 ---
 
+import BlockQuote from '../../components/BlockQuote.astro';
+
 In previous posts, we looked at setting up authentication with OAuth to access FreeAgent's API. We've got something working but a couple of caveats remain when working with it from a rich client.
 
 
@@ -60,9 +62,9 @@ In a successful exchange of _authorisation code_ for _access token_, you should 
 ```
 In OAuth, The `expires_in` value should be the time in seconds that the _access token_ is valid.
 
-{% blockquote OAuth 2.0 Specification https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2 %}
+<BlockQuote source="OAuth 2.0 Specification" url="https://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2.2">
 RECOMMENDED. The lifetime in seconds of the access token. For example, the value "3600" denotes that the access token will expire in one hour from the time the response was generated. If omitted, the authorization server SHOULD provide the expiration time via other means or document the default value.
-{% endblockquote %}
+</BlockQuote>
 
 FreeAgent return `604800` which is consistent with their documentation as it works out as 7 days. As this countdown starts when you exchange the tokens, I convert the number into a concrete date when I get the response. That way, I can see later if I actually need to refresh the token. However, it seems that you can refresh your token at any point.
 
