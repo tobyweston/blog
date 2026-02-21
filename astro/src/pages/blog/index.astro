@@ -21,11 +21,12 @@ const pagePosts = posts.slice(0, perPage);
 
     {posts.length > perPage && (
       <div id="loading-indicator" class="mt-8 text-center hidden">
-        <div class="inline-flex items-center px-4 py-2 text-gray-500">
-          <svg class="spinner mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
+        <div class="inline-flex items-center px-4 py-2 text-gray-600">
+          <div class="bouncing-loader mr-3">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
     )}
@@ -34,18 +35,36 @@ const pagePosts = posts.slice(0, perPage);
   </section>
 
   <style>
-    .spinner {
-      width: 1.25rem;
-      height: 1.25rem;
-      animation: spin 1s linear infinite;
+    .bouncing-loader {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
     }
 
-    @keyframes spin {
-      from {
-        transform: rotate(0deg);
+    .bouncing-loader > div {
+      width: 0.75rem;
+      height: 0.75rem;
+      background-color: var(--accent, #2337ff);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out both;
+    }
+
+    .bouncing-loader > div:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .bouncing-loader > div:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
       }
-      to {
-        transform: rotate(360deg);
+      40% {
+        transform: scale(1);
+        opacity: 1;
       }
     }
   </style>
