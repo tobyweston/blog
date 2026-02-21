@@ -112,39 +112,70 @@ const pagePosts = posts.slice(0, perPage);
     }
 
     async function loadMorePosts() {
+      console.log('loadMorePosts called', { loading, hasMore, offset });
       if (loading || !hasMore) return;
 
       loading = true;
       loadingIndicator?.classList.remove('hidden');
+      console.log('Loading indicator shown, fetching posts...');
+
+      // Track when loading started for minimum display time
+      const loadStartTime = Date.now();
+      const minDisplayTime = 1000; // 1 seconds minimum
 
       try {
         const response = await fetch(`/api/posts.json?offset=${offset}&limit=12`);
         const data = await response.json();
+        console.log('Fetched data:', data);
 
-        data.posts.forEach(post => {
-          const card = createPostCard(post);
-          postsGrid?.appendChild(card);
-        });
+        // Calculate how long to wait before showing results
+        const elapsedTime = Date.now() - loadStartTime;
+        const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+        console.log(`Waiting ${remainingTime}ms before showing posts`);
 
-        offset = data.nextOffset;
-        hasMore = data.hasMore;
+        // Wait for the remaining time before adding posts
+        setTimeout(() => {
+          console.log('Adding posts to grid');
+          data.posts.forEach(post => {
+            const card = createPostCard(post);
+            postsGrid?.appendChild(card);
+          });
 
-        if (!hasMore && sentinel) {
-          sentinel.style.display = 'none';
-        }
+          offset = data.nextOffset;
+          hasMore = data.hasMore;
+          console.log('Updated state:', { offset, hasMore });
+
+          if (!hasMore && sentinel) {
+            sentinel.style.display = 'none';
+            console.log('No more posts, hiding sentinel');
+          }
+
+          loading = false;
+          loadingIndicator?.classList.add('hidden');
+          console.log('Loading complete, indicator hidden');
+        }, remainingTime);
+
       } catch (error) {
         console.error('Failed to load more posts:', error);
-      } finally {
-        loading = false;
-        loadingIndicator?.classList.add('hidden');
+
+        // Still respect minimum display time on error
+        const elapsedTime = Date.now() - loadStartTime;
+        const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+
+        setTimeout(() => {
+          loading = false;
+          loadingIndicator?.classList.add('hidden');
+        }, remainingTime);
       }
     }
 
     // Intersection Observer for infinite scroll
     if (sentinel && hasMore) {
+      console.log('Setting up Intersection Observer', { sentinel, hasMore });
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
+            console.log('Intersection event:', { isIntersecting: entry.isIntersecting, loading, hasMore });
             if (entry.isIntersecting) {
               loadMorePosts();
             }
@@ -156,6 +187,9 @@ const pagePosts = posts.slice(0, perPage);
       );
 
       observer.observe(sentinel);
+      console.log('Observer attached to sentinel');
+    } else {
+      console.log('Sentinel or hasMore not available', { sentinel, hasMore });
     }
   </script>
 </SiteLayout>
