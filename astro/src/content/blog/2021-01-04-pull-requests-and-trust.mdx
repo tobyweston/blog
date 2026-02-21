@@ -3,17 +3,19 @@ title: "Pull Requests and Trust"
 subTitle: "A (sketchy) History of the Pull Request"
 pubDate: '2021-01-04'
 categories: "agile"
-keywords: ""
-description: ""
+keywords: "pull requests, code review, continuous integration, team trust, git workflow, development practices, team collaboration, code quality"
+description: "Exploring the history and implications of pull requests in software development. This post examines how PRs introduce delays, impact continuous integration, and discusses the relationship between trust and code review practices in agile teams."
 ---
 
 import Pullquote from '../../components/ui/Pullquote.astro';
+import ImgTag from '../../components/ImgTag.astro';
+import git from '../images/git-request-pull.png';
 
-## A (Sketchy) History of the Pull Request
+## A (sketchy) History of the Pull Request
 
-The nomenclature "pull request" actually came out of GitHub where they were using the git-request-pull command as the basis of their new feature to manage code reviews and merges. From a Git perspective (and [Linus'](https://github.com/torvalds/linux/pull/17#issuecomment-5654674), a third party can request a project "pull" potential changes into their internal repository - it's literally a request to pull changes from some other repo. From the GitHub product perspective, Pull Requests (PRs) were designed to help review and integrate code from third parties via their platform. The need for which stems from the open source community where we try and encouraging contribution from the public.
+The nomenclature "pull request" actually came out of GitHub where they were using the `git-request-pull` command as the basis of their new feature to manage code reviews and merges. From a Git perspective (and [Linus'](https://github.com/torvalds/linux/pull/17#issuecomment-5654674), a third party can request a project "pull" potential changes into their internal repository - it's literally a request to pull changes from some other repo. From the GitHub product perspective, Pull Requests (PRs) were designed to help review and integrate code from third parties via their platform. The need for which stems from the open source community where we try and encouraging contribution from the public.
 
-![](../images/git-request-pull.png)
+[<ImgTag class="right" src={git} alt="Native Git request-pull command docs" />]({cookiesMilk})
 
 The thing is, all this was mainly designed to make it easier to accepting code from people outside the project's set of trusted committers. There's a natural connotation here that if we don't trust you, we have some tools to help review your changes before we accept them.
 
