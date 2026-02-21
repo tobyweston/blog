@@ -1,7 +1,7 @@
 ---
 title: "Pi Console Lead"
 pubDate: '2015-12-28'
-categories: 'pi'
+categories: 'raspberry-pi'
 keywords: "Raspberry Pi Zero, console lead, Adafruit, serial connection, headless Pi setup, Mac, El Capitan, PL2303"
 description: "Set up a headless Raspberry Pi Zero using an Adafruit console lead. Step-by-step guide for Mac users on El Capitan/Sierra using the Prolific PL2303 driver."
 ---

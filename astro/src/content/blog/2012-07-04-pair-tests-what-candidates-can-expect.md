@@ -1,7 +1,7 @@
 ---
 title: "Pair Tests: What Candidates Can Expect"
 pubDate: "2012-07-04"
-categories: "agile coaching"
+categories: 'agile'
 keywords: "pair test, technical interview, coding interview, agile hiring, what to expect, pair programming interview"
 description: "What candidates can expect from a pair programming interview test. Tips on how to prepare, what interviewers are looking for, and how to handle the pairing exercise."
 ---

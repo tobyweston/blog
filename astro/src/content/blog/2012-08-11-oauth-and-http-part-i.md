@@ -2,7 +2,7 @@
 title: "FreeAgent, OAuth & HTTP (Part I)"
 subTitle: "Implement OAuth authorization in your desktop Java applications"
 pubDate: "2012-08-11"
-categories: "java recipes"
+categories: 'web'
 keywords: "OAuth, HTTP, authorisation, access token, OAuth flow, REST API security, Scribe, Java"
 description: "OAuth and HTTP part I: understanding the OAuth authorisation flow. Covers the three-legged OAuth dance, tokens, and how to implement it in Java with Scribe."
 series: "FreeAgent OAuth"

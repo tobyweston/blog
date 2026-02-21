@@ -1,7 +1,7 @@
 ---
 title: "Automatically rebase on git pull"
 pubDate: '2013-07-09'
-categories: 'recipes git'
+categories: 'tools'
 keywords: "Git rebase, git pull, git config, IntelliJ IDEA, merge vs rebase, git workflow"
 description: "Configure Git to automatically rebase instead of merge on every pull. Covers global and per-repository configuration, including IntelliJ IDEA settings."
 series: 'Git'

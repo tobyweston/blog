@@ -1,7 +1,7 @@
 ---
 title: "Easily Switch JDK on Mac"
 pubDate: '2015-09-10'
-categories: 'java'
+categories: 'tools'
 keywords: "Java versions, Mac, java_home, JAVA_HOME, JDK switch, multiple Java versions, Mac JDK"
 description: "Easily switch between Java versions on Mac using the java_home utility. Includes bash function to set JAVA_HOME for any installed JDK version."
 ---

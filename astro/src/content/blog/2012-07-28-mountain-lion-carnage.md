@@ -1,7 +1,7 @@
 ---
 title: "Mountain Lion Carnage"
 pubDate: "2012-07-28"
-categories: "java"
+categories: 'tools'
 keywords: "Mac OS X Mountain Lion, upgrade issues, Java, developer tools, Mac upgrade, Mac tips"
 description: "The aftermath of upgrading to Mac OS X Mountain Lion. What broke, what needed fixing, and tips for developers upgrading their Mac."
 ---

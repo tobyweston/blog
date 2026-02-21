@@ -1,7 +1,7 @@
 ---
 title: "Abstracting ReentrantReadWriteLock"
 pubDate: "2009-08-01"
-categories: 'java concurrency tempus-fugit'
+categories: 'java concurrency'
 keywords: "Java ReentrantReadWriteLock, read write lock, concurrency, locks, synchronized, tempus-fugit, thread safety"
 description: "Java's ReentrantReadWriteLock allows concurrent reads but serialised writes. Learn how to abstract the lock boilerplate safely using try/finally blocks."
 ---

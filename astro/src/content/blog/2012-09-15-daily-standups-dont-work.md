@@ -1,7 +1,7 @@
 ---
 title: "Daily Standups Don't Work"
 pubDate: "2012-09-15"
-categories: "agile coaching"
+categories: 'agile'
 keywords: "daily standup, scrum, lean, agile, standup meetings, team communication, kanban, information radiator"
 description: "Daily standups often fail because they become status reports. Learn why standups don't work and what to do instead to improve team communication and flow."
 ---

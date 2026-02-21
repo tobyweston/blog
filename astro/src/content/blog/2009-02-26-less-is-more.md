@@ -1,7 +1,7 @@
 ---
 title: "Less is More"
 pubDate: "2009-02-26"
-categories: 'java performance'
+categories: 'java concurrency'
 keywords: "Java heap size, JVM threads, OutOfMemoryError, native threads, -Xmx, thread memory, JVM tuning"
 description: "Counterintuitive JVM behaviour: reducing the maximum heap size (-Xmx) actually allows you to create more native threads. Explains why and shows measured results."
 ---

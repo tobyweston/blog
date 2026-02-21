@@ -2,7 +2,7 @@
 title: "Upgrade Raspbian"
 subTitle: "Stretch to Buster"
 pubDate: "2019-08-29"
-categories: 'pi'
+categories: 'raspberry-pi'
 keywords: "Raspbian Buster, Raspbian Stretch, Raspberry Pi upgrade, apt-get dist-upgrade, Raspbian upgrade"
 description: "Step-by-step guide to upgrading Raspbian from Stretch to Buster on your Raspberry Pi."
 ---

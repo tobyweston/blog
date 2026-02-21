@@ -1,7 +1,7 @@
 ---
 title: "Calculate the Optimum Number of Threads"
 pubDate: '2013-06-01'
-categories: 'java tempus-fugit concurrency'
+categories: 'java concurrency'
 keywords: "Java threads, optimal thread count, CPU-bound, IO-bound, thread pool, concurrency, performance"
 description: "Calculate the optimal number of threads for a Java application. Covers CPU-bound vs IO-bound workloads and the formula for sizing thread pools correctly."
 ---

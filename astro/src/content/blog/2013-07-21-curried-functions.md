@@ -2,7 +2,7 @@
 title: "Currying Functions in Java & Scala"
 subTitle: "Transform multi-argument functions into elegant single-argument chains"
 pubDate: '2013-07-21'
-categories: 'java scala java8'
+categories: 'functional-programming'
 keywords: "currying, partial application, Java, Scala, functional programming, higher-order functions"
 description: "Currying transforms a multi-argument function into a chain of single-argument functions. Practical examples in both Java and Scala."
 ---

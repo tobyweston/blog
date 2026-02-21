@@ -1,7 +1,7 @@
 ---
 title: "Changing Test Gears"
 pubDate: "2010-07-09"
-categories: 'agile coaching java mocking testing'
+categories: 'testing agile'
 keywords: "unit testing, acceptance testing, integration testing, agile testing, Spring, application context, test strategy"
 description: "Choosing the right level of testing — unit, integration, or acceptance — is a subtle skill. Learn when each is appropriate and how to avoid duplication across test levels."
 ---

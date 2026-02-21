@@ -2,7 +2,7 @@
 title: "Java source on Mac"
 subTitle: "A quick guide to accessing Java source and Javadoc on macOS"
 pubDate: "2011-10-29"
-categories: 'java recipes'
+categories: 'tools'
 keywords: "Java source code, Mac, Maven, M2_HOME, mvn, developer tools, IDE source attachment"
 description: "How to get Java source code on your Mac for IDE source attachment. Covers Maven and environment configuration."
 ---

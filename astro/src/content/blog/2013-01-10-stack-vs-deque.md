@@ -2,7 +2,7 @@
 title: "Java Stack vs Deque"
 subTitle: "Why Oracle's recommendation breaks encapsulation and how to fix it"
 pubDate: '2013-01-10'
-categories: 'java object-oriented'
+categories: 'java'
 keywords: "Java Stack, Deque, ArrayDeque, data structures, LIFO, collection framework, stack implementation"
 description: "Java's Stack class is a legacy class with known problems. Use Deque (specifically ArrayDeque) instead for a proper last-in-first-out stack implementation."
 ---

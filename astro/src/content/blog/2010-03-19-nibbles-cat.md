@@ -2,7 +2,7 @@
 title: "Nibbles the Cat & Concurrency"
 subTitle: "Learn to detect and avoid deadlocks with a practical example"
 pubDate: "2010-03-19"
-categories: 'java concurrency tempus-fugit'
+categories: 'java concurrency'
 keywords: "Java deadlock, deadlock detection, DeadlockDetector, tempus-fugit, thread management, example"
 description: "A concrete deadlock example in Java showing how two threads can deadlock acquiring the same locks in opposite orders. Demonstrates DeadlockDetector in action."
 ---

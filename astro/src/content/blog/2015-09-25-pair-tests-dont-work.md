@@ -1,7 +1,7 @@
 ---
 title: "Pair Testing Doesn't Work"
 pubDate: '2015-09-25'
-categories: 'organisational improvement'
+categories: 'agile'
 keywords: "pair test, technical interview, hiring developers, interview bias, agile hiring, recruitment, code review"
 description: "Pair tests are a poor proxy for real work. After years of giving and receiving them, the author argues for fairer, more realistic interview techniques."
 ---
