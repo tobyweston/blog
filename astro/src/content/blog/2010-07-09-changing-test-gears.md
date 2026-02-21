@@ -2,8 +2,8 @@
 title: "Changing Test Gears"
 pubDate: "2010-07-09"
 categories: 'agile coaching java mocking testing'
-keywords: "unit testing, acceptance testing, integration testing, unit vs acceptance testing, agile testing, user testing, uat, java, spring, application context, builder pattern"
-description: "Understanding different types of testing (unit, integration, acceptance) and when each is appropriate is a subtle skill. Optimising your approach and avoiding duplicate testing requires you know the context you're working in and what's coming up."
+keywords: "unit testing, acceptance testing, integration testing, agile testing, Spring, application context, test strategy"
+description: "Choosing the right level of testing — unit, integration, or acceptance — is a subtle skill. Learn when each is appropriate and how to avoid duplication across test levels."
 ---
 
 Good poker players know when to change gears. They know when to alter their playing style from cautious to aggressive as the game changes and players drop out. They look at how the _odds change_ as the game progresses and react appropriately. It's the same with testing, you gotta know when to change gears.

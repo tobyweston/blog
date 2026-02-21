@@ -2,8 +2,8 @@
 title: "Implicit Parameters in Scala"
 pubDate: '2015-07-03'
 categories: 'scala'
-keywords: "scala, implicit, implicit parameter, implicit values"
-description: "This post talks about Scala implicit parameters (aka implicit values). In the series, I introduce the \"implicit\" categories and show real examples."
+keywords: "Scala implicits, implicit parameters, implicit values, Scala compiler, context bounds, type class"
+description: "Scala implicit parameters allow the compiler to automatically supply values marked implicit. Introduction to the three categories of Scala implicits."
 series: 'Scala Implicits'
 ---
 

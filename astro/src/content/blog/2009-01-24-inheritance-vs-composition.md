@@ -2,8 +2,8 @@
 title: "Inheritance vs Composition"
 pubDate: "2009-01-24"
 categories: 'java object-oriented'
-keywords: "inheritance vs composition, inheritance vs aggregation"
-description: "Java's stack class isn't a stack at all! It favours inheritance over composition causing it to no longer be just a stack."
+keywords: "inheritance vs composition, Java Stack, Vector, object-oriented design, composition over inheritance"
+description: "Java's Stack class extends Vector, making it not a true stack. A real-world example of why composition beats inheritance for code reuse."
 ---
 
 When interviewing, I often like to ask a candidate to discuss inheritance vs composition using a `Stack` as an example.

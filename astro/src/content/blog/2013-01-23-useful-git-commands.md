@@ -3,8 +3,8 @@ title: "Useful Git Commands"
 subTitle: "Handy Git commands you'll want to keep in your toolkit"
 pubDate: '2013-01-23'
 categories: 'recipes git'
-keywords: "git, tips, delete remote branch, remove branch, github, ssh, https"
-description: "Some git commands I find useful but keep forgetting like removing a remote branch."
+keywords: "Git, useful git commands, delete remote branch, SSH, HTTPS, GitHub, git tips"
+description: "A collection of useful Git commands including how to delete remote branches, switch between SSH and HTTPS, and other handy tips for everyday Git use."
 series: 'Git'
 ---
 

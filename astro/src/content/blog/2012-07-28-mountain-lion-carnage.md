@@ -2,8 +2,8 @@
 title: "Mountain Lion Carnage"
 pubDate: "2012-07-28"
 categories: "java"
-keywords: "mountain lion, mac osx, 10.8, java, svn, git, git broken after mountain lion, svn broken after mountain lion"
-description: "The Mountain Lion upgrade blasts Java, svn and git. Find out how to get them back"
+keywords: "Mac OS X Mountain Lion, upgrade issues, Java, developer tools, Mac upgrade, Mac tips"
+description: "The aftermath of upgrading to Mac OS X Mountain Lion. What broke, what needed fixing, and tips for developers upgrading their Mac."
 ---
 
 After installing Mountain Lion, I discovered Java was gone along with Subversion and Git. Even Python was partially crippled. I went through these steps to bring them back.

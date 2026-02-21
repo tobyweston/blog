@@ -2,8 +2,8 @@
 title: "Logging is evil but..."
 pubDate: "2010-10-18"
 categories: 'java mocking testing exceptions rest recipes'
-keywords: "logging, log4j, testing log4j, logging as a feature, logging is bad, why is logging bad"
-description: "Don't let logging clutter up your code, follow these tips to separate concerns and move towards logging as a feature. We also look at how to actually test against logging."
+keywords: "logging, log4j, testing logging, separation of concerns, logging as feature, assertions on logs"
+description: "Logging clutters code and couples concerns. Learn how to treat logging as a feature, separate it from business logic, and write tests that assert on log output."
 ---
 
 Logging is a nightmare. I don't mean here that conveying information about exceptional circumstances is a nightmare, I mean the combination of over eager developers and [_insert your current logging framework here_] is a recipe for disaster. We've all seen too much of

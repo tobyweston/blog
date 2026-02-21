@@ -2,8 +2,8 @@
 title: "Be Explicit with the UI Thread"
 pubDate: "2008-12-30"
 categories: 'java testing concurrency'
-keywords: "SWT, EDT, event dispatching thread, testing on the main thread"
-description: "Understand which is the main, event dispatching thread and take control when running UI tests."
+keywords: "SWT, UI thread, event dispatching thread, EDT, invalid thread access, Display.sync, Display.async"
+description: "Understand the SWT UI thread and how to avoid invalid thread access errors by being explicit about which thread is the main UI thread when testing."
 ---
 
 Following up from the post [SWT Support in Window Licker](/blog/2008-12-29-swt-support-for-window-licker/).

@@ -3,8 +3,8 @@ title: "Be more Expressive with Builders"
 subTitle: "Use the builder pattern to create readable, human-like method chains"
 pubDate: "2009-01-06"
 categories: 'java concurrency tempus-fugit'
-keywords: "CountDownLatch, micro-DSL, DSL, builder pattern"
-description: "Chain methods to create a micro-DSL and a more concise, human readable sequence of events in your code."
+keywords: "Java, builder pattern, micro-DSL, fluent API, CountDownLatch, method chaining, expressive code"
+description: "Create more expressive Java code using the builder pattern and method chaining to build micro-DSLs. Demonstrated with CountDownLatch as a practical example."
 ---
 
 I came up with a neat little pattern that's helped me be more expressive in some (fairly specific) situations. Here I'll give you a feel for it using the `CountDownLatch` class as an example.

@@ -2,8 +2,8 @@
 title: "JUnit and Threaded Tests"
 pubDate: "2008-12-17"
 categories: "java concurrency testing"
-keywords: "junit, concurrent, concurrent tests, tests, eclipse, false positive"
-description: "Find out how threaded tests exit early thanks to your test runner. Eclipse (and others) will call exit so unless you wait, you may get false-positive results."
+keywords: "JUnit, threaded tests, concurrent testing, Java threads, false positive tests, test runner"
+description: "JUnit tests with threads can produce false positives because the test runner calls System.exit() before threads complete. Learn how to wait for threads in tests."
 ---
 
 I recently noticed a bit of a problem when playing with threads within JUnit. Take the following snippet as an example;

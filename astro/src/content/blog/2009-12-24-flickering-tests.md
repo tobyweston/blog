@@ -2,8 +2,8 @@
 title: "Flickering Tests and a JUnit Rule"
 pubDate: "2009-12-24"
 categories: 'java concurrency tempus-fugit'
-keywords: "flickering tests, nondeterminism, intermittent tests, java, intermittent, junit"
-description: "Repeat intermittently failing tests automatically with a JUnit rule."
+keywords: "intermittent tests, flickering tests, JUnit, non-deterministic tests, @Intermittent, tempus-fugit, test reliability"
+description: "Automatically repeat intermittently failing tests using tempus-fugit's @Intermittent JUnit rule. Identify non-deterministic tests and make them deterministic."
 ---
 
 Occasionally I'll see flickering tests. Sometimes they're green, sometimes they're red and this can happen without any code changes. What bugs me the most is that when trying to fix the problem, I can never be sure that I haven't just been lucky and the green I'm seeing isn't really a false positive. I'll have to manually run the test several times before my confidence grows.

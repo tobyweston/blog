@@ -2,8 +2,8 @@
 title: "Standard Pi Setup"
 pubDate: "2017-03-01"
 categories: 'pi'
-keywords: "pi, pi zero, zero w, raspian"
-description: "Some common setup for a new Pi"
+keywords: "Raspberry Pi setup, Raspbian, SD card, Pi Zero W, headless setup, SSH, new Pi configuration"
+description: "Standard Raspberry Pi setup steps: flash Raspbian, enable SSH, configure Wi-Fi, and get your Pi ready for headless use."
 ---
 
 Here"s some common things to do when you first setup a Pi.

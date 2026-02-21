@@ -2,8 +2,8 @@
 title: "Exception Handling as a System Wide Concern"
 pubDate: "2012-03-28"
 categories: 'java rest object-oriented exceptions'
-keywords: "exception handling, system wide policy for exception handling, java"
-description: "Be more explicit about handling exceptions as a system wide concern. Examples of identifying boundaries to catch and deal with exceptions at appropriate & coherent points."
+keywords: "exception handling, system-wide policy, REST, application boundaries, ports and adapters, Java"
+description: "Treat exception handling as a system-wide concern. Identify boundaries in your application and handle exceptions consistently at those boundaries."
 ---
 
 It's not ok to handle exceptions in an ad-hoc way. Exception handling should be a **system wide concern**. That means catching an exception, arbitrarily logging it before rethrowing isn't a good idea. We should be carefully considering _when_ and _how_ to handle exceptions. With a high level strategy, things just become easier. You focus exception handling to just a few places making it easy to test and easy to apply consistently.

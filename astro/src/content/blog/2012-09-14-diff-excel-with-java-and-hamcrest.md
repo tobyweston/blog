@@ -2,8 +2,8 @@
 title: "Diff Excel with Java and Hamcrest"
 pubDate: "2012-09-14"
 categories: "java recipes"
-keywords: "excel, diff, compare excel, testing excel, testing, junit, hamcrest, java"
-description: "Diff Excel using Java and Hamcrest. Build and compare Excel files using Java and Hamcrest."
+keywords: "Excel diff, Java, Hamcrest, Apache POI, spreadsheet testing, compare Excel files, simple-excel"
+description: "Compare Excel spreadsheets in Java tests using Hamcrest matchers and Apache POI. The simple-excel library makes asserting on spreadsheet content straightforward."
 ---
 
 Comparing Excel spreadsheets programmatically can be tricky. Projects like [Apache POI](http://poi.apache.org/) and [JExcel](http://jexcelapi.sourceforge.net/) let you build and interrogate sheets but don't offer a built in compare function. Fortunately, [simple-excel](http://github.com/tobyweston/simple-excel) offers a simplified API for building sheets in Java and a bunch of [Hamcrest](http://hamcrest.org/) matchers to find any differences.

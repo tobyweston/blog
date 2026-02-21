@@ -2,8 +2,8 @@
 title: "FreeAgent, OAuth & HTTP (Part III)"
 pubDate: "2012-08-13"
 categories: 'java'
-keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
-description: "Caveats access the FreeAgent API using OAuth"
+keywords: "OAuth, FreeAgent API, Scribe, Java, signed request, OAuth header, REST API, HTTP client"
+description: "OAuth and HTTP part III: making signed OAuth requests to the FreeAgent API using Java and Scribe. Practical end-to-end OAuth integration example."
 series: "FreeAgent OAuth"
 ---
 

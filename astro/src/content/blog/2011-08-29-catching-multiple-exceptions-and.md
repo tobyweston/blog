@@ -2,8 +2,8 @@
 title: "Catching Multiple Exceptions (and rethrowing them all!)"
 pubDate: "2011-08-29"
 categories: 'java exceptions recipes'
-keywords: "rethrowing multiple exceptions, exception handling in java"
-description: "Learn how to catch multiple exceptions, ignore and continue processing before finally retesting and rethrowing them all."
+keywords: "Java exceptions, catch multiple exceptions, rethrow, exception handling, Java 7, multi-catch"
+description: "How to catch multiple exceptions, process them independently, then rethrow them all. A pattern for collecting and re-throwing exceptions in batch processing."
 ---
 
 Sometimes, we may want to catch an exception, temporarily ignoring it to continue work before rethrowing it when its more appropriate to do so. I recently saw a slight variation of this whereby the developer wanted to (potentially) catch multiple exceptions, perform some processing then throw. However, it left the question that if more than one was caught, which exception should we actually rethrow. We certainly don't want to loose any information and should really allow the client to catch the exception in a standard way.

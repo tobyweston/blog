@@ -3,8 +3,8 @@ title: "JDK7 Previewed"
 subTitle: "Explore the new language features coming in Java 7"
 pubDate: "2011-03-04"
 categories: 'java exceptions'
-keywords: "Java 7, JDK7, JDK8, Open JDK, OpenJDK, Java Tech Journal, type inference, diamond operator, try-with-resource, autoclosable, lambda, closure"
-description: "Checkout the new and noteworthy features in JDK7."
+keywords: "Java 7, JDK 7, diamond operator, try-with-resources, AutoCloseable, type inference, switch on strings"
+description: "A preview of noteworthy Java 7 features: diamond operator, try-with-resources, switch on strings, and the foundation they lay for Java 8 lambdas."
 ---
 
 Oracle put out the preview release of JDK7 last month. I guess they felt they had to. So, it's not what was once heralded (will [8 see lambdas](http://openjdk.java.net/projects/lambda/)?) but still has one or two interesting language features. A few that caught my eye include...

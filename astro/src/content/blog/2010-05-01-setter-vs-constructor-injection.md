@@ -2,8 +2,8 @@
 title: "Setter vs Constructor Injection"
 pubDate: "2010-05-01"
 categories: 'java'
-keywords: "setter vs constructor injection, spring, setter, getter, constructor, java"
-description: "Setter vs constructor injection. Explore the options here."
+keywords: "setter injection, constructor injection, dependency injection, Spring, Java, testability, immutability"
+description: "Compare setter injection vs constructor injection in Java. Constructor injection promotes immutability and clearer dependencies — here's why to prefer it."
 ---
 
 So what is the argument for / against? It can be a tough one to describe as I recently discovered.

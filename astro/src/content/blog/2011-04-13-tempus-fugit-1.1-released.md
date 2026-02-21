@@ -2,8 +2,8 @@
 title: "tempus-fugit 1.1 released"
 pubDate: "2011-04-13"
 categories: 'java tempus-fugit concurrency testing'
-keywords: "tempus-fugit, concurrency, concurrency library, testing concurrent code"
-description: "Announcing the release of the new version of the tempus-fugit library."
+keywords: "tempus-fugit 1.1, Java concurrency, concurrent testing library, JUnit, release, open source"
+description: "tempus-fugit 1.1 released. The Java library for testing concurrent and time-sensitive code gains new features and improvements."
 ---
 
 Yesterday, I released the 1.1 version of my micro-library [tempus-fugit](http://tempusfugitlibrary.org/). From the project's website

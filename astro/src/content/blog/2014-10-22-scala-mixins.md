@@ -2,8 +2,8 @@
 title: "Scala Mixins: The Right Way"
 pubDate: '2014-09-22'
 categories: 'scala'
-keywords: "scala, trait, mixin, ruby"
-description: "Avoid the inheritance vs. composition argument by using mixin traits in the right way. Using inheritance to mixin behaviour contradicts the inheritance vs. composition principle, so when is a trait with behaviour a genuine mixin? Find out here."
+keywords: "Scala traits, mixin, inheritance, composition, code reuse, Scala, ad-hoc polymorphism"
+description: "Scala traits can be used for both polymorphism and mixins, but mixing these uses leads to trouble. Learn when using a trait as a mixin is genuinely appropriate."
 ---
 
 Scala traits are interesting because they can be used for [inclusion polymorphism](http://en.wikipedia.org/wiki/Polymorphism_(computer_science) _and_ to [mixin](http://en.wikipedia.org/wiki/Mixin) behaviour. I've found tension here though, as the former uses inheritance and the later is more about code re-use. So when a Scala class extends a trait with behaviour, it seems to go against the generally accepted view that using inheritance as a mechanism for code re-use [is a bad idea](/blog/2009-01-24-inheritance-vs-composition/).

@@ -3,8 +3,8 @@ title: "Un/Marshalling"
 subTitle: "Why marshalling frameworks add complexity and how to avoid them"
 pubDate: "2010-05-01"
 categories: 'java'
-keywords: "unmarshalling frameworks, castor, JAXB, json, xml"
-description: "Almost all unmarshalling frameworks cause problems. By extension, all frameworks cause problems. There's generally idiosyncrasies or constraints that won't work for you're app. Roll your own, please, it's simpler than you think"
+keywords: "Java unmarshalling, JAXB, Castor, JSON, XML, serialisation, framework trade-offs"
+description: "Almost all unmarshalling frameworks impose constraints on your application. Sometimes rolling your own simple unmarshalling logic is simpler and more flexible."
 ---
 
 This post should probably be titled "Why I don't like Unmarhsalling frameworks". They just hack me off. I mean really,
