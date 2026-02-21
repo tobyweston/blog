@@ -50,7 +50,7 @@ describe('Video Pages - Enhanced Tests', () => {
         title: 'Java 8 Lambda',
       },
       {
-        slug: '2026-02-08-luhn-algorithm',
+        slug: '2021-05-05-luhn-algorithm',
         title: 'Luhn Algorithm',
       }
     ];
