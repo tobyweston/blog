@@ -23,15 +23,19 @@ const image = Astro.props.image || '/blog-placeholder-1.jpg';
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+
+<!-- RSS Feed -->
+<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
-<meta name="keywords" content={keywords} />
+{keywords && <meta name="keywords" content={keywords} />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
@@ -39,6 +43,7 @@ const image = Astro.props.image || '/blog-placeholder-1.jpg';
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:site_name" content={SITE_TITLE} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />

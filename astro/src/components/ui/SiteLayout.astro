@@ -2,11 +2,12 @@
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import BaseHead from '../BaseHead.astro';
-const {title, description} = Astro.props;
+const {title, description, keywords} = Astro.props;
 ---
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} keywords={keywords} />
+    <slot name="head" />
   </head>
   <body class="bg-white text-gray-900">
     <Header />
