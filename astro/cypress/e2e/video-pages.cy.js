@@ -147,7 +147,7 @@ describe('Video Pages - Enhanced Tests', () => {
     });
 
     it('should have header navigation on video pages', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.get('header').should('be.visible');
       cy.get('nav a[href="/blog"]').should('exist');
       cy.get('nav a[href="/book"]').should('exist');
@@ -156,7 +156,7 @@ describe('Video Pages - Enhanced Tests', () => {
     });
 
     it('should have footer on video pages', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.get('footer').should('be.visible');
       cy.get('footer').should('contain', 'Toby Weston');
     });
@@ -164,12 +164,12 @@ describe('Video Pages - Enhanced Tests', () => {
 
   describe('Video Page SEO and Meta', () => {
     it('should have proper page title', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.title().should('include', 'Videos');
     });
 
     it('should have meta description', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.get('meta[name="description"]').should('exist');
     });
 
@@ -187,13 +187,13 @@ describe('Video Pages - Enhanced Tests', () => {
     });
 
     it('should have iframe title attribute', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.get('.video-detail-frame iframe')
         .should('have.attr', 'title');
     });
 
     it('should have semantic HTML structure', () => {
-      cy.visit('/video/2026-02-08-refactoring');
+      cy.visit('/video/2019-06-29-refactoring');
       cy.get('article').should('exist');
       cy.get('header').should('exist');
       cy.get('main').should('exist');
