@@ -16,9 +16,13 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
 
 <SiteLayout title="Archive - bad.robot" description="All posts">
   <section>
-    <h1 class="text-3xl font-bold mb-4">Archive</h1>
-    <div class="mb-6">
-      <input id="search" placeholder="Search posts by title..." class="w-full border rounded px-3 py-2" />
+    <h1 class="text-3xl font-bold mb-8">Archive</h1>
+    <div class="mb-8">
+      <label for="search" class="sr-only">Search posts by title or subtitle</label>
+      <div class="relative w-full">
+        <input id="search" placeholder="Search posts by title..." class="w-full px-4 py-3 pl-12 pr-4 text-base bg-white border-2 border-slate-200 rounded-xl focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200 placeholder-slate-400 shadow-sm hover:border-slate-300"
+        />
+      </div>
     </div>
 
     <div id="posts">
@@ -27,7 +31,7 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
           <h2 class="text-xl font-semibold mb-3">{year}</h2>
           <ul class="list-disc pl-6 space-y-2">
             {(byYear[year] || []).map((p: typeof posts[0]) => (
-              <li data-title={p.data.title.toLowerCase()}>
+              <li data-title={p.data.title.toLowerCase()} data-subtitle={p.data.subTitle?.toLowerCase() || ''}>
                 <div class="flex flex-wrap items-baseline gap-2">
                   <a href={`/blog/${p.slug}/`} class="text-slate-800 hover:text-sky-600">{p.data.title}</a>
                   {p.data.subTitle && <span class="text-sm text-slate-500 italic">{p.data.subTitle}</span>}
@@ -47,8 +51,10 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
     input.addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
       posts.forEach(li => {
-        const t = li.dataset.title || '';
-        li.style.display = t.includes(q) ? '' : 'none';
+        const title = li.dataset.title || '';
+        const subtitle = li.dataset.subtitle || '';
+        const matches = title.includes(q) || subtitle.includes(q);
+        li.style.display = matches ? '' : 'none';
       });
     });
   </script>
