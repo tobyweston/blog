@@ -1,5 +1,6 @@
 ---
 title: "SWTBot vs Window Licker"
+subTitle: "A developer's comparison of rich client testing frameworks"
 pubDate: "2009-03-15"
 categories: 'java testing'
 keywords: "swtbot, window licker, swtbot vs window licker, awt, swing, awt robot, selenium, rich clients"

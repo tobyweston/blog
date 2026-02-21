@@ -1,5 +1,6 @@
 ---
 title: "Java Stack vs Deque"
+subTitle: "Why Oracle's recommendation breaks encapsulation and how to fix it"
 pubDate: '2013-01-10'
 categories: 'java object-oriented'
 keywords: "java stack, inheritance vs composition, inheritance vs aggregation, deque, LIFO, FIFO"

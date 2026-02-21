@@ -1,5 +1,6 @@
 ---
 title: "Implicit Functions in Scala"
+subTitle: "Master automatic type conversions and write more succinct APIs"
 pubDate: '2015-07-14'
 categories: 'scala'
 keywords: "scala, implicit, implicit function, implicit conversion, SAM, implicits"

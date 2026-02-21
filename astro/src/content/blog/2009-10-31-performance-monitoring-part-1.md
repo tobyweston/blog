@@ -1,5 +1,6 @@
 ---
 title: "Performance Monitoring Basics"
+subTitle: "Set up early monitoring and establish metrics that matter for your application"
 pubDate: "2009-10-31"
 categories: 'java performance'
 keywords: "performance, monitoring, tuning, scalability, instrumentation, aop, aspectj, requests per second, rps, java melody, jmx"

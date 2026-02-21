@@ -1,5 +1,6 @@
 ---
 title: "Nibbles the Cat & Concurrency"
+subTitle: "Learn to detect and avoid deadlocks with a practical example"
 pubDate: "2010-03-19"
 categories: 'java concurrency tempus-fugit'
 keywords: "concurrency, deadlock, deadlock detection,"

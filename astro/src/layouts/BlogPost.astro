@@ -5,7 +5,7 @@ import SiteLayout from '../components/ui/SiteLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const {title, description, pubDate, updatedDate}: Props = Astro.props;
+const {title, subTitle, description, pubDate, updatedDate}: Props = Astro.props;
 ---
 
 <SiteLayout title={title} description={description}>
@@ -14,6 +14,7 @@ const {title, description, pubDate, updatedDate}: Props = Astro.props;
       <div class="article-title-section mb-8">
         <p class="detail-kicker">Blog</p>
         <h1 class="article-title-section h1">{title}</h1>
+        {subTitle && <p class="article-subtitle">{subTitle}</p>}
         {description && <p class="article-description">{description}</p>}
       </div>
 

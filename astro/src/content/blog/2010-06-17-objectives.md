@@ -1,5 +1,6 @@
 ---
 title: "Objectives"
+subTitle: "Make your career goals personal and meaningful with SMART.Y goal setting"
 pubDate: "2010-06-17"
 categories: 'coaching'
 keywords: "Objective setting, SMART, coding diary, coding journal, developer journal"

@@ -1,5 +1,6 @@
 ---
 title: "Java source for Mac OSX"
+subTitle: "Navigating Apple's Java source availability for developers"
 pubDate: "2009-08-01"
 categories: 'java'
 keywords: ""

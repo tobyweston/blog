@@ -1,5 +1,6 @@
 ---
 title: "Atomiticy of the Thread class"
+subTitle: "Why Java threads don't always maintain state atomically with interrupt flags"
 pubDate: "2009-12-10"
 categories: 'java concurrency tempus-fugit'
 keywords: "thread, interrupt status flag, interrupt, state, RUNNABLE, WAITING, TIMED_WAITING, TERMINATED"

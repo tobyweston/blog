@@ -1,5 +1,6 @@
 ---
 title: "Useful Git Commands"
+subTitle: "Handy Git commands you'll want to keep in your toolkit"
 pubDate: '2013-01-23'
 categories: 'recipes git'
 keywords: "git, tips, delete remote branch, remove branch, github, ssh, https"

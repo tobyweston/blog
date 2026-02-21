@@ -1,9 +1,10 @@
 ---
 title: "Lead Time vs Cycle Time"
+subTitle: "Understand the key differences between these DORA metrics that matter for software delivery"
 pubDate: "2022-06-07"
 categories: 'agile'
 keywords: ""
-description: "The terms lead time and cycle time are often conflated or used interchangeable when in fact there’s a subtle distinction. It doesn’t help that the terms stem from the manufacturing industry and don’t translate directly to software delivery. With the advent of lean manufacturing and the more general adoption of “lean” in the software delivery space, the terms have become more relevant to software delivery. DORA and the State of DevOps Report use Lead Time for Changes as one of its four key metrics (and notably don’t talk about cycle time) and so more and more organisations are becoming interested."
+description: "The terms lead time and cycle time are often conflated or used interchangeable when in fact there's a subtle distinction. It doesn't help that the terms stem from the manufacturing industry and don't translate directly to software delivery. With the advent of lean manufacturing and the more general adoption of lean in the software delivery space, the terms have become more relevant to software delivery. DORA and the State of DevOps Report use Lead Time for Changes as one of its four key metrics (and notably don't talk about cycle time) and so more and more organisations are becoming interested."
 heroImage: 'images/blog-placeholder-1.jpg'
 ---
 

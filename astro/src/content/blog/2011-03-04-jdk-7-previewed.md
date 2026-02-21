@@ -1,5 +1,6 @@
 ---
 title: "JDK7 Previewed"
+subTitle: "Explore the new language features coming in Java 7"
 pubDate: "2011-03-04"
 categories: 'java exceptions'
 keywords: "Java 7, JDK7, JDK8, Open JDK, OpenJDK, Java Tech Journal, type inference, diamond operator, try-with-resource, autoclosable, lambda, closure"

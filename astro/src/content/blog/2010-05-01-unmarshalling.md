@@ -1,5 +1,6 @@
 ---
 title: "Un/Marshalling"
+subTitle: "Why marshalling frameworks add complexity and how to avoid them"
 pubDate: "2010-05-01"
 categories: 'java'
 keywords: "unmarshalling frameworks, castor, JAXB, json, xml"

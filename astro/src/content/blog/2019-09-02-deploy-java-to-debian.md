@@ -1,5 +1,6 @@
 ---
 title: "Easily Deploy Java to Debian"
+subTitle: "Package and distribute Java applications via .deb files and apt repositories"
 pubDate: '2019-09-02'
 categories: 'java, scala'
 keywords: "java, scala, debian, debian repositories, aptly, ubuntu"

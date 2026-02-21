@@ -1,5 +1,6 @@
 ---
 title: "Be more Expressive with Builders"
+subTitle: "Use the builder pattern to create readable, human-like method chains"
 pubDate: "2009-01-06"
 categories: 'java concurrency tempus-fugit'
 keywords: "CountDownLatch, micro-DSL, DSL, builder pattern"

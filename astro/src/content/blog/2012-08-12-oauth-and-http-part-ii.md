@@ -1,5 +1,6 @@
 ---
 title: "FreeAgent, OAuth & HTTP (Part II)"
+subTitle: "Exchange authorization codes for access tokens and make OAuth API calls"
 pubDate: "2012-08-12"
 categories: "java recipes"
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"

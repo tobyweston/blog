@@ -1,5 +1,6 @@
 ---
 title: "FreeAgent, OAuth & HTTP (Part I)"
+subTitle: "Implement OAuth authorization in your desktop Java applications"
 pubDate: "2012-08-11"
 categories: "java recipes"
 keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"

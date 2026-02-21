@@ -177,3 +177,11 @@ hr {
 	font-weight: 500;
 }
 
+.article-subtitle {
+	font-size: 1.563em;
+	color: rgb(var(--gray));
+	margin: 0.5rem 0 1rem 0;
+	line-height: 1.4;
+	font-weight: 500;
+}
+
