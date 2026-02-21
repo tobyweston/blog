@@ -2,8 +2,8 @@
 title: "Nibbles the Cat & Concurrency"
 pubDate: "2010-03-19"
 categories: 'java concurrency tempus-fugit'
-keywords: "concurrency, deadlock, deadlock detection,"
-description: "Detect deadlocks programmatically with the DeadlockDetector class. Shows an example of deadlock."
+keywords: "Java deadlock, deadlock detection, DeadlockDetector, tempus-fugit, thread management, example"
+description: "A concrete deadlock example in Java showing how two threads can deadlock acquiring the same locks in opposite orders. Demonstrates DeadlockDetector in action."
 ---
 
 I recently introduced a deadlock into our performance monitoring. I inadvertently prevented a statistic collection daemon I wrote from shutting down thanks to some unlucky timing and a bad synchronisation policy. Because the synchronisation that was involved was distributed across a couple of classes (including some external classes) it wasn't obvious where they clashed. It got me thinking more about deadlocks and how many times we _actually _see them in real systems. In the end, I created a `DeadlockDetector` class.

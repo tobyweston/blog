@@ -2,8 +2,8 @@
 title: "Abstracting ReentrantReadWriteLock"
 pubDate: "2009-08-01"
 categories: 'java concurrency tempus-fugit'
-keywords: "reentrant locks, java, locks, read write lock, concurrency, synchronized, ReentrantReadWriteLock"
-description: "All locks in Java are reentrant. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronized method and then call the superclass method without deadlocking"
+keywords: "Java ReentrantReadWriteLock, read write lock, concurrency, locks, synchronized, tempus-fugit, thread safety"
+description: "Java's ReentrantReadWriteLock allows concurrent reads but serialised writes. Learn how to abstract the lock boilerplate safely using try/finally blocks."
 ---
 
 All locks in Java are reentrant. They have to be in so that the owner of a monitor can reenter protected code. If a thread requests a lock that it already holds, it'll be given it. Without this, a subclass couldn't override a snynchronised method and then call the superclass method without deadlocking.

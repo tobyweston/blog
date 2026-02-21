@@ -2,8 +2,8 @@
 title: "Less is More"
 pubDate: "2009-02-26"
 categories: 'java performance'
-keywords: "OutOfMemory, threads, -Xmx, heap, number of threads, less heap, more threads, unable to create new native thread"
-description: "Allocating less heap size to the JVM actually means you can create more native threads. "
+keywords: "Java heap size, JVM threads, OutOfMemoryError, native threads, -Xmx, thread memory, JVM tuning"
+description: "Counterintuitive JVM behaviour: reducing the maximum heap size (-Xmx) actually allows you to create more native threads. Explains why and shows measured results."
 ---
 
 [Dave Denton](https://twitter.com/#!/tarkaTheRotter) were chatting recently and he was trying to convince me that less is more when it comes to maximum heap size in Java. After I finally got the point, I was aghast! Shock, horror... creating threads in Java takes up non-VM managed memory!

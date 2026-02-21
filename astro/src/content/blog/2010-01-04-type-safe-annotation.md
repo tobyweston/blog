@@ -2,8 +2,8 @@
 title: "Type Safe Annotation"
 pubDate: "2010-01-04"
 categories: 'java concurrency tempus-fugit'
-keywords: "java, annotation, goetz, enum annotation must be an enum constant"
-description: "Why does Java insist that an enum annotation value must be an enum constant?"
+keywords: "Java annotation, enum annotation, type safety, concurrency, @GuardedBy, Goetz, compile-time check"
+description: "Java insists enum annotation values must be enum constants, preventing type-safe runtime checks. Explores why this is and what it means for concurrency annotations."
 ---
 
 A new year and another Java gripe! This time its annotations and the lack of anything useful by way of parameters. Implementing the Goetz annotations from [Concurrency In Practice](http://amzn.to/TtEnWO), I wanted to include an enum as a parameter type. Kind of like this

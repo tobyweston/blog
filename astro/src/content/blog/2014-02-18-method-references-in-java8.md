@@ -2,8 +2,8 @@
 title: "Method References in Java 8"
 pubDate: '2014-02-18'
 categories: 'java, java8'
-keywords: "JDK 8, Java 8, OpenJDK 8, lambda support, method references, method references in java, oracle docs"
-description: "Oracle have made a mess in their official docs, read my more straight forward description of method references in Java 8"
+keywords: "Java 8, method references, lambda, functional interface, static method reference, instance method reference"
+description: "Java 8 method references explained clearly. Four types with real examples: static, bound instance, unbound instance, and constructor references."
 series: "What's new in Java 8"
 ---
 

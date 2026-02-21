@@ -2,8 +2,8 @@
 title: "Pair Testing Doesn't Work"
 pubDate: '2015-09-25'
 categories: 'organisational improvement'
-keywords: "agile, pair test, interview, best interview answers, how to beat the interview, technical interviews"
-description: "Pair tests are outdated. Don't cling to biased and loaded interview techniques when looking to hire developers, embrace fairer and more balanced techniques."
+keywords: "pair test, technical interview, hiring developers, interview bias, agile hiring, recruitment, code review"
+description: "Pair tests are a poor proxy for real work. After years of giving and receiving them, the author argues for fairer, more realistic interview techniques."
 ---
 
 Either when looking for work or looking to recruit, I've been doing pair tests in one form or another since 2008. I've only recently come to the conclusion that they just don't work. At least not reliably. 

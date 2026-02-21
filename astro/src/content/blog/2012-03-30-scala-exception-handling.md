@@ -2,8 +2,8 @@
 title: "Scala Exception Handling"
 pubDate: "2012-03-30"
 categories: 'java scala exceptions'
-keywords: "scala exception handling, scala, java, checked vs runtime"
-description: "Let's take a quick look at Scala’s syntax around exception handling and pattern matching. Scala uses runtime exceptions as apposed to checked exceptions and so forces more responsibility onto the developer."
+keywords: "Scala exception handling, pattern matching, try catch, Either, Option, functional error handling"
+description: "Exception handling in Scala: from familiar try/catch with pattern matching to functional approaches using Either and Option types."
 ---
 
 We're very used to Java's notion of checked exceptions. If we want to force the developer to consider exceptional behaviour then we typically throw a checked exception. The problem is that despite our best intentions, we can't force the developer to actually deal with the exception sensibly. Java tries to help by forcing a compilation error onto the developer so they at least forced to choose a course of action. The trouble is though it's all too tempting to swallow exceptions or just rethrow. We tend to either bury our heads in the sand or litter our code with addition noise.

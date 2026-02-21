@@ -2,8 +2,8 @@
 title: "Building Better Exceptions"
 pubDate: "2012-03-28"
 categories: 'java testing object-oriented exceptions'
-keywords: "checked vs runtime exceptions, exception handling, java, LoD, tell don't ask, test exception message, never test exception message, testing exceptions, ports and adaptors"
-description: "Isolate the internal boundaries within your system and isolate exception handling. Extend the idea and treat exceptions as real objects. Add behaviour, tell them do do things, don't ask"
+keywords: "Java exceptions, exception design, checked vs unchecked, Law of Demeter, tell don't ask, exception behaviour"
+description: "Design better exceptions by treating them as proper objects with behaviour. Apply the Law of Demeter and 'tell don't ask' to keep exception handling clean."
 ---
 
 In the [previous post](/blog/2012-03-28-exception-handling-as-a-system-wide-concern), we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.

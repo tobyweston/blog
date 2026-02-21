@@ -2,8 +2,8 @@
 title: "Calculate the Optimum Number of Threads"
 pubDate: '2013-06-01'
 categories: 'java tempus-fugit concurrency'
-keywords: "optimal number of threads, cpu bound, io bound, goetz, java, tempus-fugit, throughput, low latency"
-description: "Calculate the theoretical optimal number of threads needed for both CPU and IO bound applications."
+keywords: "Java threads, optimal thread count, CPU-bound, IO-bound, thread pool, concurrency, performance"
+description: "Calculate the optimal number of threads for a Java application. Covers CPU-bound vs IO-bound workloads and the formula for sizing thread pools correctly."
 ---
 
 Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?

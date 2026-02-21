@@ -2,8 +2,8 @@
 title: "Implicit Functions in Scala"
 pubDate: '2015-07-14'
 categories: 'scala'
-keywords: "scala, implicit, implicit function, implicit conversion, SAM, implicits"
-description: "Implicit functions, their usages and examples. Learn how implicit functions help make your APIs more succinct, reduce your code and convert types."
+keywords: "Scala implicit functions, implicit conversion, type conversion, Scala compiler, SAM, implicits"
+description: "Scala implicit functions convert types automatically when the compiler needs it. Learn how implicit conversion functions work and how to use them safely."
 series: 'Scala Implicits'
 ---
 

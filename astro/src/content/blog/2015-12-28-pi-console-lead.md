@@ -2,8 +2,8 @@
 title: "Pi Console Lead"
 pubDate: '2015-12-28'
 categories: 'pi'
-keywords: "Headless Pi Zero setup on El Captain (Mac OSX)"
-description: "Without an ethernet port, the Pi Zero doesn't lend itself to setting up without a monitor, this post shows how to configure your wifi using the Adafruit console lead"
+keywords: "Raspberry Pi Zero, console lead, Adafruit, serial connection, headless Pi setup, Mac, El Capitan, PL2303"
+description: "Set up a headless Raspberry Pi Zero using an Adafruit console lead. Step-by-step guide for Mac users on El Capitan/Sierra using the Prolific PL2303 driver."
 ---
 
 Without an ethernet port, the Pi Zero doesn't lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.

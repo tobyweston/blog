@@ -2,8 +2,8 @@
 title: "Evidencing Source Code Reviews"
 pubDate: '2019-10-30'
 categories: "agile"
-keywords: "mas, monetary authority of singapore, technology risk management guidelines, crypto-evidence, code reviews, pull requests, TRM, signed commits, git"
-description: "Many industries need to evidence that code reviews have taken place but how do you do that and still maintain fast delivery? Signed commits may help you prove pair programming as a code review mechanism and avoid wasteful out-of-band code reviews."
+keywords: "code review, signed commits, pair programming, MAS, regulated industry, git, crypto evidence, pull requests"
+description: "How to evidence source code reviews in regulated environments. Signed commits and pair programming as a code review mechanism without wasteful bureaucracy."
 ---
 
 Many industries need to evidence that code reviews have taken place. This is typical in regulated environments like Banking but the Regulators aren't clear what constitutes a good source code review process and don't yet understand modern practices like Pair Programming. They can't help you streamline your process.

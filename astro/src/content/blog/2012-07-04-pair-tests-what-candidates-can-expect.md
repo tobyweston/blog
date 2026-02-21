@@ -2,8 +2,8 @@
 title: "Pair Tests: What Candidates Can Expect"
 pubDate: "2012-07-04"
 categories: "agile coaching"
-keywords: "pair tests, interview, tdd, pairing exercise, agile pair test, what to expect from an agile pair interview"
-description: "This post talks a little about what to expect from a pair test and offers a few tips to surviving the ordeal."
+keywords: "pair test, technical interview, coding interview, agile hiring, what to expect, pair programming interview"
+description: "What candidates can expect from a pair programming interview test. Tips on how to prepare, what interviewers are looking for, and how to handle the pairing exercise."
 ---
 
 ![](../images/pairing.jpg)

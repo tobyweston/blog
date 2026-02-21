@@ -2,8 +2,8 @@
 title: "FreeAgent, OAuth & HTTP (Part II)"
 pubDate: "2012-08-12"
 categories: "java recipes"
-keywords: "FreeAgent, OAuth, OAuth and FreeAgent, tutorial, scribe, java, google oauth"
-description: "Retrieving the FreeAgent OAuth access token requires a basic auth POST request with a body with content previously retrieved. See the details here."
+keywords: "OAuth, FreeAgent API, Scribe, Java, access token, OAuth token, REST, API integration"
+description: "OAuth and HTTP part II: calling the FreeAgent API with OAuth. Step-by-step guide to obtaining and using OAuth tokens with the Scribe library in Java."
 series: "FreeAgent OAuth"
 ---
 

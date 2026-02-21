@@ -2,8 +2,8 @@
 title: "Expecting Exceptions JUnit Rule"
 pubDate: "2012-03-27"
 categories: 'java testing exceptions recipes'
-keywords: "try catch, junit, junit rule, expected =, ExpectedException, ExpectedException rule"
-description: "Avoid the try-fail-catch idiom and use the ExpectedException JUnit rule when testing for exceptions."
+keywords: "JUnit, ExpectedException, @Rule, testing exceptions, try-catch, JUnit rule, exception testing"
+description: "Replace the try-fail-catch anti-pattern with JUnit's ExpectedException rule for cleaner, more readable exception testing."
 ---
 
 To make an assertion that an exception was thrown with JUnit, it's fairly common to use the try/fail/catch idiom or

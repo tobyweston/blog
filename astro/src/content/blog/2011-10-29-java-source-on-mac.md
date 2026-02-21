@@ -2,8 +2,8 @@
 title: "Java source on Mac"
 pubDate: "2011-10-29"
 categories: 'java recipes'
-keywords: "mac, java source, org/codehaus/plexus/classworlds/launcher/Launcher, maven, m2_home, mvn"
-description: "Getting Java source on your Mac"
+keywords: "Java source code, Mac, Maven, M2_HOME, mvn, developer tools, IDE source attachment"
+description: "How to get Java source code on your Mac for IDE source attachment. Covers Maven and environment configuration."
 ---
 
 Mostly as a reminder to myself, getting the Java source on your Mac involves the following.

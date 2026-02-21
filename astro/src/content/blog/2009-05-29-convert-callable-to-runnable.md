@@ -2,8 +2,8 @@
 title: "Convert a Callable to a Runnable"
 pubDate: "2009-05-29"
 categories: 'java object-oriented tempus-fugit recipes'
-keywords: "callable, lambda, runnable, java, Executors framework, fixed rate delay, fixed rate, executors, doug lea"
-description: "Convert Java Callable objects to Runnable to schedule them at a fixed rate with the Executors framework"
+keywords: "Java Callable, Runnable, Executors, scheduled executor, fixed rate, tempus-fugit, concurrency"
+description: "The Executors framework can convert Runnable to Callable but not the reverse. Here's how to wrap a Callable as a Runnable to schedule it at a fixed rate."
 ---
 
 The `Executors` class has helper methods to convert from a `Runnable` to a `Callable`, presumably so you can submit a `Runnable` task to an executor, but it doesn't offer the counterpart helper. Something to convert a `Callable` to a `Runnable`.

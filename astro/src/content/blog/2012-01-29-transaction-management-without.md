@@ -2,8 +2,8 @@
 title: "Transaction Management without the Frameworks"
 pubDate: "2012-01-29"
 categories: 'java object-oriented'
-keywords: "transactions, acid, transaction management, transactionality, GOOS, unit of work, declarative vs imperative, spring"
-description: "Avoid frameworks like Spring and roll your own transaction management. Declarative approaches like Spring, by definition, take away control. Moving towards an imperative approach gives it back. Don't be put of, it's actually very straight forward."
+keywords: "transaction management, ACID, Spring transactions, imperative vs declarative, unit of work, Java"
+description: "Avoid declarative transaction management frameworks like Spring. Roll your own imperative transaction management for more control and testability."
 ---
 
 It's easy to avoid manually managing transactions when frameworks like Spring and containers do a good job of hiding all the details. However, it's often more advantageous to take the controls and manage your own transactions. We seem to shy away from this but its really straight forward and if it means we're not tied into yet another framework, why wouldn't we? Aside from just avoiding frameworks though, how does replacing `@Transctional` with something bespoke really help us?

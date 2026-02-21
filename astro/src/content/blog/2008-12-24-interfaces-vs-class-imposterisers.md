@@ -2,8 +2,8 @@
 title: "Interfaces vs Class impostorisers"
 pubDate: '2008-12-24'
 categories: 'java testing mocking'
-keywords: "jmock, mocking, imposterizer, cg-lib"
-description: "Mocking with JMock without using an interface, ie, using an impostor, isn't always a bad thing."
+keywords: "JMock, class impostorisers, mocking, interface mocking, cglib, SWT testing, legacy code"
+description: "When is using a class imposturiser in JMock acceptable? Explores the trade-offs of mocking classes vs interfaces, particularly when working with third-party or legacy code like SWT."
 ---
 
 I've been mocking with JMock2 for a while now and fully buy into using mocks and driving out behaviour using interfaces. However, I'm not sure I get the resistance when people want to use class imposterisers.

@@ -2,8 +2,8 @@
 title: "Tools for bad.robots"
 pubDate: "2012-03-18"
 categories: 'java robotooling'
-keywords: "java, tempus-fugit, simple-http, simple-excel, concordion ant task"
-description: "Introducing the robotooling project; a collection of useful Java tools (capturing the things I do again and again)"
+keywords: "robotooling, Java tools, tempus-fugit, simple-http, simple-excel, Concordion, open source"
+description: "Introducing robotooling: a collection of open-source Java utilities capturing reusable patterns around HTTP, Excel, Concordion, and concurrent testing."
 ---
 
 Just a quick post to introduce the [robotooling](http://robotooling.com) project;

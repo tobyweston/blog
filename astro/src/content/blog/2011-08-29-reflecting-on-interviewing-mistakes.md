@@ -2,8 +2,8 @@
 title: "Reflecting on Interviewing Mistakes"
 pubDate: "2011-08-29"
 categories: 'agile coaching'
-keywords: "interviewing, agile interview, pair test, reflections on interviewing, open questions, honesty when interviewing"
-description: "Reflecting on the last few years of heavily interviewing for agile developers. We've got the process down but often fool ourselves and let good guys slip through. Right or wrong answers don’t really have a place because there’s never a right or wrong answer in what we do."
+keywords: "technical interviewing, agile hiring, pair test, interview mistakes, open questions, honest feedback"
+description: "Reflecting on years of interviewing agile developers. Examines common mistakes interviewers make, the problem with 'right answers', and how to create better interview conditions."
 ---
 
 Recruiting for the next guy on your team is hard. At first glance it doesn't seem to be, we've developed techniques like pair tests but as I start to look at it more closely, I've started to notice that even the more progressive techniques don't preclude us from making the same mistakes as the traditional interview.

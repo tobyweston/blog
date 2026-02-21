@@ -2,8 +2,8 @@
 title: "Atomiticy of the Thread class"
 pubDate: "2009-12-10"
 categories: 'java concurrency tempus-fugit'
-keywords: "thread, interrupt status flag, interrupt, state, RUNNABLE, WAITING, TIMED_WAITING, TERMINATED"
-description: "Java's Thread seems not to maintain it's state (RUNNABLE, WAITING etc) atomically with it's interrupt status flag"
+keywords: "Java Thread, interrupt status, thread state, RUNNABLE, WAITING, atomicity, concurrency, race condition"
+description: "Java's Thread class does not maintain thread state atomically with its interrupt status flag, leading to subtle race conditions in state checking."
 ---
 
 I had an interesting time getting a couple of tests running for [tempus-fugit](http://tempusfugitlibrary.org/) recently. It threw up a couple of interesting aspects about using threads that I hadn't come across before.
