@@ -13,16 +13,130 @@ const pagePosts = posts.slice(0, perPage);
 <SiteLayout title="Blog - bad.robot" description="Recent blog posts">
   <section>
     <h1 class="text-3xl font-bold mb-6">Blog</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {pagePosts.map((p: CollectionEntry<'blog'>) => (
         <PostCard post={p} />
       ))}
     </div>
 
     {posts.length > perPage && (
-      <div class="mt-8 text-center">
-        <a href="/blog/page/2" class="px-4 py-2 border rounded">Older posts</a>
+      <div id="loading-indicator" class="mt-8 text-center hidden">
+        <div class="inline-flex items-center px-4 py-2 text-gray-500">
+          <svg class="spinner mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
       </div>
     )}
+
+    <div id="scroll-sentinel" class="h-4"></div>
   </section>
+
+  <style>
+    .spinner {
+      width: 1.25rem;
+      height: 1.25rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <script type="module" define:vars={{perPage, totalPosts: posts.length}}>
+    let offset = perPage;
+    let loading = false;
+    let hasMore = totalPosts > perPage;
+
+    const postsGrid = document.getElementById('posts-grid');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const sentinel = document.getElementById('scroll-sentinel');
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function createPostCard(post) {
+      const article = document.createElement('article');
+      article.className = 'card hover:shadow-medium';
+
+      const link = document.createElement('a');
+      link.href = `/blog/${post.slug}/`;
+      link.className = 'block no-underline';
+
+      const title = document.createElement('h3');
+      title.className = 'text-xl font-bold mb-2 text-gray-900';
+      title.textContent = post.title;
+
+      const dateDiv = document.createElement('div');
+      dateDiv.className = 'text-sm text-gray-500 mb-3 font-medium';
+      dateDiv.textContent = formatDate(post.pubDate);
+
+      const description = document.createElement('p');
+      description.className = 'text-gray-700 line-clamp-3';
+      description.textContent = post.description || '';
+
+      link.appendChild(title);
+      link.appendChild(dateDiv);
+      link.appendChild(description);
+      article.appendChild(link);
+
+      return article;
+    }
+
+    async function loadMorePosts() {
+      if (loading || !hasMore) return;
+
+      loading = true;
+      loadingIndicator?.classList.remove('hidden');
+
+      try {
+        const response = await fetch(`/api/posts.json?offset=${offset}&limit=12`);
+        const data = await response.json();
+
+        data.posts.forEach(post => {
+          const card = createPostCard(post);
+          postsGrid?.appendChild(card);
+        });
+
+        offset = data.nextOffset;
+        hasMore = data.hasMore;
+
+        if (!hasMore && sentinel) {
+          sentinel.style.display = 'none';
+        }
+      } catch (error) {
+        console.error('Failed to load more posts:', error);
+      } finally {
+        loading = false;
+        loadingIndicator?.classList.add('hidden');
+      }
+    }
+
+    // Intersection Observer for infinite scroll
+    if (sentinel && hasMore) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadMorePosts();
+            }
+          });
+        },
+        {
+          rootMargin: '200px', // Start loading 200px before reaching the sentinel
+        }
+      );
+
+      observer.observe(sentinel);
+    }
+  </script>
 </SiteLayout>
