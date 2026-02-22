@@ -1,0 +1,130 @@
+---
+import { Image } from 'astro:assets';
+
+type Props = {
+  src: any;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  fullWidth?: number;
+  fullHeight?: number;
+};
+
+const {
+  src,
+  alt,
+  class: className,
+  width,
+  height,
+  fullWidth,
+  fullHeight,
+} = Astro.props;
+
+const id = `cte-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<button
+  id={`${id}-trigger`}
+  type="button"
+  class={`cte-button ${className ?? ''}`.trim()}
+  aria-haspopup="dialog"
+  aria-controls={`${id}-dialog`}
+  data-cte-trigger
+  data-cte-id={id}
+>
+  <Image src={src} alt={alt} width={width} height={height} />
+</button>
+
+<dialog id={`${id}-dialog`} class="cte-dialog" aria-label={alt} data-cte-dialog={id}>
+  <button type="button" class="cte-close" aria-label="Close image">&times;</button>
+  <div class="cte-frame">
+    <Image src={src} alt={alt} width={fullWidth} height={fullHeight} class="cte-image" />
+  </div>
+</dialog>
+
+<script type="module" is:inline>
+  if (!window.__cteBound) {
+    window.__cteBound = true;
+
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-cte-trigger]');
+      if (trigger) {
+        const cteId = trigger.getAttribute('data-cte-id');
+        const dialog = cteId
+          ? document.querySelector(`dialog[data-cte-dialog="${cteId}"]`)
+          : null;
+        if (dialog) dialog.showModal();
+        return;
+      }
+
+      const closeButton = event.target.closest('.cte-close');
+      if (closeButton) {
+        const dialog = closeButton.closest('dialog');
+        if (dialog) dialog.close();
+        return;
+      }
+
+      const dialog = event.target.closest('dialog.cte-dialog');
+      if (dialog && event.target === dialog) {
+        dialog.close();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const openDialog = document.querySelector('dialog.cte-dialog[open]');
+        if (openDialog) openDialog.close();
+      }
+    });
+  }
+</script>
+
+<style>
+  .cte-button {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+
+  .cte-dialog {
+    border: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.85);
+    width: min(96vw, 1200px);
+    max-height: 96vh;
+  }
+
+  .cte-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .cte-frame {
+    padding: 24px;
+  }
+
+  .cte-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .cte-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+</style>
+
