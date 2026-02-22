@@ -4,7 +4,7 @@ pubDate: '2015-12-28'
 categories: 'raspberry-pi'
 keywords: "Raspberry Pi Zero, console lead, Adafruit, serial connection, headless Pi setup, Mac, El Capitan, PL2303"
 description: "Set up a headless Raspberry Pi Zero using an Adafruit console lead. Step-by-step guide for Mac users on El Capitan/Sierra using the Prolific PL2303 driver."
-heroImage: "/images/heroes/raspberry-pi.jpg"
+heroImage: "/images/heroes/raspberry-pi-alt.jpg"
 ---
 
 Without an ethernet port, the Pi Zero doesn't lend itself to being setup without a monitor and keyboard. This post shows how to configure your wifi using the Adafruit console lead without having to plug in a monitor or keyboard.
@@ -39,15 +39,14 @@ By default, the console width is 30 characters and wraps on a single line. It's 
 stty cols 130
 ```
 
-When you fire up the `screen` window manager, you can use `Ctrl` + `A` (![Option](/images/ks_control.gif) + `A`) to enter "command mode", hitting a subsequent key will execute a command. For example, `Ctrl` + `A` followed by a `?` will show you some helpful commands.
+When you fire up the `screen` window manager, you can use `Ctrl` + `A` (<span>^ + `A`) to enter "command mode", hitting a subsequent key will execute a command. For example, `Ctrl` + `A` followed by a `?` will show you some helpful commands.
 
 Here are some reminders of useful commands.
 
-| Command(s)        | Description
-|-------------------|------------------------
-| Get some help     | `Ctrl + A, ?`
-| Kill a session    | `Ctrl + A, Ctrl + \`
-
+| Command(s)     | Description          |
+|----------------|----------------------|
+| Get some help  | `Ctrl + A, ?`        |
+| Kill a session | `Ctrl + A, Ctrl + \` |
 
 ## Initial Setup
 
