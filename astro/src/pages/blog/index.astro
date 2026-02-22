@@ -8,6 +8,13 @@ const posts = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const perPage = 12;
 const pagePosts = posts.slice(0, perPage);
+const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
+  slug: post.slug,
+  title: post.data.title,
+  subTitle: post.data.subTitle,
+  description: post.data.description,
+  pubDate: post.data.pubDate.toISOString(),
+}));
 ---
 
 <SiteLayout title="Blog - bad.robot" description="Recent blog posts">
@@ -69,7 +76,7 @@ const pagePosts = posts.slice(0, perPage);
     }
   </style>
 
-  <script type="module" define:vars={{perPage, totalPosts: posts.length}}>
+  <script type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts}}>
     let offset = perPage;
     let loading = false;
     let hasMore = totalPosts > perPage;
@@ -132,9 +139,7 @@ const pagePosts = posts.slice(0, perPage);
       const minDisplayTime = 1000; // 1 seconds minimum
 
       try {
-        const response = await fetch(`/api/posts.json?offset=${offset}&limit=12`);
-        const data = await response.json();
-        console.log('Fetched data:', data);
+        const nextPosts = allPosts.slice(offset, offset + perPage);
 
         // Calculate how long to wait before showing results
         const elapsedTime = Date.now() - loadStartTime;
@@ -144,13 +149,13 @@ const pagePosts = posts.slice(0, perPage);
         // Wait for the remaining time before adding posts
         setTimeout(() => {
           console.log('Adding posts to grid');
-          data.posts.forEach(post => {
+          nextPosts.forEach(post => {
             const card = createPostCard(post);
             postsGrid?.appendChild(card);
           });
 
-          offset = data.nextOffset;
-          hasMore = data.hasMore;
+          offset += nextPosts.length;
+          hasMore = offset < totalPosts;
           console.log('Updated state:', { offset, hasMore });
 
           if (!hasMore && sentinel) {

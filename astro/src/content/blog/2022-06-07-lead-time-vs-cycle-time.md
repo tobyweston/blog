@@ -1,6 +1,6 @@
 ---
 title: "Lead Time vs Cycle Time"
-subTitle: "Understand the key differences between these DORA metrics that matter for software delivery"
+subTitle: "Understand the key differences between the DORA metrics that matter for software delivery"
 pubDate: "2022-06-07"
 categories: 'agile'
 keywords: "lead time, cycle time, DORA metrics, DevOps, lean, flow, software delivery, State of DevOps"
