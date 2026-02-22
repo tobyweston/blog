@@ -4,6 +4,10 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
@@ -43,8 +47,8 @@ body {
 	line-height: 1.7;
 }
 main {
-	width: 70%;
-	max-width: calc(100% - 2em);
+	width: 100%;
+	max-width: 72rem;
 	margin: auto;
 	padding: 3em 1em;
 }
@@ -83,6 +87,19 @@ p {
 }
 .prose p {
 	margin-bottom: 2em;
+}
+.prose ul {
+	list-style: disc;
+	padding-left: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+.prose ol {
+	list-style: decimal;
+	padding-left: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+.prose li {
+	margin-bottom: 0.5rem;
 }
 textarea {
 	width: 100%;
@@ -184,4 +201,3 @@ hr {
 	line-height: 1.4;
 	font-weight: 500;
 }
-

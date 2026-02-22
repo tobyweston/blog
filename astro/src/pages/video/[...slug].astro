@@ -18,46 +18,40 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}
 ---
 
 <SiteLayout title={`${video.data.title} - Videos`} description={video.data.description}>
-  <article class="video-detail">
-    <header class="video-detail-header">
-      <p class="detail-kicker">Video</p>
-      <h1 class="text-4xl font-bold">{video.data.title}</h1>
-      <div class="text-sm text-gray-500 font-medium">
-        <FormattedDate date={video.data.pubDate} />
+  <div class="py-12">
+    <article class="max-w-4xl mx-auto px-4">
+      <div class="article-title-section mb-8">
+        <p class="detail-kicker">Video</p>
+        <h1 class="article-title-section h1">{video.data.title}</h1>
+        {video.data.description && (
+          <p class="article-description">{video.data.description}</p>
+        )}
       </div>
-      <p class="text-gray-700 max-w-2xl">
-        {video.data.description}
-      </p>
-    </header>
 
-    <div class="video-detail-frame">
-      <iframe
-        src={embedUrl}
-        title={video.data.title}
-        loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </div>
+      <div class="article-meta">
+        <div class="article-date">
+          <strong>Published:</strong> <FormattedDate date={video.data.pubDate} />
+        </div>
+      </div>
 
-    <section class="video-detail-content">
-      <Content />
-    </section>
-  </article>
+      <div class="video-detail-frame">
+        <iframe
+          src={embedUrl}
+          title={video.data.title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <section class="prose mt-10">
+        <Content />
+      </section>
+    </article>
+  </div>
 </SiteLayout>
 
 <style>
-  .video-detail {
-    display: grid;
-    gap: 2rem;
-  }
-
-  .video-detail-header {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-
   .video-detail-frame {
     position: relative;
     width: 100%;
@@ -65,6 +59,7 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}
     background: #0f172a;
     border-radius: 8px;
     overflow: hidden;
+    margin-top: 2rem;
   }
 
   .video-detail-frame iframe {
@@ -73,10 +68,6 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${video.data.youtubeId}
     width: 100%;
     height: 100%;
     border: 0;
-  }
-
-  .video-detail-content {
-    color: var(--text-secondary);
   }
 </style>
 

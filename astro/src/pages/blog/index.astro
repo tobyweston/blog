@@ -13,7 +13,7 @@ const pagePosts = posts.slice(0, perPage);
 <SiteLayout title="Blog - bad.robot" description="Recent blog posts">
   <section>
     <h1 class="text-3xl font-bold mb-6">Blog</h1>
-    <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="posts-grid" class="space-y-6">
       {pagePosts.map((p: CollectionEntry<'blog'>) => (
         <PostCard post={p} />
       ))}
@@ -92,18 +92,26 @@ const pagePosts = posts.slice(0, perPage);
       link.className = 'block no-underline';
 
       const title = document.createElement('h3');
-      title.className = 'text-xl font-bold mb-2 text-gray-900';
+      title.className = 'text-2xl font-bold mb-2 text-gray-900';
       title.textContent = post.title;
+
+      let subTitle;
+      if (post.subTitle) {
+        subTitle = document.createElement('p');
+        subTitle.className = 'text-base text-gray-600 mb-2 italic';
+        subTitle.textContent = post.subTitle;
+      }
 
       const dateDiv = document.createElement('div');
       dateDiv.className = 'text-sm text-gray-500 mb-3 font-medium';
       dateDiv.textContent = formatDate(post.pubDate);
 
       const description = document.createElement('p');
-      description.className = 'text-gray-700 line-clamp-3';
+      description.className = 'text-gray-700';
       description.textContent = post.description || '';
 
       link.appendChild(title);
+      if (subTitle) link.appendChild(subTitle);
       link.appendChild(dateDiv);
       link.appendChild(description);
       article.appendChild(link);
