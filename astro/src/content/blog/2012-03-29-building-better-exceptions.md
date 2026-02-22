@@ -64,7 +64,7 @@ If we handle exceptions _only_ at the boundaries, we do so based on _type_ in th
 
 The first part is to test that the handling class responds appropriately to the exception _type_ and that those exceptions are generated only at appropriate times. The second part is that if the handling class does depend on some internal details, we should encapsulate this, apply _tell don't ask_ and so can write simpler tests.
 
-In this way, we're just applying the [ports and adaptors](/blog/2012/02/13/hexagonal-acceptance-testing) idea to write overlapping tests which combine for coverage but are still simple on their own.
+In this way, we're just applying the [ports and adaptors](/blog/2012-02-13-hexagonal-acceptance-testing/) idea to write overlapping tests which combine for coverage but are still simple on their own.
 
 
 ## Only using Runtime Exceptions
@@ -83,4 +83,3 @@ Checked exceptions cause noise. That's all. Nothing else bad about them but they
 
 
 In the next post [Scala Exception Handling](/blog/2012-03-30-scala-exception-handling), well take a look at how Scala embraces some of these ideas. For example, in Scala _all_ exceptions are based on `RuntimeException`.
-

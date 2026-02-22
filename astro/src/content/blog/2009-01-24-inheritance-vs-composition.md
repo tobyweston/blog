@@ -40,6 +40,4 @@ public class Stack<T> {
 Extending `Vector` as in example 1 weakens the encapsulation of the class. Suddenly, methods to get and insert elements at specific positions are available to clients of the stack. We move from trying to create a well behaved LIFO stack to creating a socially irresponsible monster: an `EvilStack`.
 
   
-So I was surprised when looking at the Java source to see that `java.util.Stack` actually extends `Vector`! Naughty and things [aren't any better in Java 7 and 8](/blog/2013/01/10/stack-vs-deque).
-
-
+So I was surprised when looking at the Java source to see that `java.util.Stack` actually extends `Vector`! Naughty and things [aren't any better in Java 7 and 8](/blog/2013-01-10-stack-vs-deque/).

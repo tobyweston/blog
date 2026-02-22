@@ -126,7 +126,7 @@ public class ExecuteUsingLock<T, E extends Exception> {
 ```
 
   
-Having the [micro-DSL](/blog/2009/02/16/more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I couldn't make just the method generic and instead had to link the types by making the class definition generic. You might also notice that the `Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception` as a generic type.
+Having the [micro-DSL](/blog/2009-02-16-more-on-micro-dsls/) pass in the generic `Callable` on the static constructor meant that I couldn't make just the method generic and instead had to link the types by making the class definition generic. You might also notice that the `Callable` used isn't Java's `Callable`, as Sun saw fit not to have the `Exception` as a generic type.
 
  By creating a new `Callable` interface with a generic exception, I was able to neaten up the DSL so that we're not forced to throw `Exception` from a method that uses the `ExecuteUsingLock` class. Instead, you define your closure function to throw `RuntimeException`.
 
@@ -162,7 +162,4 @@ private Callable<Status, RuntimeException> gettingStatus() {
 ```
 
 All this to avoid the boiler plate code. You can try it for yourself by using the [tempus-fugit](http://tempusfugitlibrary.org/) project.
-
-  
-
 

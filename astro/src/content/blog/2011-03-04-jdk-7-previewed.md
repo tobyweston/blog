@@ -103,9 +103,4 @@ I usually end up pushing the code to execute as a `Callable` and dealing with th
 Have a look [here](http://download.java.net/jdk7/docs/#NewFeature) for on the new features and download from [here](http://www.oracle.com/technetwork/java/javase/downloads/ea-jsp-142245.html) (unfortunately, not for the Mac).
 
   
-**UPDATE:** An extended version of this post has been published in [May edition of the JavaTech Journal](/blog/2011/06/10/artcile-in-javatech-journal/).
-  
-
-
-
-
+**UPDATE:** An extended version of this post has been published in [May edition of the JavaTech Journal](/blog/2011-06-10-artcile-in-javatech-journal/).

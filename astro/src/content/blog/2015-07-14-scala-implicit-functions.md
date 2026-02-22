@@ -85,7 +85,7 @@ Without the implicit `waitForElement` function, the code wouldn't compile; `By` 
 
 ## Single Arguments Only Please
 
-Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support](/blog/2013/07/21/curried-functions/)). By combining implicit parameters the we saw in the [previous post](/blog/2015/07/03/scala-implicit-parameters/), we can maintain the elegant API.
+Now there's one little bit I've brushed over here; namely how the `WebDriver` `driver` instance is made available. The example above assumes it's available but it'd be nicer to pass it into the function along with `locator`. However, there's a restriction of passing only a single argument into an implicit function. The answer is to use a second argument (using Scala's built in [currying support](/blog/2013-07-21-curried-functions/)). By combining implicit parameters the we saw in the [previous post](/blog/2015-07-03-scala-implicit-parameters/), we can maintain the elegant API.
   
 ``` scala
 implicit def waitForElement(locator: By)(implicit driver: WebDriver: WebElement = {
