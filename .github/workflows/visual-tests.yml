@@ -52,10 +52,8 @@ jobs:
         with:
           working-directory: ./astro
           browser: ${{ matrix.browser }}
-          command: npm run test:visual
+          command: npm run test:visual -- --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --parallel
           install: false
-          record: true
-          parallel: true
         id: cypress-tests
 
       - name: Parse test results and create annotations
