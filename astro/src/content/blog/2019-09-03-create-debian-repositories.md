@@ -1,10 +1,10 @@
 ---
-title: 'UNPUBLISHED Creating Debian Repositories - Part 1'
+title: 'Creating Debian Repositories'
 series: 'Deploying to Debian'
 pubDate: '2019-09-03'
 categories: 'java, scala'
-keywords: 'java, scala, debian, debian repositories, aptly, ubuntu'
-description: 'Create your own Debian repository for deploying your Java / Scala apps'
+keywords: 'debian, ubuntu, apt, apt-get, aptly, deb repository, package repository, gpg signing, linux packaging, release distribution'
+description: 'Step-by-step guide to building and publishing your own Debian/Ubuntu APT repository with aptly, including package publishing, signing with GPG, and client setup.'
 ---
 
 In this post, we'll look at to how to setup your own [Debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` on popular Linux distros like Debian and Ubuntu.
@@ -15,7 +15,7 @@ In this post, we'll look at to how to setup your own [Debian repository](https:/
 
 The basic approach:
 
-1. Create a `.deb` package (see the [previous post](/blog/2019/09/02/deploy-java-to-debian) for doing so with Java/Scala and `sbt`)
+1. Create a `.deb` package (see the [previous post](/blog/2019-09-02-deploy-java-to-debian/) for doing so with Java/Scala and `sbt`)
 1. Use `aptly` to create a manage your own debian repository, serving your packages over HTTP
 1. Tell your customers where your repository is hosted
 1. Profit
