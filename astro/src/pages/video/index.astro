@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import SiteLayout from '../../components/ui/SiteLayout.astro';
-import VideoPreviewCard from '../../components/ui/VideoPreviewCard.astro';
+import PreviewVideo from '../../components/ui/PreviewVideo.astro';
 
 const videos = (await getCollection('video')) as CollectionEntry<'video'>[];
 videos.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -15,7 +15,7 @@ videos.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   <section class="mt-10 space-y-8">
     {videos.map((video: CollectionEntry<'video'>) => (
-      <VideoPreviewCard video={video} />
+      <PreviewVideo video={video} />
     ))}
   </section>
 </SiteLayout>

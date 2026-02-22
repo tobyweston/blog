@@ -2,7 +2,7 @@
 import {getCollection} from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import SiteLayout from '../../components/ui/SiteLayout.astro';
-import PostCard from '../../components/ui/PostCard.astro';
+import PreviewBlog from '../../components/ui/PreviewBlog.astro';
 
 const posts = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -15,7 +15,7 @@ const pagePosts = posts.slice(0, perPage);
     <h1 class="text-3xl font-bold mb-6">Blog</h1>
     <div id="posts-grid" class="space-y-6">
       {pagePosts.map((p: CollectionEntry<'blog'>) => (
-        <PostCard post={p} />
+        <PreviewBlog post={p} />
       ))}
     </div>
 
