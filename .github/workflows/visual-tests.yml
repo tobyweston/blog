@@ -45,12 +45,17 @@ jobs:
           npx wait-on http://localhost:4321 --timeout 60000
 
       - name: Run Cypress visual tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           working-directory: ./astro
           browser: ${{ matrix.browser }}
           command: npm run test:visual
           install: false
+          record: true
+          parallel: true
         id: cypress-tests
 
       - name: Parse test results and create annotations
