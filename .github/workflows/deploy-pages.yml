@@ -13,15 +13,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Publish to GitHub Pages
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 21
           cache: npm
