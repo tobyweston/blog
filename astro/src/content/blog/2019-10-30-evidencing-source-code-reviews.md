@@ -4,6 +4,7 @@ pubDate: '2019-10-30'
 categories: 'agile'
 keywords: "code review, signed commits, pair programming, MAS, regulated industry, git, crypto evidence, pull requests"
 description: "How to evidence source code reviews in regulated environments. Signed commits and pair programming as a code review mechanism without wasteful bureaucracy."
+heroImage: "/images/heroes/security.jpg"
 ---
 
 Many industries need to evidence that code reviews have taken place. This is typical in regulated environments like Banking but the Regulators aren't clear what constitutes a good source code review process and don't yet understand modern practices like Pair Programming. They can't help you streamline your process.

@@ -4,6 +4,7 @@ pubDate: "2023-01-01"
 categories: 'java'
 keywords: "Java naming conventions, Impl suffix, interface naming, code readability, maintainability, software design"
 description: "Naming implementation classes 'Impl' obscures intent. Learn why descriptive implementation names matter and how to choose names that reflect behaviour."
+heroImage: "/images/heroes/code-quality.jpg"
 ---
 
 As part of my 5 Coding Habits that are Hurting you series, I'm trying to call out when habits in code often lead to hidden costs. Today is the turn of the infamous Impl class names.

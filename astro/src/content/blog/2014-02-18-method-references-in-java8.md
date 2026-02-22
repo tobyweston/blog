@@ -5,6 +5,7 @@ categories: 'java functional-programming'
 keywords: "Java 8, method references, lambda, functional interface, static method reference, instance method reference"
 description: "Java 8 method references explained clearly. Four types with real examples: static, bound instance, unbound instance, and constructor references."
 series: "What's new in Java 8"
+heroImage: "/images/heroes/java-code.jpg"
 ---
 
 Java 8 brings with it method references; shortcuts that you can use anywhere you would use a lambda. The [Oracle docs](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html) describe four types of method reference but do such a poor job of describing them that I felt compelled to describe them myself.

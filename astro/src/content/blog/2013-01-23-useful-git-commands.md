@@ -6,6 +6,7 @@ categories: 'tools'
 keywords: "Git, useful git commands, delete remote branch, SSH, HTTPS, GitHub, git tips"
 description: "A collection of useful Git commands including how to delete remote branches, switch between SSH and HTTPS, and other handy tips for everyday Git use."
 series: 'Git'
+heroImage: "/images/heroes/git-collaboration.jpg"
 ---
 
 <a id="top"></a>More as a reminder to myself than anything, here's a bunch of Git commands I fund useful.

@@ -4,6 +4,7 @@ pubDate: '2012-06-10'
 categories: 'web'
 keywords: "HTTP, REST, HTTP verbs, GET POST PUT DELETE, status codes, simple-http, Java HTTP client"
 description: "A simple introduction to HTTP and REST. Covers HTTP verbs, status codes, and practical Java examples using the simple-http library."
+heroImage: "/images/heroes/api-web.jpg"
 ---
 
 Apache's HTTP client libraries (version 4.x has a very different API than 3.x) are fairly involved to configure and require a lot of boilerplate code. Making a simple HTTP GET request usually ends up with way too many lines of code. Working with HTTP should be simple, so I've been working on a library offering a straight forward API with sensible defaults. Typically, you'll make HTTP requests with just one line of code.

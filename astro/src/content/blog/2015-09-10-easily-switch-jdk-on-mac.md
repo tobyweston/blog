@@ -4,6 +4,7 @@ pubDate: '2015-09-10'
 categories: 'tools'
 keywords: "Java versions, Mac, java_home, JAVA_HOME, JDK switch, multiple Java versions, Mac JDK"
 description: "Easily switch between Java versions on Mac using the java_home utility. Includes bash function to set JAVA_HOME for any installed JDK version."
+heroImage: "/images/heroes/java-code.jpg"
 ---
 
 I have several versions of Java installed on my Mac. Trouble is, I can never remember where any of them are. So switching Java versions using the `JAVA_HOME` environment variable was always a pain. Then I discovered the handy `java_home` command.

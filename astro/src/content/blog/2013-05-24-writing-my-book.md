@@ -4,6 +4,7 @@ pubDate: '2013-05-24'
 categories: 'agile'
 keywords: "writing a book, Leanpub, acceptance testing, ebook, self-publishing, effective acceptance testing"
 description: "Behind the scenes of writing 'Effective Acceptance Testing' — choosing Leanpub for self-publishing, the writing process, and why I decided to write the book."
+heroImage: "/images/heroes/learning.jpg"
 ---
 
 There haven't been many posts on the blog recently because I've been super-busy working on my book [Essential Acceptance Testing](http://baddotrobot.com/book/). It's published via [Leanpub](https://leanpub.com/essential_acceptance_testing) and talks about the typical acceptance testing strategy and how, more often than not, it's driven by dogma rather than by a genuine testing need.

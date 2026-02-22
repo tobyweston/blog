@@ -5,6 +5,7 @@ pubDate: '2013-01-10'
 categories: 'java'
 keywords: "Java Stack, Deque, ArrayDeque, data structures, LIFO, collection framework, stack implementation"
 description: "Java's Stack class is a legacy class with known problems. Use Deque (specifically ArrayDeque) instead for a proper last-in-first-out stack implementation."
+heroImage: "/images/heroes/architecture.jpg"
 ---
 
 Java has long had a [badly written](/blog/2009-01-24-inheritance-vs-composition/) implementation of a stack. The stack is a great example of single responsibility; it's supposed to implement LIFO and only LIFO behaviour. Java ignores this principle with the default implementation of `Stack`. It extends `Vector` and so is implemented in terms of inheritance rather than aggregation. It's _both_ a `Stack` *and* a `Vector`. They haven't made the situation any better when recently deprecating `Stack` in favour of `Deque`.

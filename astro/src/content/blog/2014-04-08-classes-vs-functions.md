@@ -6,6 +6,7 @@ keywords: "Java 8, lambda, anonymous class, invokedynamic, class vs function, La
 description: "Java 8 lambdas are not just syntactic sugar over anonymous classes. Explores the underlying bytecode differences and why lambdas and anonymous classes behave differently."
 updatedDate: '2014-11-25'
 series: "What's new in Java 8"
+heroImage: "/images/heroes/java-code.jpg"
 ---
 
 You can use lambdas in Java 8 anywhere you would have previously used a [single method interface](/blog/2014-04-07-functional-interfaces-in-java8) so it may just look like syntactic sugar, but it's not. Let's have a look at how they differ; it's anonymous classes vs. lambdas or simply put, classes vs. functions.

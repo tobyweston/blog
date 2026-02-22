@@ -4,6 +4,7 @@ pubDate: '2013-06-01'
 categories: 'java concurrency'
 keywords: "Java threads, optimal thread count, CPU-bound, IO-bound, thread pool, concurrency, performance"
 description: "Calculate the optimal number of threads for a Java application. Covers CPU-bound vs IO-bound workloads and the formula for sizing thread pools correctly."
+heroImage: "/images/heroes/performance.jpg"
 ---
 
 Working out the theoretical optimal number of threads you should use for your application is fairly straightforward. You do, however, need to understand your applications runtime characteristics. Is it mostly occupied with CPU intensive work or is it mostly waiting for IO?

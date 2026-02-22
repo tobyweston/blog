@@ -4,6 +4,7 @@ pubDate: "2012-03-28"
 categories: 'java testing'
 keywords: "Java exceptions, exception design, checked vs unchecked, Law of Demeter, tell don't ask, exception behaviour"
 description: "Design better exceptions by treating them as proper objects with behaviour. Apply the Law of Demeter and 'tell don't ask' to keep exception handling clean."
+heroImage: "/images/heroes/exception-handling.jpg"
 ---
 
 In the [previous post](/blog/2012-03-28-exception-handling-as-a-system-wide-concern), we looked at being more explicit about a system's exception handling policies. By identifying the boundaries within your system, you isolate the points at which you handle exceptions.

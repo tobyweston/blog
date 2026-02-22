@@ -5,6 +5,7 @@ categories: 'scala functional-programming'
 keywords: "Scala type classes, ad-hoc polymorphism, implicits, type class pattern, Scala, functional programming"
 description: "Type classes in Scala provide ad-hoc polymorphism without inheritance. Learn the pattern using implicits and understand when type classes beat traditional OOP."
 series: 'Scala Implicits'
+heroImage: "/images/heroes/functional-programming.jpg"
 ---
 
 Type classes provide [ad-hoc inheritance](http://bit.ly/1kr6C8E#Ad_hoc_polymorphism) which means that we can use them to create polymorphic functions that can be applied to arguments of different types. This is a fancy way of saying that we can create common behaviour for classes without resorting to traditional (`extends`) polymorphism.

@@ -4,6 +4,7 @@ pubDate: '2015-09-25'
 categories: 'agile'
 keywords: "pair test, technical interview, hiring developers, interview bias, agile hiring, recruitment, code review"
 description: "Pair tests are a poor proxy for real work. After years of giving and receiving them, the author argues for fairer, more realistic interview techniques."
+heroImage: "/images/heroes/team-collaboration.jpg"
 ---
 
 Either when looking for work or looking to recruit, I've been doing pair tests in one form or another since 2008. I've only recently come to the conclusion that they just don't work. At least not reliably. 

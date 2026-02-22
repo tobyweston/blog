@@ -5,6 +5,7 @@ categories: 'scala'
 keywords: "Scala implicits, implicit parameters, implicit values, Scala compiler, context bounds, type class"
 description: "Scala implicit parameters allow the compiler to automatically supply values marked implicit. Introduction to the three categories of Scala implicits."
 series: 'Scala Implicits'
+heroImage: "/images/heroes/functional-programming.jpg"
 ---
 
 Scala "implicits" allow you to omit calling methods or referencing variables directly but instead rely on the compiler to make the connections for you. For example, you could write a function to convert from and `Int` to a `String` and rather than call that function _explicitly_, you can ask the compiler to do it for you, _implicitly_.  

@@ -5,6 +5,7 @@ pubDate: "2011-10-29"
 categories: 'tools'
 keywords: "Java source code, Mac, Maven, M2_HOME, mvn, developer tools, IDE source attachment"
 description: "How to get Java source code on your Mac for IDE source attachment. Covers Maven and environment configuration."
+heroImage: "/images/heroes/mac-tools.jpg"
 ---
 
 Mostly as a reminder to myself, getting the Java source on your Mac involves the following.

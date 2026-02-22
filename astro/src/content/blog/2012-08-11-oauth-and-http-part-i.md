@@ -6,6 +6,7 @@ categories: 'web'
 keywords: "OAuth, HTTP, authorisation, access token, OAuth flow, REST API security, Scribe, Java"
 description: "OAuth and HTTP part I: understanding the OAuth authorisation flow. Covers the three-legged OAuth dance, tokens, and how to implement it in Java with Scribe."
 series: "FreeAgent OAuth"
+heroImage: "/images/heroes/database.jpg"
 ---
 
 Although OAuth is intended for web, mobile and desktop applications, I've been finding the protocol clunky when accessing a web application from a rich desktop client. Specifically, I'm trying to access FreeAgent's API. Their [documentation is pretty thin](https://dev.freeagent.com/docs/oauth) on background. The [support](https://groups.google.com/forum/#!forum/freeagent_api) is fairly focused on web apps and I found it difficult getting a desktop client hooked up.

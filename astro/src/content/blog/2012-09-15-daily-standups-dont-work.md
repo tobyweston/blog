@@ -4,6 +4,7 @@ pubDate: "2012-09-15"
 categories: 'agile'
 keywords: "daily standup, scrum, lean, agile, standup meetings, team communication, kanban, information radiator"
 description: "Daily standups often fail because they become status reports. Learn why standups don't work and what to do instead to improve team communication and flow."
+heroImage: "/images/heroes/agile.jpg"
 ---
 
 At some point, standups have stopped working for me. They've certainly moved away from the original intention to improve collaboration and communication. I'm not sure I can put my finger on why, but I'm just not getting much out of them any more. It's led me to think that standups per se just don't work. At least in most of the environments I've encountered. So I've been thinking about what could work in their place and I think its just to _talk_ more.

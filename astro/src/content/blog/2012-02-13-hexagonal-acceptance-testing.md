@@ -4,6 +4,7 @@ pubDate: "2012-02-13"
 categories: 'testing agile'
 keywords: "hexagonal architecture, ports and adapters, acceptance testing, BDD, application boundaries, Java"
 description: "Apply hexagonal (ports and adapters) architecture to structure acceptance tests. Test at the application boundary without spinning up the full stack."
+heroImage: "/images/heroes/architecture.jpg"
 ---
 
 There's no reason a unit test can't also be an acceptance test. If you can prove that the _unit_ behaves a certain way _and_ that in production, it will behave in the same way as in your unit test, the intersection should give you enough confidence.

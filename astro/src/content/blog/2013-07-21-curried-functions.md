@@ -5,6 +5,7 @@ pubDate: '2013-07-21'
 categories: 'functional-programming'
 keywords: "currying, partial application, Java, Scala, functional programming, higher-order functions"
 description: "Currying transforms a multi-argument function into a chain of single-argument functions. Practical examples in both Java and Scala."
+heroImage: "/images/heroes/functional-programming.jpg"
 ---
 
 Currying is the technique of transforming a function with multiple arguments into a function with just one argument. The single argument is the value of the first argument from the original function and the function returns another single argument function. This in turn would take the second original argument and itself return another single argument function. This chaining continues over the number of arguments of the original. The last in the chain will have access to all of the arguments and so can do whatever it needs to do.

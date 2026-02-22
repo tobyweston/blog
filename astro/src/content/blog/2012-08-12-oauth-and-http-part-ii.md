@@ -6,6 +6,7 @@ categories: 'web'
 keywords: "OAuth, FreeAgent API, Scribe, Java, access token, OAuth token, REST, API integration"
 description: "OAuth and HTTP part II: calling the FreeAgent API with OAuth. Step-by-step guide to obtaining and using OAuth tokens with the Scribe library in Java."
 series: "FreeAgent OAuth"
+heroImage: "/images/heroes/security.jpg"
 ---
 
 In the [previous post](/blog/2012-08-11-oauth-and-http-part-i), we walked through requesting "authorisation" from [FreeAgent](https://dev.freeagent.com/docs/oauth) using OAuth. In this next post, we'll look at the next steps, requesting an _access token_ and actually making client API calls to our target application.

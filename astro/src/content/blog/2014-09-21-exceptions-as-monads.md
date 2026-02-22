@@ -5,6 +5,7 @@ categories: 'java functional-programming'
 keywords: "monads, Either, Option, Try, Scala, Java 8, functional error handling, Scalaz, functional programming"
 description: "Treat exceptions functionally using monadic types like Either, Option, and Try. Captures error handling in the type system and provides system-wide consistency."
 series: 'Exception Handling'
+heroImage: "/images/heroes/exception-handling.jpg"
 ---
 
 In some previous posts, I wrote about treating exceptions as a system-wide concern. In this post, I extend that idea and talk about distinguishing between exceptional behaviour and just code that didn't return what you wanted.
