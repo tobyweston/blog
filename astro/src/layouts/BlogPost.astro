@@ -13,7 +13,7 @@ const jsonLd = JSON.stringify({
   "@type": "BlogPosting",
   "headline": title,
   "description": description,
-  "datePublished": pubDate?.toISOString(),
+  "datePublished": pubDate.toISOString(),
   ...(updatedDate && { "dateModified": updatedDate.toISOString() }),
   "url": canonicalURL,
   "author": {
