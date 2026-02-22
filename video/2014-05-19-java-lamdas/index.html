@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.3"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/video/2014-05-19-java-lamdas/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Java 8 Lambda Basic Syntax - Udemy - Videos</title><meta name="title" content="Java 8 Lambda Basic Syntax - Udemy - Videos"><meta name="description" content="An extract from my Udemy course describing Lamdas"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/video/2014-05-19-java-lamdas/"><meta property="og:title" content="Java 8 Lambda Basic Syntax - Udemy - Videos"><meta property="og:description" content="An extract from my Udemy course describing Lamdas"><meta property="og:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/video/2014-05-19-java-lamdas/"><meta property="twitter:title" content="Java 8 Lambda Basic Syntax - Udemy - Videos"><meta property="twitter:description" content="An extract from my Udemy course describing Lamdas"><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><link rel="stylesheet" href="/_astro/index.BIJT_GkW.css">
+<style>.video-detail-frame[data-astro-cid-d3yewdex]{position:relative;width:100%;padding-top:56.25%;background:#0f172a;border-radius:8px;overflow:hidden;margin-top:2rem}.video-detail-frame[data-astro-cid-d3yewdex] iframe[data-astro-cid-d3yewdex]{position:absolute;inset:0;width:100%;height:100%;border:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.CTb-p3zm.css"></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">  <div class="py-12" data-astro-cid-d3yewdex> <article class="" data-astro-cid-d3yewdex> <div class="article-title-section mb-8" data-astro-cid-d3yewdex> <p class="detail-kicker" data-astro-cid-d3yewdex>Video</p> <h1 class="article-title-section h1" data-astro-cid-d3yewdex>Java 8 Lambda Basic Syntax - Udemy</h1> <p class="article-description" data-astro-cid-d3yewdex>An extract from my Udemy course describing Lamdas</p> </div> <div class="article-meta" data-astro-cid-d3yewdex> <div class="article-date" data-astro-cid-d3yewdex> <strong data-astro-cid-d3yewdex>Published:</strong> <time datetime="2014-05-19T00:00:00.000Z"> May 19, 2014 </time> </div> </div> <div class="video-detail-frame" data-astro-cid-d3yewdex> <iframe src="https://www.youtube-nocookie.com/embed/By6DRlP74z8?rel=0" title="Java 8 Lambda Basic Syntax - Udemy" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-astro-cid-d3yewdex></iframe> </div> <section class="prose mt-10" data-astro-cid-d3yewdex>  <h1 id="understanding-java-lambda-syntax">Understanding Java Lambda Syntax</h1>
+<p>If you’ve ever written Java before Java 8, you’ll remember the ceremony. Anonymous classes. Verbose method overrides. Lots of boilerplate just to pass behaviour around.  Enter <strong>lambdas</strong>.</p>
+<p>Let’s break down what they are, how they work, and how to write them — cleanly.</p>
+<h2 id="what-is-a-lambda">What Is a Lambda?</h2>
+<p>A lambda is essentially an <strong>anonymous block of functionality</strong>.</p>
+<p>Think of it like a lightweight anonymous class — but without all the ceremony.</p>
+<p>Before lambdas, if you wanted to pass behaviour (like sorting logic), you’d typically create an anonymous class instance.</p>
+<p>For example, sorting an array using <code>Arrays.sort()</code> required a <code>Comparator</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">Arrays.</span><span style="color:#B392F0">sort</span><span style="color:#E1E4E8">(array, </span><span style="color:#F97583">new</span><span style="color:#E1E4E8"> Comparator&lt;</span><span style="color:#F97583">Integer</span><span style="color:#E1E4E8">&gt;() {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> int</span><span style="color:#B392F0"> compare</span><span style="color:#E1E4E8">(Integer </span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, Integer </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<p>That <code>Comparator</code> instance doesn’t mean anything on its own. It only becomes useful when passed into <code>Arrays.sort()</code>.</p>
+<p>It’s just a bundle of behaviour.</p>
+<h2 id="replacing-anonymous-classes-with-lambdas">Replacing Anonymous Classes with Lambdas</h2>
+<p>With Java 8+, that same logic becomes:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">Arrays.</span><span style="color:#B392F0">sort</span><span style="color:#E1E4E8">(array, (a, b) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b);</span></span></code></pre>
+<p>That’s it.</p>
+<p>Shorter. Clearer. No boilerplate.</p>
+<p>Even though it looks different, Java treats this lambda as an instance of <code>Comparator&lt;Integer&gt;</code>.</p>
+<p>Why does this work?</p>
+<p>Because <code>Comparator</code> has only <strong>one abstract method</strong> (<code>compare</code>). That makes it a <em>functional interface</em>.</p>
+<p>The compiler sees:</p>
+<ul>
+<li>A single abstract method</li>
+<li>A lambda expression</li>
+<li>Matching parameter and return types</li>
+</ul>
+<p>…and it connects the dots.</p>
+<h2 id="why-lambdas-work-functional-interfaces">Why Lambdas Work: Functional Interfaces</h2>
+<p>A lambda can replace any interface that has <strong>exactly one abstract method</strong>.</p>
+<p>These are called <strong>functional interfaces</strong>.</p>
+<p>Example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#F97583">interface</span><span style="color:#B392F0"> Example</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    R </span><span style="color:#B392F0">apply</span><span style="color:#E1E4E8">(T </span><span style="color:#FFAB70">arg</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Before lambdas:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">Example ex </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Example</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> R </span><span style="color:#B392F0">apply</span><span style="color:#E1E4E8">(T </span><span style="color:#FFAB70">arg</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> ...;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<p>After converting to a lambda?</p>
+<p>We trim the fat.</p>
+<ol>
+<li>Remove instantiation</li>
+<li>Remove method name</li>
+<li>Remove override annotation</li>
+<li>Keep parameters and body</li>
+<li>Add the arrow <code>-&gt;</code></li>
+</ol>
+<p>Result:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">Example ex </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (arg) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> ...;</span></span></code></pre>
+<p>That’s the core syntax.</p>
+<h2 id="lambda-syntax-explained">Lambda Syntax Explained</h2>
+<p>At its most verbose, a lambda looks like this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(Type arg1, Type arg2) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // body</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>It consists of:</p>
+<ol>
+<li><strong>Parameters</strong> (in parentheses)</li>
+<li>The arrow <code>-&gt;</code></li>
+<li>A <strong>body</strong> (either a block or expression)</li>
+</ol>
+<h2 id="syntax-shortcuts-the-good-stuff">Syntax Shortcuts (The Good Stuff)</h2>
+<p>Java lets you simplify lambdas quite a bit.</p>
+<h3 id="1️⃣-drop-parameter-types-type-inference">1️⃣ Drop Parameter Types (Type Inference)</h3>
+<p>If the compiler can figure out the types from context, you can omit them:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(a, b) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b</span></span></code></pre>
+<p>Java uses <strong>type inference</strong> based on where the lambda is used.</p>
+<h3 id="2️⃣-drop-braces-for-single-expressions">2️⃣ Drop Braces for Single Expressions</h3>
+<p>If the body is just one expression:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(a, b) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b</span></span></code></pre>
+<p>You don’t need:</p>
+<ul>
+<li>Curly braces</li>
+<li><code>return</code></li>
+</ul>
+<p>Java knows a single expression must return a value consistent with the functional interface.</p>
+<h3 id="3️⃣-drop-parentheses-for-one-parameter">3️⃣ Drop Parentheses for One Parameter</h3>
+<p>If there’s only one argument:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span></code></pre>
+<p>No parentheses required.</p>
+<h3 id="4️⃣-no-arguments-use-empty-parentheses">4️⃣ No Arguments? Use Empty Parentheses</h3>
+<p>If the lambda takes no parameters:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">() </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Hello&quot;</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>The “hamburger symbol” (empty brackets) is required.</p>
+<h2 id="syntax-recap">Syntax Recap</h2>
+<p>Here’s the progression from most verbose to most concise:</p>
+<p><strong>Most verbose:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(Type x) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>With inferred types:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Single expression:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span></code></pre>
+<p><strong>Single parameter shortcut:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span></code></pre>
+<p>Java allows these reductions because of:</p>
+<ul>
+<li>Functional interfaces</li>
+<li>Type inference improvements</li>
+<li>Context-aware compilation</li>
+</ul>
+<h2 id="method-references-a-shortcut-to-lambdas">Method References (A Shortcut to Lambdas)</h2>
+<p>There’s one more shortcut worth mentioning: <strong>method references</strong>.</p>
+<p>Sometimes instead of writing:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">-&gt;</span><span style="color:#E1E4E8"> System.out.</span><span style="color:#B392F0">println</span><span style="color:#E1E4E8">(x)</span></span></code></pre>
+<p>You can write:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#E1E4E8">System.out</span><span style="color:#F97583">::</span><span style="color:#E1E4E8">println</span></span></code></pre>
+<p>Method references are just shorthand for specific kinds of lambdas.</p>
+<p>We’ll dive deeper into those separately — but for now, just know they can be used anywhere a lambda is expected.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>Lambdas didn’t just reduce syntax — they changed how Java code feels.</p>
+<p>They make:</p>
+<ul>
+<li>Behaviour easier to pass around</li>
+<li>Code more expressive</li>
+<li>Functional-style patterns natural in Java</li>
+</ul>
+<p>The key ideas to remember:</p>
+<ul>
+<li>Lambdas replace single-method interfaces</li>
+<li>The arrow <code>-&gt;</code> separates parameters from body</li>
+<li>The compiler does a lot of heavy lifting for you</li>
+<li>You can progressively simplify syntax when context allows</li>
+</ul>
+<p>Once you internalise that, lambdas stop looking magical and start feeling obvious.</p>  </section> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html> 

@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.3"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/blog/2017-03-01-standard-pi-setup/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Standard Raspberry Pi Setup</title><meta name="title" content="Standard Raspberry Pi Setup"><meta name="description" content="A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation."><meta name="keywords" content="Raspberry Pi setup, Raspbian, SSH, headless setup, Pi configuration, Linux, Raspberry Pi tutorials"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/blog/2017-03-01-standard-pi-setup/"><meta property="og:title" content="Standard Raspberry Pi Setup"><meta property="og:description" content="A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation."><meta property="og:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/blog/2017-03-01-standard-pi-setup/"><meta property="twitter:title" content="Standard Raspberry Pi Setup"><meta property="twitter:description" content="A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation."><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Standard Raspberry Pi Setup","description":"A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation.","datePublished":"2017-03-01T00:00:00.000Z","url":"https://baddotrobot.com/blog/2017-03-01-standard-pi-setup/","author":{"@type":"Person","name":"Toby Weston","url":"https://baddotrobot.com"},"publisher":{"@type":"Person","name":"bad.robot"}}</script><link rel="stylesheet" href="/_astro/index.BIJT_GkW.css">
+<link rel="stylesheet" href="/_astro/_slug_.CTb-p3zm.css"></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">   <div class="py-12"> <article class=""> <div class="article-title-section mb-8"> <p class="detail-kicker">Blog</p> <h1 class="article-title-section h1">Standard Raspberry Pi Setup</h1>  <p class="article-description">A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation.</p> </div> <div class="article-meta"> <div class="article-date"> <strong>Published:</strong> <time datetime="2017-03-01T00:00:00.000Z"> Mar 1, 2017 </time> </div>  </div> <div class="prose">  <p>Here”s some common things to do when you first setup a Pi.</p>
+<h2 id="raspian-image">Raspian Image</h2>
+<p>Download your image and <a href="https://www.raspberrypi.org/documentation/installation/installing-images/">burn to an SD card</a>. You can’t go far wrong with a <a href="http://amzn.to/1T6zIc9">SanDisk 16GB microSDHC memory card</a>for £6.99.</p>
+<h2 id="raspi-config"><code>raspi-config</code></h2>
+<ul>
+<li>Expand the file system</li>
+<li>Disable GUI via boot options, set to <code>Boot Options</code> then <code>B1 Console</code></li>
+<li>Change hostname via Advanced options</li>
+</ul>
+<h2 id="setup-wifi">Setup Wifi</h2>
+<p>Modify the <code>/etc/network/interfaces</code> file to access a network (with hidden SSID).</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>source-directory /etc/network/interfaces.d</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>auto lo</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>iface lo inet loopback</span></span>
+<span class="line"><span>iface eth0 inet dhcp</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>auto wlan0</span></span>
+<span class="line"><span>allow-hotplug wlan0</span></span>
+<span class="line"><span>iface wlan0 inet dhcp</span></span>
+<span class="line"><span>   wpa-scan-ssid 1</span></span>
+<span class="line"><span>   wpa-ap-scan 1</span></span>
+<span class="line"><span>   wpa-key-mgmt WPA-PSK</span></span>
+<span class="line"><span>   wpa-proto RSN WPA</span></span>
+<span class="line"><span>   wpa-pairwise CCMP TKIP</span></span>
+<span class="line"><span>   wpa-group CCMP TKIP</span></span>
+<span class="line"><span>   wpa-ssid "network-name"</span></span>
+<span class="line"><span>   wpa-psk 72084.....654</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>iface default inet dhcp</span></span></code></pre>
+<h2 id="prevent-wifi-sleeping">Prevent Wifi Sleeping</h2>
+<p>The <code>8192cu</code> based wifi dongles will often go to sleep if they’re not getting any traffic. This means broken terminal sessions and general annoyances. Prevent it happening by adding the following to <code>/etc/modprobe.d/8192cu.conf</code>. Create the file if it doesn’t already exist (<a href="https://www.raspberrypi.org/forums/viewtopic.php?f=28&#x26;t=44044&#x26;start=350">reference</a>).</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>options 8192cu rtw_power_mgnt=0 rtw_enusbss=0</span></span></code></pre>
+<p>You can check if you have the <code>8192cu</code> module loaded with <code>lsmod</code>. If you don’t see it in the list, don’t bother!</p>
+<h2 id="update-the-system">Update the System</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ sudo apt-get update</span></span>
+<span class="line"><span>$ sudo apt-get upgrade</span></span>
+<span class="line"><span>$ sudo rpi-update</span></span></code></pre>
+<h2 id="standard-software">Standard Software</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ sudo apt-get install build-essential git avahi-daemon libavahi-client-dev oracle-java8-jdk</span></span></code></pre>
+<h2 id="install-sbt">Install SBT</h2>
+<p>For Scala development.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ cd /usr/local/bin</span></span>
+<span class="line"><span>$ sudo wget https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.13/sbt-launch.jar</span></span>
+<span class="line"><span>$ sudo chown pi sbt-launch.jar</span></span>
+<span class="line"><span>$ sudo chgrp pi sbt-launch.jar</span></span></code></pre>
+<p>Create a file <code>/usr/local/bin/sbt</code> (change the owner and group as above) and paste the following in (take note that the max memory is set to 512 MB for the Pi Zero). Change the owner and group as above.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>#!/bin/bash</span></span>
+<span class="line"><span>SBT_OPTS="-Xms512M -Xmx512M"</span></span>
+<span class="line"><span>java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar "$@"</span></span></code></pre>
+<p>Note that there’s not much memory on the Pi, so limit <code>sbt</code>s consumption. In this case, the 512MB limit suits the Pi Zero.</p>
+<p>Then make it executable.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>chmod u+x /usr/local/bin/sbt</span></span></code></pre>
+<h2 id="bash-setup">Bash Setup</h2>
+<p>Add the following to <code>~/.bashrc</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># some more ls aliases</span></span>
+<span class="line"><span>alias ll='ls -lavh --group-directories-first'</span></span>
+<span class="line"><span>alias la='ls -A'</span></span>
+<span class="line"><span>#alias l='ls -CF'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Toby's ones</span></span>
+<span class="line"><span>alias path='echo -e ${PATH//:/\\n}'</span></span>
+<span class="line"><span>alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'</span></span>
+<span class="line"><span>alias du='du -kh'    # Makes a more readable output.</span></span>
+<span class="line"><span>alias df='df -kTh'</span></span></code></pre>
+<h2 id="disable-activity-led">Disable Activity LED</h2>
+<p>Add the following to <code>/boot/config.txt</code> (tested on the Pi Zero only).</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># disable the activity LED (intended for the Pi Zero)</span></span>
+<span class="line"><span>dtparam=act_led_trigger=none</span></span>
+<span class="line"><span>dtparam=act_led_activelow=on</span></span></code></pre>
+<h2 id="share-disk-with-mac-osx">Share Disk with Mac OSX</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo apt-get install netatalk</span></span></code></pre>
+<h2 id="vi-setup"><code>vi</code> setup</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>$ echo 'set nocompatible' > ~/.vimrc</span></span></code></pre>
+<h2 id="timezone">Timezone</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime</span></span></code></pre>  </div> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html>
