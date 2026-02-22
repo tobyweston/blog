@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import SiteLayout from '../components/ui/SiteLayout.astro';
 import Hero from '../components/ui/Hero.astro';
 import PreviewBlog from '../components/ui/PreviewBlog.astro';
+import BlogTeaser from "../components/ui/BlogTeaser.astro";
 
 const posts = (await getCollection('blog')).sort((a,b)=> b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const recent = posts.slice(0,5);
@@ -15,7 +16,7 @@ const recent = posts.slice(0,5);
     <h2 class="text-2xl font-semibold mb-6">Recent Posts</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {recent.map(p => (
-        <PreviewBlog post={p} />
+        <BlogTeaser post={p} />
       ))}
     </div>
   </section>
