@@ -1,7 +1,7 @@
 ---
 title: "SWT Applications on Mac OS X"
 pubDate: "2008-12-29"
-categories: 'java tools'
+categories: 'java-tools'
 keywords: "SWT, Mac OS X, XstartOnFirstThread, invalid thread access, Java Mac, Cocoa, Carbon"
 description: "Fix invalid thread access errors in SWT applications on Mac OS X using the -XstartOnFirstThread JVM option."
 ---

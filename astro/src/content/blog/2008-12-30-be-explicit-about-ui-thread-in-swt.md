@@ -1,7 +1,7 @@
 ---
 title: "Be Explicit with the UI Thread"
 pubDate: "2008-12-30"
-categories: 'java concurrency'
+categories: 'java-concurrency'
 keywords: "SWT, UI thread, event dispatching thread, EDT, invalid thread access, Display.sync, Display.async"
 description: "Understand the SWT UI thread and how to avoid invalid thread access errors by being explicit about which thread is the main UI thread when testing."
 ---

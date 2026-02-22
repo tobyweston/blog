@@ -1,7 +1,7 @@
 ---
 title: "SWT Support for Window Licker"
 pubDate: "2008-12-29"
-categories: 'java testing'
+categories: 'java-testing'
 keywords: "SWT, Window Licker, GUI testing, rich client testing, Swing, AWT, WebDriver, SWT support"
 description: "SWT support for Window Licker, the rich UI testing framework. Covers implementing basic SWT support as a patch to the Window Licker project."
 ---

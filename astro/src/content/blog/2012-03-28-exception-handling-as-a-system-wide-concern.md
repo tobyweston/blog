@@ -1,7 +1,7 @@
 ---
 title: "Exception Handling as a System Wide Concern"
 pubDate: "2012-03-28"
-categories: 'java web'
+categories: 'java-web'
 keywords: "exception handling, system-wide policy, REST, application boundaries, ports and adapters, Java"
 description: "Treat exception handling as a system-wide concern. Identify boundaries in your application and handle exceptions consistently at those boundaries."
 ---

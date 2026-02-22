@@ -1,7 +1,7 @@
 ---
 title: "JUnit and Threaded Tests"
 pubDate: "2008-12-17"
-categories: 'concurrency testing'
+categories: 'concurrency-testing'
 keywords: "JUnit, threaded tests, concurrent testing, Java threads, false positive tests, test runner"
 description: "JUnit tests with threads can produce false positives because the test runner calls System.exit() before threads complete. Learn how to wait for threads in tests."
 ---

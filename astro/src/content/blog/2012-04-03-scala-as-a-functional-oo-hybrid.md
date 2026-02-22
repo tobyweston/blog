@@ -1,7 +1,7 @@
 ---
 title: "Scala as a Functional OO Hybrid"
 pubDate: "2012-04-03"
-categories: 'scala functional-programming'
+categories: 'scala-functional-programming'
 keywords: "Scala, functional programming, object-oriented, pure functions, side effects, referential transparency"
 description: "Scala as a functional/OO hybrid: what does 'functional' really mean? Explores pure functions, side effects, and referential transparency in Scala."
 ---

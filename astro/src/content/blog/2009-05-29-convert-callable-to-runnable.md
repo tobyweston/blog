@@ -1,7 +1,7 @@
 ---
 title: "Convert a Callable to a Runnable"
 pubDate: "2009-05-29"
-categories: 'java concurrency'
+categories: 'java-concurrency'
 keywords: "Java Callable, Runnable, Executors, scheduled executor, fixed rate, tempus-fugit, concurrency"
 description: "The Executors framework can convert Runnable to Callable but not the reverse. Here's how to wrap a Callable as a Runnable to schedule it at a fixed rate."
 ---

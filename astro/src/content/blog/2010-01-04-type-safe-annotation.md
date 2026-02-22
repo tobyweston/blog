@@ -1,7 +1,7 @@
 ---
 title: "Type Safe Annotation"
 pubDate: "2010-01-04"
-categories: 'java concurrency'
+categories: 'java-concurrency'
 keywords: "Java annotation, enum annotation, type safety, concurrency, @GuardedBy, Goetz, compile-time check"
 description: "Java insists enum annotation values must be enum constants, preventing type-safe runtime checks. Explores why this is and what it means for concurrency annotations."
 ---

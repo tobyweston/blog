@@ -1,7 +1,7 @@
 ---
 title: "Hexagonal Acceptance Testing"
 pubDate: "2012-02-13"
-categories: 'testing agile'
+categories: 'testing-agile'
 keywords: "hexagonal architecture, ports and adapters, acceptance testing, BDD, application boundaries, Java"
 description: "Apply hexagonal (ports and adapters) architecture to structure acceptance tests. Test at the application boundary without spinning up the full stack."
 ---

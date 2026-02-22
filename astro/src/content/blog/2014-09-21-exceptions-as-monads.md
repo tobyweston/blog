@@ -1,7 +1,7 @@
 ---
 title: "Dealing with Exceptions as Monads"
 pubDate: '2014-09-21'
-categories: 'java functional-programming'
+categories: 'java-functional-programming'
 keywords: "monads, Either, Option, Try, Scala, Java 8, functional error handling, Scalaz, functional programming"
 description: "Treat exceptions functionally using monadic types like Either, Option, and Try. Captures error handling in the type system and provides system-wide consistency."
 series: 'Exception Handling'

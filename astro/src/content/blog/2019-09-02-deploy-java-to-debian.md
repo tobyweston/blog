@@ -1,7 +1,7 @@
 ---
 title: "Easily Deploy Java to Debian"
 pubDate: '2019-09-02'
-categories: 'java tools'
+categories: 'java-tools'
 keywords: "Java deployment, Debian, .deb package, apt, aptly, Scala, Kotlin, Linux deployment, distribution"
 description: "Package Java, Scala, or Kotlin apps as .deb files and deploy via apt. Level up your distribution strategy with proper Debian package management."
 series: "Deploying to Debian"

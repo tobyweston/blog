@@ -1,7 +1,7 @@
 ---
 title: "Logging is still evil but..."
 pubDate: "2011-06-22"
-categories: 'java testing'
+categories: 'java-testing'
 keywords: "log4j, testing logging, event-driven, log appender, assertions, test logging output, Log4J capture"
 description: "Make assertions against Log4J in tests using a custom appender. If you can't avoid logging, treat it as a requirement and write tests that verify log output."
 ---

@@ -1,7 +1,7 @@
 ---
 title: "SWTBot vs Window Licker"
 pubDate: "2009-03-15"
-categories: 'java testing'
+categories: 'java-testing'
 keywords: "SWTBot, Window Licker, GUI testing, rich client testing, SWT, event simulation, AWT Robot"
 description: "An experience report comparing SWTBot and Window Licker for GUI testing. Covers architectural differences, event simulation approaches, and API usability."
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Flickering Tests and a JUnit Rule"
 pubDate: "2009-12-24"
-categories: 'testing concurrency'
+categories: 'testing-concurrency'
 keywords: "intermittent tests, flickering tests, JUnit, non-deterministic tests, @Intermittent, tempus-fugit, test reliability"
 description: "Automatically repeat intermittently failing tests using tempus-fugit's @Intermittent JUnit rule. Identify non-deterministic tests and make them deterministic."
 ---

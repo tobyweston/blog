@@ -1,7 +1,7 @@
 ---
 title: "Interfaces vs Class impostorisers"
 pubDate: '2008-12-24'
-categories: 'java testing'
+categories: 'java-testing'
 keywords: "JMock, class impostorisers, mocking, interface mocking, cglib, SWT testing, legacy code"
 description: "When is using a class imposturiser in JMock acceptable? Explores the trade-offs of mocking classes vs interfaces, particularly when working with third-party or legacy code like SWT."
 ---

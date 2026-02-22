@@ -1,7 +1,7 @@
 ---
 title: "Method References in Java 8"
 pubDate: '2014-02-18'
-categories: 'java functional-programming'
+categories: 'java-functional-programming'
 keywords: "Java 8, method references, lambda, functional interface, static method reference, instance method reference"
 description: "Java 8 method references explained clearly. Four types with real examples: static, bound instance, unbound instance, and constructor references."
 series: "What's new in Java 8"

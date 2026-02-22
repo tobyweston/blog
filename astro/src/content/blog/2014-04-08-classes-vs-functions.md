@@ -1,7 +1,7 @@
 ---
 title: "Classes vs. Functions"
 pubDate: '2014-04-08'
-categories: 'java functional-programming'
+categories: 'java-functional-programming'
 keywords: "Java 8, lambda, anonymous class, invokedynamic, class vs function, LambdaMetafactory, bytecode"
 description: "Java 8 lambdas are not just syntactic sugar over anonymous classes. Explores the underlying bytecode differences and why lambdas and anonymous classes behave differently."
 updatedDate: '2014-11-25'

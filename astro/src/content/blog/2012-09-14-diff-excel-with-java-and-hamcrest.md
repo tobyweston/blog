@@ -1,7 +1,7 @@
 ---
 title: "Diff Excel with Java and Hamcrest"
 pubDate: "2012-09-14"
-categories: 'java testing'
+categories: 'java-testing'
 keywords: "Excel diff, Java, Hamcrest, Apache POI, spreadsheet testing, compare Excel files, simple-excel"
 description: "Compare Excel spreadsheets in Java tests using Hamcrest matchers and Apache POI. The simple-excel library makes asserting on spreadsheet content straightforward."
 ---

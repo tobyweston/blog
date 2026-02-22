@@ -1,7 +1,7 @@
 ---
 title: "Type Classes in Scala"
 pubDate: "2016-08-13"
-categories: 'scala functional-programming'
+categories: 'scala-functional-programming'
 keywords: "Scala type classes, ad-hoc polymorphism, implicits, type class pattern, Scala, functional programming"
 description: "Type classes in Scala provide ad-hoc polymorphism without inheritance. Learn the pattern using implicits and understand when type classes beat traditional OOP."
 series: 'Scala Implicits'
