@@ -1,9 +1,10 @@
 ---
-title: "Standard Pi Setup"
+title: "Standard Raspberry Pi Setup"
 pubDate: "2017-03-01"
 categories: 'raspberry-pi'
-keywords: "Raspberry Pi setup, Raspbian, SD card, Pi Zero W, headless setup, SSH, new Pi configuration"
-description: "Standard Raspberry Pi setup steps: flash Raspbian, enable SSH, configure Wi-Fi, and get your Pi ready for headless use."
+keywords: "Raspberry Pi setup, Raspbian, SSH, headless setup, Pi configuration, Linux, Raspberry Pi tutorials"
+description: "A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation."
+heroImage: "/images/heroes/raspberry-pi.jpg"
 ---
 
 Here"s some common things to do when you first setup a Pi.

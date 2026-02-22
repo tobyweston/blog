@@ -5,6 +5,7 @@ categories: 'scala'
 keywords: "Scala learning curve, Scala training, Pluralsight, functional programming, Scala adoption, beginner Scala"
 description: "What does the Scala learning curve look like? Expect quick initial progress followed by a slower ramp into advanced functional features like type classes and implicits."
 updatedDate: '2014-11-27'
+heroImage: "/images/heroes/functional-programming.jpg"
 ---
 
 If you've just started to learn Scala and are wondering what to expect, it's typical to experience a quick ramp up in skill followed by a slower adoption of the more sophisticated features. In this post, I talk about what I think of as a typical learning curve.

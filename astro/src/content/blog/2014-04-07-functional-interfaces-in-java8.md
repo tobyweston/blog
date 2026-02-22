@@ -5,6 +5,7 @@ categories: 'java functional-programming'
 keywords: "Java 8, functional interface, @FunctionalInterface, lambda, SAM, Runnable, Callable, single abstract method"
 description: "Functional interfaces in Java 8 are single-method interfaces. Anywhere you use a lambda, you're using a functional interface. Learn the syntax and built-in examples."
 series: "What's new in Java 8"
+heroImage: "/images/heroes/java-code.jpg"
 ---
 
 Java 8 treats lambdas as an instance of an interface type. It formalises this into something it calls "functional interfaces". A functional interface is just an interface with a single method. Java calls the method a "functional method" but the name "single abstract method" or SAM is often used. All the existing single method interfaces like `Runnable` and `Callable` in the JDK are now functional interfaces and lambdas can be used anywhere a single abstract method interface is used.

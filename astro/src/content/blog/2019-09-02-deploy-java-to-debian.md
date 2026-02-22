@@ -6,6 +6,7 @@ categories: 'java tools'
 keywords: "Java deployment, Debian, .deb package, apt, aptly, Scala, Kotlin, Linux deployment, distribution"
 description: "Package Java, Scala, or Kotlin apps as .deb files and deploy via apt. Level up your distribution strategy with proper Debian package management."
 series: "Deploying to Debian"
+heroImage: "/images/heroes/devops.jpg"
 ---
 
 Level up the way you distribute your Java/Scala/Kotlin applications by packaging them as `.deb` files and deploying via `apt`. 

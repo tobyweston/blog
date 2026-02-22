@@ -4,6 +4,7 @@ pubDate: "2010-08-15"
 categories: 'agile'
 keywords: "pair programming, pair stairs, agile, XP, developer collaboration, honest pairing, team dynamics"
 description: "Practical tips for more honest and effective pair programming in agile teams. Covers the pair stairs technique and how to get the most from pairing."
+heroImage: "/images/heroes/team-collaboration.jpg"
 ---
 
 Recently we had particularly good retrospective where the team were able to admit that each of us has had difference experiences pairing. We were honest in saying that despite having "done pairing" we'd all done different amounts of pairing and that, at times, we weren't even sure what we were supposed to get out of it.
