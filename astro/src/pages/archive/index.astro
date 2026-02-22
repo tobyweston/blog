@@ -27,7 +27,7 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
 
     <div id="posts">
       {Object.keys(byYear).sort((a,b)=>Number(b)-Number(a)).map(year => (
-        <div class="mb-8">
+        <div class="mb-8" data-year-group>
           <h2 class="text-xl font-semibold mb-3">{year}</h2>
           <ul class="list-disc pl-6 space-y-2">
             {(byYear[year] || []).map((p: typeof posts[0]) => (
@@ -48,6 +48,10 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
   <script type="module" is:inline>
     const input = document.getElementById('search');
     const posts = Array.from(document.querySelectorAll('#posts li'));
+    const yearGroups = Array.from(document.querySelectorAll('#posts [data-year-group]')).map(group => ({
+      el: group,
+      items: Array.from(group.querySelectorAll('li')),
+    }));
     input.addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
       posts.forEach(li => {
@@ -55,6 +59,10 @@ const byYear = posts.reduce((acc: PostsByYear, p) => {
         const subtitle = li.dataset.subtitle || '';
         const matches = title.includes(q) || subtitle.includes(q);
         li.style.display = matches ? '' : 'none';
+      });
+      yearGroups.forEach(({ el, items }) => {
+        const anyVisible = items.some(li => li.style.display !== 'none');
+        el.style.display = anyVisible ? '' : 'none';
       });
     });
   </script>
