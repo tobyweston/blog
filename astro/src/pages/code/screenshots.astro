@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../../components/ui/SiteLayout.astro';
+import ClickToEnlarge from '../../components/ui/ClickToEnlarge.astro';
+import virtualLights from '../../content/images/virtual_lights.png';
+import screensaverBig from '../../content/images/screensaver_big.png';
+import trafficLightsBig from '../../content/images/build-monitor-traffic-lights.jpg';
+---
+
+<SiteLayout title="Screenshots - bad.robot" description="Screnshots">
+  <section>
+    <h1 class="text-3xl font-bold mb-4">Screenshots</h1>
+  </section>
+
+  <section class="mt-8 space-y-12">
+    <figure class="space-y-3">
+      <h2 class="text-xl font-semibold">Virtual Lights</h2>
+      <ClickToEnlarge src={virtualLights} alt="Virtual lights build radiator" width={640} />
+      <figcaption class="text-sm text-slate-600">A virtual build radiator for quickly spotting pipeline status.</figcaption>
+    </figure>
+
+    <figure class="space-y-3">
+      <h2 class="text-xl font-semibold">Build Screen Saver</h2>
+      <ClickToEnlarge src={screensaverBig} alt="Build radiator screensaver" width={640} />
+      <figcaption class="text-sm text-slate-600">A screensaver view designed for team visibility around CI health.</figcaption>
+    </figure>
+
+    <figure class="space-y-3">
+      <h2 class="text-xl font-semibold">Traffic Lights</h2>
+      <ClickToEnlarge src={trafficLightsBig} alt="Build monitor traffic lights" width={640} />
+      <figcaption class="text-sm text-slate-600">Physical-style traffic lights representation for build status.</figcaption>
+    </figure>
+  </section>
+</SiteLayout>
