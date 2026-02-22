@@ -5,7 +5,7 @@ pubDate: "2017-10-26"
 categories: 'raspberry-pi'
 keywords: "Raspbian Jessie, Raspbian Stretch, Raspberry Pi upgrade, apt-get dist-upgrade, Raspbian upgrade"
 description: "Step-by-step guide to upgrading Raspbian from Jessie to Stretch on your Raspberry Pi."
-heroImage: "/images/heroes/raspberry-pi.jpg"
+heroImage: "/images/heroes/raspberry-pi-alt.jpg"
 ---
 
 Upgrade your Raspbian install from Jessie to Stretch.
