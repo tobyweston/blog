@@ -195,7 +195,7 @@ Again, use the `-j4` flag if you're on a big boy Pi.
 
 ## Test & Install the Driver
 
-Once it's compiled, remove the old driver with `sudo rmmod 8192cu` and from the driver folder, manually startup the newly compiled one; `sudo insmod 8192cu.ko`. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi (like a [console cable](/blog/2015/12/28/pi-console-lead/)).
+Once it's compiled, remove the old driver with `sudo rmmod 8192cu` and from the driver folder, manually startup the newly compiled one; `sudo insmod 8192cu.ko`. Note that you'll loose network connectivity after removing the old module. Make sure you've got a way to connect back to your Pi (like a [console cable](/blog/2015-12-28-pi-console-lead/)).
 
 Running `modinfo 8192cu` doesn't help verify the new driver as none of the meta-data has changed but you can check the datestamp of the `.ko` and you should see that there's no LED flashing.
 
