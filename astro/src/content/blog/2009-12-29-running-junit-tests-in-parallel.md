@@ -6,7 +6,7 @@ keywords: "testing, concurrency, parallel tests, run concurrently, multi threade
 description: "Use JUnit to run tests in parallel."
 ---
 
-I've been playing with running tests in their own threads for a while now (in particular with reference to [GUI testing](/blog/2008/12/30/be-explicit-about-ui-thread-in-swt/)) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.
+I've been playing with running tests in their own threads for a while now (in particular with reference to [GUI testing](/blog/2008-12-30-be-explicit-about-ui-thread-in-swt/)) and am starting to feel comfortable with my approach. Today I was working on running tests in parallel with JUnit.
 
 
 Looking more into recent versions of JUnit, there seems to be lots of integration points for you to play with. I've been playing with `Rules`, `Statements` and `Runners` mostly and when creating your own `BlockJUnit4ClassRunner`, I spotted you can override the scheduler which schedules the actual test methods to be run.

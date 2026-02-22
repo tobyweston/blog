@@ -6,7 +6,7 @@ keywords: "SWT, EDT, event dispatching thread, testing on the main thread"
 description: "Understand which is the main, event dispatching thread and take control when running UI tests."
 ---
 
-Following up from the post [SWT Support in Window Licker](/blog/2008/12/29/swt-support-for-window-licker/).
+Following up from the post [SWT Support in Window Licker](/blog/2008-12-29-swt-support-for-window-licker/).
   
 The thing I found most interesting about looking at this was having to be more explicit about the UI thread. When developing SWT applications, we're all aware that accessing almost anything graphical in SWT from any other thread than the UI thread spells "invalid thread access", but it was fun to be more explicit about the "UI thread".
 

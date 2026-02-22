@@ -33,10 +33,10 @@ Should be encoded and sent over in the header. It'll look something like this.
 Authorization: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
 ```
 
-The `POST` body should include the following [x-www-form-urlencoded](/blog/2012/06/11/http-encoding-schemes) parameters.
+The `POST` body should include the following [x-www-form-urlencoded](/blog/2012-06-11-http-encoding-schemes/) parameters.
 
  * `grant_type=authorization_code`
- * `code=`the authorisation code (see [previous post](/blog/2012/08/11/oauth-and-http-part-i))
+ * `code=`the authorisation code (see [previous post](/blog/2012-08-11-oauth-and-http-part-i/))
  * `redirect_uri=`your redirect URI
 
 FreeAgent differs from a lot of other OAuth implementations where the information is passed along as query parameters to a `GET` request.

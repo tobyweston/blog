@@ -97,7 +97,7 @@ For example, if you're using a version of JMock prior to 2.6.0 and use `@RunWith
 
 ## Summary
 
-The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the `expected` element offers the most straight forward syntax. In the next article [Exception Handling as a System Wide Concern](/blog/2012/03/28/exception-handling-as-a-system-wide-concern/), I describe a general exception handling approach which negates the need to assert against exception messages.
+The new rule offers a balance between concise syntax and function. In practice though if you're not interested in asserting against the exception's message, the `expected` element offers the most straight forward syntax. In the next article [Exception Handling as a System Wide Concern](/blog/2012-03-28-exception-handling-as-a-system-wide-concern/), I describe a general exception handling approach which negates the need to assert against exception messages.
 
 The `ExpectedException` rule comes with its own baggage. The declarative nature of the rule means _magic_ just happens and so there is a new kind of "noise" to cope with in the test. You may or may not be comfortable with this.
 

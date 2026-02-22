@@ -83,4 +83,4 @@ def anotherAccompaniment(dinner: String) {
 
 ## Conclusion
 
-The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the `catch` when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to [handle them as a system wide concern](/blog/2012/03/28/exception-handling-as-a-system-wide-concern).
+The whole thing is generally neater than the Java equivalent but as I keep banging on about, we still need to carefully consider where to apply the `catch` when handling exceptions. When using Scala, it's even more important to understand where potential exceptions will bubble up and how to [handle them as a system wide concern](/blog/2012-03-28-exception-handling-as-a-system-wide-concern/).
