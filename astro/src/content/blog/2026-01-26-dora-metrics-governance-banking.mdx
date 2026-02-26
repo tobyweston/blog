@@ -1,0 +1,99 @@
+---
+title: "DORA Metrics Meet Governance in Banking"
+pubDate: "2026-01-26"
+categories: 'devops, governance, compliance, banking, metrics'
+keywords: "DORA metrics, governance, banking, compliance, deployment frequency, lead time, mean time to recovery, change failure rate, software delivery performance"
+description: "Mike Long, Nathan Harvey and I discuss how DORA metrics can be aligned with governance frameworks in the banking industry. We posted the resulting article under the Team Topologies Expert View series."
+heroImage: "/images/heroes/dora-metrics-governance.png"
+---
+
+import { Image } from 'astro:assets';
+
+import panel from "../images/dora-metrics-governance.png";
+
+<a href="https://teamtopologies.com/news-blogs-newsletters/when-dora-metrics-meet-governance-in-banking"><Image src={panel} alt="DORA Metrics and Governance in Banking" /></a>
+
+
+
+## Regulatory Environments Moving Quickly?
+
+Industries that operate under regulatory constraints often find tension between these constraints and moving quickly. DORA (DevOps Research and Assessment) as a body of research material and reflection on practice has long since established that moving quickly doesn't have to compromise stability. You can move quickly _and_ safely.
+
+I think this is particularly relevant for the world of governance and compliance. As a regulated industry, can we learn from the DevOps practices around speed and stability and apply them to the world controls and controls engineering?
+
+That's something that Mike Long from [Kosli](https://kosli.com), Nathan Harvey from Google's [DORA](https://dora.dev/) group and I discussed recently in the Team Topologies article. You can read the full article [here](http://localhost:4321/blog/2026-01-26-dora-metrics-governance-banking/).
+
+## DORA Metrics
+
+DORA metrics include the "four keys" - four performance indicators that measure software delivery effectiveness:
+
+1. **Deployment Frequency** - How often code changes are deployed to production
+2. **Lead Time for Changes** - The time from code commit to production deployment
+3. **Mean Time to Recovery (MTTR)** - How quickly the team recovers from a production failure
+4. **Change Failure Rate** - The percentage of deployments that cause production incidents
+
+## The Governance Challenge
+
+In banking, governance requirements often prioritize:
+
+- **Change control** - Formal approval processes for production changes
+- **Audit trails** - Complete documentation of who changed what and when
+- **Risk management** - Careful assessment of potential impact before deployment
+- **Compliance** - Adherence to regulatory frameworks like Basel III, MiFID II, and others
+
+At first glance, these objectives seem incompatible with the high deployment frequency and rapid lead times that DORA metrics encourage.
+
+## The Path Forward: Controls Engineering
+
+However, organizations have demonstrated that governance and high-performing DORA metrics can coexist. The key is shifting from **preventive** governance (blocking changes) to **intelligent** governance (enabling safe changes).
+
+#### Key Strategies
+
+**1. Automated Compliance Checks**
+
+Embed governance rules directly into your CI/CD pipeline. Rather than waiting for manual approval, automated checks validate compliance requirements as part of the build process. This maintains audit trails while reducing cycle time.
+
+**2. Risk-Based Approval**
+
+
+Not all changes carry equal risk. Implement tiered approval processes where low-risk changes (e.g., documentation, configuration) bypass lengthy approval, while high-risk changes (e.g., core payment systems) receive appropriate scrutiny.
+
+**3. Observable Systems**
+
+
+High observability enables faster recovery from failures. When MTTR improves through better monitoring and alerting, you reduce the impact of any production incidents, supporting both compliance (incident response) and performance metrics.
+
+**4. Version Control as Audit Trail**
+
+
+Modern version control systems (like Git) provide immutable audit trails. Combined with signed commits and other techniques, they can meet governance requirements via strong provenance trails.
+
+**5. Containerization and Infrastructure as Code**
+
+
+Codifying your infrastructure enables governance at the code review stage, rather than at deployment time. This allows faster deployments while maintaining compliance.
+
+
+## Real-World Implementation
+
+The convergence of DORA metrics and governance is increasingly evident in banking technology. Teams are:
+
+- Deploying daily while maintaining regulatory compliance
+- Recovering from incidents in minutes while satisfying audit requirements
+- Increasing change frequency while reducing failure rates
+
+This isn't achieved by choosing between compliance and performance. Instead, it requires thoughtful integration of governance into the development workflow itself. Shifting left on compliance by applying the same engineering principles DORA promotes to the governenace process. This focus on automation and systems thinking is something we're starting to call "controls engineering".
+
+### Conclusion
+
+Banking organizations no longer need to choose between traditional governance and modern software delivery practices. By embedding governance into automated systems, prioritizing observable architectures, and implementing risk-based controls, teams can achieve high DORA metrics while maintaining the rigorous compliance standards the industry demands.
+
+The future of banking technology depends on organizations that can move quickly *and* safely—and DORA metrics, properly aligned with governance frameworks, show the path forward.
+
+---
+
+**Further Reading:**
+- [Team Topologies - When DORA Metrics Meet Governance in Banking](https://teamtopologies.com/)
+- [DORA - DevOps Research and Assessment](https://dora.dev/)
+- [Accelerate: The Science of Lean Software and DevOps](https://nicolefv.com/accelerate)
+
