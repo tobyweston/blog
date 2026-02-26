@@ -45,33 +45,29 @@ At first glance, these objectives seem incompatible with the high deployment fre
 
 ## The Path Forward: Controls Engineering
 
-However, organizations have demonstrated that governance and high-performing DORA metrics can coexist. The key is shifting from **preventive** governance (blocking changes) to **intelligent** governance (enabling safe changes).
+However, organizations are demonstrating that high governance standards and high-performing, fast moving teams can coexist. The key is shifting from blocking changes and traditional fear driven cultures to applying DORA engineering principles to the governance problem. This means embedding systems thinking and engineering into governance processes, designing irrefutable, technology driven audit trails that are harmonized with the developer flow state, not working against it.
 
-#### Key Strategies
+### Key Strategies
 
 **1. Automated Compliance Checks**
 
-Embed governance rules directly into your CI/CD pipeline. Rather than waiting for manual approval, automated checks validate compliance requirements as part of the build process. This maintains audit trails while reducing cycle time.
+Embed governance rules directly into your CI/CD pipeline. Rather than waiting for manual approval, automated checks validate compliance requirements as part of the build process. This maintains audit trails while reducing cycle time. For consistency and easier conversations with audit professionals, choose **centralised governance _and_ compliance** rather than **centralalised governance and federated compliance**.
 
 **2. Risk-Based Approval**
 
-
-Not all changes carry equal risk. Implement tiered approval processes where low-risk changes (e.g., documentation, configuration) bypass lengthy approval, while high-risk changes (e.g., core payment systems) receive appropriate scrutiny.
+Not all changes carry equal risk. Implement tiered approval processes where low-risk changes (e.g., documentation, configuration) bypass lengthy approval, while high-risk changes (e.g., core payment systems) receive additioanl scrutiny. Don't mention the C-word (CABs).
 
 **3. Observable Systems**
 
-
-High observability enables faster recovery from failures. When MTTR improves through better monitoring and alerting, you reduce the impact of any production incidents, supporting both compliance (incident response) and performance metrics.
+High observability enables faster recovery from failures. When MTTR improves through better monitoring and alerting, you reduce the impact of any production incidents, supporting both compliance (incident response) and performance metrics. Apply the same principles to the compliance problem. If the conditions by which you evidence controls are a black box, you will get extra scrutiny from auditors. If you systems are self documented (think tracer rounds), those conversations will be much easier.
 
 **4. Version Control as Audit Trail**
 
-
-Modern version control systems (like Git) provide immutable audit trails. Combined with signed commits and other techniques, they can meet governance requirements via strong provenance trails.
+Modern version control systems (like Git) provide immutable audit trails. Combined with signed commits and other techniques, they can meet governance requirements via strong provenance trails. The journey to production typically starts with a commit and can be the backbone to demonstrating provenance in the software supply chain.
 
 **5. Containerization and Infrastructure as Code**
 
-
-Codifying your infrastructure enables governance at the code review stage, rather than at deployment time. This allows faster deployments while maintaining compliance.
+Codifying your infrastructure enables governance at the code review stage, rather than at deployment time. This allows faster deployments while maintaining compliance. Traceability is key. Containerization (as well as offering other benefits) allows for easy provenance checks with systems like [Kosli](http://kosli.com) being able to provide real-time observability on your production estate, demonstrating traceability from commit to running environment.
 
 
 ## Real-World Implementation
@@ -82,18 +78,17 @@ The convergence of DORA metrics and governance is increasingly evident in bankin
 - Recovering from incidents in minutes while satisfying audit requirements
 - Increasing change frequency while reducing failure rates
 
-This isn't achieved by choosing between compliance and performance. Instead, it requires thoughtful integration of governance into the development workflow itself. Shifting left on compliance by applying the same engineering principles DORA promotes to the governenace process. This focus on automation and systems thinking is something we're starting to call "controls engineering".
+This isn't achieved by choosing between compliance and performance. Instead, it requires thoughtful integration of governance into the development workflow itself. Shifting left on compliance by applying the same engineering principles DORA promotes to the governance process. This focus on automation and systems thinking is something we're starting to call "controls engineering".
 
 ### Conclusion
 
 Banking organizations no longer need to choose between traditional governance and modern software delivery practices. By embedding governance into automated systems, prioritizing observable architectures, and implementing risk-based controls, teams can achieve high DORA metrics while maintaining the rigorous compliance standards the industry demands.
 
-The future of banking technology depends on organizations that can move quickly *and* safely—and DORA metrics, properly aligned with governance frameworks, show the path forward.
+The future of banking technology depends on organizations that can move quickly *and* safely. DORA metrics and the practices that affect them, properly applied to governance frameworks, are the step change modern regulated companies need to keep up.
 
----
 
 **Further Reading:**
 - [Team Topologies - When DORA Metrics Meet Governance in Banking](https://teamtopologies.com/)
 - [DORA - DevOps Research and Assessment](https://dora.dev/)
-- [Accelerate: The Science of Lean Software and DevOps](https://nicolefv.com/accelerate)
+- [Accelerate: The Science of Lean Software and DevOps](https://itrevolution.com/product/accelerate/)
 
