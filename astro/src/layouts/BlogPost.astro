@@ -5,7 +5,7 @@ import SiteLayout from '../components/ui/SiteLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const {title, subTitle, description, keywords, pubDate, updatedDate}: Props = Astro.props;
+const {title, subTitle, description, keywords, pubDate, updatedDate, heroImage}: Props = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = JSON.stringify({
@@ -15,6 +15,7 @@ const jsonLd = JSON.stringify({
   "description": description,
   "datePublished": pubDate.toISOString(),
   ...(updatedDate && { "dateModified": updatedDate.toISOString() }),
+  ...(heroImage && { "image": new URL(heroImage, Astro.site).toString() }),
   "url": canonicalURL,
   "author": {
     "@type": "Person",
@@ -32,6 +33,11 @@ const jsonLd = JSON.stringify({
   <script type="application/ld+json" slot="head" is:inline set:html={jsonLd} />
   <div class="py-12">
     <article class="">
+      <!--{heroImage && (-->
+      <!--  <div class="hero-image mb-8">-->
+      <!--    <img src={heroImage} alt={title} class="w-full h-auto rounded-lg shadow-lg" />-->
+      <!--  </div>-->
+      <!--)}-->
       <div class="article-title-section mb-8">
         <p class="detail-kicker">Blog</p>
         <h1 class="article-title-section h1">{title}</h1>
