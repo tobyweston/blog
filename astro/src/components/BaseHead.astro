@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../themes/fresh-tailwind/input.css';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import GoogleAnalytics from './GoogleAnalytics.astro';
 
 interface Props {
 	title?: string;
@@ -24,6 +25,9 @@ const image = Astro.props.image || '/images/heroes/java-code.jpg';
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Google Analytics -->
+<GoogleAnalytics />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

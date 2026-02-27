@@ -1,0 +1,24 @@
+---
+// Google Analytics component - Non-invasive and easily removable
+// Simply delete this component and the import in BaseHead.astro to disable GA
+
+import { GOOGLE_ANALYTICS_ID } from '../consts';
+
+// Only render if GA ID is configured
+const gaId = GOOGLE_ANALYTICS_ID;
+---
+
+{gaId && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    </script>
+  </>
+)}
+
