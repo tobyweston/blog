@@ -1,116 +1,52 @@
-# Cypress Visual Regression Testing
+# Cypress Test Suite
 
-Quick-start guide for visual regression testing with Cypress.
-
-## Quick Start
+## Run Tests
 
 ```bash
 cd astro
 
-# Build and start preview server
-npm run build
-npm run preview &
+# Build and preview (required first)
+npm run build && npm run preview &
 
-# Run tests (creates baseline screenshots)
+# Run all tests
 npm run test:visual
 
-# Or open interactive UI (recommended first time)
+# Interactive mode
 npm run test:visual:open
 ```
 
-## What Gets Tested
+## Test Coverage
 
-- **Pages**: Homepage, Blog (index + 3 sample posts), Book, Video, Archive, 404
-- **Viewports**: Mobile (375×667), Tablet (768×1024), Desktop (1920×1080)
-- **Coverage**: ~30 tests, ~90 screenshots per run
+**Visual Regression** (3 viewports: mobile 375×667, tablet 768×1024, desktop 1920×1080):
+- `visual-regression.cy.js` - Homepage, archive, 404
+- `blog-posts.cy.js` - Blog index + sample posts
+- `book-pages.cy.js` - Book pages
 
-## Commands
+**Functional**:
+- `video-pages.cy.js` - Video embeds
+- `hyperlink-resolution.cy.js` - Link validation
+- `click-to-enlarge.cy.js` - Image interactions
 
+## Screenshots & Baselines
+
+**First time setup (create baselines):**
 ```bash
-npm run test:visual              # Run all tests
-npm run test:visual:open         # Interactive Cypress UI
-npm run cypress:run              # Direct run
-npm run cypress:open             # Direct UI
-
-# Helper scripts
-./cypress/test.sh full           # Complete workflow
-./cypress/test.sh test           # Just run tests
-./cypress/test.sh open           # Open UI
-```
-
-## How It Works
-
-1. **First run** → Creates baseline screenshots in `cypress/screenshots/`
-2. **Commit baselines** → They become your reference point
-3. **Make CSS changes** → Run tests again to create new screenshots
-4. **Compare** → Use git or visual tools to see what changed
-
-## File Structure
-
-```
-cypress/
-├── e2e/                         # Test specs
-│   ├── visual-regression.cy.js  # Core pages (visual)
-│   ├── blog-posts.cy.js         # Blog tests (visual)
-│   ├── book-video.cy.js         # Book & video tests (visual)
-│   ├── video-pages.cy.js        # Video functionality (functional) 
-│   └── hyperlink-resolution.cy.js # Link validation (functional)
-├── support/
-│   ├── e2e.js                   # Custom commands
-│   └── commands.d.ts            # TypeScript definitions
-├── plugins/
-│   └── index.js                 # Plugin config
-├── screenshots/                 # Baseline storage (commit to git!)
-├── README.md                    # Full documentation
-└── test.sh                      # Helper script
-```
-
-## Custom Commands
-
-```javascript
-cy.checkForErrors()                       // Monitor console errors
-cy.capturePageAtViewport(name, viewport)  // Screenshot specific viewport
-cy.testPageVisually(url, name)            // Test page across all viewports
-```
-
-## Typical Workflow
-
-### Create Baselines (First Time)
-
-```bash
-npm run test:visual
-git add cypress/screenshots/
+npm run test:visual:baseline
+git add cypress/results/screenshots/
 git commit -m "Add visual regression baselines"
 ```
 
-### After CSS Changes
-
+**After changes (comparison tests):**
 ```bash
-npm run test:visual         # New screenshots created
-git diff cypress/screenshots/  # See what changed
-# If good: git add + commit
-# If bad: fix CSS and re-run
+npm run test:visual                    # Creates new screenshots, compares to baseline
+git diff cypress/results/screenshots/  # Review visual changes
 ```
 
-## Troubleshooting
+Baselines are stored in `cypress/results/screenshots/` and committed to git. Tests fail if new screenshots differ from baselines.
 
-| Issue               | Fix                                   |
-|---------------------|---------------------------------------|
-| Port 4321 in use    | `killall node`                        |
-| Cypress not found   | `npm install`                         |
-| Tests timeout       | Check if site builds: `npm run build` |
-| Screenshots missing | Run `npm run test:visual` first       |
+## Config
 
-## Configuration
-
-- **Base URL**: http://localhost:4321
-- **Viewports**: Configured in `cypress.config.js`
-- **Threshold**: Pixel differences detected at 0.5%
-- **Screenshots**: Native Cypress `cy.screenshot()` functionality
-
-## CI/CD
-
-GitHub Actions workflow included in `.github/workflows/visual-tests.yml`
-- Runs on every push and PR
-- Tests in Chrome and Firefox
-- Uploads diff images on failure
+- Base URL: `http://localhost:4321`
+- Viewports: Defined in `cypress.config.js` env.viewports
+- Results: `cypress/results/` (screenshots + JUnit XML)
+- Port conflict: `killall node`
