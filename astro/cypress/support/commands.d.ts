@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="cypress-image-snapshot" />
 
 // Add TypeScript definitions for custom commands
 declare global {
@@ -11,7 +12,7 @@ declare global {
       checkForErrors(): Chainable<void>;
 
       /**
-       * Custom command to capture page at specific viewport
+       * Custom command to capture page at specific viewport and compare against baseline
        * @example cy.capturePageAtViewport('homepage', 'mobile')
        */
       capturePageAtViewport(pageName: string, viewportName: string): Chainable<void>;
@@ -21,7 +22,15 @@ declare global {
        * @example cy.testPageVisually('/', 'homepage')
        */
       testPageVisually(url: string, pageName: string): Chainable<void>;
+
+      /**
+       * Command to compare current screenshot against baseline snapshot
+       * @example cy.matchImageSnapshot('my-snapshot')
+       */
+      matchImageSnapshot(snapshotName?: string): Chainable<void>;
     }
   }
 }
+
+export {};
 

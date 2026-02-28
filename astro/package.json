@@ -1,5 +1,5 @@
 {
-  "name": "tobys-blog",
+  "name": "bad.robot",
   "type": "module",
   "version": "2.0",
   "scripts": {
@@ -30,6 +30,7 @@
   "devDependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "cypress": "^13.0.0",
+    "cypress-image-snapshot": "^4.0.1",
     "mocha-junit-reporter": "^2.2.1"
   },
   "overrides": {
