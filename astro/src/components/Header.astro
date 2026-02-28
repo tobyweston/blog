@@ -27,6 +27,26 @@ import logo from '../content/images/robot-logo_105x132.png';
       <a href="/video">Videos</a>
       <a href="/archive">Archive</a>
     </nav>
+
+    <div id="header-animation-switcher" class="header-switcher" style="display: none;">
+      <div class="switcher-buttons">
+        <button class="switcher-btn active" data-option="1" title="Smooth Fade Only">
+          <span class="btn-icon">⚫</span>
+        </button>
+        <button class="switcher-btn" data-option="2" title="Fade + Gentle Lift">
+          <span class="btn-icon">⬆️</span>
+        </button>
+        <button class="switcher-btn" data-option="3" title="Slide In Left">
+          <span class="btn-icon">➡️</span>
+        </button>
+        <button class="switcher-btn" data-option="4" title="Blur Fade">
+          <span class="btn-icon">🔮</span>
+        </button>
+        <button class="switcher-btn" data-option="5" title="Subtle Scale">
+          <span class="btn-icon">📈</span>
+        </button>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -62,7 +82,7 @@ import logo from '../content/images/robot-logo_105x132.png';
   }
 
   .logo-image {
-    //width: 84px;
+    /* width: 84px; */
     height: auto;
     flex-shrink: 0;
   }
