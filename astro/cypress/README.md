@@ -5,10 +5,14 @@
 ```bash
 cd astro
 
-# Build and preview (required first)
-npm run build && npm run preview &
+# Terminal 1: Start dev server
+npm run dev
 
-# Run all tests
+# Terminal 2: Run tests (once server is ready)
+npm run test:visual
+
+# Or use preview mode
+npm run build && npm run preview
 npm run test:visual
 
 # Interactive mode
@@ -32,17 +36,17 @@ npm run test:visual:open
 **First time setup (create baselines):**
 ```bash
 npm run test:visual:baseline
-git add cypress/results/screenshots/
+git add cypress/snapshots/
 git commit -m "Add visual regression baselines"
 ```
 
 **After changes (comparison tests):**
 ```bash
-npm run test:visual                    # Creates new screenshots, compares to baseline
-git diff cypress/results/screenshots/  # Review visual changes
+npm run test:visual               # Creates new screenshots, compares to baseline
+git diff cypress/snapshots/       # Review visual changes
 ```
 
-Baselines are stored in `cypress/results/screenshots/` and committed to git. Tests fail if new screenshots differ from baselines.
+Baselines are stored in `cypress/snapshots/` and committed to git. Tests fail if new screenshots differ from baselines. Diff images saved to `cypress/snapshots/__diff_output__/`.
 
 ## Config
 

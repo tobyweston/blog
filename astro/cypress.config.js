@@ -1,4 +1,8 @@
 import { defineConfig } from 'cypress';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
 
 export default defineConfig({
   projectId: 'mnnwjg',
@@ -9,8 +13,9 @@ export default defineConfig({
     video: false,
     screenshotOnRunFailure: true,
     screenshotsFolder: 'cypress/results/screenshots',  // Test failure screenshots go here
-    setupNodeEvents: () => {
-      // Plugins are handled in support/e2e.js
+    setupNodeEvents(on, config) {
+      addMatchImageSnapshotPlugin(on, config);
+      return config;
     },
   },
 
