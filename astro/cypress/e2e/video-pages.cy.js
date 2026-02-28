@@ -1,6 +1,14 @@
 /// <reference types="cypress" />
 
 describe('Video Pages - Enhanced Tests', () => {
+  let testData;
+
+  before(() => {
+    cy.fixture('test-data').then((data) => {
+      testData = data;
+    });
+  });
+
   beforeEach(() => {
     cy.checkForErrors();
   });
@@ -10,8 +18,8 @@ describe('Video Pages - Enhanced Tests', () => {
   });
 
   describe('Video Index Page (/video)', () => {
-    beforeEach(() => {
-      cy.visit('/video');
+    beforeEach(function() {
+      cy.visit(testData.pages.video.url);
     });
 
     it('should load the video index page', () => {
@@ -39,63 +47,59 @@ describe('Video Pages - Enhanced Tests', () => {
   });
 
   describe('Video Detail Pages', () => {
-    const testVideos = [
-      {
-        slug: '2019-06-29-refactoring',
-        title: 'Refactoring in 10 Minutes',
-        youtubeId: '-lkiccO8h6w',
-        name: 'video-refactoring'
-      },
-      {
-        slug: '2014-05-19-java-lamdas',
-        title: 'Java 8 Lambda',
-        name: 'video-lambdas'
-      },
-      {
-        slug: '2021-05-05-luhn-algorithm',
-        title: 'Luhn Algorithm',
-      }
-    ];
+    const videoKeys = ['refactoring', 'lambdas', 'luhn'];
 
-    testVideos.forEach(({ slug, title, youtubeId, name }) => {
-      describe(`Video: ${slug}`, () => {
-        const url = `/video/${slug}`;
-
-        it('should load the video page without errors', () => {
+    videoKeys.forEach((videoKey) => {
+      describe(`Video: ${videoKey}`, function() {
+        it('should load the video page without errors', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('body').should('be.visible');
         });
 
-        it('should display the correct title', () => {
+        it('should display the correct title', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('h1').should('exist');
-          if (title) {
-            cy.get('h1').should('contain', title);
+          if (video.title) {
+            cy.get('h1').should('contain', video.title);
           }
         });
 
-        it('should display "Video" kicker', () => {
+        it('should display "Video" kicker', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.detail-kicker').should('contain', 'Video');
         });
 
-        it('should display formatted publication date', () => {
+        it('should display formatted publication date', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('time').should('exist');
         });
 
-        it('should display video description', () => {
+        it('should display video description', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.video-detail-header p').should('exist');
         });
 
-        it('should embed YouTube video iframe', () => {
+        it('should embed YouTube video iframe', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.video-detail-frame').should('exist');
           cy.get('.video-detail-frame iframe').should('exist');
         });
 
-        it('should have correct iframe attributes', () => {
+        it('should have correct iframe attributes', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.video-detail-frame iframe')
             .should('have.attr', 'src')
@@ -108,21 +112,27 @@ describe('Video Pages - Enhanced Tests', () => {
             .should('have.attr', 'loading', 'lazy');
         });
 
-        if (youtubeId) {
-          it(`should embed the correct YouTube video ID: ${youtubeId}`, () => {
+        it('should embed the correct YouTube video ID if specified', function() {
+          const video = testData.videos[videoKey];
+          if (video.youtubeId) {
+            const url = `/video/${video.slug}`;
             cy.visit(url);
             cy.get('.video-detail-frame iframe')
               .should('have.attr', 'src')
-              .and('include', youtubeId);
-          });
-        }
+              .and('include', video.youtubeId);
+          }
+        });
 
-        it('should display video content section', () => {
+        it('should display video content section', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.video-detail-content').should('exist');
         });
 
-        it('should have proper responsive video frame', () => {
+        it('should have proper responsive video frame', function() {
+          const video = testData.videos[videoKey];
+          const url = `/video/${video.slug}`;
           cy.visit(url);
           cy.get('.video-detail-frame')
             .should('have.css', 'position', 'relative')
@@ -131,17 +141,18 @@ describe('Video Pages - Enhanced Tests', () => {
         });
 
         // Visual regression tests
-        if (name) {
-          it('should match visual snapshot on mobile', () => {
+        it('should match visual snapshots if name specified', function() {
+          const video = testData.videos[videoKey];
+          if (video.name) {
+            const url = `/video/${video.slug}`;
             cy.visit(url);
-            cy.capturePageAtViewport(name, 'mobile');
-          });
 
-          it('should match visual snapshot on desktop', () => {
-            cy.visit(url);
-            cy.capturePageAtViewport(name, 'desktop');
-          });
-        }
+            // Test both viewports in one visit
+            ['mobile', 'desktop'].forEach((viewport) => {
+              cy.capturePageAtViewport(video.name, viewport);
+            });
+          }
+        });
       });
     });
   });

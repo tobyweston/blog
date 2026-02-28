@@ -1,6 +1,14 @@
 /// <reference types="cypress" />
 
 describe('Visual Regression - Core Pages', () => {
+  let testData;
+
+  before(() => {
+    cy.fixture('test-data').then((data) => {
+      testData = data;
+    });
+  });
+
   // Track console errors
   beforeEach(() => {
     cy.checkForErrors();
@@ -11,34 +19,31 @@ describe('Visual Regression - Core Pages', () => {
     cy.get('@consoleError').should('not.have.been.called');
   });
 
-  const pages = [
-    { url: '/', name: 'homepage' },
-    { url: '/blog', name: 'blog-index' },
-    { url: '/book', name: 'book-index' },
-    { url: '/video', name: 'video-index' },
-    { url: '/archive', name: 'archive' },
-  ];
+  // Use fixture data for pages
+  const pageKeys = ['homepage', 'blog', 'book', 'video', 'archive'];
 
-  pages.forEach(({ url, name }) => {
-    describe(`${name} page`, () => {
-      it('should load without errors', () => {
-        cy.visit(url);
+  pageKeys.forEach((pageKey) => {
+    describe(`${pageKey} page`, () => {
+      it('should load without errors', function() {
+        const page = testData.pages[pageKey];
+        cy.visit(page.url);
+
+        // Stronger assertions
         cy.get('body').should('be.visible');
+        cy.get('h1').should('exist').and('not.be.empty');
+        cy.get('main').should('exist').and('be.visible');
+        cy.get('header').should('exist').and('be.visible');
+        cy.get('footer').should('exist').and('be.visible');
       });
 
-      it('should match visual snapshot on mobile', () => {
-        cy.visit(url);
-        cy.capturePageAtViewport(name, 'mobile');
-      });
+      it('should match visual snapshots across all viewports', function() {
+        const page = testData.pages[pageKey];
+        cy.visit(page.url);
 
-      it('should match visual snapshot on tablet', () => {
-        cy.visit(url);
-        cy.capturePageAtViewport(name, 'tablet');
-      });
-
-      it('should match visual snapshot on desktop', () => {
-        cy.visit(url);
-        cy.capturePageAtViewport(name, 'desktop');
+        // Test all viewports in one visit
+        ['mobile', 'tablet', 'desktop'].forEach((viewport) => {
+          cy.capturePageAtViewport(page.name, viewport);
+        });
       });
     });
   });

@@ -1,6 +1,14 @@
 /// <reference types="cypress" />
 
 describe('ClickToEnlarge Component', () => {
+  let testData;
+
+  before(() => {
+    cy.fixture('test-data').then((data) => {
+      testData = data;
+    });
+  });
+
   beforeEach(() => {
     cy.checkForErrors();
   });
@@ -9,9 +17,8 @@ describe('ClickToEnlarge Component', () => {
     cy.get('@consoleError').should('not.have.been.called');
   });
 
-  const postUrl = '/blog/2016-03-23-homebrew-temperature-logger';
-
-  it('opens and closes the dialog via the close button', () => {
+  it('opens and closes the dialog via the close button', function() {
+    const postUrl = testData.specialPosts.clickToEnlarge.url;
     cy.visit(postUrl);
 
     cy.get('[data-cte-trigger]').first().as('trigger');
@@ -29,7 +36,8 @@ describe('ClickToEnlarge Component', () => {
     });
   });
 
-  it('closes the dialog when clicking the backdrop', () => {
+  it('closes the dialog when clicking the backdrop', function() {
+    const postUrl = testData.specialPosts.clickToEnlarge.url;
     cy.visit(postUrl);
 
     cy.get('[data-cte-trigger]').first().as('trigger');

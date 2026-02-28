@@ -1,0 +1,83 @@
+{
+  "pages": {
+    "homepage": {
+      "url": "/",
+      "name": "homepage",
+      "title": "Toby Weston"
+    },
+    "blog": {
+      "url": "/blog",
+      "name": "blog-index",
+      "title": "Blog"
+    },
+    "book": {
+      "url": "/book",
+      "name": "book-index",
+      "title": "Books"
+    },
+    "video": {
+      "url": "/video",
+      "name": "video-index",
+      "title": "Videos"
+    },
+    "archive": {
+      "url": "/archive",
+      "name": "archive",
+      "title": "Archive"
+    }
+  },
+  "blogPosts": {
+    "recent": {
+      "slug": "2022-06-07-lead-time-vs-cycle-time",
+      "name": "recent-blog-post",
+      "title": "Lead Time vs Cycle Time"
+    },
+    "midEra": {
+      "slug": "2015-09-25-pair-tests-dont-work",
+      "name": "mid-era-blog-post",
+      "title": "Pair Tests Don't Work"
+    },
+    "older": {
+      "slug": "2010-07-11-growing-team-skills",
+      "name": "older-blog-post-with-mdx",
+      "title": "Growing Team Skills"
+    }
+  },
+  "videos": {
+    "refactoring": {
+      "slug": "2019-06-29-refactoring",
+      "name": "video-refactoring",
+      "title": "Refactoring in 10 Minutes",
+      "youtubeId": "-lkiccO8h6w"
+    },
+    "lambdas": {
+      "slug": "2014-05-19-java-lamdas",
+      "name": "video-lambdas",
+      "title": "Java 8 Lambda"
+    },
+    "luhn": {
+      "slug": "2021-05-05-luhn-algorithm",
+      "name": "video-luhn",
+      "title": "Luhn Algorithm"
+    }
+  },
+  "books": {
+    "scalaForJavaDevs": {
+      "slug": "scala-for-dava-devs",
+      "name": "book-detail",
+      "title": "Scala for Java Developers"
+    }
+  },
+  "specialPosts": {
+    "clickToEnlarge": {
+      "url": "/blog/2016-03-23-homebrew-temperature-logger",
+      "title": "Homebrew Temperature Logger"
+    }
+  },
+  "viewports": {
+    "mobile": { "width": 375, "height": 667 },
+    "tablet": { "width": 768, "height": 1024 },
+    "desktop": { "width": 1920, "height": 1080 }
+  }
+}
+
