@@ -14,8 +14,27 @@ books.sort((a: CollectionEntry<'book'>, b: CollectionEntry<'book'>) => b.data.pu
   </section>
 
   <section class="mt-10 space-y-8">
-    {books.map((book: CollectionEntry<'book'>) => (
-      <PreviewBook book={book} />
+    {books.map((book: CollectionEntry<'book'>, idx: number) => (
+      <div class="card-reveal" data-card-idx={idx}>
+        <PreviewBook book={book} />
+      </div>
     ))}
   </section>
+
+  <script type="module">
+    const CARD_REVEAL_DELAY = 100;
+    const ITEM_REVEAL_DELAY = 70;
+
+    function animateCard(cardElement, cardIndex) {
+      const cardDelay = cardIndex * CARD_REVEAL_DELAY;
+      setTimeout(() => cardElement.classList.add('revealed'), cardDelay);
+      cardElement.querySelectorAll('.card-item-reveal').forEach((item, i) => {
+        setTimeout(() => item.classList.add('revealed'), cardDelay + (i + 1) * ITEM_REVEAL_DELAY);
+      });
+    }
+
+    document.querySelectorAll('.card-reveal').forEach((card, index) => {
+      animateCard(card, index);
+    });
+  </script>
 </SiteLayout>

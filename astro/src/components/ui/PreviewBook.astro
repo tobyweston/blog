@@ -20,7 +20,7 @@ if (book.data.coverImage) {
 ---
 
 <article class="card book-preview">
-  <a href={detailHref} class="book-preview-link" aria-label={`View ${book.data.title}`}>
+  <a href={detailHref} class="book-preview-link card-item-reveal" data-item-idx="0" aria-label={`View ${book.data.title}`}>
     {coverImageImport && (
       <div class="book-preview-cover">
         <Image
@@ -33,13 +33,13 @@ if (book.data.coverImage) {
   </a>
   <div class="book-preview-body">
     <div class="book-preview-meta">
-      <h3 class="text-2xl font-semibold">{book.data.title}</h3>
-      <div class="text-sm text-gray-500 font-medium">
+      <h3 class="text-2xl font-semibold card-item-reveal" data-item-idx="1">{book.data.title}</h3>
+      <div class="text-sm text-gray-500 font-medium card-item-reveal" data-item-idx="2">
         <FormattedDate date={book.data.pubDate} />
       </div>
     </div>
-    <p class="text-gray-700">{book.data.description}</p>
-    <a href={detailHref} class="book-preview-cta">View Details</a>
+    <p class="text-gray-700 card-item-reveal" data-item-idx="3">{book.data.description}</p>
+    <a href={detailHref} class="book-preview-cta card-item-reveal" data-item-idx="4">View Details</a>
   </div>
 </article>
 
