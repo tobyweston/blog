@@ -7,11 +7,20 @@
 // Import and configure cypress-image-snapshot for visual regression testing
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
+// Configure cypress-image-snapshot with update support
+const updateSnapshots = Cypress.env('updateSnapshots') || false;
+
 addMatchImageSnapshotCommand({
   failureThreshold: 0.03,           // 3% threshold
   failureThresholdType: 'percent',
   customDiffConfig: { threshold: 0.1 },
   capture: 'viewport',              // Capture only viewport, not entire page
+  customSnapshotsDir: 'cypress/snapshots',  // Visual regression baselines go here
+  customDiffDir: 'cypress/snapshots/__diff_output__',  // Diff images go here
+  ...(updateSnapshots && {
+    updatePassedSnapshot: true,      // Update snapshots when updateSnapshots=true
+    failOnSnapshotDiff: false        // Don't fail tests when updating
+  })
 });
 
 // Custom command to check for console errors

@@ -8,6 +8,7 @@ export default defineConfig({
     viewportHeight: 1080,
     video: false,
     screenshotOnRunFailure: true,
+    screenshotsFolder: 'cypress/results/screenshots',  // Test failure screenshots go here
     setupNodeEvents: () => {
       // Plugins are handled in support/e2e.js
     },
