@@ -50,6 +50,14 @@
     letter-spacing: -0.02em;
   }
 
+  .page-header {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
   .logo-subtitle-text {
     font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       'Liberation Mono', 'Courier New', monospace;

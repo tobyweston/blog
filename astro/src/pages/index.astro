@@ -10,10 +10,8 @@ const recent = posts.slice(0,5);
 ---
 
 <SiteLayout title="bad.robot" description="Good Robots do what they're told!">
-  <Hero kicker="Thoughts & experiments" title="Welcome" subtitle="Notes on programming, systems and developer craft" cta={{href:'/blog', text:'See Posts'}} />
-
-  <section class="mt-12">
-    <h2 class="text-2xl font-semibold mb-6">Recent Posts</h2>
+  <section>
+    <h1 class="page-header mb-6">Blog</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {recent.map(p => (
         <BlogTeaser post={p} />
