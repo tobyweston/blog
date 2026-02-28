@@ -3,10 +3,11 @@ import {getCollection} from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import SiteLayout from '../../components/ui/SiteLayout.astro';
 import PreviewBlog from '../../components/ui/PreviewBlog.astro';
+import RobotCaneCard from "../../components/ui/RobotCaneCard.astro";
 
 const posts = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const perPage = 12;
+const perPage = 5;
 const pagePosts = posts.slice(0, perPage);
 const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
   slug: post.slug,
@@ -17,13 +18,14 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
 }));
 ---
 
-<SiteLayout title="Blog - bad.robot" description="Recent blog posts">
+<SiteLayout title="Blog - bad.robot" description="Good Robots do what they're told!">
   <section>
     <h1 class="page-header mb-6">Blog</h1>
-    <div id="posts-grid" class="space-y-6">
+    <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {pagePosts.map((p: CollectionEntry<'blog'>) => (
         <PreviewBlog post={p} />
       ))}
+      <RobotCaneCard />
     </div>
 
     {posts.length > perPage && (
