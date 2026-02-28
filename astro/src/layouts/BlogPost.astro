@@ -2,6 +2,7 @@
 import type {CollectionEntry} from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import SiteLayout from '../components/ui/SiteLayout.astro';
+import Giscus from '../components/ui/Giscus.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -61,6 +62,8 @@ const jsonLd = JSON.stringify({
       <div class="prose">
         <slot />
       </div>
+
+      <Giscus />
     </article>
   </div>
 </SiteLayout>

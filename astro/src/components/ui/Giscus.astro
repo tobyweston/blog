@@ -1,0 +1,98 @@
+---
+// Giscus comment widget
+// Configure GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID
+// in your .env file (see .env.example).
+// Visit https://giscus.app to generate these values for your repository.
+const repo         = import.meta.env.PUBLIC_GISCUS_REPO         ?? '';
+const repoId       = import.meta.env.PUBLIC_GISCUS_REPO_ID      ?? '';
+const category     = import.meta.env.PUBLIC_GISCUS_CATEGORY     ?? 'General';
+const categoryId   = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID  ?? '';
+
+// Only render when the required values are present
+const enabled = repo && repoId && categoryId;
+---
+
+{enabled && (
+  <div class="giscus-wrapper">
+    <div class="giscus-divider">
+      <span class="giscus-divider-label">Discussion</span>
+    </div>
+    <div class="giscus" id="giscus-container"></div>
+  </div>
+)}
+
+{enabled && (
+  <script
+    define:vars={{ repo, repoId, category, categoryId }}
+    type="module"
+    is:inline
+  >
+    function loadGiscus() {
+      const container = document.getElementById('giscus-container');
+      if (!container) return;
+
+      const script = document.createElement('script');
+      script.src            = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo',              repo);
+      script.setAttribute('data-repo-id',           repoId);
+      script.setAttribute('data-category',          category);
+      script.setAttribute('data-category-id',       categoryId);
+      script.setAttribute('data-mapping',           'pathname');
+      script.setAttribute('data-strict',            '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata',     '0');
+      script.setAttribute('data-input-position',    'top');
+      script.setAttribute('data-theme',             'light');
+      script.setAttribute('data-lang',              'en');
+      script.setAttribute('data-loading',           'lazy');
+      script.crossOrigin    = 'anonymous';
+      script.async          = true;
+      container.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadGiscus);
+    } else {
+      loadGiscus();
+    }
+  </script>
+)}
+
+<style>
+  .giscus-wrapper {
+    margin-top: 3rem;
+    padding-top: 0;
+  }
+
+  /* Divider matching the site's page-kicker aesthetic */
+  .giscus-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .giscus-divider::before,
+  .giscus-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .giscus-divider-label {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Contain and blend the giscus iframe */
+  .giscus,
+  .giscus-frame {
+    width: 100%;
+  }
+</style>
+
