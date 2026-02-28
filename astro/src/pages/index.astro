@@ -1,22 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
-import SiteLayout from '../components/ui/SiteLayout.astro';
-import Hero from '../components/ui/Hero.astro';
-import BlogTeaser from "../components/ui/BlogTeaser.astro";
-import RobotCaneCard from "../components/ui/RobotCaneCard.astro";
-
-const posts = (await getCollection('blog')).sort((a,b)=> b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const recent = posts.slice(0,5);
+return Astro.redirect('/blog');
 ---
 
-<SiteLayout title="bad.robot" description="Good Robots do what they're told!">
-  <section>
-    <h1 class="page-header mb-6">Blog</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {recent.map(p => (
-        <BlogTeaser post={p} />
-      ))}
-      <RobotCaneCard />
-    </div>
-  </section>
-</SiteLayout>
