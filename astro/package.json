@@ -15,7 +15,7 @@
     "test:visual:open": "cypress open"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.2.1",
@@ -29,11 +29,13 @@
   },
   "devDependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "@simonsmith/cypress-image-snapshot": "^10.0.3",
     "cypress": "^13.0.0",
-    "cypress-image-snapshot": "^4.0.1",
     "mocha-junit-reporter": "^2.2.1"
   },
   "overrides": {
-    "esbuild": "0.20.2"
+    "esbuild": "0.20.2",
+    "serialize-javascript": "^7.0.3",
+    "diff": "^8.0.3"
   }
 }

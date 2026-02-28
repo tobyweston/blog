@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-/// <reference types="cypress-image-snapshot" />
+/// <reference types="@simonsmith/cypress-image-snapshot" />
 
 // Add TypeScript definitions for custom commands
 declare global {

@@ -5,7 +5,7 @@
 // ***********************************************************
 
 // Import and configure cypress-image-snapshot for visual regression testing
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
 
 // Configure cypress-image-snapshot with update support
 const updateSnapshots = Cypress.env('updateSnapshots') || false;

@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
-const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 
 export default defineConfig({
   projectId: 'mnnwjg',
