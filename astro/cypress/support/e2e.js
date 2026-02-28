@@ -56,11 +56,27 @@ Cypress.Commands.add('testPageVisually', (url, pageName) => {
   });
 });
 
-// Prevent uncaught exceptions from failing tests (but log them)
+// Handle uncaught exceptions selectively
 Cypress.on('uncaught:exception', (err, _runnable) => {
-  // Log the error
-  cy.log('Uncaught exception:', err.message);
-  // Return false to prevent the error from failing the test
-  // Remove this if you want uncaught exceptions to fail tests
-  return false;
+  // Log all errors for debugging
+  console.error('Uncaught exception:', err.message);
+
+  // Only ignore specific known benign errors that don't affect functionality
+  const benignErrors = [
+    'ResizeObserver loop limit exceeded',
+    'ResizeObserver loop completed with undelivered notifications',
+  ];
+
+  // Check if this is a known benign error
+  const isBenignError = benignErrors.some(benignError =>
+    err.message.includes(benignError)
+  );
+
+  if (isBenignError) {
+    // Ignore known benign errors
+    return false;
+  }
+
+  // Let all other errors fail the test so we catch real bugs
+  return true;
 });

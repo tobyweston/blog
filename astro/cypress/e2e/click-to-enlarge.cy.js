@@ -5,6 +5,10 @@ describe('ClickToEnlarge Component', () => {
     cy.checkForErrors();
   });
 
+  afterEach(() => {
+    cy.get('@consoleError').should('not.have.been.called');
+  });
+
   const postUrl = '/blog/2016-03-23-homebrew-temperature-logger';
 
   it('opens and closes the dialog via the close button', () => {

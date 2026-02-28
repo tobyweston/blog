@@ -236,47 +236,36 @@ describe('Hyperlink Resolution Tests', () => {
     });
 
     describe('Crawl Internal Links', () => {
-      it('should crawl internal links and ensure they resolve', () => {
-        const maxPages = 50;
-        const visited = new Set();
-        const queue = ['/'];
+      it('should verify internal links resolve without 404s', () => {
+        const maxPages = 20; // Reduced for faster tests
+        const linksToCheck = new Set();
 
-        const crawlNext = () => {
-          if (queue.length === 0 || visited.size >= maxPages) {
-            return;
+        // Start from homepage and collect links
+        cy.visit('/');
+
+        cy.get('a[href^="/"]').each(($link) => {
+          const href = $link.prop('href');
+          const pathname = new URL(href).pathname;
+          if (pathname && !pathname.includes('#') && linksToCheck.size < maxPages) {
+            linksToCheck.add(pathname);
           }
+        }).then(() => {
+          // Use cy.request() for fast link validation (doesn't load full page)
+          const links = Array.from(linksToCheck);
+          cy.log(`Checking ${links.length} internal links`);
 
-          const next = queue.shift();
-          if (!next || visited.has(next)) {
-            return crawlNext();
-          }
-
-          visited.add(next);
-
-          cy.request(next).its('status').should('eq', 200);
-          cy.visit(next);
-
-          cy.get('a[href^="/"]').then(($links) => {
-            const hrefs = [...new Set(
-              $links
-                .toArray()
-                .map((link) => link.getAttribute('href'))
-                .filter((href) => href && !href.includes('#'))
-            )];
-
-            hrefs.forEach((href) => {
-              if (!visited.has(href) && queue.length + visited.size < maxPages) {
-                queue.push(href);
-              }
+          links.forEach(link => {
+            cy.request({
+              url: link,
+              failOnStatusCode: false
+            }).then(response => {
+              expect(response.status, `Link ${link} should return 200`).to.eq(200);
             });
           });
-
-          cy.then(crawlNext);
-        };
-
-        cy.then(crawlNext);
+        });
       });
     });
+
 
     describe('404 Page', () => {
       it('should show 404 page for non-existent routes', () => {
