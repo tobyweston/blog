@@ -22,10 +22,14 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
   <section>
     <h1 class="page-header mb-6">Blog</h1>
     <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {pagePosts.map((p: CollectionEntry<'blog'>) => (
-        <PreviewBlog post={p} />
+      {pagePosts.map((p: CollectionEntry<'blog'>, idx: number) => (
+        <div class="card-reveal" data-card-idx={idx}>
+          <PreviewBlog post={p} />
+        </div>
       ))}
-      <RobotCaneCard />
+      <div class="card-reveal" data-card-idx={pagePosts.length}>
+        <RobotCaneCard />
+      </div>
     </div>
 
     {posts.length > perPage && (
@@ -78,14 +82,20 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
     }
   </style>
 
-  <script type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts}}>
+  <script type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts, initialCardCount: pagePosts.length + 1}}>
     let offset = perPage;
     let loading = false;
     let hasMore = totalPosts > perPage;
+    let currentCardIdx = initialCardCount; // Starting index for new cards
 
     const postsGrid = document.getElementById('posts-grid');
     const loadingIndicator = document.getElementById('loading-indicator');
     const sentinel = document.getElementById('scroll-sentinel');
+
+    // Animation timing constants (matching Hero component aesthetic)
+    const CARD_REVEAL_DELAY = 80; // ms between each card
+    const ITEM_REVEAL_DELAY = 60; // ms between items within a card
+    const REVEAL_DURATION = 450; // ms for each reveal animation
 
     function formatDate(dateString) {
       const date = new Date(dateString);
@@ -93,30 +103,42 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
     }
 
     function createPostCard(post) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'card-reveal';
+      wrapper.setAttribute('data-card-idx', currentCardIdx);
+
       const article = document.createElement('article');
-      article.className = 'card hover:shadow-medium';
+      article.className = 'card hover:shadow-medium overflow-hidden h-full';
 
       const link = document.createElement('a');
       link.href = `/blog/${post.slug}/`;
-      link.className = 'block no-underline';
+      link.className = 'block no-underline flex flex-col h-full';
 
       const title = document.createElement('h3');
-      title.className = 'text-2xl font-bold mb-2 text-gray-900';
+      title.className = 'text-2xl font-bold mb-2 text-gray-900 card-item-reveal';
+      title.setAttribute('data-item-idx', '0');
       title.textContent = post.title;
+
+      let itemIdx = 1;
 
       let subTitle;
       if (post.subTitle) {
         subTitle = document.createElement('p');
-        subTitle.className = 'text-base text-gray-600 mb-2 italic';
+        subTitle.className = 'text-base text-gray-600 mb-2 italic card-item-reveal';
+        subTitle.setAttribute('data-item-idx', String(itemIdx));
         subTitle.textContent = post.subTitle;
+        itemIdx++;
       }
 
       const dateDiv = document.createElement('div');
-      dateDiv.className = 'text-sm text-gray-500 mb-3 font-medium';
+      dateDiv.className = 'text-sm text-gray-500 mb-3 font-medium card-item-reveal';
+      dateDiv.setAttribute('data-item-idx', String(itemIdx));
       dateDiv.textContent = formatDate(post.pubDate);
+      itemIdx++;
 
       const description = document.createElement('p');
-      description.className = 'text-gray-700';
+      description.className = 'text-gray-700 card-item-reveal';
+      description.setAttribute('data-item-idx', String(itemIdx));
       description.textContent = post.description || '';
 
       link.appendChild(title);
@@ -124,8 +146,37 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
       link.appendChild(dateDiv);
       link.appendChild(description);
       article.appendChild(link);
+      wrapper.appendChild(article);
 
-      return article;
+      currentCardIdx++;
+      return wrapper;
+    }
+
+    function animateCard(cardElement, cardIndex) {
+      const cardRevealDelay = cardIndex * CARD_REVEAL_DELAY;
+
+      // Animate the card itself
+      setTimeout(() => {
+        cardElement.classList.add('revealed');
+      }, cardRevealDelay);
+
+      // Animate items within the card
+      const itemElements = cardElement.querySelectorAll('.card-item-reveal');
+      itemElements.forEach((item, itemIndex) => {
+        const itemDelay = cardRevealDelay + ((itemIndex + 1) * ITEM_REVEAL_DELAY);
+        setTimeout(() => {
+          item.classList.add('revealed');
+        }, itemDelay);
+      });
+    }
+
+    function animateExistingCards() {
+      const cardElements = document.querySelectorAll('.card-reveal');
+      cardElements.forEach((card, index) => {
+        if (!card.classList.contains('revealed')) {
+          animateCard(card, index);
+        }
+      });
     }
 
     async function loadMorePosts() {
@@ -138,7 +189,7 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
 
       // Track when loading started for minimum display time
       const loadStartTime = Date.now();
-      const minDisplayTime = 1000; // 1 seconds minimum
+      const minDisplayTime = 1000;
 
       try {
         const nextPosts = allPosts.slice(offset, offset + perPage);
@@ -151,9 +202,13 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
         // Wait for the remaining time before adding posts
         setTimeout(() => {
           console.log('Adding posts to grid');
-          nextPosts.forEach(post => {
+          const startCardIdx = document.querySelectorAll('.card-reveal').length;
+
+          nextPosts.forEach((post, idx) => {
             const card = createPostCard(post);
             postsGrid?.appendChild(card);
+            // Animate each new card with staggered timing
+            animateCard(card, startCardIdx + idx);
           });
 
           offset += nextPosts.length;
@@ -184,6 +239,9 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
       }
     }
 
+    // Animate initial cards on page load
+    animateExistingCards();
+
     // Intersection Observer for infinite scroll
     if (sentinel && hasMore) {
       console.log('Setting up Intersection Observer', { sentinel, hasMore });
@@ -197,7 +255,7 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
           });
         },
         {
-          rootMargin: '200px', // Start loading 200px before reaching the sentinel
+          rootMargin: '200px',
         }
       );
 

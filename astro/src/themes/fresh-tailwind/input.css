@@ -234,6 +234,8 @@
     padding: 1.5rem;
     transition: all 0.3s ease;
     margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .card:hover {
@@ -260,6 +262,38 @@
     transition: opacity 0.45s cubic-bezier(0.2, 0.9, 0.2, 1),
                 transform 0.45s cubic-bezier(0.2, 0.9, 0.2, 1);
   }
+
+  /* Card reveal animations for blog previews */
+  .card-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.45s cubic-bezier(0.2, 0.9, 0.2, 1),
+                transform 0.45s cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  .card-reveal > .card {
+    flex: 1;
+  }
+
+  /* Staggered reveals within cards */
+  .card-item-reveal {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  .card-item-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.2, 1),
+                transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
 }
 
 @layer utilities {
@@ -281,6 +315,10 @@
 
   .shadow-medium {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .grid-auto-rows-fr {
+    grid-auto-rows: 1fr;
   }
 }
 
