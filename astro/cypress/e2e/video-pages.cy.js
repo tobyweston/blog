@@ -43,11 +43,13 @@ describe('Video Pages - Enhanced Tests', () => {
       {
         slug: '2019-06-29-refactoring',
         title: 'Refactoring in 10 Minutes',
-        youtubeId: '-lkiccO8h6w'
+        youtubeId: '-lkiccO8h6w',
+        name: 'video-refactoring'
       },
       {
         slug: '2014-05-19-java-lamdas',
         title: 'Java 8 Lambda',
+        name: 'video-lambdas'
       },
       {
         slug: '2021-05-05-luhn-algorithm',
@@ -55,7 +57,7 @@ describe('Video Pages - Enhanced Tests', () => {
       }
     ];
 
-    testVideos.forEach(({ slug, title, youtubeId }) => {
+    testVideos.forEach(({ slug, title, youtubeId, name }) => {
       describe(`Video: ${slug}`, () => {
         const url = `/video/${slug}`;
 
@@ -127,6 +129,19 @@ describe('Video Pages - Enhanced Tests', () => {
             .should('have.css', 'width')
             .and('not.equal', '0px');
         });
+
+        // Visual regression tests
+        if (name) {
+          it('should match visual snapshot on mobile', () => {
+            cy.visit(url);
+            cy.capturePageAtViewport(name, 'mobile');
+          });
+
+          it('should match visual snapshot on desktop', () => {
+            cy.visit(url);
+            cy.capturePageAtViewport(name, 'desktop');
+          });
+        }
       });
     });
   });
@@ -137,6 +152,12 @@ describe('Video Pages - Enhanced Tests', () => {
       cy.get('nav a[href="/video"]').click();
       cy.url().should('include', '/video');
       cy.get('h1').should('contain', 'Videos');
+    });
+
+    it('should navigate from homepage to videos using text link', () => {
+      cy.visit('/');
+      cy.contains('video', { matchCase: false }).first().click();
+      cy.url().should('include', '/video');
     });
 
     it('should navigate from video index to video detail', () => {
