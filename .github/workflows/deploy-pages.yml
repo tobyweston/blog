@@ -22,9 +22,11 @@ jobs:
           cache: npm
           cache-dependency-path: astro/package-lock.json
 
-      - name: Install dependencies
+      - name: Clean and install dependencies
         working-directory: astro
-        run: npm ci
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       - name: Build site
         working-directory: astro
