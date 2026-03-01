@@ -14,6 +14,9 @@
     "test:visual:baseline": "cypress run --env updateSnapshots=true",
     "test:visual:open": "cypress open"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
