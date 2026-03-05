@@ -7,9 +7,12 @@
 // Import and configure cypress-image-snapshot for visual regression testing
 import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
 
-// Configure cypress-image-snapshot with update support
-const updateSnapshots = Cypress.env('updateSnapshots') || false;
+// Read Cypress env via Cypress.config to avoid deprecated Cypress.env signatures.
+const env = Cypress.config('env') || {};
+const updateSnapshots = Boolean(env.updateSnapshots);
+const viewports = env.viewports;
 
+// Configure cypress-image-snapshot with update support
 addMatchImageSnapshotCommand({
   failureThreshold: 0.03,           // 3% threshold
   failureThresholdType: 'percent',
@@ -33,7 +36,7 @@ Cypress.Commands.add('checkForErrors', () => {
 
 // Custom command to take full page screenshot at different viewports
 Cypress.Commands.add('capturePageAtViewport', (pageName, viewportName) => {
-  const viewport = Cypress.env('viewports')[viewportName];
+  const viewport = viewports[viewportName];
 
   cy.viewport(viewport.width, viewport.height);
 
@@ -55,12 +58,12 @@ Cypress.Commands.add('capturePageAtViewport', (pageName, viewportName) => {
 
 // Custom command to test a page across all viewports
 Cypress.Commands.add('testPageVisually', (url, pageName) => {
-  const viewports = Object.keys(Cypress.env('viewports'));
+  const viewportNames = Object.keys(viewports);
 
   cy.visit(url);
   cy.checkForErrors();
 
-  viewports.forEach((viewportName) => {
+  viewportNames.forEach((viewportName) => {
     cy.capturePageAtViewport(pageName, viewportName);
   });
 });

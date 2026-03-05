@@ -82,7 +82,7 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
     }
   </style>
 
-  <script type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts, initialCardCount: pagePosts.length + 1}}>
+  <script is:inline type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts, initialCardCount: pagePosts.length + 1}}>
     let offset = perPage;
     let loading = false;
     let hasMore = totalPosts > perPage;
@@ -95,7 +95,6 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
     // Animation timing constants (matching Hero component aesthetic)
     const CARD_REVEAL_DELAY = 80; // ms between each card
     const ITEM_REVEAL_DELAY = 60; // ms between items within a card
-    const REVEAL_DURATION = 450; // ms for each reveal animation
 
     function formatDate(dateString) {
       const date = new Date(dateString);

@@ -46,7 +46,7 @@ const redirectUrl = `/blog/${newSlug}/`;
 		<p>
 			Redirecting to <a href={redirectUrl}>{redirectUrl}</a>...
 		</p>
-		<script type="module" define:vars={{ redirectUrl }}>
+		<script is:inline type="module" define:vars={{ redirectUrl }}>
 			window.location.href = redirectUrl;
 		</script>
 	</body>
