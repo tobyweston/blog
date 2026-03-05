@@ -40,9 +40,12 @@ describe('Visual Regression - Core Pages', () => {
         const page = testData.pages[pageKey];
         cy.visit(page.url);
 
+        // '/' redirects to '/blog', so compare against the same baseline.
+        const snapshotPageName = pageKey === 'homepage' ? 'blog-index' : page.name;
+
         // Test all viewports in one visit
         ['mobile', 'tablet', 'desktop'].forEach((viewport) => {
-          cy.capturePageAtViewport(page.name, viewport);
+          cy.capturePageAtViewport(snapshotPageName, viewport);
         });
       });
     });
@@ -65,4 +68,3 @@ describe('Visual Regression - Core Pages', () => {
     });
   });
 });
-
