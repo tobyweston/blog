@@ -86,7 +86,7 @@ describe('Video Pages - Enhanced Tests', () => {
           const video = testData.videos[videoKey];
           const url = `/video/${video.slug}`;
           cy.visit(url);
-          cy.get('.video-detail-header p').should('exist');
+          cy.get('.article-description').should('exist').and('not.be.empty');
         });
 
         it('should embed YouTube video iframe', function() {
@@ -127,7 +127,7 @@ describe('Video Pages - Enhanced Tests', () => {
           const video = testData.videos[videoKey];
           const url = `/video/${video.slug}`;
           cy.visit(url);
-          cy.get('.video-detail-content').should('exist');
+          cy.get('section.prose').should('exist');
         });
 
         it('should have proper responsive video frame', function() {
@@ -233,6 +233,4 @@ describe('Video Pages - Enhanced Tests', () => {
     });
   });
 });
-
-
 
