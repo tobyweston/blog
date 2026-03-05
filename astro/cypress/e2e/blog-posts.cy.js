@@ -57,10 +57,10 @@ describe('Visual Regression - Blog Posts', () => {
   });
 
   describe('Blog navigation', () => {
-    it('should navigate between blog posts', () => {
+    it('should navigate to a post from the blog grid', () => {
       cy.visit('/blog');
-      cy.get('a').contains('Lead Time').first().click();
-      cy.url().should('include', '/blog/');
+      cy.get('#posts-grid a[href^="/blog/"]').first().click();
+      cy.url().should('match', /\/blog\/.+/);
 
       // Verify we're on a valid blog post page
       cy.get('article').should('exist').and('be.visible');
@@ -81,4 +81,3 @@ describe('Visual Regression - Blog Posts', () => {
     });
   });
 });
-
