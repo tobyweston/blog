@@ -15,7 +15,7 @@
     "test:visual:open": "cypress open"
   },
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -24,21 +24,16 @@
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^6.0.1",
     "astro": "^5.17.3",
-    "astro-embed": "^0.9.0",
+    "astro-embed": "^0.12.0",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@simonsmith/cypress-image-snapshot": "^10.0.3",
-    "cypress": "^13.0.0",
+    "cypress": "^15.11.0",
     "mocha-junit-reporter": "^2.2.1"
-  },
-  "overrides": {
-    "esbuild": "0.20.2",
-    "serialize-javascript": "^7.0.3",
-    "diff": "^8.0.3"
   }
 }
