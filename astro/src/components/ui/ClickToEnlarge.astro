@@ -66,8 +66,12 @@ const id = `cte-${Math.random().toString(36).slice(2, 9)}`;
       }
 
       const dialog = event.target.closest('dialog.cte-dialog');
-      if (dialog && event.target === dialog) {
-        dialog.close();
+      if (dialog) {
+        const frame = dialog.querySelector('.cte-frame');
+        // Treat clicks on dialog shell or frame padding as backdrop intent.
+        if (event.target === dialog || event.target === frame) {
+          dialog.close();
+        }
       }
     });
 
