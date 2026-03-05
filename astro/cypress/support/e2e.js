@@ -7,10 +7,12 @@
 // Import and configure cypress-image-snapshot for visual regression testing
 import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
 
-// Read Cypress env via Cypress.config to avoid deprecated Cypress.env signatures.
-const env = Cypress.config('env') || {};
+// Merge env from both config and runtime so CLI overrides still work in test runner.
+const envFromConfig = Cypress.config('env') || {};
+const envFromRuntime = Cypress.env() || {};
+const env = { ...envFromConfig, ...envFromRuntime };
 const updateSnapshots = Boolean(env.updateSnapshots);
-const viewports = env.viewports;
+const viewports = env.viewports || {};
 
 // Configure cypress-image-snapshot with update support
 addMatchImageSnapshotCommand({
@@ -37,6 +39,9 @@ Cypress.Commands.add('checkForErrors', () => {
 // Custom command to take full page screenshot at different viewports
 Cypress.Commands.add('capturePageAtViewport', (pageName, viewportName) => {
   const viewport = viewports[viewportName];
+  if (!viewport) {
+    throw new Error(`Missing Cypress env viewport definition for "${viewportName}"`);
+  }
 
   cy.viewport(viewport.width, viewport.height);
 
@@ -59,6 +64,9 @@ Cypress.Commands.add('capturePageAtViewport', (pageName, viewportName) => {
 // Custom command to test a page across all viewports
 Cypress.Commands.add('testPageVisually', (url, pageName) => {
   const viewportNames = Object.keys(viewports);
+  if (viewportNames.length === 0) {
+    throw new Error('No Cypress env viewports configured. Expected env.viewports in cypress.config.js');
+  }
 
   cy.visit(url);
   cy.checkForErrors();
