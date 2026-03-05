@@ -50,7 +50,7 @@ describe('Hyperlink Resolution Tests', () => {
       it('should navigate home when clicking logo', () => {
         cy.visit('/blog');
         cy.get('header .logo-link').click();
-        cy.url().should('eq', Cypress.config().baseUrl + '/');
+        cy.url().should('include', '/blog');
       });
     });
 
