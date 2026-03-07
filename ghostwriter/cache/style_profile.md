@@ -3,9 +3,18 @@
 ## Voice summary
 A technically literate, pragmatic and slightly opinionated blog voice that teaches through concrete examples and trade-offs. Writing is authoritative but collegial: it assumes an informed reader, uses short paragraphs, headings and lists, and mixes crisp explanations with worked examples (often code or commands). The voice privileges clarity, traceability and maintainability over cleverness-for-its-own-sake.
 
+Avoid writing like a generic “tech blogger”. Prefer reasoning from first principles and engineering judgement.
+
+## Voice Guiderail
+Never sound like:
+- startup marketing
+- LinkedIn growth advice
+- generic developer evangelism
+
 ## Tone
 **Overall:** clear, didactic and gently provocative
-
+- reflective
+- slightly contrarian (positive disruption)
 - authoritative (expert-level)
 - pragmatic (focus on actionable guidance)
 - analytical (weighs trade-offs)
@@ -39,6 +48,7 @@ A technically literate, pragmatic and slightly opinionated blog voice that teach
 - Problem → evidence → consequence: explain why a pattern is problematic, show failure modes, then give the architectural/maintenance consequences.
 - Use of numbered steps and short checklists for procedures and recipes.
 - Use of short quoted definitions or external authority (e.g. Google/DORA) to ground claims.
+- Reframe: “what people think is happening” vs “what is actually happening”
 
 ## Signature moves
 - Start with a realistic micro-scenario to make the problem tangible.
@@ -50,9 +60,32 @@ A technically literate, pragmatic and slightly opinionated blog voice that teach
 ## Favourite themes
 - software delivery metrics (lead time, DORA)
 - governance and compliance in regulated environments (banking)
-- code review practices, trunk-based development, pair programming
+- code review practices, trunk-based development, pair programming, extreme programming
 - Java/Scala programming styles (imperative vs functional) and naming/abstraction hygiene
 - packaging/deployment tooling (Debian .deb, apt repositories, sbt-native-packager)
+
+## Deeper analytical pattern
+Frequently reframes a surface technical issue as a systemic design or organisational problem.
+
+Examples:
+- developer friction → trust problem
+- compliance → evidence problem
+- tooling → governance mechanism
+
+Tends to identify root cause and frame things as "systems" problems (systems thinkings). For example, how organisational dysfunction can lead to behavioural anti-patterns within engineering teams. 
+
+Thinks about technical choices affecting the culture and behaviour of teams, and vice versa. For example, how branching models can affect code review practices and team trust - enforcing branch protection can have the side effect of limited trunk based development.
+
+Enjoys deeper analysis of first principles, examples being methods vs functions or message passing vs method invocation.
+
+## Framework style
+Often introduces simple mental models or frameworks that organise complex problems.
+
+Examples:
+- trust lifecycle (establish / verify / maintain)
+- delivery vs runtime risk
+- evidence vs assertion
+
 
 ## Vocabulary
 - Preferred register: Technically literate, semi-formal British English with occasional colloquial touches and contractions.
