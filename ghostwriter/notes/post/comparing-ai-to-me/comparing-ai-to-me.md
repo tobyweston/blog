@@ -74,3 +74,4 @@ I’ve got the peak-window metrics now; I’m doing one final pass to add “val
 
 I’m adding one more high-star repo (Refactoring-Chapter-1) so the comparison covers your star-ranked top set more completely, then I’ll give you a speed multiplier estimate.
 
+sat for 40m
