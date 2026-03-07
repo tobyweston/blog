@@ -2,9 +2,14 @@
 
 This CLI orchestrates the full blog-writing pipeline:
 
+```
 plan → review → draft → revise → evaluate
+```
 
-It is intentionally **guided and verbose** so you don't have to remember the workflow.
+It is intentionally **guided and verbose** so you don’t have to remember the workflow.
+
+Ghostwriter is designed as a **personal writing engine** rather than a single AI prompt.
+It combines planning, semantic retrieval, structured frameworks, and revision passes to produce high-quality technical writing in your voice.
 
 
 
@@ -24,9 +29,9 @@ python ghostwriter.py new "Why compliance fails developers"
 
 Pipeline:
 
-1. Create plan
+1. Create a plan
 2. Pause for human review
-3. Generate draft
+3. Generate a draft
 4. Optional revision pass
 5. Optional evaluation
 
@@ -47,6 +52,8 @@ You will be prompted to:
 
 This keeps **human judgement in the loop**.
 
+The **plan stage is critical** — it determines the structure and argument of the post.
+
 
 
 # Providing More Direction
@@ -54,9 +61,7 @@ This keeps **human judgement in the loop**.
 Add an **angle** or thesis:
 
 ```
-python ghostwriter.py new
-"Code review as an evidence system"
---angle "code review is actually an assurance mechanism"
+python ghostwriter.py new "Code review as an evidence system" --angle "code review is actually an assurance mechanism"
 ```
 
 Add quick notes for the planner:
@@ -65,19 +70,31 @@ Add quick notes for the planner:
 --notes "Frame around trust and evidence"
 ```
 
+These hints guide the **planning phase**, which determines the argument and structure of the article.
+
+
 
 # Using Research Documents
 
 Provide specific research files:
 
 ```
-python ghostwriter.py new "Trust in software delivery" --research research/common/dora-metrics.md
+python ghostwriter.py new \
+"Trust in software delivery" \
+--research research/common/dora-metrics.md
 ```
 
 Multiple files:
 
 ```
 --research file1.md,file2.md,file3.md
+```
+
+If no explicit research is supplied, Ghostwriter will automatically search:
+
+```
+research/common
+research/posts/<topic-slug>
 ```
 
 
@@ -87,7 +104,9 @@ Multiple files:
 Provide structured notes:
 
 ```
---notes-file notes/post/trust-in-software-delivery/outline.md
+python ghostwriter.py new \
+"Trust in software delivery" \
+--notes-file notes/posts/trust-in-software-delivery/outline.md
 ```
 
 Multiple:
@@ -95,6 +114,13 @@ Multiple:
 ```
 --notes-file file1.md,file2.md
 ```
+
+Notes are intended for:
+
+* outlines
+* rough ideas
+* argument fragments
+* reminders
 
 
 
@@ -113,7 +139,11 @@ python ghostwriter.py new "Topic" --auto
 Run a revision pass automatically:
 
 ```
-python ghostwriter.py new "Topic" --auto --auto-revision --revision-mode tighten
+python ghostwriter.py new \
+"Topic" \
+--auto \
+--auto-revision \
+--revision-mode tighten
 ```
 
 Revision modes:
@@ -125,14 +155,20 @@ more-like-me
 less-tutorial
 more-opinionated
 add-framework
+sharpen-argument
 ```
 
-See [REVISIONS.md](REVISIONS.md) readme for details on each mode.
+See **REVISIONS.md** for details on each mode.
+
+Revision passes are **targeted editorial improvements**, not full rewrites.
+
 
 
 # Rebuilding the Semantic Index
 
-Run this when content changes.
+Ghostwriter uses **semantic retrieval** to ground writing in existing content.
+
+Run this when content changes:
 
 ```
 python ghostwriter.py reindex
@@ -147,30 +183,80 @@ research
 notes
 ```
 
+Under the hood this runs:
+
+```
+python build_index.py
+```
+
+which creates:
+
+```
+cache/faiss.index
+cache/chunk_meta.json
+cache/chunks.jsonl
+```
+
+These files form the **semantic memory** of the system.
+
 
 
 # Folder Structure
 
-The CLI expects this structure.
+The CLI expects this structure:
 
 ```
 ghostwriter/
+
 frameworks/
+
 research/
-common/
-post/<slug>/
+  common/
+  posts/<slug>/
 
 notes/
-common/
-post/<slug>/
+  common/
+  posts/<slug>/
 
 output/
-plans/
-drafts/
+  plans/
+  drafts/
 
 cache/
+```
+
+
+
+# Frameworks
+
+Frameworks provide reusable **argument structures** and mental models for posts.
+
+Examples include:
 
 ```
+delivery-vs-runtime-risk
+trust-lifecycle
+supply-chain-vs-operational-risk
+```
+
+Framework files live in:
+
+```
+frameworks/
+```
+
+They contain structured metadata such as:
+
+```
+topics
+when_to_use
+key_claims
+argument_patterns
+example_phrasing
+guardrails
+```
+
+During planning, Ghostwriter may select relevant frameworks to organise the article.
 
 
 
@@ -180,14 +266,37 @@ Automatic retrieval searches:
 
 ```
 research/common
-research/post/<topic-slug>
+research/posts/<topic-slug>
 
 notes/common
-notes/post/<topic-slug>
-
+notes/posts/<topic-slug>
 ```
 
-You can override with `--research` or `--notes-file`.
+You can override this with:
+
+```
+--research
+--notes-file
+```
+
+
+
+# Semantic Retrieval
+
+Ghostwriter uses **semantic vector retrieval** to ground planning and drafting.
+
+The retrieval pipeline is:
+
+```mermaid
+graph TD
+    A[Content Sources<br/>blog posts, frameworks, research, notes] --> B[Chunking]
+    B --> C[OpenAI Embeddings]
+    C --> D[FAISS Vector Index]
+    D --> E[Semantic Retrieval]
+    E --> F
+```
+
+This allows Ghostwriter to retrieve relevant ideas even when wording differs.
 
 
 
@@ -218,29 +327,23 @@ gw reindex
 
 after adding or editing:
 
-- blog posts
-- frameworks
-- research documents
-- notes
+* blog posts
+* frameworks
+* research documents
+* notes
 
 
 
 # Mental Model
 
-Elite Writer works like this:
+```mermaid
+graph TD
+    A[Content Sources] --> B[Semantic Retrieval]
+    B --> C[Plan Generation]
+    C --> D[Draft Writing]
+    D --> E[Revision]
+    E --> F[Evaluation]
 
-```
-content sources
-↓
-semantic retrieval
-↓
-plan generation
-↓
-draft writing
-↓
-revision
-↓
-evaluation
 ```
 
 Think of it as a **personal writing engine**, not just a prompt.
@@ -253,10 +356,10 @@ Always review the **plan** before drafting.
 
 The plan determines:
 
-- argument
-- structure
-- framework
-- examples
+* argument
+* structure
+* framework
+* examples
 
 If the plan is weak, the draft will be weak.
 
@@ -266,9 +369,8 @@ If the plan is weak, the draft will be weak.
 
 The system is designed to:
 
-- keep humans in control
-- use retrieval instead of hallucination
-- enforce clear argument structure
-- maintain your writing voice
-
-
+* keep humans in control
+* use retrieval instead of hallucination
+* enforce clear argument structure
+* maintain your writing voice
+* encourage deliberate editorial revision rather than rewrites
