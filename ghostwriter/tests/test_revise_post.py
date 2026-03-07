@@ -1,12 +1,33 @@
 """Tests for revise_post.py"""
 from __future__ import annotations
 
+import json
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
 
-from revise_post import REVISION_MODES, slug_suffix
+from revise_post import REVISION_MODES, load_style_profile_text, slug_suffix
+
+
+# ---------------------------------------------------------------------------
+# load_style_profile_text
+# ---------------------------------------------------------------------------
+
+class TestLoadStyleProfileText:
+    def test_loads_existing_profile(self, tmp_path):
+        profile_path = tmp_path / "style_profile.json"
+        profile_path.write_text('{"voice_summary": "direct"}', encoding="utf-8")
+        with patch("revise_post.STYLE_PROFILE_JSON", profile_path):
+            result = load_style_profile_text()
+        assert "direct" in result
+
+    def test_raises_system_exit_when_missing(self, tmp_path):
+        missing = tmp_path / "no_profile.json"
+        with patch("revise_post.STYLE_PROFILE_JSON", missing):
+            with pytest.raises(SystemExit):
+                load_style_profile_text()
 
 
 # ---------------------------------------------------------------------------

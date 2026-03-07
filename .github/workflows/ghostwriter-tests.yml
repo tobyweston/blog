@@ -14,8 +14,6 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     strategy:
       fail-fast: false
@@ -40,6 +38,5 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run tests
-        # OPENAI_API_KEY is intentionally absent — all API calls are mocked
         run: python -m pytest tests/ -v --tb=short
 

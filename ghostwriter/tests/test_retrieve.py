@@ -381,7 +381,8 @@ class TestPickFrameworks:
             self._make_framework("Unrelated Framework", "about cooking and recipes"),
         ]
 
-        with patch("retrieve.load_frameworks", return_value=frameworks):
+        with patch("retrieve.load_frameworks", return_value=frameworks), \
+             patch("retrieve.semantic_search", return_value=[]):
             results = pick_frameworks("code quality engineering review", limit=2)
 
         names = [fw["name"] for fw in results]
@@ -393,7 +394,8 @@ class TestPickFrameworks:
             for i in range(10)
         ]
 
-        with patch("retrieve.load_frameworks", return_value=frameworks):
+        with patch("retrieve.load_frameworks", return_value=frameworks), \
+             patch("retrieve.semantic_search", return_value=[]):
             results = pick_frameworks("engineering", limit=3)
 
         assert len(results) <= 3
@@ -404,7 +406,8 @@ class TestPickFrameworks:
             self._make_framework("Framework B", "about deployment pipelines"),
         ]
 
-        with patch("retrieve.load_frameworks", return_value=frameworks):
+        with patch("retrieve.load_frameworks", return_value=frameworks), \
+             patch("retrieve.semantic_search", return_value=[]):
             results = pick_frameworks("cooking", limit=2)
 
         assert len(results) == 2

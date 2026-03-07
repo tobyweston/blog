@@ -8,6 +8,7 @@ import pytest
 
 
 from style_profile import (
+    build_analysis_prompt,
     choose_analysis_docs,
     ending_lines,
     heuristic_profile,
@@ -342,4 +343,76 @@ class TestRenderMarkdown:
         md = render_markdown(profile, SAMPLE_DOCS[:1])
         for section in ["## Tone", "## Rhythm", "## Structure", "## Vocabulary", "## Humour", "## Dos", "## Don'ts"]:
             assert section in md
+
+
+# ---------------------------------------------------------------------------
+# build_analysis_prompt
+# ---------------------------------------------------------------------------
+
+class TestBuildAnalysisPrompt:
+    SENTENCE_METRICS = {"mean_words_per_sentence": 12.5, "median_words_per_sentence": 11.0,
+                        "min_words_per_sentence": 4, "max_words_per_sentence": 32}
+    PARAGRAPH_METRICS = {"mean_sentences_per_paragraph": 3.1, "median_sentences_per_paragraph": 3.0}
+    TOP_WORDS = [("engineering", 42), ("deployment", 18)]
+    CATEGORIES = [("engineering", 30), ("leadership", 10)]
+    TOPICS = [("testing", 20), ("delivery", 15)]
+    OPENINGS = ["Every system is a bet.", "The problem with most pipelines is invisible."]
+    ENDINGS = ["That is the only metric that matters.", "Start there."]
+
+    def _call(self, docs=None, **overrides):
+        kwargs = dict(
+            docs=docs or SAMPLE_DOCS[:2],
+            sentence_metrics=self.SENTENCE_METRICS,
+            paragraph_metrics=self.PARAGRAPH_METRICS,
+            top_words=self.TOP_WORDS,
+            categories=self.CATEGORIES,
+            topics=self.TOPICS,
+            openings=self.OPENINGS,
+            endings=self.ENDINGS,
+        )
+        kwargs.update(overrides)
+        return build_analysis_prompt(**kwargs)
+
+    def test_returns_non_empty_string(self):
+        assert isinstance(self._call(), str)
+        assert len(self._call()) > 200
+
+    def test_contains_sentence_metrics(self):
+        prompt = self._call()
+        assert "mean_words_per_sentence" in prompt
+
+    def test_contains_sample_doc_title(self):
+        prompt = self._call()
+        assert "Post One" in prompt
+
+    def test_contains_typical_openings(self):
+        prompt = self._call()
+        assert "Every system is a bet." in prompt
+
+    def test_contains_typical_endings(self):
+        prompt = self._call()
+        assert "Start there." in prompt
+
+    def test_requests_json_output(self):
+        prompt = self._call()
+        assert "voice_summary" in prompt
+
+    def test_mentions_british_english(self):
+        prompt = self._call()
+        assert "British English" in prompt
+
+    def test_truncates_long_doc_excerpts(self):
+        long_doc = {
+            "kind": "blog",
+            "content": "x" * 10000,
+            "date": "2024-01-01",
+            "year": 2024,
+            "title": "Long Doc",
+            "categories": [],
+            "topics": [],
+            "word_count": 2000,
+        }
+        prompt = self._call(docs=[long_doc])
+        # Excerpt is capped at 5000 chars; the full 10000 should NOT appear
+        assert "x" * 5001 not in prompt
 
