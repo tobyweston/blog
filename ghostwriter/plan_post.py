@@ -192,8 +192,8 @@ def main() -> None:
             "  2. review output/plans/<generated>.plan.md\n"
             "  3. python generate_post.py --plan output/plans/<generated>.plan.md\n\n"
             "Optional grounding:\n"
-            "  --research research/doc1.md,research/doc2.md\n"
-            "  --notes-file notes/rough-notes.md"
+            "  --research research/common/doc.md,research/post/<slug>/doc.md\n"
+            "  --notes-file notes/common/note.md,notes/post/<slug>/note.md"
         ),
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -224,8 +224,18 @@ def main() -> None:
 
     chosen_frameworks = pick_frameworks(query, limit=3)
     chosen_samples = pick_topic_samples(query, limit=5)
-    chosen_research = pick_research(query, paths=research_paths, limit=3)
-    chosen_notes = pick_notes(query, paths=notes_paths, limit=3)
+    chosen_research = pick_research(
+        query,
+        paths=research_paths,
+        topic_or_query=args.topic,
+        limit=3,
+    )
+    chosen_notes = pick_notes(
+        query,
+        paths=notes_paths,
+        topic_or_query=args.topic,
+        limit=3,
+    )
 
     prompt = build_prompt(
         topic=args.topic,

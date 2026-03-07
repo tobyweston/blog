@@ -271,11 +271,13 @@ def main() -> None:
         ]
     ).strip()
 
+    topic_hint = plan.get("recommended_title") or query
+
     voice_samples = pick_voice_anchors(MAX_STYLE_SAMPLES)
     topic_samples = pick_topic_samples(query)
     frameworks = pick_frameworks(query)
-    research = pick_research(query)
-    notes = pick_notes(query)
+    research = pick_research(query, topic_or_query=topic_hint)
+    notes = pick_notes(query, topic_or_query=topic_hint)
 
     prompt = build_prompt(
         plan=plan,

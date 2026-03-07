@@ -2,8 +2,6 @@
 
 Reusable thinking models used when planning posts.
 
-These represent **mental tools I use when reasoning about problems**. They are not tied to a specific post.
-
 ## Structure
 
 Each framework is one Markdown file with YAML frontmatter.
@@ -31,12 +29,11 @@ topics:
 - misuse to avoid
 ---
 
-Optional extended explanation below the frontmatter.
-
+Optional explanation may follow below the frontmatter.
 ```
 
 ## Rules
 
-- One framework per file
-- Stable concepts only (not post-specific ideas)
-- Used by the planner to shape arguments
+- one framework per file
+- reusable across multiple posts
+- stable concepts only

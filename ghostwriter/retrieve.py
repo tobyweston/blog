@@ -1,5 +1,4 @@
 from __future__ import annotations
-from embeddings import search
 
 import json
 import re
@@ -14,8 +13,14 @@ from extract_corpus import build_corpus, save_corpus
 
 BASE_DIR = Path(__file__).resolve().parent
 FRAMEWORKS_DIR = BASE_DIR / "frameworks"
+
 RESEARCH_DIR = BASE_DIR / "research"
+RESEARCH_COMMON_DIR = RESEARCH_DIR / "common"
+RESEARCH_POSTS_DIR = RESEARCH_DIR / "post"
+
 NOTES_DIR = BASE_DIR / "notes"
+NOTES_COMMON_DIR = NOTES_DIR / "common"
+NOTES_POSTS_DIR = NOTES_DIR / "post"
 
 
 def ensure_corpus() -> list[dict[str, Any]]:
@@ -86,40 +91,73 @@ def load_text_file(path: Path) -> dict[str, Any]:
     }
 
 
-def load_research_files(paths: list[str] | None = None) -> list[dict[str, Any]]:
+def iter_text_files(directory: Path) -> list[Path]:
+    if not directory.exists():
+        return []
+    return sorted(
+        path
+        for path in directory.glob("*")
+        if path.is_file() and path.suffix.lower() in {".md", ".txt"}
+    )
+
+
+def infer_post_slug(topic_or_query: str | None) -> str | None:
+    if not topic_or_query:
+        return None
+    slug = slugify(topic_or_query)
+    return slug or None
+
+
+def gather_candidate_files(
+        *,
+        common_dir: Path,
+        posts_dir: Path,
+        explicit_paths: list[str] | None = None,
+        topic_or_query: str | None = None,
+) -> list[dict[str, Any]]:
     files: list[dict[str, Any]] = []
 
-    if paths:
-        for raw_path in paths:
+    if explicit_paths:
+        for raw_path in explicit_paths:
             path = Path(raw_path)
             if path.exists() and path.is_file():
                 files.append(load_text_file(path))
         return files
 
-    if RESEARCH_DIR.exists():
-        for path in sorted(RESEARCH_DIR.glob("*")):
-            if path.is_file() and path.suffix.lower() in {".md", ".txt"}:
-                files.append(load_text_file(path))
+    for path in iter_text_files(common_dir):
+        files.append(load_text_file(path))
+
+    post_slug = infer_post_slug(topic_or_query)
+    if post_slug:
+        post_dir = posts_dir / post_slug
+        for path in iter_text_files(post_dir):
+            files.append(load_text_file(path))
 
     return files
 
 
-def load_notes_files(paths: list[str] | None = None) -> list[dict[str, Any]]:
-    files: list[dict[str, Any]] = []
+def load_research_files(
+        paths: list[str] | None = None,
+        topic_or_query: str | None = None,
+) -> list[dict[str, Any]]:
+    return gather_candidate_files(
+        common_dir=RESEARCH_COMMON_DIR,
+        posts_dir=RESEARCH_POSTS_DIR,
+        explicit_paths=paths,
+        topic_or_query=topic_or_query,
+    )
 
-    if paths:
-        for raw_path in paths:
-            path = Path(raw_path)
-            if path.exists() and path.is_file():
-                files.append(load_text_file(path))
-        return files
 
-    if NOTES_DIR.exists():
-        for path in sorted(NOTES_DIR.glob("*")):
-            if path.is_file() and path.suffix.lower() in {".md", ".txt"}:
-                files.append(load_text_file(path))
-
-    return files
+def load_notes_files(
+        paths: list[str] | None = None,
+        topic_or_query: str | None = None,
+) -> list[dict[str, Any]]:
+    return gather_candidate_files(
+        common_dir=NOTES_COMMON_DIR,
+        posts_dir=NOTES_POSTS_DIR,
+        explicit_paths=paths,
+        topic_or_query=topic_or_query,
+    )
 
 
 def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
@@ -146,10 +184,29 @@ def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
     return chosen[:limit] if chosen else ranked[:limit]
 
 
-def pick_topic_samples(query: str, limit: int = 5):
+def pick_topic_samples(query: str, limit: int = 5) -> list[dict[str, Any]]:
     corpus = ensure_corpus()
-    results = search(query, corpus, limit)
-    return results
+    scored = []
+
+    for doc in corpus:
+        if not doc.get("content", "").strip():
+            continue
+
+        blob = " ".join(
+            [
+                doc.get("title", ""),
+                doc.get("description", ""),
+                " ".join(doc.get("categories", [])),
+                " ".join(doc.get("topics", [])),
+                doc.get("content", "")[:4000],
+            ]
+        )
+        score = score_text(blob, query)
+        if score > 0:
+            scored.append((score, doc))
+
+    scored.sort(key=lambda item: (item[0], item[1].get("date", "")), reverse=True)
+    return [doc for _, doc in scored[:limit]]
 
 
 def pick_voice_anchors(limit: int = MAX_STYLE_SAMPLES) -> list[dict[str, Any]]:
@@ -166,9 +223,10 @@ def pick_voice_anchors(limit: int = MAX_STYLE_SAMPLES) -> list[dict[str, Any]]:
 def pick_research(
         query: str,
         paths: list[str] | None = None,
+        topic_or_query: str | None = None,
         limit: int = 3,
 ) -> list[dict[str, Any]]:
-    files = load_research_files(paths)
+    files = load_research_files(paths=paths, topic_or_query=topic_or_query)
     ranked = sorted(
         files,
         key=lambda item: score_text(item.get("content", ""), query),
@@ -181,9 +239,10 @@ def pick_research(
 def pick_notes(
         query: str,
         paths: list[str] | None = None,
+        topic_or_query: str | None = None,
         limit: int = 3,
 ) -> list[dict[str, Any]]:
-    files = load_notes_files(paths)
+    files = load_notes_files(paths=paths, topic_or_query=topic_or_query)
     ranked = sorted(
         files,
         key=lambda item: score_text(item.get("content", ""), query),
