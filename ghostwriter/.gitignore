@@ -1,0 +1,8 @@
+# Virtual Environment
+venv/
+*.pyc
+__pycache__/
+
+# Generated drafts (optional - remove this line if you want to commit drafts)
+../astro/src/content/blog/ai-draft.mdx
+
