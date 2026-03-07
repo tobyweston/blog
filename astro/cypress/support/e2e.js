@@ -33,9 +33,34 @@ addMatchImageSnapshotCommand({
 
 // Custom command to check for console errors
 Cypress.Commands.add('checkForErrors', () => {
+  const consoleErrorSpy = Cypress.sinon.spy();
+  cy.wrap(consoleErrorSpy, { log: false }).as('consoleError');
+
+  // Bind before each page load so we capture errors on visited pages, not about:blank.
+  cy.on('window:before:load', (win) => {
+    Cypress.sinon.stub(win.console, 'error').callsFake((...args) => {
+      consoleErrorSpy(...args);
+    });
+  });
+});
+
+// Wait for client-side rendering to stabilize before assertions/snapshots.
+Cypress.Commands.add('waitForPageReady', () => {
+  cy.document().its('readyState').should('eq', 'complete');
   cy.window().then((win) => {
-    // Track console errors
-    cy.spy(win.console, 'error').as('consoleError');
+    const fontsReady = win.document.fonts?.ready ?? Promise.resolve();
+    const imageReadyPromises = Array.from(win.document.images ?? []).map((image) => {
+      if (image.complete) {
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        image.addEventListener('load', resolve, { once: true });
+        image.addEventListener('error', resolve, { once: true });
+      });
+    });
+
+    return Promise.all([fontsReady, ...imageReadyPromises]);
   });
 });
 
@@ -48,14 +73,9 @@ Cypress.Commands.add('capturePageAtViewport', (pageName, viewportName) => {
 
   cy.viewport(viewport.width, viewport.height);
 
-  // Wait for responsive layout to settle and content to be visible
+  // Wait for responsive layout and resource loading to settle.
   cy.get('body').should('be.visible');
-  cy.get('img').should('be.visible');
-  cy.window().then((win) => {
-    if (win.document.fonts) {
-      return win.document.fonts.ready;
-    }
-  });
+  cy.waitForPageReady();
 
   // Create snapshot name with both page and viewport
   const snapshotName = `${pageName}--${viewportName}`;

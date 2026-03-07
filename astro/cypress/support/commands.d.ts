@@ -18,6 +18,12 @@ declare global {
       capturePageAtViewport(pageName: string, viewportName: string): Chainable<void>;
 
       /**
+       * Wait until document, fonts and images are loaded.
+       * @example cy.waitForPageReady()
+       */
+      waitForPageReady(): Chainable<void>;
+
+      /**
        * Custom command to test a page visually across all viewports
        * @example cy.testPageVisually('/', 'homepage')
        */
@@ -33,4 +39,3 @@ declare global {
 }
 
 export {};
-

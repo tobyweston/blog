@@ -20,6 +20,7 @@ describe('ClickToEnlarge Component', () => {
   it('opens and closes the dialog via the close button', function() {
     const postUrl = testData.specialPosts.clickToEnlarge.url;
     cy.visit(postUrl);
+    cy.waitForPageReady();
 
     cy.get('[data-cte-trigger]').first().as('trigger');
     cy.get('@trigger').invoke('attr', 'data-cte-id').as('cteId');
@@ -39,6 +40,7 @@ describe('ClickToEnlarge Component', () => {
   it('closes the dialog when clicking the backdrop', function() {
     const postUrl = testData.specialPosts.clickToEnlarge.url;
     cy.visit(postUrl);
+    cy.waitForPageReady();
 
     cy.get('[data-cte-trigger]').first().as('trigger');
     cy.get('@trigger').invoke('attr', 'data-cte-id').as('cteId');
@@ -50,7 +52,8 @@ describe('ClickToEnlarge Component', () => {
       cy.get('@trigger').click();
       cy.get('@dialog').should('have.attr', 'open');
 
-      cy.get('@dialog').click('topLeft');
+      // Dialog closes when click target is the dialog shell or the padded frame.
+      cy.get('@dialog').find('.cte-frame').click('topLeft');
       cy.get('@dialog').should('not.have.attr', 'open');
     });
   });

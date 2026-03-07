@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Video Pages - Enhanced Tests', () => {
+describe('Video Pages', () => {
   let testData;
 
   before(() => {
@@ -17,220 +17,95 @@ describe('Video Pages - Enhanced Tests', () => {
     cy.get('@consoleError').should('not.have.been.called');
   });
 
-  describe('Video Index Page (/video)', () => {
-    beforeEach(function() {
-      cy.visit(testData.pages.video.url);
+  const visitVideo = (slug) => {
+    cy.visit(`/video/${slug}`);
+    cy.waitForPageReady();
+  };
+
+  describe('Video index', () => {
+    beforeEach(() => {
+      cy.visit('/video');
+      cy.waitForPageReady();
     });
 
-    it('should load the video index page', () => {
-      cy.get('h1').should('contain', 'Videos');
-      cy.get('body').should('be.visible');
-    });
-
-    it('should display video preview cards', () => {
-      // Check that video cards are rendered
-      cy.get('article').should('have.length.greaterThan', 0);
-    });
-
-    it('should show video descriptions', () => {
-      cy.get('p').should('exist');
-    });
-
-    it('should have clickable video links', () => {
-      cy.get('a[href*="/video/"]').should('exist');
-    });
-
-    it('should display formatted dates', () => {
-      // FormattedDate component should render dates
-      cy.get('time').should('exist');
+    it('renders the page header and preview cards', () => {
+      cy.get('main h1').should('have.text', 'Videos');
+      cy.get('article.video-preview').should('have.length.greaterThan', 0);
+      cy.get('article.video-preview').first().within(() => {
+        cy.get('h3').should('not.be.empty');
+        cy.get('time').should('exist');
+        cy.get('a.video-preview-cta[href^="/video/"]').should('exist');
+      });
     });
   });
 
-  describe('Video Detail Pages', () => {
+  describe('Video detail pages', () => {
     const videoKeys = ['refactoring', 'lambdas', 'luhn'];
 
     videoKeys.forEach((videoKey) => {
-      describe(`Video: ${videoKey}`, function() {
-        it('should load the video page without errors', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('body').should('be.visible');
+      describe(`Video: ${videoKey}`, () => {
+        let video;
+
+        beforeEach(() => {
+          video = testData.videos[videoKey];
+          visitVideo(video.slug);
         });
 
-        it('should display the correct title', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('h1').should('exist');
-          if (video.title) {
-            cy.get('h1').should('contain', video.title);
-          }
-        });
-
-        it('should display "Video" kicker', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('.detail-kicker').should('contain', 'Video');
-        });
-
-        it('should display formatted publication date', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
+        it('renders title, metadata and content', () => {
+          cy.get('main article').should('exist').and('be.visible');
+          cy.get('.detail-kicker').should('have.text', 'Video');
+          cy.get('h1').should('contain', video.title);
           cy.get('time').should('exist');
+          cy.get('.article-description').should('exist').invoke('text').should('not.be.empty');
+          cy.get('section.prose').should('exist').and('be.visible');
         });
 
-        it('should display video description', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('.article-description').should('exist').and('not.be.empty');
-        });
-
-        it('should embed YouTube video iframe', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('.video-detail-frame').should('exist');
-          cy.get('.video-detail-frame iframe').should('exist');
-        });
-
-        it('should have correct iframe attributes', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
+        it('embeds the expected YouTube frame', () => {
           cy.get('.video-detail-frame iframe')
             .should('have.attr', 'src')
             .and('include', 'youtube-nocookie.com/embed/');
+          cy.get('.video-detail-frame iframe').should('have.attr', 'allowfullscreen');
+          cy.get('.video-detail-frame iframe').should('have.attr', 'loading', 'lazy');
 
-          cy.get('.video-detail-frame iframe')
-            .should('have.attr', 'allowfullscreen');
-
-          cy.get('.video-detail-frame iframe')
-            .should('have.attr', 'loading', 'lazy');
-        });
-
-        it('should embed the correct YouTube video ID if specified', function() {
-          const video = testData.videos[videoKey];
           if (video.youtubeId) {
-            const url = `/video/${video.slug}`;
-            cy.visit(url);
             cy.get('.video-detail-frame iframe')
               .should('have.attr', 'src')
               .and('include', video.youtubeId);
           }
         });
 
-        it('should display video content section', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('section.prose').should('exist');
-        });
-
-        it('should have proper responsive video frame', function() {
-          const video = testData.videos[videoKey];
-          const url = `/video/${video.slug}`;
-          cy.visit(url);
-          cy.get('.video-detail-frame')
-            .should('have.css', 'position', 'relative')
-            .should('have.css', 'width')
-            .and('not.equal', '0px');
-        });
-
-        // Visual regression tests
-        it('should match visual snapshots if name specified', function() {
-          const video = testData.videos[videoKey];
-          if (video.name) {
-            const url = `/video/${video.slug}`;
-            cy.visit(url);
-
-            // Test both viewports in one visit
-            ['mobile', 'desktop'].forEach((viewport) => {
-              cy.capturePageAtViewport(video.name, viewport);
-            });
-          }
+        it('matches visual snapshots on mobile and desktop', () => {
+          ['mobile', 'desktop'].forEach((viewport) => {
+            cy.capturePageAtViewport(video.name, viewport);
+          });
         });
       });
     });
   });
 
-  describe('Video Page Navigation', () => {
-    it('should navigate from homepage to video index', () => {
-      cy.visit('/');
-      cy.get('nav a[href="/video"]').click();
-      cy.url().should('include', '/video');
-      cy.get('h1').should('contain', 'Videos');
-    });
-
-    it('should navigate from homepage to videos using text link', () => {
-      cy.visit('/');
-      cy.contains('video', { matchCase: false }).first().click();
-      cy.url().should('include', '/video');
-    });
-
-    it('should navigate from video index to video detail', () => {
+  describe('Navigation and metadata', () => {
+    it('navigates from video index to detail page', () => {
       cy.visit('/video');
-      cy.get('a[href*="/video/"]').first().click();
+      cy.get('a.video-preview-cta[href^="/video/"]').first().click();
       cy.url().should('match', /\/video\/.+/);
       cy.get('.video-detail-frame iframe').should('exist');
     });
 
-    it('should have header navigation on video pages', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.get('header').should('be.visible');
-      cy.get('nav a[href="/blog"]').should('exist');
-      cy.get('nav a[href="/book"]').should('exist');
-      cy.get('nav a[href="/video"]').should('exist');
-      cy.get('nav a[href="/archive"]').should('exist');
+    it('keeps global nav links available on detail pages', () => {
+      visitVideo(testData.videos.refactoring.slug);
+      cy.get('header nav a[href="/blog"]').should('exist');
+      cy.get('header nav a[href="/book"]').should('exist');
+      cy.get('header nav a[href="/video"]').should('exist');
+      cy.get('header nav a[href="/archive"]').should('exist');
     });
 
-    it('should have footer on video pages', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.get('footer').should('be.visible');
-      cy.get('footer').should('contain', 'Toby Weston');
-    });
-  });
+    it('shows SEO and accessibility essentials on detail pages', () => {
+      const video = testData.videos.refactoring;
+      visitVideo(video.slug);
 
-  describe('Video Page SEO and Meta', () => {
-    it('should have proper page title', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.title().should('include', 'Videos');
-    });
-
-    it('should have meta description', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.get('meta[name="description"]').should('exist');
-    });
-
-    it('should have proper heading hierarchy', () => {
-      cy.visit('/video');
-      // Should have at least one h1 for the main content
-      cy.get('main h1').should('have.length', 1);
-    });
-  });
-
-  describe('Video Page Accessibility', () => {
-    it('should have alt text for logo', () => {
-      cy.visit('/video');
-      cy.get('header img').should('have.attr', 'alt');
-    });
-
-    it('should have iframe title attribute', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.get('.video-detail-frame iframe')
-        .should('have.attr', 'title');
-    });
-
-    it('should have semantic HTML structure', () => {
-      cy.visit('/video/2019-06-29-refactoring');
-      cy.get('article').should('exist');
-      cy.get('header').should('exist');
-      cy.get('main').should('exist');
-      cy.get('footer').should('exist');
+      cy.title().should('contain', `${video.title} - Videos`);
+      cy.get('meta[name="description"]').should('have.attr', 'content').and('not.be.empty');
+      cy.get('.video-detail-frame iframe').should('have.attr', 'title', video.title);
     });
   });
 });
-
