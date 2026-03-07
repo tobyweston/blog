@@ -19,7 +19,10 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 def cosine_similarity(a: List[float], b: List[float]) -> float:
     a = np.array(a)
     b = np.array(b)
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
+    denom = np.linalg.norm(a) * np.linalg.norm(b)
+    if denom == 0.0:
+        return 0.0
+    return float(np.dot(a, b) / denom)
 
 
 def embed_text(text: str) -> List[float]:

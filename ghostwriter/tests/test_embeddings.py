@@ -41,6 +41,10 @@ class TestCosineSimilarity:
         result = cosine_similarity(a, b)
         assert isinstance(result, float)
 
+    def test_zero_vector_returns_zero(self):
+        assert cosine_similarity([0.0, 0.0], [1.0, 0.0]) == 0.0
+        assert cosine_similarity([0.0, 0.0], [0.0, 0.0]) == 0.0
+
 
 # ---------------------------------------------------------------------------
 # load_embeddings / save_embeddings
