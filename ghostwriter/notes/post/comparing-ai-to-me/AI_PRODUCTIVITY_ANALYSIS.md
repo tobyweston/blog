@@ -141,4 +141,4 @@ Practical band: **1.8x-2.3x** depending on weighting choices.
 
 Companion initiative-sizing report:
 
-- [FEATURE_SIZE_COMPARISON.md](/Users/toby/dev/code/blog/FEATURE_SIZE_COMPARISON.md)
+- [FEATURE_SIZE_COMPARISON.md](FEATURE_SIZE_COMPARISON.md)
