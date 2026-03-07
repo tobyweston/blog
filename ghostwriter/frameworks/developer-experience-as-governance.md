@@ -17,7 +17,7 @@ Developer experience is not separate from governance. The shape of delivery tool
 behaviour, policy adherence, and the quality of evidence produced by teams.
 
 key_claims:
-- Engineers follow the path that the system makes easiest.
+- Engineers follow the path that the system makes easiest - the path of least resistance.
 - Good platform design can make compliant behaviour the natural default.
 - Friction in delivery is often a sign of poor governance implementation, not strong governance.
 
