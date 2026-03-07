@@ -1,4 +1,4 @@
-[![Visual Regression Tests](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml/badge.svg)](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml)
+[![Visual Regression Tests](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml/badge.svg)](https://github.com/tobyweston/blog/actions/workflows/visual-tests.yml) [![Ghostwriter Tests](https://github.com/tobyweston/blog/actions/workflows/ghostwriter-tests.yml/badge.svg)](https://github.com/tobyweston/blog/actions/workflows/ghostwriter-tests.yml)
 
 # bad.robot
 
