@@ -25,7 +25,6 @@ def load_draft(path: Path) -> str:
 
 
 def build_prompt(style_profile: dict, draft: str) -> str:
-
     return f"""
 You are reviewing a blog post written for Toby Weston.
 
@@ -104,7 +103,6 @@ Concrete revisions that would strengthen the article.
 
 
 def main() -> None:
-
     parser = argparse.ArgumentParser(
         description="Evaluate a blog draft against the Toby Weston style profile."
     )
@@ -123,11 +121,8 @@ def main() -> None:
     args = parser.parse_args()
 
     draft_path = Path(args.input)
-
     style_profile = load_style_profile()
-
     draft = load_draft(draft_path)
-
     prompt = build_prompt(style_profile, draft)
 
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -144,9 +139,7 @@ def main() -> None:
     print("BLOG POST EVALUATION")
     print("=" * 80)
     print("\n")
-
     print(evaluation)
-
     print("\n")
     print("=" * 80)
 

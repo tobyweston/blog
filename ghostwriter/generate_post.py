@@ -18,18 +18,14 @@ from config import (
     OUTPUT_DIR,
     STYLE_PROFILE_JSON,
 )
-
 from retrieve import (
-    pick_voice_anchors,
-    pick_topic_samples,
     pick_frameworks,
-    pick_research,
     pick_notes,
+    pick_research,
+    pick_topic_samples,
+    pick_voice_anchors,
     slugify,
 )
-
-
-BASE_DIR = Path(__file__).resolve().parent
 
 
 def load_style_profile() -> dict[str, Any]:
@@ -111,7 +107,6 @@ def normalise_generated_document(
         categories: list[str],
         topics: list[str],
 ) -> str:
-
     frontmatter, body = extract_frontmatter_block(generated)
 
     today = date.today().isoformat()
@@ -162,8 +157,7 @@ def build_prompt(
         research: list[dict[str, Any]],
         notes: list[dict[str, Any]],
 ) -> str:
-
-    def block_docs(label: str, docs: list[dict[str, Any]], chars: int):
+    def block_docs(label: str, docs: list[dict[str, Any]], chars: int) -> str:
         return "\n\n---\n\n".join(
             "\n".join(
                 [
@@ -219,7 +213,6 @@ Author notes:
 Return a complete Astro-ready MDX post.
 
 Rules:
-
 - Use British English
 - Preserve the plan's central insight
 - Prefer short paragraphs
@@ -230,18 +223,14 @@ Rules:
 
 
 def write_output(content: str, title: str) -> Path:
-
     today = date.today().isoformat()
     slug = slugify(title or "untitled")
-
     path = OUTPUT_DIR / f"{today}-{slug}.mdx"
     path.write_text(content, encoding="utf-8")
-
     return path
 
 
 def main() -> None:
-
     parser = argparse.ArgumentParser(
         description="Draft a blog post from an approved plan.",
         epilog=(
@@ -258,7 +247,6 @@ def main() -> None:
         required=True,
         help="Plan file created by plan_post.py",
     )
-
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--dry-run", action="store_true")
 
@@ -270,7 +258,6 @@ def main() -> None:
         raise SystemExit(f"Plan not found: {plan_path}")
 
     plan = parse_plan(plan_path)
-
     style_profile = load_style_profile()
 
     query = " ".join(
@@ -278,8 +265,11 @@ def main() -> None:
             plan.get("recommended_title", ""),
             plan.get("central_insight", ""),
             plan.get("why_this_matters", ""),
+            plan.get("recommended_framework", ""),
+            " ".join(plan.get("key_arguments", [])),
+            " ".join(plan.get("suggested_topics", [])),
         ]
-    )
+    ).strip()
 
     voice_samples = pick_voice_anchors(MAX_STYLE_SAMPLES)
     topic_samples = pick_topic_samples(query)
@@ -299,11 +289,39 @@ def main() -> None:
 
     if args.dry_run:
         print("DRY RUN\n")
+        print(f"Plan: {plan_path}")
+        print(f"Recommended title: {plan.get('recommended_title', '')}")
+        print(f"Recommended framework: {plan.get('recommended_framework', '')}")
+
+        print("\nVoice samples:")
+        for doc in voice_samples:
+            print(f" - {doc.get('date', '')} | {doc.get('title', '')}")
+
+        print("\nTopic samples:")
+        for doc in topic_samples:
+            print(f" - {doc.get('date', '')} | {doc.get('title', '')}")
+
+        print("\nFrameworks:")
+        for fw in frameworks:
+            print(f" - {fw.get('name', '')}")
+
+        if research:
+            print("\nResearch:")
+            for item in research:
+                print(f" - {item.get('path', '')}")
+
+        if notes:
+            print("\nNotes:")
+            for item in notes:
+                print(f" - {item.get('path', '')}")
+
+        print("\nPrompt preview:\n")
         print(prompt[:3000])
+        if len(prompt) > 3000:
+            print("\n... [truncated]")
         return
 
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
-
     response = client.responses.create(
         model=args.model,
         input=prompt,
@@ -312,7 +330,6 @@ def main() -> None:
     generated = response.output_text.strip()
 
     fallback_title = plan.get("recommended_title") or "Untitled Draft"
-
     categories = plan.get("suggested_categories", [])
     topics = plan.get("suggested_topics", [])
 

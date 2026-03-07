@@ -1,4 +1,5 @@
 from __future__ import annotations
+from embeddings import search
 
 import json
 import re
@@ -145,29 +146,10 @@ def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
     return chosen[:limit] if chosen else ranked[:limit]
 
 
-def pick_topic_samples(query: str, limit: int = 5) -> list[dict[str, Any]]:
+def pick_topic_samples(query: str, limit: int = 5):
     corpus = ensure_corpus()
-    scored = []
-
-    for doc in corpus:
-        if not doc.get("content", "").strip():
-            continue
-
-        blob = " ".join(
-            [
-                doc.get("title", ""),
-                doc.get("description", ""),
-                " ".join(doc.get("categories", [])),
-                " ".join(doc.get("topics", [])),
-                doc.get("content", "")[:4000],
-            ]
-        )
-        score = score_text(blob, query)
-        if score > 0:
-            scored.append((score, doc))
-
-    scored.sort(key=lambda item: (item[0], item[1].get("date", "")), reverse=True)
-    return [doc for _, doc in scored[:limit]]
+    results = search(query, corpus, limit)
+    return results
 
 
 def pick_voice_anchors(limit: int = MAX_STYLE_SAMPLES) -> list[dict[str, Any]]:
