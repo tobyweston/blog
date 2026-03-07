@@ -9,6 +9,8 @@ import yaml
 
 from config import CORPUS_CACHE, MAX_STYLE_SAMPLES
 from extract_corpus import build_corpus, save_corpus
+from embeddings import embed_text
+from vector_store import search as vector_search
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -21,6 +23,9 @@ RESEARCH_POSTS_DIR = RESEARCH_DIR / "post"
 NOTES_DIR = BASE_DIR / "notes"
 NOTES_COMMON_DIR = NOTES_DIR / "common"
 NOTES_POSTS_DIR = NOTES_DIR / "post"
+
+CACHE_DIR = BASE_DIR / "cache"
+CHUNK_META_FILE = CACHE_DIR / "chunk_meta.json"
 
 
 def ensure_corpus() -> list[dict[str, Any]]:
@@ -160,10 +165,107 @@ def load_notes_files(
     )
 
 
-def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
+def load_chunk_metadata() -> list[dict[str, Any]]:
+    if not CHUNK_META_FILE.exists():
+        raise RuntimeError("Missing chunk metadata. Run build_index.py first.")
+    return json.loads(CHUNK_META_FILE.read_text(encoding="utf-8"))
+
+
+def semantic_search(
+        query: str,
+        *,
+        kind: str | None = None,
+        limit: int = 5,
+        topic_or_query: str | None = None,
+) -> list[dict[str, Any]]:
+    query_vector = embed_text(query)
+    results = vector_search(query_vector, limit=max(limit * 5, 20))
+
+    filtered: list[dict[str, Any]] = []
+
+    post_slug = infer_post_slug(topic_or_query)
+
+    for item in results:
+        if kind and item.get("kind") != kind:
+            continue
+
+        if kind in {"research", "notes"} and post_slug:
+            path = item.get("source_path", "")
+            common_ok = f"/{kind}/common/" in path.replace("\\", "/")
+            post_ok = f"/{kind}/post/{post_slug}/" in path.replace("\\", "/")
+            if not (common_ok or post_ok):
+                continue
+
+        filtered.append(item)
+
+        if len(filtered) >= limit:
+            break
+
+    return filtered
+
+
+def dedupe_by_source(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[str] = set()
+    deduped: list[dict[str, Any]] = []
+
+    for item in items:
+        key = item.get("source_path", "")
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(item)
+
+    return deduped
+
+
+def rehydrate_blog_docs(chunk_hits: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    corpus = ensure_corpus()
+    by_path = {doc.get("path"): doc for doc in corpus}
+
+    docs: list[dict[str, Any]] = []
+    for hit in dedupe_by_source(chunk_hits):
+        path = hit.get("source_path")
+        if path in by_path:
+            docs.append(by_path[path])
+
+    return docs
+
+
+def rehydrate_framework_docs(chunk_hits: list[dict[str, Any]]) -> list[dict[str, Any]]:
     frameworks = load_frameworks()
+    by_path = {fw.get("path"): fw for fw in frameworks}
+
+    docs: list[dict[str, Any]] = []
+    for hit in dedupe_by_source(chunk_hits):
+        path = hit.get("source_path")
+        if path in by_path:
+            docs.append(by_path[path])
+
+    return docs
+
+
+def rehydrate_text_files(chunk_hits: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    docs: list[dict[str, Any]] = []
+
+    for hit in dedupe_by_source(chunk_hits):
+        path = Path(hit.get("source_path", ""))
+        if path.exists() and path.is_file():
+            docs.append(load_text_file(path))
+
+    return docs
+
+
+def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
+    hits = semantic_search(query, kind="framework", limit=limit)
+    frameworks = rehydrate_framework_docs(hits)
+
+    if frameworks:
+        return frameworks[:limit]
+
+    # fallback to keyword scoring
+    all_frameworks = load_frameworks()
     ranked = sorted(
-        frameworks,
+        all_frameworks,
         key=lambda fw: score_text(
             " ".join(
                 [
@@ -179,12 +281,17 @@ def pick_frameworks(query: str, limit: int = 3) -> list[dict[str, Any]]:
         ),
         reverse=True,
     )
-
-    chosen = [fw for fw in ranked if score_text(fw.get("summary", ""), query) > 0]
-    return chosen[:limit] if chosen else ranked[:limit]
+    return ranked[:limit]
 
 
 def pick_topic_samples(query: str, limit: int = 5) -> list[dict[str, Any]]:
+    hits = semantic_search(query, kind="blog", limit=limit)
+    docs = rehydrate_blog_docs(hits)
+
+    if docs:
+        return docs[:limit]
+
+    # fallback to keyword retrieval
     corpus = ensure_corpus()
     scored = []
 
@@ -226,14 +333,24 @@ def pick_research(
         topic_or_query: str | None = None,
         limit: int = 3,
 ) -> list[dict[str, Any]]:
-    files = load_research_files(paths=paths, topic_or_query=topic_or_query)
-    ranked = sorted(
-        files,
-        key=lambda item: score_text(item.get("content", ""), query),
-        reverse=True,
+    if paths:
+        files = load_research_files(paths=paths, topic_or_query=topic_or_query)
+        ranked = sorted(
+            files,
+            key=lambda item: score_text(item.get("content", ""), query),
+            reverse=True,
+        )
+        chosen = [item for item in ranked if score_text(item.get("content", ""), query) > 0]
+        return chosen[:limit] if chosen else ranked[:limit]
+
+    hits = semantic_search(
+        query,
+        kind="research",
+        topic_or_query=topic_or_query,
+        limit=limit,
     )
-    chosen = [item for item in ranked if score_text(item.get("content", ""), query) > 0]
-    return chosen[:limit] if chosen else ranked[:limit]
+    docs = rehydrate_text_files(hits)
+    return docs[:limit]
 
 
 def pick_notes(
@@ -242,11 +359,21 @@ def pick_notes(
         topic_or_query: str | None = None,
         limit: int = 3,
 ) -> list[dict[str, Any]]:
-    files = load_notes_files(paths=paths, topic_or_query=topic_or_query)
-    ranked = sorted(
-        files,
-        key=lambda item: score_text(item.get("content", ""), query),
-        reverse=True,
+    if paths:
+        files = load_notes_files(paths=paths, topic_or_query=topic_or_query)
+        ranked = sorted(
+            files,
+            key=lambda item: score_text(item.get("content", ""), query),
+            reverse=True,
+        )
+        chosen = [item for item in ranked if score_text(item.get("content", ""), query) > 0]
+        return chosen[:limit] if chosen else ranked[:limit]
+
+    hits = semantic_search(
+        query,
+        kind="notes",
+        topic_or_query=topic_or_query,
+        limit=limit,
     )
-    chosen = [item for item in ranked if score_text(item.get("content", ""), query) > 0]
-    return chosen[:limit] if chosen else ranked[:limit]
+    docs = rehydrate_text_files(hits)
+    return docs[:limit]
