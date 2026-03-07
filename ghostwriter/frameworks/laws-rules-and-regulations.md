@@ -60,6 +60,8 @@ guardrails:
 - Avoid suggesting that internal audit designs or implements governance frameworks
 - Emphasise traceability and lineage between obligations, risks, standards and controls
 
+---
+
 responsibility_model:
   Laws / Rules / Regulations: External authorities
   Regulatory obligations / interpretation: Second Line of Defence (2LoD)
@@ -69,4 +71,3 @@ responsibility_model:
   Controls: First Line of Defence (1LoD)
   Evidence, monitoring and testing: First Line of Defence (1LoD) with oversight by Second Line of Defence (2LoD)
   Oversight and independent assurance: Third Line of Defence (3LoD)
----

@@ -55,6 +55,8 @@ guardrails:
 - include concrete examples such as day-zero vulnerabilities or disaster recovery failures
 - emphasise that operational risks can arise outside the SDLC
 
+---
+
 risk_model:
   Software Supply Chain Risk:
     description: >
@@ -80,4 +82,3 @@ risk_model:
     - disaster recovery failures
     - environment onboarding procedures
     - runtime policy enforcement
----
