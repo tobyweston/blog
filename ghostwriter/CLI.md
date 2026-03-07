@@ -127,6 +127,7 @@ more-opinionated
 add-framework
 ```
 
+See [REVISIONS.md](REVISIONS.md) readme for details on each mode.
 
 
 # Rebuilding the Semantic Index
