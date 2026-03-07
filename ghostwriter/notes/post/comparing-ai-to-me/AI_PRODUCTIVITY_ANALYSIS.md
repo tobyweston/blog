@@ -84,6 +84,38 @@ xychart-beta
     bar [61,44,37,30,17]
 ```
 
+```mermaid
+xychart-beta
+    title "Reliability/CI/Test-like Commit Count by Repo"
+    x-axis ["blog","radiate","simple-excel","tempus-fugit","temperature-machine"]
+    y-axis "Count" 0 --> 70
+    bar [57,39,28,16,10]
+```
+
+```mermaid
+xychart-beta
+    title "New Test Files by Repo"
+    x-axis ["blog","radiate","simple-excel","tempus-fugit","temperature-machine"]
+    y-axis "Files" 0 --> 120
+    bar [116,18,36,19,6]
+```
+
+```mermaid
+xychart-beta
+    title "Estimated Major Product Steps by Repo"
+    x-axis ["blog","radiate","simple-excel","tempus-fugit","temperature-machine"]
+    y-axis "Steps (midpoint)" 0 --> 10
+    bar [8.5,3.5,3.5,2.5,1.5]
+```
+
+```mermaid
+xychart-beta
+    title "Relative Multipliers vs Historical (Blog)"
+    x-axis ["vs mean","vs median","vs best historical"]
+    y-axis "Multiplier" 0 --> 2.5
+    bar [2.05,1.98,1.31]
+```
+
 ## Findings
 
 1. Recent `blog` activity is not just higher churn; it combines feature construction, reliability scaffolding, and productization in one window.
@@ -105,3 +137,8 @@ A defensible estimate from this analysis is:
 
 Practical band: **1.8x-2.3x** depending on weighting choices.
 
+---
+
+Companion initiative-sizing report:
+
+- [FEATURE_SIZE_COMPARISON.md](/Users/toby/dev/code/blog/FEATURE_SIZE_COMPARISON.md)
