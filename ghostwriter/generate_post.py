@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import os
 import re
 from dataclasses import dataclass
@@ -17,9 +16,11 @@ from config import (
     DEFAULT_AUDIENCE,
     DEFAULT_DRAFT,
     DEFAULT_MAX_AGE_YEARS,
+    DEFAULT_MODEL,
     DEFAULT_STRICT_MAX_AGE,
     MAX_SAMPLE_CHARS,
     MAX_STYLE_SAMPLES,
+    MODEL_PRICING,
     OUTPUT_DIR,
     RECENCY_HALF_LIFE_YEARS,
 )
@@ -68,7 +69,6 @@ def years_old(doc: dict[str, Any]) -> int | None:
 def recency_multiplier(age: int | None) -> float:
     if age is None:
         return 0.9
-    # gentle exponential decay, never fully zero
     return max(0.35, 0.5 ** (age / RECENCY_HALF_LIFE_YEARS))
 
 
@@ -116,25 +116,19 @@ def score_doc(
             if tokenize(item) & q:
                 category_topic_bonus += 6
 
-    length_penalty = 0
-    if doc.get("word_count", 0) < 250:
-        length_penalty = -10
-
+    length_penalty = -10 if doc.get("word_count", 0) < 250 else 0
     age_mult = recency_multiplier(age)
 
-    # strongly damp very old posts unless they match well
     if age is not None and age > max_age_years and not strict_max_age:
         age_mult *= 0.55
 
-    score = (
+    return (
         published_bonus
         + metadata_bonus
         + body_bonus
         + category_topic_bonus
         + length_penalty
     ) * age_mult
-
-    return score
 
 
 def pick_style_samples(
@@ -167,7 +161,7 @@ def pick_style_samples(
         if item.score <= 0:
             continue
 
-        title = doc_title = item.doc.get("title", "").strip().lower()
+        title = item.doc.get("title", "").strip().lower()
         if not item.doc.get("content", "").strip():
             continue
         if title in seen_titles:
@@ -196,17 +190,14 @@ def infer_categories_and_topics(
         for topic in sample.get("topics", []):
             topic_counts[topic] = topic_counts.get(topic, 0) + 1
 
-    best_categories = [k for k, _ in sorted(category_counts.items(), key=lambda x: x[1], reverse=True)[:3]]
-    best_topics = [k for k, _ in sorted(topic_counts.items(), key=lambda x: x[1], reverse=True)[:5]]
+    best_categories = [
+        k for k, _ in sorted(category_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+    ]
+    best_topics = [
+        k for k, _ in sorted(topic_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+    ]
 
     return best_categories, best_topics
-
-
-def frontmatter_list(items: list[str]) -> str:
-    if not items:
-        return "[]"
-    quoted = ", ".join(json.dumps(item) for item in items)
-    return f"[{quoted}]"
 
 
 def build_prompt(
@@ -309,6 +300,12 @@ def parse_title_from_frontmatter(frontmatter: str | None) -> str | None:
     return match.group(1).strip() if match else None
 
 
+def frontmatter_list_yaml(items: list[str]) -> str:
+    if not items:
+        return "[]"
+    return "\n".join(f"  - {json.dumps(item)}" for item in items)
+
+
 def normalise_generated_document(
     generated: str,
     *,
@@ -339,8 +336,10 @@ def normalise_generated_document(
             f"description: {json.dumps(description)}",
             f"date: {today}",
             f"draft: {str(DEFAULT_DRAFT).lower()}",
-            f"categories: {frontmatter_list(categories)}",
-            f"topics: {frontmatter_list(topics)}",
+            "categories:",
+            frontmatter_list_yaml(categories) if categories else "  []",
+            "topics:",
+            frontmatter_list_yaml(topics) if topics else "  []",
             "---",
             "",
         ]
@@ -364,6 +363,64 @@ def csv_list(value: str | None) -> list[str]:
     return [part.strip() for part in value.split(",") if part.strip()]
 
 
+def estimate_tokens_from_text(text: str) -> int:
+    # Rough planning heuristic only
+    return max(1, round(len(text) / 4))
+
+
+def estimate_cost_usd(model: str, input_tokens: int, output_tokens: int) -> float | None:
+    pricing = MODEL_PRICING.get(model)
+    if not pricing:
+        return None
+
+    input_cost = (input_tokens / 1_000_000) * pricing["input_per_million"]
+    output_cost = (output_tokens / 1_000_000) * pricing["output_per_million"]
+    return input_cost + output_cost
+
+
+def print_dry_run(
+    *,
+    model: str,
+    prompt: str,
+    samples: list[dict[str, Any]],
+    categories: list[str],
+    topics: list[str],
+    estimated_output_tokens: int,
+) -> None:
+    input_tokens = estimate_tokens_from_text(prompt)
+    estimated_cost = estimate_cost_usd(model, input_tokens, estimated_output_tokens)
+
+    print("DRY RUN")
+    print(f"Model: {model}")
+    print(f"Estimated input tokens:  {input_tokens:,}")
+    print(f"Estimated output tokens: {estimated_output_tokens:,}")
+    if estimated_cost is not None:
+        print(f"Estimated API cost:     ${estimated_cost:.4f}")
+    else:
+        print("Estimated API cost:     unknown (model not in MODEL_PRICING)")
+
+    print("\nInferred frontmatter")
+    print(f"  categories: {categories}")
+    print(f"  topics:     {topics}")
+
+    print("\nStyle samples selected")
+    for idx, sample in enumerate(samples, start=1):
+        print(
+            f"  {idx}. {sample.get('date', '')} | {sample.get('kind', '')} | "
+            f"{sample.get('title', '')}"
+        )
+        if sample.get("categories"):
+            print(f"     categories: {', '.join(sample.get('categories', []))}")
+        if sample.get("topics"):
+            print(f"     topics:     {', '.join(sample.get('topics', []))}")
+
+    print("\nPrompt preview")
+    preview = prompt[:2000]
+    print(preview)
+    if len(prompt) > len(preview):
+        print("\n... [truncated]")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--topic", required=True)
@@ -379,6 +436,18 @@ def main() -> None:
         action="store_true",
         default=DEFAULT_STRICT_MAX_AGE,
         help="Hard-exclude posts older than --max-age-years",
+    )
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument(
+        "--estimated-output-tokens",
+        type=int,
+        default=1800,
+        help="Used for dry-run cost estimation only",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show chosen samples and estimated cost without calling the API",
     )
     args = parser.parse_args()
 
@@ -426,9 +495,20 @@ def main() -> None:
         explicit_title=args.title,
     )
 
+    if args.dry_run:
+        print_dry_run(
+            model=args.model,
+            prompt=prompt,
+            samples=samples,
+            categories=categories,
+            topics=topics,
+            estimated_output_tokens=args.estimated_output_tokens,
+        )
+        return
+
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
     response = client.responses.create(
-        model="gpt-5",
+        model=args.model,
         input=prompt,
     )
 

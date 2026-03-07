@@ -20,7 +20,20 @@ MAX_SAMPLE_CHARS = 4000
 DEFAULT_AUDIENCE = "Senior engineers and engineering leaders"
 DEFAULT_DRAFT = True
 
-# Retrieval behaviour
-DEFAULT_MAX_AGE_YEARS = 12      # soft default for style selection
-DEFAULT_STRICT_MAX_AGE = False  # if true, hard-cut old posts
-RECENCY_HALF_LIFE_YEARS = 6     # score decays with age
+DEFAULT_MAX_AGE_YEARS = 12
+DEFAULT_STRICT_MAX_AGE = False
+RECENCY_HALF_LIFE_YEARS = 6
+
+DEFAULT_MODEL = "gpt-5"
+
+# Official prices, USD per 1M tokens
+MODEL_PRICING = {
+    "gpt-5": {
+        "input_per_million": 1.25,
+        "output_per_million": 10.00,
+    },
+    "gpt-5-mini": {
+        "input_per_million": 0.25,
+        "output_per_million": 2.00,
+    },
+}
