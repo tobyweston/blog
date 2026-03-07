@@ -11,6 +11,8 @@ CACHE_DIR = BASE_DIR / "cache"
 CACHE_DIR.mkdir(exist_ok=True)
 
 CORPUS_CACHE = CACHE_DIR / "corpus.json"
+STYLE_PROFILE_JSON = CACHE_DIR / "style_profile.json"
+STYLE_PROFILE_MD = CACHE_DIR / "style_profile.md"
 
 INCLUDE_UNPUBLISHED = True
 
@@ -26,7 +28,6 @@ RECENCY_HALF_LIFE_YEARS = 6
 
 DEFAULT_MODEL = "gpt-5"
 
-# Official prices, USD per 1M tokens
 MODEL_PRICING = {
     "gpt-5": {
         "input_per_million": 1.25,
