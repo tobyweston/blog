@@ -10,6 +10,9 @@ import pytest
 
 
 from retrieve import (
+    gather_candidate_files,
+    infer_post_slug,
+    iter_text_files,
     load_frameworks,
     load_notes_files,
     load_research_files,
@@ -103,6 +106,130 @@ class TestLoadTextFile:
 
 
 # ---------------------------------------------------------------------------
+# iter_text_files
+# ---------------------------------------------------------------------------
+
+class TestIterTextFiles:
+    def test_yields_md_and_txt_only(self, tmp_path):
+        (tmp_path / "a.md").touch()
+        (tmp_path / "b.txt").touch()
+        (tmp_path / "c.py").touch()
+        names = {p.name for p in iter_text_files(tmp_path)}
+        assert names == {"a.md", "b.txt"}
+
+    def test_returns_empty_for_missing_directory(self, tmp_path):
+        assert iter_text_files(tmp_path / "nope") == []
+
+    def test_returns_sorted(self, tmp_path):
+        (tmp_path / "z.md").touch()
+        (tmp_path / "a.md").touch()
+        paths = iter_text_files(tmp_path)
+        assert paths == sorted(paths)
+
+
+# ---------------------------------------------------------------------------
+# infer_post_slug
+# ---------------------------------------------------------------------------
+
+class TestInferPostSlug:
+    def test_slugifies_topic(self):
+        assert infer_post_slug("My Great Topic") == "my-great-topic"
+
+    def test_returns_none_for_none(self):
+        assert infer_post_slug(None) is None
+
+    def test_returns_none_for_empty_string(self):
+        assert infer_post_slug("") is None
+
+    def test_returns_none_for_whitespace_only(self):
+        assert infer_post_slug("   ") is None
+
+
+# ---------------------------------------------------------------------------
+# gather_candidate_files
+# ---------------------------------------------------------------------------
+
+class TestGatherCandidateFiles:
+    def test_loads_common_files(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "shared.md").write_text("Shared content", encoding="utf-8")
+
+        files = gather_candidate_files(
+            common_dir=common,
+            posts_dir=tmp_path / "post",
+        )
+        assert any(f["name"] == "shared" for f in files)
+
+    def test_loads_per_post_files_when_topic_given(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
+        post_dir = tmp_path / "post" / "my-topic"
+        post_dir.mkdir(parents=True)
+        (post_dir / "notes.md").write_text("Post-specific notes", encoding="utf-8")
+
+        files = gather_candidate_files(
+            common_dir=common,
+            posts_dir=tmp_path / "post",
+            topic_or_query="My Topic",
+        )
+        assert any(f["name"] == "notes" for f in files)
+
+    def test_merges_common_and_post_files(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "shared.md").write_text("Shared", encoding="utf-8")
+        post_dir = tmp_path / "post" / "my-topic"
+        post_dir.mkdir(parents=True)
+        (post_dir / "specific.md").write_text("Specific", encoding="utf-8")
+
+        files = gather_candidate_files(
+            common_dir=common,
+            posts_dir=tmp_path / "post",
+            topic_or_query="My Topic",
+        )
+        names = {f["name"] for f in files}
+        assert "shared" in names
+        assert "specific" in names
+
+    def test_explicit_paths_override_directory_scan(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "ignored.md").write_text("Should be ignored", encoding="utf-8")
+        explicit = tmp_path / "explicit.md"
+        explicit.write_text("Explicit content", encoding="utf-8")
+
+        files = gather_candidate_files(
+            common_dir=common,
+            posts_dir=tmp_path / "post",
+            explicit_paths=[str(explicit)],
+        )
+        names = {f["name"] for f in files}
+        assert names == {"explicit"}
+
+    def test_skips_missing_explicit_paths(self, tmp_path):
+        files = gather_candidate_files(
+            common_dir=tmp_path / "common",
+            posts_dir=tmp_path / "post",
+            explicit_paths=[str(tmp_path / "missing.md")],
+        )
+        assert files == []
+
+    def test_no_post_dir_match_still_returns_common(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "shared.md").write_text("Shared", encoding="utf-8")
+
+        files = gather_candidate_files(
+            common_dir=common,
+            posts_dir=tmp_path / "post",
+            topic_or_query="topic-with-no-post-dir",
+        )
+        assert len(files) == 1
+        assert files[0]["name"] == "shared"
+
+
+# ---------------------------------------------------------------------------
 # load_frameworks
 # ---------------------------------------------------------------------------
 
@@ -178,11 +305,14 @@ class TestLoadFrameworks:
 
 class TestLoadResearchFiles:
     def test_loads_all_files_when_no_paths_given(self, tmp_path):
-        (tmp_path / "research1.md").write_text("Research one", encoding="utf-8")
-        (tmp_path / "research2.txt").write_text("Research two", encoding="utf-8")
-        (tmp_path / "skip.py").write_text("not loaded", encoding="utf-8")
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "research1.md").write_text("Research one", encoding="utf-8")
+        (common / "research2.txt").write_text("Research two", encoding="utf-8")
+        (common / "skip.py").write_text("not loaded", encoding="utf-8")
 
-        with patch("retrieve.RESEARCH_DIR", tmp_path):
+        with patch("retrieve.RESEARCH_COMMON_DIR", common), \
+             patch("retrieve.RESEARCH_POSTS_DIR", tmp_path / "post"):
             files = load_research_files()
 
         names = {f["name"] for f in files}
@@ -206,9 +336,12 @@ class TestLoadResearchFiles:
 
 class TestLoadNotesFiles:
     def test_loads_notes_from_directory(self, tmp_path):
-        (tmp_path / "note1.md").write_text("Note one", encoding="utf-8")
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "note1.md").write_text("Note one", encoding="utf-8")
 
-        with patch("retrieve.NOTES_DIR", tmp_path):
+        with patch("retrieve.NOTES_COMMON_DIR", common), \
+             patch("retrieve.NOTES_POSTS_DIR", tmp_path / "post"):
             files = load_notes_files()
 
         assert len(files) == 1
@@ -326,19 +459,24 @@ class TestPickVoiceAnchors:
 
 class TestPickResearch:
     def test_returns_relevant_research(self, tmp_path):
-        path = tmp_path / "relevant.md"
-        path.write_text("engineering deployment pipelines testing", encoding="utf-8")
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "relevant.md").write_text("engineering deployment pipelines testing", encoding="utf-8")
 
-        with patch("retrieve.RESEARCH_DIR", tmp_path):
+        with patch("retrieve.RESEARCH_COMMON_DIR", common), \
+             patch("retrieve.RESEARCH_POSTS_DIR", tmp_path / "post"):
             results = pick_research("engineering deployment", limit=5)
 
         assert len(results) >= 1
 
     def test_returns_up_to_limit(self, tmp_path):
+        common = tmp_path / "common"
+        common.mkdir()
         for i in range(5):
-            (tmp_path / f"doc{i}.md").write_text(f"engineering content {i}", encoding="utf-8")
+            (common / f"doc{i}.md").write_text(f"engineering content {i}", encoding="utf-8")
 
-        with patch("retrieve.RESEARCH_DIR", tmp_path):
+        with patch("retrieve.RESEARCH_COMMON_DIR", common), \
+             patch("retrieve.RESEARCH_POSTS_DIR", tmp_path / "post"):
             results = pick_research("engineering", limit=2)
 
         assert len(results) <= 2
@@ -346,10 +484,12 @@ class TestPickResearch:
 
 class TestPickNotes:
     def test_returns_relevant_notes(self, tmp_path):
-        path = tmp_path / "ideas.md"
-        path.write_text("system design architecture microservices", encoding="utf-8")
+        common = tmp_path / "common"
+        common.mkdir()
+        (common / "ideas.md").write_text("system design architecture microservices", encoding="utf-8")
 
-        with patch("retrieve.NOTES_DIR", tmp_path):
+        with patch("retrieve.NOTES_COMMON_DIR", common), \
+             patch("retrieve.NOTES_POSTS_DIR", tmp_path / "post"):
             results = pick_notes("microservices architecture", limit=5)
 
         assert len(results) >= 1
