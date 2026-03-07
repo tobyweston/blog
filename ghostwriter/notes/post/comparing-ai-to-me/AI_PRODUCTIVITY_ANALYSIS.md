@@ -10,23 +10,23 @@ Quantify whether recent AI-assisted work produced more **feature/value throughpu
 
 ## Compared Windows
 
-| Repo | Window |
-|---|---|
-| `blog` | 2026-02-08 to 2026-03-07 |
-| `simple-excel` | 2012-08-25 to 2012-09-21 |
-| `tempus-fugit` | 2009-11-30 to 2009-12-27 |
+| Repo                  | Window                   |
+|-----------------------|--------------------------|
+| `blog`                | 2026-02-08 to 2026-03-07 |
+| `simple-excel`        | 2012-08-25 to 2012-09-21 |
+| `tempus-fugit`        | 2009-11-30 to 2009-12-27 |
 | `temperature-machine` | 2018-04-12 to 2018-05-09 |
-| `radiate` | 2013-07-24 to 2013-08-20 |
+| `radiate`             | 2013-07-24 to 2013-08-20 |
 
 ## Raw Delivery Signals
 
-| Repo | Commits | New Files | New Code Files | New Test Files | Feature-like Commits | Fix-like Commits | Reliability/CI/Test-like Commits |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| `blog` | 196 | 225 | 52 | 116 | 61 | 51 | 57 |
-| `simple-excel` | 105 | 78 | 57 | 36 | 37 | 25 | 28 |
-| `tempus-fugit` | 76 | 40 | 31 | 19 | 30 | 9 | 16 |
-| `temperature-machine` | 126 | 25 | 3 | 6 | 17 | 10 | 10 |
-| `radiate` | 146 | 125 | 96 | 18 | 44 | 26 | 39 |
+| Repo                  | Commits | New Files | New Code Files | New Test Files | Feature-like Commits | Fix-like Commits | Reliability/CI/Test-like Commits |
+|-----------------------|--------:|----------:|---------------:|---------------:|---------------------:|-----------------:|---------------------------------:|
+| `blog`                |     196 |       225 |             52 |            116 |                   61 |               51 |                               57 |
+| `simple-excel`        |     105 |        78 |             57 |             36 |                   37 |               25 |                               28 |
+| `tempus-fugit`        |      76 |        40 |             31 |             19 |                   30 |                9 |                               16 |
+| `temperature-machine` |     126 |        25 |              3 |              6 |                   17 |               10 |                               10 |
+| `radiate`             |     146 |       125 |             96 |             18 |                   44 |               26 |                               39 |
 
 Notes:
 - `feature-like`, `fix-like`, `reliability/CI/test-like` are keyword-classified commit-message buckets.
@@ -40,13 +40,13 @@ To avoid raw-LOC bias, a normalized weighted index was used:
 
 where each component is normalized to the maximum observed across compared repos.
 
-| Repo | FeatureValueIndex |
-|---|---:|
-| `blog` | **88.5** |
-| `radiate` | 67.4 |
-| `simple-excel` | 53.3 |
-| `tempus-fugit` | 36.3 |
-| `temperature-machine` | 16.1 |
+| Repo                  | FeatureValueIndex |
+|-----------------------|------------------:|
+| `blog`                |          **88.5** |
+| `radiate`             |              67.4 |
+| `simple-excel`        |              53.3 |
+| `tempus-fugit`        |              36.3 |
+| `temperature-machine` |              16.1 |
 
 ### Relative Multipliers (Recent `blog` vs historical)
 
@@ -58,13 +58,13 @@ where each component is normalized to the maximum observed across compared repos
 
 Estimated count of major capability steps shipped in each window:
 
-| Repo | Major Steps (estimated) | Examples |
-|---|---:|---|
-| `blog` | **8-9** | Ghostwriter end-to-end flow, semantic RAG/indexing, CLI, dedicated Python CI/tests, visual-regression hardening, routing/canonical redirects, archive/search UX, SEO+discussion+analytics |
-| `simple-excel` | 3-4 | API shaping, styling support maturation, release hardening |
-| `tempus-fugit` | 2-3 | concurrency/deadlock capabilities plus docs/site packaging |
-| `radiate` | 3-4 | exception/info display architecture, event/logging behavior, UI feature controls |
-| `temperature-machine` | 1-2 | packaging/install/deployment stabilization with limited net-new core features |
+| Repo                  | Major Steps (estimated) | Examples                                                                                                                                                                                  |
+|-----------------------|------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `blog`                |                 **8-9** | Ghostwriter end-to-end flow, semantic RAG/indexing, CLI, dedicated Python CI/tests, visual-regression hardening, routing/canonical redirects, archive/search UX, SEO+discussion+analytics |
+| `simple-excel`        |                     3-4 | API shaping, styling support maturation, release hardening                                                                                                                                |
+| `tempus-fugit`        |                     2-3 | concurrency/deadlock capabilities plus docs/site packaging                                                                                                                                |
+| `radiate`             |                     3-4 | exception/info display architecture, event/logging behavior, UI feature controls                                                                                                          |
+| `temperature-machine` |                     1-2 | packaging/install/deployment stabilization with limited net-new core features                                                                                                             |
 
 ## Charts
 
