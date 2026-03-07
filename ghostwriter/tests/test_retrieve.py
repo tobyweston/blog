@@ -20,6 +20,7 @@ from retrieve import (
     pick_frameworks,
     pick_notes,
     pick_research,
+    pick_topic_samples,
     pick_voice_anchors,
     score_text,
     slugify,
@@ -458,39 +459,139 @@ class TestPickVoiceAnchors:
 # ---------------------------------------------------------------------------
 
 class TestPickResearch:
-    def test_returns_relevant_research(self, tmp_path):
-        common = tmp_path / "common"
-        common.mkdir()
-        (common / "relevant.md").write_text("engineering deployment pipelines testing", encoding="utf-8")
+    """pick_research without explicit paths delegates to semantic_search (FAISS vector path)."""
 
-        with patch("retrieve.RESEARCH_COMMON_DIR", common), \
-             patch("retrieve.RESEARCH_POSTS_DIR", tmp_path / "post"):
+    def _make_hit(self, tmp_path, name="relevant"):
+        path = tmp_path / f"{name}.md"
+        path.write_text("engineering deployment pipelines testing", encoding="utf-8")
+        return [{"source_path": str(path), "score": 0.9}]
+
+    def test_returns_results_from_semantic_search(self, tmp_path):
+        hits = self._make_hit(tmp_path)
+        with patch("retrieve.semantic_search", return_value=hits), \
+             patch("retrieve.rehydrate_text_files", return_value=[{"name": "relevant", "content": "..."}]):
             results = pick_research("engineering deployment", limit=5)
-
         assert len(results) >= 1
 
     def test_returns_up_to_limit(self, tmp_path):
-        common = tmp_path / "common"
-        common.mkdir()
-        for i in range(5):
-            (common / f"doc{i}.md").write_text(f"engineering content {i}", encoding="utf-8")
-
-        with patch("retrieve.RESEARCH_COMMON_DIR", common), \
-             patch("retrieve.RESEARCH_POSTS_DIR", tmp_path / "post"):
+        hits = [{"source_path": str(tmp_path / f"doc{i}.md"), "score": 0.9} for i in range(5)]
+        rehydrated = [{"name": f"doc{i}", "content": "..."} for i in range(5)]
+        with patch("retrieve.semantic_search", return_value=hits), \
+             patch("retrieve.rehydrate_text_files", return_value=rehydrated):
             results = pick_research("engineering", limit=2)
-
         assert len(results) <= 2
+
+    def test_explicit_paths_bypass_semantic_search(self, tmp_path):
+        """When paths= is given the keyword-scoring path is used, not semantic_search."""
+        path = tmp_path / "explicit.md"
+        path.write_text("engineering deployment pipelines testing", encoding="utf-8")
+        with patch("retrieve.semantic_search") as mock_ss:
+            results = pick_research("engineering", paths=[str(path)])
+        mock_ss.assert_not_called()
+        assert len(results) == 1
+
+    def test_explicit_paths_ranked_by_keyword_score(self, tmp_path):
+        high = tmp_path / "high.md"
+        low = tmp_path / "low.md"
+        high.write_text("engineering deployment pipelines testing analysis", encoding="utf-8")
+        low.write_text("cooking recipes baking", encoding="utf-8")
+        results = pick_research("engineering deployment", paths=[str(high), str(low)])
+        # high-scoring doc should come first
+        assert results[0]["name"] == "high"
 
 
 class TestPickNotes:
-    def test_returns_relevant_notes(self, tmp_path):
-        common = tmp_path / "common"
-        common.mkdir()
-        (common / "ideas.md").write_text("system design architecture microservices", encoding="utf-8")
+    """pick_notes without explicit paths delegates to semantic_search (FAISS vector path)."""
 
-        with patch("retrieve.NOTES_COMMON_DIR", common), \
-             patch("retrieve.NOTES_POSTS_DIR", tmp_path / "post"):
+    def test_returns_results_from_semantic_search(self, tmp_path):
+        path = tmp_path / "ideas.md"
+        path.write_text("system design architecture microservices", encoding="utf-8")
+        hits = [{"source_path": str(path), "score": 0.9}]
+        rehydrated = [{"name": "ideas", "content": "system design architecture microservices"}]
+        with patch("retrieve.semantic_search", return_value=hits), \
+             patch("retrieve.rehydrate_text_files", return_value=rehydrated):
             results = pick_notes("microservices architecture", limit=5)
-
         assert len(results) >= 1
+
+    def test_explicit_paths_bypass_semantic_search(self, tmp_path):
+        path = tmp_path / "my-note.md"
+        path.write_text("microservices architecture patterns", encoding="utf-8")
+        with patch("retrieve.semantic_search") as mock_ss:
+            results = pick_notes("microservices", paths=[str(path)])
+        mock_ss.assert_not_called()
+        assert len(results) == 1
+
+    def test_returns_empty_when_no_hits(self):
+        with patch("retrieve.semantic_search", return_value=[]), \
+             patch("retrieve.rehydrate_text_files", return_value=[]):
+            results = pick_notes("unknown topic")
+        assert results == []
+
+
+# ---------------------------------------------------------------------------
+# pick_topic_samples
+# ---------------------------------------------------------------------------
+
+class TestPickTopicSamples:
+    """pick_topic_samples uses semantic_search first, falls back to keyword scoring."""
+
+    def _make_corpus(self):
+        return [
+            {
+                "path": "/blog/post-a.md",
+                "kind": "blog",
+                "title": "Engineering Deployment",
+                "description": "About deployment pipelines",
+                "categories": ["engineering"],
+                "topics": ["deployment"],
+                "content": "engineering deployment pipelines testing",
+                "date": "2024-01-01",
+            },
+            {
+                "path": "/blog/post-b.md",
+                "kind": "blog",
+                "title": "Cooking Basics",
+                "description": "About cooking",
+                "categories": ["lifestyle"],
+                "topics": [],
+                "content": "cooking recipes baking bread",
+                "date": "2023-06-01",
+            },
+        ]
+
+    def test_returns_hits_from_semantic_search(self):
+        corpus = self._make_corpus()
+        hits = [{"source_path": "/blog/post-a.md", "score": 0.9}]
+        with patch("retrieve.semantic_search", return_value=hits), \
+             patch("retrieve.ensure_corpus", return_value=corpus):
+            results = pick_topic_samples("deployment engineering", limit=3)
+        assert len(results) == 1
+        assert results[0]["title"] == "Engineering Deployment"
+
+    def test_falls_back_to_keyword_when_no_semantic_hits(self):
+        corpus = self._make_corpus()
+        with patch("retrieve.semantic_search", return_value=[]), \
+             patch("retrieve.ensure_corpus", return_value=corpus):
+            results = pick_topic_samples("deployment engineering", limit=3)
+        assert any(r["title"] == "Engineering Deployment" for r in results)
+
+    def test_respects_limit(self):
+        corpus = [
+            {
+                "path": f"/blog/post-{i}.md",
+                "kind": "blog",
+                "title": f"Post {i}",
+                "description": "",
+                "categories": ["engineering"],
+                "topics": [],
+                "content": f"engineering content post {i}",
+                "date": f"202{i % 10}-01-01",
+            }
+            for i in range(10)
+        ]
+        hits = [{"source_path": f"/blog/post-{i}.md", "score": 0.9} for i in range(10)]
+        with patch("retrieve.semantic_search", return_value=hits), \
+             patch("retrieve.ensure_corpus", return_value=corpus):
+            results = pick_topic_samples("engineering", limit=3)
+        assert len(results) <= 3
 

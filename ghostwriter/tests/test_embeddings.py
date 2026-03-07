@@ -1,177 +1,134 @@
-"""Tests for embeddings.py"""
+"""Tests for embeddings.py
+
+embeddings.py exposes:
+  - embed_text(text: str) -> List[float]
+  - embed_batch(texts: list[str]) -> list[list[float]]
+
+Both call the OpenAI embeddings API which is patched out in all tests.
+"""
 from __future__ import annotations
 
-import json
 from unittest.mock import MagicMock, patch
 
 import pytest
 
+from embeddings import embed_batch, embed_text
+import embeddings as _embeddings_module
 
-from embeddings import cosine_similarity, embed_documents, load_embeddings, save_embeddings, search
 
-
-# ---------------------------------------------------------------------------
-# cosine_similarity
-# ---------------------------------------------------------------------------
-
-class TestCosineSimilarity:
-    def test_identical_vectors_return_one(self):
-        v = [1.0, 0.0, 0.0]
-        assert cosine_similarity(v, v) == pytest.approx(1.0)
-
-    def test_orthogonal_vectors_return_zero(self):
-        a = [1.0, 0.0]
-        b = [0.0, 1.0]
-        assert cosine_similarity(a, b) == pytest.approx(0.0)
-
-    def test_opposite_vectors_return_minus_one(self):
-        a = [1.0, 0.0]
-        b = [-1.0, 0.0]
-        assert cosine_similarity(a, b) == pytest.approx(-1.0)
-
-    def test_similar_vectors_return_high_score(self):
-        a = [1.0, 1.0, 0.0]
-        b = [1.0, 0.9, 0.1]
-        score = cosine_similarity(a, b)
-        assert score > 0.95
-
-    def test_returns_float(self):
-        a = [1.0, 2.0, 3.0]
-        b = [4.0, 5.0, 6.0]
-        result = cosine_similarity(a, b)
-        assert isinstance(result, float)
-
-    def test_zero_vector_returns_zero(self):
-        assert cosine_similarity([0.0, 0.0], [1.0, 0.0]) == 0.0
-        assert cosine_similarity([0.0, 0.0], [0.0, 0.0]) == 0.0
+@pytest.fixture(autouse=True)
+def reset_embeddings_client():
+    """Reset the lazy singleton so each test starts clean."""
+    _embeddings_module._client = None
+    yield
+    _embeddings_module._client = None
 
 
 # ---------------------------------------------------------------------------
-# load_embeddings / save_embeddings
+# Helpers
 # ---------------------------------------------------------------------------
 
-class TestLoadSaveEmbeddings:
-    def test_load_returns_empty_dict_when_no_file(self, tmp_path):
-        with patch("embeddings.EMBEDDINGS_FILE", tmp_path / "embeddings.json"):
-            result = load_embeddings()
-        assert result == {}
+def _mock_client(vectors: list[list[float]]):
+    """Return a mock OpenAI client whose embeddings.create returns *vectors*."""
+    mock_response = MagicMock()
+    mock_response.data = [MagicMock(embedding=v) for v in vectors]
+    mock_c = MagicMock()
+    mock_c.embeddings.create.return_value = mock_response
+    return mock_c
 
-    def test_save_and_load_round_trip(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
-        data = {"doc/a.md": [0.1, 0.2, 0.3], "doc/b.md": [0.4, 0.5, 0.6]}
 
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path):
-            save_embeddings(data)
-            loaded = load_embeddings()
-
-        assert loaded == data
-
-    def test_save_creates_parent_directories(self, tmp_path):
-        nested = tmp_path / "a" / "b" / "embeddings.json"
-        data = {"key": [1.0, 2.0]}
-
-        with patch("embeddings.EMBEDDINGS_FILE", nested):
-            save_embeddings(data)
-
-        assert nested.exists()
+def _patch_client(vectors):
+    """Context manager that patches _get_client to return a mock."""
+    return patch("embeddings._get_client", return_value=_mock_client(vectors))
 
 
 # ---------------------------------------------------------------------------
-# embed_documents
+# embed_text
 # ---------------------------------------------------------------------------
 
-class TestEmbedDocuments:
-    def test_skips_already_embedded_docs(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
-        existing = {"path/a.md": [0.1, 0.2]}
-        embeddings_path.write_text(json.dumps(existing))
+class TestEmbedText:
+    def test_returns_list_of_floats(self):
+        fake_vec = [0.1, 0.2, 0.3]
+        with _patch_client([fake_vec]):
+            result = embed_text("Hello world")
+        assert result == fake_vec
 
-        docs = [{"path": "path/a.md", "content": "some content"}]
+    def test_empty_string_returns_empty_list_without_api_call(self):
+        with patch("embeddings._get_client") as mock_get:
+            result = embed_text("")
+            mock_get.assert_not_called()
+        assert result == []
 
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text") as mock_embed:
-            embed_documents(docs)
-            mock_embed.assert_not_called()
+    def test_whitespace_only_returns_empty_list_without_api_call(self):
+        with patch("embeddings._get_client") as mock_get:
+            result = embed_text("   \n  ")
+            mock_get.assert_not_called()
+        assert result == []
 
-    def test_embeds_new_documents(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
+    def test_calls_correct_model(self):
+        mock_c = _mock_client([[0.5, 0.5]])
+        with patch("embeddings._get_client", return_value=mock_c):
+            embed_text("some text")
+        assert mock_c.embeddings.create.call_args.kwargs["model"] == "text-embedding-3-small"
 
-        docs = [{"path": "path/new.md", "content": "new content here"}]
-        fake_vec = [0.5, 0.5, 0.5]
+    def test_passes_text_as_input(self):
+        mock_c = _mock_client([[0.1]])
+        with patch("embeddings._get_client", return_value=mock_c):
+            embed_text("test content")
+        assert mock_c.embeddings.create.call_args.kwargs["input"] == "test content"
 
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text", return_value=fake_vec) as mock_embed:
-            embed_documents(docs)
-            mock_embed.assert_called_once()
-
-        saved = json.loads(embeddings_path.read_text())
-        assert saved["path/new.md"] == fake_vec
-
-    def test_truncates_content_to_4000_chars(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
-        long_content = "x" * 10000
-        docs = [{"path": "doc.md", "content": long_content}]
-
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text", return_value=[0.1]) as mock_embed:
-            embed_documents(docs)
-            called_with = mock_embed.call_args[0][0]
-            assert len(called_with) == 4000
+    def test_returns_first_embedding_from_response(self):
+        """Only the first data item's embedding should be returned."""
+        vec_a, vec_b = [1.0, 0.0], [0.0, 1.0]
+        with _patch_client([vec_a, vec_b]):
+            result = embed_text("hello")
+        assert result == vec_a
 
 
 # ---------------------------------------------------------------------------
-# search
+# embed_batch
 # ---------------------------------------------------------------------------
 
-class TestSearch:
-    def _make_docs(self, paths):
-        return [{"path": p, "content": f"content for {p}"} for p in paths]
+class TestEmbedBatch:
+    def test_empty_list_returns_empty_without_api_call(self):
+        with patch("embeddings._get_client") as mock_get:
+            result = embed_batch([])
+            mock_get.assert_not_called()
+        assert result == []
 
-    def test_returns_top_n_results(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
+    def test_single_text_returns_single_vector(self):
+        fake_vec = [0.1, 0.9]
+        with _patch_client([fake_vec]):
+            result = embed_batch(["hello"])
+        assert result == [fake_vec]
 
-        paths = [f"doc{i}.md" for i in range(10)]
-        stored = {p: [float(i), 0.0] for i, p in enumerate(paths)}
-        embeddings_path.write_text(json.dumps(stored))
+    def test_multiple_texts_returns_multiple_vectors(self):
+        vecs = [[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]]
+        with _patch_client(vecs):
+            result = embed_batch(["a", "b", "c"])
+        assert result == vecs
 
-        docs = self._make_docs(paths)
-        query_vec = [9.0, 0.0]  # most similar to doc9
+    def test_calls_api_once_for_whole_batch(self):
+        mock_c = _mock_client([[0.1], [0.2], [0.3]])
+        with patch("embeddings._get_client", return_value=mock_c):
+            embed_batch(["x", "y", "z"])
+        assert mock_c.embeddings.create.call_count == 1
 
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text", return_value=query_vec):
-            results = search("some query", docs, limit=3)
+    def test_passes_texts_as_input(self):
+        texts = ["alpha", "beta"]
+        mock_c = _mock_client([[0.1], [0.2]])
+        with patch("embeddings._get_client", return_value=mock_c):
+            embed_batch(texts)
+        assert mock_c.embeddings.create.call_args.kwargs["input"] == texts
 
-        assert len(results) == 3
+    def test_uses_correct_model(self):
+        mock_c = _mock_client([[0.1], [0.2]])
+        with patch("embeddings._get_client", return_value=mock_c):
+            embed_batch(["a", "b"])
+        assert mock_c.embeddings.create.call_args.kwargs["model"] == "text-embedding-3-small"
 
-    def test_skips_docs_without_embeddings(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
-        stored = {"only-this.md": [1.0, 0.0]}
-        embeddings_path.write_text(json.dumps(stored))
-
-        docs = self._make_docs(["only-this.md", "missing.md"])
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text", return_value=[1.0, 0.0]):
-            results = search("query", docs, limit=5)
-
-        assert len(results) == 1
-        assert results[0]["path"] == "only-this.md"
-
-    def test_results_ordered_by_similarity(self, tmp_path):
-        embeddings_path = tmp_path / "embeddings.json"
-
-        stored = {
-            "low.md": [0.0, 1.0],
-            "high.md": [1.0, 0.0],
-        }
-        embeddings_path.write_text(json.dumps(stored))
-
-        docs = self._make_docs(["low.md", "high.md"])
-        query_vec = [1.0, 0.0]  # identical to high.md
-
-        with patch("embeddings.EMBEDDINGS_FILE", embeddings_path), \
-             patch("embeddings.embed_text", return_value=query_vec):
-            results = search("query", docs, limit=5)
-
-        assert results[0]["path"] == "high.md"
-        assert results[1]["path"] == "low.md"
-
+    def test_result_length_matches_input_length(self):
+        vecs = [[float(i)] for i in range(7)]
+        with _patch_client(vecs):
+            result = embed_batch([f"text {i}" for i in range(7)])
+        assert len(result) == 7

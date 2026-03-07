@@ -9,11 +9,13 @@ import pytest
 
 
 from generate_post import (
+    build_prompt,
     extract_frontmatter_block,
     frontmatter_list_yaml,
     normalise_generated_document,
     parse_plan,
     parse_title_from_frontmatter,
+    write_output,
 )
 
 
@@ -283,4 +285,132 @@ class TestNormaliseGeneratedDocument:
             topics=[],
         )
         assert result.endswith("\n")
+
+
+# ---------------------------------------------------------------------------
+# build_prompt
+# ---------------------------------------------------------------------------
+
+SAMPLE_STYLE_PROFILE = {
+    "voice_summary": "Thoughtful technical writer",
+    "tone": {"overall": "direct", "traits": ["precise"]},
+    "dos": ["Be clear"],
+    "donts": ["Avoid hype"],
+}
+
+SAMPLE_PLAN_DICT = {
+    "raw": "# Post Plan\n\n## Recommended title\nTest Post\n",
+    "recommended_title": "Test Post",
+    "central_insight": "The core argument.",
+    "why_this_matters": "It matters a lot.",
+    "recommended_framework": "Trust Lifecycle",
+    "outline": ["Section one", "Section two"],
+    "key_arguments": ["Argument A"],
+    "suggested_categories": ["engineering"],
+    "suggested_topics": ["deployment"],
+    "alternative_titles": [],
+    "reader": "Senior engineers",
+    "opening_options": [],
+    "things_to_avoid": [],
+}
+
+
+class TestBuildPrompt:
+    def _make_voice_sample(self, title="Post A"):
+        return {"title": title, "content": "Some post content here." * 10}
+
+    def _make_framework(self, name="Trust Framework"):
+        return {
+            "name": name,
+            "summary": "A summary of the framework.",
+            "key_claims": ["Claim one", "Claim two"],
+        }
+
+    def _call(self, **overrides):
+        kwargs = dict(
+            plan=SAMPLE_PLAN_DICT,
+            style_profile=SAMPLE_STYLE_PROFILE,
+            voice_samples=[self._make_voice_sample()],
+            topic_samples=[],
+            frameworks=[self._make_framework()],
+            research=[],
+            notes=[],
+        )
+        kwargs.update(overrides)
+        return build_prompt(**kwargs)
+
+    def test_prompt_contains_plan_raw(self):
+        prompt = self._call()
+        assert "Test Post" in prompt
+
+    def test_prompt_contains_style_profile(self):
+        prompt = self._call()
+        assert "Thoughtful technical writer" in prompt
+
+    def test_prompt_contains_framework_name(self):
+        prompt = self._call()
+        assert "Trust Framework" in prompt
+
+    def test_prompt_contains_voice_sample(self):
+        prompt = self._call()
+        assert "Post A" in prompt
+
+    def test_prompt_mentions_british_english(self):
+        prompt = self._call()
+        assert "British English" in prompt
+
+    def test_prompt_is_non_empty_string(self):
+        prompt = self._call()
+        assert isinstance(prompt, str)
+        assert len(prompt) > 200
+
+    def test_empty_research_and_notes_shows_none(self):
+        prompt = self._call(research=[], notes=[])
+        # Both empty blocks should fall back to "None" sentinel
+        assert prompt.count("None") >= 2
+
+    def test_multiple_frameworks_all_appear(self):
+        frameworks = [self._make_framework("Framework A"), self._make_framework("Framework B")]
+        prompt = self._call(frameworks=frameworks)
+        assert "Framework A" in prompt
+        assert "Framework B" in prompt
+
+
+# ---------------------------------------------------------------------------
+# write_output
+# ---------------------------------------------------------------------------
+
+class TestWriteOutput:
+    def test_creates_file_in_output_dir(self, tmp_path):
+        content = "---\ntitle: Test\n---\nBody."
+        with patch("generate_post.OUTPUT_DIR", tmp_path):
+            output_path = write_output(content, "My Test Post")
+        assert output_path.exists()
+
+    def test_filename_contains_today_and_slug(self, tmp_path):
+        from datetime import date
+        content = "---\ntitle: Test\n---\nBody."
+        with patch("generate_post.OUTPUT_DIR", tmp_path):
+            output_path = write_output(content, "My Test Post")
+        name = output_path.name
+        assert date.today().isoformat() in name
+        assert "my-test-post" in name
+
+    def test_filename_has_mdx_extension(self, tmp_path):
+        with patch("generate_post.OUTPUT_DIR", tmp_path):
+            output_path = write_output("content", "Some Title")
+        assert output_path.suffix == ".mdx"
+
+    def test_file_content_matches_input(self, tmp_path):
+        content = "---\ntitle: Test\n---\nHello world."
+        with patch("generate_post.OUTPUT_DIR", tmp_path):
+            output_path = write_output(content, "Test Post")
+        assert output_path.read_text(encoding="utf-8") == content
+
+    def test_untitled_fallback(self, tmp_path):
+        with patch("generate_post.OUTPUT_DIR", tmp_path):
+            output_path = write_output("content", "")
+        assert "untitled" in output_path.name
+
+
 

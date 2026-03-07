@@ -44,6 +44,7 @@ class TestRevisionModes:
         "less-tutorial",
         "more-opinionated",
         "add-framework",
+        "sharpen-argument",
     }
 
     def test_all_expected_modes_present(self):
@@ -59,4 +60,7 @@ class TestRevisionModes:
 
     def test_more_like_me_mentions_style_profile(self):
         assert "style profile" in REVISION_MODES["more-like-me"].lower()
+
+    def test_sharpen_argument_mentions_central(self):
+        assert "central" in REVISION_MODES["sharpen-argument"].lower()
 

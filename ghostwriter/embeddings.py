@@ -8,7 +8,14 @@ from openai import OpenAI
 
 MODEL = "text-embedding-3-small"
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+_client: OpenAI | None = None
+
+
+def _get_client() -> OpenAI:
+    global _client
+    if _client is None:
+        _client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+    return _client
 
 
 def embed_text(text: str) -> List[float]:
@@ -19,7 +26,7 @@ def embed_text(text: str) -> List[float]:
     if not text.strip():
         return []
 
-    response = client.embeddings.create(
+    response = _get_client().embeddings.create(
         model=MODEL,
         input=text,
     )
@@ -35,7 +42,7 @@ def embed_batch(texts: list[str]) -> list[list[float]]:
     if not texts:
         return []
 
-    response = client.embeddings.create(
+    response = _get_client().embeddings.create(
         model=MODEL,
         input=texts,
     )
