@@ -33,7 +33,7 @@ export default defineConfig({
     // Viewport configurations for different device sizes
     viewports: {
       mobile: { width: 375, height: 667 },
-      tablet: { width: 768, height: 1024 },
+      tablet: {  width: 768, height: 1024 },
       desktop: { width: 1920, height: 1080 },
     },
   },
