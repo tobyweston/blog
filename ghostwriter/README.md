@@ -60,3 +60,32 @@ python revise_post.py \
 ```
 
 
+# Example real workflow
+
+## Plan
+
+```shell 
+python plan_post.py  --topic "Code review as an evidence system"
+```
+
+## Draft
+
+```shell
+python generate_post.py --plan output/plans/2026-03-07-code-review-as-an-evidence-system.plan.md
+```
+
+## Tighten
+
+```shell
+python revise_post.py \
+   --input ../astro/src/content/blog/2026-03-07-code-review-as-an-evidence-system.mdx \
+   --mode tighten
+```
+
+
+## Evaluate
+
+```shell 
+python evaluate_post.py \
+   --input ../astro/src/content/blog/2026-03-07-code-review-as-an-evidence-system.mdx
+```
