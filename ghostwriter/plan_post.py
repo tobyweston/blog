@@ -3,35 +3,19 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 from datetime import date
 from pathlib import Path
 from typing import Any
 
-import yaml
 from openai import OpenAI
 
-from config import (
-    CORPUS_CACHE,
-    DEFAULT_AUDIENCE,
-    DEFAULT_MODEL,
-    OUTPUT_DIR,
-    STYLE_PROFILE_JSON,
-)
-from extract_corpus import build_corpus, save_corpus
+from config import DEFAULT_AUDIENCE, DEFAULT_MODEL, STYLE_PROFILE_JSON
+from retrieve import pick_frameworks, pick_notes, pick_research, pick_topic_samples, slugify
 
 
 BASE_DIR = Path(__file__).resolve().parent
-FRAMEWORKS_DIR = BASE_DIR / "frameworks"
 PLANS_DIR = BASE_DIR / "output" / "plans"
 PLANS_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def ensure_corpus() -> list[dict[str, Any]]:
-    if not CORPUS_CACHE.exists():
-        docs = build_corpus()
-        save_corpus(docs)
-    return json.loads(CORPUS_CACHE.read_text(encoding="utf-8"))
 
 
 def load_style_profile() -> dict[str, Any]:
@@ -40,119 +24,23 @@ def load_style_profile() -> dict[str, Any]:
     return json.loads(STYLE_PROFILE_JSON.read_text(encoding="utf-8"))
 
 
-def load_frameworks() -> list[dict[str, Any]]:
-    frameworks: list[dict[str, Any]] = []
-
-    if not FRAMEWORKS_DIR.exists():
-        return frameworks
-
-    for path in sorted(FRAMEWORKS_DIR.glob("*.md")):
-        raw = path.read_text(encoding="utf-8")
-        match = re.match(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", raw, flags=re.DOTALL)
-        if not match:
-            continue
-
-        frontmatter = yaml.safe_load(match.group(1)) or {}
-        body = match.group(2).strip()
-
-        if not isinstance(frontmatter, dict):
-            continue
-
-        frameworks.append(
-            {
-                "path": str(path),
-                "name": frontmatter.get("name", path.stem),
-                "slug": frontmatter.get("slug", path.stem),
-                "topics": frontmatter.get("topics", []) or [],
-                "when_to_use": frontmatter.get("when_to_use", []) or [],
-                "summary": frontmatter.get("summary", ""),
-                "key_claims": frontmatter.get("key_claims", []) or [],
-                "argument_patterns": frontmatter.get("argument_patterns", []) or [],
-                "example_phrasing": frontmatter.get("example_phrasing", []) or [],
-                "guardrails": frontmatter.get("guardrails", []) or [],
-                "body": body,
-            }
-        )
-
-    return frameworks
-
-
-def tokenize(text: str) -> set[str]:
-    return set(re.findall(r"[a-zA-Z][a-zA-Z0-9\-]{2,}", text.lower()))
-
-
-def score_framework(framework: dict[str, Any], query: str) -> int:
-    q = tokenize(query)
-    blob = " ".join(
-        [
-            framework.get("name", ""),
-            framework.get("summary", ""),
-            " ".join(framework.get("topics", [])),
-            " ".join(framework.get("when_to_use", [])),
-            " ".join(framework.get("key_claims", [])),
-            " ".join(framework.get("argument_patterns", [])),
-        ]
-    )
-    return len(q & tokenize(blob))
-
-
-def pick_frameworks(
-    frameworks: list[dict[str, Any]],
-    query: str,
-    limit: int = 3,
-) -> list[dict[str, Any]]:
-    ranked = sorted(
-        frameworks,
-        key=lambda fw: score_framework(fw, query),
-        reverse=True,
-    )
-    chosen = [fw for fw in ranked if score_framework(fw, query) > 0]
-    return chosen[:limit] if chosen else ranked[:limit]
-
-
-def pick_topic_samples(
-    corpus: list[dict[str, Any]],
-    query: str,
-    limit: int = 5,
-) -> list[dict[str, Any]]:
-    q = tokenize(query)
-
-    scored = []
-    for doc in corpus:
-        blob = " ".join(
-            [
-                doc.get("title", ""),
-                doc.get("description", ""),
-                " ".join(doc.get("categories", [])),
-                " ".join(doc.get("topics", [])),
-                doc.get("content", "")[:3000],
-            ]
-        )
-        score = len(q & tokenize(blob))
-        if score > 0:
-            scored.append((score, doc))
-
-    scored.sort(key=lambda item: (item[0], item[1].get("date", "")), reverse=True)
-    return [doc for _, doc in scored[:limit]]
-
-
-def slugify(text: str) -> str:
-    value = text.lower().strip()
-    value = re.sub(r"[^a-z0-9\s-]", "", value)
-    value = re.sub(r"\s+", "-", value)
-    value = re.sub(r"-{2,}", "-", value)
-    return value.strip("-")
+def csv_list(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [part.strip() for part in value.split(",") if part.strip()]
 
 
 def build_prompt(
-    *,
-    topic: str,
-    angle: str | None,
-    notes: str | None,
-    audience: str,
-    style_profile: dict[str, Any],
-    frameworks: list[dict[str, Any]],
-    samples: list[dict[str, Any]],
+        *,
+        topic: str,
+        angle: str | None,
+        notes: str | None,
+        audience: str,
+        style_profile: dict[str, Any],
+        frameworks: list[dict[str, Any]],
+        samples: list[dict[str, Any]],
+        research: list[dict[str, Any]],
+        notes_files: list[dict[str, Any]],
 ) -> str:
     framework_block = "\n\n---\n\n".join(
         "\n".join(
@@ -166,7 +54,7 @@ def build_prompt(
             ]
         )
         for fw in frameworks
-    )
+    ) or "None"
 
     sample_block = "\n\n---\n\n".join(
         "\n".join(
@@ -180,7 +68,27 @@ def build_prompt(
             ]
         )
         for doc in samples
-    )
+    ) or "None"
+
+    research_block = "\n\n---\n\n".join(
+        "\n".join(
+            [
+                f"RESEARCH FILE: {item.get('name', '')}",
+                item.get("content", "")[:4000].strip(),
+            ]
+        )
+        for item in research
+    ) or "None"
+
+    notes_block = "\n\n---\n\n".join(
+        "\n".join(
+            [
+                f"NOTES FILE: {item.get('name', '')}",
+                item.get("content", "")[:2500].strip(),
+            ]
+        )
+        for item in notes_files
+    ) or "None"
 
     return f"""
 You are planning a blog post for Toby Weston.
@@ -197,7 +105,7 @@ Requested topic:
 Requested angle:
 {angle or "Choose the strongest angle implied by the topic."}
 
-Additional notes:
+Inline notes from user:
 {notes or "None"}
 
 Style profile:
@@ -208,6 +116,12 @@ Candidate frameworks:
 
 Relevant blog samples:
 {sample_block}
+
+Research material:
+{research_block}
+
+Author notes:
+{notes_block}
 
 Return valid markdown with these sections:
 
@@ -273,10 +187,13 @@ def main() -> None:
             "review the plan before drafting."
         ),
         epilog=(
-            "Recommended workflow:\\n"
-            "  1. python plan_post.py --topic \"...\" --angle \"...\"\\n"
-            "  2. review output/plans/<generated>.plan.md\\n"
-            "  3. python generate_post.py --plan output/plans/<generated>.plan.md"
+            "Recommended workflow:\n"
+            "  1. python plan_post.py --topic \"...\" --angle \"...\"\n"
+            "  2. review output/plans/<generated>.plan.md\n"
+            "  3. python generate_post.py --plan output/plans/<generated>.plan.md\n\n"
+            "Optional grounding:\n"
+            "  --research research/doc1.md,research/doc2.md\n"
+            "  --notes-file notes/rough-notes.md"
         ),
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -285,19 +202,30 @@ def main() -> None:
     parser.add_argument("--notes")
     parser.add_argument("--audience", default=DEFAULT_AUDIENCE)
     parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--research", help="Comma-separated research file paths to ground the plan",)
+    parser.add_argument("--notes-file", help="Comma-separated note file paths containing rough ideas or story fragments",)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    corpus = ensure_corpus()
     style_profile = load_style_profile()
-    frameworks = load_frameworks()
 
     query = " ".join(
-        part for part in [args.topic, args.angle or "", args.notes or ""] if part
+        part
+        for part in [
+            args.topic,
+            args.angle or "",
+            args.notes or "",
+            ]
+        if part
     ).strip()
 
-    chosen_frameworks = pick_frameworks(frameworks, query, limit=3)
-    chosen_samples = pick_topic_samples(corpus, query, limit=5)
+    research_paths = csv_list(args.research)
+    notes_paths = csv_list(args.notes_file)
+
+    chosen_frameworks = pick_frameworks(query, limit=3)
+    chosen_samples = pick_topic_samples(query, limit=5)
+    chosen_research = pick_research(query, paths=research_paths, limit=3)
+    chosen_notes = pick_notes(query, paths=notes_paths, limit=3)
 
     prompt = build_prompt(
         topic=args.topic,
@@ -307,6 +235,8 @@ def main() -> None:
         style_profile=style_profile,
         frameworks=chosen_frameworks,
         samples=chosen_samples,
+        research=chosen_research,
+        notes_files=chosen_notes,
     )
 
     if args.dry_run:
@@ -314,9 +244,19 @@ def main() -> None:
         print("\nFrameworks:")
         for fw in chosen_frameworks:
             print(f" - {fw.get('name', '')}")
+
         print("\nSamples:")
         for doc in chosen_samples:
             print(f" - {doc.get('date', '')} | {doc.get('title', '')}")
+
+        print("\nResearch:")
+        for item in chosen_research:
+            print(f" - {item.get('path', '')}")
+
+        print("\nNotes files:")
+        for item in chosen_notes:
+            print(f" - {item.get('path', '')}")
+
         print("\nPrompt preview:\n")
         print(prompt[:3000])
         if len(prompt) > 3000:
@@ -336,9 +276,20 @@ def main() -> None:
     print("Frameworks used:")
     for fw in chosen_frameworks:
         print(f" - {fw.get('name', '')}")
+
     print("Samples used:")
     for doc in chosen_samples:
         print(f" - {doc.get('date', '')} | {doc.get('title', '')}")
+
+    if chosen_research:
+        print("Research used:")
+        for item in chosen_research:
+            print(f" - {item.get('path', '')}")
+
+    if chosen_notes:
+        print("Notes used:")
+        for item in chosen_notes:
+            print(f" - {item.get('path', '')}")
 
 
 if __name__ == "__main__":

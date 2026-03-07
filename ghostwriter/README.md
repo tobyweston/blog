@@ -1,6 +1,6 @@
-i# Ghostwriter
+# Ghostwriter
 
-AI-powered blog post generator for Toby Weston's blog. Analyzes existing posts to match writing style and tone.
+AI-powered blog post generator for my blog. Analyzes existing posts to match writing style and tone.
 
 ## Setup
 
@@ -24,21 +24,39 @@ AI-powered blog post generator for Toby Weston's blog. Analyzes existing posts t
    export OPENAI_API_KEY='your-api-key-here'
    ```
 
-## Usage
-
-```bash
-python generate_post.py
-```
-
-You'll be prompted to enter a topic. The script will:
-- Analyze your existing blog posts for writing style
-- Generate a draft post in your voice
-- Save it to `../astro/src/content/blog/ai-draft.mdx`
-
 ## Deactivate
 
 When done, deactivate the virtual environment:
 ```bash
 deactivate
 ```
+
+
+## Usage 
+
+Plan with research and notes:
+
+```bash
+python plan_post.py \
+  --topic "Code review as an evidence system" \
+  --angle "review is not just collaboration, it is assurance" \
+  --research research/dora-notes.md,research/control-framework.md \
+  --notes-file notes/code-review-ideas.md
+```
+
+Draft from the approved plan:
+
+```bash
+python generate_post.py \
+  --plan output/plans/2026-03-07-code-review-as-an-evidence-system.plan.md
+```
+
+Revise deliberately:
+
+```bash
+python revise_post.py \
+  --input ../astro/src/content/blog/2026-03-07-code-review-as-an-evidence-system.mdx \
+  --mode stronger-hook
+```
+
 
