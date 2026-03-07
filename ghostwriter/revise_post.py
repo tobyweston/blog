@@ -17,6 +17,7 @@ REVISION_MODES = {
     "less-tutorial": "Reduce tutorial tone. Make it more reflective, analytical, and blog-like.",
     "more-opinionated": "Make the draft a little more opinionated and slightly more contrarian, while staying grounded and credible.",
     "add-framework": "Strengthen or add a framework section if the argument would benefit from one.",
+    "sharpen-argument": "Dramatically improve the central idea of the article. Clarify the core thesis, remove anything that dilutes it, and ensure every section serves the main argument.",
 }
 
 

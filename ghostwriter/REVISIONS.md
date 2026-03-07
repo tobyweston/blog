@@ -247,6 +247,46 @@ When the article needs **structure**.
 
 
 
+# 7. `sharpen-argument`
+
+**Purpose**
+
+Dramatically improve the **central idea of the article**.
+
+Works very well for thought-leadership style writing.
+
+**What it does**
+
+* clarifies and strengthens the core thesis
+* removes ambiguity around the central claim
+* ensures the argument is coherent from start to finish
+* cuts anything that dilutes or distracts from the main point
+
+**Typical effect**
+
+```
+clearer central claim
+stronger through-line
+more memorable conclusion
+```
+
+**Example**
+
+Before:
+
+> There are many ways to think about software delivery, and teams can approach this in different ways depending on context.
+
+After:
+
+> Software delivery is a trust problem.
+> Everything else — pipelines, reviews, metrics — is just the mechanism by which trust is established or destroyed.
+
+**When to use**
+
+When the article has a good structure but the **central idea is fuzzy or undersold**.
+
+
+
 # Recommended Revision Strategy
 
 Usually:
@@ -263,6 +303,14 @@ Occasionally:
 tighten
 less-tutorial
 more-opinionated
+```
+
+For thought-leadership pieces:
+
+```
+tighten
+sharpen-argument
+more-like-me
 ```
 
 
@@ -329,12 +377,9 @@ or
 more-like-me
 ```
 
-
-
-If you want, I can also show you **one extremely powerful additional revision mode** that fits your blog style perfectly:
+or, for pieces where the central idea needs work:
 
 ```
 sharpen-argument
 ```
 
-It dramatically improves the **central idea of the article** and works very well for thought-leadership style writing.

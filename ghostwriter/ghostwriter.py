@@ -165,6 +165,7 @@ def maybe_run_revision(draft_path: Path, args: argparse.Namespace, auto: bool) -
     print("A first draft exists. You can optionally run a focused revision pass.")
     print("Common good defaults are:")
     print("  - tighten")
+    print("  - sharpen-argument")
     print("  - stronger-hook")
     print("  - more-like-me")
     print("  - less-tutorial")
@@ -345,7 +346,7 @@ def main() -> None:
 
     new_parser.add_argument(
         "--revision-mode",
-        choices=["tighten", "stronger-hook", "more-like-me", "less-tutorial", "more-opinionated", "add-framework"],
+        choices=["tighten", "stronger-hook", "more-like-me", "less-tutorial", "more-opinionated", "add-framework", "sharpen-argument"],
         help="Default suggested revision mode",
     )
     new_parser.add_argument(
