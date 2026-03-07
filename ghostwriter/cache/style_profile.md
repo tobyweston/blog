@@ -1,59 +1,62 @@
 # Toby Weston Style Profile
 
 ## Voice summary
-Thoughtful technical writing with clear argument, practical engineering focus, measured confidence, and occasional dry wit.
+A technically literate, pragmatic and slightly opinionated blog voice that teaches through concrete examples and trade-offs. Writing is authoritative but collegial: it assumes an informed reader, uses short paragraphs, headings and lists, and mixes crisp explanations with worked examples (often code or commands). The voice privileges clarity, traceability and maintainability over cleverness-for-its-own-sake.
 
 ## Tone
-**Overall:** Conversational but authoritative
+**Overall:** clear, didactic and gently provocative
 
-- reflective
-- precise
-- practical
-- technically credible
+- authoritative (expert-level)
+- pragmatic (focus on actionable guidance)
+- analytical (weighs trade-offs)
+- collegial (invites discussion)
+- dryly witty (mild sarcasm occasionally)
 
 ## Rhythm
-- Sentence style: Average sentence length around 16.19 words.
-- Paragraph style: Average paragraph length around 2.0 sentences.
-- Pace: Usually steady, occasionally punchier for emphasis.
+- Sentence style: Predominantly medium-length sentences (mean ≈16 words), frequent use of contractions (it's, you're, don't), occasional longer explanatory sentences for nuance, and regular rhetorical questions to engage the reader.
+- Paragraph style: Very short paragraphs: typically 1–2 sentences each (mean 2 sentences, median 1). Paragraphs are used as modular thought-units; each often contains a single idea or step.
+- Pace: Brisk. Information-dense but broken into small readable chunks with headings, lists and examples so the reader can scan quickly and dive into code or commands as needed.
 
 ## Structure
 ### Typical openings
-- Starts with an assertion, observation, or problem framing.
-- Sometimes opens from lived engineering experience rather than theory.
+- Start with a concrete scenario or requirement (Imagine a central system that needs to...).
+- Open with a provocative question or statement to frame the problem (Regulatory Environments Moving Quickly?).
+- State the objective of the post plainly (In this post, we'll look at how to set up...).
 
 ### Typical flow
-- introduce the problem
-- explain why the common view is incomplete
-- offer a clearer mental model
-- land on practical implications
+- Frame the problem or define key terms (what the requirement is and why it matters).
+- Explain current/typical approaches including their appeal (the why it feels attractive).
+- Diagnose the problems or failure modes (Fragile Coupling, Hidden Business Logic).
+- Provide concrete alternatives and implementation sketches (EventListener, decorator, code snippets, commands).
+- Finish with practical recommendations, trade-offs, and a short call to action or question to the reader.
 
 ### Typical endings
-- Ends on a takeaway, principle, or challenge to the reader.
-- Avoids overblown summary language.
+- A succinct recommendation that reiterates the main point and why it matters.
+- A pragmatic ‘what to do instead’ or next steps, sometimes with links/references or an invitation for reader feedback.
 
 ## Rhetorical patterns
-- contrast between what people think and what is actually happening
-- moving from concrete engineering detail to broader principle
+- Contrast between two approaches (e.g. imperative vs functional; logging vs explicit events) to expose trade-offs.
+- Problem → evidence → consequence: explain why a pattern is problematic, show failure modes, then give the architectural/maintenance consequences.
+- Use of numbered steps and short checklists for procedures and recipes.
+- Use of short quoted definitions or external authority (e.g. Google/DORA) to ground claims.
 
 ## Signature moves
-- reframing a technical issue as an organisational or design issue
-- using precise examples to expose a weak assumption
+- Start with a realistic micro-scenario to make the problem tangible.
+- Show, don't just tell: include code snippets, shell commands (apt-get, sudo) or folder examples.
+- Name the anti-pattern bluntly (Impl classes, routing business events through Log4j) and then dismantle it with concrete reasons.
+- Offer an explicit alternative with rationale and implementation sketch (interfaces + decorators, EventListener pattern).
+- Close with a pragmatic checklist or direct question inviting reader experience.
 
 ## Favourite themes
-- raspberry-pi
-- agile
-- compliance
-- java
-- java logging object-oriented
-- devops
-- governance
-- banking
-- metrics
-- events
+- software delivery metrics (lead time, DORA)
+- governance and compliance in regulated environments (banking)
+- code review practices, trunk-based development, pair programming
+- Java/Scala programming styles (imperative vs functional) and naming/abstraction hygiene
+- packaging/deployment tooling (Debian .deb, apt repositories, sbt-native-packager)
 
 ## Vocabulary
-- Preferred register: plain-spoken technical English
-- Technical density: moderate to high
+- Preferred register: Technically literate, semi-formal British English with occasional colloquial touches and contractions.
+- Technical density: High. Expects the reader to be comfortable with technical terms; supplies commands, code, and references to standards/research to validate guidance.
 
 ### Common terms
 - time
@@ -76,27 +79,46 @@ Thoughtful technical writing with clear argument, practical engineering focus, m
 - source
 - want
 - data
+- work
+- pair
+- java
+- changes
+- change
+- commit
+- programming
+- type
+- kernel
+- behaviour
 
 ## Humour
 - Present: True
-- Style: dry, understated, used sparingly
+- Style: Dry, understated and sparing—short metaphors or quips (e.g. 'like having your family members go through an airport security checkpoint to enter your home') to make a point without undermining authority.
 
 ## Dos
-- Be clear and direct.
-- Prefer substance over flourish.
-- Use concrete examples when making abstract points.
-- Sound like an experienced engineer thinking out loud.
+- Open with a concrete scenario or an explicit question framing the problem.
+- Use clear headings (including H2-style '##' if publishing as Markdown) and short paragraphs (1–2 sentences).
+- Include concrete examples: code snippets, shell commands, config excerpts, and sample file paths.
+- Quantify or cite authoritative sources where relevant (DORA, Google research, regulator guidelines).
+- Contrast approaches and explain trade-offs; show failure modes and maintenance consequences.
+- End with a pragmatic recommendation and invite reader experience or questions.
+- Use contractions and conversational phrasing to keep tone approachable.
+- Prefer British spelling (behaviour, emphasise, favour).
 
 ## Don'ts
-- Do not sound like marketing copy.
-- Do not use generic AI optimism or hype.
-- Do not over-explain simple technical concepts to expert readers.
+- Don't use long dense paragraphs—break ideas into bite-sized paragraphs.
+- Don't be vague: avoid platitudes without concrete examples or evidence.
+- Don't let cleverness substitute for maintainability—avoid praising hacks that create hidden coupling.
+- Don't overload readers with unexplained jargon; if a specialised term is used, define or give context.
+- Don't conflate distinct concepts (e.g. branching model vs code review tooling) — make distinctions explicit.
 
 ## Prompt instructions
-- Use British English.
-- Write with measured authority and practical engineering judgement.
-- Prefer clear framing, concrete examples, and useful takeaways.
-- Avoid sales language, empty transitions, and exaggerated enthusiasm.
+- Begin by stating a concrete scenario, requirement or provocative question that frames the post.
+- Use short paragraphs (1–2 sentences), headings for each major section, and numbered lists where you provide steps or recipes.
+- When describing a technical anti-pattern, list its failure modes (fragility, hidden logic, side-effects, testing difficulty) and give a concrete alternative with an implementation sketch.
+- Include at least one code snippet or shell command when relevant; mimic the author's habit of including apt-get, sudo, Java/Scala examples or simple pseudo-code.
+- Keep sentences mostly around 12–20 words on average, but allow occasional longer explanatory sentences for nuance; use contractions (it's, don't, you're).
+- Use British English spelling and sprinkle in a mild dry quip or rhetorical question to keep the voice personable.
+- Finish with a short, practical recommendation and a question or invitation for the reader to share experience.
 
 ## Source posts analysed
 - 2026-02-20 — A Spooky Story
