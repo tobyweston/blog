@@ -1,4 +1,4 @@
----
+
 title: "Man vs the Model"
 subTitle: "Comparing AI over four weeks to various historical peaks of my career"
 description: "A four\u2011week, AI\u2011assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."
@@ -11,7 +11,7 @@ topics:
   - "prompt engineering as a disciplined practice"
   - "RAG/FAISS indexing and operational hardening"
   - "code review, maintainability and governance for generated code"
----
+
 Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half aog.
 
 It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me about a day, elapsed time. About 200 posts plus glue and custom processing.
@@ -34,22 +34,70 @@ I wanted to measure initiatives and value, not commits or lines of code.
 
 Some that's a discrete, user‑meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let's call this an **initiative**.
 
-### 1. Initiative Sizing
+In the end, I used two models.
 
-Each initiative got a `FeatureValueIndex` (FVI) on four dimensions: new features, new misc code, new tests, and reliability (hardening, CI, general scaffolding). The idea being group code changes and bias towards "features" or value-add. To avoid raw-LOC bias, each was weighted.
+1. **Delivery signals**: FVI (FeatureValueIndex) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.
+2. **Initiative‑sizing**: a more qualitative  model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS..XXL).
 
-> `FVI = (0.45 * feature) + (0.25 * new_code) + (0.20 * new_tests) + (0.10 * reliability)`
+### Model 1: Delivery Signals
+
+The historical data was processed to derive a `FeatureValueIndex` (FVI) on four dimensions: new features, new misc code, new tests, and reliability (hardening, CI, general scaffolding). The idea being group code changes and bias towards "features" or value-add. To avoid raw-LOC bias, each was weighted.
+
+> `FVI = 100 (0.45 * feature) + (0.25 * new_code) + (0.20 * new_tests) + (0.10 * reliability)`
 
 ...where each component is normalized to the maximum observed across compared repos.
 
+### Model 2: Initiative‑sizing
 
-### 2. Commit‑bucket Heuristics
+As before, using historical data to derive a `FeatureSizeScore` (FSS) on five dimensions: novelty, depth, breadth, hardening, and user impact. Each scored 1-5 and weighted to reflect my values (novelty and depth matter more than breadth, which matters more than hardening, which matters more than user impact).
 
-To work out which commits contributed to which dimension, I applied semantic reasoning based on commit message and actual code (diff). I should add that AI did the heaving lifting here.
+This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketted.
 
-Buckets let me infer where the code actually contributed. Crude, but directionally useful.
+| Dimension                 | Weight  | Meaning                                 |
+|---------------------------|---------|-----------------------------------------|
+| Novel Capability (N)      | **30%** | Is this something fundamentally new?    |
+| Technical Depth (D)       | **25%** | Architectural or algorithmic complexity |
+| Surface Breadth (B)       | **20%** | How much of the system it touches       |
+| Operational Hardening (O) | **15%** | Tests, CI, packaging, release readiness |
+| User/Product Impact (U)   | **10%** | Visible value to users                  |
 
-### 3. Comparable Windows
+> `FSS = 20 * ( 0.30 * N + 0.25 * D + 0.20 * B + 0.15 * O + 0.10 * U)`
+
+I then mapped the composite score to a `Feature Point` (FP) size (XS..XXL) to make it more intuitive and to reflect the fact that a new subsystem is much bigger than a minor tweak.
+
+| FSS Range | Size | Feature Points |
+|-----------|------|----------------|
+| ≥ 85      | XXL  | 13             |
+| 70–84     | XL   | 8              |
+| 55–69     | L    | 5              |
+| 40–54     | M    | 3              |
+| 25–39     | S    | 2              |
+| <25       | XS   | 1              |
+
+Total productivity for the window is then the sum of the initiative sizes. This model is more subjective but tries to capture the real value and effort behind the work, not just the raw code churn.
+
+> TotalFeaturePoints = sum(FP for all initiatives)
+
+As an example, having run the numbers, the following came out. It felt about right, a balance of volume and value.:
+
+| Initiative        | Size        |
+| ----------------- | ----------- |
+| Ghostwriter       | XXL (13 FP) |
+| RAG retrieval     | XXL (13 FP) |
+| CI/test hardening | XL (8 FP)   |
+| UX improvements   | L (5 FP)    |
+| SEO + analytics   | L (5 FP)    |
+
+FVI asks:
+
+> How much delivery activity occurred?
+
+FSS/FP asks:
+
+> How large were the things that were shipped?
+
+
+## Comparable Windows
 
 I compared the recent 28 days to four historic one‑month “peak” windows where I worked hands‑on and shipped meaningful platform work.
 
@@ -236,6 +284,185 @@ If you want to run the same experiment, consider this:
 - Freeze good prompts and record fixtures the moment a result is “good”
 - Keep a drift budget. When evaluation scores wobble, fix prompts/fixtures first; only then refactor code
 - Don’t count LOC. Track something finished initiatives, FVI
+
+
+# Derived Model
+
+After the basic work there was interesting hiding in your data: **the real productivity gain probably isn't 2× or 2.8× — it's closer to 4×**.
+
+...but it only become visible if we compute a third derived metric from these two models.
+
+# The Derived Model: **Delivery Leverage Index (DLI)**
+
+The first two models measure **different axes**:
+
+| Model                     | Measures          |
+| ------------------------- | ----------------- |
+| Feature Value Index (FVI) | delivery activity |
+| Feature Points (FP)       | initiative size   |
+
+If both increased simultaneously, the real change is **multiplicative**, not additive.
+
+So we define:
+
+```
+Delivery Leverage Index (DLI) = Relative_FVI * Relative_FP
+```
+
+Where:
+
+```text Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP  = FP_blog / FP_historical_mean
+```
+
+# Step 1 — Relative Delivery Activity
+
+From the Feature Value Index model:
+
+```
+blog FVI = 88.5
+historical mean ≈ 43.1
+```
+
+So:
+
+```
+Relative_FVI = 88.5 / 43.1
+             ≈ 2.05
+```
+
+
+
+# Step 2 — Relative Initiative Magnitude
+
+From the Feature Point model:
+
+```
+blog FP = 44
+historical mean = 15.5
+```
+
+So:
+
+```
+Relative_FP = 44 / 15.5
+            ≈ 2.84
+```
+
+
+
+# Step 3 — Delivery Leverage Index
+
+Now combine them.
+
+```
+DLI = 2.05 * 2.84
+```
+
+```
+DLI ≈ 5.82
+```
+
+So the effective productivity leverage becomes:
+
+> **~5.8× vs historical baseline**
+
+
+
+# Why this Happens
+
+AI changes **two things simultaneously** - local coding throughput **and** the cognitive load of running multiple initiatives at once.
+
+## Coding Throughput Increases
+
+More commits, more tests, more scaffolding. Measured by **FVI (~2×)**.
+
+## Cognitive Decreases
+
+Large systems become feasible to build concurrently.
+
+The example from my time window being I shipped **two XXL initiatives at once** in the blog work. An entire, sophisticated Ghostwriter system and RAG semantic retrieval model
+
+Measured by **Feature Points (~2.8×)**.
+
+# The key insight
+
+Before AI:
+
+```
+1 large initiative + maintenance work
+```
+
+With AI:
+
+```
+2–3 large initiatives + maintenance + reliability work
+```
+
+Which is why the experience feels like:
+
+> “I suddenly have **parallel engineering capacity**.”
+
+
+
+# What this actually means
+
+This **doesn't mean developers are 6× faster at coding**.
+
+It means the **effective capability surface per engineer expands dramatically**.
+
+A useful interpretation:
+
+| Layer                     | Effect     |
+|---------------------------|------------|
+| Coding                    | ~2× faster |
+| Architecture execution    | ~3× larger |
+| Overall delivery capacity | ~5–6×      |
+
+
+
+# Combined Model Summary
+
+Two different measurement models produced similar results.
+
+> A delivery-signal model suggests roughly **2× higher engineering throughput**.
+>
+> A capability-sizing model suggests roughly **2.8× larger initiatives shipped**.
+>
+> When those two effects combine, the effective delivery leverage during this period was closer to **5–6× my historical baseline**.
+
+That doesn't mean AI made me six times faster at coding. It means it allowed me to run **multiple architectural work streams simultaneously**.
+
+
+
+
+# One more thing worth adding to the post
+
+Your data shows something **very unusual** that strengthens the argument:
+
+```
+New test files (blog): 116
+```
+
+Compared to historical windows:
+
+| Repo                | New test files |
+|---------------------|----------------|
+| blog                | **116**        |
+| radiate             | 18             |
+| simple-excel        | 36             |
+| tempus-fugit        | 19             |
+| temperature-machine | 6              |
+
+So the AI era produced:
+
+> **3–6× more reliability scaffolding**.
+
+This is important because it counters the typical criticism:
+
+> “AI just produces low-quality code faster.”
+
+Your dataset shows the opposite.
+
 
 ## Over to you...
 
