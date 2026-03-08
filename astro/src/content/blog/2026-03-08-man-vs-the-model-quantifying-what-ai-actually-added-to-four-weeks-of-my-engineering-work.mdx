@@ -298,83 +298,33 @@ This suggests the productivity gain is not just faster coding, but an expanded *
 </div>
 
 
-## What The Numbers Reveal (and Hide)
+# Something Surprising
 
-What they reveal
+Taking a step back form the headline numbers, I realised there was something interesting hiding the data: **the real productivity gain probably wasn't 2x or 2.8x — it was closer to 6x**. It only becomes visible if we compute a third derived metric from these two models.
 
-- Initiative throughput went up materially. More finished, production‑ready slices in the same wall‑clock time.
-- Breadth is where the model shines. Boilerplate, adapters, and “you already know how this looks” scaffolds arrived quickly.
-- Hardening stayed the multiplier. Tests, CI, reproducible evaluation, and visual diffs converted drafts into delivery.
-
-What they hide
-
-- Quality variance. First drafts were right‑shaped but occasionally wrong‑headed. My review loop collapsed that, but it took time.
-- Brittleness risk. Prompt drift is a thing. Frozen prompts and recorded fixtures mattered more than I expected.
-- Governance overhead. Tracking prompts, evaluation data, and model versions adds operational cost. Worth it, but it’s a cost.
-- Dependency gravity. You inherit changelogs from SDKs, tokenisers, and image libs. Keep them boring and pinned.
-
-What changed in my behaviour
-
-- I wrote tighter briefs and constraints than I would for myself. That paid back twice: faster drafts and clearer tests.
-- I reviewed more, typed less. Review becomes the design surface.
-- I invested earlier in evaluation and fixtures. It felt slow on day two and fast on day ten.
-
-Experience matters
-
-- An experienced engineer plus AI is not equivalent to a junior plus AI.
-- The risk surface is different: you need taste for boundaries, failure modes, and what “clean enough” looks like.
-
-## Man vs the Model?
-
-Across a month, my AI‑assisted self out‑shipped my historical peaks by ~2.7–2.8x on an initiative‑weighted basis.
-
-That advantage existed because I paired generation with hardening and governance. Without tests, CI, and reproducible evaluation, you get speed without confidence, which is just future work with interest.
-
-It didn’t replace expertise. It amplified it, especially on repeatable patterns and breadth tasks.
-
-## Recommendations
-
-If you want to run the same experiment, consider this:
-
-- Measure at the initiative level. Amplify the things you value, in my case, I weighted rigour/testing at 2x
-- Keep a prompt and fixture repo. Version everything. Treat prompts as code
-- Freeze good prompts and record fixtures the moment a result is “good”
-- Keep a drift budget. When evaluation scores wobble, fix prompts/fixtures first; only then refactor code
-- Don’t count LOC. Track something finished initiatives, FVI
-
-
-# Derived Model
-
-After the basic work there was interesting hiding in your data: **the real productivity gain probably isn't 2× or 2.8× — it's closer to 4×**.
-
-...but it only become visible if we compute a third derived metric from these two models.
-
-# The Derived Model: **Delivery Leverage Index (DLI)**
+## The Derived Model: **Delivery Leverage Index (DLI)**
 
 The first two models measure **different axes**:
 
 | Model                     | Measures          |
-| ------------------------- | ----------------- |
+|---------------------------|-------------------|
 | Feature Value Index (FVI) | delivery activity |
 | Feature Points (FP)       | initiative size   |
 
-If both increased simultaneously, the real change is **multiplicative**, not additive.
+If both increased simultaneously, perhaps the real change is **multiplicative**, not additive.
 
 So we define:
 
-```
-Delivery Leverage Index (DLI) = Relative_FVI * Relative_FP
-```
+``` Delivery Leverage Index (DLI) = Relative_FVI * Relative_FP ```
 
 Where:
 
-```
-Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP  = FP_blog / FP_historical_mean
-```
+``` Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP = FP_blog / FP_historical_mean ```
 
-# Step 1 — Relative Delivery Activity
 
-From the Feature Value Index model:
+### Step 1 — Relative Delivery Signal
+
+From the FVI model:
 
 ```
 blog FVI = 88.5
@@ -388,11 +338,9 @@ Relative_FVI = 88.5 / 43.1
              ≈ 2.05
 ```
 
+### Step 2 — Relative Initiative-sizing
 
-
-# Step 2 — Relative Initiative Magnitude
-
-From the Feature Point model:
+From the FSS/FP model::
 
 ```
 blog FP = 44
@@ -406,9 +354,7 @@ Relative_FP = 44 / 15.5
             ≈ 2.84
 ```
 
-
-
-# Step 3 — Delivery Leverage Index
+### Step 3 — Delivery Leverage Index
 
 Now combine them.
 
@@ -426,7 +372,7 @@ So the effective productivity leverage becomes:
 
 
 
-# Why this Happens
+## Why this Happens
 
 AI changes **two things simultaneously** - local coding throughput **and** the cognitive load of running multiple initiatives at once.
 
@@ -521,6 +467,57 @@ This is important because it counters the typical criticism:
 
 Your dataset shows the opposite.
 
+
+
+
+
+
+
+
+
+## What The Numbers Reveal (and Hide)
+
+What they reveal
+
+- Initiative throughput went up materially. More finished, production‑ready slices in the same wall‑clock time.
+- Breadth is where the model shines. Boilerplate, adapters, and “you already know how this looks” scaffolds arrived quickly.
+- Hardening stayed the multiplier. Tests, CI, reproducible evaluation, and visual diffs converted drafts into delivery.
+
+What they hide
+
+- Quality variance. First drafts were right‑shaped but occasionally wrong‑headed. My review loop collapsed that, but it took time.
+- Brittleness risk. Prompt drift is a thing. Frozen prompts and recorded fixtures mattered more than I expected.
+- Governance overhead. Tracking prompts, evaluation data, and model versions adds operational cost. Worth it, but it’s a cost.
+- Dependency gravity. You inherit changelogs from SDKs, tokenisers, and image libs. Keep them boring and pinned.
+
+What changed in my behaviour
+
+- I wrote tighter briefs and constraints than I would for myself. That paid back twice: faster drafts and clearer tests.
+- I reviewed more, typed less. Review becomes the design surface.
+- I invested earlier in evaluation and fixtures. It felt slow on day two and fast on day ten.
+
+Experience matters
+
+- An experienced engineer plus AI is not equivalent to a junior plus AI.
+- The risk surface is different: you need taste for boundaries, failure modes, and what “clean enough” looks like.
+
+## Man vs the Model?
+
+Across a month, my AI‑assisted self out‑shipped my historical peaks by ~2.7–2.8x on an initiative‑weighted basis.
+
+That advantage existed because I paired generation with hardening and governance. Without tests, CI, and reproducible evaluation, you get speed without confidence, which is just future work with interest.
+
+It didn’t replace expertise. It amplified it, especially on repeatable patterns and breadth tasks.
+
+## Recommendations
+
+If you want to run the same experiment, consider this:
+
+- Measure at the initiative level. Amplify the things you value, in my case, I weighted rigour/testing at 2x
+- Keep a prompt and fixture repo. Version everything. Treat prompts as code
+- Freeze good prompts and record fixtures the moment a result is “good”
+- Keep a drift budget. When evaluation scores wobble, fix prompts/fixtures first; only then refactor code
+- Don’t count LOC. Track something finished initiatives, FVI
 
 ## Over to you...
 
