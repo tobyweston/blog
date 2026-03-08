@@ -20,7 +20,7 @@ import deliverySignalRadarWithLegend from '../images/man-vs-model/delivery_signa
 import fviBarChart from '../images/man-vs-model/fvi_bar_chart.png';
 import fviBoxplotWithBlog from '../images/man-vs-model/fvi_boxplot_with_blog.png';
 import productivitySurfaceEnvelopeChart from '../images/man-vs-model/productivity_surface_envelope_chart.png';
-import featurePointComparison from '../images/man-vs-model/feature_points_comparison.png';
+import productivitySurfaceEnvelopeChart2 from '../images/man-vs-model/productivity_surface_hero_chart.png';
 import featurePointsPublishChart from "../images/man-vs-model/feature_points_publish_chart.png"
 
 Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days elapsed time.
@@ -282,41 +282,21 @@ This AI-assisted month combined all of them simultaneously:
 The result isn't just higher delivery signals (the FVI result earlier) but **larger capability steps shipped in the same period**.
 
 
+## FVI and FSS/FP Combined
 
+<div className={"chart-section"}>
+<ImgTag class={"right"} src={productivitySurfaceEnvelopeChart2} alt="Engineering Productivity Surface" width={550} />
 
+This chart combines both productivity models in one view.
 
-
-[//]: # (<!-- to review -->)
-
-## Coarse-Grained Product Steps (Qualitative Read)
-
-Estimated count of major capability steps shipped in each window:
-
-| Repo                | Major Steps (estimated) | Examples                                                                                          |
-|---------------------|------------------------:|---------------------------------------------------------------------------------------------------|
-| blog                |                 **8-9** | Ghostwriter pipeline, RAG indexing, CLI, CI/test harness, visual regression, routing improvements |
-| simple-excel        |                     3-4 | API shaping, styling maturation                                                                   |
-| tempus-fugit        |                     2-3 | concurrency capabilities                                                                          |
-| radiate             |                     3-4 | UI exception system, logging                                                                      |
-| temperature-machine |                     1-2 | packaging and deployment                                                                          |
-
-
-## Findings
-
-<Image src={productivitySurfaceEnvelopeChart} alt="Engineering Productivity Surface" width={500} />
-
-This chart combines both productivity models.
-
-The horizontal axis represents **delivery activity (FeatureValueIndex)** while the vertical axis represents **initiative magnitude (Feature Points)**.
+- X-axis: **delivery activity** (FVI)
+- Y-axis: **initiative magnitude** (Feature Points)
 
 Historical windows cluster within a narrow band of activity and initiative size. The AI-assisted window shifts both **right (more delivery)** and **up (larger initiatives)**.
 
 This suggests the productivity gain is not just faster coding, but an expanded **engineering capability surface**, enabling multiple architectural initiatives to ship concurrently.
 
-
-1. Recent `blog` activity is not just higher churn; it combines feature construction, reliability scaffolding, and productization in one window.
-2. On feature/value proxies, recent `blog` work is about **2x** my historical peak windows.
-3. The largest AI-era gain appears to be **parallelized delivery**: building net-new subsystem capability while simultaneously tightening tests/CI and docs.
+</div>
 
 
 ## What The Numbers Reveal (and Hide)
