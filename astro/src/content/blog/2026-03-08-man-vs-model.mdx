@@ -1,7 +1,7 @@
 ---
 title: "Man vs the Model"
 subTitle: "Measuring AI-Assisted development against my historical productivity peaks"
-description: "A four week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."
+description: "A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."
 heroImage: "/images/heroes/man-vs-model.png"
 pubDate: 2026-03-08
 draft: true
@@ -23,7 +23,7 @@ import fviBoxplotWithBlog from '../images/man-vs-model/fvi_boxplot_with_blog.png
 import productivitySurfaceEnvelopeChart2 from '../images/man-vs-model/productivity_surface_hero_chart.png';
 import featurePointsPublishChart from "../images/man-vs-model/feature_points_publish_chart.png"
 
-Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days elapsed time.
+Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days of elapsed time.
 
 It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me and AI about a day, elapsed time. About 200 posts plus glue and custom processing, styling and search.
 
@@ -64,13 +64,14 @@ The historical data was processed to derive a `FeatureValueIndex` (FVI) on four 
 
 > <Latex formula={String.raw`\text{FVI} = 100 \times (0.45 \times F + 0.25 \times NC + 0.20 \times NT + 0.10 \times R)`} />
 
-...where each component is normalized to the maximum observed across compared repos.
+Each component is normalized to the maximum observed value across the compared repositories.
+
 
 ### Model 2: Initiative-sizing (FSS)
 
 As before, using historical data to derive a `FeatureSizeScore` (FSS) on five dimensions: novelty, depth, breadth, hardening, and user impact. Each scored 1-5 and weighted to reflect my values (novelty and depth matter more than breadth, which matters more than hardening, which matters more than user impact).
 
-This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketed.
+This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed to look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketed.
 
 | Dimension                 | Weight  | Meaning                                 |
 |---------------------------|---------|-----------------------------------------|
@@ -97,7 +98,7 @@ Total productivity for the window is then the sum of the initiative sizes. This 
 
 > TotalFeaturePoints = sum(FP for all initiatives)
 
-As an example, having run the numbers, the following came out. It felt about right, a balance of volume and value.:
+As an example, having run the numbers, the following came out. It felt about right, a balance of volume and value.
 
 | Initiative        | Size        |
 |-------------------|-------------|
@@ -118,7 +119,7 @@ FSS/FP asks:
 
 # Case Study
 
-I compared the recent burst of activity in my blog against 28 days of historic activity over other four of my other projects. I programmatically found busy periods in each.
+I compared the recent burst of activity in my blog against 28 days of historic activity across four other projects. I programmatically found busy periods in each.
 
 | Repo                  | Window                       |
 |-----------------------|------------------------------|
@@ -135,7 +136,7 @@ Why these? From trawling the commits, GitHub stars and activity on my projects, 
 
 During this time, the historical-me was passionate about code craft and quality. I would labour over design decisions and build complex systems that would be low-maintenance and high quality.
 
-Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more-recent career, running a large team and setting the same standards at the org level that I was practicing passionately in these historical peak periods. I just don't have the time to code with the same labored idealism.
+Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more recent career, running a large team and setting the same standards at the org level that I was practising passionately in these historical peak periods. I just don't have the time to code with the same laboured idealism.
 
 
 ## Recent AI‑Assisted Burst
@@ -253,8 +254,8 @@ The historical **average** was therefore:
 
 Comparing the recent window:
 
-- vs historical average: **2.84×**
-- vs best historical window (`radiate`): **2.10×**
+- vs historical average: **2.84x**
+- vs best historical window (`radiate`): **2.10x**
 
 In other words, the AI-assisted month did not just produce more delivery activity (as measured by FVI). It also produced **significantly larger initiatives**.
 
@@ -383,13 +384,13 @@ Now combine them.
 
 So the effective productivity leverage becomes:
 
-> **~5.8× vs historical baseline**
+> **~5.8x vs historical baseline**
 
 
 
 ## Why this Happens
 
-AI changes **two things simultaneously** - local coding throughput **and** the cognitive load of running multiple initiatives at once.
+AI changes **two things simultaneously**: local coding throughput **and** the cognitive load of running multiple initiatives at once.
 
 More commits, more tests, more scaffolding. Measured by **FVI (~2x)**.
 
@@ -397,7 +398,7 @@ When cognitive load reduces, larger systems become feasible to build concurrentl
 
 In this window, I shipped **two XXL initiatives at once** in the blog work: an entire Ghostwriter system and a semantic retrieval model.
 
-I was working concurrently and often spinning-up side quests (I even had my AI assistant generate a LaTeX Astro component to display these formulas **whilst** I was writing this post!).
+I was working concurrently and often spinning up side quests (I even had my AI assistant generate a LaTeX Astro component to display these formulas **whilst** I was writing this post!).
 
 
 ## The Key Insight
@@ -429,7 +430,7 @@ Two different measurement models produced similar results.
 
 ## Bonus Insight
 
-For the AI burst, I created 116 test files. Compared to historical windows where I was always focused on test driven development, this was proportionally much higher than the historical average. For example, in `radiate` I created 18 test files, in `simple-excel` 36, and in `tempus-fugit` 19.
+For the AI burst, I created 116 test files. Compared to historical windows where I was always focused on test-driven development, this was proportionally much higher than the historical average. For example, in `radiate` I created 18 test files, in `simple-excel` 36, and in `tempus-fugit` 19.
 
 | Repo                | New test files |
 |---------------------|----------------|
@@ -439,14 +440,14 @@ For the AI burst, I created 116 test files. Compared to historical windows where
 | tempus-fugit        | 19             |
 | temperature-machine | 6              |
 
-So the AI era produced **3–6× more reliability scaffolding**. I think this was because I was driving. I asked for additional tests and test scaffolding because it was so easy, especially when having agents generate them in parallel.
+So the AI era produced **3–6x more reliability scaffolding**. I think this was because I was driving. I asked for additional tests and test scaffolding because it was so easy, especially when having agents generate them in parallel.
 
-This is important because as it might counter the typical criticism **“AI just produces low-quality code faster"**, at least when the pilot is actually concerned about testing.
+This is important because it might counter the typical criticism: **"AI just produces low-quality code faster"**, at least when the pilot is actually concerned about testing.
 
 
 ## Man vs the Model?
 
-Across a month, my AI‑assisted self out‑shipped my historical peaks by ~2.7–2.8x on an initiative‑weighted basis.
+Across a month, my AI-assisted self out-shipped my historical peaks by ~2.7–2.8x on an initiative-weighted basis.
 
 That advantage existed because I paired generation with hardening and governance. Without tests, CI, and reproducible evaluation, you get speed without confidence, which is just future work with interest.
 
