@@ -58,13 +58,13 @@ where each component is normalized to the maximum observed across compared repos
 
 Estimated count of major capability steps shipped in each window:
 
-| Repo                  | Major Steps (estimated) | Examples                                                                                                                                                                                  |
-|-----------------------|------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `blog`                |                 **8-9** | Ghostwriter end-to-end flow, semantic RAG/indexing, CLI, dedicated Python CI/tests, visual-regression hardening, routing/canonical redirects, archive/search UX, SEO+discussion+analytics |
-| `simple-excel`        |                     3-4 | API shaping, styling support maturation, release hardening                                                                                                                                |
-| `tempus-fugit`        |                     2-3 | concurrency/deadlock capabilities plus docs/site packaging                                                                                                                                |
-| `radiate`             |                     3-4 | exception/info display architecture, event/logging behavior, UI feature controls                                                                                                          |
-| `temperature-machine` |                     1-2 | packaging/install/deployment stabilization with limited net-new core features                                                                                                             |
+| Repo                  | Major Steps<br/>(estimated) | Examples                                                                                                                                                                                  |
+|-----------------------|:----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `blog`                | **8-9**                     | Ghostwriter end-to-end flow, semantic RAG/indexing, CLI, dedicated Python CI/tests, visual-regression hardening, routing/canonical redirects, archive/search UX, SEO+discussion+analytics |
+| `simple-excel`        | 3-4                         | API shaping, styling support maturation, release hardening                                                                                                                                |
+| `tempus-fugit`        | 2-3                         | concurrency/deadlock capabilities plus docs/site packaging                                                                                                                                |
+| `radiate`             | 3-4                         | exception/info display architecture, event/logging behavior, UI feature controls                                                                                                          |
+| `temperature-machine` | 1-2                         | packaging/install/deployment stabilization with limited net-new core features                                                                                                             |
 
 ## Charts
 
