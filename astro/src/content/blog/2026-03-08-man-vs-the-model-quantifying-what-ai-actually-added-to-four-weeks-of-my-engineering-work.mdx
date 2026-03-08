@@ -1,20 +1,21 @@
-
+---
 title: "Man vs the Model"
 subTitle: "Comparing AI over four weeks to various historical peaks of my career"
-description: "A four\u2011week, AI\u2011assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."
+description: "A four week, AI assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."
 pubDate: 2026-03-08
 draft: true
 categories: ai, engineering, productivity, leadership
 topics:
   - "developer productivity metrics (FeatureValueIndex, Feature Points)"
-  - "testing & CI for AI\u2011assisted development"
+  - "testing & CI for AI assisted development"
   - "prompt engineering as a disciplined practice"
   - "RAG/FAISS indexing and operational hardening"
   - "code review, maintainability and governance for generated code"
+---
 
-Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half aog.
+Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days elapsed time.
 
-It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me about a day, elapsed time. About 200 posts plus glue and custom processing.
+It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me and AI about a day, elapsed time. About 200 posts plus glue and custom processing, styling and search.
 
 Afterward, I was curious if that feeling of productivity was real, and if so, how much faster I was compared to my own historical peaks. So I set out to find out.
 
@@ -32,26 +33,26 @@ Not lines of code but something more meaningful - delivered features and value-a
 
 I wanted to measure initiatives and value, not commits or lines of code.
 
-Some that's a discrete, user‑meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let's call this an **initiative**.
+Something that's a discrete, user‑meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let's call this an **initiative**.
 
 In the end, I used two models.
 
 1. **Delivery signals**: FVI (FeatureValueIndex) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.
 2. **Initiative‑sizing**: a more qualitative  model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS..XXL).
 
-### Model 1: Delivery Signals
+### Model 1: Delivery Signals (FVI)
 
 The historical data was processed to derive a `FeatureValueIndex` (FVI) on four dimensions: new features, new misc code, new tests, and reliability (hardening, CI, general scaffolding). The idea being group code changes and bias towards "features" or value-add. To avoid raw-LOC bias, each was weighted.
 
-> `FVI = 100 (0.45 * feature) + (0.25 * new_code) + (0.20 * new_tests) + (0.10 * reliability)`
+> `FVI = 100 * (0.45 * feature) + (0.25 * new_code) + (0.20 * new_tests) + (0.10 * reliability)`
 
 ...where each component is normalized to the maximum observed across compared repos.
 
-### Model 2: Initiative‑sizing
+### Model 2: Initiative‑sizing (FSS)
 
 As before, using historical data to derive a `FeatureSizeScore` (FSS) on five dimensions: novelty, depth, breadth, hardening, and user impact. Each scored 1-5 and weighted to reflect my values (novelty and depth matter more than breadth, which matters more than hardening, which matters more than user impact).
 
-This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketted.
+This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketed.
 
 | Dimension                 | Weight  | Meaning                                 |
 |---------------------------|---------|-----------------------------------------|
@@ -72,7 +73,7 @@ I then mapped the composite score to a `Feature Point` (FP) size (XS..XXL) to ma
 | 55–69     | L    | 5              |
 | 40–54     | M    | 3              |
 | 25–39     | S    | 2              |
-| <25       | XS   | 1              |
+| < 25      | XS   | 1              |
 
 Total productivity for the window is then the sum of the initiative sizes. This model is more subjective but tries to capture the real value and effort behind the work, not just the raw code churn.
 
@@ -81,7 +82,7 @@ Total productivity for the window is then the sum of the initiative sizes. This 
 As an example, having run the numbers, the following came out. It felt about right, a balance of volume and value.:
 
 | Initiative        | Size        |
-| ----------------- | ----------- |
+|-------------------|-------------|
 | Ghostwriter       | XXL (13 FP) |
 | RAG retrieval     | XXL (13 FP) |
 | CI/test hardening | XL (8 FP)   |
@@ -105,9 +106,9 @@ No “10x developer” nonsense. Just like‑for‑like, same engineer, just you
 
 During this time, the historical-me was passionate about code craft and quality. I would labor design decisions and build complex systems that would be low maintenance and high quality. I would write tests first, relentlessly focus on refactoring and good object-oriented (or functional-esq design).
 
-Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more-recent career, running a large team and setting the same standards at the org level that I was practicing passionately in these historical peak periods.
+Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more-recent career, running a large team and setting the same standards at the org level that I was practicing passionately in these historical peak periods. I just don't have the time to code with the same labored idealism.
 
-## Case Study: The Recent AI‑Assisted Burst
+## Case Study: Recent AI‑Assisted Burst
 
 The headline deliverables for my recent AI assisted burst were:
 
