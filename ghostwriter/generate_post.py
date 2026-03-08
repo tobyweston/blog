@@ -7,6 +7,8 @@ import re
 from datetime import date
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote_plus, urlparse
+from urllib.request import Request, urlopen
 
 from openai import OpenAI
 
@@ -26,6 +28,9 @@ from retrieve import (
     pick_voice_anchors,
     slugify,
 )
+
+HERO_IMAGES_DIR = (OUTPUT_DIR.parent.parent.parent / "public" / "images" / "heroes").resolve()
+DEFAULT_HERO_IMAGE = "/images/heroes/generic.jpg"
 
 
 def load_style_profile() -> dict[str, Any]:
@@ -100,45 +105,153 @@ def parse_title_from_frontmatter(frontmatter: str | None) -> str | None:
     return match.group(1).strip() if match else None
 
 
+def parse_frontmatter_value(frontmatter: str | None, keys: list[str]) -> str:
+    if not frontmatter:
+        return ""
+
+    for key in keys:
+        match = re.search(
+            rf"^{re.escape(key)}:\s*(.*?)\s*$",
+            frontmatter,
+            flags=re.MULTILINE,
+        )
+        if not match:
+            continue
+        value = match.group(1).strip().strip("'\"")
+        if value:
+            return value
+    return ""
+
+
+def trim_text(text: str, max_chars: int) -> str:
+    clean = re.sub(r"\s+", " ", text).strip()
+    if len(clean) <= max_chars:
+        return clean
+    trimmed = clean[:max_chars].rsplit(" ", 1)[0].strip()
+    return trimmed or clean[:max_chars].strip()
+
+
+def categories_to_string(categories: list[str]) -> str:
+    cleaned: list[str] = []
+    seen: set[str] = set()
+
+    for category in categories:
+        value = slugify(str(category))
+        if not value or value in seen:
+            continue
+        cleaned.append(value)
+        seen.add(value)
+
+    return " ".join(cleaned) if cleaned else "engineering"
+
+
+def keywords_to_string(categories: list[str], topics: list[str]) -> str:
+    keywords: list[str] = []
+    seen: set[str] = set()
+
+    for item in [*categories, *topics]:
+        key = re.sub(r"\s+", " ", str(item)).strip()
+        if not key:
+            continue
+        dedupe_key = key.lower()
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        keywords.append(key)
+
+    return ", ".join(keywords[:12])
+
+
+def _extension_for(content_type: str, final_url: str) -> str:
+    content_type = content_type.lower().split(";", 1)[0].strip()
+    if content_type == "image/jpeg":
+        return ".jpg"
+    if content_type == "image/png":
+        return ".png"
+    if content_type == "image/webp":
+        return ".webp"
+
+    path = Path(urlparse(final_url).path)
+    ext = path.suffix.lower()
+    if ext == ".jpeg":
+        return ".jpg"
+    if ext in {".jpg", ".png", ".webp"}:
+        return ext
+    return ".jpg"
+
+
+def download_hero_image(*, search_query: str, slug: str) -> str:
+    HERO_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+
+    query = re.sub(r"\s+", " ", search_query).strip() or "software engineering"
+    encoded_query = quote_plus(query)
+    sources = [
+        f"https://source.unsplash.com/1600x900/?{encoded_query}",
+        f"https://loremflickr.com/1600/900/{encoded_query}",
+    ]
+
+    for url in sources:
+        try:
+            request = Request(url, headers={"User-Agent": "ghostwriter/1.0"})
+            with urlopen(request, timeout=20) as response:
+                image = response.read()
+                if len(image) < 1024:
+                    continue
+
+                content_type = response.headers.get("Content-Type", "")
+                final_url = response.geturl()
+                extension = _extension_for(content_type, final_url)
+
+            filename = f"{date.today().isoformat()}-{slug}-hero{extension}"
+            destination = HERO_IMAGES_DIR / filename
+            destination.write_bytes(image)
+            return f"/images/heroes/{filename}"
+        except Exception:
+            continue
+
+    return DEFAULT_HERO_IMAGE
+
+
 def normalise_generated_document(
         generated: str,
         *,
         fallback_title: str,
         categories: list[str],
         topics: list[str],
+        subtitle_hint: str,
+        hero_image: str,
 ) -> str:
     frontmatter, body = extract_frontmatter_block(generated)
 
     today = date.today().isoformat()
 
     title = parse_title_from_frontmatter(frontmatter) or fallback_title
-    description = ""
-
-    if frontmatter:
-        match = re.search(
-            r'^description:\s*["\']?(.*?)["\']?\s*$',
-            frontmatter,
-            flags=re.MULTILINE,
-        )
-        if match:
-            description = match.group(1).strip()
+    description = parse_frontmatter_value(frontmatter, ["description"])
 
     if not description:
         body_text = re.sub(r"^#\s+.*?$", "", body, flags=re.MULTILINE).strip()
         first_para = body_text.split("\n\n", 1)[0].strip()
         description = first_para[:180].rstrip(".") + "." if first_para else "Draft post."
 
+    subtitle = parse_frontmatter_value(frontmatter, ["subTitle", "subtitle"])
+    if not subtitle:
+        subtitle = trim_text(subtitle_hint or description, 110).rstrip(".")
+
+    category_string = categories_to_string(categories)
+    keywords = keywords_to_string(categories, topics)
+    hero = hero_image or parse_frontmatter_value(frontmatter, ["heroImage"]) or DEFAULT_HERO_IMAGE
+
     clean_frontmatter = "\n".join(
         [
             "---",
             f"title: {json.dumps(title)}",
+            f"subTitle: {json.dumps(subtitle)}",
             f"description: {json.dumps(description)}",
-            f"date: {today}",
+            f"pubDate: {json.dumps(today)}",
             f"draft: {str(DEFAULT_DRAFT).lower()}",
-            "categories:",
-            frontmatter_list_yaml(categories),
-            "topics:",
-            frontmatter_list_yaml(topics),
+            f"categories: {json.dumps(category_string)}",
+            f"keywords: {json.dumps(keywords)}",
+            f"heroImage: {json.dumps(hero)}",
             "---",
             "",
         ]
@@ -215,6 +328,7 @@ Return a complete Astro-ready MDX post.
 Rules:
 - Use British English
 - Preserve the plan's central insight
+- Start with frontmatter that includes title, subTitle and description
 - Prefer short paragraphs
 - Avoid generic AI explanation tone
 - Avoid startup marketing tone
@@ -334,12 +448,25 @@ def main() -> None:
     fallback_title = plan.get("recommended_title") or "Untitled Draft"
     categories = plan.get("suggested_categories", [])
     topics = plan.get("suggested_topics", [])
+    hero_query = " ".join(
+        [
+            fallback_title,
+            plan.get("central_insight", ""),
+            "software engineering",
+        ]
+    ).strip()
+    hero_image = download_hero_image(
+        search_query=hero_query,
+        slug=slugify(fallback_title or "untitled"),
+    )
 
     content = normalise_generated_document(
         generated,
         fallback_title=fallback_title,
         categories=categories,
         topics=topics,
+        subtitle_hint=plan.get("central_insight", ""),
+        hero_image=hero_image,
     )
 
     final_title = parse_title_from_frontmatter(
@@ -349,6 +476,7 @@ def main() -> None:
     output_path = write_output(content, final_title)
 
     print(f"Draft written to: {output_path}")
+    print(f"Hero image: {hero_image}")
     print(f"Plan used: {plan_path}")
 
 

@@ -9,7 +9,10 @@ import pytest
 
 
 from generate_post import (
+    DEFAULT_HERO_IMAGE,
     build_prompt,
+    categories_to_string,
+    download_hero_image,
     extract_frontmatter_block,
     frontmatter_list_yaml,
     normalise_generated_document,
@@ -68,19 +71,19 @@ class TestExtractFrontmatterBlock:
 
 class TestParseTitleFromFrontmatter:
     def test_parses_unquoted_title(self):
-        fm = 'title: Hello World\ndate: 2024-01-01'
+        fm = 'title: Hello World\npubDate: "2024-01-01"'
         assert parse_title_from_frontmatter(fm) == "Hello World"
 
     def test_parses_double_quoted_title(self):
-        fm = 'title: "Hello World"\ndate: 2024-01-01'
+        fm = 'title: "Hello World"\npubDate: "2024-01-01"'
         assert parse_title_from_frontmatter(fm) == "Hello World"
 
     def test_parses_single_quoted_title(self):
-        fm = "title: 'Hello World'\ndate: 2024-01-01"
+        fm = "title: 'Hello World'\npubDate: '2024-01-01'"
         assert parse_title_from_frontmatter(fm) == "Hello World"
 
     def test_returns_none_when_no_title(self):
-        fm = "date: 2024-01-01\ndescription: test"
+        fm = 'pubDate: "2024-01-01"\ndescription: test'
         assert parse_title_from_frontmatter(fm) is None
 
     def test_returns_none_for_none_input(self):
@@ -212,14 +215,18 @@ class TestNormaliseGeneratedDocument:
             fallback_title="Fallback",
             categories=["engineering"],
             topics=["testing"],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         assert result.startswith("---\n")
         fm, body = extract_frontmatter_block(result)
         assert fm is not None
         assert "title:" in fm
-        assert "date:" in fm
+        assert "subTitle:" in fm
+        assert "pubDate:" in fm
         assert "categories:" in fm
-        assert "topics:" in fm
+        assert "heroImage:" in fm
+        assert "keywords:" in fm
 
     def test_uses_title_from_generated_frontmatter(self):
         raw = "---\ntitle: Generated Title\n---\nBody."
@@ -228,6 +235,8 @@ class TestNormaliseGeneratedDocument:
             fallback_title="Fallback",
             categories=[],
             topics=[],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         fm, _ = extract_frontmatter_block(result)
         assert "Generated Title" in fm
@@ -239,19 +248,23 @@ class TestNormaliseGeneratedDocument:
             fallback_title="My Fallback Title",
             categories=[],
             topics=[],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         fm, _ = extract_frontmatter_block(result)
         assert "My Fallback Title" in fm
 
-    def test_injects_categories_and_topics(self):
+    def test_injects_categories_and_keywords(self):
         raw = "---\ntitle: Test\n---\nBody."
         result = normalise_generated_document(
             raw,
             fallback_title="Test",
             categories=["engineering", "leadership"],
             topics=["deployment"],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
-        assert "engineering" in result
+        assert 'categories: "engineering leadership"' in result
         assert "deployment" in result
 
     def test_auto_generates_description_from_body(self):
@@ -261,9 +274,24 @@ class TestNormaliseGeneratedDocument:
             fallback_title="Test",
             categories=[],
             topics=[],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         fm, _ = extract_frontmatter_block(result)
         assert "description:" in fm
+
+    def test_uses_subtitle_from_generated_frontmatter(self):
+        raw = "---\ntitle: Test\nsubtitle: Existing subtitle\n---\nBody."
+        result = normalise_generated_document(
+            raw,
+            fallback_title="Test",
+            categories=[],
+            topics=[],
+            subtitle_hint="Plan subtitle",
+            hero_image="/images/heroes/test.jpg",
+        )
+        fm, _ = extract_frontmatter_block(result)
+        assert 'subTitle: "Existing subtitle"' in fm
 
     def test_body_is_preserved(self):
         body_text = "This is the real body of the article."
@@ -273,6 +301,8 @@ class TestNormaliseGeneratedDocument:
             fallback_title="Test",
             categories=[],
             topics=[],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         assert body_text in result
 
@@ -283,8 +313,66 @@ class TestNormaliseGeneratedDocument:
             fallback_title="Test",
             categories=[],
             topics=[],
+            subtitle_hint="A short hook",
+            hero_image="/images/heroes/test.jpg",
         )
         assert result.endswith("\n")
+
+
+# ---------------------------------------------------------------------------
+# categories_to_string
+# ---------------------------------------------------------------------------
+
+class TestCategoriesToString:
+    def test_empty_defaults_to_engineering(self):
+        assert categories_to_string([]) == "engineering"
+
+    def test_slugifies_and_deduplicates(self):
+        result = categories_to_string(["Object Oriented", "object-oriented", "Testing"])
+        assert result == "object-oriented testing"
+
+
+# ---------------------------------------------------------------------------
+# download_hero_image
+# ---------------------------------------------------------------------------
+
+class _FakeResponse:
+    def __init__(self, payload: bytes, content_type: str, final_url: str):
+        self._payload = payload
+        self.headers = {"Content-Type": content_type}
+        self._final_url = final_url
+
+    def read(self) -> bytes:
+        return self._payload
+
+    def geturl(self) -> str:
+        return self._final_url
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return None
+
+
+class TestDownloadHeroImage:
+    def test_downloads_and_writes_image(self, tmp_path):
+        response = _FakeResponse(
+            payload=b"x" * 4096,
+            content_type="image/jpeg",
+            final_url="https://example.com/pic.jpg",
+        )
+        with patch("generate_post.HERO_IMAGES_DIR", tmp_path), patch("generate_post.urlopen", return_value=response):
+            hero_path = download_hero_image(search_query="java testing", slug="test-post")
+
+        assert hero_path.startswith("/images/heroes/")
+        filename = hero_path.rsplit("/", 1)[-1]
+        assert (tmp_path / filename).exists()
+
+    def test_returns_default_when_download_fails(self, tmp_path):
+        with patch("generate_post.HERO_IMAGES_DIR", tmp_path), patch("generate_post.urlopen", side_effect=OSError("offline")):
+            hero_path = download_hero_image(search_query="java testing", slug="test-post")
+        assert hero_path == DEFAULT_HERO_IMAGE
 
 
 # ---------------------------------------------------------------------------
@@ -411,6 +499,5 @@ class TestWriteOutput:
         with patch("generate_post.OUTPUT_DIR", tmp_path):
             output_path = write_output("content", "")
         assert "untitled" in output_path.name
-
 
 
