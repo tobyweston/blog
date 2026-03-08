@@ -14,6 +14,8 @@ topics:
 ---
 
 import { Image } from 'astro:assets';
+import ImgTag from '../../components/ImgTag.astro';
+
 import deliverySignalRadarWithLegend from '../images/man-vs-model/delivery_signal_radar_with_legend.png';
 import fviBarChart from '../images/man-vs-model/fvi_bar_chart.png';
 import fviBoxplotWithBlog from '../images/man-vs-model/fvi_boxplot_with_blog.png';
@@ -43,8 +45,8 @@ Something that's a discrete, user-meaningful chunk of work that stands alone in 
 
 In the end, I used two models.
 
-1. **Delivery signals**: FVI (FeatureValueIndex) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.
-2. **Initiative-sizing**: a more qualitative model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS..XXL).
+1. **Delivery signals**: FVI (`FeatureValueIndex`) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.
+2. **Initiative-sizing**: FSS (`FeatureSizeScore`), a more qualitative model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS-XXL).
 
 ### Model 1: Delivery Signals (FVI)
 
@@ -162,42 +164,47 @@ Why these? From trawling the commits, GitHub stars and activity on my projects, 
 
 
 ### Delivery Signal Composition
-
-<Image src={deliverySignalRadarWithLegend} alt="Delivery Signal Radar" width={500} />
+<div class="chart-section">
+<ImgTag class={"left"} src={deliverySignalRadarWithLegend} alt="Delivery Signal Radar" width={500} />
 
 This radar chart shows the **composition of delivery signals** across repositories. This reveals the **shape of delivery**. The recent blog window shows strong expansion in tests and reliability scaffolding, reflecting the AI workflow where scaffolding, evaluation harnesses, and guardrails were generated rapidly and then hardened.
+</div>
 
 ### Headline numbers (FVI totals for the month)
+<div class="chart-section">
 
-| Repo                | FeatureValueIndex |
-|---------------------|------------------:|
+<ImgTag class="left" src={fviBarChart} alt="Feature Value Index Comparison" width={450} />
+<br/>
+
+| Repo                  | FeatureValueIndex |
+|-----------------------|------------------:|
 | `blog`                |          **88.5** |
 | `radiate`             |              67.4 |
 | `simple-excel`        |              53.3 |
 | `tempus-fugit`        |              36.3 |
 | `temperature-machine` |              16.1 |
 
-<Image src={fviBarChart} alt="Feature Value Index Comparison" width={500} />
+</div>
 
-This chart visualises the **relative FeatureValueIndex scores** across repositories.
 
 The recent AI-assisted burst clearly exceeds my historical peaks, with the `blog` window achieving the highest composite delivery signal across feature commits, new code, tests, and reliability work.
 
 ---
 
 ### Relative Multipliers (Recent `blog` vs historical)
+<div class="chart-section">
+<ImgTag class={"right"} src={fviBoxplotWithBlog} alt="FVI Distribution" width={500} />
 
 - vs historical mean: **2.05x**
 - vs historical median: **1.98x**
 - vs best historical window (`radiate`): **1.31x**
+
 The AI-driven burst moved more first‑mile code than I typically would in a month. The last‑mile and the guardrails were still mine.
 
-<Image src={fviBoxplotWithBlog} alt="FVI Distribution" width={500} />
 
 The box-and-whisker plot shows the **distribution of historical productivity windows**.
 The AI-assisted window appears above the historical range, illustrating that this period was not just above average but outside the typical productivity envelope.
-
----
+</div>
 
 ## Coarse-Grained Product Steps (Qualitative Read)
 
@@ -302,7 +309,8 @@ Delivery Leverage Index (DLI) = Relative_FVI * Relative_FP
 
 Where:
 
-```text Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP  = FP_blog / FP_historical_mean
+```
+Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP  = FP_blog / FP_historical_mean
 ```
 
 # Step 1 — Relative Delivery Activity

@@ -227,3 +227,9 @@ hr {
 	line-height: 1.4;
 	font-weight: 500;
 }
+
+.chart-section {
+	display: flow-root; /* contains internal floats */
+	clear: both; /* starts below earlier floated elements */
+	overflow: clip; /* optional: hide any spillover pixels */
+}
