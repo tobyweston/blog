@@ -13,6 +13,12 @@ topics:
   - "code review, maintainability and governance for generated code"
 ---
 
+import { Image } from 'astro:assets';
+import deliverySignalRadarWithLegend from '../images/man-vs-model/delivery_signal_radar_with_legend.png';
+import fviBarChart from '../images/man-vs-model/fvi_bar_chart.png';
+import fviBoxplotWithBlog from '../images/man-vs-model/fvi_boxplot_with_blog.png';
+import productivitySurfaceEnvelopeChart from '../images/man-vs-model/productivity_surface_envelope_chart.png';
+
 Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days elapsed time.
 
 It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me and AI about a day, elapsed time. About 200 posts plus glue and custom processing, styling and search.
@@ -25,7 +31,7 @@ Here’s the story.
 
 ## The Question
 
-Did AI meaningfully increase my throughput over a concentrated four‑week window, compared to my own past peak periods?
+Did AI meaningfully increase my throughput over a concentrated four-week window, compared to my own past peak periods?
 
 Not lines of code but something more meaningful - delivered features and value-add.
 
@@ -33,12 +39,12 @@ Not lines of code but something more meaningful - delivered features and value-a
 
 I wanted to measure initiatives and value, not commits or lines of code.
 
-Something that's a discrete, user‑meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let's call this an **initiative**.
+Something that's a discrete, user-meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let's call this an **initiative**.
 
 In the end, I used two models.
 
 1. **Delivery signals**: FVI (FeatureValueIndex) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.
-2. **Initiative‑sizing**: a more qualitative  model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS..XXL).
+2. **Initiative-sizing**: a more qualitative model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS..XXL).
 
 ### Model 1: Delivery Signals (FVI)
 
@@ -48,7 +54,7 @@ The historical data was processed to derive a `FeatureValueIndex` (FVI) on four 
 
 ...where each component is normalized to the maximum observed across compared repos.
 
-### Model 2: Initiative‑sizing (FSS)
+### Model 2: Initiative-sizing (FSS)
 
 As before, using historical data to derive a `FeatureSizeScore` (FSS) on five dimensions: novelty, depth, breadth, hardening, and user impact. Each scored 1-5 and weighted to reflect my values (novelty and depth matter more than breadth, which matters more than hardening, which matters more than user impact).
 
@@ -155,41 +161,74 @@ Why these? From trawling the commits, GitHub stars and activity on my projects, 
 | `radiate`             |     146 |            125 |                  96 |                  18 |                        44 |                    26 |                               39 |
 
 
+### Delivery Signal Composition
+
+<Image src={deliverySignalRadarWithLegend} alt="Delivery Signal Radar" width={500} />
+
+This radar chart shows the **composition of delivery signals** across repositories. This reveals the **shape of delivery**. The recent blog window shows strong expansion in tests and reliability scaffolding, reflecting the AI workflow where scaffolding, evaluation harnesses, and guardrails were generated rapidly and then hardened.
+
 ### Headline numbers (FVI totals for the month)
 
-| Repo                  | FeatureValueIndex |
-|-----------------------|------------------:|
+| Repo                | FeatureValueIndex |
+|---------------------|------------------:|
 | `blog`                |          **88.5** |
 | `radiate`             |              67.4 |
 | `simple-excel`        |              53.3 |
 | `tempus-fugit`        |              36.3 |
 | `temperature-machine` |              16.1 |
 
+<Image src={fviBarChart} alt="Feature Value Index Comparison" width={500} />
+
+This chart visualises the **relative FeatureValueIndex scores** across repositories.
+
+The recent AI-assisted burst clearly exceeds my historical peaks, with the `blog` window achieving the highest composite delivery signal across feature commits, new code, tests, and reliability work.
+
+---
+
 ### Relative Multipliers (Recent `blog` vs historical)
 
 - vs historical mean: **2.05x**
 - vs historical median: **1.98x**
 - vs best historical window (`radiate`): **1.31x**
-
 The AI-driven burst moved more first‑mile code than I typically would in a month. The last‑mile and the guardrails were still mine.
+
+<Image src={fviBoxplotWithBlog} alt="FVI Distribution" width={500} />
+
+The box-and-whisker plot shows the **distribution of historical productivity windows**.
+The AI-assisted window appears above the historical range, illustrating that this period was not just above average but outside the typical productivity envelope.
+
+---
 
 ## Coarse-Grained Product Steps (Qualitative Read)
 
 Estimated count of major capability steps shipped in each window:
 
-| Repo                  | Major Steps (estimated) | Examples                                                                                                                                                                                  |
-|-----------------------|------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `blog`                |                 **8-9** | Ghostwriter end-to-end flow, semantic RAG/indexing, CLI, dedicated Python CI/tests, visual-regression hardening, routing/canonical redirects, archive/search UX, SEO+discussion+analytics |
-| `simple-excel`        |                     3-4 | API shaping, styling support maturation, release hardening                                                                                                                                |
-| `tempus-fugit`        |                     2-3 | concurrency/deadlock capabilities plus docs/site packaging                                                                                                                                |
-| `radiate`             |                     3-4 | exception/info display architecture, event/logging behavior, UI feature controls                                                                                                          |
-| `temperature-machine` |                     1-2 | packaging/install/deployment stabilization with limited net-new core features                                                                                                             |
+| Repo                | Major Steps (estimated) | Examples                                                                                          |
+|---------------------|------------------------:|---------------------------------------------------------------------------------------------------|
+| blog                |                 **8-9** | Ghostwriter pipeline, RAG indexing, CLI, CI/test harness, visual regression, routing improvements |
+| simple-excel        |                     3-4 | API shaping, styling maturation                                                                   |
+| tempus-fugit        |                     2-3 | concurrency capabilities                                                                          |
+| radiate             |                     3-4 | UI exception system, logging                                                                      |
+| temperature-machine |                     1-2 | packaging and deployment                                                                          |
 
+---
 
 ## Findings
 
+<Image src={productivitySurfaceEnvelopeChart} alt="Engineering Productivity Surface" width={500} />
+
+This chart combines both productivity models.
+
+The horizontal axis represents **delivery activity (FeatureValueIndex)** while the vertical axis represents **initiative magnitude (Feature Points)**.
+
+Historical windows cluster within a narrow band of activity and initiative size. The AI-assisted window shifts both **right (more delivery)** and **up (larger initiatives)**.
+
+This suggests the productivity gain is not just faster coding, but an expanded **engineering capability surface**, enabling multiple architectural initiatives to ship concurrently.
+
+---
+
 1. Recent `blog` activity is not just higher churn; it combines feature construction, reliability scaffolding, and productization in one window.
-2. On feature/value proxies, recent `blog` work is about **2x** your typical historic peak OSS window and still about **1.3x** above your strongest historical comparator.
+2. On feature/value proxies, recent `blog` work is about **2x** my historical peak windows.
 3. The largest AI-era gain appears to be **parallelized delivery**: building net-new subsystem capability while simultaneously tightening tests/CI and docs.
 
 
