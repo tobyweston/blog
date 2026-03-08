@@ -157,6 +157,18 @@ pre > code {
 	line-height: 1.5;
 	letter-spacing: 0.005em;
 }
+
+.prose svg[id^='mermaid-'] {
+	margin: 1rem auto 2.5rem auto;
+	padding: 0.75rem;
+	background: #fff;
+	border: 1px solid rgba(var(--gray-light), 65%);
+	border-radius: 6px;
+	overflow-x: auto;
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
 blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
