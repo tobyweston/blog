@@ -27,7 +27,7 @@ It felt insanely productive. That initial migration I gave up on (moving one pos
 
 Afterward, I was curious if that feeling of productivity was real, and if so, how much faster I was compared to my own historical peaks. So I set out to find out.
 
-> Turns out, I've been ~2.8x more productive that my historical peaks
+> Turns out, with AI assistance I've been ~2.8x more productive than my historical peaks
 
 Here’s the story.
 
@@ -52,7 +52,15 @@ In the end, I used two models.
 
 The historical data was processed to derive a `FeatureValueIndex` (FVI) on four dimensions: new features, new misc code, new tests, and reliability (hardening, CI, general scaffolding). The idea being group code changes and bias towards "features" or value-add. To avoid raw-LOC bias, each was weighted.
 
-> `FVI = 100 * (0.45 * feature) + (0.25 * new_code) + (0.20 * new_tests) + (0.10 * reliability)`
+| Dimension                | Weight  | Meaning                                 |
+|--------------------------|---------|-----------------------------------------|
+| Feature-like commits (F) | **45%** | Most direct proxy for user-visible work |
+| New code files (NC)      | **25%** | Captures structural expansion           |
+| New test files (NT)      | **20%** | Indicates operational hardening         |
+| Reliability/CI (R)       | **10%** | Signals production readiness            |
+
+
+> `FVI = 100 * (0.45 * F) + (0.25 * NC) + (0.20 * NT) + (0.10 * R)`
 
 ...where each component is normalized to the maximum observed across compared repos.
 
@@ -70,9 +78,9 @@ This model measures productivity by sizing initiatives, similar to story points 
 | Operational Hardening (O) | **15%** | Tests, CI, packaging, release readiness |
 | User/Product Impact (U)   | **10%** | Visible value to users                  |
 
-> `FSS = 20 * ( 0.30 * N + 0.25 * D + 0.20 * B + 0.15 * O + 0.10 * U)`
+> `FSS = 20 * ((0.30 * N) + (0.25 * D) + (0.20 * B) + (0.15 * O) + (0.10 * U))`
 
-I then mapped the composite score to a `Feature Point` (FP) size (XS..XXL) to make it more intuitive and to reflect the fact that a new subsystem is much bigger than a minor tweak.
+I then mapped the composite score to a `Feature Point` (FP) size (XS-XXL) to make it more intuitive and to reflect the fact that a new subsystem is much bigger than a minor tweak.
 
 | FSS Range | Size | Feature Points |
 |-----------|------|----------------|
@@ -106,41 +114,9 @@ FSS/FP asks:
 > How large were the things that were shipped?
 
 
-## Comparable Windows
+# Case Study
 
-I compared the recent 28 days to four historic one‑month “peak” windows where I worked hands‑on and shipped meaningful platform work.
-
-No “10x developer” nonsense. Just like‑for‑like, same engineer, just younger.
-
-During this time, the historical-me was passionate about code craft and quality. I would labor design decisions and build complex systems that would be low maintenance and high quality. I would write tests first, relentlessly focus on refactoring and good object-oriented (or functional-esq design).
-
-Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more-recent career, running a large team and setting the same standards at the org level that I was practicing passionately in these historical peak periods. I just don't have the time to code with the same labored idealism.
-
-## Case Study: Recent AI‑Assisted Burst
-
-The headline deliverables for my recent AI assisted burst were:
-
-- Implementing a full RAG-based Ghostwriter pipeline that drafts long‑form content in my voice via OpenAI
-- CI that evaluates drafts using style checks, broken‑link scans, and content linting.
-- Visual regression tests on the rendered site to catch layout drift before publish.
-- Lightweight RAG index (FAISS) over past posts and a style profile to ground the drafts.
-- Reproducible prompts, fixtures, and an evaluation harness that blocks merges if scores regress.
-
-### How I actually worked
-
-- I wrote crisp task briefs with constraints and acceptance checks
-- The model produced first drafts and scaffolding
-- I refactored for naming, boundaries, and failure modes
-- I asked the model to write tests from the acceptance checks, then I improved them
-- I froze good prompts, recorded fixtures, and added them to the evaluation harness
-- I iterated until evaluation gates were green on repeat runs
-
-The AI approach was great at breadth and speed. My time went on shaping, joining, hardening and waiting around for multiple prompt-threads to complete.
-
-
-## Historical Comparators
-
-I compared against four earlier one‑month peaks:
+I compared the recent burst of activity in my blog against 28 days of historic activity over other four of my other projects. I programmatically found busy periods in each.
 
 | Repo                  | Window                       |
 |-----------------------|------------------------------|
@@ -150,28 +126,56 @@ I compared against four earlier one‑month peaks:
 | `temperature-machine` | `2018-04-12` to `2018-05-09` |
 | `radiate`             | `2013-07-24` to `2013-08-20` |
 
+
+No “10x developer” nonsense. Just like‑for‑like, same engineer, just younger.
+
 Why these? From trawling the commits, GitHub stars and activity on my projects, these were some of my best and busiest projects and months I was “on it.”
 
-### Raw Delivery Signals
+During this time, the historical-me was passionate about code craft and quality. I would labor design decisions and build complex systems that would be low maintenance and high quality. I would write tests first, relentlessly focus on refactoring and good object-oriented (or functional-esq design).
+
+Recent me is much more "vibe" coding. I've focused a lot on organisational leadership in my more-recent career, running a large team and setting the same standards at the org level that I was practicing passionately in these historical peak periods. I just don't have the time to code with the same labored idealism.
+
+
+## Recent AI‑Assisted Burst
+
+In terms of what I'm comparing against, what I actually delivered in the blog project included:
+
+- Implementing a full RAG-based Ghostwriter pipeline that drafts long‑form content in my voice via OpenAI
+- CI that evaluates drafts using style checks, broken‑link scans, and content linting.
+- Visual regression tests on the rendered site to catch layout drift before publish.
+- Lightweight RAG index (FAISS) over past posts and a style profile to ground the drafts.
+- Reproducible prompts, fixtures, and an evaluation harness that blocks merges if scores regress.
+
+The AI approach I took to create these was great at breadth and speed. My time went on shaping, joining, hardening and waiting around for multiple prompt-threads to complete.
+
+
+# Results
+
+All charts are generated directly from the commit history of the repositories listed below.
+
+### Delivery Signals (FVI) Raw Data
 
 | Repo                  | Commits | New Files | New Code Files | New Test Files | Feature-like Commits | Fix-like Commits | Reliability/CI/test Commits |
-|-----------------------|--------:|---------------:|--------------------:|--------------------:|--------------------------:|----------------------:|---------------------------------:|
-| `blog`                |     196 |            225 |                  52 |                 116 |                        61 |                    51 |                               57 |
-| `simple-excel`        |     105 |             78 |                  57 |                  36 |                        37 |                    25 |                               28 |
-| `tempus-fugit`        |      76 |             40 |                  31 |                  19 |                        30 |                     9 |                               16 |
-| `temperature-machine` |     126 |             25 |                   3 |                   6 |                        17 |                    10 |                               10 |
-| `radiate`             |     146 |            125 |                  96 |                  18 |                        44 |                    26 |                               39 |
+|-----------------------|--------:|----------:|---------------:|---------------:|---------------------:|-----------------:|----------------------------:|
+| `blog`                |     196 |       225 |             52 |            116 |                   61 |               51 |                          57 |
+| `simple-excel`        |     105 |        78 |             57 |             36 |                   37 |               25 |                          28 |
+| `tempus-fugit`        |      76 |        40 |             31 |             19 |                   30 |                9 |                          16 |
+| `temperature-machine` |     126 |        25 |              3 |              6 |                   17 |               10 |                          10 |
+| `radiate`             |     146 |       125 |             96 |             18 |                   44 |               26 |                          39 |
 
 
-### Delivery Signal Composition
-<div class="chart-section">
+### Delivery Signal (FVI) Makeup
+
+<div className="chart-section">
+
 <ImgTag class={"left"} src={deliverySignalRadarWithLegend} alt="Delivery Signal Radar" width={500} />
 
-This radar chart shows the **composition of delivery signals** across repositories. This reveals the **shape of delivery**. The recent blog window shows strong expansion in tests and reliability scaffolding, reflecting the AI workflow where scaffolding, evaluation harnesses, and guardrails were generated rapidly and then hardened.
+This radar chart shows the **composition of delivery signals** across repositories. This reveals the **shape of delivery**. The recent blog activity shows strong expansion in tests and reliability scaffolding, reflecting the AI workflow where scaffolding, evaluation harnesses, and guardrails were generated rapidly and then hardened.
 </div>
 
-### Headline numbers (FVI totals for the month)
-<div class="chart-section">
+### FVI Totals (for the month)
+
+<div className="chart-section">
 
 <ImgTag class="left" src={fviBarChart} alt="Feature Value Index Comparison" width={450} />
 <br/>
@@ -189,21 +193,26 @@ This radar chart shows the **composition of delivery signals** across repositori
 
 The recent AI-assisted burst clearly exceeds my historical peaks, with the `blog` window achieving the highest composite delivery signal across feature commits, new code, tests, and reliability work.
 
----
 
-### Relative Multipliers (Recent `blog` vs historical)
-<div class="chart-section">
+### Relative Performance vs Historical Peaks
+
+<div className="chart-section">
+
 <ImgTag class={"right"} src={fviBoxplotWithBlog} alt="FVI Distribution" width={500} />
+
+To make the comparison clearer, I divided the recent `blog` FVI score by several historical reference points. `FeatureValueIndex` for the AI-assisted month was **88.5**, compared to a historical average of **~43**.
 
 - vs historical mean: **2.05x**
 - vs historical median: **1.98x**
 - vs best historical window (`radiate`): **1.31x**
 
-The AI-driven burst moved more first‑mile code than I typically would in a month. The last‑mile and the guardrails were still mine.
+In other words:
 
+- this is **about twice the delivery activity** of my typical historical peak (when using AI)
+- and **~30% more than my strongest previous month**
 
-The box-and-whisker plot shows the **distribution of historical productivity windows**.
-The AI-assisted window appears above the historical range, illustrating that this period was not just above average but outside the typical productivity envelope.
+The box-and-whisker plot shows the **distribution of those historical windows**. The AI-assisted window sits above that range, suggesting this wasn’t just a good month — it was outside the productivity band I normally operated in.
+
 </div>
 
 ## Coarse-Grained Product Steps (Qualitative Read)
@@ -218,7 +227,6 @@ Estimated count of major capability steps shipped in each window:
 | radiate             |                     3-4 | UI exception system, logging                                                                      |
 | temperature-machine |                     1-2 | packaging and deployment                                                                          |
 
----
 
 ## Findings
 
@@ -232,7 +240,6 @@ Historical windows cluster within a narrow band of activity and initiative size.
 
 This suggests the productivity gain is not just faster coding, but an expanded **engineering capability surface**, enabling multiple architectural initiatives to ship concurrently.
 
----
 
 1. Recent `blog` activity is not just higher churn; it combines feature construction, reliability scaffolding, and productization in one window.
 2. On feature/value proxies, recent `blog` work is about **2x** my historical peak windows.
