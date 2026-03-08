@@ -1,0 +1,632 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.18.0"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-1PVLDLDJQN"></script><script>(function(){const gaId = "G-1PVLDLDJQN";
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    })();</script><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/blog/2026-03-08-man-vs-model/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Man vs the Model</title><meta name="title" content="Man vs the Model"><meta name="description" content="A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/blog/2026-03-08-man-vs-model/"><meta property="og:title" content="Man vs the Model"><meta property="og:description" content="A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."><meta property="og:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/blog/2026-03-08-man-vs-model/"><meta property="twitter:title" content="Man vs the Model"><meta property="twitter:description" content="A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe."><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/java-code.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Man vs the Model","description":"A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe.","datePublished":"2026-03-08T00:00:00.000Z","image":"https://baddotrobot.com/images/heroes/man-vs-model.png","url":"https://baddotrobot.com/blog/2026-03-08-man-vs-model/","author":{"@type":"Person","name":"Toby Weston","url":"https://baddotrobot.com"},"publisher":{"@type":"Person","name":"bad.robot"}}</script><link rel="stylesheet" href="/_astro/index.BK8cr6X-.css">
+<style>.giscus-wrapper[data-astro-cid-2s6z27su]{margin-top:3rem;padding-top:0}.giscus-divider[data-astro-cid-2s6z27su]{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}.giscus-divider[data-astro-cid-2s6z27su]:before,.giscus-divider[data-astro-cid-2s6z27su]:after{content:"";flex:1;height:1px;background:var(--border)}.giscus-divider-label[data-astro-cid-2s6z27su]{text-transform:uppercase;letter-spacing:.2em;color:var(--accent);font-size:.75rem;font-weight:600;white-space:nowrap}.giscus[data-astro-cid-2s6z27su],.giscus-frame[data-astro-cid-2s6z27su]{width:100%}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.rQMPVdh2.css"><style>img[data-astro-cid-hgbazjtb]{max-width:100%;height:auto}img[data-astro-cid-hgbazjtb].right{float:right;margin:0 0 1.5rem 1.5rem;max-width:50%}img[data-astro-cid-hgbazjtb].left{float:left;margin:0 1.5rem 1.5rem 0;max-width:50%}img[data-astro-cid-hgbazjtb].center{display:block;margin:1.5rem auto}img[data-astro-cid-hgbazjtb].half{max-width:48%}@media(max-width:768px){img[data-astro-cid-hgbazjtb].right,img[data-astro-cid-hgbazjtb].left{float:none;display:block;margin:1.5rem auto;max-width:100%}}
+</style><style>.latex[data-astro-cid-yr57hmin] .katex-display{text-align:left;margin:.75rem 0;padding:.45rem .6rem;background-color:#1a1a1a0a;border:1px solid rgba(26,26,26,.08);border-radius:.5rem}.latex[data-astro-cid-yr57hmin] .katex-display>.katex{text-align:left}
+</style><link rel="stylesheet" href="/_astro/katex_min.3GqXRNAv.css"></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">   <div class="py-12"> <article class=""> <!--{heroImage && (--> <!--  <div class="hero-image mb-8">--> <!--    <img src={heroImage} alt={title} class="w-full h-auto rounded-lg shadow-lg" />--> <!--  </div>--> <!--)}--> <div class="article-title-section mb-8"> <p class="detail-kicker">Blog</p> <h1 class="article-title-section h1">Man vs the Model</h1> <p class="article-subtitle">Measuring AI-Assisted development against my historical productivity peaks</p> <p class="article-description">A four-week, AI-assisted delivery burst measured against my own historical peaks. What shipped, how I measured it, what the numbers really say, and the guardrails that made it safe.</p> </div> <div class="article-meta"> <div class="article-date"> <strong>Published:</strong> <time datetime="2026-03-08T00:00:00.000Z"> Mar 8, 2026 </time> </div>  </div> <div class="prose">  <p>Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days of elapsed time.</p>
+<p>It felt insanely productive. That initial migration I gave up on (moving one post at a time, converting one at a time) took me and AI about a day, elapsed time. About 200 posts plus glue and custom processing, styling and search.</p>
+<p>Afterward, I was curious if that feeling of productivity was real, and if so, how much faster I was compared to my own historical peaks. So I set out to find out.</p>
+<blockquote>
+<p>Turns out, with AI assistance I’ve been <strong>~2.8x more productive than my historical peaks</strong></p>
+</blockquote>
+<p>Here’s the story.</p>
+<h2 id="the-question">The Question</h2>
+<p>Did AI meaningfully increase my throughput over a concentrated four-week window, compared to my own past peak periods?</p>
+<p>Not lines of code but something more meaningful - delivered features and value-add.</p>
+<h2 id="methodology">Methodology</h2>
+<p>I wanted to measure initiatives and value, not commits or lines of code.</p>
+<p>Something that’s a discrete, user-meaningful chunk of work that stands alone in production. An example might be adding a Cypress suite of visual regression tests rather than fixing a flaky test. Let’s call this an <strong>initiative</strong>.</p>
+<p>In the end, I used two models.</p>
+<ol>
+<li><strong>Delivery signals</strong>: FVI (<code>FeatureValueIndex</code>) based on commit buckets and new files, weighted by feature-like, new code, new tests, and reliability work.</li>
+<li><strong>Initiative-sizing</strong>: FSS (<code>FeatureSizeScore</code>), a more qualitative model scoring each initiative on a rubric of novelty, depth, breadth, hardening, and user impact then mapped to feature points (XS-XXL).</li>
+</ol>
+<h3 id="model-1-delivery-signals-fvi">Model 1: Delivery Signals (FVI)</h3>
+<p>The historical data was processed to derive a <code>FeatureValueIndex</code> (FVI) on four dimensions: new features, new misc code, new tests, and reliability (hardening, CI, general scaffolding). The idea being group code changes and bias towards “features” or value-add. To avoid raw-LOC bias, each was weighted.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>Weight</th><th>Meaning</th></tr></thead><tbody><tr><td>Feature-like commits (F)</td><td><strong>45%</strong></td><td>Most direct proxy for user-visible work</td></tr><tr><td>New code files (NC)</td><td><strong>25%</strong></td><td>Captures structural expansion</td></tr><tr><td>New test files (NT)</td><td><strong>20%</strong></td><td>Indicates operational hardening</td></tr><tr><td>Reliability/CI (R)</td><td><strong>10%</strong></td><td>Signals production readiness</td></tr></tbody></table>
+<blockquote>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>FVI</mtext><mo>=</mo><mn>100</mn><mo>×</mo><mo stretchy="false">(</mo><mn>0.45</mn><mo>×</mo><mi>F</mi><mo>+</mo><mn>0.25</mn><mo>×</mo><mi>N</mi><mi>C</mi><mo>+</mo><mn>0.20</mn><mo>×</mo><mi>N</mi><mi>T</mi><mo>+</mo><mn>0.10</mn><mo>×</mo><mi>R</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{FVI} = 100 \times (0.45 \times F + 0.25 \times NC + 0.20 \times NT + 0.10 \times R)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FVI</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">100</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0.45</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.25</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mclose">)</span></span></span></span></span></div>
+</blockquote>
+<p>Each component is normalized to the maximum observed value across the compared repositories.</p>
+<h3 id="model-2-initiative-sizing-fss">Model 2: Initiative-sizing (FSS)</h3>
+<p>As before, using historical data to derive a <code>FeatureSizeScore</code> (FSS) on five dimensions: novelty, depth, breadth, hardening, and user impact. Each scored 1-5 and weighted to reflect my values (novelty and depth matter more than breadth, which matters more than hardening, which matters more than user impact).</p>
+<p>This model measures productivity by sizing initiatives, similar to story points (aka fairy points) designed to look past just delivery signals. Instead of counting commits, it measures how big the shipped capabilities were. Commit messages and code diffs were analysed using semantic reasoning and bucketed.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>Weight</th><th>Meaning</th></tr></thead><tbody><tr><td>Novel Capability (N)</td><td><strong>30%</strong></td><td>Is this something fundamentally new?</td></tr><tr><td>Technical Depth (D)</td><td><strong>25%</strong></td><td>Architectural or algorithmic complexity</td></tr><tr><td>Surface Breadth (B)</td><td><strong>20%</strong></td><td>How much of the system it touches</td></tr><tr><td>Operational Hardening (O)</td><td><strong>15%</strong></td><td>Tests, CI, packaging, release readiness</td></tr><tr><td>User/Product Impact (U)</td><td><strong>10%</strong></td><td>Visible value to users</td></tr></tbody></table>
+<blockquote>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>FSS</mtext><mo>=</mo><mn>20</mn><mo>×</mo><mo stretchy="false">(</mo><mn>0.30</mn><mo>×</mo><mi>N</mi><mo>+</mo><mn>0.25</mn><mo>×</mo><mi>D</mi><mo>+</mo><mn>0.20</mn><mo>×</mo><mi>B</mi><mo>+</mo><mn>0.15</mn><mo>×</mo><mi>O</mi><mo>+</mo><mn>0.10</mn><mo>×</mo><mi>U</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{FSS} = 20 \times (0.30 \times N + 0.25 \times D + 0.20 \times B + 0.15 \times O + 0.10 \times U)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">FSS</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0.30</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.25</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.20</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.15</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.10</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mclose">)</span></span></span></span></span></div>
+</blockquote>
+<p>I then mapped the composite score to a <code>Feature Point</code> (FP) size (XS-XXL) to make it more intuitive and to reflect the fact that a new subsystem is much bigger than a minor tweak.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>FSS Range</th><th>Size</th><th>Feature Points</th></tr></thead><tbody><tr><td>≥ 85</td><td>XXL</td><td>13</td></tr><tr><td>70–84</td><td>XL</td><td>8</td></tr><tr><td>55–69</td><td>L</td><td>5</td></tr><tr><td>40–54</td><td>M</td><td>3</td></tr><tr><td>25–39</td><td>S</td><td>2</td></tr><tr><td>&lt; 25</td><td>XS</td><td>1</td></tr></tbody></table>
+<p>Total productivity for the window is then the sum of the initiative sizes. This model is more subjective but tries to capture the real value and effort behind the work, not just the raw code churn.</p>
+<blockquote>
+<p>TotalFeaturePoints = sum(FP for all initiatives)</p>
+</blockquote>
+<p>As an example, having run the numbers, the following came out. It felt about right, a balance of volume and value.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Initiative</th><th>Size</th></tr></thead><tbody><tr><td>Ghostwriter</td><td>XXL (13 FP)</td></tr><tr><td>RAG retrieval</td><td>XXL (13 FP)</td></tr><tr><td>CI/test hardening</td><td>XL (8 FP)</td></tr><tr><td>UX improvements</td><td>L (5 FP)</td></tr><tr><td>SEO + analytics</td><td>L (5 FP)</td></tr></tbody></table>
+<p>FVI asks:</p>
+<blockquote>
+<p>How much delivery activity occurred?</p>
+</blockquote>
+<p>FSS/FP asks:</p>
+<blockquote>
+<p>How large were the things that were shipped?</p>
+</blockquote>
+<h1 id="case-study">Case Study</h1>
+<p>I compared the recent burst of activity in my blog against 28 days of historic activity across four other projects. I programmatically found busy periods in each. All metrics were derived directly from repository commit history for the time periods below.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repo</th><th>Window</th></tr></thead><tbody><tr><td><code>blog</code></td><td><code>2026-02-08</code> to <code>2026-03-07</code></td></tr><tr><td><code>simple-excel</code></td><td><code>2012-08-25</code> to <code>2012-09-21</code></td></tr><tr><td><code>tempus-fugit</code></td><td><code>2009-11-30</code> to <code>2009-12-27</code></td></tr><tr><td><code>temperature-machine</code></td><td><code>2018-04-12</code> to <code>2018-05-09</code></td></tr><tr><td><code>radiate</code></td><td><code>2013-07-24</code> to <code>2013-08-20</code></td></tr></tbody></table>
+<p>No “10x developer” nonsense. Just like‑for‑like, same engineer, just younger.</p>
+<p>Why these? From trawling the commits, GitHub stars and activity on my projects, these were some of my best and busiest projects and months I was “on it.”</p>
+<p>During this time, the historical-me was passionate about code craft and quality. I would labour over design decisions and build complex systems that would be low-maintenance and high quality.</p>
+<p>Recent me is much more “vibe” coding. I’ve focused a lot on organisational leadership in my more recent career, running a large team and setting the same standards at the org level that I was practising passionately in these historical peak periods. I just don’t have the time to code with the same laboured idealism.</p>
+<h2 id="recent-aiassisted-burst">Recent AI‑Assisted Burst</h2>
+<p>In terms of what I’m comparing against, what I actually delivered in the blog project included:</p>
+<ul>
+<li>Implementing a full RAG-based Ghostwriter pipeline that drafts long‑form content in my voice via OpenAI</li>
+<li>CI that evaluates drafts using style checks, broken‑link scans, and content linting.</li>
+<li>Visual regression tests on the rendered site to catch layout drift before publish.</li>
+<li>Lightweight RAG index (FAISS) over past posts and a style profile to ground the drafts.</li>
+<li>Reproducible prompts, fixtures, and an evaluation harness that blocks merges if scores regress.</li>
+</ul>
+<p>The AI approach I took to create these was great at breadth and speed. My time went on shaping, joining, hardening and waiting around for multiple prompt threads to complete.</p>
+<h1 id="results">Results</h1>
+<p>All charts are generated directly from the commit history of the repositories listed below.</p>
+<h3 id="delivery-signals-fvi-raw-data">Delivery Signals (FVI) Raw Data</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repo</th><th style="text-align:right">Commits</th><th style="text-align:right">New Files</th><th style="text-align:right">New Code Files</th><th style="text-align:right">New Test Files</th><th style="text-align:right">Feature-like Commits</th><th style="text-align:right">Fix-like Commits</th><th style="text-align:right">Reliability/CI/test Commits</th></tr></thead><tbody><tr><td><code>blog</code></td><td style="text-align:right">196</td><td style="text-align:right">225</td><td style="text-align:right">52</td><td style="text-align:right">116</td><td style="text-align:right">61</td><td style="text-align:right">51</td><td style="text-align:right">57</td></tr><tr><td><code>simple-excel</code></td><td style="text-align:right">105</td><td style="text-align:right">78</td><td style="text-align:right">57</td><td style="text-align:right">36</td><td style="text-align:right">37</td><td style="text-align:right">25</td><td style="text-align:right">28</td></tr><tr><td><code>tempus-fugit</code></td><td style="text-align:right">76</td><td style="text-align:right">40</td><td style="text-align:right">31</td><td style="text-align:right">19</td><td style="text-align:right">30</td><td style="text-align:right">9</td><td style="text-align:right">16</td></tr><tr><td><code>temperature-machine</code></td><td style="text-align:right">126</td><td style="text-align:right">25</td><td style="text-align:right">3</td><td style="text-align:right">6</td><td style="text-align:right">17</td><td style="text-align:right">10</td><td style="text-align:right">10</td></tr><tr><td><code>radiate</code></td><td style="text-align:right">146</td><td style="text-align:right">125</td><td style="text-align:right">96</td><td style="text-align:right">18</td><td style="text-align:right">44</td><td style="text-align:right">26</td><td style="text-align:right">39</td></tr></tbody></table>
+<h3 id="delivery-signal-fvi-makeup">Delivery Signal (FVI) Makeup</h3>
+<div class="chart-section"><img src="/_astro/delivery_signal_radar_with_legend.CXoKyUy1_Z6Qs1l.webp" alt="Delivery Signal Radar" loading="lazy" data-astro-cid-hgbazjtb="true" decoding="async" fetchpriority="auto" width="500" height="406" class="left"><p>This radar chart shows the <strong>composition of delivery signals</strong> across repositories. This reveals the <strong>shape of delivery</strong>. The recent blog activity shows strong expansion in tests and reliability scaffolding, reflecting the AI workflow where scaffolding, evaluation harnesses, and guardrails were generated rapidly and then hardened.</p></div>
+<h3 id="fvi-totals-for-the-month">FVI Totals (for the month)</h3>
+<div class="chart-section"><img src="/_astro/fvi_bar_chart.CWVW4qMS_Z1A9k1c.webp" alt="Feature Value Index Comparison" loading="lazy" data-astro-cid-hgbazjtb="true" decoding="async" fetchpriority="auto" width="450" height="338" class="left"><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repo</th><th style="text-align:right">FeatureValueIndex</th></tr></thead><tbody><tr><td><code>blog</code></td><td style="text-align:right"><strong>88.5</strong></td></tr><tr><td><code>radiate</code></td><td style="text-align:right">67.4</td></tr><tr><td><code>simple-excel</code></td><td style="text-align:right">53.3</td></tr><tr><td><code>tempus-fugit</code></td><td style="text-align:right">36.3</td></tr><tr><td><code>temperature-machine</code></td><td style="text-align:right">16.1</td></tr></tbody></table></div>
+<p>The recent AI-assisted burst clearly exceeds my historical peaks, with the <code>blog</code> window achieving the highest composite delivery signal across feature commits, new code, tests, and reliability work.</p>
+<h3 id="relative-performance-vs-historical-peaks-fvi">Relative Performance vs Historical Peaks (FVI)</h3>
+<div class="chart-section"><img src="/_astro/fvi_boxplot_with_blog.g6X5v6Wg_DbTzc.webp" alt="FVI Distribution" loading="lazy" data-astro-cid-hgbazjtb="true" decoding="async" fetchpriority="auto" width="500" height="375" class="right"><p>To make the comparison clearer, I divided the recent <code>blog</code> FVI score by several historical reference points. <code>FeatureValueIndex</code> for the AI-assisted month was <strong>88.5</strong>, compared to a historical average of <strong>~43</strong>.</p><ul>
+<li>vs historical mean: <strong>2.05x</strong></li>
+<li>vs historical median: <strong>1.98x</strong></li>
+<li>vs best historical window (<code>radiate</code>): <strong>1.31x</strong></li>
+</ul><p>In other words:</p><ul>
+<li>this is <strong>about twice the delivery activity</strong> of my typical historical peak (when using AI)</li>
+<li>and <strong>~30% more than my strongest previous month</strong></li>
+</ul><p>The box-and-whisker plot shows the <strong>distribution of those historical windows</strong>. The AI-assisted window sits above that range, suggesting this wasn’t just a good month — it was outside the productivity band I normally operated in.</p></div>
+<h2 id="initiative-sizing-fss-raw-data">Initiative-sizing (FSS) Raw Data</h2>
+<p>While FVI measures delivery signals, the second model measures <strong>initiative magnitude</strong>.</p>
+<p>Instead of counting commits or files, the Feature Size model groups work into initiatives and scores their size using the weighted rubric described earlier. Each initiative maps to a <strong>Feature Point (FP)</strong> size ranging from XS to XXL.</p>
+<div class="chart-section"><img src="/_astro/feature_points_publish_chart.26pXr-yI_Z1gE6IP.webp" alt="Feature Points initiative magnitude comparison" loading="lazy" data-astro-cid-hgbazjtb="true" decoding="async" fetchpriority="auto" width="500" height="375" class="right"><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repo</th><th style="text-align:right">Total Feature Points</th><th style="text-align:right"># Initiatives</th><th style="text-align:right">Avg FP / Initiative</th></tr></thead><tbody><tr><td><code>blog</code></td><td style="text-align:right"><strong>44</strong></td><td style="text-align:right">5</td><td style="text-align:right"><strong>8.8</strong></td></tr><tr><td><code>radiate</code></td><td style="text-align:right">21</td><td style="text-align:right">4</td><td style="text-align:right">5.3</td></tr><tr><td><code>simple-excel</code></td><td style="text-align:right">18</td><td style="text-align:right">4</td><td style="text-align:right">4.5</td></tr><tr><td><code>tempus-fugit</code></td><td style="text-align:right">14</td><td style="text-align:right">3</td><td style="text-align:right">4.7</td></tr><tr><td><code>temperature-machine</code></td><td style="text-align:right">9</td><td style="text-align:right">3</td><td style="text-align:right">3.0</td></tr></tbody></table></div>
+<p>The recent <code>blog</code> window totals <strong>44 Feature Points</strong>, compared to a historical average of <strong>15.5</strong>.</p>
+<h3 id="initiative-size-compared-to-historical-peaks-fss">Initiative Size Compared to Historical Peaks (FSS)</h3>
+<p>The following multipliers come from comparing the recent window’s <strong>Feature Point total (44)</strong> against historical reference points from above.</p>
+<p>The historical <strong>average</strong> was therefore:</p>
+<p><code>(21 + 18 + 14 + 9) / 4 = 15.5</code></p>
+<p>Comparing the recent window:</p>
+<ul>
+<li>vs historical average: <strong>2.84x</strong></li>
+<li>vs best historical window (<code>radiate</code>): <strong>2.10x</strong></li>
+</ul>
+<p>In other words, the AI-assisted month did not just produce more delivery activity (as measured by FVI). It also produced <strong>significantly larger initiatives</strong>.</p>
+<p>This is visible in the initiative breakdown:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Initiative</th><th>Size</th></tr></thead><tbody><tr><td>Ghostwriter</td><td>XXL (13 FP)</td></tr><tr><td>RAG retrieval</td><td>XXL (13 FP)</td></tr><tr><td>CI/test hardening</td><td>XL (8 FP)</td></tr><tr><td>UX improvements</td><td>L (5 FP)</td></tr><tr><td>SEO + analytics</td><td>L (5 FP)</td></tr></tbody></table>
+<p>Two things stand out. First, the window stacked <strong>two XXL initiatives</strong> in the same month: the Ghostwriter platform and the semantic retrieval architecture. Second, supporting work (tests, CI, and UX) still landed as meaningful initiatives rather than incremental tweaks.</p>
+<p>Compare that historically where my peak months tended to focus on <strong>one major capability axis at a time</strong>: API design, UI behaviour, packaging, or infrastructure hardening.</p>
+<p>This AI-assisted month combined all of them simultaneously:</p>
+<ul>
+<li>new product capability</li>
+<li>architectural subsystems</li>
+<li>reliability scaffolding</li>
+<li>distribution and UX improvements</li>
+</ul>
+<p>The result isn’t just higher delivery signals (the FVI result earlier) but <strong>larger capability steps shipped in the same period</strong>.</p>
+<h2 id="fvi-and-fssfp-combined">FVI and FSS/FP Combined</h2>
+<div class="chart-section"><img src="/_astro/productivity_surface_hero_chart.Fl_pNBMb_IjmdS.webp" alt="Engineering Productivity Surface" loading="lazy" data-astro-cid-hgbazjtb="true" decoding="async" fetchpriority="auto" width="550" height="428" class="right"><p>This chart combines both productivity models in one view.</p><ul>
+<li>X-axis: <strong>delivery activity</strong> (FVI)</li>
+<li>Y-axis: <strong>initiative magnitude</strong> (Feature Points)</li>
+</ul><p>Historical windows cluster within a narrow band of activity and initiative size. The AI-assisted window shifts both <strong>right (more delivery)</strong> and <strong>up (larger initiatives)</strong>.</p><p>This suggests the productivity gain is not just faster coding, but an expanded <strong>engineering capability surface</strong>, enabling multiple architectural initiatives to ship concurrently.</p></div>
+<h1 id="something-surprising">Something Surprising</h1>
+<p>Taking a step back from the headline numbers, I realised there was something interesting hiding in the data: <strong>the real productivity gain probably wasn’t 2x or 2.8x - it was closer to 6x</strong>.</p>
+<p>It only becomes visible if we compute a third derived metric from these two models.</p>
+<h2 id="the-derived-model-delivery-leverage-index-dli">The Derived Model: <strong>Delivery Leverage Index (DLI)</strong></h2>
+<p>The first two models measure <strong>different axes</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Measures</th></tr></thead><tbody><tr><td>Feature Value Index (FVI)</td><td>delivery activity</td></tr><tr><td>Feature Points (FP)</td><td>initiative size</td></tr></tbody></table>
+<p>If both increased simultaneously, perhaps the real change is <strong>multiplicative</strong>, not additive.</p>
+<p>So we define:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Delivery Leverage Index (DLI)</mtext><mo>=</mo><mtext>Relative_FVI</mtext><mo>×</mo><mtext>Relative_FP</mtext></mrow><annotation encoding="application/x-tex">\text{Delivery Leverage Index (DLI)} = \text{Relative\_FVI} \times \text{Relative\_FP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">Delivery Leverage Index (DLI)</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord">Relative_FVI</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0044em;vertical-align:-0.31em;"></span><span class="mord text"><span class="mord">Relative_FP</span></span></span></span></span></span></div>
+<p>Where:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>Relative_FVI</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><msub><mtext>FVI</mtext><mtext>blog</mtext></msub><msub><mtext>FVI</mtext><mtext>historical mean</mtext></msub></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>Relative_FP</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><msub><mtext>FP</mtext><mtext>blog</mtext></msub><msub><mtext>FP</mtext><mtext>historical mean</mtext></msub></mfrac></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{Relative\_FVI} &amp;= \frac{\text{FVI}_{\text{blog}}}{\text{FVI}_{\text{historical mean}}} \\
+\text{Relative\_FP} &amp;= \frac{\text{FP}_{\text{blog}}}{\text{FP}_{\text{historical mean}}}
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.9927em;vertical-align:-2.2463em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463em;"><span style="top:-4.7463em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mord text"><span class="mord">Relative_FVI</span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mord text"><span class="mord">Relative_FP</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.7463em;"><span style="top:-4.7463em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord text"><span class="mord">FVI</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">historical mean</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord text"><span class="mord">FVI</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">blog</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord text"><span class="mord">FP</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">historical mean</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord text"><span class="mord">FP</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">blog</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.2463em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<h3 id="step-1--relative-delivery-signal">Step 1 — Relative Delivery Signal</h3>
+<p>From the FVI model:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>blog FVI</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mn>88.5</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>historical mean</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≈</mo><mn>43.1</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{blog FVI} &amp;= 88.5 \\
+\text{historical mean} &amp;\approx 43.1
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">blog FVI</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">historical mean</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">88.5</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">43.1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<p>So:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>Relative_FVI</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><mn>88.5</mn><mn>43.1</mn></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≈</mo><mn>2.05</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{Relative\_FVI} &amp;= \frac{88.5}{43.1} \\
+&amp;\approx 2.05
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.8074em;vertical-align:-1.6537em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.1537em;"><span style="top:-4.1537em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord text"><span class="mord">Relative_FVI</span></span></span></span><span style="top:-2.3277em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.6537em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.1537em;"><span style="top:-4.1537em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">43.1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">88.5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.3277em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">2.05</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.6537em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<h3 id="step-2--relative-initiative-sizing">Step 2 — Relative Initiative-sizing</h3>
+<p>From the FSS/FP model:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>blog FP</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mn>44</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>historical mean</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mn>15.5</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{blog\ FP} &amp;= 44 \\
+\text{historical\ mean} &amp;= 15.5
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">blog FP</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">historical mean</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">44</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">15.5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<p>So:</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>Relative_FP</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mfrac><mn>44</mn><mn>15.5</mn></mfrac></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≈</mo><mn>2.84</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{Relative\_FP} &amp;= \frac{44}{15.5} \\
+&amp;\approx 2.84
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.8074em;vertical-align:-1.6537em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.1537em;"><span style="top:-4.1537em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord text"><span class="mord">Relative_FP</span></span></span></span><span style="top:-2.3277em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.6537em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.1537em;"><span style="top:-4.1537em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">15.5</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">44</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-2.3277em;"><span class="pstrut" style="height:3.3214em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">2.84</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.6537em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<h3 id="step-3--delivery-leverage-index">Step 3 — Delivery Leverage Index</h3>
+<p>Now combine them.</p>
+<div class="latex" data-astro-cid-yr57hmin><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mtext>DLI</mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>=</mo><mn>2.05</mn><mo>×</mo><mn>2.84</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo>≈</mo><mn>5.82</mn></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+\text{DLI} &amp;= 2.05 \times 2.84 \\
+&amp;\approx 5.82
+\end{aligned}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3em;vertical-align:-1.25em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">DLI</span></span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.75em;"><span style="top:-3.91em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">2.05</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">2.84</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">5.82</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.25em;"><span></span></span></span></span></span></span></span></span></span></span></span></div>
+<p>So the effective productivity leverage becomes:</p>
+<blockquote>
+<p><strong>~5.8x vs historical baseline</strong></p>
+</blockquote>
+<h2 id="why-this-happens">Why this Happens</h2>
+<p>AI changes <strong>two things simultaneously</strong>: local coding throughput <strong>and</strong> the cognitive load of running multiple initiatives at once.</p>
+<p>More commits, more tests, more scaffolding. Measured by <strong>FVI (~2x)</strong>.</p>
+<p>When cognitive load reduces, larger systems become feasible to build concurrently. Measured by <strong>Feature Points (~2.8x)</strong>.</p>
+<p>In this window, I shipped <strong>two XXL initiatives at once</strong> in the blog work: an entire Ghostwriter system and a semantic retrieval model.</p>
+<p>I was working concurrently and often spinning up side quests (I even had my AI assistant generate a LaTeX Astro component to display these formulas <strong>whilst</strong> I was writing this post!).</p>
+<h2 id="the-key-insight">The Key Insight</h2>
+<p>Empirically, from my own work, before AI, I was working on <strong>1 large initiative + maintenance work</strong>.</p>
+<p>With AI, it shifted to <strong>2-3 large initiatives + maintenance + reliability work + side quests</strong>.</p>
+<h2 id="what-this-actually-means">What this Actually Means</h2>
+<p>Before I jump both feet first into the hype machine, this <strong>doesn’t mean developers are 6x faster at coding</strong>. It means the <strong>effective capability surface per engineer expands dramatically</strong>.</p>
+<p>A useful interpretation:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Effect</th></tr></thead><tbody><tr><td>Coding</td><td>~2x faster</td></tr><tr><td>Architecture execution</td><td>~3x larger</td></tr><tr><td>Overall delivery capacity</td><td>~5–6x</td></tr></tbody></table>
+<p>Two different measurement models produced similar results.</p>
+<blockquote>
+<p>A delivery-signal model suggests roughly <strong>2x higher engineering throughput</strong>.</p>
+<p>A capability-sizing model suggests roughly <strong>2.8x larger initiatives shipped</strong>.</p>
+<p>When those two effects combine, the effective delivery leverage during this period was closer to <strong>5–6x my historical baseline</strong>.</p>
+</blockquote>
+<h2 id="bonus-insight">Bonus Insight</h2>
+<p>For the AI burst, I created 116 test files. Compared to historical windows where I was always focused on test-driven development, this was proportionally much higher than the historical average. For example, in <code>radiate</code> I created 18 test files, in <code>simple-excel</code> 36, and in <code>tempus-fugit</code> 19.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repo</th><th>New test files</th></tr></thead><tbody><tr><td>blog</td><td><strong>116</strong></td></tr><tr><td>radiate</td><td>18</td></tr><tr><td>simple-excel</td><td>36</td></tr><tr><td>tempus-fugit</td><td>19</td></tr><tr><td>temperature-machine</td><td>6</td></tr></tbody></table>
+<p>So the AI era produced <strong>3–6x more reliability scaffolding</strong>. I think this was because I was driving. I asked for additional tests and test scaffolding because it was so easy, especially when having agents generate them in parallel.</p>
+<p>This is important because it might counter the typical criticism: <strong>“AI just produces low-quality code faster”</strong>, at least when the pilot is actually concerned about testing.</p>
+<h2 id="man-vs-the-model">Man vs the Model?</h2>
+<p>Across a month, my AI-assisted self out-shipped my historical peaks by ~2.7–2.8x on an initiative-weighted basis.</p>
+<p>That advantage existed because I paired generation with hardening and governance. Without tests, CI, and reproducible evaluation, you get speed without confidence, which is just future work with interest.</p>
+<p>It didn’t replace expertise. It amplified it, especially on repeatable patterns and breadth tasks.</p>
+<h2 id="over-to-you">Over to you…</h2>
+<p>What did AI actually add to your last month?</p>
+<p>If you’ve measured at the initiative level, I’d love to hear your experience, where it helped, and where it got in the way. If you haven’t, pick your next two initiatives, measure, and tell me what you see.</p>  </div> <div class="giscus-wrapper" data-astro-cid-2s6z27su><div class="giscus-divider" data-astro-cid-2s6z27su><span class="giscus-divider-label" data-astro-cid-2s6z27su>Discussion</span></div><div class="giscus" id="giscus-container" data-astro-cid-2s6z27su></div></div><script type="module">const repo = "tobyweston/blog";
+const repoId = "MDEwOlJlcG9zaXRvcnkzMzUyNTYw";
+const category = "General";
+const categoryId = "DIC_kwDOADMn8M4C3bWR";
+
+    function loadGiscus() {
+      const container = document.getElementById('giscus-container');
+      if (!container) return;
+
+      const script = document.createElement('script');
+      script.src            = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo',              repo);
+      script.setAttribute('data-repo-id',           repoId);
+      script.setAttribute('data-category',          category);
+      script.setAttribute('data-category-id',       categoryId);
+      script.setAttribute('data-mapping',           'pathname');
+      script.setAttribute('data-strict',            '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata',     '0');
+      script.setAttribute('data-input-position',    'top');
+      script.setAttribute('data-theme',             'light');
+      script.setAttribute('data-lang',              'en');
+      script.setAttribute('data-loading',           'lazy');
+      script.crossOrigin    = 'anonymous';
+      script.async          = true;
+      container.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadGiscus);
+    } else {
+      loadGiscus();
+    }
+  </script> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html>
