@@ -221,7 +221,7 @@ def maybe_run_evaluation(draft_path: Path, args: argparse.Namespace, auto: bool)
 
 
 def new_workflow(args: argparse.Namespace) -> None:
-    print_banner("ELITE WRITER")
+    print_banner("👻 Ghostwriter")
     print("This command will guide you through the full writing pipeline:")
     print("  1. create a plan")
     print("  2. pause for plan review")
@@ -308,7 +308,7 @@ def rebuild_index_workflow(args: argparse.Namespace) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Elite Writer CLI: guided plan → draft → revise → evaluate workflow.",
+        description="👻 Ghostwriter CLI: guided plan → draft → revise → evaluate workflow.",
         epilog=(
             "Examples:\n"
             "  python ghostwriter.py new \"Why compliance fails developers\"\n"
