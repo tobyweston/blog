@@ -1,0 +1,33 @@
+---
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  formula: string;
+  block?: boolean;
+}
+
+const { formula, block = true } = Astro.props;
+const rendered = katex.renderToString(formula, {
+  displayMode: block,
+  throwOnError: false,
+  strict: 'ignore',
+});
+---
+
+{block ? <div class="latex" set:html={rendered} /> : <span class="latex" set:html={rendered} />}
+
+<style>
+  .latex :global(.katex-display) {
+    text-align: left;
+    margin: 0.75rem 0;
+    padding: 0.45rem 0.6rem;
+    background-color: rgba(26, 26, 26, 0.04);
+    border: 1px solid rgba(26, 26, 26, 0.08);
+    border-radius: 0.5rem;
+  }
+
+  .latex :global(.katex-display > .katex) {
+    text-align: left;
+  }
+</style>

@@ -13,8 +13,8 @@ topics:
   - "code review, maintainability and governance for generated code"
 ---
 
-import { Image } from 'astro:assets';
 import ImgTag from '../../components/ImgTag.astro';
+import Latex from '../../components/Latex.astro';
 
 import deliverySignalRadarWithLegend from '../images/man-vs-model/delivery_signal_radar_with_legend.png';
 import fviBarChart from '../images/man-vs-model/fvi_bar_chart.png';
@@ -28,7 +28,7 @@ It felt insanely productive. That initial migration I gave up on (moving one pos
 
 Afterward, I was curious if that feeling of productivity was real, and if so, how much faster I was compared to my own historical peaks. So I set out to find out.
 
-> Turns out, with AI assistance I've been ~2.8x more productive than my historical peaks
+> Turns out, with AI assistance I've been **~2.8x more productive than my historical peaks**
 
 Here’s the story.
 
@@ -61,7 +61,7 @@ The historical data was processed to derive a `FeatureValueIndex` (FVI) on four 
 | Reliability/CI (R)       | **10%** | Signals production readiness            |
 
 
-> `FVI = 100 * (0.45 * F) + (0.25 * NC) + (0.20 * NT) + (0.10 * R)`
+> <Latex formula={String.raw`\text{FVI} = 100 \times (0.45 \times F + 0.25 \times NC + 0.20 \times NT + 0.10 \times R)`} />
 
 ...where each component is normalized to the maximum observed across compared repos.
 
@@ -79,7 +79,7 @@ This model measures productivity by sizing initiatives, similar to story points 
 | Operational Hardening (O) | **15%** | Tests, CI, packaging, release readiness |
 | User/Product Impact (U)   | **10%** | Visible value to users                  |
 
-> `FSS = 20 * ((0.30 * N) + (0.25 * D) + (0.20 * B) + (0.15 * O) + (0.10 * U))`
+> <Latex formula={String.raw`\text{FSS} = 20 \times (0.30 \times N + 0.25 \times D + 0.20 \times B + 0.15 \times O + 0.10 \times U)`} />
 
 I then mapped the composite score to a `Feature Point` (FP) size (XS-XXL) to make it more intuitive and to reflect the fact that a new subsystem is much bigger than a minor tweak.
 
@@ -315,56 +315,68 @@ If both increased simultaneously, perhaps the real change is **multiplicative**,
 
 So we define:
 
-``` Delivery Leverage Index (DLI) = Relative_FVI * Relative_FP ```
+<Latex formula={String.raw`\text{Delivery Leverage Index (DLI)} = \text{Relative\_FVI} \times \text{Relative\_FP}`} />
 
 Where:
 
-``` Relative_FVI = FVI_blog / FVI_historical_mean Relative_FP = FP_blog / FP_historical_mean ```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{Relative\_FVI} &= \frac{\text{FVI}_{\text{blog}}}{\text{FVI}_{\text{historical mean}}} \\
+\text{Relative\_FP} &= \frac{\text{FP}_{\text{blog}}}{\text{FP}_{\text{historical mean}}}
+\end{aligned}`}
+/>
 
 
 ### Step 1 — Relative Delivery Signal
 
 From the FVI model:
 
-```
-blog FVI = 88.5
-historical mean ≈ 43.1
-```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{blog FVI} &= 88.5 \\
+\text{historical mean} &\approx 43.1
+\end{aligned}`}
+/>
 
 So:
 
-```
-Relative_FVI = 88.5 / 43.1
-             ≈ 2.05
-```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{Relative\_FVI} &= \frac{88.5}{43.1} \\
+&\approx 2.05
+\end{aligned}`}
+/>
 
 ### Step 2 — Relative Initiative-sizing
 
 From the FSS/FP model::
 
-```
-blog FP = 44
-historical mean = 15.5
-```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{blog\ FP} &= 44 \\
+\text{historical\ mean} &= 15.5
+\end{aligned}`}
+/>
 
 So:
 
-```
-Relative_FP = 44 / 15.5
-            ≈ 2.84
-```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{Relative\_FP} &= \frac{44}{15.5} \\
+&\approx 2.84
+\end{aligned}`}
+/>
 
 ### Step 3 — Delivery Leverage Index
 
 Now combine them.
 
-```
-DLI = 2.05 * 2.84
-```
-
-```
-DLI ≈ 5.82
-```
+<Latex
+  formula={String.raw`\begin{aligned}
+\text{DLI} &= 2.05 \times 2.84 \\
+&\approx 5.82
+\end{aligned}`}
+/>
 
 So the effective productivity leverage becomes:
 
