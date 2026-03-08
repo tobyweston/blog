@@ -437,32 +437,6 @@ So the AI era produced **3–6× more reliability scaffolding**. I think this wa
 This is important because as it might counter the typical criticism **“AI just produces low-quality code faster"**, at least when the polit is actually concerned about testing.
 
 
-## What The Numbers Reveal (and Hide)
-
-What they reveal
-
-- Initiative throughput went up materially. More finished, production‑ready slices in the same wall‑clock time.
-- Breadth is where the model shines. Boilerplate, adapters, and “you already know how this looks” scaffolds arrived quickly.
-- Hardening stayed the multiplier. Tests, CI, reproducible evaluation, and visual diffs converted drafts into delivery.
-
-What they hide
-
-- Quality variance. First drafts were right‑shaped but occasionally wrong‑headed. My review loop collapsed that, but it took time.
-- Brittleness risk. Prompt drift is a thing. Frozen prompts and recorded fixtures mattered more than I expected.
-- Governance overhead. Tracking prompts, evaluation data, and model versions adds operational cost. Worth it, but it’s a cost.
-- Dependency gravity. You inherit changelogs from SDKs, tokenisers, and image libs. Keep them boring and pinned.
-
-What changed in my behaviour
-
-- I wrote tighter briefs and constraints than I would for myself. That paid back twice: faster drafts and clearer tests.
-- I reviewed more, typed less. Review becomes the design surface.
-- I invested earlier in evaluation and fixtures. It felt slow on day two and fast on day ten.
-
-Experience matters
-
-- An experienced engineer plus AI is not equivalent to a junior plus AI.
-- The risk surface is different: you need taste for boundaries, failure modes, and what “clean enough” looks like.
-
 ## Man vs the Model?
 
 Across a month, my AI‑assisted self out‑shipped my historical peaks by ~2.7–2.8x on an initiative‑weighted basis.
@@ -470,16 +444,6 @@ Across a month, my AI‑assisted self out‑shipped my historical peaks by ~2.7�
 That advantage existed because I paired generation with hardening and governance. Without tests, CI, and reproducible evaluation, you get speed without confidence, which is just future work with interest.
 
 It didn’t replace expertise. It amplified it, especially on repeatable patterns and breadth tasks.
-
-## Recommendations
-
-If you want to run the same experiment, consider this:
-
-- Measure at the initiative level. Amplify the things you value, in my case, I weighted rigour/testing at 2x
-- Keep a prompt and fixture repo. Version everything. Treat prompts as code
-- Freeze good prompts and record fixtures the moment a result is “good”
-- Keep a drift budget. When evaluation scores wobble, fix prompts/fixtures first; only then refactor code
-- Don’t count LOC. Track something finished initiatives, FVI
 
 ## Over to you...
 
