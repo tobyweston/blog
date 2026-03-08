@@ -36,6 +36,24 @@ class TestCsvList:
     def test_trims_whitespace(self):
         assert csv_list("  alpha  ,  beta  ") == ["alpha", "beta"]
 
+    # --- list inputs (from nargs='+') ---
+
+    def test_list_of_single_item(self):
+        assert csv_list(["file1.md"]) == ["file1.md"]
+
+    def test_list_of_multiple_items(self):
+        assert csv_list(["file1.md", "file2.md"]) == ["file1.md", "file2.md"]
+
+    def test_empty_list_returns_empty(self):
+        assert csv_list([]) == []
+
+    def test_list_items_can_themselves_be_comma_separated(self):
+        # e.g. user types --research a.md,b.md c.md
+        assert csv_list(["a.md,b.md", "c.md"]) == ["a.md", "b.md", "c.md"]
+
+    def test_list_items_stripped(self):
+        assert csv_list(["  a.md  ", "  b.md  "]) == ["a.md", "b.md"]
+
 
 # ---------------------------------------------------------------------------
 # write_plan

@@ -175,7 +175,7 @@ Plan with research and notes:
 python plan_post.py \
   --topic "Code review as an evidence system" \
   --angle "review is not just collaboration, it is assurance" \
-  --research research/common/dora-notes.md,research/common/control-framework.md \
+  --research research/common/dora-notes.md research/common/control-framework.md \
   --notes-file notes/common/code-review-ideas.md
 ```
 
@@ -210,36 +210,5 @@ less-tutorial
 more-opinionated
 add-framework
 sharpen-argument
-```
-
-
-
-# Example real workflow
-
-## Plan
-
-```shell
-python plan_post.py --topic "Code review as an evidence system"
-```
-
-## Draft
-
-```shell
-python generate_post.py --plan output/plans/2026-03-07-code-review-as-an-evidence-system.plan.md
-```
-
-## Tighten
-
-```shell
-python revise_post.py \
-  --input ../astro/src/content/blog/2026-03-07-code-review-as-an-evidence-system.mdx \
-  --mode tighten
-```
-
-## Evaluate
-
-```shell
-python evaluate_post.py \
-  --input ../astro/src/content/blog/2026-03-07-code-review-as-an-evidence-system.mdx
 ```
 

@@ -115,10 +115,12 @@ def build_plan_args(args: argparse.Namespace) -> list[str]:
         cmd.extend(["--notes", args.notes])
 
     if args.research:
-        cmd.extend(["--research", args.research])
+        cmd.append("--research")
+        cmd.extend(args.research)
 
     if args.notes_file:
-        cmd.extend(["--notes-file", args.notes_file])
+        cmd.append("--notes-file")
+        cmd.extend(args.notes_file)
 
     if args.plan_dry_run:
         cmd.append("--dry-run")
@@ -236,8 +238,8 @@ def new_workflow(args: argparse.Namespace) -> None:
                 f"Topic:   {args.topic}",
                 f"Angle:   {args.angle or '(none)'}",
                 f"Notes:   {args.notes or '(none)'}",
-                f"Research:{' ' + args.research if args.research else ' (auto/common + post-specific only)'}",
-                f"Notes file:{' ' + args.notes_file if args.notes_file else ' (auto/common + post-specific only)'}",
+                f"Research:{' ' + ', '.join(args.research) if args.research else ' (auto/common + post-specific only)'}",
+                f"Notes file:{' ' + ', '.join(args.notes_file) if args.notes_file else ' (auto/common + post-specific only)'}",
             ]
         ),
     )
@@ -329,8 +331,8 @@ def main() -> None:
     new_parser.add_argument("topic", help="The blog topic or working title")
     new_parser.add_argument("--angle", help="Optional angle or thesis")
     new_parser.add_argument("--notes", help="Inline notes for the planner")
-    new_parser.add_argument("--research", help="Comma-separated research file paths")
-    new_parser.add_argument("--notes-file", help="Comma-separated note file paths")
+    new_parser.add_argument("--research", nargs="+", help="Research file paths (space or comma separated)")
+    new_parser.add_argument("--notes-file", nargs="+", help="Note file paths (space or comma separated)")
     new_parser.add_argument("--audience", default="Senior engineers and engineering leaders")
 
     new_parser.add_argument("--plan-model", default="gpt-5-mini", help="Model used for planning")

@@ -24,9 +24,26 @@ def load_style_profile() -> dict[str, Any]:
     return json.loads(STYLE_PROFILE_JSON.read_text(encoding="utf-8"))
 
 
-def csv_list(value: str | None) -> list[str]:
+def csv_list(value: "str | list[str] | None") -> list[str]:
+    """Parse a comma-separated string or a list of strings into a list of paths.
+
+    Accepts:
+    - None or empty → []
+    - A list (from nargs='+') → flattened, comma-split, stripped
+    - A plain string → comma-split, stripped
+
+    This means the CLI accepts both:
+      --research file1.md,file2.md
+      --research file1.md file2.md   (tab-completion friendly)
+    """
     if not value:
         return []
+    if isinstance(value, list):
+        # Each element may itself be comma-separated (e.g. "a.md,b.md" as one token)
+        parts: list[str] = []
+        for item in value:
+            parts.extend(p.strip() for p in item.split(",") if p.strip())
+        return parts
     return [part.strip() for part in value.split(",") if part.strip()]
 
 
@@ -192,8 +209,9 @@ def main() -> None:
             "  2. review output/plans/<generated>.plan.md\n"
             "  3. python generate_post.py --plan output/plans/<generated>.plan.md\n\n"
             "Optional grounding:\n"
-            "  --research research/common/doc.md,research/post/<slug>/doc.md\n"
-            "  --notes-file notes/common/note.md,notes/post/<slug>/note.md"
+            "  --research research/common/doc.md research/post/<slug>/doc.md\n"
+            "  --notes-file notes/common/note.md notes/post/<slug>/note.md\n"
+            "  (comma-separated also accepted: file1.md,file2.md)"
         ),
         formatter_class=argparse.RawTextHelpFormatter,
     )
@@ -202,8 +220,8 @@ def main() -> None:
     parser.add_argument("--notes")
     parser.add_argument("--audience", default=DEFAULT_AUDIENCE)
     parser.add_argument("--model", default=DEFAULT_MODEL)
-    parser.add_argument("--research", help="Comma-separated research file paths to ground the plan",)
-    parser.add_argument("--notes-file", help="Comma-separated note file paths containing rough ideas or story fragments",)
+    parser.add_argument("--research", nargs="+", help="Research file paths to ground the plan (space or comma separated)",)
+    parser.add_argument("--notes-file", nargs="+", help="Note file paths containing rough ideas or story fragments (space or comma separated)",)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 

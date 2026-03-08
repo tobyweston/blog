@@ -84,7 +84,13 @@ python ghostwriter.py new \
 --research research/common/dora-metrics.md
 ```
 
-Multiple files:
+Multiple files (space-separated, tab-completion friendly):
+
+```
+--research file1.md file2.md file3.md
+```
+
+Comma-separated also accepted:
 
 ```
 --research file1.md,file2.md,file3.md
@@ -109,7 +115,13 @@ python ghostwriter.py new \
 --notes-file notes/posts/trust-in-software-delivery/outline.md
 ```
 
-Multiple:
+Multiple (space-separated, tab-completion friendly):
+
+```
+--notes-file file1.md file2.md
+```
+
+Comma-separated also accepted:
 
 ```
 --notes-file file1.md,file2.md
