@@ -20,6 +20,8 @@ import deliverySignalRadarWithLegend from '../images/man-vs-model/delivery_signa
 import fviBarChart from '../images/man-vs-model/fvi_bar_chart.png';
 import fviBoxplotWithBlog from '../images/man-vs-model/fvi_boxplot_with_blog.png';
 import productivitySurfaceEnvelopeChart from '../images/man-vs-model/productivity_surface_envelope_chart.png';
+import featurePointComparison from '../images/man-vs-model/feature_points_comparison.png';
+
 
 Recently, I shipped an AI RAG Ghostwriter system plus CI, unit and visual tests for my blog, oh and migrated from Ruby (Octopress) to Astro static site generators. Something that I gave up doing manually about a year and a half ago. In just a few days elapsed time.
 
@@ -214,6 +216,79 @@ In other words:
 The box-and-whisker plot shows the **distribution of those historical windows**. The AI-assisted window sits above that range, suggesting this wasn’t just a good month — it was outside the productivity band I normally operated in.
 
 </div>
+
+## Initiative-sizing (FSS) Raw Data
+
+While FVI measures delivery signals, the second model measures **initiative magnitude**.
+
+Instead of counting commits or files, the Feature Size model groups work into initiatives and scores their size using the weighted rubric described earlier. Each initiative maps to a **Feature Point (FP)** size ranging from XS to XXL.
+
+<div className={"chart-section"}>
+
+<ImgTag class={"right"} src={featurePointComparison} alt="Feature Points comparison across repositories" width={500} />
+
+<br/>
+
+| Repo                  | Total Feature Points | # Initiatives | Avg FP / Initiative |
+|-----------------------|---------------------:|--------------:|--------------------:|
+| `blog`                | **44**               | 5             | **8.8**             |
+| `radiate`             | 21                   | 4             | 5.3                 |
+| `simple-excel`        | 18                   | 4             | 4.5                 |
+| `tempus-fugit`        | 14                   | 3             | 4.7                 |
+| `temperature-machine` | 9                    | 3             | 3.0                 |
+
+
+</div>
+
+The recent `blog` window totals **44 Feature Points**, compared to a historical average of **15.5**.
+
+
+### Initiative Size Compared to Historical Peaks (FSS)
+
+The following multipliers come from comparing the recent window’s **Feature Point total (44)** against historical reference points from above.
+
+The historical **average** was therefore:
+
+`(21 + 18 + 14 + 9) / 4 = 15.5`
+
+Comparing the recent window:
+
+- vs historical average: **2.84×**
+- vs best historical window (`radiate`): **2.10×**
+
+In other words, the AI-assisted month did not just produce more delivery activity (as measured by FVI). It also produced **significantly larger initiatives**.
+
+This is visible in the initiative breakdown:
+
+| Initiative        | Size        |
+|-------------------|-------------|
+| Ghostwriter       | XXL (13 FP) |
+| RAG retrieval     | XXL (13 FP) |
+| CI/test hardening | XL (8 FP)   |
+| UX improvements   | L (5 FP)    |
+| SEO + analytics   | L (5 FP)    |
+
+Two things stand out. First, the window stacked **two XXL initiatives** in the same month: the Ghostwriter platform and the semantic retrieval architecture. Second, supporting work (tests, CI, and UX) still landed as meaningful initiatives rather than incremental tweaks.
+
+Compare that historically where my peak months tended to focus on **one major capability axis at a time**: API design, UI behavior, packaging, or infrastructure hardening.
+
+This AI-assisted month combined all of them simultaneously:
+
+- new product capability
+- architectural subsystems
+- reliability scaffolding
+- distribution and UX improvements
+
+The result isn't just higher delivery signals (the FVI result earlier) but **larger capability steps shipped in the same period**.
+
+
+
+
+
+
+
+
+[//]: # (<!-- to review -->)
 
 ## Coarse-Grained Product Steps (Qualitative Read)
 
