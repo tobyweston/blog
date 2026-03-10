@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import '../themes/fresh-tailwind/input.css';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_OG_IMAGE } from '../consts';
 import GoogleAnalytics from './GoogleAnalytics.astro';
 
 interface Props {
@@ -16,7 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const title = Astro.props.title || SITE_TITLE;
 const description = Astro.props.description || SITE_DESCRIPTION || '';
 const keywords = Astro.props.keywords || '';
-const image = Astro.props.image || '/images/heroes/java-code.jpg';
+const image = Astro.props.image || SITE_OG_IMAGE;
 ---
 
 <!-- Global Metadata -->
@@ -55,4 +55,3 @@ const image = Astro.props.image || '/images/heroes/java-code.jpg';
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
-

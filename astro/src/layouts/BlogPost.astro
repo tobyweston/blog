@@ -30,7 +30,7 @@ const jsonLd = JSON.stringify({
 });
 ---
 
-<SiteLayout title={title} description={description} keywords={keywords}>
+<SiteLayout title={title} description={description} keywords={keywords} image={heroImage}>
   <script type="application/ld+json" slot="head" is:inline set:html={jsonLd} />
   <div class="py-12">
     <article class="">

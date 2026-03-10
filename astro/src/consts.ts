@@ -4,4 +4,4 @@
 export const SITE_TITLE = 'bad.robot';
 export const SITE_DESCRIPTION = "good robots do what they're told";
 export const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID || '';
-
+export const SITE_OG_IMAGE = '/images/heroes/robot-cane-og.png';
