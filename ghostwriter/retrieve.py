@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -89,10 +90,42 @@ def load_frameworks() -> list[dict[str, Any]]:
 
 
 def load_text_file(path: Path) -> dict[str, Any]:
+    if path.suffix.lower() == ".pdf":
+        try:
+            from pypdf import PdfReader
+        except ImportError as exc:
+            raise ValueError(
+                f"Cannot read PDF '{path}'. Install pypdf (pip install pypdf) or provide .md/.txt instead."
+            ) from exc
+
+        reader = PdfReader(str(path))
+        pages = []
+        for page in reader.pages:
+            text = (page.extract_text() or "").strip()
+            if text:
+                pages.append(text)
+
+        content = "\n\n".join(pages).strip()
+        if not content:
+            raise ValueError(f"PDF '{path}' has no extractable text.")
+
+        return {
+            "path": str(path),
+            "name": path.stem,
+            "content": content,
+        }
+
+    try:
+        content = path.read_text(encoding="utf-8").strip()
+    except UnicodeDecodeError as exc:
+        raise ValueError(
+            f"Cannot decode '{path}' as UTF-8. Use UTF-8 .md/.txt, or pass a PDF file."
+        ) from exc
+
     return {
         "path": str(path),
         "name": path.stem,
-        "content": path.read_text(encoding="utf-8").strip(),
+        "content": content,
     }
 
 
@@ -126,17 +159,26 @@ def gather_candidate_files(
         for raw_path in explicit_paths:
             path = Path(raw_path)
             if path.exists() and path.is_file():
-                files.append(load_text_file(path))
+                try:
+                    files.append(load_text_file(path))
+                except ValueError as exc:
+                    print(f"[warn] Skipping '{path}': {exc}", file=sys.stderr)
         return files
 
     for path in iter_text_files(common_dir):
-        files.append(load_text_file(path))
+        try:
+            files.append(load_text_file(path))
+        except ValueError as exc:
+            print(f"[warn] Skipping '{path}': {exc}", file=sys.stderr)
 
     post_slug = infer_post_slug(topic_or_query)
     if post_slug:
         post_dir = posts_dir / post_slug
         for path in iter_text_files(post_dir):
-            files.append(load_text_file(path))
+            try:
+                files.append(load_text_file(path))
+            except ValueError as exc:
+                print(f"[warn] Skipping '{path}': {exc}", file=sys.stderr)
 
     return files
 
@@ -377,3 +419,4 @@ def pick_notes(
     )
     docs = rehydrate_text_files(hits)
     return docs[:limit]
+

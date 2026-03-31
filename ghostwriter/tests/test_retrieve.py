@@ -105,6 +105,13 @@ class TestLoadTextFile:
         assert result["name"] == "my-research"
         assert "some content" in result["content"]
 
+    def test_raises_value_error_for_non_utf8_text(self, tmp_path):
+        path = tmp_path / "binary.bin"
+        path.write_bytes(b"\xda\x00\x10")
+
+        with pytest.raises(ValueError, match="Cannot decode"):
+            load_text_file(path)
+
 
 # ---------------------------------------------------------------------------
 # iter_text_files
@@ -228,6 +235,20 @@ class TestGatherCandidateFiles:
         )
         assert len(files) == 1
         assert files[0]["name"] == "shared"
+
+    def test_skips_unreadable_explicit_paths(self, tmp_path, capsys):
+        unreadable = tmp_path / "bad.bin"
+        unreadable.write_bytes(b"\xda\x00\x10")
+
+        files = gather_candidate_files(
+            common_dir=tmp_path / "common",
+            posts_dir=tmp_path / "post",
+            explicit_paths=[str(unreadable)],
+        )
+
+        captured = capsys.readouterr()
+        assert files == []
+        assert "Skipping" in captured.err
 
 
 # ---------------------------------------------------------------------------

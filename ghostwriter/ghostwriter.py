@@ -15,6 +15,11 @@ PLAN_RE = re.compile(r"Plan written to:\s*(.+)")
 DRAFT_RE = re.compile(r"Draft written to:\s*(.+)")
 REVISED_RE = re.compile(r"Revised draft written to:\s*(.+)")
 
+DEFAULT_PLAN_MODEL = "gpt-5-mini"
+DEFAULT_DRAFT_MODEL = "gpt-5"
+DEFAULT_REVISION_MODEL = "gpt-5-mini"
+DEFAULT_EVAL_MODEL = "gpt-5-mini"
+
 
 def slugify(text: str) -> str:
     value = text.lower().strip()
@@ -101,11 +106,19 @@ def expected_plan_path(topic: str) -> Path:
     return PLANS_DIR / f"{today}-{slug}.plan.md"
 
 
+def resolve_model(stage_model: str | None, global_model: str | None, default_model: str) -> str:
+    if stage_model:
+        return stage_model
+    if global_model:
+        return global_model
+    return default_model
+
+
 def build_plan_args(args: argparse.Namespace) -> list[str]:
     cmd = [
         "--topic", args.topic,
         "--audience", args.audience,
-        "--model", args.plan_model,
+        "--model", resolve_model(args.plan_model, args.model, DEFAULT_PLAN_MODEL),
     ]
 
     if args.angle:
@@ -131,7 +144,7 @@ def build_plan_args(args: argparse.Namespace) -> list[str]:
 def build_generate_args(plan_path: Path, args: argparse.Namespace) -> list[str]:
     cmd = [
         "--plan", str(plan_path),
-        "--model", args.draft_model,
+        "--model", resolve_model(args.draft_model, args.model, DEFAULT_DRAFT_MODEL),
     ]
 
     if args.draft_dry_run:
@@ -190,7 +203,12 @@ def maybe_run_revision(draft_path: Path, args: argparse.Namespace, auto: bool) -
 
     output = run_python_script(
         "revise_post.py",
-        build_revise_args(draft_path, choice, args.revision_model, in_place=True),
+        build_revise_args(
+            draft_path,
+            choice,
+            resolve_model(args.revision_model, args.model, DEFAULT_REVISION_MODEL),
+            in_place=True,
+        ),
     )
 
     revised_path = parse_output_path(REVISED_RE, output, "revised draft path")
@@ -219,7 +237,10 @@ def maybe_run_evaluation(draft_path: Path, args: argparse.Namespace, auto: bool)
         return
 
     print_step("Running evaluation", f"Draft: {draft_path}")
-    run_python_script("evaluate_post.py", build_evaluate_args(draft_path, args.eval_model))
+    run_python_script(
+        "evaluate_post.py",
+        build_evaluate_args(draft_path, resolve_model(args.eval_model, args.model, DEFAULT_EVAL_MODEL)),
+    )
 
 
 def new_workflow(args: argparse.Namespace) -> None:
@@ -335,10 +356,11 @@ def main() -> None:
     new_parser.add_argument("--notes-file", nargs="+", help="Note file paths (space or comma separated)")
     new_parser.add_argument("--audience", default="Senior engineers and engineering leaders")
 
-    new_parser.add_argument("--plan-model", default="gpt-5-mini", help="Model used for planning")
-    new_parser.add_argument("--draft-model", default="gpt-5", help="Model used for drafting")
-    new_parser.add_argument("--revision-model", default="gpt-5-mini", help="Model used for revision")
-    new_parser.add_argument("--eval-model", default="gpt-5-mini", help="Model used for evaluation")
+    new_parser.add_argument("--model", help="Fallback model for all stages unless a stage-specific model is provided")
+    new_parser.add_argument("--plan-model", help=f"Model used for planning (default: {DEFAULT_PLAN_MODEL})")
+    new_parser.add_argument("--draft-model", help=f"Model used for drafting (default: {DEFAULT_DRAFT_MODEL})")
+    new_parser.add_argument("--revision-model", help=f"Model used for revision (default: {DEFAULT_REVISION_MODEL})")
+    new_parser.add_argument("--eval-model", help=f"Model used for evaluation (default: {DEFAULT_EVAL_MODEL})")
 
     new_parser.add_argument("--plan-dry-run", action="store_true", help="Run planning in dry-run mode only")
     new_parser.add_argument("--draft-dry-run", action="store_true", help="Run drafting in dry-run mode only")
