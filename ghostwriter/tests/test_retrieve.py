@@ -215,13 +215,13 @@ class TestGatherCandidateFiles:
         names = {f["name"] for f in files}
         assert names == {"explicit"}
 
-    def test_skips_missing_explicit_paths(self, tmp_path):
-        files = gather_candidate_files(
-            common_dir=tmp_path / "common",
-            posts_dir=tmp_path / "post",
-            explicit_paths=[str(tmp_path / "missing.md")],
-        )
-        assert files == []
+    def test_raises_for_missing_explicit_paths(self, tmp_path):
+        with pytest.raises(FileNotFoundError, match="Input file not found"):
+            gather_candidate_files(
+                common_dir=tmp_path / "common",
+                posts_dir=tmp_path / "post",
+                explicit_paths=[str(tmp_path / "missing.md")],
+            )
 
     def test_no_post_dir_match_still_returns_common(self, tmp_path):
         common = tmp_path / "common"
@@ -350,10 +350,10 @@ class TestLoadResearchFiles:
         assert len(files) == 1
         assert "Specific content" in files[0]["content"]
 
-    def test_skips_missing_specific_paths(self, tmp_path):
+    def test_raises_for_missing_specific_paths(self, tmp_path):
         missing = str(tmp_path / "does_not_exist.md")
-        files = load_research_files([missing])
-        assert files == []
+        with pytest.raises(FileNotFoundError, match="Input file not found"):
+            load_research_files([missing])
 
 
 class TestLoadNotesFiles:

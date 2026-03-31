@@ -158,11 +158,14 @@ def gather_candidate_files(
     if explicit_paths:
         for raw_path in explicit_paths:
             path = Path(raw_path)
-            if path.exists() and path.is_file():
-                try:
-                    files.append(load_text_file(path))
-                except ValueError as exc:
-                    print(f"[warn] Skipping '{path}': {exc}", file=sys.stderr)
+            if not path.exists():
+                raise FileNotFoundError(f"Input file not found: {path}")
+            if not path.is_file():
+                raise FileNotFoundError(f"Input path is not a file: {path}")
+            try:
+                files.append(load_text_file(path))
+            except ValueError as exc:
+                print(f"[warn] Skipping '{path}': {exc}", file=sys.stderr)
         return files
 
     for path in iter_text_files(common_dir):
@@ -419,4 +422,3 @@ def pick_notes(
     )
     docs = rehydrate_text_files(hits)
     return docs[:limit]
-
