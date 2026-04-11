@@ -6,29 +6,30 @@ heroImage: ""
 pubDate: 2026-04-04
 ---
 
-Last week I had the pleasure of hosting a small, senior‑technical roundtable in London with peers from Morgan Stanley and Kosli, under the umbrella of our FINOS SDLC Common Controls project. Practitioners from Citi, UBS, HSBC, JP Morgan Chase, NatWest, DnB, Nationwide, Aegon and others attended to compare notes on a shared problem - how to elevate SDLC governance as a recognized engineering discipline and common standard to remove toil for our developer teams and smooth the process of audit and regulatory evidencing.
+import { Image } from 'astro:assets';
+import flyer from "../images/control-engineering-flyer.png";
+
+Late March, I had the pleasure of hosting a small, senior‑technical roundtable in London with peers from **Morgan Stanley** and **Kosli**, under the umbrella of our **FINOS SDLC Common Controls project**. Practitioners from **Citi**, **UBS**, **HSBC**, **JP Morgan Chase**, **NatWest**, **DnB**, **Nationwide**, **Aegon** and others attended to compare notes on a shared problem - how to elevate SDLC governance as a recognized engineering discipline and common standard to remove toil for our developer teams and smooth the process of audit and regulatory evidencing.
 
 VIDEO
 
-Across banks, the symptoms look familiar. Governance intent gets conflated, confused and diluted into manual checks, subjective interpretations, and late‑stage friction. Controls that were designed to manage risk instead slow down delivery, frustrate engineers, and leave us exposed to audit. This isn’t because teams don’t care, it’s because governance has largely evolved as poor policy, habitual behavior and ill-fitting processes. Instead we're trying to look at this must more as an engineered system. The emerging term for this is controls engineering.
+Across banks, the symptoms look familiar. Governance intent gets conflated, confused and diluted into manual checks, subjective interpretations, and late‑stage friction. Controls that were designed to manage risk instead slow down delivery, frustrate engineers, and leave us exposed to audit. This isn’t because teams don’t care, it’s because governance has largely evolved as poor policy, habitual behavior and ill-fitting processes. Instead we're trying to look at this must more as an **engineered system**. The emerging term for this is **controls engineering**.
 
 ## Controls Engineering
 
-What emerged clearly in the discussion is that SDLC governance is no longer a process or policy problem. At scale, it becomes a systems problem:
+What emerged clearly in the discussion is that **SDLC governance is no longer a process or policy problem**. At scale, it becomes a _systems_ problem:
 
 * Evidence isn’t something you “collect later”, it needs to be produced continuously at the point in time risks are introduced
 * Controls need to express intent precisely, not rely on human interpretation
 * Risk management and delivery speed are only in tension when controls are manual
 
-This is the lens we refer to as controls engineering. The idea of treating governance mechanisms with the same discipline we apply to production systems. Policy-as-code, versioned, observable, testable, automatable, this list goes on.
+This is the lens we refer to as **controls engineering**. The idea of treating governance mechanisms with the same discipline we apply to production systems. Policy-as-code, versioned, observable, testable, automatable, this list goes on.
 
 That shift sounds obvious, but it’s culturally hard. Much of today’s governance complexity is a product of history: mergers, regulation, organizational boundaries, and earlier technology constraints. You can’t “best practice” your way out of that. You have to design for context.
 
-The OneSDLC+ embodies these principles. In fact, we've condensed this into Seven Core Principles which were shared with the group. 
-
 ## What we Explored Together
 
-What made the session valuable was the openness. Morgan Stanley shared real experiences building compliance into delivery rather than bolting it on afterwards. Kosli grounded the discussion in what automated, evidence‑based SDLC governance looks like in practice. FINOS and our standards project provided the bigger picture: why open standards matter if we want this to scale across the industry. 
+What made the session valuable was the openness. **Morgan Stanley** shared real experiences building compliance into delivery rather than bolting it on afterward. Kosli grounded the discussion in what automated, evidence‑based SDLC governance looks like in practice. FINOS and our standards project provided the bigger picture: why **open standards matter if we want this to scale across the industry**.
 
 The consistent theme was trust. When controls are clear and evidence‑based:
 
@@ -42,7 +43,7 @@ Governance stops being a brake and starts becoming an enabler.
 
 None of this works in isolation. If every bank solves this differently, we recreate the same fragmentation we’re trying to escape. That’s why the FINOS context is crutial. Open standards give us a way to align on what good looks like, while still allowing firms to innovate on how they get there.
 
-For us at Deutsche Bank, hosting this event was less about showcasing solutions and more about convening practitioners who are trying to move the industry forward in a sustainable way. Thanks go to Morgan Stanley and Kosli for helping drive this recognition within industry.
+For us at Deutsche Bank, hosting this event was less about showcasing solutions and more about **convening practitioners** who are trying to move the industry forward in a sustainable way. Thanks go to Morgan Stanley and Kosli for helping drive this recognition within industry.
 
 ## Looking Ahead
 
@@ -50,6 +51,6 @@ This isn’t a finished journey. Treating governance as an engineering disciplin
 
  
 
-The energy in the room made one thing obvious: we’re not alone, there is a real sense of industry coming together with shared goals and insight on a topic which has traditionally languished in the shadows.
+The energy in the room made one thing obvious: **we’re not alone**, there is a **real sense of industry coming together** with shared goals and insight on a topic which has traditionally languished in the shadows.
 
-![](images/controls-engineering-flyer.png)
+<Image src={flyer} alt="flyer" />
