@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.18.1"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-1PVLDLDJQN"></script><script>(function(){const gaId = "G-1PVLDLDJQN";
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    })();</script><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/blog/2020-02-01-engineering-culture/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Establishing an Engineering Culture</title><meta name="title" content="Establishing an Engineering Culture"><meta name="description" content="How trust, voice, and autonomy shape engineering culture, with practical levers drawn from Westrum, DORA, and Deming."><meta name="keywords" content="engineering culture, trust, voice, autonomy, DORA, Westrum, Deming"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/blog/2020-02-01-engineering-culture/"><meta property="og:title" content="Establishing an Engineering Culture"><meta property="og:description" content="How trust, voice, and autonomy shape engineering culture, with practical levers drawn from Westrum, DORA, and Deming."><meta property="og:image" content="https://baddotrobot.com/images/heroes/trust-voice-autonomy.svg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/blog/2020-02-01-engineering-culture/"><meta property="twitter:title" content="Establishing an Engineering Culture"><meta property="twitter:description" content="How trust, voice, and autonomy shape engineering culture, with practical levers drawn from Westrum, DORA, and Deming."><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/trust-voice-autonomy.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Establishing an Engineering Culture","description":"How trust, voice, and autonomy shape engineering culture, with practical levers drawn from Westrum, DORA, and Deming.","datePublished":"2020-02-01T00:00:00.000Z","image":"https://baddotrobot.com/images/heroes/trust-voice-autonomy.svg","url":"https://baddotrobot.com/blog/2020-02-01-engineering-culture/","author":{"@type":"Person","name":"Toby Weston","url":"https://baddotrobot.com"},"publisher":{"@type":"Person","name":"bad.robot"}}</script><link rel="stylesheet" href="/_astro/index.BK8cr6X-.css">
+<style>.giscus-wrapper[data-astro-cid-2s6z27su]{margin-top:3rem;padding-top:0}.giscus-divider[data-astro-cid-2s6z27su]{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}.giscus-divider[data-astro-cid-2s6z27su]:before,.giscus-divider[data-astro-cid-2s6z27su]:after{content:"";flex:1;height:1px;background:var(--border)}.giscus-divider-label[data-astro-cid-2s6z27su]{text-transform:uppercase;letter-spacing:.2em;color:var(--accent);font-size:.75rem;font-weight:600;white-space:nowrap}.giscus[data-astro-cid-2s6z27su],.giscus-frame[data-astro-cid-2s6z27su]{width:100%}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.rQMPVdh2.css"><style>img[data-astro-cid-hgbazjtb]{max-width:100%;height:auto}img[data-astro-cid-hgbazjtb].right{float:right;margin:0 0 1.5rem 1.5rem;max-width:50%}img[data-astro-cid-hgbazjtb].left{float:left;margin:0 1.5rem 1.5rem 0;max-width:50%}img[data-astro-cid-hgbazjtb].center{display:block;margin:1.5rem auto}img[data-astro-cid-hgbazjtb].half{max-width:48%}@media(max-width:768px){img[data-astro-cid-hgbazjtb].right,img[data-astro-cid-hgbazjtb].left{float:none;display:block;margin:1.5rem auto;max-width:100%}}
+</style><style>.pullquote[data-astro-cid-piptdfao]{margin:2rem 0;padding:0;border:none;font-size:1.1em;line-height:1.6;background:linear-gradient(135deg,#2337ff0a,#2337ff05);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:2rem 2rem 2rem 2.5rem;position:relative;--quote-mark-size: 3.5rem;--quote-mark-gap: 1rem}.pullquote-content[data-astro-cid-piptdfao]{position:relative;display:flex;align-items:center;justify-content:center}.quote-mark[data-astro-cid-piptdfao]{font-size:var(--quote-mark-size);line-height:1;color:var(--accent);opacity:.25;flex-shrink:0;font-weight:700;font-family:Georgia,serif}.quote-mark-open[data-astro-cid-piptdfao]{order:-1;margin-right:var(--quote-mark-gap);align-self:flex-start}.quote-mark-close[data-astro-cid-piptdfao]{order:1;margin-left:var(--quote-mark-gap);align-self:flex-end}.pullquote-text[data-astro-cid-piptdfao]{margin:0;color:rgb(var(--gray-dark));font-style:italic;font-weight:500;flex:1;font-size:1.1em}.pullquote-text[data-astro-cid-piptdfao] p{margin:0}.pullquote-footer[data-astro-cid-piptdfao]{display:flex;align-items:center;gap:.5rem;margin-top:1.25rem;font-size:.875em;color:rgb(var(--gray));font-style:normal;font-weight:400;margin-left:calc(var(--quote-mark-size) + var(--quote-mark-gap));margin-right:calc(var(--quote-mark-size) + var(--quote-mark-gap));justify-content:flex-end;text-align:right}.pullquote-author[data-astro-cid-piptdfao]{font-weight:600;color:rgb(var(--gray-dark))}.pullquote-separator[data-astro-cid-piptdfao],.pullquote-company[data-astro-cid-piptdfao]{color:rgb(var(--gray))}@media(max-width:720px){.pullquote[data-astro-cid-piptdfao]{padding:1.5rem 1.5rem 1.5rem 2rem;border-left-width:3px;--quote-mark-size: 2.5rem;--quote-mark-gap: 0}.pullquote-content[data-astro-cid-piptdfao]{flex-wrap:wrap}.quote-mark[data-astro-cid-piptdfao]{font-size:2.5rem;margin-right:0;margin-left:0}.pullquote-text[data-astro-cid-piptdfao]{flex-basis:100%;order:1}.quote-mark-open[data-astro-cid-piptdfao]{order:0;align-self:flex-start;margin-bottom:.5rem}.quote-mark-close[data-astro-cid-piptdfao]{order:2;align-self:flex-end;margin-top:.5rem}.pullquote-footer[data-astro-cid-piptdfao]{margin-left:0;margin-right:0;justify-content:flex-end;text-align:right}}
+</style></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">   <div class="py-12"> <article class=""> <!--{heroImage && (--> <!--  <div class="hero-image mb-8">--> <!--    <img src={heroImage} alt={title} class="w-full h-auto rounded-lg shadow-lg" />--> <!--  </div>--> <!--)}--> <div class="article-title-section mb-8"> <p class="detail-kicker">Blog</p> <h1 class="article-title-section h1">Establishing an Engineering Culture</h1> <p class="article-subtitle">Using trust, voice, and autonomy to build generative teams</p> <p class="article-description">How trust, voice, and autonomy shape engineering culture, with practical levers drawn from Westrum, DORA, and Deming.</p> </div> <div class="article-meta"> <div class="article-date"> <strong>Published:</strong> <time datetime="2020-02-01T00:00:00.000Z"> Feb 1, 2020 </time> </div>  </div> <div class="prose">  <p>Establishing an Engineering Culture at DB means two things to me, a) changing the existing culture to b) allow an engineering focused culture to emerge.</p>
+<p>Changing culture is hard but there’s a lot of industry and academic research on the subject. It may seem obvious but I was surprised to learn that the way to change culture is “not to first change how people think, but instead to start by changing how people behave - what they do” (John Shook reflecting on General Motors / Toyota cultural reinvention). Additional research correlates a lot of lean practices to positive cultural change as outcomes. The implication is that if we <strong>eliminate waste, reduce inventory</strong> and follow continuous improvement, a move towards a more generative culture will follow. This seems easier than I thought, just follow the agile manifesto no?</p>
+<blockquote class="pullquote" data-astro-cid-piptdfao> <div class="pullquote-content" data-astro-cid-piptdfao> <span class="quote-mark quote-mark-open" aria-hidden="true" data-astro-cid-piptdfao>“</span> <div class="pullquote-text" data-astro-cid-piptdfao> <p>What my NUMMI experience taught me that was so powerful was that the way to change culture is not to first change how people think, but instead to start by changing how people behave — what they do.</p> </div> <span class="quote-mark quote-mark-close" aria-hidden="true" data-astro-cid-piptdfao>”</span> </div> <footer class="pullquote-footer" data-astro-cid-piptdfao> <span class="pullquote-author" data-astro-cid-piptdfao>John Shook </span> <span class="pullquote-separator" data-astro-cid-piptdfao>—</span> <span class="pullquote-company" data-astro-cid-piptdfao>2010, How to Change a Culture: Lessons from NUMMI</span> </footer> </blockquote> 
+<h2 id="westrums-organisational-cultural-topology">Westrum’s Organisational Cultural Topology</h2>
+<p>Ron Westrum defined a useful model to define organisation cultures. His research focused information flows within organisations as a predictive measure of software development performance. Good culture is predictive of good outcomes. Accelerate supports these ideas and bolsters them with concrete practices that are again, predictive of good outcomes.</p>
+<p>Based on <a href="https://qualitysafety.bmj.com/content/13/suppl_2/ii22.short">his model</a> below, what do you think our culture looks like now?</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Pathological Culture</th><th>Bureaucratic Culture</th><th>Generative Culture *</th></tr></thead><tbody><tr><td><strong>Power oriented</strong></td><td><strong>Rule oriented</strong></td><td><strong>Performance oriented</strong></td></tr><tr><td>Low co-operation</td><td>Modest co-operation</td><td>High co-operation</td></tr><tr><td>Messengers “shot”</td><td>Messengers neglected</td><td>Messengers trained</td></tr><tr><td>Responsibilities shirked</td><td>Narrow responsibilities</td><td>Risks are shared</td></tr><tr><td>Bridging discouraged</td><td>Bridging tolerated</td><td>Bridging encouraged</td></tr><tr><td>Failures lead to scapegoating</td><td>Failure leads to justice</td><td>Failures lead to inquiry</td></tr><tr><td>Novelty (innovation) crushed</td><td>Novelty leads to problems</td><td>Novelty implemented (valued)</td></tr></tbody></table>
+<p>^ Westrum’s topology of organisational cultures</p>
+<ul>
+<li>In generative cultures, leaders place emphasis on accomplishing organisational goals and outcomes, rather than on personal gain or rules (typical to performance-oriented cultures)</li>
+</ul>
+<h2 id="focus-on-practices-and-measurements">Focus on Practices and Measurements</h2>
+<p>Shook and DevOps Research and Assessment (DORA) group’s research agree that simple steps to encourage the (non-bold) characteristics in the generative column can lead to cultural change. For example, encouraging bridging is about breaking down silos through physical co-location, cross-functional teams (negating Conway’s Law) and networking. Bringing in XP practices can lead to high co-operation, lean principles lead to a performance oriented focus and so on.</p>
+<p>I really liked Westrum’s views on how to measure cultural change, he points out that it is a <strong>perceptive measure</strong> and so questionnaires are the best mechanism by which to measure. We can use this when experimenting to measure the success of any initiative we try (another lean principle). He suggests the following survey (scored 1-7 when aggregating to give a quantitative result).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Statement</th><th>Strongly Disagree</th><th>Disagree</th><th>Somewhat Disagree</th><th>Neither Agree nor Disagree</th><th>Somewhat Agree</th><th>Agree</th><th>Strongly Agree</th></tr></thead><tbody><tr><td>On my team, information is actively sought</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Messengers are not punished when they deliver news of failures or other bad news</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>On my team, responsibilities are shared</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>On my team, cross-functional collaboration is encouraged and rewarded</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>On my team, failure causes inquiry</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>On my team, new ideas are welcomed</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<h2 id="the-big-3-levers">The Big 3 Levers</h2>
+<p>I think particularly relevant to our firm, three cultural capabilities seem to affect culture more significantly than others. As levers, DORA assert that the following have been shown to drive organisational culture.</p>
+<img src="/images/heroes/trust-voice-autonomy.svg" class="center" width="700" height="368" title="The Big 3 Levers: Trust → Voice → Autonomy" alt="Diagram showing Trust leads to Voice, which leads to Autonomy" loading="lazy" data-astro-cid-hgbazjtb>
+<p>They feel intuitive. That trust can neutralize a fear culture, that voice empowers individuals and validates self-worth and autonomy promotes initiative (doing the right thing without being told) and innovation. All of them feed into the generative capabilities of Westrum’s topology and should in my view, be our focus.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Desired Outcome</th><th>Antithesis</th><th>Discussion and examples</th></tr></thead><tbody><tr><td>Autonomy</td><td>Command and control</td><td>Deming’s work supports the need for autonomy and purpose - the two go hand in hand. Leaders are in a position to affect this straight away by how they behave. In autonomous teams, leaders demonstrate the fulcrums below</td></tr><tr><td>Trust</td><td>Fear</td><td>As an industry, investment banking does not have the public’s trust - this manifests as a deeply ingrained fear culture in the majority of banks. I think it stems from the horror stories (like our involvement in CDO market) and the power over entire economies the big institutions hold. It’s evidenced by the need to regulate.<br/><br/>Misconceptions around governance, driven by misunderstanding regulation or audit interpretation can also contribute to a feature culture.</td></tr><tr><td>Voice</td><td>Not listening</td><td>The measure of how strongly individuals and teams feel about their ability to speak up both with bad news, during conflict and with positive suggestions on improvement. For me, this is really about how much people feel they are heard. Nobody likes to feel marginalised and feeling like you are contributing ideas and suggestions has a huge affect on morale or worth.<br/><br/>This is driven by autonomy and trust.</td></tr></tbody></table>
+<h3 id="autonomy-fulcrums">Autonomy Fulcrums</h3>
+<p>To encourage autonopmy, you should communicate goals or outcomes and let teams decide how to achieve them.</p>
+<p>Allow teams to prioritise good outcomes for the customer, even if it means bending the “rules”. For example, teams should decide if if they should use centrally provided infra like Teamcity and BitBucket or host their own. Teams should be able to self-attest source code reviews are taking place instead of mandating central tooling (the example being if the central solution inhibits trunk based development by enforcing pull requests as the only option. Forcing language choice, frameworks, libraries (just don’t do this).</p>
+<p>Eliminate all targets (Deming’s point 10) and by implication measures (like code commit statistics). These kind of measures are powerful tools in internal reflection and improvement (i.e. at the team level) but do not scale well to the enterprise unless done so very carefully.</p>
+<h3 id="trust-fulcrums">Trust Fulcrums</h3>
+<p>Encouraging inquiry, trusting dev teams to self attest that they can demonstrate regulation having shown they actually understand it (stopping the dogma). Give problems to the experts. Put another way, delegate the problems to the teams in the trenches and trust them.</p>
+<p>Deming’s point 8 (drive out fear) and associated material (you’ll have to do some of your own reading here to find specific examples / techniques).</p>
+<p>Encourage “messengers” (never “shoot the messenger”), favor postmortems, retrospectives and continuous improvement over blame. Share risks.</p>
+<h2 id="whats-next">What’s next</h2>
+<p>How else can we affect these levers and what impact can they have to the generative culture characteristics above? You tell me in the comments below.</p>
+<p>Further Reading</p>
+<ul>
+<li><a href="http://services.google.com/fh/files/misc/dora_research_program.pdf">Summary of DORA research</a></li>
+<li><a href="https://qualitysafety.bmj.com/content/13/suppl_2/ii22">Westrum’s 2004 research</a></li>
+<li><a href="https://cloud.google.com/solutions/devops/devops-culture-westrum-organizational-culture">Google Cloud / DevOps compendium (cultural change section)</a></li>
+<li><a href="https://cloud.google.com/solutions/devops/devops-culture-transform">How to transform (DevOps culture) inc PDCA</a></li>
+</ul>  </div> <div class="giscus-wrapper" data-astro-cid-2s6z27su><div class="giscus-divider" data-astro-cid-2s6z27su><span class="giscus-divider-label" data-astro-cid-2s6z27su>Discussion</span></div><div class="giscus" id="giscus-container" data-astro-cid-2s6z27su></div></div><script type="module">const repo = "tobyweston/blog";
+const repoId = "MDEwOlJlcG9zaXRvcnkzMzUyNTYw";
+const category = "General";
+const categoryId = "DIC_kwDOADMn8M4C3bWR";
+
+    function loadGiscus() {
+      const container = document.getElementById('giscus-container');
+      if (!container) return;
+
+      const script = document.createElement('script');
+      script.src            = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo',              repo);
+      script.setAttribute('data-repo-id',           repoId);
+      script.setAttribute('data-category',          category);
+      script.setAttribute('data-category-id',       categoryId);
+      script.setAttribute('data-mapping',           'pathname');
+      script.setAttribute('data-strict',            '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata',     '0');
+      script.setAttribute('data-input-position',    'top');
+      script.setAttribute('data-theme',             'light');
+      script.setAttribute('data-lang',              'en');
+      script.setAttribute('data-loading',           'lazy');
+      script.crossOrigin    = 'anonymous';
+      script.async          = true;
+      container.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadGiscus);
+    } else {
+      loadGiscus();
+    }
+  </script> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html>

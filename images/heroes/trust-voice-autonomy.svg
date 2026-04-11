@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Trust, Voice, and Autonomy</title>
+  <desc id="desc">A left-to-right diagram showing Trust leads to Voice, and Voice leads to Autonomy.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="10" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#cbd5e1" />
+    </marker>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <text x="600" y="90" text-anchor="middle" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700">
+    Engineering Culture Levers
+  </text>
+
+  <line x1="300" y1="320" x2="520" y2="320" stroke="#cbd5e1" stroke-width="8"  />
+  <line x1="680" y1="320" x2="900" y2="320" stroke="#cbd5e1" stroke-width="8" />
+
+  <g>
+    <circle cx="220" cy="320" r="110" fill="#1d4ed8" stroke="#93c5fd" stroke-width="6" />
+    <text x="220" y="330" text-anchor="middle" fill="#eff6ff" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700">Trust</text>
+    <text x="220" y="470" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="24">Build psychological safety</text>
+  </g>
+
+  <g>
+    <circle cx="600" cy="320" r="110" fill="#7c3aed" stroke="#c4b5fd" stroke-width="6" />
+    <text x="600" y="330" text-anchor="middle" fill="#faf5ff" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="700">Voice</text>
+    <text x="600" y="470" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="24">Encourage ideas and candor</text>
+  </g>
+
+  <g>
+    <circle cx="980" cy="320" r="110" fill="#059669" stroke="#6ee7b7" stroke-width="6" />
+    <text x="980" y="330" text-anchor="middle" fill="#ecfdf5" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="700">Autonomy</text>
+    <text x="980" y="470" text-anchor="middle" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="24">Enable ownership and action</text>
+  </g>
+
+</svg>
+
