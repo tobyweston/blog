@@ -1,0 +1,199 @@
+name: Post Code Reviews for PRs 20 and 21
+
+on:
+  push:
+    branches:
+      - copilot/review-pull-requests-20-21
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (print reviews but do not post)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  pull-requests: write
+
+jobs:
+  review-pr-20:
+    name: Review PR #20 — Jekyll to Astro migration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post review on PR #20
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+        run: |
+          REVIEW_BODY=$(cat <<'REVIEW'
+          ## Code Review: Replace Jekyll liquid syntax with Astro components
+
+          Thanks for this PR — it successfully replaces all 18 Jekyll liquid syntax occurrences across 10 blog posts with clean Astro components. The build should now work correctly. A few things worth addressing before merging:
+
+          ---
+
+          ### 🔴 Duplicate PullQuote component
+
+          There's already a more capable `Pullquote.astro` in `src/components/ui/` with `quote`, `author`, and `company` props. This PR creates a new slot-based `PullQuote.astro` directly in `src/components/`, resulting in two components doing the same thing with different APIs.
+
+          More importantly, `pull-requests-and-trust.mdx` in `master` already uses the prop-based `Pullquote` with proper attribution for Kief Morris/ThoughtWorks. This PR's diff would downgrade that file and **lose the author attribution**.
+
+          **Suggestion:** Either remove the new `PullQuote.astro` and use the existing `src/components/ui/Pullquote.astro` throughout, or add `<slot>` support to the existing component so both usage styles work. Don't modify `pull-requests-and-trust.mdx` since it already has the correct implementation.
+
+          ---
+
+          ### 🟡 Components should live in `src/components/ui/`
+
+          The new `PullQuote.astro`, `BlockQuote.astro`, and `Gallery.astro` are placed directly in `src/components/`, while the existing reusable UI components (`Pullquote.astro`, `SiteLayout.astro`, etc.) all live in `src/components/ui/`. This breaks the organisational consistency.
+
+          **Suggestion:** Move these to `src/components/ui/` and update the import paths in the MDX files accordingly.
+
+          ---
+
+          ### 🟡 Unrelated `package-lock.json` changes
+
+          The diff adds `"peer": true` to 8+ entries in `package-lock.json`. These appear to be an npm version artifact and are unrelated to this PR's purpose.
+
+          **Suggestion:** Revert `package-lock.json` to the base branch version to keep this PR focused.
+
+          ---
+
+          ### 🟡 Alt text duplication in Gallery usage
+
+          In `less-is-more.mdx` and `performance-monitoring-part-1.mdx`, the `alt` attribute and `<figcaption>` contain identical text, e.g.:
+          ```astro
+          <figure><Image src={img64} alt="-Xmx 64m" /><figcaption>-Xmx 64m</figcaption></figure>
+          ```
+          Screen readers may announce this content twice. Consider making the figcaption text more descriptive than the alt text, or adding `aria-hidden="true"` to the figcaption when it's identical to the alt.
+
+          ---
+
+          ### ✅ Good things
+
+          - `BlockQuote.astro` with `<figure>`/`<blockquote>`/`<figcaption>` is semantically correct and the optional `url` prop for linking attribution is a nice addition.
+          - Correctly removes the `{% assign braces %}` workaround — literal `{{` in MDX fenced code blocks doesn't need escaping.
+          - The removed dangling `![](git-request-pull.png)` reference was a clean fix.
+          - Gallery responsive CSS grid with `auto-fit, minmax(200px, 1fr)` is a solid implementation.
+
+          ---
+
+          **Note on merge order:** This PR renames 6 `.md` files to `.mdx`. PR #21 modifies several of these same files with `.md` extensions. This PR should merge before PR #21 to avoid conflicts.
+          REVIEW
+          )
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "=== DRY RUN: Would post the following review to PR #20 ==="
+            echo "$REVIEW_BODY"
+          else
+            gh pr review 20 \
+              --repo tobyweston/blog \
+              --comment \
+              --body "$REVIEW_BODY"
+          fi
+
+  review-pr-21:
+    name: Review PR #21 — SEO and category optimization
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post review on PR #21
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+        run: |
+          REVIEW_BODY=$(cat <<'REVIEW'
+          ## Code Review: [WIP] Update blog posts for SEO and category optimization
+
+          This is a comprehensive and well-structured SEO overhaul. The improved descriptions are noticeably better — more actionable and accurate. The infrastructure additions (`robots.txt`, `llms.txt`, Schema.org JSON-LD, RSS autodiscovery) are solid Astro-idiomatic improvements.
+
+          Since this is a draft PR, the comments below are for when it's marked ready for review.
+
+          ---
+
+          ### 🔴 Merge conflicts with PR #20
+
+          PR #20 renames 6 `.md` files to `.mdx` (including `less-is-more`, `swtbot-vs-window-licker`, `performance-monitoring-part-1`, `objectives`, `reflecting-on-interviewing-mistakes`, and `oauth-and-http-part-iii`). This PR modifies those files still using the `.md` paths.
+
+          Additionally, `2009-03-15-swtbot-vs-window-licker.md` in this PR's diff still contains the unresolved `{% photo %}` Jekyll syntax — PR #20 was supposed to handle that.
+
+          **Suggestion:** Rebase this PR on top of PR #20 once that merges. Apply the updated front matter (keywords/description/categories) from this PR to the `.mdx` versions of those files.
+
+          ---
+
+          ### 🔴 JSON-LD publisher type is incorrect
+
+          In `BlogPost.astro`, the structured data has:
+          ```js
+          "publisher": {
+            "@type": "Person",   // should be "Organization" for a publication
+            "name": "bad.robot"  // this is the blog name, not a person's name
+          }
+          ```
+
+          `"bad.robot"` is the blog's brand, not a person. Per Schema.org, `publisher` should be `"@type": "Organization"`. The `author` already correctly identifies Toby Weston as a `Person`.
+
+          **Suggestion:**
+          ```js
+          "publisher": {
+            "@type": "Organization",
+            "name": "bad.robot",
+            "url": "https://baddotrobot.com"
+          }
+          ```
+          Also consider using the `SITE_TITLE` constant rather than hardcoding `"bad.robot"`.
+
+          ---
+
+          ### 🟡 Blog posts should use `og:type = "article"`
+
+          `BaseHead.astro` sets `og:type` to `"website"` globally. For individual blog posts, `og:type` should be `"article"` to enable richer social sharing (publication date, author, etc. from Open Graph article properties).
+
+          The good news: this PR adds `slot="head"` to `SiteLayout.astro`, enabling exactly this kind of override from `BlogPost.astro`.
+
+          **Suggestion:** Add to `BlogPost.astro`:
+          ```astro
+          <meta property="og:type" content="article" slot="head" />
+          <meta property="article:published_time" content={pubDate?.toISOString()} slot="head" />
+          ```
+
+          ---
+
+          ### 🟡 `FacebookBot` disallow will break Facebook link previews
+
+          `FacebookBot` is used by Facebook/Instagram to generate link preview cards when someone shares a URL. Disallowing it means blog post links shared on social media won't show proper titles, descriptions, or preview images — which is counterproductive for an SEO-optimised site.
+
+          **Suggestion:** Remove `FacebookBot` from the disallow list. Facebook's crawler is not primarily used for AI training.
+
+          ---
+
+          ### 🟡 Some useful category specificity is lost
+
+          The new taxonomy is cleaner overall, but a few changes lose useful information:
+          - `'java performance'` → `'java'` for performance monitoring posts — `performance` could be a useful standalone category given several posts cover this
+          - `'java object-oriented tempus-fugit recipes'` → `'java concurrency'` — `tempus-fugit` was useful for finding library-specific posts
+          - `'java concurrency testing'` → `'concurrency testing'` — dropping `java` when the subject is specifically Java concurrency seems inconsistent
+
+          **Suggestion:** Consider whether `performance` and/or `tempus-fugit` should be included in the taxonomy.
+
+          ---
+
+          ### ✅ Good things
+
+          - **Conditional keywords tag** `{keywords && <meta ... />}` — empty keywords meta tags are wasteful, this is a good fix.
+          - **`robots.txt` AI bot exclusions** — blocking AI training crawlers (GPTBot, CCBot, anthropic-ai, Claude-Web) while allowing RAG indexers (PerplexityBot, YouBot) is a sensible and well-considered distinction.
+          - **`llms.txt`** — forward-looking addition based on the community proposal; well-structured content.
+          - **Schema.org JSON-LD** in `BlogPost.astro` is well-implemented and should improve rich search snippets.
+          - **RSS autodiscovery link** `<link rel="alternate" type="application/rss+xml" ...>` — enables browser RSS autodiscovery, good addition.
+          - **`og:site_name`** in `BaseHead.astro` — clean addition that improves social sharing.
+          - **`max-image-preview:large`** in robots meta — good SEO practice, enables large image previews in Google Search.
+          REVIEW
+          )
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "=== DRY RUN: Would post the following review to PR #21 ==="
+            echo "$REVIEW_BODY"
+          else
+            gh pr review 21 \
+              --repo tobyweston/blog \
+              --comment \
+              --body "$REVIEW_BODY"
+          fi
