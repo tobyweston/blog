@@ -9,6 +9,8 @@ keywords: "attestations, evidence, provenance, controls engineering, software su
 ---
 
 import ExampleCallout from '../../components/ui/ExampleCallout.astro';
+import { Image } from 'astro:assets';
+import attestationAndCakesSummary from '../images/attestation_and_cakes_summary.png';
 
 To manage risk, first line teams will typically have to prove a control was applied (and presumably protected us from some risk). It's common that an auditor would ask for "evidence" and for the most part, they will look in some sort of compliance database (aka Compliance System of Record) for that evidence. More often than not, that's ServiceNow.
 
@@ -74,12 +76,7 @@ A written statement of compliance showing the list of ingredients and the list o
 
 **Attestations** record what happened. **Policy** defines what should have happened. **Evaluation** compares the two. **Evidence** is the durable record of that comparison, its really a side effect. It has the inputs, the versioned policy and the result, bound to a specific artifact and point in time.
 
-```mermaid
-flowchart LR
-  A[Attestations<br/>what happened] --> E[Evaluation]
-  P[Policy<br/>what should happen] --> E
-  E --> V[Evidence<br/>replayable record]
-```
+<Image src={attestationAndCakesSummary} alt="Diagram summarising attestations, policy, evaluation and evidence using the bakery example: ingredients (attestations) and allergen-free rules (policy) feed a testing laboratory (evaluation), producing a nut-free certificate (evidence)." />
 
 Which brings us back to the auditor and the compliance database. The problem was never that there's too little evidence, it's that what's there arrives with no account of how it was produced. A ticket stub, not CCTV.
 
