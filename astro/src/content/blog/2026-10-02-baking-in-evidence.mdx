@@ -221,15 +221,15 @@ If we run the same control over a batch where the oven drifted to 210°C, we'd f
 
 The expression at step `2` was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
 
-Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different than the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
+Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different from the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
 
 ## Advantages
 
-**One format, _n_ controls**. Auditor learn the evidence format once and the bar is forever high. This dramatically changes the tone of conversation with audit.
+**One format, _n_ controls**. Auditor learn the evidence format once. This dramatically changes the tone of conversation with audit.
 
 **Anyone can check it**. The inputs and policy are both hashed, so a third party can take the same facts, run the same rule and see whether they get the same answer. That's a much stronger position than "trust the tool that closed the control".
 
-**The rule is on the page**. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed. Today that rarely happens because the rules are buried in a tool or in someones memory.
+**The rule is on the page**. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed. Today that rarely happens because the rules are buried in a tool or in someone's memory.
 
 **It works as a fitness function**. You cannot produce this document from a screenshot. You cannot produce it if the thing collecting the evidence also decides the outcome. Adopting the format forces controls towards declarative, opinionless attestations and external evaluation. Mandating the output shape turns out to be a more effective lever than mandating the architecture.
 
@@ -237,9 +237,11 @@ Notice that the evidence itself is versioned and independently verifiable. Every
 
 ## You Still Need Trust
 
-This does have limits though. It doesn't make an attestation **trustworthy**. Ensuring that the provenance and guarneteeing that attestations are made form trusted authorities is still a responsbility of the system in which the controls operate. For example, allowing a development team to make attestations invites the question of "can we trust them?" where as running from a centralised secure pipeline may give more confidence. Digitial signatures, minimizing trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
+It comes with caveats though. It doesn't automatically make an attestation **trustworthy**.
 
-Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to enforce a consequence. This is the difference between a Policy Decision Point (PDP) and a Policy Enforcement Point (PEP).
+Guaranteeing that attestations are made form trusted authorities is still a responsibility of the system in which the controls operate. For example, allowing a development teams to make their own attestations invites the question of "can we trust them?". Whereas running from a centralised secure pipeline may give more confidence. Digitial signatures, minimizing trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
+
+Decisions and enforcement are still separate jobs. OPA can say whether the artifact satisfies the policy. Something else has to enforce a consequence. This is the difference between a Policy Decision Point (PDP) and a Policy Enforcement Point (PEP).
 
 ## Where to Start
 
@@ -247,6 +249,6 @@ Pick one control. Write down the facts it consumes and where each one comes from
 
 Then refuse to accept a different shape for the next control.
 
-The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once and every control you move onto it makes the next conversation with audit shorter rather than longer.
+The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once and every control you move onto it makes the next conversation with audit easier.
 
-Get that right and nobody argues about the output any more, because anyone can replay the decision and get the same answer. Audit the *system*, not the output.
+Get that right and there's less debate and you can all focus on the things that mater - actually reducing risk. Audit the *system*, not the output.
