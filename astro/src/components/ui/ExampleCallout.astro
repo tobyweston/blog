@@ -12,7 +12,13 @@ interface Props {
 	variant?: Variant;
 	label?: string;
 	mascot?: boolean;
+	/** Image shown in the corner medallion (an imported asset). */
+	mascotSrc?: ImageMetadata;
 	mascotAlt?: string;
+	/** object-position for the medallion crop, e.g. '50% 15%'. */
+	mascotPosition?: string;
+	/** Scale the artwork inside the medallion. >1 crops in tighter. */
+	mascotZoom?: number;
 	class?: string;
 }
 
@@ -20,7 +26,10 @@ const {
 	variant = 'blue',
 	label,
 	mascot = true,
+	mascotSrc,
 	mascotAlt,
+	mascotPosition,
+	mascotZoom,
 	class: className,
 } = Astro.props;
 ---
@@ -34,7 +43,7 @@ const {
 	</div>
 	{mascot && (
 		<div class="example-callout-mascot" aria-hidden={mascotAlt ? undefined : 'true'}>
-			<ChefMascot title={mascotAlt} />
+			<ChefMascot src={mascotSrc} alt={mascotAlt} position={mascotPosition} zoom={mascotZoom} />
 		</div>
 	)}
 </aside>
@@ -81,17 +90,19 @@ const {
 
 	.example-callout-mascot {
 		position: absolute;
-		right: 1rem;
-		bottom: -0.75rem;
+		right: 1.25rem;
+		/* centred on the callout rather than hung off the bottom edge */
+		top: 50%;
+		transform: translateY(-50%);
 		width: 5.5rem;
-		height: 5.5rem;
-		filter: drop-shadow(0 4px 8px rgba(15, 18, 25, 0.25));
+		aspect-ratio: 1;
+		filter: drop-shadow(0 3px 6px rgba(15, 18, 25, 0.2));
 	}
 
-	.example-callout-mascot svg {
+	/* :global() is needed to reach ChefMascot's markup from this component's scope */
+	.example-callout-mascot :global(.chef-mascot) {
 		width: 100%;
 		height: 100%;
-		display: block;
 	}
 
 	/* colour variants */
@@ -118,14 +129,12 @@ const {
 	@media (max-width: 640px) {
 		.example-callout-body {
 			padding: 1.25rem;
-			padding-bottom: 3.5rem;
+			padding-right: 5.5rem;
 		}
 
 		.example-callout-mascot {
 			width: 4rem;
-			height: 4rem;
 			right: 0.75rem;
-			bottom: -0.5rem;
 		}
 	}
 </style>
