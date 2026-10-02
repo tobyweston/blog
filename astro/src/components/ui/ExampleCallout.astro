@@ -1,0 +1,131 @@
+---
+import ChefMascot from './ChefMascot.astro';
+
+// Replicates the highlighted "worked example" callout: a tinted box with a
+// bold accent-coloured left border and a circular illustration pinned to the
+// bottom-right corner. Pass any content (including HTML/markdown) via the
+// default slot; use `variant` to switch the colour scheme.
+
+type Variant = 'blue' | 'green' | 'amber' | 'rose';
+
+interface Props {
+	variant?: Variant;
+	label?: string;
+	mascot?: boolean;
+	mascotAlt?: string;
+	class?: string;
+}
+
+const {
+	variant = 'blue',
+	label,
+	mascot = true,
+	mascotAlt,
+	class: className,
+} = Astro.props;
+---
+
+<aside class={`example-callout example-callout--${variant} ${className ?? ''}`.trim()}>
+	<div class="example-callout-body">
+		{label && <p class="example-callout-label">{label}</p>}
+		<div class="example-callout-content">
+			<slot />
+		</div>
+	</div>
+	{mascot && (
+		<div class="example-callout-mascot" aria-hidden={mascotAlt ? undefined : 'true'}>
+			<ChefMascot title={mascotAlt} />
+		</div>
+	)}
+</aside>
+
+<style>
+	.example-callout {
+		position: relative;
+		display: block;
+		margin: 2rem 0 2.5rem 0;
+		border-left: 6px solid var(--callout-border, var(--accent));
+		border-radius: 0 10px 10px 0;
+		background: var(--callout-bg, rgba(35, 55, 255, 0.1));
+		box-shadow: 0 1px 2px rgba(15, 18, 25, 0.06);
+		overflow: visible;
+	}
+
+	.example-callout-body {
+		padding: 1.5rem;
+		padding-right: clamp(1.5rem, 20vw, 7.5rem);
+	}
+
+	.example-callout-label {
+		margin: 0 0 0.4rem 0;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--callout-border, var(--accent));
+	}
+
+	.example-callout-content {
+		font-size: 1em;
+		line-height: 1.6;
+		color: rgb(var(--gray-dark));
+	}
+
+	.example-callout-content :global(p) {
+		margin: 0 0 0.75rem 0;
+	}
+
+	.example-callout-content :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.example-callout-mascot {
+		position: absolute;
+		right: 1rem;
+		bottom: -0.75rem;
+		width: 5.5rem;
+		height: 5.5rem;
+		filter: drop-shadow(0 4px 8px rgba(15, 18, 25, 0.25));
+	}
+
+	.example-callout-mascot svg {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	/* colour variants */
+	.example-callout--blue {
+		--callout-bg: #dde1f8;
+		--callout-border: #2b3a9e;
+	}
+
+	.example-callout--green {
+		--callout-bg: #dcf3e3;
+		--callout-border: #1f7a44;
+	}
+
+	.example-callout--amber {
+		--callout-bg: #faecd2;
+		--callout-border: #9a6a0a;
+	}
+
+	.example-callout--rose {
+		--callout-bg: #f8dee4;
+		--callout-border: #a02a52;
+	}
+
+	@media (max-width: 640px) {
+		.example-callout-body {
+			padding: 1.25rem;
+			padding-bottom: 3.5rem;
+		}
+
+		.example-callout-mascot {
+			width: 4rem;
+			height: 4rem;
+			right: 0.75rem;
+			bottom: -0.5rem;
+		}
+	}
+</style>

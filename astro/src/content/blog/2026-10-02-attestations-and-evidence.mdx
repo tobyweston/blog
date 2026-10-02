@@ -8,6 +8,8 @@ categories: "governance controls-engineering compliance"
 keywords: "attestations, evidence, provenance, controls engineering, software supply chain, policy as code"
 ---
 
+import ExampleCallout from '../../components/ui/ExampleCallout.astro';
+
 To manage risk, first line teams will typically have to prove a control was applied (and presumably protected us from some risk). It's common that an auditor would ask for "evidence" and for the most part, they will look in some sort of compliance database (aka Compliance System of Record) for that evidence. More often than not, that's ServiceNow.
 
 > Auditors look for evidence retrospectively to understand if a control was executed and is effective
@@ -38,8 +40,23 @@ Key points:
 * Attestations are Opinionless, they declare something has happened and don't care what impact that has on compliance
 * Attestations are distinct from governance, they must be applied to policy to derive compliance
 
+<ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
+As an example, a Baker making cakes in a bakery might attest to the ingredients used, the baking time and temperature, and any decorations added. This attestation provides a verifiable record of how the cake was made, which can be important for quality control and customer satisfaction.
+</ExampleCallout>
 
 ## Policy
+
+When we ask if a control is compliance (passes or fails our governance tests), we are _evaluating_ the control. We need to have enough information from teh attestations in order to do that. Simplisitically is result of evaluation is always pass or fail.
+
+The way we capture the governance tests that must pass or fail, is in the **policy**. It's just a set of rules that define what is considered compliant or non-compliant. It takes the attestations as input and applies the rules to determine if the control meets the required standards. Rego is an expression language that allows us to write these rules in a structured and machine-readable way which really means we can write _policy-as-code_. When we evalute a rego policy, we pass in attestations and get a compliance status back.
+
+Key points:
+
+* Evaluations consume attestations, they do not alter them (an evaluation itself however, might produce new attestations)
+* Because attestations are artifact-bound, evaluations are made against a specific artefact or group of artefacts
+* Evaluations are always either a pass (compliant) or fail (non-compliant)
+
+The point around artifact-binding is interesting. It means evaluations prove something is true for a given artefact and that is a powerful tool when we want to demonstrate _provenance_ of artefacts, especially to a chain of compliance statements.
 
 
 ## Evidence is what lets someone assess a claim
