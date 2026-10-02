@@ -70,6 +70,8 @@ She is capturing the policy as Rego and the ingredients and cooking details as a
 The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added, and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
 </ExampleCallout>
 
+**`attestations.json`**
+
 ```json
 {
   "artifact": { "id": "cake-batch-2026-05-07-001", "type": "batch-id" },
@@ -93,6 +95,8 @@ Within the evidence, the full policy is captured. Both as Rego (technically, the
 
 > In plain language, an auditor can see the version of the policy that was actually used, elliminating the frantic scramble to demonstrate how a system would have behaved six months ago.
 
+
+**`bakery.rego`**
 
 ```rego
 package bakery
@@ -154,6 +158,8 @@ The `clauses` table is the policy describing itself. Each entry carries the huma
 The third section is the one almost no real evidence has, and the reason is usually that someone tried to write it by hand afterwards.
 
 It shouldn't be written by hand. It should be output. A second, generic package turns any clause table into a decision, and this part is the same for every control in the estate:
+
+**`evidence.rego`**
 
 ```rego
 package evidence
