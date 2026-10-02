@@ -5,6 +5,12 @@ import tailwind from '@astrojs/tailwind';
 import rehypeMermaid from 'rehype-mermaid';
 
 import sitemap from '@astrojs/sitemap';
+import { readFileSync } from 'node:fs';
+
+// Shiki ships no Rego grammar, so load our own TextMate definition.
+const rego = JSON.parse(
+	readFileSync(new URL('./src/syntax/rego.tmLanguage.json', import.meta.url), 'utf8'),
+);
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +20,9 @@ export default defineConfig({
 		syntaxHighlight: {
 			type: 'shiki',
 			excludeLangs: ['mermaid'],
+		},
+		shikiConfig: {
+			langs: [rego],
 		},
 		rehypePlugins: [[rehypeMermaid, { strategy: 'inline-svg' }]],
 	},

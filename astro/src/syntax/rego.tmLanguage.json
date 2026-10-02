@@ -1,0 +1,85 @@
+{
+  "name": "rego",
+  "scopeName": "source.rego",
+  "fileTypes": ["rego"],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#package" },
+    { "include": "#import" },
+    { "include": "#string-raw" },
+    { "include": "#string" },
+    { "include": "#rule-head" },
+    { "include": "#keyword" },
+    { "include": "#constant" },
+    { "include": "#document" },
+    { "include": "#function-call" },
+    { "include": "#number" },
+    { "include": "#operator" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.rego",
+      "match": "#.*$"
+    },
+    "package": {
+      "match": "^\\s*(package)\\s+([A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)",
+      "captures": {
+        "1": { "name": "keyword.control.package.rego" },
+        "2": { "name": "entity.name.namespace.rego" }
+      }
+    },
+    "import": {
+      "match": "^\\s*(import)\\s+([A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)(?:\\s+(as)\\s+([A-Za-z_][A-Za-z0-9_]*))?",
+      "captures": {
+        "1": { "name": "keyword.control.import.rego" },
+        "2": { "name": "entity.name.namespace.rego" },
+        "3": { "name": "keyword.control.as.rego" },
+        "4": { "name": "variable.other.rego" }
+      }
+    },
+    "string-raw": {
+      "name": "string.quoted.other.raw.rego",
+      "begin": "`",
+      "end": "`"
+    },
+    "string": {
+      "name": "string.quoted.double.rego",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        { "name": "constant.character.escape.rego", "match": "\\\\." }
+      ]
+    },
+    "rule-head": {
+      "match": "^\\s*(?:(default)\\s+)?([A-Za-z_][A-Za-z0-9_]*)(?=\\s*(?:\\[|\\(|:=|=[^=]|if\\b|contains\\b))",
+      "captures": {
+        "1": { "name": "keyword.control.rego" },
+        "2": { "name": "entity.name.function.rego" }
+      }
+    },
+    "keyword": {
+      "name": "keyword.control.rego",
+      "match": "\\b(default|not|some|every|in|if|else|contains|with|as)\\b"
+    },
+    "constant": {
+      "name": "constant.language.rego",
+      "match": "\\b(true|false|null)\\b"
+    },
+    "document": {
+      "name": "variable.language.rego",
+      "match": "\\b(input|data)\\b"
+    },
+    "function-call": {
+      "name": "support.function.rego",
+      "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*(?=\\s*\\()"
+    },
+    "number": {
+      "name": "constant.numeric.rego",
+      "match": "\\b[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b"
+    },
+    "operator": {
+      "name": "keyword.operator.rego",
+      "match": ":=|==|!=|<=|>=|\\||\\+|-|\\*|/|%|<|>|="
+    }
+  }
+}
