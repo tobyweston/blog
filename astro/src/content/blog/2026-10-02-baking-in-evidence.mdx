@@ -23,7 +23,7 @@ If you were to pick a release at random in a large regulated organisation and lo
 |-----------------------------------|-------------------------------------------------------------------------------------------------------------|--------|-----------|:-------------------------------------------------------------|
 | Never alone applied               | [Code Review](https://sdlc-common-controls.finos.org/mitigations/mi-1_code-review.html)                     | JSON   | automated | Evidence of a PR being merged and branch protection in place |
 | Sufficient testing was undertaken | [Test Execution and Sign-Off](https://sdlc-common-controls.finos.org/mitigations/mi-16_test-execution.html) | PDF    | automated | JUnit reports demonstrating some tests were executed         |
-| SBOM available                    | [Component Inventory](https://sdlc-common-controls.finos.org/mitigations/mi-9-component-inventory.html)     | .xlsx  | manual    | Provenance unknown - we don't know who generated this or how |
+| SBOM available                    | [Component Inventory](https://sdlc-common-controls.finos.org/mitigations/mi-9-component-inventory.html)     | .xlsx  | manual    | Provenance unknown — we don't know who generated this or how |
 
 None of these are obviously pinned to the same artifact. They could relate to anything. How do I know, for example, the tests that were run were against the artifact we're deploying?
 
@@ -40,7 +40,7 @@ To be able to independently verify and re-check a decision and to be able to do 
 * an **identifiable artifact** (a fingerprint of the subject of the claim, or similar)
 * the **facts** that were used and where each one came from
 * the **rules** that were applied, verbatim and versioned
-* **how** the fact met the rules (or otherwise)
+* **how** the facts met the rules (or otherwise)
 * the **result** and when it was reached
 
 Read that list again and notice what isn't in it. Nothing specific to a control. Nothing about code review, test coverage or CVEs.
@@ -181,6 +181,11 @@ steps := [object.union(object.remove(c, ["holds"]), {
 }) |
 	some i, c in bakery.clauses
 ]
+
+decision := {
+	"status": status,
+	"steps": steps,
+}
 ```
 
 Run it via OPA:
@@ -209,7 +214,7 @@ opa eval --data bakery.rego --data evidence.rego --input attestations.json 'data
 }
 ```
 
-Given the JSON, we can render however we like.
+Given the JSON, we can render it however we like.
 
 
 ## When It Fails
@@ -219,7 +224,7 @@ If we run the same control over a batch where the oven drifted to 210°C, we'd f
 <ClickToEnlarge src={evidenceFail} alt="An evidence document headed Allergen Free Cake Batch with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass and the overall row reads Non-compliant."></ClickToEnlarge>
 
 
-The expression at step `2` was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
+The expression at step `2` was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the `temp_ok` rule and the overall status is non-compliant.
 
 Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of the attestation set above is different from the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
 
