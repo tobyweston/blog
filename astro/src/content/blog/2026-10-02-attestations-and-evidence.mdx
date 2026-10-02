@@ -1,0 +1,116 @@
+---
+title: "Attestations and Evidence"
+subTitle: "A practical vocabulary for making software controls provable"
+description: "Attestations and evidence are often referred to in GRC circles. They are related but not interchangeable. This post look at definitions, interpretations and how, along with _evaluation_ they can they build trust in governance."
+pubDate: "2026-05-02"
+draft: true
+categories: "governance controls-engineering compliance"
+keywords: "attestations, evidence, provenance, controls engineering, software supply chain, policy as code"
+---
+
+To manage risk, first line teams will typically have to prove a control was applied (and presumably protected us from some risk). It's common that an auditor would ask for "evidence" and for the most part, they will look in some sort of compliance database (aka Compliance System of Record) for that evidence. More often than not, that's ServiceNow.
+
+> Auditors look for evidence retrospectively to understand if a control was executed and is effective
+
+The problem is that most of the time, the evidence doesn't have any context. It's the output of some process with no advocacy how it was produced or what policy or process it actually followed.
+
+## Evidence != Proof
+
+If you want to check I traveled to Brighton, you could look at my train ticket but you'd have no way to know if I actually traveled. If you have actual proof, perhaps CCTV footage of me boarding and departing the train, you wouldn't actually need the ticket stub. The ticket stub is evidence, but it doesn't prove I traveled. The CCTV footage is proof.
+
+In modern governance systems, if we demonstrate the control can not be avoided (e.g. show a sealed pipeline is the only way to achieve an action), then we don't need to rely on the output so much. Audit the _system_, not the output.
+
+## Attestations
+
+Attestations in the general English sense have been a way for teams to "evidence" that they have done something (like met a control standard). We're used a human saying "I attest" or "I approve" and use it as evidence in the way it was described above. Audit functions rightly point out the waeknesses to this in the risk world - we can't rely on the human. So "attestation" becomes a nuaghty word in the GRC world and first line teams strive for more automation.
+
+However, attestations as a term can take on a much stronger meaning when we look at SLSA and modern Governance Engineering. In this context, an attestation is much more formal.
+
+> Attestations are **trusted** and **verifiable** statements or metadata about a **software arrefact** or group of artefacts. These statements help us asnwer important compliance questions.
+
+Attestations are observations made against events. They are opinionless. They are just statements that something happened, usually against some form of artifact. For example, the **code** was _compiled_. They capture metadata about the evnt, for example, the version of the compiler used but they do not determin compliance. Attestations provide inputs needed to evalute compliance later. To be able to evalute them, you need to know the **policy**. Together this can form a cohierent set of steps to implement a contro.
+
+To continue the example, we might have a policy which says only version 1.2 or above of the compiler is allowed. We record what version was used at the point of compilation and they later feed the policy that metadata to decide if we are compliant or not.
+
+Key points:
+
+* Attestation are facts
+* Attestations are Opinionless, they declare something has happened and don't care what impact that has on compliance
+* Attestations are distinct from governance, they must be applied to policy to derive compliance
+
+
+## Policy
+
+
+## Evidence is what lets someone assess a claim
+
+**Evidence** is information that helps a person or system evaluate whether a claim is true.
+
+For a software release, evidence might include:
+
+- A source revision and the identity of the system that built it
+- Test results tied to the artifact that was tested
+- A record of the dependencies used by the build
+- A deployment event showing which artifact reached an environment
+
+Evidence is not automatically trustworthy or sufficient. A log can be incomplete, a test report can refer to a different build, and a screenshot can be difficult to verify. The useful question is not simply whether some evidence exists, but whether it is relevant, attributable, and connected to the thing being assessed.
+
+## An attestation is a structured statement
+
+An **attestation** is a statement made by an identified party or system about a subject. It typically has a predicate: a claim about that subject.
+
+For example:
+
+> Bakery CI built artifact `sha256:abc...` from source revision `4f2...` using the approved build process.
+
+The artifact digest identifies the subject. The statement about how it was built is the predicate. The identity of Bakery CI is the issuer.
+
+In software supply-chain systems, attestations are often machine-readable and may be signed. That makes them easier to transport, verify, and evaluate consistently.
+
+## How the two fit together
+
+An attestation can itself be evidence: it is evidence that an issuer made a particular statement. Its contents may also provide evidence for a control, such as whether an artifact was built by an approved builder.
+
+But an attestation is not proof that its claim is true merely because it is well-formed or signed. A signature can help establish who issued a statement and whether it was changed. It cannot, by itself, establish that the issuer observed the process correctly or was authorized to make that claim.
+
+Trust therefore depends on a chain of questions:
+
+1. **What is the subject?** Is the statement tied to the exact artifact, source revision, or deployment being assessed?
+2. **Who issued it?** Can the issuer’s identity and authority be verified?
+3. **What backs the claim?** Did the issuer observe a reliable process, or is it repeating an unverified assertion?
+4. **Does the claim satisfy the control?** Is it current, complete, and relevant to the policy?
+
+For example, a signed “tests passed” attestation is much more useful when it names the artifact digest, comes from a trusted CI identity, and is produced by a test system whose results are retained and inspectable.
+
+## Attestation versus manual declaration
+
+A person ticking a box to say “I followed the process” is an attestation in the broad sense: someone is making a claim. It may have a place in a control, but it is usually weak evidence of what actually happened.
+
+Compare that with a pipeline that records the source revision, build identity, test result, and artifact digest as it runs. The pipeline still makes claims, and its configuration still needs to be governed. But the information is produced close to the event and can be checked against other records.
+
+Good controls do not ask people to reconstruct the past from memory if the engineering system can produce the relevant evidence as part of normal work.
+
+## What a useful evidence trail looks like
+
+A useful trail connects the pieces rather than collecting disconnected documents:
+
+```text
+source revision
+    -> build attestation
+    -> tested artifact digest
+    -> policy decision
+    -> deployment record
+```
+
+Each link should identify the subject it refers to. If a test result is not tied to the artifact that was deployed, it cannot answer whether that deployed artifact passed the test. If a deployment record does not identify the artifact, it cannot establish what is running.
+
+This is why provenance is central to evidence-based governance. The goal is not to produce the largest archive. It is to make the important claims traceable and assessable.
+
+## A short definition
+
+- **Evidence** is information used to assess a claim or control.
+- **An attestation** is a structured claim made by an issuer about a subject.
+- **A trustworthy attestation** is attributable and bound to the right subject, and is produced by a process the organisation trusts.
+- **A control decision** evaluates relevant evidence against a policy; it should not confuse the existence of an attestation with proof that every claim is true.
+
+In the companion example, a fictional bakery uses Rego to decide whether a software release has the attestations its policy requires. The policy checks the claims it receives; verification of signatures and issuer identity remains an explicit step outside that policy.
