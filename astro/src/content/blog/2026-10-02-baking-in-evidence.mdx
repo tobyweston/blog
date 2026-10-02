@@ -223,42 +223,20 @@ If we run the same control over a batch where the oven drifted to 210°C, we'd f
 
 One expression was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
 
-Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different than the happy path above because the facts are different. The document is bound to the inputs that produced it. You can cryptographically proof the document wasn't tampered with. This will make the most paranoid auditor happy.
+Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different than the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
 
-## Why it has to be the same document every time
+## Advantages
 
-A uniform format isn't tidiness. It buys specific things.
+**One format, _n_ controls**. Auditor learn the evidence format once and the bar is forever high. This dramatically changes the tone of conversation with audit.
 
-**One format, N controls.** The auditor learns the document once. Onboarding cost is paid a single time rather than per control, and the comparison between controls becomes possible at all.
+**Anyone can check it**. The inputs and policy are both hashed, so a third party can take the same facts, run the same rule, and see whether they get the same answer. That's a much stronger position than "trust the tool that closed the control".
 
-**The decision is falsifiable.** Canonical inputs, verbatim policy, both hashed. Anyone can re-run it and either get the same answer or not. That's a much stronger position than "trust the tool that closed the control", and it's the difference between evidence and assertion.
+**The rule is on the page**. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed. Today that rarely happens because the rules are buried in a tool or in someones memory.
 
-**The rule is on the page.** This one is underrated. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed, and today it's nearly impossible to have, because the rule is buried in a tool nobody outside the team can read.
+**It works as a fitness function**. You cannot produce this document from a screenshot. You cannot produce it if the thing collecting the evidence also decides the outcome. Adopting the format forces controls towards declarative, opinionless attestations and external evaluation. Mandating the output shape turns out to be a more effective lever than mandating the architecture.
 
-**It works as a fitness function.** You cannot produce this document from a screenshot. You cannot produce it if the thing collecting the evidence also decides the outcome, because then there's nothing left to show as workings. Adopting the format forces controls towards declarative, opinionless attestations and external evaluation, which is where they should have been anyway. Mandating the output shape turns out to be a more effective lever than mandating the architecture.
+**It's an interface**. The evidence schema becomes the contract between the teams implementing controls and the system of record that stores them. Contracts can be versioned and tested.
 
-**It's an interface.** The evidence schema becomes the contract between the teams implementing controls and the system of record that stores them. Contracts can be versioned and tested. "Upload something that demonstrates compliance" cannot.
+This does have limits though. It doesn't make an attestation **trustworthy**. Ensuring that the provenance and guarneteeing that attestations are made form trusted authorities is still a responsbility of the operating system. For example, allowing a development team to make attestations invites the question of "can we trust them?" where as running from a centralised secure pipeline may give more confidence. Digitial signatures, minimising trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
 
-And yes — the PDF is a rendering, not the record. The record is the structured decision; the document is the view of it for people, carrying the same hashes as the view for machines. Give the auditor the PDF and the pipeline the JSON, generated from one source, and they can never disagree.
-
-## What it doesn't do
-
-Some honesty about the limits, because a pretty document is a good way to smuggle in unearned confidence.
-
-It doesn't make an attestation trustworthy. Signature verification, issuer identity and freshness all happen before the policy sees anything. The document records that they were checked; it doesn't do the checking. Rego will happily evaluate a lie.
-
-Hashes are integrity, not authority. The attestation set hash proves the facts haven't been edited since. It says nothing about who produced them. If the document has to survive a hostile reading, it needs signing and a trusted time source on top.
-
-Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to stop the release and keep the decision record next to the evidence it evaluated.
-
-A bad policy renders beautifully. Uniform format is not uniform rigour, and the document will show you a nut-free check that never looked for nuts with exactly the same confident green shield.
-
-And the real cost: every control needs an attestation schema and a policy as code before it can produce any of this. That's the work. The format is the easy part.
-
-## Where to start
-
-Pick one control. Define the facts it consumes and where they come from. Write the rule down in Rego, badly if necessary — the first version only has to be honest, not complete. Make the evaluation emit its own workings, render the document, and show it to someone in audit.
-
-Then refuse to accept a different shape for the next one.
-
-Get that right and nobody has to argue about the output, because anyone can replay the decision and get the same answer. Audit the *system*, not the output.
+Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to enforce a consequence. This is the difference between a Policy Decision Point (PDP) and a Policy Enforcement Point (PEP).
