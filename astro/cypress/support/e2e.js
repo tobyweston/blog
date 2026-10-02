@@ -49,18 +49,23 @@ Cypress.Commands.add('waitForPageReady', () => {
   cy.document().its('readyState').should('eq', 'complete');
   cy.window().then((win) => {
     const fontsReady = win.document.fonts?.ready ?? Promise.resolve();
-    const imageReadyPromises = Array.from(win.document.images ?? []).map((image) => {
-      if (image.complete) {
-        return Promise.resolve();
-      }
 
-      return new Promise((resolve) => {
+    // Only wait on images the browser has actually started fetching. Lazy
+    // images inside a closed <dialog> (ClickToEnlarge) have no layout box and
+    // are never requested, so waiting on them would hang forever.
+    const imageReadyPromises = Array.from(win.document.images ?? [])
+      .filter((image) => !image.complete && image.getClientRects().length > 0)
+      .map((image) => new Promise((resolve) => {
         image.addEventListener('load', resolve, { once: true });
         image.addEventListener('error', resolve, { once: true });
-      });
-    });
+      }));
 
-    return Promise.all([fontsReady, ...imageReadyPromises]);
+    // Images below the fold may never load at all in a fixed viewport, so cap
+    // the wait rather than letting the command time out.
+    const settled = Promise.all([fontsReady, ...imageReadyPromises]);
+    const capped = new Promise((resolve) => win.setTimeout(resolve, 2000));
+
+    return Promise.race([settled, capped]);
   });
 });
 

@@ -1,0 +1,151 @@
+---
+name: hero-image
+description: Write an image-generation prompt for a named blog post's hero image in one of the site's house styles, then wire the generated image into the post. Use when asked to create, generate, redo or restyle a hero image, hero banner, card image or social/OG image for a post in astro/src/content/blog.
+---
+
+# Hero images
+
+Produces a prompt to paste into an external image generator (Gemini, Midjourney,
+whatever is to hand), then installs the result. Claude writes the prompt, not the
+image.
+
+## Where the hero actually shows up
+
+Check this before composing, because it drives the composition rules:
+
+- **Post cards** on `/blog` and in `PreviewBlog` — rendered at `h-48`
+  (192px tall) with `object-cover` across a two-column grid. Measured at a
+  1440px viewport that is 546 x 192, so a 1600x900 hero is centre-cropped to
+  about 2.8:1 and loses the top and bottom fifth.
+- **Social and search previews** — `BlogPost.astro` passes `heroImage` to
+  `SiteLayout` as the OG image and into the schema.org `image` field.
+- **Not** as a banner at the top of the post. That markup is commented out in
+  `astro/src/layouts/BlogPost.astro`.
+
+So the hero is a thumbnail and a social card. It has to survive a hard centre
+crop and still read at roughly 550x190. Fine detail and small text are wasted.
+
+## Workflow
+
+### 1. Resolve the post
+
+Accept a slug, filename, title or path. Find it under
+`astro/src/content/blog/`. If more than one matches, ask. If the post is in
+`astro/src/content/unpublished/`, that's fine — treat it the same.
+
+### 2. Read the post and pull out the visual material
+
+Read the whole post, not just the frontmatter. Extract:
+
+- `title`, `subTitle`, `description`, `categories`, `keywords`
+- the central argument in one sentence — the thing the image should make a
+  reader curious about
+- **three to six concrete nouns that can be drawn.** This is the part that
+  matters. Abstractions ("governance", "trust", "latency") produce generic
+  stock-art slop. Hunt for the physical objects the post already uses: a
+  printed document, a train ticket, an oven, a shield, a filing cabinet, a
+  conveyor belt. Most posts contain their own metaphor — use the author's,
+  don't invent a new one.
+- any recurring character or motif from earlier posts in the same series. If the
+  post links to a previous post, read that post's `heroImage` and look at it, so
+  the new one continues rather than resets.
+
+If the post is one of a series, say so in the prompt explicitly — continuity is
+the main reason this skill exists.
+
+### 3. Pick a style
+
+Explicit instruction wins. Otherwise infer from `categories`:
+
+| Categories contain | Style |
+|---|---|
+| `compliance`, `governance`, `controls-engineering`, `policy-as-code` | `bold-outline-cartoon` |
+| `raspberry-pi`, `debian`, `tooling`, `build`, `java`, `scala`, `rego` | `technical-blueprint` |
+| `culture`, `teams`, `process`, `metrics`, `opinion` | `flat-editorial` |
+
+If nothing fits cleanly, offer the three and ask. Never silently mix two styles —
+the point is a consistent look across the site.
+
+Read the chosen file in `styles/` and `reference/output-spec.md` before writing
+anything.
+
+### 4. Compose the prompt
+
+Fill the skeleton below. Paste the style file's **Style block** and **Palette**
+sections in verbatim — they are the shared part, and editing them per post is how
+a house style drifts.
+
+```text
+Create a wide 16:9 hero illustration, exactly 1600 x 900 pixels, for a technical
+blog post about <one-line subject>. Output a single flat image, no borders, no
+frame, no watermark, no signature.
+
+STYLE
+<verbatim Style block from the chosen style file>
+
+<RECURRING CHARACTER — only if the style defines one and the series uses it>
+
+SUBJECT
+<the scene: one clear focal object or action, drawn from the concrete nouns.
+Say what the reader should understand at a glance.>
+
+<SUPPORTING DETAIL — one or two secondary elements, placed and described>
+
+TEXT IN THE IMAGE
+Use very little text, rendered large and spelled exactly as written. Do not
+invent additional words or labels.
+  - <exact string 1>
+  - <exact string 2>
+Everything else must be abstract placeholder lines, not legible lettering.
+
+COLOUR
+<verbatim Palette block from the chosen style file, plus one line saying which
+element should be the highest-contrast focal point>
+
+COMPOSITION FOR A WEB CARD
+This image is centre-cropped hard to a wide strip for post cards, about 2.8:1,
+and is also used as a social preview. Only the middle 60% of the image height
+survives that crop. Keep the focal subject and all text inside that central
+band; the top 20% and the bottom 20% may be cut away entirely, so put nothing
+there but background. Keep text away from the left and right edges too. The
+image must still read at roughly 550 x 190 pixels, so favour large shapes and
+strong contrast over fine detail. Balanced composition, not centred
+symmetrically.
+```
+
+### 5. Hand it over
+
+- Save the finished prompt to `documents/hero-prompts/<post-filename>.md`, with
+  the post title, the chosen style and the date at the top. These are kept so a
+  hero can be regenerated or restyled later without re-deriving it.
+- Print the prompt in the reply inside a ```text fence so it can be copied.
+- Name the previous post's hero file as a style reference to attach, if the post
+  is part of a series.
+- Call out which parts are most likely to be mangled — any literal text — and
+  what to drop if the generator fumbles it.
+
+### 6. Wire the image in
+
+Once the user has a generated file, follow `reference/output-spec.md`: check and
+normalise the dimensions, save it to the right path under
+`astro/public/images/heroes/`, add or update `heroImage` in the post's
+frontmatter, and run `npx astro build` from `astro/` to confirm it resolves.
+
+## Rules that apply to every prompt
+
+**Keep literal text to three strings at most.** Image models mangle lettering.
+Anything longer than two or three words should be specified as abstract
+placeholder lines. Always state the exact spelling of the strings you do ask for,
+and always offer a text-free fallback.
+
+**One focal idea.** A hero that tries to illustrate the whole argument reads as
+clutter at 192px. Pick the single image the post turns on.
+
+**Use the post's own metaphor.** If the author compared something to a bakery,
+a train ticket or CCTV, that is the image. Don't substitute a better one.
+
+**No UI screenshots, no code walls, no floating holographic dashboards.** They
+date badly and read as nothing at thumbnail size.
+
+**State the negatives.** Every prompt should say what the style is *not*
+(not photorealistic, not 3D render, and so on) — the style files carry this.
