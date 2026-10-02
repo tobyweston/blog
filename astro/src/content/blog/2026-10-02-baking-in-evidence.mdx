@@ -33,7 +33,7 @@ None of them describe what was checked, against which version of which rules, us
 
 ## Modern Evidence
 
-When evidence just shows the output of a process, an auditor has no choice but to look into that process. When it's tooling, they can inspect the configuration (for example, look at your branch protection rules) but at scale that can become time consuming and unreliable, especially when you need to demonstrate it from six months ago. For manual processes, it quickly becomes impracticable.
+When evidence just shows the output of a process, an auditor has no choice but to look into that process. When it's tooling, they can inspect the configuration (for example, look at your branch protection rules) but at scale that can become time consuming and unreliable, especially when you need to demonstrate it from six months ago. For manual processes, it quickly becomes impractical.
 
 To be able to independently verify and re-check a decision and to be able to do that three years in the future, your evidence will need:
 
@@ -55,14 +55,14 @@ She's using the approach from the [previous post](/blog/2026-10-02-attestations-
 
 * recording the list of ingredients used, oven temperature and cooking times
 * defining a policy to ensure no nuts are in the ingredients list
-* expanding that policy to ensure baking temperatures and times are consistent to cook the ingredients properly
+* expanding that policy to ensure baking temperatures and times are sufficient to cook the ingredients properly
 
 She is capturing the policy as Rego and the ingredients and cooking details as attestations. The evaluation of the policy against the attestations produces a pass/fail decision in the format below.
 
 <ClickToEnlarge tall src={evidenceDoc} alt="A unified evidence document headed Allergen Free Cake Batch. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source and the evaluation showing each clause, the attestation it used, the expression evaluated and its result."></ClickToEnlarge>
 
 
-## Attestations: what was observed
+## Attestations: What Was Observed
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
 The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
@@ -86,11 +86,11 @@ The baker attests to the ingredients that went in, the temperature and time the 
 }
 ```
 
-## Policy: what should have been true
+## Policy: What Should Have Been True
 
-Within the evidence, the full policy is captured. Both as Rego (technically, the policy-as-code part) but also as a human-readable table of clauses. Rego can get pretty knarly and having a human readible summary is powerful for the non-technical audience. The fact that this is code and not hearsay or departmental memory, means trust levels go up between Audit and the teams operating the control.
+Within the evidence, the full policy is captured. Both as Rego (technically, the policy-as-code part) but also as a human-readable table of clauses. Rego can get pretty gnarly and having a human readable summary is powerful for the non-technical audience. The fact that this is code and not hearsay or departmental memory means trust levels go up between Audit and the teams operating the control.
 
-> In plain language, an auditor can see the version of the policy that was actually used, elliminating the frantic scramble to demonstrate how a system would have behaved six months ago.
+> In plain language, an auditor can see the version of the policy that was actually used, eliminating the frantic scramble to demonstrate how a system would have behaved six months ago.
 
 
 ```rego
@@ -146,12 +146,12 @@ The `fact` rule projects the set of attestations **into something the clauses ca
   "signed_by":   { "from": "att-006", "value": "Baker A (emp-12345)" }
 }
 ```
-"§
+
 **The `clauses` table is the policy describing itself**. Each entry carries the human-readable statement, the attestations it drew on and a rendered expression with the real values substituted in. In a few lines, it allows the document to "show the workings".
 
-## Evaluation: show your workings
+## Evaluation: Show Your Workings
 
-The third section does the heavy lifting of showing how attestations were evaluated against the policy. I like to think of Rego as a series of expression that use attestations as inputs to evaluate.
+The third section does the heavy lifting of showing how attestations were evaluated against the policy. I like to think of Rego as a series of expressions that use attestations as inputs to evaluate.
 
 There's one hidden piece of Rego that shows how to do this. The `evidence.rego` below is infrastructure and only needs writing once. The "policy" itself is in `bakery.rego` above and would be specific to each control, but the evidence generation is generic and reusable.
 
@@ -209,10 +209,10 @@ opa eval --data bakery.rego --data evidence.rego --input attestations.json 'data
 }
 ```
 
-Give the json, we can render however we like.
+Given the JSON, we can render however we like.
 
 
-## When it Fails
+## When It Fails
 
 If we run the same control over a batch where the oven drifted to 210°C, we'd fail the control.
 
@@ -221,11 +221,11 @@ If we run the same control over a batch where the oven drifted to 210°C, we'd f
 
 The expression at step `2` was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
 
-Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different from the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
+Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of the attestation set above is different from the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
 
 ## Advantages
 
-**One format, _n_ controls**. Auditor learn the evidence format once. This dramatically changes the tone of conversation with audit.
+**One format, _n_ controls**. Auditors learn the evidence format once. This dramatically changes the tone of conversation with audit.
 
 **Anyone can check it**. The inputs and policy are both hashed, so a third party can take the same facts, run the same rule and see whether they get the same answer. That's a much stronger position than "trust the tool that closed the control".
 
@@ -239,7 +239,7 @@ Notice that the evidence itself is versioned and independently verifiable. Every
 
 It comes with caveats though. It doesn't automatically make an attestation **trustworthy**.
 
-Guaranteeing that attestations are made form trusted authorities is still a responsibility of the system in which the controls operate. For example, allowing a development teams to make their own attestations invites the question of "can we trust them?". Whereas running from a centralised secure pipeline may give more confidence. Digitial signatures, minimizing trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
+Guaranteeing that attestations are made from trusted authorities is still a responsibility of the system in which the controls operate. For example, allowing development teams to make their own attestations invites the question of "can we trust them?", whereas running from a centralised secure pipeline may give more confidence. Digital signatures, minimising trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
 
 Decisions and enforcement are still separate jobs. OPA can say whether the artifact satisfies the policy. Something else has to enforce a consequence. This is the difference between a Policy Decision Point (PDP) and a Policy Enforcement Point (PEP).
 
@@ -251,4 +251,4 @@ Then refuse to accept a different shape for the next control.
 
 The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once and every control you move onto it makes the next conversation with audit easier.
 
-Get that right and there's less debate and you can all focus on the things that mater - actually reducing risk. Audit the *system*, not the output.
+Get that right and there's less debate, so you can all focus on the things that matter — actually reducing risk. Audit the *system*, not the output.
