@@ -1,0 +1,247 @@
+---
+title: "Baking in Evidence"
+subTitle: "Every control you operate should produce the same evidence"
+description: "Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on..."
+pubDate: "2026-05-12"
+draft: true
+categories: "rego policy-as-code controls-engineering compliance"
+keywords: "Rego, OPA, attestations, evidence, unified evidence format, policy as code, controls engineering, software supply chain, bakery"
+---
+
+import ExampleCallout from '../../components/ui/ExampleCallout.astro';
+import ClickToEnlarge from '../../components/ui/ClickToEnlarge.astro';
+import evidenceDoc from '../images/unified-evidence-bakery.png';
+import evidenceFail from '../images/unified-evidence-bakery-fail.png';
+
+Continuing from the previous post on [attestations and evidence](/blog/2026-10-02-attestations-and-evidence/), this post looks deeper into defining policy as code, evaluating and producing a consistent evidence format that shows _why_ a control passed or failed.
+
+A bakery is a useful way to explore the software supply-chain and policies keeping the output compliant. Imagine the bakery...
+
+## Three controls, three formats
+
+Pick a release at random in a large regulated organisation and look at how its controls were closed. You'll find something like this.
+
+| Control                     | Format | Closure   |
+|-----------------------------|--------|-----------|
+| Source code review          | JSON   | automated |
+| Test evaluation report      | PDF    | automated |
+| Implementation and rollback | .xlsx  | manual    |
+
+Three controls on one release, three formats, one of them a spreadsheet someone emailed. All three say PASS.
+
+None of them says what was checked, against which version of which rule, using what inputs. The JSON is a payload from whichever tool happened to close the control. The PDF is a screenshot of a dashboard that has since been re-rendered. The spreadsheet is a human asserting a conclusion.
+
+The problem isn't the volume of evidence. It's that every control invented its own shape, so the auditor has to learn all of them and still ends up taking the result on trust. A ticket stub, not CCTV.
+
+## What has to be in it
+
+Work backwards from the chain and the contents are forced. To re-check a decision, and to be able to re-check it in three years, you need:
+
+* the artifact it was about, and its fingerprint
+* the facts that were used, and where each one came from
+* the rule that was applied, verbatim and versioned
+* how the rule met the facts, step by step
+* the result, and when it was reached
+
+Read that list again and notice what isn't in it. Nothing about cakes. Nothing about code review, or CVEs, or test coverage. There's no control-specific item on that list, which is precisely why one format can serve every control you operate.
+
+## One document, three sections
+
+Here's that list rendered for a single control. The bakery is a fictional one, but the structure is the point: a header that states the verdict and binds the document to an artifact, then **attestations**, **policy** and **evaluation**.
+
+<ClickToEnlarge tall src={evidenceDoc} alt="A unified evidence document for a cake batch release. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result."></ClickToEnlarge>
+
+Click it to read the detail. The three sections are worth taking one at a time.
+
+### Attestations: what was observed
+
+<ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
+The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added, and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
+</ExampleCallout>
+
+```json
+{
+  "artifact": { "id": "cake-batch-2026-05-07-001", "type": "batch-id" },
+  "attestations": [
+    { "id": "att-002", "type": "allergens", "field": "allergens",
+      "value": ["milk", "eggs"], "source": "ingredient classifier",
+      "observed_at": "2026-05-07T09:12:05Z" },
+    { "id": "att-003", "type": "bake", "field": "temp_c",
+      "value": 180, "source": "oven telemetry",
+      "observed_at": "2026-05-07T09:44:10Z" },
+    { "id": "att-004", "type": "bake", "field": "minutes",
+      "value": 32, "source": "oven telemetry",
+      "observed_at": "2026-05-07T10:16:10Z" }
+  ]
+}
+```
+
+Three of the six are shown; the document lists them all. Two of the six (the decorations and the signer) are greyed out in the rendering because this policy never reads them. That's deliberate. The attestation set records what was observed, not what was convenient, and an auditor can see at a glance which observations the decision actually rested on.
+
+Each one names its source. "Oven telemetry" is a different kind of claim to "baker log", and the document doesn't flatten that distinction away.
+
+### Policy: what should have been true
+
+Printing the rule inside the evidence is the move that makes the document self-contained. Nobody has to work out which version of the policy was live when the batch was baked, or go and find a wiki page that's been edited twice since.
+
+```rego
+package bakery
+
+# Facts, projected from the attestation set. Each one remembers which attestation it came from.
+fact[att.field] := {"value": att.value, "from": att.id} if {
+	some att in input.attestations
+}
+
+default nut_free := false
+
+nut_free if not "nuts" in fact.allergens.value
+
+default temp_ok := false
+
+temp_ok if {
+	fact.temp_c.value >= 175
+	fact.temp_c.value <= 200
+}
+
+default time_ok := false
+
+time_ok if {
+	fact.minutes.value >= 25
+	fact.minutes.value <= 40
+}
+
+# The clause table: what each rule means, what it drew on, and what was actually evaluated.
+clauses := [
+	{"clause": "Nut allergens absent", "predicate": "nut_free", "holds": nut_free,
+		"inputs": [fact.allergens.from],
+		"expression": sprintf(`not "nuts" in %v`, [fact.allergens.value])},
+	{"clause": "Bake temperature in range", "predicate": "temp_ok", "holds": temp_ok,
+		"inputs": [fact.temp_c.from],
+		"expression": sprintf("%v >= 175 and %v <= 200", [fact.temp_c.value, fact.temp_c.value])},
+	{"clause": "Bake time in range", "predicate": "time_ok", "holds": time_ok,
+		"inputs": [fact.minutes.from],
+		"expression": sprintf("%v >= 25 and %v <= 40", [fact.minutes.value, fact.minutes.value])},
+]
+```
+
+Two things are doing work here.
+
+The `fact` rule projects the attestation set into something the clauses can read, and each fact remembers the attestation it came from. That `from` field is what later lets the evidence cite `att-003` rather than just asserting that the temperature was 180.
+
+The `clauses` table is the policy describing itself. Each entry carries the human-readable statement, the attestations it drew on, and a rendered expression with the real values substituted in. It costs a few lines and it's the difference between a document that shows its workings and one that doesn't.
+
+### Evaluation: the workings
+
+The third section is the one almost no real evidence has, and the reason is usually that someone tried to write it by hand afterwards.
+
+It shouldn't be written by hand. It should be output. A second, generic package turns any clause table into a decision, and this part is the same for every control in the estate:
+
+```rego
+package evidence
+
+import data.bakery
+
+verdict(true) := "Pass"
+
+verdict(false) := "Fail"
+
+default compliant := false
+
+compliant if every c in bakery.clauses {
+	c.holds
+}
+
+status := "Compliant" if compliant
+
+status := "Non-compliant" if not compliant
+
+steps := [object.union(object.remove(c, ["holds"]), {
+	"step": i + 1,
+	"result": verdict(c.holds),
+}) |
+	some i, c in bakery.clauses
+]
+```
+
+Run it:
+
+```bash
+opa eval --data bakery.rego --data evidence.rego \
+  --input attestations.json 'data.evidence.decision'
+```
+
+```json
+{
+  "status": "Compliant",
+  "steps": [
+    { "step": 1, "clause": "Nut allergens absent", "predicate": "nut_free",
+      "inputs": ["att-002"],
+      "expression": "not \"nuts\" in [\"milk\", \"eggs\"]", "result": "Pass" },
+    { "step": 2, "clause": "Bake temperature in range", "predicate": "temp_ok",
+      "inputs": ["att-003"],
+      "expression": "180 >= 175 and 180 <= 200", "result": "Pass" },
+    { "step": 3, "clause": "Bake time in range", "predicate": "time_ok",
+      "inputs": ["att-004"],
+      "expression": "32 >= 25 and 32 <= 40", "result": "Pass" }
+  ]
+}
+```
+
+The rows in that third section of the document are that output, rendered. Not a reconstruction, not a narrative someone typed into a ticket afterwards. The workings are a by-product of the decision, which is the only way they can be trusted to match it.
+
+Note where the split falls. `bakery.rego` is small, control-specific and reviewable — it's the thing that should go through governance. `evidence.rego` is infrastructure, written once. The conjunction ("compliant only if all clauses pass") lives in the infrastructure too, because it's the same sentence for every control.
+
+## When it fails
+
+Now run the same control over a batch where the oven drifted to 210°C.
+
+<ClickToEnlarge src={evidenceFail} alt="An evidence document for a cake batch release with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass, and the overall row reads Non-compliant."></ClickToEnlarge>
+
+
+Same document, same sections, same code path. One expression now reads `210 >= 175 and 210 <= 200`, one verdict flips, and the overall status follows.
+
+Three things fall out of that, and they're the whole argument for generating evidence rather than curating it.
+
+Failure costs the same as success. There's no separate "exception process" that produces a different artefact, because there's no separate code path.
+
+The reason is derived, not authored. Step 2 says why. Nobody writes a justification, which means nobody can write a convenient one.
+
+And the attestation set hash changed, because the facts changed. The document is bound to the inputs that produced it.
+
+## Why it has to be the same document every time
+
+A uniform format isn't tidiness. It buys specific things.
+
+**One format, N controls.** The auditor learns the document once. Onboarding cost is paid a single time rather than per control, and the comparison between controls becomes possible at all.
+
+**The decision is falsifiable.** Canonical inputs, verbatim policy, both hashed. Anyone can re-run it and either get the same answer or not. That's a much stronger position than "trust the tool that closed the control", and it's the difference between evidence and assertion.
+
+**The rule is on the page.** This one is underrated. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed, and today it's nearly impossible to have, because the rule is buried in a tool nobody outside the team can read.
+
+**It works as a fitness function.** You cannot produce this document from a screenshot. You cannot produce it if the thing collecting the evidence also decides the outcome, because then there's nothing left to show as workings. Adopting the format forces controls towards declarative, opinionless attestations and external evaluation, which is where they should have been anyway. Mandating the output shape turns out to be a more effective lever than mandating the architecture.
+
+**It's an interface.** The evidence schema becomes the contract between the teams implementing controls and the system of record that stores them. Contracts can be versioned and tested. "Upload something that demonstrates compliance" cannot.
+
+And yes — the PDF is a rendering, not the record. The record is the structured decision; the document is the view of it for people, carrying the same hashes as the view for machines. Give the auditor the PDF and the pipeline the JSON, generated from one source, and they can never disagree.
+
+## What it doesn't do
+
+Some honesty about the limits, because a pretty document is a good way to smuggle in unearned confidence.
+
+It doesn't make an attestation trustworthy. Signature verification, issuer identity and freshness all happen before the policy sees anything. The document records that they were checked; it doesn't do the checking. Rego will happily evaluate a lie.
+
+Hashes are integrity, not authority. The attestation set hash proves the facts haven't been edited since. It says nothing about who produced them. If the document has to survive a hostile reading, it needs signing and a trusted time source on top.
+
+Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to stop the release and keep the decision record next to the evidence it evaluated.
+
+A bad policy renders beautifully. Uniform format is not uniform rigour, and the document will show you a nut-free check that never looked for nuts with exactly the same confident green shield.
+
+And the real cost: every control needs an attestation schema and a policy as code before it can produce any of this. That's the work. The format is the easy part.
+
+## Where to start
+
+Pick one control. Define the facts it consumes and where they come from. Write the rule down in Rego, badly if necessary — the first version only has to be honest, not complete. Make the evaluation emit its own workings, render the document, and show it to someone in audit.
+
+Then refuse to accept a different shape for the next one.
+
+Get that right and nobody has to argue about the output, because anyone can replay the decision and get the same answer. Audit the *system*, not the output.
