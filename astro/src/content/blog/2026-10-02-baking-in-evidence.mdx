@@ -25,7 +25,7 @@ If you were to pick a release at random in a large regulated organisation and lo
 | Sufficient testing was undertaken | [Test Execution and Sign-Off](https://sdlc-common-controls.finos.org/mitigations/mi-16_test-execution.html) | PDF    | automated | JUnit reports demonstrating some tests were executed         |
 | SBOM available                    | [Component Inventory](https://sdlc-common-controls.finos.org/mitigations/mi-9-component-inventory.html)     | .xlsx  | manual    | Provenance unknown - we don't know who generated this or how |
 
-None of these are obviously provable to apply to the same artifact. How do I know the tests that were run are relevant to the artefact we're deploying?
+None of these are obviously provable to apply to the same artifact. How do I know the tests that were run are relevant to the artifact we're deploying?
 
 Each one has a different format and might be highly technical in nature. A typical PR log will have Git SHAs and branch names, something a non-technical auditor might not recognise. It's not obvious that the list of SHAs relates to the artifact being deployed. Perhaps worse, none of these describe the rules by which compliance can be determined. The list of PRs doesn't include a description that "all code has been through a PR" or that "no author can be the reviewer". That second part is hidden in the runtime policy enforcmcent of branch protection... or not. The point is, no one can really tell by just looking at the evidence. We need more.
 
@@ -47,9 +47,9 @@ To be able to independently verify and re-check a decision, and to be able to do
 
 Read that list again and notice what isn't in it. Nothing specific to a control. Nothing about code review, test coverage or CVEs.
 
-> It's because there are **no control-specific items** in the list, that we can create a single evidence format that will satisfy an auditor for **any control**.
+> It's because there are **no control-specific items** in the list that we can create a single evidence format that will satisfy an auditor for **any control**.
 
-## The Baking Example
+## The Bakery Example
 
 The bakery example is useful as the production line is very similar to the software supply chain. Imagine the chef who is baking a batch of cakes. She wants to demonstrate the batch is allergen free so she can sell to the local millennials.
 
@@ -237,6 +237,18 @@ Notice that the evidence itself is versioned and independently verifiable. Every
 
 **It's an interface**. The evidence schema becomes the contract between the teams implementing controls and the system of record that stores them. Contracts can be versioned and tested.
 
-This does have limits though. It doesn't make an attestation **trustworthy**. Ensuring that the provenance and guarneteeing that attestations are made form trusted authorities is still a responsbility of the operating system. For example, allowing a development team to make attestations invites the question of "can we trust them?" where as running from a centralised secure pipeline may give more confidence. Digitial signatures, minimising trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
+## You Still Need Trust
+
+This does have limits though. It doesn't make an attestation **trustworthy**. Ensuring that the provenance and guarneteeing that attestations are made form trusted authorities is still a responsbility of the system in which the controls operate. For example, allowing a development team to make attestations invites the question of "can we trust them?" where as running from a centralised secure pipeline may give more confidence. Digitial signatures, minimizing trusted authorities, applying zero-trust principles and fingerprinting are all techniques we can use to improve the trustworthiness of attestations.
 
 Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to enforce a consequence. This is the difference between a Policy Decision Point (PDP) and a Policy Enforcement Point (PEP).
+
+## Where to Start
+
+Pick one control. Write down the facts it consumes and where each one comes from. Write the rule in Rego — badly, if necessary, the first version only has to be honest, not complete. Make the evaluation emit its own workings rather than a verdict, render the document, and put it in front of someone in audit.
+
+Then refuse to accept a different shape for the next control.
+
+The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once, and every control you move onto it makes the next conversation with audit shorter rather than longer.
+
+Get that right and nobody argues about the output any more, because anyone can replay the decision and get the same answer. Audit the *system*, not the output.
