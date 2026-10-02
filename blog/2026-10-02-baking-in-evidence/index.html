@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.18.2"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-1PVLDLDJQN"></script><script>(function(){const gaId = "G-1PVLDLDJQN";
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    })();</script><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/blog/2026-10-02-baking-in-evidence/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Baking in Evidence</title><meta name="title" content="Baking in Evidence"><meta name="description" content="Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on..."><meta name="keywords" content="Rego, OPA, attestations, evidence, unified evidence format, policy as code, controls engineering, software supply chain, bakery"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/blog/2026-10-02-baking-in-evidence/"><meta property="og:title" content="Baking in Evidence"><meta property="og:description" content="Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on..."><meta property="og:image" content="https://baddotrobot.com/images/heroes/baking-in-evidence-hero.jpg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/blog/2026-10-02-baking-in-evidence/"><meta property="twitter:title" content="Baking in Evidence"><meta property="twitter:description" content="Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on..."><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/baking-in-evidence-hero.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Baking in Evidence","description":"Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on...","datePublished":"2026-05-12T00:00:00.000Z","image":"https://baddotrobot.com/images/heroes/baking-in-evidence-hero.jpg","url":"https://baddotrobot.com/blog/2026-10-02-baking-in-evidence/","author":{"@type":"Person","name":"Toby Weston","url":"https://baddotrobot.com"},"publisher":{"@type":"Person","name":"bad.robot"}}</script><link rel="stylesheet" href="/_astro/index.BCB_f8XX.css">
+<style>.giscus-wrapper[data-astro-cid-2s6z27su]{margin-top:3rem;padding-top:0}.giscus-divider[data-astro-cid-2s6z27su]{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}.giscus-divider[data-astro-cid-2s6z27su]:before,.giscus-divider[data-astro-cid-2s6z27su]:after{content:"";flex:1;height:1px;background:var(--border)}.giscus-divider-label[data-astro-cid-2s6z27su]{text-transform:uppercase;letter-spacing:.2em;color:var(--accent);font-size:.75rem;font-weight:600;white-space:nowrap}.giscus[data-astro-cid-2s6z27su],.giscus-frame[data-astro-cid-2s6z27su]{width:100%}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.CJsBr_rl.css"><style>.cte-button[data-astro-cid-djr4ip6f]{border:0;padding:0;background:transparent;cursor:zoom-in}.cte-dialog[data-astro-cid-djr4ip6f]{border:0;padding:0;background:#000000d9;width:min(96vw,1200px);max-height:96vh}.cte-dialog[data-astro-cid-djr4ip6f]::backdrop{background:#0009}.cte-frame[data-astro-cid-djr4ip6f]{padding:24px}.cte-image[data-astro-cid-djr4ip6f]{display:block;width:100%;height:auto;max-height:88vh;-o-object-fit:contain;object-fit:contain;border-radius:8px}.cte-dialog--tall[data-astro-cid-djr4ip6f]{width:min(96vw,1440px)}.cte-dialog--tall[data-astro-cid-djr4ip6f] .cte-frame[data-astro-cid-djr4ip6f]{max-height:96vh;overflow:auto}.cte-dialog--tall[data-astro-cid-djr4ip6f] .cte-image[data-astro-cid-djr4ip6f]{max-height:none}.cte-close[data-astro-cid-djr4ip6f]{position:absolute;top:12px;right:16px;width:40px;height:40px;border-radius:999px;border:0;background:#0009;color:#fff;font-size:1.75rem;cursor:pointer}
+</style><style>.chef-mascot[data-astro-cid-dvg5deyl]{aspect-ratio:1;border-radius:50%;overflow:hidden;background:#fff;border:3px solid #1b1b2f;isolation:isolate}.chef-mascot[data-astro-cid-dvg5deyl] img{width:100%;height:100%;-o-object-fit:cover;object-fit:cover;display:block;margin:0;border-radius:0}
+</style><style>.example-callout[data-astro-cid-jil2q4ul]{position:relative;display:block;margin:2rem 0 2.5rem;border-left:6px solid var(--callout-border, var(--accent));border-radius:0 10px 10px 0;background:var(--callout-bg, rgba(35, 55, 255, .1));box-shadow:0 1px 2px #0f12190f;overflow:visible}.example-callout-body[data-astro-cid-jil2q4ul]{padding:1.5rem;padding-right:clamp(1.5rem,20vw,7.5rem)}.example-callout-label[data-astro-cid-jil2q4ul]{margin:0 0 .4rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--callout-border, var(--accent))}.example-callout-content[data-astro-cid-jil2q4ul]{font-size:1em;line-height:1.6;color:rgb(var(--gray-dark))}.example-callout-content[data-astro-cid-jil2q4ul] p{margin:0 0 .75rem}.example-callout-content[data-astro-cid-jil2q4ul] p:last-child{margin-bottom:0}.example-callout-mascot[data-astro-cid-jil2q4ul]{position:absolute;right:1.25rem;top:50%;transform:translateY(-50%);width:5.5rem;aspect-ratio:1;filter:drop-shadow(0 3px 6px rgba(15,18,25,.2))}.example-callout-mascot[data-astro-cid-jil2q4ul] .chef-mascot{width:100%;height:100%}.example-callout--blue[data-astro-cid-jil2q4ul]{--callout-bg: #dde1f8;--callout-border: #2b3a9e}.example-callout--green[data-astro-cid-jil2q4ul]{--callout-bg: #dcf3e3;--callout-border: #1f7a44}.example-callout--amber[data-astro-cid-jil2q4ul]{--callout-bg: #faecd2;--callout-border: #9a6a0a}.example-callout--rose[data-astro-cid-jil2q4ul]{--callout-bg: #f8dee4;--callout-border: #a02a52}@media(max-width:640px){.example-callout-body[data-astro-cid-jil2q4ul]{padding:1.25rem 5.5rem 1.25rem 1.25rem}.example-callout-mascot[data-astro-cid-jil2q4ul]{width:4rem;right:.75rem}}
+</style></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">   <div class="py-12"> <article class=""> <!--{heroImage && (--> <!--  <div class="hero-image mb-8">--> <!--    <img src={heroImage} alt={title} class="w-full h-auto rounded-lg shadow-lg" />--> <!--  </div>--> <!--)}--> <div class="article-title-section mb-8"> <p class="detail-kicker">Blog</p> <h1 class="article-title-section h1">Baking in Evidence</h1> <p class="article-subtitle">Every control you operate should produce the same evidence</p> <p class="article-description">Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on...</p> </div> <div class="article-meta"> <div class="article-date"> <strong>Published:</strong> <time datetime="2026-05-12T00:00:00.000Z"> May 12, 2026 </time> </div>  </div> <div class="prose">  <p>Continuing from the previous post on <a href="/blog/2026-10-02-attestations-and-evidence/">attestations and evidence</a>, this post looks deeper into defining policy as code, evaluating and producing a consistent evidence format that shows <em>why</em> a control passed or failed.</p>
+<p>A bakery is a useful way to explore the software supply-chain and policies keeping the output compliant. Imagine the bakery…</p>
+<h2 id="three-controls-three-formats">Three controls, three formats</h2>
+<p>Pick a release at random in a large regulated organisation and look at how its controls were closed. You’ll find something like this.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Control</th><th>Format</th><th>Closure</th></tr></thead><tbody><tr><td>Source code review</td><td>JSON</td><td>automated</td></tr><tr><td>Test evaluation report</td><td>PDF</td><td>automated</td></tr><tr><td>Implementation and rollback</td><td>.xlsx</td><td>manual</td></tr></tbody></table>
+<p>Three controls on one release, three formats, one of them a spreadsheet someone emailed. All three say PASS.</p>
+<p>None of them says what was checked, against which version of which rule, using what inputs. The JSON is a payload from whichever tool happened to close the control. The PDF is a screenshot of a dashboard that has since been re-rendered. The spreadsheet is a human asserting a conclusion.</p>
+<p>The problem isn’t the volume of evidence. It’s that every control invented its own shape, so the auditor has to learn all of them and still ends up taking the result on trust. A ticket stub, not CCTV.</p>
+<h2 id="what-has-to-be-in-it">What has to be in it</h2>
+<p>Work backwards from the chain and the contents are forced. To re-check a decision, and to be able to re-check it in three years, you need:</p>
+<ul>
+<li>the artifact it was about, and its fingerprint</li>
+<li>the facts that were used, and where each one came from</li>
+<li>the rule that was applied, verbatim and versioned</li>
+<li>how the rule met the facts, step by step</li>
+<li>the result, and when it was reached</li>
+</ul>
+<p>Read that list again and notice what isn’t in it. Nothing about cakes. Nothing about code review, or CVEs, or test coverage. There’s no control-specific item on that list, which is precisely why one format can serve every control you operate.</p>
+<h2 id="one-document-three-sections">One document, three sections</h2>
+<p>Here’s that list rendered for a single control. The bakery is a fictional one, but the structure is the point: a header that states the verdict and binds the document to an artifact, then <strong>attestations</strong>, <strong>policy</strong> and <strong>evaluation</strong>.</p>
+<button id="cte-hg62fev-trigger" type="button" class="cte-button" aria-haspopup="dialog" aria-controls="cte-hg62fev-dialog" data-cte-trigger data-cte-id="cte-hg62fev" data-astro-cid-djr4ip6f> <img src="/_astro/unified-evidence-bakery.lzX-WhgL_Z2lmSEi.webp" alt="A unified evidence document for a cake batch release. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result." data-astro-cid-djr4ip6f="true" loading="lazy" decoding="async" fetchpriority="auto" width="2768" height="4532"> </button> <dialog id="cte-hg62fev-dialog" class="cte-dialog cte-dialog--tall" aria-label="A unified evidence document for a cake batch release. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result." data-cte-dialog="cte-hg62fev" data-astro-cid-djr4ip6f> <button type="button" class="cte-close" aria-label="Close image" data-astro-cid-djr4ip6f>&times;</button> <div class="cte-frame" data-astro-cid-djr4ip6f> <img src="/_astro/unified-evidence-bakery.lzX-WhgL_Z2lmSEi.webp" alt="A unified evidence document for a cake batch release. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result." data-astro-cid-djr4ip6f="true" loading="lazy" decoding="async" fetchpriority="auto" width="2768" height="4532" class="cte-image"> </div> </dialog> <script type="module">
+  if (!window.__cteBound) {
+    window.__cteBound = true;
+
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-cte-trigger]');
+      if (trigger) {
+        const cteId = trigger.getAttribute('data-cte-id');
+        const dialog = cteId
+          ? document.querySelector(`dialog[data-cte-dialog="${cteId}"]`)
+          : null;
+        if (dialog) dialog.showModal();
+        return;
+      }
+
+      const closeButton = event.target.closest('.cte-close');
+      if (closeButton) {
+        const dialog = closeButton.closest('dialog');
+        if (dialog) dialog.close();
+        return;
+      }
+
+      const dialog = event.target.closest('dialog.cte-dialog');
+      if (dialog) {
+        const frame = dialog.querySelector('.cte-frame');
+        // Treat clicks on dialog shell or frame padding as backdrop intent.
+        if (event.target === dialog || event.target === frame) {
+          dialog.close();
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const openDialog = document.querySelector('dialog.cte-dialog[open]');
+        if (openDialog) openDialog.close();
+      }
+    });
+  }
+</script> 
+<p>Click it to read the detail. The three sections are worth taking one at a time.</p>
+<h3 id="attestations-what-was-observed">Attestations: what was observed</h3>
+<aside class="example-callout example-callout--blue" data-astro-cid-jil2q4ul> <div class="example-callout-body" data-astro-cid-jil2q4ul>  <div class="example-callout-content" data-astro-cid-jil2q4ul> <p>The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added, and who signed the batch off. None of those statements know anything about allergen policy. They’re just a record of what happened.</p> </div> </div> <div class="example-callout-mascot" data-astro-cid-jil2q4ul> <div class="chef-mascot" data-astro-cid-dvg5deyl> <img src="/_astro/chef-mascot.fBkip4fU_2h7qU4.webp" srcset="/_astro/chef-mascot.fBkip4fU_ZQOFzw.webp 2x, /_astro/chef-mascot.fBkip4fU_LGBhv.webp 3x" alt="Illustration of a chef giving a thumbs up" loading="lazy" decoding="async" data-astro-cid-dvg5deyl="true" fetchpriority="auto" width="88" height="88"> </div>  </div> </aside> 
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;artifact&quot;</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">&quot;id&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;cake-batch-2026-05-07-001&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;batch-id&quot;</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;attestations&quot;</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;id&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;att-002&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;allergens&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;field&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;allergens&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;value&quot;</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">&quot;milk&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;eggs&quot;</span><span style="color:#E1E4E8">], </span><span style="color:#79B8FF">&quot;source&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;ingredient classifier&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;observed_at&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;2026-05-07T09:12:05Z&quot;</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;id&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;att-003&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;bake&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;field&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;temp_c&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;value&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;source&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;oven telemetry&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;observed_at&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;2026-05-07T09:44:10Z&quot;</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;id&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;att-004&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;bake&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;field&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;minutes&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;value&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">32</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;source&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;oven telemetry&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;observed_at&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;2026-05-07T10:16:10Z&quot;</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">  ]</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Three of the six are shown; the document lists them all. Two of the six (the decorations and the signer) are greyed out in the rendering because this policy never reads them. That’s deliberate. The attestation set records what was observed, not what was convenient, and an auditor can see at a glance which observations the decision actually rested on.</p>
+<p>Each one names its source. “Oven telemetry” is a different kind of claim to “baker log”, and the document doesn’t flatten that distinction away.</p>
+<h3 id="policy-what-should-have-been-true">Policy: what should have been true</h3>
+<p>Printing the rule inside the evidence is the move that makes the document self-contained. Nobody has to work out which version of the policy was live when the batch was baked, or go and find a wiki page that’s been edited twice since.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>package bakery</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Facts, projected from the attestation set. Each one remembers which attestation it came from.</span></span>
+<span class="line"><span>fact[att.field] := {&quot;value&quot;: att.value, &quot;from&quot;: att.id} if {</span></span>
+<span class="line"><span>	some att in input.attestations</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>default nut_free := false</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>nut_free if not &quot;nuts&quot; in fact.allergens.value</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>default temp_ok := false</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>temp_ok if {</span></span>
+<span class="line"><span>	fact.temp_c.value &gt;= 175</span></span>
+<span class="line"><span>	fact.temp_c.value &lt;= 200</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>default time_ok := false</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>time_ok if {</span></span>
+<span class="line"><span>	fact.minutes.value &gt;= 25</span></span>
+<span class="line"><span>	fact.minutes.value &lt;= 40</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># The clause table: what each rule means, what it drew on, and what was actually evaluated.</span></span>
+<span class="line"><span>clauses := [</span></span>
+<span class="line"><span>	{&quot;clause&quot;: &quot;Nut allergens absent&quot;, &quot;predicate&quot;: &quot;nut_free&quot;, &quot;holds&quot;: nut_free,</span></span>
+<span class="line"><span>		&quot;inputs&quot;: [fact.allergens.from],</span></span>
+<span class="line"><span>		&quot;expression&quot;: sprintf(`not &quot;nuts&quot; in %v`, [fact.allergens.value])},</span></span>
+<span class="line"><span>	{&quot;clause&quot;: &quot;Bake temperature in range&quot;, &quot;predicate&quot;: &quot;temp_ok&quot;, &quot;holds&quot;: temp_ok,</span></span>
+<span class="line"><span>		&quot;inputs&quot;: [fact.temp_c.from],</span></span>
+<span class="line"><span>		&quot;expression&quot;: sprintf(&quot;%v &gt;= 175 and %v &lt;= 200&quot;, [fact.temp_c.value, fact.temp_c.value])},</span></span>
+<span class="line"><span>	{&quot;clause&quot;: &quot;Bake time in range&quot;, &quot;predicate&quot;: &quot;time_ok&quot;, &quot;holds&quot;: time_ok,</span></span>
+<span class="line"><span>		&quot;inputs&quot;: [fact.minutes.from],</span></span>
+<span class="line"><span>		&quot;expression&quot;: sprintf(&quot;%v &gt;= 25 and %v &lt;= 40&quot;, [fact.minutes.value, fact.minutes.value])},</span></span>
+<span class="line"><span>]</span></span></code></pre>
+<p>Two things are doing work here.</p>
+<p>The <code>fact</code> rule projects the attestation set into something the clauses can read, and each fact remembers the attestation it came from. That <code>from</code> field is what later lets the evidence cite <code>att-003</code> rather than just asserting that the temperature was 180.</p>
+<p>The <code>clauses</code> table is the policy describing itself. Each entry carries the human-readable statement, the attestations it drew on, and a rendered expression with the real values substituted in. It costs a few lines and it’s the difference between a document that shows its workings and one that doesn’t.</p>
+<h3 id="evaluation-the-workings">Evaluation: the workings</h3>
+<p>The third section is the one almost no real evidence has, and the reason is usually that someone tried to write it by hand afterwards.</p>
+<p>It shouldn’t be written by hand. It should be output. A second, generic package turns any clause table into a decision, and this part is the same for every control in the estate:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>package evidence</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>import data.bakery</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>verdict(true) := &quot;Pass&quot;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>verdict(false) := &quot;Fail&quot;</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>default compliant := false</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>compliant if every c in bakery.clauses {</span></span>
+<span class="line"><span>	c.holds</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>status := &quot;Compliant&quot; if compliant</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>status := &quot;Non-compliant&quot; if not compliant</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>steps := [object.union(object.remove(c, [&quot;holds&quot;]), {</span></span>
+<span class="line"><span>	&quot;step&quot;: i + 1,</span></span>
+<span class="line"><span>	&quot;result&quot;: verdict(c.holds),</span></span>
+<span class="line"><span>}) |</span></span>
+<span class="line"><span>	some i, c in bakery.clauses</span></span>
+<span class="line"><span>]</span></span></code></pre>
+<p>Run it:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">opa</span><span style="color:#9ECBFF"> eval</span><span style="color:#79B8FF"> --data</span><span style="color:#9ECBFF"> bakery.rego</span><span style="color:#79B8FF"> --data</span><span style="color:#9ECBFF"> evidence.rego</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  --input</span><span style="color:#9ECBFF"> attestations.json</span><span style="color:#9ECBFF"> &#39;data.evidence.decision&#39;</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;status&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Compliant&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;steps&quot;</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;step&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;clause&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Nut allergens absent&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;predicate&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;nut_free&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;inputs&quot;</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">&quot;att-002&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;expression&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;not </span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF">nuts</span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF"> in [</span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF">milk</span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF">, </span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF">eggs</span><span style="color:#79B8FF">\&quot;</span><span style="color:#9ECBFF">]&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;result&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Pass&quot;</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;step&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;clause&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Bake temperature in range&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;predicate&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;temp_ok&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;inputs&quot;</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">&quot;att-003&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;expression&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;180 &gt;= 175 and 180 &lt;= 200&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;result&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Pass&quot;</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#79B8FF">&quot;step&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;clause&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Bake time in range&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;predicate&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;time_ok&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;inputs&quot;</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">&quot;att-004&quot;</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;expression&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;32 &gt;= 25 and 32 &lt;= 40&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;result&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Pass&quot;</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">  ]</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>The rows in that third section of the document are that output, rendered. Not a reconstruction, not a narrative someone typed into a ticket afterwards. The workings are a by-product of the decision, which is the only way they can be trusted to match it.</p>
+<p>Note where the split falls. <code>bakery.rego</code> is small, control-specific and reviewable — it’s the thing that should go through governance. <code>evidence.rego</code> is infrastructure, written once. The conjunction (“compliant only if all clauses pass”) lives in the infrastructure too, because it’s the same sentence for every control.</p>
+<h2 id="when-it-fails">When it fails</h2>
+<p>Now run the same control over a batch where the oven drifted to 210°C.</p>
+<button id="cte-w4qy2yb-trigger" type="button" class="cte-button" aria-haspopup="dialog" aria-controls="cte-w4qy2yb-dialog" data-cte-trigger data-cte-id="cte-w4qy2yb" data-astro-cid-djr4ip6f> <img src="/_astro/unified-evidence-bakery-fail.l87nK8nq_Z1Gxspl.webp" alt="An evidence document for a cake batch release with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass, and the overall row reads Non-compliant." data-astro-cid-djr4ip6f="true" loading="lazy" decoding="async" fetchpriority="auto" width="2768" height="1406"> </button> <dialog id="cte-w4qy2yb-dialog" class="cte-dialog" aria-label="An evidence document for a cake batch release with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass, and the overall row reads Non-compliant." data-cte-dialog="cte-w4qy2yb" data-astro-cid-djr4ip6f> <button type="button" class="cte-close" aria-label="Close image" data-astro-cid-djr4ip6f>&times;</button> <div class="cte-frame" data-astro-cid-djr4ip6f> <img src="/_astro/unified-evidence-bakery-fail.l87nK8nq_Z1Gxspl.webp" alt="An evidence document for a cake batch release with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass, and the overall row reads Non-compliant." data-astro-cid-djr4ip6f="true" loading="lazy" decoding="async" fetchpriority="auto" width="2768" height="1406" class="cte-image"> </div> </dialog> <script type="module">
+  if (!window.__cteBound) {
+    window.__cteBound = true;
+
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest('[data-cte-trigger]');
+      if (trigger) {
+        const cteId = trigger.getAttribute('data-cte-id');
+        const dialog = cteId
+          ? document.querySelector(`dialog[data-cte-dialog="${cteId}"]`)
+          : null;
+        if (dialog) dialog.showModal();
+        return;
+      }
+
+      const closeButton = event.target.closest('.cte-close');
+      if (closeButton) {
+        const dialog = closeButton.closest('dialog');
+        if (dialog) dialog.close();
+        return;
+      }
+
+      const dialog = event.target.closest('dialog.cte-dialog');
+      if (dialog) {
+        const frame = dialog.querySelector('.cte-frame');
+        // Treat clicks on dialog shell or frame padding as backdrop intent.
+        if (event.target === dialog || event.target === frame) {
+          dialog.close();
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        const openDialog = document.querySelector('dialog.cte-dialog[open]');
+        if (openDialog) openDialog.close();
+      }
+    });
+  }
+</script> 
+<p>Same document, same sections, same code path. One expression now reads <code>210 &gt;= 175 and 210 &lt;= 200</code>, one verdict flips, and the overall status follows.</p>
+<p>Three things fall out of that, and they’re the whole argument for generating evidence rather than curating it.</p>
+<p>Failure costs the same as success. There’s no separate “exception process” that produces a different artefact, because there’s no separate code path.</p>
+<p>The reason is derived, not authored. Step 2 says why. Nobody writes a justification, which means nobody can write a convenient one.</p>
+<p>And the attestation set hash changed, because the facts changed. The document is bound to the inputs that produced it.</p>
+<h2 id="why-it-has-to-be-the-same-document-every-time">Why it has to be the same document every time</h2>
+<p>A uniform format isn’t tidiness. It buys specific things.</p>
+<p><strong>One format, N controls.</strong> The auditor learns the document once. Onboarding cost is paid a single time rather than per control, and the comparison between controls becomes possible at all.</p>
+<p><strong>The decision is falsifiable.</strong> Canonical inputs, verbatim policy, both hashed. Anyone can re-run it and either get the same answer or not. That’s a much stronger position than “trust the tool that closed the control”, and it’s the difference between evidence and assertion.</p>
+<p><strong>The rule is on the page.</strong> This one is underrated. When the policy is printed in the evidence, an auditor can challenge the <em>rule</em> rather than the outcome. Is 175–200°C actually the right range? That’s a far more useful conversation than relitigating whether the control was closed, and today it’s nearly impossible to have, because the rule is buried in a tool nobody outside the team can read.</p>
+<p><strong>It works as a fitness function.</strong> You cannot produce this document from a screenshot. You cannot produce it if the thing collecting the evidence also decides the outcome, because then there’s nothing left to show as workings. Adopting the format forces controls towards declarative, opinionless attestations and external evaluation, which is where they should have been anyway. Mandating the output shape turns out to be a more effective lever than mandating the architecture.</p>
+<p><strong>It’s an interface.</strong> The evidence schema becomes the contract between the teams implementing controls and the system of record that stores them. Contracts can be versioned and tested. “Upload something that demonstrates compliance” cannot.</p>
+<p>And yes — the PDF is a rendering, not the record. The record is the structured decision; the document is the view of it for people, carrying the same hashes as the view for machines. Give the auditor the PDF and the pipeline the JSON, generated from one source, and they can never disagree.</p>
+<h2 id="what-it-doesnt-do">What it doesn’t do</h2>
+<p>Some honesty about the limits, because a pretty document is a good way to smuggle in unearned confidence.</p>
+<p>It doesn’t make an attestation trustworthy. Signature verification, issuer identity and freshness all happen before the policy sees anything. The document records that they were checked; it doesn’t do the checking. Rego will happily evaluate a lie.</p>
+<p>Hashes are integrity, not authority. The attestation set hash proves the facts haven’t been edited since. It says nothing about who produced them. If the document has to survive a hostile reading, it needs signing and a trusted time source on top.</p>
+<p>Deciding and enforcing are still separate jobs. OPA can say whether the release satisfies the policy. Something else has to stop the release and keep the decision record next to the evidence it evaluated.</p>
+<p>A bad policy renders beautifully. Uniform format is not uniform rigour, and the document will show you a nut-free check that never looked for nuts with exactly the same confident green shield.</p>
+<p>And the real cost: every control needs an attestation schema and a policy as code before it can produce any of this. That’s the work. The format is the easy part.</p>
+<h2 id="where-to-start">Where to start</h2>
+<p>Pick one control. Define the facts it consumes and where they come from. Write the rule down in Rego, badly if necessary — the first version only has to be honest, not complete. Make the evaluation emit its own workings, render the document, and show it to someone in audit.</p>
+<p>Then refuse to accept a different shape for the next one.</p>
+<p>Get that right and nobody has to argue about the output, because anyone can replay the decision and get the same answer. Audit the <em>system</em>, not the output.</p>  </div> <div class="giscus-wrapper" data-astro-cid-2s6z27su><div class="giscus-divider" data-astro-cid-2s6z27su><span class="giscus-divider-label" data-astro-cid-2s6z27su>Discussion</span></div><div class="giscus" id="giscus-container" data-astro-cid-2s6z27su></div></div><script type="module">const repo = "tobyweston/blog";
+const repoId = "MDEwOlJlcG9zaXRvcnkzMzUyNTYw";
+const category = "General";
+const categoryId = "DIC_kwDOADMn8M4C3bWR";
+
+    function loadGiscus() {
+      const container = document.getElementById('giscus-container');
+      if (!container) return;
+
+      const script = document.createElement('script');
+      script.src            = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo',              repo);
+      script.setAttribute('data-repo-id',           repoId);
+      script.setAttribute('data-category',          category);
+      script.setAttribute('data-category-id',       categoryId);
+      script.setAttribute('data-mapping',           'pathname');
+      script.setAttribute('data-strict',            '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata',     '0');
+      script.setAttribute('data-input-position',    'top');
+      script.setAttribute('data-theme',             'light');
+      script.setAttribute('data-lang',              'en');
+      script.setAttribute('data-loading',           'lazy');
+      script.crossOrigin    = 'anonymous';
+      script.async          = true;
+      container.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadGiscus);
+    } else {
+      loadGiscus();
+    }
+  </script> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html>

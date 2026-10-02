@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/x-icon" href="/favicon.ico"><meta name="generator" content="Astro v5.18.2"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-1PVLDLDJQN"></script><script>(function(){const gaId = "G-1PVLDLDJQN";
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gaId);
+    })();</script><!-- Canonical URL --><link rel="canonical" href="https://baddotrobot.com/blog/2026-07-18-why-tdd-is-dead/"><!-- RSS Feed --><link rel="alternate" type="application/rss+xml" title="bad.robot" href="/rss.xml"><!-- Primary Meta Tags --><title>Why TDD is Dead</title><meta name="title" content="Why TDD is Dead"><meta name="description" content="good robots do what they're told"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://baddotrobot.com/blog/2026-07-18-why-tdd-is-dead/"><meta property="og:title" content="Why TDD is Dead"><meta property="og:description" content="good robots do what they're told"><meta property="og:image" content="https://baddotrobot.com/images/heroes/controls-engineering-hero.jpeg"><meta property="og:site_name" content="bad.robot"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://baddotrobot.com/blog/2026-07-18-why-tdd-is-dead/"><meta property="twitter:title" content="Why TDD is Dead"><meta property="twitter:description" content="good robots do what they're told"><meta property="twitter:image" content="https://baddotrobot.com/images/heroes/controls-engineering-hero.jpeg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Why TDD is Dead","description":"","datePublished":"2026-07-18T00:00:00.000Z","image":"https://baddotrobot.com/images/heroes/controls-engineering-hero.jpeg","url":"https://baddotrobot.com/blog/2026-07-18-why-tdd-is-dead/","author":{"@type":"Person","name":"Toby Weston","url":"https://baddotrobot.com"},"publisher":{"@type":"Person","name":"bad.robot"}}</script><link rel="stylesheet" href="/_astro/index.BCB_f8XX.css">
+<style>.giscus-wrapper[data-astro-cid-2s6z27su]{margin-top:3rem;padding-top:0}.giscus-divider[data-astro-cid-2s6z27su]{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}.giscus-divider[data-astro-cid-2s6z27su]:before,.giscus-divider[data-astro-cid-2s6z27su]:after{content:"";flex:1;height:1px;background:var(--border)}.giscus-divider-label[data-astro-cid-2s6z27su]{text-transform:uppercase;letter-spacing:.2em;color:var(--accent);font-size:.75rem;font-weight:600;white-space:nowrap}.giscus[data-astro-cid-2s6z27su],.giscus-frame[data-astro-cid-2s6z27su]{width:100%}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.CJsBr_rl.css"></head> <body class="bg-white text-gray-900"> <header class="header" data-astro-cid-3ef6ksr2> <div class="header-container" data-astro-cid-3ef6ksr2> <div class="logo-section" data-astro-cid-3ef6ksr2> <a href="/" class="logo-link" data-astro-cid-3ef6ksr2> <img src="/_astro/robot-logo_105x132.N1ZQY9mA_Zj02tT.webp" alt="bad.robot logo" data-astro-cid-3ef6ksr2="true" loading="lazy" decoding="async" fetchpriority="auto" width="84" height="106" class="logo-image"> <div class="logo-text-block" data-astro-cid-3ef6ksr2> <h1 class="logo-title logo-text header-logo-text" data-astro-cid-3ef6ksr2>bad.robot</h1> <h2 class="logo-subtitle logo-subtitle-text header-subtitle" data-astro-cid-3ef6ksr2>good robots do what they&#39;re told</h2> </div> </a> </div> <nav class="nav" data-astro-cid-3ef6ksr2> <a href="/blog" data-astro-cid-3ef6ksr2>Blog</a> <a href="/book" data-astro-cid-3ef6ksr2>Books</a> <a href="/video" data-astro-cid-3ef6ksr2>Videos</a> <a href="/archive" data-astro-cid-3ef6ksr2>Archive</a> </nav> </div> </header>  <main id="site-main" class="mx-auto w-full max-w-6xl px-4 pt-4">   <div class="py-12"> <article class=""> <!--{heroImage && (--> <!--  <div class="hero-image mb-8">--> <!--    <img src={heroImage} alt={title} class="w-full h-auto rounded-lg shadow-lg" />--> <!--  </div>--> <!--)}--> <div class="article-title-section mb-8"> <p class="detail-kicker">Blog</p> <h1 class="article-title-section h1">Why TDD is Dead</h1> <p class="article-subtitle">Say fareware to the golden age of test driven developemnt</p>  </div> <div class="article-meta"> <div class="article-date"> <strong>Published:</strong> <time datetime="2026-07-18T00:00:00.000Z"> Jul 18, 2026 </time> </div>  </div> <div class="prose">  <p>For many years, I’ve thought of myself as a TDD evangalist. I’ve put in my 10,000 hours of deliberate practice with TDD and have found it to be an extremely powerful too when building software. I’ve been using and teaching the technique since the early days of eXteme Programming and have worked with many world class developers doing so. I know its a tool much more about design than it is about testing. I love it.</p>
+<p>So why am talking about the death of TDD?</p>
+<h1 id="ai">AI</h1>
+<p>It started with skills. As I started using AI when coding my development practice began to change. I started with basic interactions and auto complete and as the tools evolved and my confidence in them rose, I started to leverage more and more techniques to kind of pre-train the coding assistance to produce code that I liked.</p>
+<p>For example, I built up the usual catalouge of <code>SKILLS.md</code>s, mostly containing guidance from the golden era of TDD.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="plaintext"><code><span class="line"><span>---</span></span>
+<span class="line"><span>name: xp-programmer</span></span>
+<span class="line"><span>description: &#39;Apply testing and extreme-programming (XP) TDD practices from the golden age of test-driven development; use whenever writing, reviewing, or refactoring unit tests or the code under test.&#39;</span></span>
+<span class="line"><span>---</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>When writing unit tests, favor stubs over mocks.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Try and tease out behavioural contracts and break up complex classes to make them easier to test with simple stubs.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>This often means passing in collaborators as interfaces or traits and using constructor injection to supply test doubles.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Favour modern testing techniques and libraries that encourage good test design, such as property-based testing, test data builders, and fluent assertions.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Use matchers for rich error reporting and practice a red, green, refactor workflow.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Clearly express the behavioural contract of the code under test in the test names and structure, so that the tests serve as documentation for how the code is supposed to work.</span></span></code></pre>  </div> <div class="giscus-wrapper" data-astro-cid-2s6z27su><div class="giscus-divider" data-astro-cid-2s6z27su><span class="giscus-divider-label" data-astro-cid-2s6z27su>Discussion</span></div><div class="giscus" id="giscus-container" data-astro-cid-2s6z27su></div></div><script type="module">const repo = "tobyweston/blog";
+const repoId = "MDEwOlJlcG9zaXRvcnkzMzUyNTYw";
+const category = "General";
+const categoryId = "DIC_kwDOADMn8M4C3bWR";
+
+    function loadGiscus() {
+      const container = document.getElementById('giscus-container');
+      if (!container) return;
+
+      const script = document.createElement('script');
+      script.src            = 'https://giscus.app/client.js';
+      script.setAttribute('data-repo',              repo);
+      script.setAttribute('data-repo-id',           repoId);
+      script.setAttribute('data-category',          category);
+      script.setAttribute('data-category-id',       categoryId);
+      script.setAttribute('data-mapping',           'pathname');
+      script.setAttribute('data-strict',            '0');
+      script.setAttribute('data-reactions-enabled', '1');
+      script.setAttribute('data-emit-metadata',     '0');
+      script.setAttribute('data-input-position',    'top');
+      script.setAttribute('data-theme',             'light');
+      script.setAttribute('data-lang',              'en');
+      script.setAttribute('data-loading',           'lazy');
+      script.crossOrigin    = 'anonymous';
+      script.async          = true;
+      container.appendChild(script);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadGiscus);
+    } else {
+      loadGiscus();
+    }
+  </script> </article> </div>  </main> <footer class="py-8 border-t border-gray-200 mt-12"> <div class="container mx-auto px-4 text-center"> <p class="text-xs text-gray-600">&copy; 2008-2026 Toby Weston. All rights reserved. (see some old <a class="text-gray-600 hover:text-sky-600" href="/code/">code</a>)</p> </div> </footer> </body></html>
