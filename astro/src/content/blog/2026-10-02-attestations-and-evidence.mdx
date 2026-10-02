@@ -1,7 +1,7 @@
 ---
 title: "Attestations and Evidence"
 subTitle: "A practical vocabulary for making software controls provable"
-description: "Attestations and evidence are often referred to in GRC circles. They are related but not interchangeable. This post look at definitions, interpretations and how, along with evaluations they can they build trust in governance."
+description: "Attestations and evidence are often referred to in GRC circles. They are related but not interchangeable. This post looks at definitions, interpretations and how, along with evaluations, they build trust in governance."
 pubDate: "2026-05-02"
 heroImage: "/images/heroes/attestations-and-evidence-hero.jpg"
 categories: "governance controls-engineering compliance"
@@ -20,26 +20,26 @@ The problem is that most of the time, the evidence doesn't have any context. It'
 
 ## Evidence != Proof
 
-If you want to check I traveled to Brighton, you could look at my train ticket but you'd have no way to know if I actually traveled. If you have actual proof, perhaps CCTV footage of me boarding and departing the train, you wouldn't actually need the ticket stub. The ticket stub is evidence, but it doesn't prove I traveled. The CCTV footage is proof.
+If you want to check I travelled to Brighton, you could look at my train ticket but you'd have no way to know if I actually travelled. If you have actual proof, perhaps CCTV footage of me boarding and departing the train, you wouldn't actually need the ticket stub. The ticket stub is evidence, but it doesn't prove I travelled. The CCTV footage is proof.
 
 In modern governance systems, if we demonstrate the control can not be avoided (e.g. show a sealed pipeline is the only way to achieve an action), then we don't need to rely on the output so much. Audit the _system_, not the output.
 
 ## Attestations
 
-Attestations in the general English sense have been a way for teams to "evidence" that they have done something (like met a control standard). We're used a human saying "I attest" or "I approve" and use it as evidence in the way it was described above. Audit functions rightly point out the waeknesses to this in the risk world - we can't rely on the human. So "attestation" becomes a nuaghty word in the GRC world and first line teams strive for more automation.
+Attestations in the general English sense have been a way for teams to "evidence" that they have done something (like met a control standard). We're used to a human saying "I attest" or "I approve" and use it as evidence in the way it was described above. Audit functions rightly point out the weaknesses of this in the risk world - we can't rely on the human. So "attestation" becomes a naughty word in the GRC world and first line teams strive for more automation.
 
 However, attestations as a term can take on a much stronger meaning when we look at SLSA and modern Governance Engineering. In this context, an attestation is much more formal.
 
-> Attestations are **trusted** and **verifiable** statements or metadata about a **software arrefact** or group of artefacts. These statements help us asnwer important compliance questions.
+> Attestations are **trusted** and **verifiable** statements or metadata about a **software artifact** or group of artifacts. These statements help us answer important compliance questions.
 
-Attestations are observations made against events. They are opinionless. They are just statements that something happened, usually against some form of artifact. For example, the **code** was _compiled_. They capture metadata about the evnt, for example, the version of the compiler used but they do not determin compliance. Attestations provide inputs needed to evalute compliance later. To be able to evalute them, you need to know the **policy**. Together this can form a cohierent set of steps to implement a contro.
+Attestations are observations made against events. They are opinionless. They are just statements that something happened, usually against some form of artifact. For example, the **code** was _compiled_. They capture metadata about the event, for example, the version of the compiler used but they do not determine compliance. Attestations provide inputs needed to evaluate compliance later. To be able to evaluate them, you need to know the **policy**. Together this can form a coherent set of steps to implement a control.
 
 To continue the example, we might have a policy which says only version 1.2 or above of the compiler is allowed. We record what version was used at the point of compilation and they later feed the policy that metadata to decide if we are compliant or not.
 
 Key points:
 
-* Attestation are facts
-* Attestations are Opinionless, they declare something has happened and don't care what impact that has on compliance
+* Attestations are facts
+* Attestations are opinionless, they declare something has happened and don't care what impact that has on compliance
 * Attestations are distinct from governance, they must be applied to policy to derive compliance
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
@@ -48,17 +48,17 @@ As an example, a Baker making cakes in a bakery might attest to the ingredients 
 
 ## Policy
 
-When we ask if a control is compliance (passes or fails our governance tests), we are _evaluating_ the control. We need to have enough information from teh attestations in order to do that. Simplisitically is result of evaluation is always pass or fail.
+When we ask if a control is compliant (passes or fails our governance tests), we are _evaluating_ the control. We need to have enough information from the attestations in order to do that. Simplistically, the result of an evaluation is always pass or fail.
 
-The way we capture the governance tests that must pass or fail, is in the **policy**. It's just a set of rules that define what is considered compliant or non-compliant. It takes the attestations as input and applies the rules to determine if the control meets the required standards. Rego is an expression language that allows us to write these rules in a structured and machine-readable way which really means we can write _policy-as-code_. When we evalute a rego policy, we pass in attestations and get a compliance status back.
+The way we capture the governance tests that must pass or fail, is in the **policy**. It's just a set of rules that define what is considered compliant or non-compliant. It takes the attestations as input and applies the rules to determine if the control meets the required standards. Rego is an expression language that allows us to write these rules in a structured and machine-readable way which really means we can write _policy-as-code_. When we evaluate a Rego policy, we pass in attestations and get a compliance status back.
 
 Key points:
 
 * Evaluations consume attestations, they do not alter them (an evaluation itself however, might produce new attestations)
-* Because attestations are artifact-bound, evaluations are made against a specific artefact or group of artefacts
+* Because attestations are artifact-bound, evaluations are made against a specific artifact or group of artifacts
 * Evaluations are always either a pass (compliant) or fail (non-compliant)
 
-The point around artifact-binding is interesting. It means evaluations prove something is true for a given artefact and that is a powerful tool when we want to demonstrate _provenance_ of artefacts, especially to a chain of compliance statements.
+The point around artifact-binding is interesting. It means evaluations prove something is true for a given artifact and that is a powerful tool when we want to demonstrate _provenance_ of artifacts, especially to a chain of compliance statements.
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
 The Baker must ensure her cakes are nut or allergen free, she might put a procedure or control in place to check the ingredient list before shipping or even employ a third party to verify the ingredient list. If the verification comes back with no nuts or allergens, the evaluation against the control has passed. She is writing a set of policies.
@@ -66,7 +66,7 @@ The Baker must ensure her cakes are nut or allergen free, she might put a proced
 
 ## Evidence
 
-Given the above, _evidence_ is the supporting documents or materials which summarise the evaluation of policy. It should be the information that helps a person or system evaluate whether a claim is true. The issue I pointed out earlier is that in many governance systems, the evidence often doesn't proof the claim. By building evidence that includes inputs, specific policy (think versioned) and the result of the evaluation, we can provide a more complete picture. Evidence like this captures the state of the system at a specific point in time, making the process becomes transparent rather than opaque. That means evidence can be replayed to easily and independently verify. Honestly, this is what auditors never knew they needed.
+Given the above, _evidence_ is the supporting documents or materials which summarise the evaluation of policy. It should be the information that helps a person or system evaluate whether a claim is true. The issue I pointed out earlier is that in many governance systems, the evidence often doesn't prove the claim. By building evidence that includes inputs, specific policy (think versioned) and the result of the evaluation, we can provide a more complete picture. Evidence like this captures the state of the system at a specific point in time, making the process transparent rather than opaque. That means evidence can be replayed and independently verified. Honestly, this is what auditors never knew they needed.
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
 A written statement of compliance showing the list of ingredients and the list of allergens, signed by the Baker (or third party), would be an example of evidence. It can be used to re-check the evaluation and would likely be stored for future inspection (for example, if the food inspector pays a visit).
