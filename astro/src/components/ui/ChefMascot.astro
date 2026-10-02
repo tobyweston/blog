@@ -1,41 +1,18 @@
 ---
 import { Image } from 'astro:assets';
-import defaultMascot from '../../assets/chef-mascot.png';
+import mascot from '../../assets/chef-mascot.png';
 
-// Circular mascot medallion used by ExampleCallout. The shipped artwork is
-// already cropped square around the chef's head, so it drops straight into the
-// circle; `position` and `zoom` are there to reframe a replacement image that
-// isn't cropped the same way.
+// Circular mascot medallion used by ExampleCallout.
 interface Props {
-	src?: ImageMetadata;
 	alt?: string;
 	class?: string;
-	/** object-position for the crop, e.g. '50% 20%' to favour the top. */
-	position?: string;
-	/** Scale the artwork inside the frame. >1 crops in tighter. */
-	zoom?: number;
 }
 
-const {
-	src = defaultMascot,
-	alt = 'Illustration of a chef giving a thumbs up',
-	class: className,
-	position = 'center',
-	zoom = 1,
-} = Astro.props;
+const { alt = 'Illustration of a chef giving a thumbs up', class: className } = Astro.props;
 ---
 
 <div class={`chef-mascot ${className ?? ''}`.trim()}>
-	<Image
-		src={src}
-		alt={alt}
-		width={88}
-		height={88}
-		densities={[2, 3]}
-		loading="lazy"
-		decoding="async"
-		style={`object-position: ${position}; ${zoom === 1 ? '' : `transform: scale(${zoom});`}`}
-	/>
+	<Image src={mascot} alt={alt} width={88} height={88} densities={[2, 3]} loading="lazy" decoding="async" />
 </div>
 
 <style>
@@ -58,6 +35,5 @@ const {
 		   artwork down out of the circle */
 		margin: 0;
 		border-radius: 0;
-		transform-origin: center;
 	}
 </style>

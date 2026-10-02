@@ -12,13 +12,7 @@ interface Props {
 	variant?: Variant;
 	label?: string;
 	mascot?: boolean;
-	/** Image shown in the corner medallion (an imported asset). */
-	mascotSrc?: ImageMetadata;
 	mascotAlt?: string;
-	/** object-position for the medallion crop, e.g. '50% 15%'. */
-	mascotPosition?: string;
-	/** Scale the artwork inside the medallion. >1 crops in tighter. */
-	mascotZoom?: number;
 	class?: string;
 }
 
@@ -26,10 +20,7 @@ const {
 	variant = 'blue',
 	label,
 	mascot = true,
-	mascotSrc,
 	mascotAlt,
-	mascotPosition,
-	mascotZoom,
 	class: className,
 } = Astro.props;
 ---
@@ -43,7 +34,7 @@ const {
 	</div>
 	{mascot && (
 		<div class="example-callout-mascot" aria-hidden={mascotAlt ? undefined : 'true'}>
-			<ChefMascot src={mascotSrc} alt={mascotAlt} position={mascotPosition} zoom={mascotZoom} />
+			<ChefMascot alt={mascotAlt} />
 		</div>
 	)}
 </aside>
