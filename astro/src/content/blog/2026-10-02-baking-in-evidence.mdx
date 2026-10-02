@@ -64,7 +64,7 @@ She is capturing the policy as Rego and the ingredients and cooking details as a
 <ClickToEnlarge tall src={evidenceDoc} alt="A unified evidence document headed Allergen Free Cake Batch. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result."></ClickToEnlarge>
 
 
-## Attestations: What was observed
+## Attestations: what was observed
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
 The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added, and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
@@ -88,7 +88,7 @@ The baker attests to the ingredients that went in, the temperature and time the 
 }
 ```
 
-## Policy: What should have been true
+## Policy: what should have been true
 
 Within the evidence, the full policy is captured. Both as Rego (technically, the policy-as-code part) but also as a human-readable table of clauses. Rego can get pretty knarly and having a human readible summary is powerful for the non-technical audience. The fact that this is code and now hearsay or departmental memory, means trust levels go up when audit speaks to the teams operating the control.
 
@@ -151,7 +151,7 @@ The `fact` partial object rule projects the set of attestations **into something
 
 **The `clauses` table is the policy describing itself**. Each entry carries the human-readable statement, the attestations it drew on, and a rendered expression with the real values substituted in. It costs a few lines and it's the difference between a document that shows its workings and one that doesn't.
 
-## Evaluation: Show your workings
+## Evaluation: show your workings
 
 The third section does the heavy lifting of showing how attestations were evaluated against the policy. I like to think of Rego as a series of expression which that use attestations as inputs to evaluate.
 
@@ -214,7 +214,7 @@ opa eval --data bakery.rego --data evidence.rego --input attestations.json 'data
 Give the json, we can render however we like.
 
 
-## When it fails
+## When it Fails
 
 If we run the same control over a batch where the oven drifted to 210°C, we'd fail the control.
 
