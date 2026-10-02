@@ -1,7 +1,7 @@
 ---
 title: "Baking in Evidence"
 subTitle: "Every control you operate should produce the same evidence"
-description: "Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consisently proves what happened? Read on..."
+description: "Evidence tends to be in whatever shape the tool that produced it happened to emit; a JSON blob here, a PDF there, a spreadsheet far more often than it should. So how do we ensure it is more than just output, that it consistently proves what happened? Read on..."
 pubDate: "2026-05-12"
 heroImage: "/images/heroes/baking-in-evidence-hero.jpg"
 categories: "rego policy-as-code controls-engineering compliance"
@@ -19,31 +19,29 @@ Continuing from the previous post on [attestations and evidence](/blog/2026-10-0
 
 If you were to pick a release at random in a large regulated organisation and look at how controls were closed, you might find something like this.
 
-| Control                           | FINOS Migitation                                                                                            | Format | Closure   | Description                                                  |
+| Control                           | FINOS Mitigation                                                                                            | Format | Closure   | Description                                                  |
 |-----------------------------------|-------------------------------------------------------------------------------------------------------------|--------|-----------|:-------------------------------------------------------------|
 | Never alone applied               | [Code Review](https://sdlc-common-controls.finos.org/mitigations/mi-1_code-review.html)                     | JSON   | automated | Evidence of a PR being merged and branch protection in place |
 | Sufficient testing was undertaken | [Test Execution and Sign-Off](https://sdlc-common-controls.finos.org/mitigations/mi-16_test-execution.html) | PDF    | automated | JUnit reports demonstrating some tests were executed         |
 | SBOM available                    | [Component Inventory](https://sdlc-common-controls.finos.org/mitigations/mi-9-component-inventory.html)     | .xlsx  | manual    | Provenance unknown - we don't know who generated this or how |
 
-None of these are obviously provable to apply to the same artifact. How do I know the tests that were run are relevant to the artifact we're deploying?
+None of these are obviously pinned to the same artifact. They could relate to anything. How do I know, for example, the tests that were run were against the artifact we're deploying?
 
-Each one has a different format and might be highly technical in nature. A typical PR log will have Git SHAs and branch names, something a non-technical auditor might not recognise. It's not obvious that the list of SHAs relates to the artifact being deployed. Perhaps worse, none of these describe the rules by which compliance can be determined. The list of PRs doesn't include a description that "all code has been through a PR" or that "no author can be the reviewer". That second part is hidden in the runtime policy enforcmcent of branch protection... or not. The point is, no one can really tell by just looking at the evidence. We need more.
+Each one has a different evidence format which might be highly technical in nature. A typical PR log will have Git SHAs and branch names, something a non-technical auditor might not recognise. It's probably not obvious that the list of SHAs relates to the artifact being deployed. Perhaps worse, none of these describe the rules by which compliance can be determined. The list of PRs doesn't include a description that "no author can be the reviewer". That part is hidden in the runtime as branch protection rules. The point is, no one can really tell by just looking at the evidence. We need more.
 
-None of them says what was checked, against which version of which rule, using what inputs. The JSON is a payload from whichever tool happened to close the control. The PDF is a screenshot of a dashboard that has since been re-rendered. The spreadsheet is a human asserting a conclusion.
-
-The problem isn't the volume of evidence. It's that every control invented its own shape, so the auditor has to learn all of them and still ends up taking the result on trust. A ticket stub, not CCTV.
+None of them describe what was checked, against which version of which rules, using what inputs. Every control invented its own shape of evidence. An auditor has to learn all of them and still ends up taking the result on trust.
 
 ## Modern Evidence
 
-When evidence just shows the output of a process, an auditor has no choice but to look into that process. When its tooling, they can inspect the configuration (for example, look at your branch protection rules) but at scale that can become time consuming and unreliable, especially when you need to demonstrate it six months ago. For manual processes, it quickly becomes impracticable.
+When evidence just shows the output of a process, an auditor has no choice but to look into that process. When it's tooling, they can inspect the configuration (for example, look at your branch protection rules) but at scale that can become time consuming and unreliable, especially when you need to demonstrate it from six months ago. For manual processes, it quickly becomes impracticable.
 
-To be able to independently verify and re-check a decision, and to be able to do that three years in the future, your evidence will need:
+To be able to independently verify and re-check a decision and to be able to do that three years in the future, your evidence will need:
 
-* an identifiable artifact (a fingerprint of the subject of the claim)
-* the facts that were used, and where each one came from
-* the rules that were applied, verbatim and versioned
-* how the fact met the rules (or otherwise)
-* the result, and when it was reached
+* an **identifiable artifact** (a fingerprint of the subject of the claim, or similar)
+* the **facts** that were used and where each one came from
+* the **rules** that were applied, verbatim and versioned
+* **how** the fact met the rules (or otherwise)
+* the **result** and when it was reached
 
 Read that list again and notice what isn't in it. Nothing specific to a control. Nothing about code review, test coverage or CVEs.
 
@@ -57,17 +55,17 @@ She's using the approach from the [previous post](/blog/2026-10-02-attestations-
 
 * recording the list of ingredients used, oven temperature and cooking times
 * defining a policy to ensure no nuts are in the ingredients list
-* expanding that policy to ensure baking temperatures and times are consistent to ingredients properly
+* expanding that policy to ensure baking temperatures and times are consistent to cook the ingredients properly
 
 She is capturing the policy as Rego and the ingredients and cooking details as attestations. The evaluation of the policy against the attestations produces a pass/fail decision in the format below.
 
-<ClickToEnlarge tall src={evidenceDoc} alt="A unified evidence document headed Allergen Free Cake Batch. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source, and the evaluation showing each clause, the attestation it used, the expression evaluated and its result."></ClickToEnlarge>
+<ClickToEnlarge tall src={evidenceDoc} alt="A unified evidence document headed Allergen Free Cake Batch. A green shield and COMPLIANT badge at the top, a strip showing evaluated at, artifact, attestation set hash and policy hash, then three sections: attestations listed in a table with their source and timestamp, the policy as human-readable clauses plus its provenance and the verbatim Rego source and the evaluation showing each clause, the attestation it used, the expression evaluated and its result."></ClickToEnlarge>
 
 
 ## Attestations: what was observed
 
 <ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
-The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added, and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
+The baker attests to the ingredients that went in, the temperature and time the oven ran at, the decorations added and who signed the batch off. None of those statements know anything about allergen policy. They're just a record of what happened.
 </ExampleCallout>
 
 ```json
@@ -90,7 +88,7 @@ The baker attests to the ingredients that went in, the temperature and time the 
 
 ## Policy: what should have been true
 
-Within the evidence, the full policy is captured. Both as Rego (technically, the policy-as-code part) but also as a human-readable table of clauses. Rego can get pretty knarly and having a human readible summary is powerful for the non-technical audience. The fact that this is code and now hearsay or departmental memory, means trust levels go up when audit speaks to the teams operating the control.
+Within the evidence, the full policy is captured. Both as Rego (technically, the policy-as-code part) but also as a human-readable table of clauses. Rego can get pretty knarly and having a human readible summary is powerful for the non-technical audience. The fact that this is code and not hearsay or departmental memory, means trust levels go up between Audit and the teams operating the control.
 
 > In plain language, an auditor can see the version of the policy that was actually used, elliminating the frantic scramble to demonstrate how a system would have behaved six months ago.
 
@@ -122,7 +120,7 @@ time_ok if {
 	fact.minutes.value <= 40
 }
 
-# The clause table: what each rule means, what it drew on, and what was actually evaluated.
+# The clause table: what each rule means, what it drew on and what was actually evaluated.
 clauses := [
 	{"clause": "Nut allergens absent", "predicate": "nut_free", "holds": nut_free,
 		"inputs": [fact.allergens.from],
@@ -136,7 +134,7 @@ clauses := [
 ]
 ```
 
-The `fact` partial object rule projects the set of attestations **into something the clauses can read and helps each fact remember the attestation it came from**. That `from` field is what later lets the evidence cite a specific input value (`att-003` above) rather than just asserting that the temperature was 180. It will produce the following.
+The `fact` rule projects the set of attestations **into something the clauses can read and helps each fact remember the attestation it came from**. That `from` field is what later lets the evidence cite a specific input value (`att-003` above) rather than just asserting that the temperature was 180. It will produce the following.
 
 ```json
 {
@@ -148,14 +146,14 @@ The `fact` partial object rule projects the set of attestations **into something
   "signed_by":   { "from": "att-006", "value": "Baker A (emp-12345)" }
 }
 ```
-
-**The `clauses` table is the policy describing itself**. Each entry carries the human-readable statement, the attestations it drew on, and a rendered expression with the real values substituted in. It costs a few lines and it's the difference between a document that shows its workings and one that doesn't.
+"§
+**The `clauses` table is the policy describing itself**. Each entry carries the human-readable statement, the attestations it drew on and a rendered expression with the real values substituted in. In a few lines, it allows the document to "show the workings".
 
 ## Evaluation: show your workings
 
-The third section does the heavy lifting of showing how attestations were evaluated against the policy. I like to think of Rego as a series of expression which that use attestations as inputs to evaluate.
+The third section does the heavy lifting of showing how attestations were evaluated against the policy. I like to think of Rego as a series of expression that use attestations as inputs to evaluate.
 
-There's one hidden piece of Rego that shows how to do this. The `evidence.rego` below is infrastructure and only needs writing once. The policy is in `bakery.rego` above and would be specific to each control.
+There's one hidden piece of Rego that shows how to do this. The `evidence.rego` below is infrastructure and only needs writing once. The "policy" itself is in `bakery.rego` above and would be specific to each control, but the evidence generation is generic and reusable.
 
 ```rego
 # evidence.rego
@@ -218,10 +216,10 @@ Give the json, we can render however we like.
 
 If we run the same control over a batch where the oven drifted to 210°C, we'd fail the control.
 
-<ClickToEnlarge src={evidenceFail} alt="An evidence document headed Allergen Free Cake Batch with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass, and the overall row reads Non-compliant."></ClickToEnlarge>
+<ClickToEnlarge src={evidenceFail} alt="An evidence document headed Allergen Free Cake Batch with a red shield and a NON-COMPLIANT badge, showing its evaluation section. Step two reads 210 >= 175 and 210 <= 200 with a Fail result; steps one and three pass and the overall row reads Non-compliant."></ClickToEnlarge>
 
 
-One expression was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
+The expression at step `2` was evaluated as `210 >= 175 and 210 <= 200` which fails with the `att-003` input of `210`. It fails the "temp ok" rule and the overall status is non-compliant.
 
 Notice that the evidence itself is versioned and independently verifiable. Everything is hashed, so the hash of attestation set above is different than the happy path above because the facts are different. The document is bound to the inputs that produced it. This will make the most paranoid auditor happy.
 
@@ -229,7 +227,7 @@ Notice that the evidence itself is versioned and independently verifiable. Every
 
 **One format, _n_ controls**. Auditor learn the evidence format once and the bar is forever high. This dramatically changes the tone of conversation with audit.
 
-**Anyone can check it**. The inputs and policy are both hashed, so a third party can take the same facts, run the same rule, and see whether they get the same answer. That's a much stronger position than "trust the tool that closed the control".
+**Anyone can check it**. The inputs and policy are both hashed, so a third party can take the same facts, run the same rule and see whether they get the same answer. That's a much stronger position than "trust the tool that closed the control".
 
 **The rule is on the page**. When the policy is printed in the evidence, an auditor can challenge the *rule* rather than the outcome. Is 175–200°C actually the right range? That's a far more useful conversation than relitigating whether the control was closed. Today that rarely happens because the rules are buried in a tool or in someones memory.
 
@@ -245,10 +243,10 @@ Deciding and enforcing are still separate jobs. OPA can say whether the release 
 
 ## Where to Start
 
-Pick one control. Write down the facts it consumes and where each one comes from. Write the rule in Rego — badly, if necessary, the first version only has to be honest, not complete. Make the evaluation emit its own workings rather than a verdict, render the document, and put it in front of someone in audit.
+Pick one control. Write down the facts it consumes and where each one comes from. Write the rule in Rego — badly, if necessary, the first version only has to be honest, not complete. Make the evaluation emit its own workings rather than a verdict, render the document and put it in front of someone in audit.
 
 Then refuse to accept a different shape for the next control.
 
-The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once, and every control you move onto it makes the next conversation with audit shorter rather than longer.
+The format is the easy part. The work is that every control needs an attestation schema and a policy as code before it can produce any of this. But you design the document once and every control you move onto it makes the next conversation with audit shorter rather than longer.
 
 Get that right and nobody argues about the output any more, because anyone can replay the decision and get the same answer. Audit the *system*, not the output.
