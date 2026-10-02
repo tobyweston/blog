@@ -58,31 +58,14 @@ Key points:
 
 The point around artifact-binding is interesting. It means evaluations prove something is true for a given artefact and that is a powerful tool when we want to demonstrate _provenance_ of artefacts, especially to a chain of compliance statements.
 
+<ExampleCallout mascotAlt="Illustration of a chef giving a thumbs up">
+The Baker must ensure her cakes are nut or allergen free, she may put a procedure or control in place to check the ingredient list before shipping or even employing a third party to verify the ingredient list. If the verification comes back with no nuts or allergens, the evaluation against the control has passed.
+</ExampleCallout>
 
-## Evidence is what lets someone assess a claim
+## Evidence
 
-**Evidence** is information that helps a person or system evaluate whether a claim is true.
+Given the above, _evidence_ is the supporting documents or materials which summarise the evaluation of policy. It should be the information that helps a person or system evaluate whether a claim is true. The issue I pointed out earlier is that in many governance systems, the evidence often doesn't proof the claim. By building evidence that includes inputs, specific policy (think versioned) and the result of the evaluation, we can provide a more complete picture. Evidence like this captures the state of the system at a specific point in time, making the process becomes transparent rather than opaque. That means evidence can be replayed to easily and independently verify. Honestly, this is what auditors never knew they needed.
 
-For a software release, evidence might include:
-
-- A source revision and the identity of the system that built it
-- Test results tied to the artifact that was tested
-- A record of the dependencies used by the build
-- A deployment event showing which artifact reached an environment
-
-Evidence is not automatically trustworthy or sufficient. A log can be incomplete, a test report can refer to a different build, and a screenshot can be difficult to verify. The useful question is not simply whether some evidence exists, but whether it is relevant, attributable, and connected to the thing being assessed.
-
-## An attestation is a structured statement
-
-An **attestation** is a statement made by an identified party or system about a subject. It typically has a predicate: a claim about that subject.
-
-For example:
-
-> Bakery CI built artifact `sha256:abc...` from source revision `4f2...` using the approved build process.
-
-The artifact digest identifies the subject. The statement about how it was built is the predicate. The identity of Bakery CI is the issuer.
-
-In software supply-chain systems, attestations are often machine-readable and may be signed. That makes them easier to transport, verify, and evaluate consistently.
 
 ## How the two fit together
 
