@@ -27,6 +27,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -273,9 +274,106 @@ def set_hero(post: Path, ref: str) -> str:
     return action
 
 
+def already_has_bespoke_hero(post: Path) -> bool:
+    """
+    True only if this post's own hero exists on disk.
+
+    Checking the frontmatter path is not enough: a rename can point heroImage at
+    the convention path before any image is there, and skipping on that basis
+    silently leaves the post with a broken hero.
+    """
+    return any((HEROES / f"{post.stem}-hero{ext}").is_file()
+               for ext in (".jpg", ".jpeg", ".png", ".svg", ".webp"))
+
+
+def run_all(args) -> None:
+    """
+    Work through every saved prompt in one go.
+
+    The per-post command is fine for one hero; it does not scale to a backlog of
+    forty. This runs the lot, skips what is already done, keeps going past
+    failures and prints a summary at the end, so a batch can be left alone.
+    """
+    key = os.environ.get("GEMINI_API_KEY")
+    if not key:
+        fail("GEMINI_API_KEY is not set",
+             "create one at https://aistudio.google.com/apikey, then: export GEMINI_API_KEY=...")
+
+    prompts = sorted(PROMPTS.glob("*.md"))
+    if not prompts:
+        fail(f"no prompts in {PROMPTS.relative_to(REPO)}")
+
+    todo, skipped = [], []
+    for path in prompts:
+        try:
+            post = find_post(path.stem)
+        except SystemExit:
+            skipped.append((path.stem, "no matching post"))
+            continue
+        if already_has_bespoke_hero(post) and not args.force:
+            skipped.append((path.stem, "already has its own hero"))
+            continue
+        todo.append(post)
+
+    print(f"{len(todo)} to generate, {len(skipped)} skipped")
+    for slug, reason in skipped:
+        print(f"  skip  {slug}  ({reason})")
+    if not todo:
+        return
+    est = len(todo) * (0.034 if "lite" in args.model else 0.101)
+    print(f"\nmodel {args.model}, roughly ${est:.2f} for {len(todo)} images")
+    if args.dry_run:
+        for post in todo:
+            print(f"  would generate  {post.stem}")
+        return
+
+    done, failed = [], []
+    for i, post in enumerate(todo, 1):
+        print(f"\n[{i}/{len(todo)}] {post.stem}")
+        try:
+            prompt = read_prompt(post)
+            with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
+                raw = Path(tmp.name)
+            raw.write_bytes(call_gemini(prompt, key, args.model))
+            dest = HEROES / f"{post.stem}-hero.jpg"
+            quality = normalise(raw, dest)
+            raw.unlink(missing_ok=True)
+            set_hero(post, f"/images/heroes/{post.stem}-hero.jpg")
+            print(f"        {dest.stat().st_size / 1024:.0f} KB, q{quality}  "
+                  f"card: {card_check(dest)}")
+            done.append(post.stem)
+        except SystemExit as e:
+            # fail() exits; in batch we note it and carry on to the next post.
+            print(f"        FAILED ({e.code})")
+            failed.append(post.stem)
+        except Exception as e:
+            print(f"        FAILED ({e})")
+            failed.append(post.stem)
+        if i < len(todo):
+            time.sleep(args.delay)
+
+    print(f"\n{len(done)} generated, {len(failed)} failed")
+    for slug in failed:
+        print(f"  failed  {slug}")
+
+    if done and not args.no_build:
+        r = subprocess.run(["npx", "astro", "build"], cwd=REPO / "astro",
+                           capture_output=True, text=True)
+        print(f"build: {'ok' if r.returncode == 0 else 'FAILED'}")
+    print("\nLook at every card check before pushing. This script does not judge "
+          "images,\nand a wrong number or a mangled label is not something it can see.")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Generate and install a post's hero image.")
-    ap.add_argument("post", help="slug, filename or path")
+    ap.add_argument("post", nargs="?", help="slug, filename or path")
+    ap.add_argument("--all", action="store_true",
+                    help="work through every saved prompt, skipping posts that "
+                         "already have their own hero")
+    ap.add_argument("--force", action="store_true",
+                    help="with --all, regenerate even where a hero exists")
+    ap.add_argument("--delay", type=float, default=2.0,
+                    help="seconds between requests in --all (default 2)")
     ap.add_argument("--variants", type=int, default=1,
                     help="generate N candidates and install none; pick one yourself")
     ap.add_argument("--install", metavar="FILE",
@@ -293,6 +391,12 @@ def main() -> None:
                     help=f"image model (default {MODEL})")
     ap.add_argument("--no-build", action="store_true", help="skip the astro build")
     args = ap.parse_args()
+
+    if args.all:
+        run_all(args)
+        return
+    if not args.post:
+        ap.error("give a post, or --all")
 
     post = find_post(args.post)
     ref = f"/images/heroes/{post.stem}-hero.jpg"
