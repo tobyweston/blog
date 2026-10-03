@@ -1,6 +1,6 @@
-# tempus-fugit 1.1 Released — hero prompt
+# Abstracting ReentrantReadWriteLock — hero prompt
 
-- **Post:** `astro/src/content/blog/2011-04-13-tempus-fugit-1.1-released.md`
+- **Post:** `astro/src/content/blog/2009-08-01-abstracting-reentrantreadwritelock.md`
 - **Style:** `concurrency-schematic`
 - **Series:** the concurrency / tempus-fugit family. Sand ground, teal accent and
   the hourglass mark set this family apart from the blueprint posts on the index
@@ -10,15 +10,17 @@
 
 ## Why this image
 
-A point release, so the image is the 1.0 module with more inside it — the same
-casing on the same plinth, opened further, with additional mechanisms seated
-beside the original and one bay still empty.
+A read-write lock admits any number of readers together but serialises writers,
+and the post wraps the boilerplate that comes with it.
+
+So the image is a gate with two approaches: a wide one letting a group through
+abreast, and a narrow one admitting a single carriage at a time.
 
 ## Prompt
 
 ```text
 Create a wide 16:9 hero illustration, exactly 1600 x 900 pixels, for a technical
-blog post about a new version of a concurrency testing library. Output a single flat image, no borders, no frame, no
+blog post about letting many readers through at once while writers go one at a time. Output a single flat image, no borders, no frame, no
 watermark, no signature.
 
 STYLE
@@ -32,15 +34,17 @@ Not photorealistic, not a 3D render, not a cartoon, not a glossy marketing
 render, no glowing neon or holographic effects.
 
 SUBJECT
-The same sealed module as in the 1.0 release image, drawn large in isometric
-projection, centred on its plinth — a rectangular casing cut away on one
-side to show an hourglass mounted in gimbals between two parallel shafts.
+A single gatehouse drawn in isometric projection, centred, with two separate
+approaches meeting it.
 
-Here the cutaway is larger, and THREE additional small mechanisms sit in a row
-alongside the hourglass, each in its own bay within the casing: a
-ratchet, a governor with two weights, and a counter wheel.
+From the LEFT, a wide approach where FIVE small carriages pass through abreast,
+side by side, all moving together through a correspondingly wide opening.
 
-One further bay at the end of the row is empty and open.
+From the RIGHT, a narrow approach just one carriage wide. One carriage is passing
+through it, and THREE more are queued behind in single file, waiting.
+
+The wide opening and the narrow one are part of the same structure and must
+clearly belong to one gatehouse.
 
 RECURRING MOTIF
 On the LEFT of the image, clear of the main subject, a small hourglass: two
@@ -52,8 +56,8 @@ Position it so the whole hourglass, base included, sits above the lower third of
 the image. It must not touch any edge and must not sit in the bottom fifth.
 
 SUPPORTING DETAIL
-Three faint callout leader lines point at the three added mechanisms, ending in
-small empty circles.
+One faint callout leader line points at the narrow single-file opening, ending in
+a small empty circle.
 
 TEXT IN THE IMAGE
 No text labels anywhere in this image. No code, braces, semicolons, thread dumps,
@@ -67,9 +71,8 @@ deeper. Deep charcoal ink for all line work and a mid warm grey for flat fills.
 One strong teal accent, reserved for the single component the post is about. No
 other colour.
 The hourglass mark stays in the charcoal line work and never takes the teal.
-The teal accent belongs to the three added mechanisms, and to nothing else. The
-hourglass inside the module, the shafts, the casing and the empty bay
-stay charcoal and warm grey.
+The teal accent belongs to the narrow single-file opening and the one carriage
+within it, and to nothing else.
 
 COMPOSITION FOR A WEB CARD
 This image is centre-cropped hard to a wide strip for post cards, about 2.8:1,
@@ -94,5 +97,5 @@ contrast over fine detail. Balanced composition, not centred symmetrically.
 ## Install
 
 ```bash
-cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2011-04-13-tempus-fugit-1.1-released --install ~/Downloads/<your-file>.jpg
+cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2009-08-01-abstracting-reentrantreadwritelock --install ~/Downloads/<your-file>.jpg
 ```

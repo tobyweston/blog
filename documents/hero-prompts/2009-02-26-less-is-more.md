@@ -1,6 +1,6 @@
-# tempus-fugit 1.1 Released — hero prompt
+# Less is More — hero prompt
 
-- **Post:** `astro/src/content/blog/2011-04-13-tempus-fugit-1.1-released.md`
+- **Post:** `astro/src/content/blog/2009-02-26-less-is-more.md`
 - **Style:** `concurrency-schematic`
 - **Series:** the concurrency / tempus-fugit family. Sand ground, teal accent and
   the hourglass mark set this family apart from the blueprint posts on the index
@@ -10,15 +10,17 @@
 
 ## Why this image
 
-A point release, so the image is the 1.0 module with more inside it — the same
-casing on the same plinth, opened further, with additional mechanisms seated
-beside the original and one bay still empty.
+Counter-intuitive and precise: shrink the heap and you get more native threads,
+because they are competing for the same address space.
+
+So the image is one fixed vessel partitioned two ways — a large block leaving
+room for few strands, and a smaller block leaving room for many.
 
 ## Prompt
 
 ```text
 Create a wide 16:9 hero illustration, exactly 1600 x 900 pixels, for a technical
-blog post about a new version of a concurrency testing library. Output a single flat image, no borders, no frame, no
+blog post about giving a runtime less memory so that it can create more threads. Output a single flat image, no borders, no frame, no
 watermark, no signature.
 
 STYLE
@@ -32,15 +34,17 @@ Not photorealistic, not a 3D render, not a cartoon, not a glossy marketing
 render, no glowing neon or holographic effects.
 
 SUBJECT
-The same sealed module as in the 1.0 release image, drawn large in isometric
-projection, centred on its plinth — a rectangular casing cut away on one
-side to show an hourglass mounted in gimbals between two parallel shafts.
+TWO identical outer frames drawn in isometric projection, side by side, exactly
+the same size — the same fixed space in both cases.
 
-Here the cutaway is larger, and THREE additional small mechanisms sit in a row
-alongside the hourglass, each in its own bay within the casing: a
-ratchet, a governor with two weights, and a counter wheel.
+Inside the LEFT frame sits a large solid block occupying most of it, with only
+THREE thin vertical rods standing in the narrow space left beside it.
 
-One further bay at the end of the row is empty and open.
+Inside the RIGHT frame sits a visibly smaller solid block, with NINE of the same
+thin rods standing in the much larger remaining space, evenly spaced.
+
+The rods are identical in both frames; only their number and the size of the
+block differ. The outer frames must be plainly the same dimensions.
 
 RECURRING MOTIF
 On the LEFT of the image, clear of the main subject, a small hourglass: two
@@ -52,8 +56,8 @@ Position it so the whole hourglass, base included, sits above the lower third of
 the image. It must not touch any edge and must not sit in the bottom fifth.
 
 SUPPORTING DETAIL
-Three faint callout leader lines point at the three added mechanisms, ending in
-small empty circles.
+Two faint callout leader lines, one to each solid block, ending in small empty
+circles.
 
 TEXT IN THE IMAGE
 No text labels anywhere in this image. No code, braces, semicolons, thread dumps,
@@ -67,9 +71,9 @@ deeper. Deep charcoal ink for all line work and a mid warm grey for flat fills.
 One strong teal accent, reserved for the single component the post is about. No
 other colour.
 The hourglass mark stays in the charcoal line work and never takes the teal.
-The teal accent belongs to the three added mechanisms, and to nothing else. The
-hourglass inside the module, the shafts, the casing and the empty bay
-stay charcoal and warm grey.
+The teal accent belongs to the nine thin rods in the right-hand frame, and to
+nothing else. Both outer frames, both blocks and the three rods on the left stay
+charcoal and warm grey.
 
 COMPOSITION FOR A WEB CARD
 This image is centre-cropped hard to a wide strip for post cards, about 2.8:1,
@@ -94,5 +98,5 @@ contrast over fine detail. Balanced composition, not centred symmetrically.
 ## Install
 
 ```bash
-cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2011-04-13-tempus-fugit-1.1-released --install ~/Downloads/<your-file>.jpg
+cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2009-02-26-less-is-more --install ~/Downloads/<your-file>.jpg
 ```

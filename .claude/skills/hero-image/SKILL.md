@@ -90,6 +90,7 @@ Explicit instruction wins. Otherwise work down this table:
 
 | The post | Style |
 |---|---|
+| **Is about concurrency, threads, locks or tempus-fugit** — where the concurrency is the subject, not the setting | `concurrency-schematic` |
 | **Reports figures it measured** — two or three headline numbers you can quote straight out of it | `data-infographic` |
 | Categories contain `compliance`, `governance`, `controls-engineering`, `policy-as-code` | `bold-outline-cartoon` |
 | Categories contain `raspberry-pi`, `debian`, `tooling`, `build`, `java`, `scala`, `rego` | `technical-blueprint` |
@@ -263,6 +264,24 @@ beats a recognisable-but-wrong trademark.
 Using a product's mark to illustrate a post about that product is ordinary
 editorial use. Don't imply endorsement, don't rework a mark into a joke, and
 don't put a company's mark on something the post is criticising.
+
+**The robot, occasionally.** The site's own mascot — a cartoon robot in a top hat
+with a handlebar moustache, big round eyes, thick black outlines, flat white and
+grey, on a pale sage-green disc — lives at
+`astro/src/content/images/robot-logo_105x132.png`. Look at it before using it.
+
+Use it **sparingly**: roughly one hero in ten, and only where it has a reason to
+be there. A post about the author's own projects, a release of his own library, a
+piece written in the first person about his own practice — those earn it. A
+tutorial about someone else's API does not. The mascot is a signature, and a
+signature on everything signs nothing.
+
+It can also be *varied* rather than reproduced. Its register — thick outlines,
+flat fills, big expressive eyes, a Victorian touch, the sage-green disc behind —
+can be lent to another character where a post calls for one, which is how the
+cat in `2010-03-19-nibbles-cat` is drawn. Describe that register in words; do not
+ask for the logo itself to be redrawn, and never composite the real logo into an
+illustration drawn in a different style.
 
 **Favour a real keyframe over a drawing.** See step 2 — if the post has a video,
 that footage is more honest than anything a generator will produce.

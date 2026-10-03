@@ -2,6 +2,7 @@
 title: "Atomiticy of the Thread class"
 subTitle: "Why Java threads don't always maintain state atomically with interrupt flags"
 pubDate: "2009-12-10"
+heroImage: "/images/heroes/2009-12-10-atomiticy-of-thread-class-hero.jpg"
 categories: 'java concurrency'
 keywords: "Java Thread, interrupt status, thread state, RUNNABLE, WAITING, atomicity, concurrency, race condition"
 description: "Java's Thread class does not maintain thread state atomically with its interrupt status flag, leading to subtle race conditions in state checking."
