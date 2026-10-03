@@ -4,7 +4,7 @@ pubDate: '2012-06-11'
 categories: 'web'
 keywords: "URL encoding, percent encoding, form encoding, x-www-form-urlencoded, Java URL encode, HTTP encoding"
 description: "Understand the difference between URL encoding and form encoding (x-www-form-urlencoded) and how to correctly encode HTTP request parameters in Java."
-heroImage: "/images/heroes/multiple-usages-exception-handling.jpg"
+heroImage: "/images/heroes/2012-06-11-http-encoding-schemes-hero.jpg"
 ---
 
 What's the difference between URL Encoding and Form URL Encoding?

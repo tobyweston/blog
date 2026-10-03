@@ -1,6 +1,7 @@
 ---
 title: "Expecting Exceptions JUnit Rule"
 pubDate: "2012-03-27"
+heroImage: "/images/heroes/2012-03-27-expecting-exception-with-junit-rule-hero.jpg"
 categories: 'java testing'
 keywords: "JUnit, ExpectedException, @Rule, testing exceptions, try-catch, JUnit rule, exception testing"
 description: "Replace the try-fail-catch anti-pattern with JUnit's ExpectedException rule for cleaner, more readable exception testing."
