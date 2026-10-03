@@ -173,8 +173,8 @@ def call_gemini(prompt: str, key: str, model: str = MODEL,
 
 
 IMG_RE = re.compile(
-    r"""(?:^import\s+\w+\s+from\s+['"]([^'"]+\.(?:png|jpe?g|gif|webp))['"]"""
-    r"""|!\[[^\]]*\]\(([^)]+\.(?:png|jpe?g|gif|webp))\))""",
+    r"""(?:^import\s+\w+\s+from\s+['"]([^'"]+\.(?:png|jpe?g|gif|webp|svg))['"]"""
+    r"""|!\[[^\]]*\]\(([^)]+\.(?:png|jpe?g|gif|webp|svg))\))""",
     re.M | re.I | re.X)
 
 
@@ -310,6 +310,11 @@ def main() -> None:
         missing = [r for r in references if not r.is_file()]
         if missing:
             fail("reference image not found: " + ", ".join(str(m) for m in missing))
+        vector = [r for r in references if r.suffix.lower() == ".svg"]
+        if vector:
+            fail("can't send SVG as a reference: " + ", ".join(v.name for v in vector),
+                 "the API wants a raster image. Open it in a browser and screenshot\n"
+                 "       it, or export a PNG, then pass that instead.")
         for r in references:
             print(f"ref    {r.name}")
     elif post_images:

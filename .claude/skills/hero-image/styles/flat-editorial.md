@@ -46,4 +46,8 @@ metaphor carries the meaning on its own.
 
 ## Used by
 
-_(none yet — first use should be recorded here)_
+- `2022-06-07-lead-time-vs-cycle-time` — a production line with two measuring
+  spans above it, the shorter nested inside the longer. Chosen over
+  `technical-blueprint` despite the post having diagrams: there is no mechanism
+  in it, only a measurement, and the mid-century printed look suits a post that
+  traces its terms back to lean manufacturing.
