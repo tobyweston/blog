@@ -1,6 +1,7 @@
 ---
 title: "Scala Exception Handling"
 pubDate: "2012-03-30"
+heroImage: "/images/heroes/2012-03-30-scala-exception-handling-hero.jpg"
 categories: 'scala'
 keywords: "Scala exception handling, pattern matching, try catch, Either, Option, functional error handling"
 description: "Exception handling in Scala: from familiar try/catch with pattern matching to functional approaches using Either and Option types."

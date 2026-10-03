@@ -1,6 +1,7 @@
 ---
 title: "JMock to Scalamock Cheat Sheet"
 pubDate: '2015-05-09'
+heroImage: "/images/heroes/2015-05-09-jmock-to-scalamock-cheatsheet-hero.jpg"
 categories: 'scala testing'
 keywords: "JMock, Scalamock, Scala, mocking, Specs2, cheat sheet, test doubles, mock objects"
 description: "Quick reference cheat sheet mapping JMock idioms to their Scalamock equivalents. Useful when migrating Java tests to Scala or learning Scalamock."
