@@ -1,0 +1,230 @@
+---
+title: "Think in Tokens: Engineering the Token Economy"
+subTitle: "Budget cost, latency and quality by treating tokens as a first\u2011class resource."
+description: "Tokens drive LLM cost, latency and often quality. Design prompts, retrieval and orchestration around explicit token budgets with guardrails, measurement and trade\u2011offs made visible."
+pubDate: "2026-03-31"
+draft: true
+categories: "engineering architecture ai cost performance"
+keywords: "engineering, architecture, ai, cost, performance, tokens, context windows, prompt engineering, rag, observability, latency, cost control"
+heroImage: "/images/heroes/2026-03-31-think-in-tokens-engineering-the-token-economy-hero.jpg"
+---
+If you’re not counting tokens, you don’t control the system—you’ve handed the AMEX to whatever your users paste into the text box.
+
+We optimise CPU, memory and IO without thinking.
+With LLMs, the scarce resource is tokens.
+Start acting like it.
+
+## Your bottleneck is tokens, not models
+
+Imagine your “smart summarise” feature is fast in staging and 10× slower (and 30× pricier) a month after launch.
+Nothing changed except the prompts got “better.”
+
+The culprit isn’t the model; it’s your token economy.
+
+A token is a sub‑word unit produced by a tokenizer (often BPE).
+It’s not characters and it’s not words: “internationalisation” might be 3–4 tokens while “cat” is 1, and emojis can be… surprising.
+Vendors bill per token and models process tokens per second.
+That’s your cost and latency right there.
+
+## Token economics 101: the three levers
+
+There are three places tokens enter your bill and latency budget:
+
+- Input tokens: system prompt, user prompt, retrieved context, tool definitions.
+- Output tokens: the model’s completion, including function/tool arguments.
+- Embedding tokens: for retrieval or indexing; paid up front and again when you re‑embed.
+
+Back‑of‑envelope you can actually use:
+
+- latency ≈ (input_tokens + output_tokens) / model_tokens_per_second + network + tool_time
+- cost ≈ input_tokens * price_in + output_tokens * price_out + embedding_tokens * price_embed
+
+A few realities across vendors:
+
+- Subscription UX (e.g. IDE copilots, consumer chat UIs): you pay a flat monthly fee with fair‑use limits.
+  Great for individuals; poor for teams needing per‑feature token accounting.
+- API usage (e.g. major model providers): billed per token in/out, embeddings separate, with rate limits (TPM/RPM).
+  You get usage in responses; perfect for observability and SLOs.
+- “Fair usage” and caches: some vendors offer prompt caching or cheaper context tiers.
+  Helpful, but you still need budgets—caches just raise the ceiling on how much you can waste.
+
+Don’t pick a vendor for a bigger context window alone.
+You’ll often just pay to carry more noise.
+
+## Common failure modes (and why they hurt)
+
+- Unbounded context.
+  You keep throwing more documents in “just in case”.
+  Latency climbs roughly linearly; quality often gets worse from dilution.
+
+- Verbose system prompts.
+  Boilerplate grandstanding (“be empathetic…”) every call.
+  It’s a silent per‑request tax.
+
+- Chatty tool/JSON schemas.
+  Paragraph‑long field descriptions and long enum labels.
+  The model reads them every call.
+
+- Bad chunking.
+  Splitting by character count severs meaning; you retrieve five bland chunks instead of two relevant ones.
+
+- Multi‑turn churn.
+  Chains of chats that restate context or re‑explain instructions each hop.
+  Token multiplier with compounding latency.
+
+Each failure mode is economic.
+You pay in tokens, you wait in tokens, and you get flaky behaviour because the signal‑to‑noise ratio drops.
+
+## Token‑first design patterns
+
+- Budgets and guards.
+  Define per‑feature token budgets: input, retrieved, output.
+  Enforce them in code.
+
+- Lean prompts.
+  Keep the system prompt under ~200 tokens.
+  Put specifics in per‑task instructions or retrieved facts.
+
+- Retrieval that packs tightly.
+  Chunk by meaning, dedupe, and pack results up to a target budget.
+  Two sharp chunks beat ten fuzzy ones.
+
+- Structured outputs that don’t explode.
+  Prefer compact JSON with short keys and capped lengths.
+  Stop sequences prevent rambling.
+
+- Single‑turn “task packets”.
+  When you can, do it in one call with explicit inputs/outputs.
+  If you must chain, compress between steps and carry only deltas.
+
+## Measure and enforce
+
+Make tokens observable.
+No exceptions.
+
+- Count tokens in code and store per request, user and feature.
+- Track p50/p95 tokens_in, tokens_out and total.
+  They predict p50/p95 latency and cost better than anything else you have.
+- SLOs: e.g. “p95 total_tokens ≤ 3,000 for summarise”.
+  Degrade gracefully when budgets are breached.
+
+Fail fast:
+
+- Trim retrieval results to budget and surface a partial answer.
+- Offer “lite” summaries or a follow‑up button for deeper dives.
+- Refuse pathological inputs with a helpful message.
+  It’s cheaper than an incident review for a bill shock.
+
+## Worked examples
+
+### Install a tokenizer
+
+```bash
+pip install tiktoken
+```
+
+### Count tokens and chunk to a budget (Python)
+
+```python
+import tiktoken
+from textwrap import dedent
+
+enc = tiktoken.get_encoding("cl100k_base")  # compatible with many GPT-class models
+
+def tokens(text: str) -> int:
+    return len(enc.encode(text))
+
+def chunk(text: str, max_tokens: int):
+    words = text.split()
+    cur, cur_tokens = [], 0
+    for w in words:
+        w_toks = tokens(w + " ")
+        if cur_tokens + w_toks > max_tokens and cur:
+            yield " ".join(cur)
+            cur, cur_tokens = [], 0
+        cur.append(w)
+        cur_tokens += w_toks
+    if cur:
+        yield " ".join(cur)
+
+doc = dedent("""
+Your long document...
+""").strip()
+
+CHUNK_BUDGET = 400  # leave room for prompt + model overhead
+chunks = list(chunk(doc, CHUNK_BUDGET))
+print(f"Chunks: {len(chunks)}, total tokens: {sum(tokens(c) for c in chunks)}")
+```
+
+Notes:
+
+- Use the model’s own tokenizer if available.
+- Your chunk budget should account for fixed overhead (system prompt, tool schemas) plus a safety margin.
+
+### Guardrails on generation (pseudo‑code; adapt to your SDK)
+
+```python
+response = client.chat.completions.create(
+  model="gpt-4o-mini",
+  messages=[{"role": "system", "content": "You are terse. Use bullet points."},
+            {"role": "user", "content": user_prompt}],
+  max_tokens=200,                # cap output
+  temperature=0.3,               # reduce waffle
+  stop=["\n\n--END--"],          # deliberate stop marker
+  response_format={"type": "json_object"}  # structured, shorter outputs
+)
+```
+
+- max_tokens is your primary brake.
+- Prefer compact JSON with short keys, no prose in descriptions, and explicit enums.
+
+### Log tokens for observability (middleware sketch)
+
+```python
+def with_token_logging(call):
+    start = time.time()
+    res = call()
+    duration = time.time() - start
+    log.info("llm_call",
+             tokens_in=res.usage.prompt_tokens,
+             tokens_out=res.usage.completion_tokens,
+             tokens_total=res.usage.total_tokens,
+             latency_ms=int(duration * 1000),
+             model=res.model,
+             feature="summarise")
+    return res
+```
+
+Aggregate by feature and user.
+Alert on drift.
+
+### Back‑of‑envelope latency and cost
+
+```python
+# latency ≈ (input_tokens + output_tokens) / model_tokens_per_second + network + tool_time
+# cost ≈ input_tokens * price_in + output_tokens * price_out + embedding_tokens * price_embed
+```
+
+Keep a simple calculator in your repo.
+Make trade‑offs explicit in PRs.
+
+## Practical checklist
+
+- Ensure there is a good summary of token based usage across the major vendors, and how to calculate costs based on token usage.
+- Define token budgets per feature: input, retrieved context, output.
+- Make tokens observable: log prompt/response tokens, p50/p95, per user and per feature.
+- Keep the system prompt under ~200 tokens; move specifics into retrieved facts.
+- Use meaning‑aware chunking and pack retrieved chunks to a target budget.
+- Tighten tool/JSON schemas: short field names, minimal descriptions, few‑shot only if it pays its rent.
+- Cap output with max_tokens and stop sequences; prefer structured outputs where possible.
+- Prefer single‑turn patterns; if you chain, compress between steps and carry only deltas.
+- Re‑embed sparingly; dedupe and normalise text first; monitor embedding token spend.
+- Periodically token‑audit prompts and tool definitions; delete verbose boilerplate that crept in “temporarily.”
+- Set SLOs on tokens (and therefore latency and cost); break the build when they drift.
+
+## Recommendation
+
+Make tokens the design surface.
+Set budgets, measure relentlessly, and refactor prompts, retrieval and schemas to meet them.
+
+If your team already does this, what’s the single biggest token sink you found—and how did you fix it?

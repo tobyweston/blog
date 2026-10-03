@@ -1,0 +1,151 @@
+---
+title: "The Token Economy Across Vendors: Why \u201cPer Token\u201d Prices Don\u2019t Compare Cleanly"
+subTitle: "Same prompt, different bill: model workload economics, not list prices."
+description: "A practical guide for engineering leaders to compare AI vendor pricing honestly by modelling request shape, context tiers, cache behaviour, and batch usage rather than relying on headline per-token rates."
+pubDate: "2026-03-31"
+draft: true
+categories: "architecture engineering-management ai-platforms governance"
+keywords: "architecture, engineering-management, ai-platforms, governance, token-pricing, llm-costs, model-selection, finops, api-design, platform-engineering, cost-modelling"
+heroImage: "/images/heroes/2026-03-31-the-token-economy-across-vendors-why-u201cper-tokenu201d-prices-donu2019t-compare-cleanly-hero.jpg"
+---
+How do you compare vendor costs, and should you really treat tokens as a universal unit?
+
+Most teams start with a clean table of “$ per 1M input” and “$ per 1M output”.  
+It looks rigorous, procurement-friendly, and completely misses how your bill is actually created.
+
+If you’re being asked why spend is volatile despite “simple unit pricing”, this is usually why.
+
+## The comparison everyone starts with (and why it fails)
+
+The naive comparison looks like this:
+
+| Vendor | Input $/1M | Output $/1M |
+|---|---:|---:|
+| A | 1.20 | 6.00 |
+| B | 0.90 | 7.50 |
+| C | 1.50 | 4.20 |
+
+It’s attractive because it’s simple.
+
+It’s incomplete because it assumes:
+1. Token counts are equivalent across vendors.
+2. Your output/input ratio is constant and small.
+3. Context length never crosses pricing tiers.
+4. Cache and batch are irrelevant.
+5. Throughput/rate limits don’t force architecture changes.
+
+In production, at least three of those assumptions are wrong by week two.
+
+## What vendors actually bill for
+
+The invoice usually isn’t just “input + output”.
+
+You’ll typically see a mix of the following:
+
+1. **Input tokens** (prompt/context you send).
+2. **Output tokens** (model response).
+3. **Cached tokens** (read/write or discounted re-use, depending on provider).
+4. **Batch or async discounts** (lower price class with latency trade-offs).
+5. **Long-context tiers** (step changes once you exceed thresholds).
+6. **Request class quirks** (tool calls, reasoning tiers, premium latency classes).
+
+So yes, list prices matter.  
+But they’re a *parameter* in your model, not the model.
+
+## Why a token isn’t a token across vendors
+
+Even with identical text, token counts differ across tokenizers.
+
+That difference gets worse with:
+- Source code
+- JSON/tool payloads
+- Non-English text
+- Long system prompts
+
+Then there’s hidden overhead: system instructions, safety wrappers, tool schemas, conversation history.  
+Your product manager sees “one user question”; your bill sees a small novella.
+
+So “we sent 5k tokens” is not portable unless you measured it per vendor encoder.
+
+## A practical cost model for engineering teams
+
+Don’t optimise for list price.
+
+Optimise for **effective cost per workload** using a simple model you can explain to finance and architecture review.
+
+```text
+effective_cost =
+  (input_tokens * input_rate)
++ (output_tokens * output_rate)
++ (cache_write_tokens * cache_write_rate)
++ (cache_read_tokens * cache_read_rate)
+all multiplied by request_volume
+then adjusted for batch_share discounts
+and context-tier multipliers where applicable
+```
+
+You need a few explicit assumptions:
+
+1. **Workload mix**: chat support, code assist, document extraction, etc.
+2. **Average context size** and percentile tail (p95 matters).
+3. **Output ratio**: output_tokens / input_tokens.
+4. **Cache hit rate**: especially for repeated system/tool context.
+5. **Batch share**: what % can tolerate async latency.
+6. **Rate-limit fit**: can you run peak traffic without expensive workarounds.
+
+If those are hand-wavy, your budget forecast will be too.
+
+## Worked comparison: one realistic workload
+
+Let’s model a common internal assistant workload:
+
+- 1,000,000 requests/month
+- Average input: 2,000 tokens
+- Average output: 400 tokens
+- 60% of input cacheable context
+- Cache hit rate on that cacheable part: 70%
+- 30% of traffic can run in batch mode
+- Occasional long-context crossing: 10% requests incur +25% input rate uplift
+
+Assume simplified vendor pricing:
+
+| Vendor | Input | Output | Cache Read | Cache Write | Batch Discount |
+|---|---:|---:|---:|---:|---:|
+| A | $1.20 | $6.00 | $0.12 | $1.20 | 25% |
+| B | $0.90 | $7.50 | $0.30 | $0.90 | 10% |
+| C | $1.50 | $4.20 | $0.15 | $1.50 | 20% |
+
+Now compute effective monthly cost (high-level result):
+
+- **Vendor A:** ~$5.2k  
+- **Vendor B:** ~$5.9k  
+- **Vendor C:** ~$4.8k
+
+Interesting bit: B looked cheapest on input list price, but output and weaker batch economics pushed it up.
+
+And if your workload becomes more output-heavy (say 1:1 input/output), ranking can invert again.
+
+That’s the trap: static winner tables are fantasy football for procurement.
+
+## Decision rules and guardrails
+
+Use a few boring rules. Boring is good.
+
+1. **Choose on effective workload cost**, not headline token rates.
+2. **Model at least two traffic shapes**: interactive and batch.
+3. **Alert on context-tier crossings** (these are step-function surprises).
+4. **Track output/input ratio weekly**; prompt changes can drift this quickly.
+5. **Measure per-vendor tokenisation** using real payloads, not assumptions.
+6. **Include non-price constraints**: rate limits, latency class, regional availability, operational fit.
+
+If a model is 15% cheaper but can’t handle your peak concurrency, it isn’t cheaper.
+
+## Closing: what to standardise internally
+
+Standardise a shared pricing worksheet and refresh it monthly.
+
+Prices move, models change, prompt shapes drift, product usage evolves. Your cost model should be a living artefact, not a one-off slide for a steering committee.
+
+If you want predictable AI spend, model request *shape* and platform *behaviour*—not just total token volume.
+
+How are you handling this today: spreadsheet, FinOps pipeline, or hopeful vibes?

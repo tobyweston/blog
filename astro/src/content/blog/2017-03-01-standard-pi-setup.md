@@ -4,7 +4,7 @@ pubDate: "2017-03-01"
 categories: 'raspberry-pi'
 keywords: "Raspberry Pi setup, Raspbian, SSH, headless setup, Pi configuration, Linux, Raspberry Pi tutorials"
 description: "A standard setup guide for Raspberry Pi including OS installation, SSH configuration, and basic system setup for headless operation."
-heroImage: "/images/heroes/raspberry-pi.jpg"
+heroImage: "/images/heroes/multiple-usages-raspberry-pi.jpg"
 ---
 
 Here"s some common things to do when you first setup a Pi.
