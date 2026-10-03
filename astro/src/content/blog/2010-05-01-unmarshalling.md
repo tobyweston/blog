@@ -2,6 +2,7 @@
 title: "Un/Marshalling"
 subTitle: "Why marshalling frameworks add complexity and how to avoid them"
 pubDate: "2010-05-01"
+heroImage: "/images/heroes/2010-05-01-unmarshalling-hero.jpg"
 categories: 'java'
 keywords: "Java unmarshalling, JAXB, Castor, JSON, XML, serialisation, framework trade-offs"
 description: "Almost all unmarshalling frameworks impose constraints on your application. Sometimes rolling your own simple unmarshalling logic is simpler and more flexible."

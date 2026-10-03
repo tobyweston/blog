@@ -1,6 +1,7 @@
 ---
 title: "Setter vs Constructor Injection"
 pubDate: "2010-05-01"
+heroImage: "/images/heroes/2010-05-01-setter-vs-constructor-injection-hero.jpg"
 categories: 'java'
 keywords: "setter injection, constructor injection, dependency injection, Spring, Java, testability, immutability"
 description: "Compare setter injection vs constructor injection in Java. Constructor injection promotes immutability and clearer dependencies — here's why to prefer it."

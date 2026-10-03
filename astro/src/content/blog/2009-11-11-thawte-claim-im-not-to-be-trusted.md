@@ -1,6 +1,7 @@
 ---
 title: "Thawte claim I'm not to be trusted..."
 pubDate: '2009-11-11'
+heroImage: "/images/heroes/2009-11-11-thawte-claim-im-not-to-be-trusted-hero.jpg"
 categories: 'tools'
 keywords: "Thawte, personal email certificates, web of trust, Java WebStart, code signing, JAR signing"
 description: "Thawte is discontinuing free personal email certificates and web of trust. Impact on signing JARs for Java WebStart deployments."
