@@ -2,3 +2,9 @@
 .idea/
 _deploy/
 /.claude/worktrees/
+
+# Repo-root build and dependency output. astro/.gitignore already covers the
+# same names inside astro/, but not these at the root, and not cypress results.
+node_modules/
+/.astro/
+astro/cypress/results/
