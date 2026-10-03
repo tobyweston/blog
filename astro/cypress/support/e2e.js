@@ -31,6 +31,29 @@ addMatchImageSnapshotCommand({
   })
 });
 
+// Errors logged by dev-server tooling rather than by the site itself. The Astro
+// dev toolbar runs a11y/perf audits after the page settles and its image checks
+// fetch assets that aren't always reachable, so it logs through console.error on
+// pages we reach by clicking. None of this ships in a production build.
+const ignoredConsoleErrors = [
+  "Error while running audit's match function",
+  'astro:dev-toolbar',
+];
+
+const isIgnoredConsoleError = (args) => {
+  const text = args
+    .map((arg) => {
+      try {
+        return arg instanceof Error ? `${arg.message} ${arg.stack ?? ''}` : String(arg);
+      } catch {
+        return '';
+      }
+    })
+    .join(' ');
+
+  return ignoredConsoleErrors.some((ignored) => text.includes(ignored));
+};
+
 // Custom command to check for console errors
 Cypress.Commands.add('checkForErrors', () => {
   const consoleErrorSpy = Cypress.sinon.spy();
@@ -39,6 +62,9 @@ Cypress.Commands.add('checkForErrors', () => {
   // Bind before each page load so we capture errors on visited pages, not about:blank.
   cy.on('window:before:load', (win) => {
     Cypress.sinon.stub(win.console, 'error').callsFake((...args) => {
+      if (isIgnoredConsoleError(args)) {
+        return;
+      }
       consoleErrorSpy(...args);
     });
   });

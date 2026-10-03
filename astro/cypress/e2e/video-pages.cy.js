@@ -57,7 +57,15 @@ describe('Video Pages', () => {
           cy.get('h1').should('contain', video.title);
           cy.get('time').should('exist');
           cy.get('.article-description').should('exist').invoke('text').should('not.be.empty');
-          cy.get('section.prose').should('exist').and('be.visible');
+
+          // Videos that carry no written body render no prose section at all,
+          // rather than an empty one.
+          if (video.hasBody) {
+            cy.get('section.prose').should('exist').and('be.visible');
+            cy.get('section.prose').invoke('text').should('not.be.empty');
+          } else {
+            cy.get('section.prose').should('not.exist');
+          }
         });
 
         it('embeds the expected YouTube frame', () => {

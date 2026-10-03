@@ -9,6 +9,11 @@ type Props = CollectionEntry<'video'>['data'] & {
 
 const { title, description, keywords, pubDate, youtubeId } = Astro.props;
 const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0`;
+
+// Some videos are the whole post and carry no written body. Render the slot up
+// front so we can skip the prose section entirely rather than emit an empty one.
+const body = Astro.slots.has('default') ? await Astro.slots.render('default') : '';
+const hasBody = body.trim().length > 0;
 ---
 
 <SiteLayout title={`${title} - Videos`} description={description} keywords={keywords}>
@@ -38,9 +43,9 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0`;
         ></iframe>
       </div>
 
-      <section class="prose mt-10">
-        <slot />
-      </section>
+      {hasBody && (
+        <section class="prose mt-10" set:html={body} />
+      )}
     </article>
   </div>
 </SiteLayout>
