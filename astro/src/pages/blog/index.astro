@@ -7,29 +7,32 @@ import RobotCaneCard from "../../components/ui/RobotCaneCard.astro";
 
 const posts = (await getCollection('blog')) as CollectionEntry<'blog'>[];
 posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Every card on the page is rendered here by PreviewBlog, so a card has exactly
+// one definition. Cards past the first batch are held at display:none via
+// .card-reveal[data-pending]; the script below drops that attribute a batch at a
+// time as the sentinel comes into view. A hidden card has no layout box, so the
+// browser does not fetch its hero image until the card is actually shown.
 const perPage = 5;
-const pagePosts = posts.slice(0, perPage);
-const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
-  slug: post.slug,
-  title: post.data.title,
-  subTitle: post.data.subTitle,
-  description: post.data.description,
-  pubDate: post.data.pubDate.toISOString(),
-}));
 ---
 
 <SiteLayout title="Blog - bad.robot" description="Good Robots do what they're told!">
   <section>
     <h1 class="page-header mb-6">Blog</h1>
     <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {pagePosts.map((p: CollectionEntry<'blog'>, idx: number) => (
+      {posts.slice(0, perPage).map((p: CollectionEntry<'blog'>, idx: number) => (
         <div class="card-reveal" data-card-idx={idx}>
           <PreviewBlog post={p} />
         </div>
       ))}
-      <div class="card-reveal" data-card-idx={pagePosts.length}>
+      <div class="card-reveal" data-card-idx={perPage}>
         <RobotCaneCard />
       </div>
+      {posts.slice(perPage).map((p: CollectionEntry<'blog'>, idx: number) => (
+        <div class="card-reveal" data-card-idx={perPage + 1 + idx} data-pending>
+          <PreviewBlog post={p} />
+        </div>
+      ))}
     </div>
 
     {posts.length > perPage && (
@@ -82,186 +85,76 @@ const serializedPosts = posts.map((post: CollectionEntry<'blog'>) => ({
     }
   </style>
 
-  <script is:inline type="module" define:vars={{perPage, totalPosts: serializedPosts.length, allPosts: serializedPosts, initialCardCount: pagePosts.length + 1}}>
-    let offset = perPage;
-    let loading = false;
-    let hasMore = totalPosts > perPage;
-    let currentCardIdx = initialCardCount; // Starting index for new cards
+  <script is:inline type="module" define:vars={{perPage}}>
+    // Animation timing constants (matching Hero component aesthetic)
+    const CARD_REVEAL_DELAY = 80; // ms between each card
+    const ITEM_REVEAL_DELAY = 60; // ms between items within a card
+    const INDICATOR_HOLD = 1000;  // ms the loader shows before a batch appears
 
     const postsGrid = document.getElementById('posts-grid');
     const loadingIndicator = document.getElementById('loading-indicator');
     const sentinel = document.getElementById('scroll-sentinel');
 
-    // Animation timing constants (matching Hero component aesthetic)
-    const CARD_REVEAL_DELAY = 80; // ms between each card
-    const ITEM_REVEAL_DELAY = 60; // ms between items within a card
-
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    }
-
-    function createPostCard(post) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'card-reveal';
-      wrapper.setAttribute('data-card-idx', currentCardIdx);
-
-      const article = document.createElement('article');
-      article.className = 'card hover:shadow-medium overflow-hidden h-full';
-
-      const link = document.createElement('a');
-      link.href = `/blog/${post.slug}/`;
-      link.className = 'block no-underline flex flex-col h-full';
-
-      const title = document.createElement('h3');
-      title.className = 'text-2xl font-bold mb-2 text-gray-900 card-item-reveal';
-      title.setAttribute('data-item-idx', '0');
-      title.textContent = post.title;
-
-      let itemIdx = 1;
-
-      let subTitle;
-      if (post.subTitle) {
-        subTitle = document.createElement('p');
-        subTitle.className = 'text-base text-gray-600 mb-2 italic card-item-reveal';
-        subTitle.setAttribute('data-item-idx', String(itemIdx));
-        subTitle.textContent = post.subTitle;
-        itemIdx++;
-      }
-
-      const dateDiv = document.createElement('div');
-      dateDiv.className = 'text-sm text-gray-500 mb-3 font-medium card-item-reveal';
-      dateDiv.setAttribute('data-item-idx', String(itemIdx));
-      dateDiv.textContent = formatDate(post.pubDate);
-      itemIdx++;
-
-      const description = document.createElement('p');
-      description.className = 'text-gray-700 card-item-reveal';
-      description.setAttribute('data-item-idx', String(itemIdx));
-      description.textContent = post.description || '';
-
-      link.appendChild(title);
-      if (subTitle) link.appendChild(subTitle);
-      link.appendChild(dateDiv);
-      link.appendChild(description);
-      article.appendChild(link);
-      wrapper.appendChild(article);
-
-      currentCardIdx++;
-      return wrapper;
-    }
+    let observer;
+    let revealing = false;
 
     function animateCard(cardElement, cardIndex) {
-      const cardRevealDelay = cardIndex * CARD_REVEAL_DELAY;
-
-      // Animate the card itself
-      setTimeout(() => {
-        cardElement.classList.add('revealed');
-      }, cardRevealDelay);
-
-      // Animate items within the card
-      const itemElements = cardElement.querySelectorAll('.card-item-reveal');
-      itemElements.forEach((item, itemIndex) => {
-        const itemDelay = cardRevealDelay + ((itemIndex + 1) * ITEM_REVEAL_DELAY);
-        setTimeout(() => {
-          item.classList.add('revealed');
-        }, itemDelay);
+      const cardDelay = cardIndex * CARD_REVEAL_DELAY;
+      setTimeout(() => cardElement.classList.add('revealed'), cardDelay);
+      cardElement.querySelectorAll('.card-item-reveal').forEach((item, itemIndex) => {
+        setTimeout(() => item.classList.add('revealed'), cardDelay + (itemIndex + 1) * ITEM_REVEAL_DELAY);
       });
     }
 
-    function animateExistingCards() {
-      const cardElements = document.querySelectorAll('.card-reveal');
-      cardElements.forEach((card, index) => {
-        if (!card.classList.contains('revealed')) {
-          animateCard(card, index);
-        }
-      });
+    function pendingCards() {
+      return Array.from(postsGrid?.querySelectorAll('.card-reveal[data-pending]') || []);
     }
 
-    async function loadMorePosts() {
-      console.log('loadMorePosts called', { loading, hasMore, offset });
-      if (loading || !hasMore) return;
+    function stopObserving() {
+      if (sentinel) sentinel.style.display = 'none';
+      observer?.disconnect();
+    }
 
-      loading = true;
-      loadingIndicator?.classList.remove('hidden');
-      console.log('Loading indicator shown, fetching posts...');
+    function revealNextBatch() {
+      if (revealing) return;
 
-      // Track when loading started for minimum display time
-      const loadStartTime = Date.now();
-      const minDisplayTime = 1000;
-
-      try {
-        const nextPosts = allPosts.slice(offset, offset + perPage);
-
-        // Calculate how long to wait before showing results
-        const elapsedTime = Date.now() - loadStartTime;
-        const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-        console.log(`Waiting ${remainingTime}ms before showing posts`);
-
-        // Wait for the remaining time before adding posts
-        setTimeout(() => {
-          console.log('Adding posts to grid');
-          const startCardIdx = document.querySelectorAll('.card-reveal').length;
-
-          nextPosts.forEach((post, idx) => {
-            const card = createPostCard(post);
-            postsGrid?.appendChild(card);
-            // Animate each new card with staggered timing
-            animateCard(card, startCardIdx + idx);
-          });
-
-          offset += nextPosts.length;
-          hasMore = offset < totalPosts;
-          console.log('Updated state:', { offset, hasMore });
-
-          if (!hasMore && sentinel) {
-            sentinel.style.display = 'none';
-            console.log('No more posts, hiding sentinel');
-          }
-
-          loading = false;
-          loadingIndicator?.classList.add('hidden');
-          console.log('Loading complete, indicator hidden');
-        }, remainingTime);
-
-      } catch (error) {
-        console.error('Failed to load more posts:', error);
-
-        // Still respect minimum display time on error
-        const elapsedTime = Date.now() - loadStartTime;
-        const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-
-        setTimeout(() => {
-          loading = false;
-          loadingIndicator?.classList.add('hidden');
-        }, remainingTime);
+      const batch = pendingCards().slice(0, perPage);
+      if (!batch.length) {
+        stopObserving();
+        return;
       }
+
+      revealing = true;
+      loadingIndicator?.classList.remove('hidden');
+
+      // Hold the loader for a beat so a batch does not snap into place.
+      setTimeout(() => {
+        batch.forEach((card, idx) => {
+          card.removeAttribute('data-pending');
+          animateCard(card, idx);
+        });
+
+        revealing = false;
+        loadingIndicator?.classList.add('hidden');
+
+        if (!pendingCards().length) stopObserving();
+      }, INDICATOR_HOLD);
     }
 
-    // Animate initial cards on page load
-    animateExistingCards();
+    // Animate the cards that start out visible.
+    postsGrid?.querySelectorAll('.card-reveal:not([data-pending])')
+      .forEach((card, idx) => animateCard(card, idx));
 
-    // Intersection Observer for infinite scroll
-    if (sentinel && hasMore) {
-      console.log('Setting up Intersection Observer', { sentinel, hasMore });
-      const observer = new IntersectionObserver(
+    if (sentinel && pendingCards().length) {
+      observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            console.log('Intersection event:', { isIntersecting: entry.isIntersecting, loading, hasMore });
-            if (entry.isIntersecting) {
-              loadMorePosts();
-            }
-          });
+          if (entries.some((entry) => entry.isIntersecting)) revealNextBatch();
         },
-        {
-          rootMargin: '200px',
-        }
+        { rootMargin: '200px' },
       );
-
       observer.observe(sentinel);
-      console.log('Observer attached to sentinel');
     } else {
-      console.log('Sentinel or hasMore not available', { sentinel, hasMore });
+      stopObserving();
     }
   </script>
 </SiteLayout>

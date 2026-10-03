@@ -282,6 +282,15 @@
     flex: 1;
   }
 
+  /*
+   * Cards past the current batch on the blog index. display:none (not merely
+   * unrevealed, which keeps the layout box) so they take no vertical space and
+   * the browser never fetches their hero images until the card is shown.
+   */
+  .card-reveal[data-pending] {
+    display: none;
+  }
+
   /* Staggered reveals within cards */
   .card-item-reveal {
     opacity: 0;
