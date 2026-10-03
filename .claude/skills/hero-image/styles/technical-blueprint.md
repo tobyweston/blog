@@ -39,6 +39,23 @@ same uniform line weight as the rest of the illustration, as a mark etched on th
 board rather than a sticker, a badge or a photograph. No text beside it.
 ```
 
+**The Scala mark.** The `scala` posts carry it. Paste verbatim:
+
+```text
+In the lower-left corner of the image, clear of the main subject, a Scala mark: a
+compact emblem of two parallel curved bands sweeping up to the right and curling
+back on themselves, like a flattened spiral staircase seen from the side. Drawn
+in a strong crimson red, flat, with no outline, no circle or roundel around it
+and no text beside it.
+```
+
+This mark is the one place a fifth colour enters the palette. It is always
+crimson, because that red is the mark's identity and a navy Scala emblem reads as
+a mistake — but it is kept small and parked in a corner, while the amber accent
+stays on whatever the post is about and is always the larger warm shape. Two warm
+hues at very different sizes and distances do not compete; two at similar sizes
+would, so do not let the mark grow.
+
 **The Debian swirl.** The `Deploying to Debian` series carries the swirl, and
 unlike the berry it sits centrally and takes the accent. Paste verbatim:
 
@@ -108,6 +125,15 @@ diagram of an abstraction is just noise with nice lines.
   units on the right for functional, joined by an amber flanged coupling. An
   inset study shows a sub-assembly equalling a single plain block, which is
   referential transparency drawn literally.
+- The `scala` posts, seven of them, all carrying the crimson mark in the
+  lower-left: exception handling (a two-way sorting chute), mixins (sleeves
+  sliding onto a shaft, deliberately not a tree), the learning curve (a ramp
+  steep then shallow, drawn from the post's own chart), the JMock/Scalamock
+  cheat sheet (a conversion plate of matched fittings), implicit parameters and
+  implicit functions (the same machine and spare-parts rack in both, a plug
+  arriving by itself and then an adapter doing the same), and type classes
+  (three unrelated shapes wearing clip-on collars that present an identical
+  fitting, with nothing above them).
 - The `Deploying to Debian` series, two posts, both carrying the swirl centrally
   and in the accent: `2019-09-02-deploy-java-to-debian` (loose parts descending
   into one crate, the canister marked with the Java cup and the crate stamped
