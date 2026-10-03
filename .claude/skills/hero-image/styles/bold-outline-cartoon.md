@@ -66,3 +66,10 @@ the cartoon warmth fights it. Use `technical-blueprint` instead.
 
 - `2026-10-02-attestations-and-evidence` — the baker presenting attestations,
   policy and evidence as three labelled groups on a counter.
+- `2019-10-30-evidencing-source-code-reviews` — one document bearing two
+  different wax seals, an author's and a signatory's. **The first use of this
+  style without the baker**: the post is governance, but it predates the bakery
+  series by seven years and borrowing her would imply a continuity that does not
+  exist. The green shield with the tick still carries across. Omitting the
+  recurring character is a legitimate choice when a post shares the subject
+  matter but not the series.

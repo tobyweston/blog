@@ -55,3 +55,8 @@ metaphor carries the meaning on its own.
   checkpoint to get through their own front door, straight from the post's Kief
   Morris pullquote. Carries no text at all: the joke explains itself, and every
   string omitted is a failure mode removed.
+- `2020-02-01-engineering-culture` — three levers in a rising cascade, TRUST
+  pushing VOICE pushing AUTONOMY, taken from the post's own "Big 3 Levers" and
+  "fulcrums" vocabulary. Chosen over `technical-blueprint` despite the levers
+  being machinery: the post is about fear and psychological safety, and blueprint
+  has no warmth to spend on that.
