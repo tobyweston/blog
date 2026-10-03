@@ -123,10 +123,20 @@ def find_image(node) -> bytes | None:
         return None
 
 
-def call_gemini(prompt: str, key: str, model: str = MODEL) -> bytes:
+def call_gemini(prompt: str, key: str, model: str = MODEL,
+                references: list[Path] | None = None) -> bytes:
+    inputs: list[dict] = [{"type": "text", "text": prompt}]
+    for ref in references or []:
+        mime = "image/png" if ref.suffix.lower() == ".png" else "image/jpeg"
+        inputs.append({
+            "type": "image",
+            "mime_type": mime,
+            "data": base64.b64encode(ref.read_bytes()).decode(),
+        })
+
     body = json.dumps({
         "model": model,
-        "input": [{"type": "text", "text": prompt}],
+        "input": inputs,
         "response_format": {
             "type": "image",
             "mime_type": "image/jpeg",
@@ -160,6 +170,29 @@ def call_gemini(prompt: str, key: str, model: str = MODEL) -> bytes:
         fail("no image in the response",
              "response keys: " + ", ".join(sorted(payload)[:12]))
     return data
+
+
+IMG_RE = re.compile(
+    r"""(?:^import\s+\w+\s+from\s+['"]([^'"]+\.(?:png|jpe?g|gif|webp))['"]"""
+    r"""|!\[[^\]]*\]\(([^)]+\.(?:png|jpe?g|gif|webp))\))""",
+    re.M | re.I | re.X)
+
+
+def find_post_images(post: Path) -> list[Path]:
+    """
+    Images the post already uses — its own charts, diagrams and screenshots.
+
+    These are the best reference material a hero prompt has: they are already in
+    the post's visual language, and for a data infographic they carry the actual
+    numbers. Both import and markdown forms resolve relative to the post.
+    """
+    out: list[Path] = []
+    for m in IMG_RE.finditer(post.read_text()):
+        ref = m.group(1) or m.group(2)
+        path = (post.parent / ref).resolve()
+        if path.is_file() and path not in out:
+            out.append(path)
+    return out
 
 
 def find_youtube_id(post: Path) -> str | None:
@@ -253,6 +286,9 @@ def main() -> None:
                          "The id is found in the post if you don't give one.")
     ap.add_argument("--dry-run", action="store_true",
                     help="resolve the post and prompt, then stop before calling the API")
+    ap.add_argument("--reference", nargs="*", metavar="FILE",
+                    help="images to send with the prompt as reference. With no "
+                         "values, uses the post's own images (up to 4).")
     ap.add_argument("--model", default=MODEL, choices=MODELS,
                     help=f"image model (default {MODEL})")
     ap.add_argument("--no-build", action="store_true", help="skip the astro build")
@@ -264,6 +300,24 @@ def main() -> None:
     video_id = args.keyframe if isinstance(args.keyframe, str) else find_youtube_id(post)
 
     print(f"post   {post.relative_to(REPO)}")
+
+    # Report what the post offers before anything can fail: --dry-run is the
+    # documented way to find out which of its own images are worth attaching.
+    post_images = find_post_images(post)
+    references: list[Path] = []
+    if args.reference is not None:
+        references = [Path(f).expanduser() for f in args.reference] or post_images[:4]
+        missing = [r for r in references if not r.is_file()]
+        if missing:
+            fail("reference image not found: " + ", ".join(str(m) for m in missing))
+        for r in references:
+            print(f"ref    {r.name}")
+    elif post_images:
+        print(f"images this post already uses ({len(post_images)}): "
+              f"{', '.join(i.name for i in post_images[:4])}"
+              f"{' ...' if len(post_images) > 4 else ''}")
+        print("       pass --reference to send them with the prompt")
+
     if args.keyframe:
         if not video_id:
             fail("no youtubeId in the post", "pass one: --keyframe <VIDEO_ID>")
@@ -334,7 +388,7 @@ def main() -> None:
         out = Path(tempfile.mkdtemp(prefix="hero-variants-"))
         for i in range(1, args.variants + 1):
             raw = out / f"raw-{i}.jpg"
-            raw.write_bytes(call_gemini(prompt, key, args.model))
+            raw.write_bytes(call_gemini(prompt, key, args.model, references))
             q = normalise(raw, out / f"{post.stem}-hero-{i}.jpg")
             print(f"  variant {i}: {out / f'{post.stem}-hero-{i}.jpg'} (q{q})")
         print(f"\n{args.variants} candidates in {out} — nothing installed.")
@@ -343,7 +397,7 @@ def main() -> None:
 
     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
         raw = Path(tmp.name)
-    raw.write_bytes(call_gemini(prompt, key, args.model))
+    raw.write_bytes(call_gemini(prompt, key, args.model, references))
     quality = normalise(raw, dest)
     raw.unlink(missing_ok=True)
 

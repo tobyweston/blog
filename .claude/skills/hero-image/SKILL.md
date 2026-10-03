@@ -65,21 +65,42 @@ Read the whole post, not just the frontmatter. Extract:
 - any recurring character or motif from earlier posts in the same series. If the
   post links to a previous post, read that post's `heroImage` and look at it, so
   the new one continues rather than resets.
+- **the images the post already contains.** Look at every one of them before
+  composing — its charts, diagrams, screenshots and photographs are the post's
+  existing visual language, and the hero should look like it belongs to the same
+  article rather than arriving from a stock library. Take the real shapes from
+  them: the actual shape of a curve, the arrangement of a diagram, the objects
+  in a photograph, the colours already in use.
+
+  ```bash
+  .claude/skills/hero-image/scripts/generate_hero.py <slug> --dry-run
+  ```
+
+  lists what the post has. Attach the two or three most useful to the generator
+  with `--reference`, and name them in the prompt's `REFERENCE IMAGES` block so
+  it is on record which ones shaped the result. A post with no images of its own
+  simply skips this.
 
 If the post is one of a series, say so in the prompt explicitly — continuity is
 the main reason this skill exists.
 
 ### 4. Pick a style
 
-Explicit instruction wins. Otherwise infer from `categories`:
+Explicit instruction wins. Otherwise work down this table:
 
-| Categories contain | Style |
+| The post | Style |
 |---|---|
-| `compliance`, `governance`, `controls-engineering`, `policy-as-code` | `bold-outline-cartoon` |
-| `raspberry-pi`, `debian`, `tooling`, `build`, `java`, `scala`, `rego` | `technical-blueprint` |
-| `culture`, `teams`, `process`, `metrics`, `opinion` | `flat-editorial` |
+| **Reports figures it measured** — two or three headline numbers you can quote straight out of it | `data-infographic` |
+| Categories contain `compliance`, `governance`, `controls-engineering`, `policy-as-code` | `bold-outline-cartoon` |
+| Categories contain `raspberry-pi`, `debian`, `tooling`, `build`, `java`, `scala`, `rego` | `technical-blueprint` |
+| Categories contain `culture`, `teams`, `process`, `metrics`, `opinion` | `flat-editorial` |
 
-If nothing fits cleanly, offer the three and ask. Never silently mix two styles —
+Check the first row before the category rows: it is about what the post contains,
+not how it is filed, and it wins when it applies. A post categorised `metrics`
+that argues about measurement is `flat-editorial`; one that reports what the
+author actually measured is `data-infographic`.
+
+If nothing fits cleanly, offer the four and ask. Never silently mix two styles —
 the point is a consistent look across the site.
 
 Read the chosen file in `styles/` and `reference/output-spec.md` before writing
@@ -100,6 +121,12 @@ STYLE
 <verbatim Style block from the chosen style file>
 
 <RECURRING CHARACTER — only if the style defines one and the series uses it>
+
+<REFERENCE IMAGES — only if images are attached. Name each one and say what to
+take from it and what to ignore, e.g. "The attached bar chart is from the post
+itself: match its proportions and its blue/amber pairing, but do not reproduce
+its axes or labels." Always say what NOT to copy, or the generator will trace
+the whole thing.>
 
 SUBJECT
 <the scene: one clear focal object or action, drawn from the concrete nouns.
@@ -137,6 +164,8 @@ symmetrically.
 - Print the prompt in the reply inside a ```text fence so it can be copied.
 - Name the previous post's hero file as a style reference to attach, if the post
   is part of a series.
+- List the post's own images that should be attached, with the exact
+  `--reference` invocation, so the generation can be repeated identically.
 - Call out which parts are most likely to be mangled — any literal text — and
   what to drop if the generator fumbles it.
 
@@ -157,6 +186,7 @@ check. Useful flags:
 |---|---|
 | `--keyframe [ID]` | Use the post's YouTube keyframe instead of generating |
 | `--install FILE` | Install an image generated elsewhere — see the note below |
+| `--reference [FILE...]` | Send images with the prompt; bare, it uses the post's own |
 | `--variants 3` | Generate three candidates, install none, pick one yourself |
 | `--model NAME` | Switch image model |
 | `--dry-run` | Resolve post and prompt, stop before spending anything |
@@ -185,14 +215,24 @@ Anything longer than two or three words should be specified as abstract
 placeholder lines. Always state the exact spelling of the strings you do ask for,
 and always offer a text-free fallback.
 
+`data-infographic` is the one exception — it is built out of labelled numbers and
+needs six to eight strings. Its style file sets out what it does to earn that,
+and the exception applies to that style only.
+
 **One focal idea.** A hero that tries to illustrate the whole argument reads as
 clutter at 192px. Pick the single image the post turns on.
+
+`data-infographic` reads as the exception and isn't: its two or three stat cards
+are one idea — the finding — stated in parts, on a strict grid that keeps them
+legible. Three *unrelated* ideas are clutter in any style, that one included.
 
 **Use the post's own metaphor.** If the author compared something to a bakery,
 a train ticket or CCTV, that is the image. Don't substitute a better one.
 
 **No UI screenshots, no code walls, no floating holographic dashboards.** They
-date badly and read as nothing at thumbnail size.
+date badly and read as nothing at thumbnail size. A `data-infographic` hero is
+not an exception to this: it is flat type and pictograms on a plain ground, with
+no window chrome, no perspective and no invented charts.
 
 **State the negatives.** Every prompt should say what the style is *not*
 (not photorealistic, not 3D render, and so on) — the style files carry this.

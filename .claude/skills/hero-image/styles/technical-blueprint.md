@@ -24,6 +24,15 @@ line work, with one warm accent (amber or rust) reserved for the single
 component the post is about. No gradients beyond flat tonal steps.
 ```
 
+## Reference images from the post
+
+The most useful attachments for this style are the post's own diagrams and
+photographs of hardware: they tell you the real arrangement of the thing, which
+is exactly what an isometric drawing has to get right. Attach the photograph of
+the actual board, rig or wiring and ask for its true layout and proportions,
+redrawn as line work. Say clearly that colours, textures and backgrounds from
+the photograph must be dropped in favour of the palette below.
+
 ## Works well for
 
 Build and packaging tooling, pipelines, hardware and Raspberry Pi projects,

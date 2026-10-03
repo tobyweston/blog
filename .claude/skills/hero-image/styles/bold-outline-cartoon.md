@@ -43,6 +43,15 @@ white tick** is a passing evaluation; **a red shield with a white cross** is a
 failing one. These map to the rendered evidence documents in the posts, so keep
 them consistent.
 
+## Reference images from the post
+
+Take the *objects* and leave the rendering. A post's screenshots of a rendered
+evidence document, a certificate or a form tell you what the baker should be
+holding and roughly how it is laid out — the badge in the corner, the bands of
+content, the proportions. Say explicitly that the attached image is a reference
+for content and layout only and must be redrawn with thick outlines and flat
+fills, or you will get a photorealistic document pasted into a cartoon.
+
 ## Works well for
 
 Governance, compliance, controls, audit, policy-as-code, anything where a

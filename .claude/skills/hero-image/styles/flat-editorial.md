@@ -24,6 +24,15 @@ or dark teal), one mid tone, and one saturated accent (burnt orange or mustard).
 Colours overlap and multiply where shapes cross. No photographic colour range.
 ```
 
+## Reference images from the post
+
+Use the post's images sparingly here. This style simplifies so aggressively that
+detail taken from a screenshot survives as noise, and a traced photograph fights
+the printed-ink look. What is worth lifting is composition — the balance of a
+chart, the direction of a trend, the silhouette of a scene — and nothing else.
+Always say that the attachment is for arrangement only and must not be
+reproduced.
+
 ## Works well for
 
 Team culture, process and practice, metrics and measurement, trust and
