@@ -56,10 +56,14 @@ Behind it on the same rail, a second identical capsule, not cut away, follows
 along.
 
 BRAND MARK
-In the lower-left corner of the image, clear of the main subject, a Java mark: a
-plain cup seen from the side, drawn in a mid steel blue, with two curling wisps
-of steam rising from it in a warm orange-red. Flat shapes, no outline, no saucer,
-no circle or roundel around it and no text beside it.
+On the LEFT of the image, clear of the main subject, a Java mark: a plain cup
+seen from the side, drawn in a mid steel blue, with two curling wisps of steam
+rising from it in a warm orange-red. Flat shapes, no outline, no saucer, no
+circle or roundel around it and no text beside it.
+Position it so the WHOLE mark — the base of the cup included — sits above the
+lower third of the image. It must not touch the bottom edge and must not sit in
+the bottom fifth. Treat the lower fifth of the frame as unusable: a mark placed
+there loses its cup to the card crop and survives only as a stray orange squiggle.
 
 SUPPORTING DETAIL
 One faint callout leader line points at the central partition, ending in a small

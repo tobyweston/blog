@@ -1,33 +1,25 @@
-# tempus-fugit 1.0 Released — hero prompt
+# Easily Switch JDK on Mac — hero prompt
 
-- **Post:** `astro/src/content/blog/2009-11-11-time-flies.md`
+- **Post:** `astro/src/content/blog/2015-09-10-easily-switch-jdk-on-mac.md`
 - **Style:** `technical-blueprint`
-- **Series:** the `java` posts, concurrency and tempus-fugit group — all carry the Java
-  cup in its series variant, see the Recurring motif section of the style file
 - **Written:** 2026-10-03
-- **Replaces:** nothing — this post has no `heroImage` today
+- **Replaces:** nothing bespoke — this post has no hero of its own today
 - **Video:** none
 
 ## Why this image
 
-The release announcement for the author's own library. A release post has no
-mechanism of its own, so the image is the library as a thing you take off a
-shelf: one sealed component, complete and ready, with its parts visible.
+Several JDKs installed, none of them findable, and a shell function that points
+`JAVA_HOME` at whichever you want.
 
-It opens the tempus-fugit group — the deadlock, atomicity and 1.1 posts all draw
-from the same vocabulary of clocks and threads.
-
-## Reference images
-
-None worth attaching — these posts illustrate themselves with code listings,
-which must not be drawn.
+The image is a rotary selector: several identical cartridges racked up, one
+selector dial, and exactly one feed line leaving it.
 
 ## Prompt
 
 ```text
-Create a wide 16:9 hero illustration, exactly 1600 x 900 pixels, for a technical
-blog post about a library for testing concurrent and time-sensitive code. Output a single flat image, no borders, no frame, no
-watermark, no signature.
+Create a wide 16:9 hero illustration, exactly 1600 x 900 pixels, for a blog post
+about selecting which of several installed toolchains is active. Output a single flat image, no borders, no frame, no watermark,
+no signature.
 
 STYLE
 Clean technical illustration in the manner of an exploded isometric diagram or
@@ -39,16 +31,15 @@ photorealistic, not a 3D render, not a cartoon, not a glossy marketing render,
 no glowing neon or holographic effects.
 
 SUBJECT
-A single sealed module drawn large in isometric projection, centred, resting on a
-plain plinth. Its casing is cut away on one side to show the interior: a simple
-clock escapement — a toothed wheel and a pivoting anchor — meshed with TWO
-parallel shafts running the length of the module.
+A rotary selector drawn in isometric projection, centred: a circular turret with
+FOUR identical cartridges seated around its rim, each in its own numbered-looking
+bay with no actual numbers.
 
-The casing is clean and unmarked apart from a single raised band around its
-middle.
+A single substantial lever sits at the turret's centre, pointing to ONE of the
+four cartridges. From that cartridge alone, one clean feed line leaves the turret
+to the RIGHT and runs off the edge of the image.
 
-To one side, slightly behind, two further identical modules stand closed and
-stacked, suggesting more of the same ready to use.
+The other three cartridges have no line leaving them at all.
 
 BRAND MARK
 On the LEFT of the image, clear of the main subject, a Java mark: a plain cup
@@ -61,14 +52,13 @@ the bottom fifth. Treat the lower fifth of the frame as unusable: a mark placed
 there loses its cup to the card crop and survives only as a stray orange squiggle.
 
 SUPPORTING DETAIL
-One faint callout leader line points at the escapement wheel, ending in a small
+One faint callout leader line points at the selector lever, ending in a small
 empty circle.
 
 TEXT IN THE IMAGE
 No text labels anywhere in this image. No code, braces, semicolons, terminal
-output, version numbers or filenames, and no text beside the Java mark. Any
-marking that would read as writing must be left out rather than rendered as
-placeholder lettering.
+output, version numbers or filenames. Any marking that would read as writing must
+be left out rather than rendered as placeholder lettering.
 
 COLOUR
 Restrained and cool: off-white or pale blue-grey ground, deep navy and slate
@@ -77,8 +67,8 @@ component the post is about. No gradients beyond flat tonal steps.
 The small blue-and-orange Java mark in the corner is the only exception. Keep it
 small and well clear of the amber element — its orange steam is close in hue to
 the accent, so the two must never sit near each other or at similar sizes.
-The amber accent belongs to the escapement wheel and its anchor, and to nothing
-else.
+The amber accent belongs to the selector lever and the single feed line leaving
+the chosen cartridge, and to nothing else.
 
 COMPOSITION FOR A WEB CARD
 This image is centre-cropped hard to a wide strip for post cards, about 2.8:1,
@@ -93,15 +83,11 @@ symmetrically.
 
 ## What is most likely to go wrong
 
-- **A literal clock face.** An escapement is a mechanism; a clock face at 192px
-  is a grey circle.
-- **Version numbers appearing.** No text in this image at all.
-- **The Java mark growing, or its orange drifting towards the amber.** Small,
-  lower-left, well clear of the accent.
-- **The mark landing in the bottom fifth**, which the card crop removes.
+- **Lines leaving more than one cartridge.** Exactly one is active.
+- **An Apple logo.** The Java cup is the only mark.
 
 ## Install
 
 ```bash
-cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2009-11-11-time-flies --install ~/Downloads/<your-file>.jpg
+cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2015-09-10-easily-switch-jdk-on-mac --install ~/Downloads/<your-file>.jpg
 ```
