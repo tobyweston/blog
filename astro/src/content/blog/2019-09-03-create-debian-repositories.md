@@ -5,7 +5,7 @@ pubDate: '2019-09-03'
 categories: 'java, scala'
 keywords: 'debian, ubuntu, apt, apt-get, aptly, deb repository, package repository, gpg signing, linux packaging, release distribution'
 description: 'Step-by-step guide to building and publishing your own Debian/Ubuntu APT repository with aptly, including package publishing, signing with GPG, and client setup.'
-heroImage: "/images/heroes/multiple-usages-devops.jpg"
+heroImage: "/images/heroes/2019-09-03-create-debian-repositories-hero.jpg"
 ---
 
 In this post, we'll look at to how to set up your own [Debian repository](https://wiki.debian.org/DebianRepository) so users can install and upgrade your software via `apt-get` on popular Linux distros like Debian and Ubuntu.
