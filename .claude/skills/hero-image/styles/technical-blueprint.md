@@ -37,4 +37,8 @@ diagram of an abstraction is just noise with nice lines.
 
 ## Used by
 
-_(none yet — first use should be recorded here)_
+- `2012-04-03-scala-as-a-functional-oo-hybrid` — one isometric machine built from
+  two kinds of part: nested solid blocks on the left for OO, a chain of inline
+  units on the right for functional, joined by an amber flanged coupling. An
+  inset study shows a sub-assembly equalling a single plain block, which is
+  referential transparency drawn literally.
