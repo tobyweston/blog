@@ -99,5 +99,8 @@ post wants a different style, not that it wants fewer stats.
 
 ## Used by
 
-- `2026-03-08-man-vs-model` — four weeks, one coder, 2x more code shipped,
-  2.8x larger features. The reference image for the style.
+- `2026-03-08-man-vs-model` — the reference image for the style, and the worked
+  example. Its prompt is at `documents/hero-prompts/2026-03-08-man-vs-model.md`:
+  read that before writing a new one, since it shows the stat-card row, the
+  REFERENCE IMAGES wording that stops the post's charts being traced, and a
+  table checking every figure against the post before any of them were used.
