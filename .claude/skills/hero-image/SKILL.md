@@ -156,9 +156,21 @@ check. Useful flags:
 | Flag | Why |
 |---|---|
 | `--keyframe [ID]` | Use the post's YouTube keyframe instead of generating |
+| `--install FILE` | Install an image generated elsewhere — see the note below |
 | `--variants 3` | Generate three candidates, install none, pick one yourself |
+| `--model NAME` | Switch image model |
 | `--dry-run` | Resolve post and prompt, stop before spending anything |
 | `--no-build` | Skip the astro build |
+
+**The API needs billing enabled.** Every Gemini image model is capped at zero on
+the free tier — a key without billing answers `429 ... limit: 0` for all four,
+and a Gemini app subscription is a different product that does not grant API
+access. Without billing, generate in the Gemini app as before and hand the file
+to the script, which still does every other step:
+
+```bash
+.claude/skills/hero-image/scripts/generate_hero.py <slug> --install ~/Downloads/<file>.jpg
+```
 
 **Always look at the card check it prints.** If the focal subject is clipped,
 the prompt's composition section needs tightening — don't fix it by re-cropping.

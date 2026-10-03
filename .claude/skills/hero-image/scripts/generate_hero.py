@@ -38,6 +38,10 @@ POSTS = [REPO / "astro/src/content/blog", REPO / "astro/src/content/unpublished"
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/interactions"
 MODEL = "gemini-3.1-flash-image"
+# Free-tier keys are gated per model: the workhorse above is paid-only and
+# answers 429 "limit: 0 input tokens per minute". --model switches to another.
+MODELS = ["gemini-3.1-flash-image", "gemini-3.1-flash-lite-image",
+          "gemini-3-pro-image", "gemini-2.5-flash-image"]
 
 # YouTube keyframes, best first. maxres is 1280x720 and often absent; hq always
 # exists but is 480x360 and 4:3, so it needs cropping to 16:9.
@@ -119,9 +123,9 @@ def find_image(node) -> bytes | None:
         return None
 
 
-def call_gemini(prompt: str, key: str) -> bytes:
+def call_gemini(prompt: str, key: str, model: str = MODEL) -> bytes:
     body = json.dumps({
-        "model": MODEL,
+        "model": model,
         "input": [{"type": "text", "text": prompt}],
         "response_format": {
             "type": "image",
@@ -140,7 +144,14 @@ def call_gemini(prompt: str, key: str) -> bytes:
             payload = json.load(r)
     except urllib.error.HTTPError as e:
         detail = e.read().decode(errors="replace")[:600]
-        fail(f"Gemini returned HTTP {e.code}", detail)
+        hint = detail
+        if e.code == 429 and "limit: 0" in detail:
+            hint = (f"{model} is not available on this key's tier. Every image model\n"
+                    f"       is gated to zero on the free tier, so this needs billing\n"
+                    f"       enabled: https://ai.dev/rate-limit\n"
+                    f"       Or generate in the Gemini app and install it with:\n"
+                    f"         generate_hero.py <slug> --install ~/Downloads/<file>.jpg")
+        fail(f"Gemini returned HTTP {e.code}", hint)
     except urllib.error.URLError as e:
         fail(f"could not reach Gemini: {e.reason}")
 
@@ -234,11 +245,16 @@ def main() -> None:
     ap.add_argument("post", help="slug, filename or path")
     ap.add_argument("--variants", type=int, default=1,
                     help="generate N candidates and install none; pick one yourself")
+    ap.add_argument("--install", metavar="FILE",
+                    help="install an image you generated elsewhere (e.g. in the "
+                         "Gemini app) instead of calling the API")
     ap.add_argument("--keyframe", nargs="?", const=True, metavar="VIDEO_ID",
                     help="use the post's YouTube keyframe instead of generating. "
                          "The id is found in the post if you don't give one.")
     ap.add_argument("--dry-run", action="store_true",
                     help="resolve the post and prompt, then stop before calling the API")
+    ap.add_argument("--model", default=MODEL, choices=MODELS,
+                    help=f"image model (default {MODEL})")
     ap.add_argument("--no-build", action="store_true", help="skip the astro build")
     args = ap.parse_args()
 
@@ -257,12 +273,34 @@ def main() -> None:
         if video_id:
             print(f"note   this post embeds youtube video {video_id} — a keyframe is")
             print(f"       usually the better hero. Re-run with --keyframe to use it.")
-        prompt = read_prompt(post)
-        print(f"prompt {len(prompt)} chars, first line: {prompt.splitlines()[0][:70]}...")
+        prompt = None if args.install else read_prompt(post)
+        if prompt is None:
+            print("source installing a file you generated elsewhere")
+        else:
+            print(f"prompt {len(prompt)} chars, first line: {prompt.splitlines()[0][:70]}...")
     print(f"hero   {ref}")
 
     if args.dry_run:
         print("\ndry run — stopping before fetching anything")
+        return
+
+    if args.install:
+        src = Path(args.install).expanduser()
+        if not src.is_file():
+            fail(f"no such file: {src}")
+        quality = normalise(src, dest)
+        size_kb = dest.stat().st_size / 1024
+        print(f"\nwrote  {dest.relative_to(REPO)}  from {src.name}, "
+              f"{WIDTH}x{HEIGHT}, {size_kb:.0f} KB, q{quality}")
+        print(f"       frontmatter: {set_hero(post, ref)}")
+        print(f"       card check:  {card_check(dest)}")
+        if not args.no_build:
+            r = subprocess.run(["npx", "astro", "build"], cwd=REPO / "astro",
+                               capture_output=True, text=True)
+            print(f"       build:       {'ok' if r.returncode == 0 else 'FAILED'}")
+            if r.returncode:
+                sys.exit(1)
+        print("\nLook at the card check before calling it done.")
         return
 
     if args.keyframe:
@@ -296,7 +334,7 @@ def main() -> None:
         out = Path(tempfile.mkdtemp(prefix="hero-variants-"))
         for i in range(1, args.variants + 1):
             raw = out / f"raw-{i}.jpg"
-            raw.write_bytes(call_gemini(prompt, key))
+            raw.write_bytes(call_gemini(prompt, key, args.model))
             q = normalise(raw, out / f"{post.stem}-hero-{i}.jpg")
             print(f"  variant {i}: {out / f'{post.stem}-hero-{i}.jpg'} (q{q})")
         print(f"\n{args.variants} candidates in {out} — nothing installed.")
@@ -305,7 +343,7 @@ def main() -> None:
 
     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
         raw = Path(tmp.name)
-    raw.write_bytes(call_gemini(prompt, key))
+    raw.write_bytes(call_gemini(prompt, key, args.model))
     quality = normalise(raw, dest)
     raw.unlink(missing_ok=True)
 
