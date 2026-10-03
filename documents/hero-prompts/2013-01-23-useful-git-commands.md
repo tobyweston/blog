@@ -15,6 +15,23 @@ So the image is a tool board: a row of distinct hand tools hung in their outline
 on a wall, each in its own silhouette, one missing from its place because it is
 in use.
 
+## The Git mark is composited, not drawn
+
+Jason Long's mark goes in from `documents/brand/git.png` after generation,
+unmodified. Sourced from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Git-logo.svg),
+**CC BY 3.0, attribution required** — see `documents/brand/README.md`.
+
+```bash
+H=astro/public/images/heroes/2013-01-23-useful-git-commands-hero.jpg
+magick $H \( documents/brand/git.png -resize x95 \) \
+  -gravity east -geometry +120-20 -composite -quality 86 $H
+```
+
+This post previously had the diamond *drawn* by the generator. It came back well,
+but a drawn trademark is still a drawn trademark, and the companion rebase post
+now carries the real mark — two Git posts with different-looking Git marks is a
+defect. Both use the real file.
+
 ## Prompt
 
 ```text
@@ -42,15 +59,14 @@ outline.
 The SIXTH outline is empty, and its tool lies on a small shelf beneath the board,
 clearly the one currently in use.
 
-BRAND MARK
-On the RIGHT of the image, clear of the main subject and above the lower third, a
-Git mark: a diamond standing on one point, drawn in a strong orange-red, with a
-simple branch diagram inside it — a straight line running through the diamond
-with a small filled node at each end, and a short branch curving up from the
-middle of that line to a third node. Flat shapes, no outline around the diamond,
-no text beside it.
-The whole mark, including the lowest point of the diamond, must sit above the
-lower third of the image and must not touch any edge.
+
+MARGINS
+The entire composition must fit within the LEFT 72% of the image width. The
+rightmost 28% is empty background — nothing whatsoever extends into it: no
+object, no track, no carriage, no callout line, no shadow and no marking. The
+background there is the same plain ground and grid as everywhere else, with no
+panel, box, border, frame or change of tone to indicate it.
+Do not draw any logo, badge, emblem, roundel or icon anywhere in this image.
 
 SUPPORTING DETAIL
 One faint callout leader line points at the empty outline on the board, ending in
@@ -65,9 +81,9 @@ COLOUR
 Restrained and cool: off-white or pale blue-grey ground, deep navy and slate
 line work, with one warm accent (amber or rust) reserved for the single
 component the post is about. No gradients beyond flat tonal steps.
-There is NO amber accent in this image. The orange-red Git mark is the only warm
-element anywhere, and nothing else may be warm — Git's orange and the usual amber
-are too close in hue to coexist.
+There is NO amber accent in this image. The real Git mark composited in afterwards
+is the only warm element, and nothing in the drawing may be warm — Git's orange
+and the usual amber are too close in hue to coexist.
 The empty painted outline is distinguished by being empty, not by colour: the
 board, all six outlines and all six tools stay entirely navy and slate.
 
@@ -88,7 +104,7 @@ symmetrically.
 - **A cluttered workshop.** One flat board, six outlines, one shelf.
 - **Anything else coming back warm.** The Git diamond is the only orange in the
   frame. An amber tool or outline would give the card two focal points.
-- **The diamond rendered as a square.** It stands on one point.
+- **Anything intruding into the right 28%.** The real mark goes there.
 
 ## Install
 

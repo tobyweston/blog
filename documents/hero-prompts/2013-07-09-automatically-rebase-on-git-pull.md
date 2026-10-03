@@ -14,6 +14,18 @@ than merge, so history stays a single line.
 So the image is two assembly lines, one of which forks and rejoins while the
 other is lifted and set back down on the end of the incoming run.
 
+## The Git mark is composited, not drawn
+
+Jason Long's mark goes in from `documents/brand/git.png` after generation,
+unmodified. Sourced from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Git-logo.svg),
+**CC BY 3.0, attribution required** — see `documents/brand/README.md`.
+
+```bash
+H=astro/public/images/heroes/2013-07-09-automatically-rebase-on-git-pull-hero.jpg
+magick $H \( documents/brand/git.png -resize x95 \) \
+  -gravity east -geometry +120-20 -composite -quality 86 $H
+```
+
 ## Prompt
 
 ```text
@@ -44,6 +56,14 @@ back down at the END of the main run, so the lower track is one unbroken straigh
 line of blocks with no branch and no loop at all.
 
 The contrast between a line with a loop in it and a line without is the subject.
+
+MARGINS
+The entire composition must fit within the LEFT 72% of the image width. The
+rightmost 28% is empty background — nothing whatsoever extends into it: no
+object, no track, no carriage, no callout line, no shadow and no marking. The
+background there is the same plain ground and grid as everywhere else, with no
+panel, box, border, frame or change of tone to indicate it.
+Do not draw any logo, badge, emblem, roundel or icon anywhere in this image.
 
 SUPPORTING DETAIL
 One faint callout leader line points at the point on the lower track where the
