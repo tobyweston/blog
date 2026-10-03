@@ -39,6 +39,44 @@ same uniform line weight as the rest of the illustration, as a mark etched on th
 board rather than a sticker, a badge or a photograph. No text beside it.
 ```
 
+**The Debian swirl.** The `Deploying to Debian` series carries the swirl, and
+unlike the berry it sits centrally and takes the accent. Paste verbatim:
+
+```text
+Stamped across the centre of the main object, a Debian swirl mark: a single
+tapering spiral stroke, broad where it begins at the upper right and narrowing
+smoothly to a fine point as it coils inward and down, like a curl of smoke. One
+unbroken stroke, no outline around it, no text beside it, drawn flat as a mark
+stencilled onto the surface rather than a sticker or a rendered logo.
+```
+
+**The Java cup.** Where a post is about moving Java somewhere, the cup marks the
+thing being moved. Paste verbatim, adapting only which object carries it:
+
+```text
+On the face of the cylindrical canister, a Java mark: a plain cup seen from the
+side with three short curling wisps of steam rising from it, drawn as one simple
+flat silhouette in the line colour. No saucer, no handle detail, no text beside
+it, and no circle or roundel around it.
+```
+
+It stays in the line colour. When it shares an image with the swirl, the cup
+marks what goes in and the swirl marks where it lands, so only one of them is
+warm.
+
+The two motifs are deliberately opposite, and the contrast is the point:
+
+| | Raspberry | Debian swirl |
+|---|---|---|
+| Placement | small, lower-right corner | large, centre of the main object |
+| Colour | line colour, never the accent | takes the warm accent |
+| Role | a maker's mark saying whose board this is | the subject's own identity |
+
+The swirl can hold the accent without breaking the palette rule because in both
+of those posts it is stamped on the very thing the post is about — the package,
+the repository — so marking the brand and marking the subject are the same act.
+Do not copy that licence to a post where the mark sits on something incidental.
+
 Keep it small and keep it in a corner. It is a maker's mark identifying whose
 board this is, not the subject of any of these posts, and it must never take the
 amber accent — that belongs to whatever the individual post is about.
@@ -70,6 +108,13 @@ diagram of an abstraction is just noise with nice lines.
   units on the right for functional, joined by an amber flanged coupling. An
   inset study shows a sub-assembly equalling a single plain block, which is
   referential transparency drawn literally.
+- The `Deploying to Debian` series, two posts, both carrying the swirl centrally
+  and in the accent: `2019-09-02-deploy-java-to-debian` (loose parts descending
+  into one crate, the canister marked with the Java cup and the crate stamped
+  with the swirl, so the image reads Java going into Debian) and
+  `2019-09-03-create-debian-repositories` (a rack of the same crates, sealed and
+  feeding out through a pipe). The crates are drawn alike on purpose so the pair
+  read as before and after.
 - The `raspberry-pi` series, six posts, all carrying the berry per the Recurring
   motif above: `2015-12-28-pi-console-lead` (jumper wires on two named GPIO
   pins), `2016-01-06-disable-led-for-edimax` (a cutaway dongle, one amber LED),
