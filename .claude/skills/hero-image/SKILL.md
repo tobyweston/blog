@@ -33,7 +33,23 @@ Accept a slug, filename, title or path. Find it under
 `astro/src/content/blog/`. If more than one matches, ask. If the post is in
 `astro/src/content/unpublished/`, that's fine — treat it the same.
 
-### 2. Read the post and pull out the visual material
+### 2. Check for a video first
+
+If the post embeds a YouTube video (`<YouTubeEmbed youtubeId="..." />` in the
+body, or `youtubeId` in frontmatter for the video collection), **prefer a
+keyframe from that video over a generated image.** It is the real thing, it is
+free, and a post whose centrepiece is a talk should show the talk.
+
+```bash
+.claude/skills/hero-image/scripts/generate_hero.py <slug> --keyframe
+```
+
+That pulls the largest keyframe YouTube holds, crops it to 1600x900 and wires it
+in. Generate instead when the video is incidental to the post, or when the
+keyframe is a title card or a face filling the frame — both read as nothing at
+192px. Look at the card check before deciding.
+
+### 3. Read the post and pull out the visual material
 
 Read the whole post, not just the frontmatter. Extract:
 
@@ -53,7 +69,7 @@ Read the whole post, not just the frontmatter. Extract:
 If the post is one of a series, say so in the prompt explicitly — continuity is
 the main reason this skill exists.
 
-### 3. Pick a style
+### 4. Pick a style
 
 Explicit instruction wins. Otherwise infer from `categories`:
 
@@ -69,7 +85,7 @@ the point is a consistent look across the site.
 Read the chosen file in `styles/` and `reference/output-spec.md` before writing
 anything.
 
-### 4. Compose the prompt
+### 5. Compose the prompt
 
 Fill the skeleton below. Paste the style file's **Style block** and **Palette**
 sections in verbatim — they are the shared part, and editing them per post is how
@@ -113,7 +129,7 @@ strong contrast over fine detail. Balanced composition, not centred
 symmetrically.
 ```
 
-### 5. Hand it over
+### 6. Hand it over
 
 - Save the finished prompt to `documents/hero-prompts/<post-filename>.md`, with
   the post title, the chosen style and the date at the top. These are kept so a
@@ -124,12 +140,31 @@ symmetrically.
 - Call out which parts are most likely to be mangled — any literal text — and
   what to drop if the generator fumbles it.
 
-### 6. Wire the image in
+### 7. Wire the image in
 
-Once the user has a generated file, follow `reference/output-spec.md`: check and
-normalise the dimensions, save it to the right path under
-`astro/public/images/heroes/`, add or update `heroImage` in the post's
-frontmatter, and run `npx astro build` from `astro/` to confirm it resolves.
+```bash
+export GEMINI_API_KEY=...    # once per shell; get one at https://aistudio.google.com/apikey
+.claude/skills/hero-image/scripts/generate_hero.py <slug>
+```
+
+The script reads the prompt you just saved, calls the Gemini image API, and does
+everything `reference/output-spec.md` asks for: 1600x900, under 400KB, written to
+`astro/public/images/heroes/<slug>-hero.jpg`, `heroImage` set in the post's
+frontmatter, `npx astro build` to confirm it resolves, and a card-crop render to
+check. Useful flags:
+
+| Flag | Why |
+|---|---|
+| `--keyframe [ID]` | Use the post's YouTube keyframe instead of generating |
+| `--variants 3` | Generate three candidates, install none, pick one yourself |
+| `--dry-run` | Resolve post and prompt, stop before spending anything |
+| `--no-build` | Skip the astro build |
+
+**Always look at the card check it prints.** If the focal subject is clipped,
+the prompt's composition section needs tightening — don't fix it by re-cropping.
+
+Doing it by hand instead: follow `reference/output-spec.md`, which carries the
+same steps as `magick` invocations.
 
 ## Rules that apply to every prompt
 
@@ -149,3 +184,33 @@ date badly and read as nothing at thumbnail size.
 
 **State the negatives.** Every prompt should say what the style is *not*
 (not photorealistic, not 3D render, and so on) — the style files carry this.
+
+**Reach for the technology the post is actually about.** If a post names a
+language, product or tool — Scala, Java, Debian, Log4j, a Raspberry Pi — work its
+mark or its idioms into the image rather than drawing a generic computer. It
+anchors the hero to the subject at a glance, which is most of the job at 192px.
+
+Prefer an idiom to a logo. Image models reliably draw a *glyph* and reliably
+mangle a *logo*, and a mangled trademark looks worse than none:
+
+| Reliable | Risky |
+|---|---|
+| A single large glyph: `=>`, `λ`, `;`, `#!`, `{}` | An accurate corporate wordmark |
+| The mark described as shapes and colours — "a red-to-orange double spiral", "a raspberry in outline", "a red swirl" | "the Scala logo", "the Debian logo" |
+| The product's colours applied to an object already in the scene | Small lettering anywhere |
+
+So: name the mark by its **shape and palette**, keep it to one secondary element
+away from the focal point, and ask for it **redrawn in the chosen house style** —
+a photoreal logo dropped into a blueprint or a cartoon wrecks both. Count any
+mark against the three-string text budget.
+
+Always give a fallback line for when it comes back wrong: the image has to work
+with the mark removed. If the generator fumbles it twice, drop it — a clean hero
+beats a recognisable-but-wrong trademark.
+
+Using a product's mark to illustrate a post about that product is ordinary
+editorial use. Don't imply endorsement, don't rework a mark into a joke, and
+don't put a company's mark on something the post is criticising.
+
+**Favour a real keyframe over a drawing.** See step 2 — if the post has a video,
+that footage is more honest than anything a generator will produce.
