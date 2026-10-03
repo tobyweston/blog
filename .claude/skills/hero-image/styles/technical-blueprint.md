@@ -77,9 +77,27 @@ flat silhouette in the line colour. No saucer, no handle detail, no text beside
 it, and no circle or roundel around it.
 ```
 
-It stays in the line colour. When it shares an image with the swirl, the cup
-marks what goes in and the swirl marks where it lands, so only one of them is
-warm.
+The cup has **two variants, and they are not interchangeable**:
+
+- **Cool variant** — drawn in the line colour, used when the cup shares an image
+  with another mark that holds the accent. This is the `Deploying to Debian`
+  case: the cup marks what goes in, the swirl marks where it lands, and only one
+  of them is warm.
+- **Series variant** — drawn in the logo's own colours, used across the `java`
+  posts where the cup is that series' mark. Paste verbatim:
+
+```text
+In the lower-left corner of the image, clear of the main subject, a Java mark: a
+plain cup seen from the side, drawn in a mid steel blue, with two curling wisps
+of steam rising from it in a warm orange-red. Flat shapes, no outline, no saucer,
+no circle or roundel around it and no text beside it.
+```
+
+The series variant brings a fifth and sixth colour into the palette, like the
+Scala mark, and carries more risk than that one did: its orange steam sits close
+to the amber accent, where crimson did not. So keep it **smaller than the Scala
+mark**, keep it in the corner, and never let it near the amber element. If the
+two warm shapes end up at similar sizes the card has no focal point.
 
 The two motifs are deliberately opposite, and the contrast is the point:
 
