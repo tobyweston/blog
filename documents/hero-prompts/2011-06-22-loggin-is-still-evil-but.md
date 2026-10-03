@@ -22,6 +22,25 @@ leaving the frame. The clutter has become something you can check.
 None worth attaching — these posts illustrate themselves with code listings,
 which must not be drawn.
 
+## The Log4j mark is composited, not drawn
+
+Both posts are specifically about Log4j, so the real mark goes in from
+`documents/brand/log4j.png` after generation, unmodified. The prompt reserves the
+right of the frame as composition, not as a boxed area.
+
+```bash
+H=astro/public/images/heroes/2011-06-22-loggin-is-still-evil-but-hero.jpg
+magick $H \( documents/brand/log4j.png -resize x110 \) \
+  -gravity east -geometry +110-20 -composite -quality 86 $H
+```
+
+Sourced from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Apache_Log4j_Logo.png),
+where the file is tagged Apache License 2.0 with the Apache Software Foundation
+as author. The ASF treats project logos as trademarks regardless, and its policy
+is aimed at stopping a logo being used to denote someone else's product or
+service; a hero on a post *about* Log4j is editorial use of the mark to refer to
+the thing itself. Recorded in `documents/brand/README.md`.
+
 ## Prompt
 
 ```text
@@ -50,15 +69,13 @@ mounted on its front.
 
 The vessel is clearly a measuring instrument, not a bucket.
 
-BRAND MARK
-On the LEFT of the image, clear of the main subject, a Java mark: a plain cup
-seen from the side, drawn in a mid steel blue, with two curling wisps of steam
-rising from it in a warm orange-red. Flat shapes, no outline, no saucer, no
-circle or roundel around it and no text beside it.
-Position it so the WHOLE mark — the base of the cup included — sits above the
-lower third of the image. It must not touch the bottom edge and must not sit in
-the bottom fifth. Treat the lower fifth of the frame as unusable: a mark placed
-there loses its cup to the card crop and survives only as a stray orange squiggle.
+MARGINS
+The entire composition must fit within the LEFT 72% of the image width. The
+rightmost 28% is empty background — nothing whatsoever extends into it: no
+object, no pipe, no tap, no callout line, no shadow and no marking. The
+background there is the same plain ground and grid as everywhere else, with no
+panel, box, border, frame or change of tone to indicate it.
+Do not draw any logo, badge, emblem, roundel or icon anywhere in this image.
 
 SUPPORTING DETAIL
 One faint callout leader line points at the sight window on the vessel, ending in
@@ -66,7 +83,7 @@ a small empty circle. The dial carries tick marks but no numbers.
 
 TEXT IN THE IMAGE
 No text labels anywhere in this image. No code, braces, semicolons, terminal
-output, version numbers or filenames, and no text beside the Java mark. Any
+output, version numbers or filenames. Any
 marking that would read as writing must be left out rather than rendered as
 placeholder lettering.
 
@@ -74,9 +91,6 @@ COLOUR
 Restrained and cool: off-white or pale blue-grey ground, deep navy and slate
 line work, with one warm accent (amber or rust) reserved for the single
 component the post is about. No gradients beyond flat tonal steps.
-The small blue-and-orange Java mark in the corner is the only exception. Keep it
-small and well clear of the amber element — its orange steam is close in hue to
-the accent, so the two must never sit near each other or at similar sizes.
 The amber accent belongs to the measuring vessel, its sight window and its dial,
 and to nothing else. The machine, the taps and all the pipework stay navy and
 slate — the reverse of the companion image, where the taps held the accent.
@@ -99,12 +113,17 @@ symmetrically.
 - **Numbers on the dial.** Ticks only.
 - **Losing the match with the companion image.** Same machine, same taps, same
   layout — only the far end changes.
-- **The Java mark growing, or its orange drifting towards the amber.** Small,
-  lower-left, well clear of the accent.
-- **The mark landing in the bottom fifth**, which the card crop removes.
 
 ## Install
 
 ```bash
 cd /Users/toby/dev/code/github/active/blog && .claude/skills/hero-image/scripts/generate_hero.py 2011-06-22-loggin-is-still-evil-but --install ~/Downloads/<your-file>.jpg
 ```
+
+## One mark, not two
+
+These posts carried the Java cup before Log4j was added. It has been dropped
+rather than kept alongside: Log4j's mark is strongly red, the Java cup's steam is
+orange, and the amber accent is warm too. Three warm things in one card leaves it
+without a focal point, and of the two marks Log4j is both the more specific and
+the one the post is actually about.

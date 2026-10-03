@@ -1,6 +1,7 @@
 ---
 title: "Transaction Management without the Frameworks"
 pubDate: "2012-01-29"
+heroImage: "/images/heroes/2012-01-29-transaction-management-without-hero.jpg"
 categories: 'java'
 keywords: "transaction management, ACID, Spring transactions, imperative vs declarative, unit of work, Java"
 description: "Avoid declarative transaction management frameworks like Spring. Roll your own imperative transaction management for more control and testability."

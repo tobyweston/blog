@@ -1,6 +1,7 @@
 ---
 title: "Tools for bad.robots"
 pubDate: "2012-03-18"
+heroImage: "/images/heroes/2012-03-18-tools-for-bad-dot-robots-hero.jpg"
 categories: 'java tools'
 keywords: "robotooling, Java tools, tempus-fugit, simple-http, simple-excel, Concordion, open source"
 description: "Introducing robotooling: a collection of open-source Java utilities capturing reusable patterns around HTTP, Excel, Concordion, and concurrent testing."
