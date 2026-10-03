@@ -24,6 +24,25 @@ line work, with one warm accent (amber or rust) reserved for the single
 component the post is about. No gradients beyond flat tonal steps.
 ```
 
+## Recurring motif
+
+**The raspberry.** Every post in the `raspberry-pi` series carries the berry, so
+the cards read as a set on the index. Paste this block verbatim, the same way as
+the Style block — describing the mark by its shape rather than naming the logo is
+what keeps a generator from mangling a trademark:
+
+```text
+In the lower-right corner of the board, a small raspberry emblem etched into the
+silkscreen: a cluster of seven or eight rounded drupelets packed into a rough
+heart shape, with two pointed leaves angled up from the top. Drawn flat in the
+same uniform line weight as the rest of the illustration, as a mark etched on the
+board rather than a sticker, a badge or a photograph. No text beside it.
+```
+
+Keep it small and keep it in a corner. It is a maker's mark identifying whose
+board this is, not the subject of any of these posts, and it must never take the
+amber accent — that belongs to whatever the individual post is about.
+
 ## Reference images from the post
 
 The most useful attachments for this style are the post's own diagrams and
@@ -51,6 +70,15 @@ diagram of an abstraction is just noise with nice lines.
   units on the right for functional, joined by an amber flanged coupling. An
   inset study shows a sub-assembly equalling a single plain block, which is
   referential transparency drawn literally.
+- The `raspberry-pi` series, six posts, all carrying the berry per the Recurring
+  motif above: `2015-12-28-pi-console-lead` (jumper wires on two named GPIO
+  pins), `2016-01-06-disable-led-for-edimax` (a cutaway dongle, one amber LED),
+  `2017-03-01-standard-pi-setup` (an SD card entering the slot beside a
+  struck-through monitor), `2017-10-26-upgrade-raspian-jessie-to-stretch` and
+  `2019-08-29-upgrade-raspian-stretch-to-buster` (bolted name plates being
+  swapped — the second shows three plates rather than two so the pair are
+  distinguishable on the index), and
+  `2016-03-23-homebrew-temperature-logger` (a probe on a lead).
 - `2023-01-01-naming-things-impl` — two interchangeable modules for one socket,
   one with visible compartments labelled "ArrayStack" and one a featureless blank
   labelled "Impl". Note the accent marks the blank module: here the component the
