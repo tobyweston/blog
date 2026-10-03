@@ -199,7 +199,12 @@ def find_post_images(post: Path) -> list[Path]:
 def find_youtube_id(post: Path) -> str | None:
     """A <YouTubeEmbed youtubeId="..."> in the body, or youtubeId in frontmatter."""
     text = post.read_text()
+    # Two component families are in use: the site's own YouTubeEmbed, which takes
+    # youtubeId, and astro-embed's <YouTube id="..." />.
     m = re.search(r'youtubeId=["\']([A-Za-z0-9_-]{6,})["\']', text)
+    if m:
+        return m.group(1)
+    m = re.search(r'<YouTube\b[^>]*?\bid=["\']([A-Za-z0-9_-]{6,})["\']', text)
     if m:
         return m.group(1)
     m = re.search(r'^youtubeId:\s*["\']?([A-Za-z0-9_-]{6,})["\']?\s*$', text, re.M)

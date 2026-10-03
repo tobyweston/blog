@@ -39,6 +39,39 @@ same uniform line weight as the rest of the illustration, as a mark etched on th
 board rather than a sticker, a badge or a photograph. No text beside it.
 ```
 
+**The Git mark.** For posts about Git itself. Paste verbatim:
+
+```text
+On the RIGHT of the image, clear of the main subject and above the lower third, a
+Git mark: a diamond standing on one point, drawn in a strong orange-red, with a
+simple branch diagram inside it — a straight line running through the diamond
+with a small filled node at each end, and a short branch curving up from the
+middle of that line to a third node. Flat shapes, no outline around the diamond,
+no text beside it.
+The whole mark, including the lowest point of the diamond, must sit above the
+lower third of the image and must not touch any edge.
+```
+
+Git's orange is close enough to the amber accent that the two cannot both appear
+at any size. On a Git post the mark takes the warm slot and the rest of the
+image stays entirely navy and slate — distinguish the subject by form instead,
+not by colour.
+
+**The Excel mark.** For posts about spreadsheets. Paste verbatim:
+
+```text
+On the RIGHT of the image, clear of the main subject and above the lower third, an
+Excel mark: a rounded square tile drawn in a deep green, with a bold white X
+spanning most of its face, and one corner of the tile folded over to suggest a
+document. Flat shapes, no outline, no text beside it.
+The whole mark must sit above the lower third of the image and must not touch any
+edge.
+```
+
+Its green sits apart from both the amber accent and the Java cup's blue and
+orange, so unusually this one can share an image with another mark and with the
+accent without muddying it.
+
 **The Scala mark.** The `scala` posts carry it. Paste verbatim:
 
 ```text
@@ -87,10 +120,14 @@ The cup has **two variants, and they are not interchangeable**:
   posts where the cup is that series' mark. Paste verbatim:
 
 ```text
-In the lower-left corner of the image, clear of the main subject, a Java mark: a
-plain cup seen from the side, drawn in a mid steel blue, with two curling wisps
-of steam rising from it in a warm orange-red. Flat shapes, no outline, no saucer,
-no circle or roundel around it and no text beside it.
+On the LEFT of the image, clear of the main subject, a Java mark: a plain cup
+seen from the side, drawn in a mid steel blue, with two curling wisps of steam
+rising from it in a warm orange-red. Flat shapes, no outline, no saucer, no
+circle or roundel around it and no text beside it.
+Position it so the WHOLE mark — the base of the cup included — sits above the
+lower third of the image. It must not touch the bottom edge and must not sit in
+the bottom fifth. Treat the lower fifth of the frame as unusable: a mark placed
+there loses its cup to the card crop and survives only as a stray orange squiggle.
 ```
 
 The series variant brings a fifth and sixth colour into the palette, like the
