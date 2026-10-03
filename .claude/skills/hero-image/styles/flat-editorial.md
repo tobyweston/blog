@@ -51,3 +51,7 @@ metaphor carries the meaning on its own.
   `technical-blueprint` despite the post having diagrams: there is no mechanism
   in it, only a measurement, and the mid-century printed look suits a post that
   traces its terms back to lean manufacturing.
+- `2021-01-04-pull-requests-and-trust` — a family queueing at an airport security
+  checkpoint to get through their own front door, straight from the post's Kief
+  Morris pullquote. Carries no text at all: the joke explains itself, and every
+  string omitted is a failure mode removed.

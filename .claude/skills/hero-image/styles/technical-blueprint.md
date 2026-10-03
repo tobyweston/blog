@@ -51,3 +51,7 @@ diagram of an abstraction is just noise with nice lines.
   units on the right for functional, joined by an amber flanged coupling. An
   inset study shows a sub-assembly equalling a single plain block, which is
   referential transparency drawn literally.
+- `2023-01-01-naming-things-impl` — two interchangeable modules for one socket,
+  one with visible compartments labelled "ArrayStack" and one a featureless blank
+  labelled "Impl". Note the accent marks the blank module: here the component the
+  post is about is the habit it argues against.
