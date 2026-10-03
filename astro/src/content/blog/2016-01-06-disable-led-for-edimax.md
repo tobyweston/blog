@@ -4,7 +4,7 @@ pubDate: "2016-01-06"
 categories: 'raspberry-pi'
 keywords: "Edimax EW-7811UN, Raspberry Pi, LED disable, kernel module, 8192cu, Wi-Fi dongle, Raspbian"
 description: "Disable the LED on the Edimax EW-7811UN Wi-Fi dongle on Raspberry Pi by recompiling the kernel module. Includes a pre-built binary if you'd rather not compile."
-heroImage: "/images/heroes/multiple-usages-raspberry-pi.jpg"
+heroImage: "/images/heroes/2016-01-06-disable-led-for-edimax-hero.jpg"
 ---
 
 Pi specific instructions to disable the LED on the Edimax EW-7811UN USB wireless adapter.
